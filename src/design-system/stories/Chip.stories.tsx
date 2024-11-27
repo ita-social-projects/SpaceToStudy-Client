@@ -16,13 +16,12 @@ With multiple types, sizes, and visual states, it offers flexibility to suit var
 #### Key Features:
 - **Variants:** Choose between different types of chips, such as \`filter\`, \`input\`, \`category\`, or \`state\`, each tailored to specific use cases.
 - **Chip Types:**
-  - **\`filter\`:** Used for filtering actions, with options like \`filled\` or \`minimal\` variants.
+  - **\`filter\`:** Used for filtering actions, where users can select from a dropdown list of options, with \`filled\` or \`minimal\` styles.
   - **\`input\`:** Ideal for user input scenarios, supporting \`filled\`, \`outlined\`, and \`filled-outlined\` variants.
-  - **\`category\`:** Designed to display categories with a \`subject\` and \`level\`, allowing for clear categorization of content.
+  - **\`category\`:** Displays categorized items, each with a descriptive label and detailed information.
   - **\`state\`:** Represents status or state, typically used to indicate the condition of an item (e.g., active, pending).
 - **Sizes:** Select from \`sm\`, \`md\`, or \`lg\` sizes to match the chip to the context—whether you need a compact tag or a larger, more prominent element.
 - **Icons:** Enhance the chip’s appearance with customizable \`startIcon\` and \`endIcon\` options to provide additional visual context or interactivity.
-- **Colors:** Use color options (\`red\`, \`yellow\` etc.) to align the chip -with your application's theme, or customize the color based on your design needs.
 - **Disabled State:** The chip can be disabled to prevent user interaction, providing clear feedback to the user when an action is unavailable.
 
 ### Chip Types and Props:
@@ -30,26 +29,19 @@ With multiple types, sizes, and visual states, it offers flexibility to suit var
 0. **Shared Props**:
 - **type**: Defines the type of chip. Available values: \`filter\`, \`input\`, \`category\`, \`state\`.
 - **size**: Controls the size of the chip (\`sm\`, \`md\`, \`lg\`).
-- **color**: Customizes the chip's color (\`string\`).
+- **label**: The text displayed inside the chip (\`string\`).
+- **startIcon**: An optional icon before the label (\`ReactNode\`).
+- **endIcon**: An optional icon after the label (\`ReactNode\`).
 - **disabled**: Makes the chip non-interactive (\`boolean\`).
 1. **Filter Chip** (\`type: 'filter'\`):
-   - **label**: The text displayed inside the chip (\`string\`).
    - **variant**: Defines the visual style (\`filled\` or \`minimal\`).
-   - **startIcon**: An optional icon before the label (\`ReactNode\`).
-   - **endIcon**: An optional icon after the label (\`ReactNode\`).
-   - **disabled**: Makes the chip non-interactive (\`boolean\`).
 2. **Input Chip** (\`type: 'input'\`):
-   - **label**: The text displayed inside the chip (\`string\`).
    - **variant**: Supports \`filled\`, \`outlined\`, and \`filled-outlined\` styles.
-   - **startIcon**: An optional icon before the label (\`ReactNode\`).
-   - **endIcon**: An optional icon after the label (\`ReactNode\`).
-   - **disabled**: Makes the chip non-interactive.
 3. **Category Chip** (\`type: 'category'\`):
-   - **subject**: Represents the main category name (\`string\`).
-   - **level**: Indicates the category level or subcategory (\`string\`).
+   - **detail**: Indicates certain detail about label (\`string\`).
+   - **color**: Customizes the chip's color (\`string\`).
 4. **State Chip** (\`type: 'state'\`):
-   - **label**: The text displayed inside the chip (\`string\`).
-   - **startIcon**: An optional icon before the label (\`ReactNode\`).
+   - **color**: Customizes the chip's color (\`string\`).
         `
       }
     }
@@ -62,8 +54,8 @@ export const FilterChip = (args: ChipProps) => <Chip {...args} />
 FilterChip.args = {
   type: 'filter',
   size: 'md',
-  //   color: 'blue-gray',
   label: 'Filter Chip',
+  options: ['Option 1', 'Option 2', 'Option 3'],
   variant: 'filled',
   disabled: false
 }
@@ -79,17 +71,17 @@ FilterChip.argTypes = {
     description: 'Size of the chip.',
     table: { defaultValue: { summary: 'md' } }
   },
-  //   color: {
-  //     control: { type: 'text' },
-  //     description: 'Color of the chip.',
-  //     table: { defaultValue: { summary: 'blue-gray' } }
-  //   },
+  options: {
+    control: { type: 'array' },
+    description: 'List of options for the filter chip',
+    defaultValue: ['Option 1', 'Option 2', 'Option 3']
+  },
   label: {
     control: { type: 'text' },
     description: 'Label text displayed on the chip.'
   },
   variant: {
-    control: { type: 'const' },
+    control: { type: 'select' },
     options: ['filled', 'minimal'],
     description: 'Visual style of the chip.',
     table: { defaultValue: { summary: 'filled' } }
@@ -113,7 +105,6 @@ export const InputChip = (args: ChipProps) => <Chip {...args} />
 InputChip.args = {
   type: 'input',
   size: 'lg',
-  //   color: 'blue-gray',
   label: 'Input Chip',
   variant: 'outlined',
   disabled: false
@@ -129,10 +120,6 @@ InputChip.argTypes = {
     options: ['sm', 'md', 'lg'],
     description: 'Size of the chip.'
   },
-  //   color: {
-  //     control: { type: 'text' },
-  //     description: 'Color of the chip.'
-  //   },
   label: {
     control: { type: 'text' },
     description: 'Label text displayed on the chip.'
@@ -161,8 +148,8 @@ CategoryChip.args = {
   type: 'category',
   size: 'md',
   color: 'purple',
-  subject: 'Astronomy',
-  level: 'Advanced',
+  label: 'Astronomy',
+  detail: 'Advanced',
   disabled: false
 }
 CategoryChip.argTypes = {
@@ -177,16 +164,27 @@ CategoryChip.argTypes = {
     description: 'Size of the chip.'
   },
   color: {
-    control: { type: 'text' },
-    description: 'Color of the chip.'
+    control: { type: 'select' },
+    options: [
+      'blue-gray',
+      'turquoise',
+      'blue',
+      'green',
+      'yellow',
+      'purple',
+      'red',
+      'neutral'
+    ],
+    description: 'Color of the chip.',
+    table: { defaultValue: { summary: 'blue-gray' } }
   },
-  subject: {
+  label: {
     control: { type: 'text' },
-    description: 'Primary text displayed in the subject field.'
+    description: 'Label text displayed on the first chip.'
   },
-  level: {
+  detail: {
     control: { type: 'text' },
-    description: 'Secondary text indicating the level or category.'
+    description: 'Secondary text displayed on the second chip.'
   },
   disabled: {
     control: { type: 'boolean' },
@@ -214,8 +212,19 @@ StateChip.argTypes = {
     description: 'Size of the chip.'
   },
   color: {
-    control: { type: 'text' },
-    description: 'Color of the chip.'
+    control: { type: 'select' },
+    options: [
+      'blue-gray',
+      'turquoise',
+      'blue',
+      'green',
+      'yellow',
+      'purple',
+      'red',
+      'neutral'
+    ],
+    description: 'Color of the chip.',
+    table: { defaultValue: { summary: 'blue-gray' } }
   },
   label: {
     control: { type: 'text' },

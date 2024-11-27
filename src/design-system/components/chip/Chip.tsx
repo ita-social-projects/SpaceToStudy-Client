@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties, useState } from 'react'
 import classNames from 'classnames'
 import CircleIcon from '@mui/icons-material/Circle'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
@@ -6,43 +6,50 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import './Chip.scss'
 
+type ChipContentProps = {
+  label: string
+  startIcon?: React.ReactNode
+  endIcon?: React.ReactNode
+}
+
 type ChipType = 'filter' | 'input' | 'category' | 'state'
 
-type BaseChipProps = {
+type BaseChipProps = ChipContentProps & {
   type: ChipType
   size?: 'sm' | 'md' | 'lg'
-  color?: string
   disabled?: boolean
 }
 
 type FilterChipProps = BaseChipProps & {
   type: 'filter'
-  label: string
+  options: string[]
   variant?: 'filled' | 'minimal'
-  startIcon?: React.ReactNode
-  endIcon?: React.ReactNode
-  disabled?: boolean
 }
 
 type InputChipProps = BaseChipProps & {
   type: 'input'
-  label: string
   variant?: 'filled' | 'outlined' | 'filled-outlined'
-  startIcon?: React.ReactNode
-  endIcon?: React.ReactNode
-  disabled?: boolean
 }
+
+type ChipColor =
+  | 'blue-gray'
+  | 'turquoise'
+  | 'blue'
+  | 'green'
+  | 'yellow'
+  | 'purple'
+  | 'red'
+  | 'neutral'
 
 type CategoryChipProps = BaseChipProps & {
   type: 'category'
-  subject: string
-  level: string
+  detail: string
+  color?: ChipColor
 }
 
 type StateChipProps = BaseChipProps & {
   type: 'state'
-  label: string
-  startIcon?: React.ReactNode
+  color?: ChipColor
 }
 
 export type ChipProps =
@@ -55,22 +62,74 @@ type CustomStyle = CSSProperties & {
   [key: `--chip-${string}`]: string | undefined
 }
 
+const ChipContent: React.FC<ChipContentProps> = ({
+  label,
+  startIcon,
+  endIcon
+}) => (
+  <>
+    {startIcon && <span className='startIcon'>{startIcon}</span>}
+    <span className='label'>{label}</span>
+    {endIcon && <span className='endIcon'>{endIcon}</span>}
+  </>
+)
+
 const FilterChip: React.FC<FilterChipProps> = ({
   label,
+  options = [],
   variant = 'filled',
   startIcon = <CircleIcon style={{ fontSize: 'inherit' }} />,
   endIcon = <ExpandMoreIcon style={{ fontSize: 'inherit' }} />,
   disabled = false,
   size = 'md'
 }) => {
-  const classes = classNames('chip', `chip--${size}`, `chip--filter`, variant, {
-    disabled
-  })
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedOption, setSelectedOption] = useState<string | null>(null)
+
+  const handleSelect = (option: string) => {
+    setSelectedOption(option)
+    setIsOpen(false)
+  }
+
+  const isSelected = !!selectedOption
+
+  const classes = classNames(
+    'chip',
+    `chip--${size}`,
+    `chip--filter`,
+    variant,
+    isSelected ? 'selected' : 'unselected',
+    {
+      disabled
+    }
+  )
   return (
-    <div className={classes}>
-      {startIcon && <span className='startIcon'>{startIcon}</span>}
-      <span className='label'>{label}</span>
-      {endIcon && <span className='endIcon'>{endIcon}</span>}
+    <div
+      className={classes}
+      onClick={() => !disabled && setIsOpen((prev) => !prev)}
+      tabIndex={0}
+    >
+      <ChipContent
+        endIcon={endIcon}
+        label={selectedOption || label}
+        startIcon={startIcon}
+      />
+      {isOpen && (
+        <ul className='dropdown-menu'>
+          {options.map((option) => (
+            <li
+              className='dropdown-item'
+              key={option}
+              onClick={() => {
+                handleSelect(option)
+                setIsOpen((prev) => !prev)
+              }}
+            >
+              {option}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
@@ -88,26 +147,24 @@ const InputChip: React.FC<InputChipProps> = ({
   })
   return (
     <div className={classes}>
-      {startIcon && <span className='startIcon'>{startIcon}</span>}
-      <span className='label'>{label}</span>
-      {endIcon && <span className='endIcon'>{endIcon}</span>}
+      <ChipContent endIcon={endIcon} label={label} startIcon={startIcon} />
     </div>
   )
 }
 
 const CategoryChip: React.FC<CategoryChipProps> = ({
-  subject,
-  level,
+  label,
+  detail,
   size = 'md',
   color = 'blue-gray',
   disabled = false
 }) => {
-  const subjectStyle: CustomStyle = {
+  const labelStyle: CustomStyle = {
     '--chip-text-color': `var(--s2s-${color}-900)`,
     '--chip-bg-color': `var(--s2s-${color}-300)`
   }
 
-  const levelStyle: CustomStyle = {
+  const detailStyle: CustomStyle = {
     '--chip-text-color': `var(--s2s-${color}-900)`,
     '--chip-bg-color': `var(--s2s-${color}-100)`
   }
@@ -115,28 +172,20 @@ const CategoryChip: React.FC<CategoryChipProps> = ({
   return (
     <div className='chip--categories'>
       <div
-        className={classNames(
-          'chip',
-          `chip--${size}`,
-          'chip--category',
-          'subject',
-          { disabled }
-        )}
-        style={subjectStyle}
+        className={classNames('chip', `chip--${size}`, 'chip--category', {
+          disabled
+        })}
+        style={labelStyle}
       >
-        <span className='label'>{subject}</span>
+        <ChipContent label={label} />
       </div>
       <div
-        className={classNames(
-          'chip',
-          `chip--${size}`,
-          'chip--category',
-          'level',
-          { disabled }
-        )}
-        style={levelStyle}
+        className={classNames('chip', `chip--${size}`, 'chip--category', {
+          disabled
+        })}
+        style={detailStyle}
       >
-        <span className='label'>{level}</span>
+        <ChipContent label={detail} />
       </div>
     </div>
   )
@@ -161,8 +210,7 @@ const StateChip: React.FC<StateChipProps> = ({
       })}
       style={style}
     >
-      {startIcon && <span className='startIcon'>{startIcon}</span>}
-      <span className='label'>{label}</span>
+      <ChipContent label={label} startIcon={startIcon} />
     </div>
   )
 }

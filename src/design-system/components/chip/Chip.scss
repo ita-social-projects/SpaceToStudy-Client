@@ -1,6 +1,7 @@
 @use '~/scss/utilities' as *;
 
 .chip {
+  margin: 5px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -31,25 +32,97 @@
     cursor: not-allowed;
   }
 
-  &--filter,
-  &--input {
-    &.filled {
-      background-color: var(--#{$prefix}blue-gray-50);
-      color: var(--#{$prefix}blue-gray-800);
+  &--filter {
+    position: relative;
 
-      &:hover {
-        box-shadow: var(--#{$prefix}box-shadow-xs);
+    &.filled {
+      &.selected {
+        background-color: var(--#{$prefix}blue-gray-100);
       }
 
-      &:focus {
-        background-color: var(--#{$prefix}blue-gray-100);
+      &.unselected {
+        background-color: var(--#{$prefix}blue-gray-50);
+      }
+    }
+
+    &.minimal {
+      color: var(--#{$prefix}blue-gray-600);
+
+      &:hover {
+        color: var(--#{$prefix}blue-gray-800);
+      }
+
+      &.selected,
+      &.unselected {
+        background-color: var(--#{$prefix}neutral-0);
+      }
+    }
+
+    &.minimal,
+    &.filled {
+      &:hover {
+        box-shadow: var(--#{$prefix}box-shadow-xs);
       }
 
       &.disabled {
         opacity: 1;
         color: var(--#{$prefix}blue-gray-500);
       }
+
+      &.selected {
+        color: var(--#{$prefix}blue-gray-800);
+
+        &:hover {
+          background-color: var(--#{$prefix}blue-gray-100);
+        }
+
+        &:active {
+          background-color: var(--#{$prefix}blue-gray-200);
+          transition: background-color 0.2s;
+        }
+      }
+
+      &.unselected {
+        &:hover {
+          background-color: var(--#{$prefix}blue-gray-50);
+          color: var(--#{$prefix}blue-gray-800);
+        }
+
+        &:active {
+          background-color: var(--#{$prefix}blue-gray-100);
+          transition: background-color 0.2s;
+        }
+      }
     }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: white;
+      border: 1px solid var(--#{$prefix}blue-gray-300);
+      border-radius: var(--#{$prefix}space-1);
+      padding: var(--#{$prefix}space-1) 0;
+      list-style: none;
+      margin: 0;
+      width: 100%;
+      z-index: 10;
+      box-shadow: var(--#{$prefix}box-shadow-xs);
+
+      .dropdown-item {
+        padding: var(--#{$prefix}space-1) var(--#{$prefix}space-2);
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: var(--#{$prefix}blue-gray-100);
+        }
+      }
+    }
+  }
+
+  &--input {
+    font-weight: var(--#{$prefix}font-weight-medium);
 
     &.outlined,
     &.filled-outlined {
@@ -70,38 +143,28 @@
     }
   }
 
-  &--input {
-    font-weight: var(--#{$prefix}font-weight-medium);
-  }
-
   &--categories {
     display: inline-flex;
     gap: var(--#{$prefix}space-0-5);
   }
 
-  &--category {
-    color: var(--chip-text-color);
-    background-color: var(--chip-bg-color);
-    font-weight: var(--#{$prefix}font-weight-regular);
-    letter-spacing: var(--#{$prefix}$letter-spacing-xl);
-    text-transform: uppercase;
-  }
-
+  &--category,
   &--state {
-    background-color: var(--chip-bg-color);
-    border-style: solid;
-    border-color: var(--chip-border-color);
-    color: var(--chip-text-color);
     font-weight: var(--#{$prefix}font-weight-regular);
     letter-spacing: var(--#{$prefix}letter-spacing-xl);
     text-transform: uppercase;
+    background-color: var(--chip-bg-color);
+    color: var(--chip-text-color);
+  }
+
+  &--state {
+    border: solid 1px var(--chip-border-color);
   }
 
   .startIcon,
   .endIcon {
     display: flex;
     align-items: center;
-    justify-content: start;
     font-size: inherit;
   }
 
