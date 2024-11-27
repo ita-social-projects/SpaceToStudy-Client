@@ -1,18 +1,20 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import AboutUserBlock from '~/containers/user-profile/about-user-block/AboutUserBlock'
-import {
-  aboutStudentKeys,
-  aboutStudentData
-} from '~/containers/user-profile/about-user-block/about-user-block.constants'
-import { UserRoleEnum } from '~/types'
+import { aboutStudentKeys } from '~/containers/user-profile/about-user-block/about-user-block.constants'
+import { UserRoleEnum, AboutStudentData } from '~/types'
 
-const AboutStudentBlock = () => {
+interface AboutStudentBlockProps {
+  data: AboutStudentData
+}
+
+const AboutStudentBlock: FC<AboutStudentBlockProps> = ({ data }) => {
   const { t } = useTranslation()
 
   return (
     <AboutUserBlock
-      data={aboutStudentData}
+      data={data}
       itemKeys={aboutStudentKeys}
       title={t('userProfilePage.studentAbout.title')}
       userRole={UserRoleEnum.Student}
