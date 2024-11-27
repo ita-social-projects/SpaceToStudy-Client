@@ -32,7 +32,11 @@ const WhoWeAre = () => {
         videoMock={videoImgLandingPage}
         videoPreview={landingPageVideo}
       />
-      <DividerComponent caption={'test'} variant={'ellipse'} />
+      <DividerComponent
+        caption={'test'}
+        orientation={'horizontal'}
+        variant={'fullWidth'}
+      />
     </Box>
   )
 }
