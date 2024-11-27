@@ -25,7 +25,7 @@ describe('FilterChip', () => {
     expect(screen.getByText('Filter Chip')).toBeInTheDocument()
   })
 
-  it('opens the dropdown menu when clicked', () => {
+  it('opens the dropdown menu when clicked', async () => {
     render(
       <Chip
         type='filter'
@@ -35,11 +35,15 @@ describe('FilterChip', () => {
     )
 
     fireEvent.click(screen.getByText('Filter Chip'))
-    expect(screen.getByText('Option 1')).toBeInTheDocument()
-    expect(screen.getByText('Option 2')).toBeInTheDocument()
+
+    const option1 = await screen.findByText('Option 1')
+    const option2 = await screen.findByText('Option 2')
+
+    expect(option1).toBeInTheDocument()
+    expect(option2).toBeInTheDocument()
   })
 
-  it('selects an option when clicked and closes dropdown menu after', () => {
+  it('selects an option when clicked and closes dropdown menu after', async () => {
     render(
       <Chip
         type='filter'
@@ -49,8 +53,11 @@ describe('FilterChip', () => {
     )
 
     fireEvent.click(screen.getByText('Filter Chip'))
-    fireEvent.click(screen.getByText('Option 1'))
-
+  
+    const option1 = await screen.findByText('Option 1')
+  
+    fireEvent.mouseDown(option1)
+  
     expect(screen.getByText('Option 1')).toBeInTheDocument()
     expect(screen.queryByText('Filter Chip')).not.toBeInTheDocument()
   })

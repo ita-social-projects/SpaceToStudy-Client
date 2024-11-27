@@ -90,7 +90,7 @@ const FilterChip: React.FC<FilterChipProps> = ({
 
   const handleSelect = (option: string) => {
     setSelectedOption(option)
-    setIsOpen(false)
+    setIsOpen((prev) => !prev)
   }
 
   const isSelected = Boolean(selectedOption)
@@ -119,11 +119,11 @@ const FilterChip: React.FC<FilterChipProps> = ({
         <ul className='dropdown-menu'>
           {options.map((option) => (
             <li
+              aria-label={option}
               className='dropdown-item'
               key={option}
-              onClick={() => {
+              onMouseDown={() => {
                 handleSelect(option)
-                setIsOpen((prev) => !prev)
               }}
             >
               {option}

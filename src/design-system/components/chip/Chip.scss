@@ -27,7 +27,7 @@
 
   &.disabled {
     opacity: 0.7;
-    cursor: not-allowed;
+    pointer-events: none;
   }
 
   &--filter {
@@ -62,12 +62,7 @@
         box-shadow: var(--#{$prefix}box-shadow-xs);
       }
 
-      &.disabled {
-        opacity: 1;
-        color: var(--#{$prefix}blue-gray-500);
-      }
-
-      &.selected {
+      &.selected:not(.disabled) {
         color: var(--#{$prefix}blue-gray-800);
 
         &:hover {
@@ -80,7 +75,7 @@
         }
       }
 
-      &.unselected {
+      &.unselected:not(.disabled) {
         &:hover {
           background-color: var(--#{$prefix}blue-gray-50);
           color: var(--#{$prefix}blue-gray-800);
@@ -91,6 +86,11 @@
           transition: background-color 0.2s;
         }
       }
+    }
+
+    &.disabled {
+      opacity: 1;
+      color: var(--#{$prefix}blue-gray-500);
     }
 
     .dropdown-menu {
