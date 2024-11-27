@@ -10,7 +10,6 @@
   border-radius: var(--#{$prefix}border-radius-md);
   font-family: var(--#{$prefix}font-family-rubik);
   cursor: pointer;
-  border-width: var(--#{$prefix}border-width-md);
 
   &--sm {
     font-size: var(--#{$prefix}font-size-sm);
@@ -100,7 +99,8 @@
       top: 100%;
       left: 0;
       background-color: white;
-      border: 1px solid var(--#{$prefix}blue-gray-300);
+      border: var(--#{$prefix}border-width-xs) solid
+        var(--#{$prefix}blue-gray-300);
       border-radius: var(--#{$prefix}space-1);
       padding: var(--#{$prefix}space-1) 0;
       list-style: none;
@@ -128,7 +128,7 @@
     &.filled-outlined {
       background-color: var(--#{$prefix}neutral-0);
       color: var(--#{$prefix}blue-gray-800);
-      border: solid var(--#{$prefix}border-width-md)
+      border: var(--#{$prefix}border-width-sm) solid
         var(--#{$prefix}blue-gray-400);
 
       &.disabled {
@@ -158,7 +158,7 @@
   }
 
   &--state {
-    border: solid 1px var(--chip-border-color);
+    border: var(--#{$prefix}border-width-sm) solid var(--chip-border-color);
   }
 
   .startIcon,
