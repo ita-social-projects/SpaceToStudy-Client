@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react'
 import Loader from '~/components/loader/Loader'
 import { LinkButtonVariantEnum, SizeEnum } from '~/types'
 import { Link } from 'react-router-dom'
+import { cn } from '~/utils/cn'
 import '~scss-components/link-button/LinkButton.scss'
 
 interface LinkButtonProps {
@@ -24,12 +25,13 @@ const LinkButton: FC<LinkButtonProps> = ({
   const loader = <Loader size={20} sx={{ opacity: '0.6' }} />
   return (
     <Link
-      className={
-        `s2s-link-button s2s-link-button__${variant} ` +
-        (size ? `s2s-link-button__${size} ` : '') +
-        (disabled || loading ? 's2s-link-button__disabled ' : '') +
-        (loading ? 's2s-link-button__loading' : '')
-      }
+      className={cn(
+        's2s-link-button',
+        `s2s-link-button__${variant}`,
+        `s2s-link-button__${size}`,
+        (disabled || loading) && 's2s-link-button__disabled',
+        loading && 's2s-link-button__loading'
+      )}
       to={disabled ? '#' : to}
     >
       {loading && <div className='s2s-link-button__loader'>{loader}</div>}
