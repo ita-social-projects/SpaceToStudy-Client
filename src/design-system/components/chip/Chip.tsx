@@ -1,5 +1,6 @@
 import React, { CSSProperties, useState } from 'react'
-import classNames from 'classnames'
+import { cn } from '~/utils/cn'
+// import classNames from 'classnames'
 import CircleIcon from '@mui/icons-material/Circle'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -92,9 +93,9 @@ const FilterChip: React.FC<FilterChipProps> = ({
     setIsOpen(false)
   }
 
-  const isSelected = !!selectedOption
+  const isSelected = Boolean(selectedOption)
 
-  const classes = classNames(
+  const classes = cn(
     'chip',
     `chip--${size}`,
     `chip--${type}`,
@@ -144,15 +145,9 @@ const InputChip: React.FC<InputChipProps> = ({
   disabled = false,
   size = 'md'
 }) => {
-  const classes = classNames(
-    'chip',
-    `chip--${size}`,
-    `chip--${type}`,
-    variant,
-    {
-      disabled
-    }
-  )
+  const classes = cn('chip', `chip--${size}`, `chip--${type}`, variant, {
+    disabled
+  })
   return (
     <div className={classes}>
       <ChipContent endIcon={endIcon} label={label} startIcon={startIcon} />
@@ -181,7 +176,7 @@ const CategoryChip: React.FC<CategoryChipProps> = ({
   return (
     <div className='chip--categories'>
       <div
-        className={classNames('chip', `chip--${size}`, `chip--${type}`, {
+        className={cn('chip', `chip--${size}`, `chip--${type}`, {
           disabled
         })}
         style={labelStyle}
@@ -189,7 +184,7 @@ const CategoryChip: React.FC<CategoryChipProps> = ({
         <ChipContent label={label} />
       </div>
       <div
-        className={classNames('chip', `chip--${size}`, `chip--${type}`, {
+        className={cn('chip', `chip--${size}`, `chip--${type}`, {
           disabled
         })}
         style={detailStyle}
@@ -215,7 +210,7 @@ const StateChip: React.FC<StateChipProps> = ({
   }
   return (
     <div
-      className={classNames('chip', `chip--${size}`, `chip--${type}`, {
+      className={cn('chip', `chip--${size}`, `chip--${type}`, {
         disabled
       })}
       style={style}

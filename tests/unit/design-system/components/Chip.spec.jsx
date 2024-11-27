@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import Chip from '~/design-system/components/chip/Chip'
 
-// Test for Basic Chip
 describe('Chip', () => {
   it('checks the basic properties of chip', () => {
     render(<Chip type='input' size='sm' label='Chip' disabled />)
@@ -13,7 +12,6 @@ describe('Chip', () => {
   })
 })
 
-// Test for FilterChip
 describe('FilterChip', () => {
   it('renders the filter chip with a label', () => {
     render(
@@ -58,7 +56,6 @@ describe('FilterChip', () => {
   })
 })
 
-// Test for InputChip
 describe('InputChip', () => {
   it('renders the input chip with a label', () => {
     render(<Chip type='input' label='Input Chip' />)
@@ -74,7 +71,6 @@ describe('InputChip', () => {
   })
 })
 
-// Test for CategoryChip
 describe('CategoryChip', () => {
   it('renders the category chip with a label and detail', () => {
     render(
@@ -112,7 +108,6 @@ describe('CategoryChip', () => {
   })
 })
 
-// Test for StateChip
 describe('StateChip', () => {
   it('renders the state chip with a label', () => {
     render(<Chip type='state' label='State Chip' color='green' />)
