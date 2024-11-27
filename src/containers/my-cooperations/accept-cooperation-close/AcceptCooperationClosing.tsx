@@ -24,7 +24,7 @@ const AcceptCooperationClosing: FC<AcceptCooperationClosureProps> = ({
         </Box>
         <Typography sx={styles.body}>
           <span style={styles.span}>{user}</span> started a closing process for
-          the current cooperation. You will have
+          the current cooperation. You will have{' '}
           <span style={styles.span}> 1 month of access</span> to study materials
           after the cooperation has been closed.
         </Typography>
