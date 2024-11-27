@@ -59,6 +59,11 @@ const mockData = {
   averageRating: {
     student: 0,
     tutor: 0
+  },
+  aboutStudent: {
+    personalIntroduction: '',
+    learningGoals: '',
+    learningActivities: ''
   }
 }
 
