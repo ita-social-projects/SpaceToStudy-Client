@@ -11,7 +11,7 @@ interface AppSwitchProps extends Omit<SwitchProps, 'size'> {
 export const AppSwitch = ({
   labelPosition = 'end',
   size = SizeEnum.Medium,
-  label,
+  label = '',
   loading,
   disabled,
   ...props
@@ -26,7 +26,7 @@ export const AppSwitch = ({
           {...props}
         />
       }
-      label={label ?? ''}
+      label={label}
       labelPlacement={labelPosition}
     />
   )
