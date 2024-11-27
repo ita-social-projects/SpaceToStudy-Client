@@ -75,6 +75,7 @@ const ChipContent: React.FC<ChipContentProps> = ({
 )
 
 const FilterChip: React.FC<FilterChipProps> = ({
+  type,
   label,
   options = [],
   variant = 'filled',
@@ -96,7 +97,7 @@ const FilterChip: React.FC<FilterChipProps> = ({
   const classes = classNames(
     'chip',
     `chip--${size}`,
-    `chip--filter`,
+    `chip--${type}`,
     variant,
     isSelected ? 'selected' : 'unselected',
     {
@@ -107,7 +108,7 @@ const FilterChip: React.FC<FilterChipProps> = ({
     <div
       className={classes}
       onClick={() => !disabled && setIsOpen((prev) => !prev)}
-      tabIndex={0}
+      role='button'
     >
       <ChipContent
         endIcon={endIcon}
@@ -135,6 +136,7 @@ const FilterChip: React.FC<FilterChipProps> = ({
 }
 
 const InputChip: React.FC<InputChipProps> = ({
+  type,
   label,
   variant = 'outlined',
   startIcon = <CircleIcon style={{ fontSize: 'inherit' }} />,
@@ -142,9 +144,15 @@ const InputChip: React.FC<InputChipProps> = ({
   disabled = false,
   size = 'md'
 }) => {
-  const classes = classNames('chip', `chip--${size}`, `chip--input`, variant, {
-    disabled
-  })
+  const classes = classNames(
+    'chip',
+    `chip--${size}`,
+    `chip--${type}`,
+    variant,
+    {
+      disabled
+    }
+  )
   return (
     <div className={classes}>
       <ChipContent endIcon={endIcon} label={label} startIcon={startIcon} />
@@ -153,6 +161,7 @@ const InputChip: React.FC<InputChipProps> = ({
 }
 
 const CategoryChip: React.FC<CategoryChipProps> = ({
+  type,
   label,
   detail,
   size = 'md',
@@ -172,7 +181,7 @@ const CategoryChip: React.FC<CategoryChipProps> = ({
   return (
     <div className='chip--categories'>
       <div
-        className={classNames('chip', `chip--${size}`, 'chip--category', {
+        className={classNames('chip', `chip--${size}`, `chip--${type}`, {
           disabled
         })}
         style={labelStyle}
@@ -180,7 +189,7 @@ const CategoryChip: React.FC<CategoryChipProps> = ({
         <ChipContent label={label} />
       </div>
       <div
-        className={classNames('chip', `chip--${size}`, 'chip--category', {
+        className={classNames('chip', `chip--${size}`, `chip--${type}`, {
           disabled
         })}
         style={detailStyle}
@@ -192,6 +201,7 @@ const CategoryChip: React.FC<CategoryChipProps> = ({
 }
 
 const StateChip: React.FC<StateChipProps> = ({
+  type,
   label,
   startIcon = <CircleIcon style={{ fontSize: 'inherit' }} />,
   size = 'md',
@@ -205,7 +215,7 @@ const StateChip: React.FC<StateChipProps> = ({
   }
   return (
     <div
-      className={classNames('chip', `chip--${size}`, 'chip--state', {
+      className={classNames('chip', `chip--${size}`, `chip--${type}`, {
         disabled
       })}
       style={style}
