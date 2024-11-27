@@ -36,6 +36,15 @@ const CloseButton = ({ label }: CloseButtonProps) => {
   )
 }
 
+CloseButton.displayName = 'CloseButton'
+
+const iconMapping = {
+  error: <ErrorOutline fontSize='inherit' />,
+  warning: <WarningAmberOutlined fontSize='inherit' />,
+  info: <InfoOutlined fontSize='inherit' />,
+  success: <CheckCircleOutline fontSize='inherit' />
+}
+
 interface AlertProps extends MuiAlertProps {
   title?: string
   description?: string
@@ -68,12 +77,7 @@ const Alert = forwardRef(
       <MuiAlert
         className={cn('s2s-alert', className)}
         icon={icon}
-        iconMapping={{
-          error: <ErrorOutline fontSize='inherit' />,
-          warning: <WarningAmberOutlined fontSize='inherit' />,
-          info: <InfoOutlined fontSize='inherit' />,
-          success: <CheckCircleOutline fontSize='inherit' />
-        }}
+        iconMapping={iconMapping}
         onClose={handleClose}
         ref={forwardedRef}
         slots={{
