@@ -106,10 +106,9 @@ const FilterChip: React.FC<FilterChipProps> = ({
     }
   )
   return (
-    <div
+    <button
       className={classes}
       onClick={() => !disabled && setIsOpen((prev) => !prev)}
-      role='button'
     >
       <ChipContent
         endIcon={endIcon}
@@ -132,7 +131,7 @@ const FilterChip: React.FC<FilterChipProps> = ({
           ))}
         </ul>
       )}
-    </div>
+    </button>
   )
 }
 
