@@ -18,13 +18,13 @@ const ToolTip: React.FC<TooltipProps> = ({
   position
 }) => {
   const textContent = (
-    <Box className={'s2s-tooltip-text-container'}>
-      <Typography className={'s2s-tooltip-title'}>{title}</Typography>
+    <Box className='s2s-tooltip-text-container'>
+      <Typography className='s2s-tooltip-title'>{title}</Typography>
       {description && <Typography>{description}</Typography>}
     </Box>
   )
 
-  const iconContent = <DoneIcon className={'s2s-tooltip-icon'} />
+  const iconContent = <DoneIcon className='s2s-tooltip-icon' />
 
   return (
     <Box
