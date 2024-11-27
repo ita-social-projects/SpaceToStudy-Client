@@ -111,5 +111,14 @@
     "french": "French",
     "spanish": "Spanish",
     "arabic": "Arabic"
+  },
+  "daysOfWeek": {
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "sun": "Sun"
   }
 }
