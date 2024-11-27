@@ -17,7 +17,7 @@ const FilterRow = <I, F>({
   const filters = filter?.filters
   const setFilterByKey = filter?.setFilterByKey
   const clearFilterByKey = filter?.clearFilterByKey
-  console.log(filters)
+
   const filterCells =
     filters &&
     columns.map((column) => (
