@@ -74,7 +74,7 @@ const ProfessionalInfoTab: FC = () => {
   useEffect(() => {
     debouncedAboutUserData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  }, [data, dataStudent])
 
   const { hash, pathname } = useLocation()
 
@@ -132,13 +132,12 @@ const ProfessionalInfoTab: FC = () => {
         )}
       />
       <Box sx={styles.accordionContainer}>
-        {isTutor && (
+        {isTutor ? (
           <AboutTutorAccordion
             data={data}
             handleInputChange={handleInputChange}
           />
-        )}
-        {userRole === UserRoleEnum.Student && (
+        ) : (
           <AboutStudentAccordion
             data={dataStudent}
             handleInputChange={handleInputChangeStudent}
