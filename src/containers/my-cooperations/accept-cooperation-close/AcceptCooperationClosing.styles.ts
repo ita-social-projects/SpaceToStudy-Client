@@ -1,10 +1,12 @@
+import palette from '~/styles/app-theme/app.pallete'
+
 export const styles = {
   root: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    border: '1px solid #EBAFAF',
-    backgroundColor: '#F1F2F3',
+    border: `1px solid ${palette.basic.pinkishRed}`,
+    backgroundColor: palette.basic.softGray,
     borderRadius: '5px',
     padding: '24px',
     gap: '16px'
@@ -13,7 +15,7 @@ export const styles = {
     fontWeight: '500'
   },
   title: {
-    color: '#CD3636',
+    color: palette.basic.mediumRed,
     fontWeight: '500',
     display: 'flex',
     flexDirection: 'row',
@@ -21,10 +23,10 @@ export const styles = {
     mb: '4px'
   },
   body: {
-    color: '#455A64'
+    color: palette.basic.darkGray
   },
   button: {
-    color: '#A42B2B !important',
-    backgroundColor: '#F5D7D7 !important'
+    color: `${palette.basic.deepRed} !important`,
+    backgroundColor: `${palette.basic.lightRed} !important`
   }
 }
