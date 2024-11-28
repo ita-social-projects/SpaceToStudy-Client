@@ -68,7 +68,6 @@ const UserProfile = () => {
   }
 
   const isTutor = preferredRole === UserRoleEnum.Tutor
-  const isStudent = preferredRole === UserRoleEnum.Student
 
   const shouldShowPresentation =
     (isTutor && isMyProfile) ||
