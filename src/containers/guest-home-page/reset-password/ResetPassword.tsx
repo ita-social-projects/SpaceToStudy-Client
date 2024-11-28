@@ -19,7 +19,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { styles } from '~/containers/guest-home-page/reset-password/ResetPassword.styles'
 
-import { NewPassword } from '~/types'
+import { ButtonTypeEnum, NewPassword } from '~/types'
 import { confirmPassword, password } from '~/utils/validations/login'
 import { snackbarVariants } from '~/constants'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
@@ -127,7 +127,12 @@ const ResetPassword: FC<ResetPasswordProps> = ({ resetToken, openModal }) => {
           type={showConfirmPassword ? 'text' : 'password'}
           value={data.confirmPassword}
         />
-        <Button disabled={loading} fullWidth size='lg' type='submit'>
+        <Button
+          disabled={loading}
+          fullWidth
+          size='lg'
+          type={ButtonTypeEnum.Submit}
+        >
           {loading ? <Loader size={20} /> : t('login.savePassword')}
         </Button>
       </Box>

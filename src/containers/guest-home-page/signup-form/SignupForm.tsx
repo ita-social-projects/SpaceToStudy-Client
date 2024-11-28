@@ -18,7 +18,12 @@ import { guestRoutes } from '~/router/constants/guestRoutes'
 import Button from '~scss-components/button/Button'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
-import { SignupParams, UseFormErrors, UseFormEventHandler } from '~/types'
+import {
+  ButtonTypeEnum,
+  SignupParams,
+  UseFormErrors,
+  UseFormEventHandler
+} from '~/types'
 import { useAppSelector } from '~/hooks/use-redux'
 
 interface SignupFormProps {
@@ -168,7 +173,7 @@ const SignupForm = ({
         disabled={!isValid || !isAgreementChecked}
         loading={authLoading}
         sx={styles.signupButton}
-        type='submit'
+        type={ButtonTypeEnum.Submit}
       >
         {t('common.labels.signup')}
       </Button>

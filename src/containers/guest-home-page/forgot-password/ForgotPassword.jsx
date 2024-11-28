@@ -22,6 +22,7 @@ import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import { ButtonTypeEnum } from '~/types'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
@@ -103,7 +104,7 @@ const ForgotPassword = () => {
           type='email'
           value={data.email}
         />
-        <Button loading={loading} sx={styles.sentPassword} type='submit'>
+        <Button loading={loading} sx={styles.sentPassword} type={ButtonTypeEnum.Submit}>
           {t('login.sendPassword')}
         </Button>
       </Box>

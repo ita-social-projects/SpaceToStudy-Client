@@ -10,7 +10,7 @@ import { useModalContext } from '~/context/modal-context'
 import Loader from '~/components/loader/Loader'
 import useAxios from '~/hooks/use-axios'
 import { CoursesAndCooperationsService } from '~/services/course-cooperation-service'
-import { CourseCooperationResponse } from '~/types'
+import { ButtonTypeEnum, CourseCooperationResponse } from '~/types'
 
 interface ChangeResourceConfirmModalProps {
   resourceId?: string
@@ -125,9 +125,9 @@ const ChangeResourceConfirmModal = ({
           onClick={handleConfirm}
           size='lg'
           sx={styles.button}
-          type='submit'
+          type={ButtonTypeEnum.Submit}
         >
-          {t('changeConfirm.confirmButton')}aaaaaaaaaa
+          {t('changeConfirm.confirmButton')}
         </Button>
       </Box>
     </Box>

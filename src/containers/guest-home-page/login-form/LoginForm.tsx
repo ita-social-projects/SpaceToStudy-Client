@@ -14,6 +14,7 @@ import Button from '~scss-components/button/Button'
 
 import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
 import { useAppSelector } from '~/hooks/use-redux'
+import { ButtonTypeEnum } from '~/types'
 
 interface LoginFormProps {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
@@ -115,7 +116,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         disabled={isDisabled}
         loading={authLoading}
         sx={styles.loginButton}
-        type='submit'
+        type={ButtonTypeEnum.Submit}
       >
         {t('common.labels.login')}
       </Button>
