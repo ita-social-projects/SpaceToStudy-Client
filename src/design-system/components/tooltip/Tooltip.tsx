@@ -9,13 +9,15 @@ type TooltipProps = {
   title: string
   description?: string
   position: 'up' | 'down' | 'right' | 'left' | 'none'
+  icon?: React.ReactNode
 }
 
 const ToolTip: React.FC<TooltipProps> = ({
   variant,
   title,
   description,
-  position
+  position,
+  icon
 }) => {
   const textContent = (
     <Box className='s2s-tooltip-text-container'>
@@ -24,7 +26,9 @@ const ToolTip: React.FC<TooltipProps> = ({
     </Box>
   )
 
-  const iconContent = <DoneIcon className='s2s-tooltip-icon' />
+  const iconContent = (
+    <Box className='s2s-tooltip-icon'>{icon || <DoneIcon />}</Box>
+  )
 
   return (
     <Box
