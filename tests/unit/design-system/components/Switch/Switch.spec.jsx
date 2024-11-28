@@ -21,7 +21,7 @@ describe('AppSwitch Component', () => {
   })
 
   it('displays the label when provided', () => {
-    render(<AppSwitch label="Test Label" />)
+    render(<AppSwitch label='Test Label' />)
 
     const labelEl = screen.getByText('Test Label')
     expect(labelEl).toBeInTheDocument()
@@ -63,28 +63,28 @@ describe('AppSwitch Component', () => {
   })
 
   it('renders the label in the correct end position', () => {
-    render(<AppSwitch label="End Label" labelPosition="end" />)
+    render(<AppSwitch label="End Label" labelPosition='end' />)
 
     const labelEl = screen.getByText('End Label')
     expect(labelEl).toBeInTheDocument()
   })
 
   it('renders the label in the correct start position', () => {
-    render(<AppSwitch label="Start Label" labelPosition="start" />)
+    render(<AppSwitch label="Start Label" labelPosition='start' />)
 
     const labelEl = screen.getByText('Start Label')
     expect(labelEl).toBeInTheDocument()
   })
 
   it('renders the label in the correct top position', () => {
-    render(<AppSwitch label="Top Label" labelPosition="top" />)
+    render(<AppSwitch label="Top Label" labelPosition='top' />)
 
     const labelEl = screen.getByText('Top Label')
     expect(labelEl).toBeInTheDocument()
   })
 
   it('renders the label in the correct bottom position', () => {
-    render(<AppSwitch label="Bottom Label" labelPosition="bottom" />)
+    render(<AppSwitch label="Bottom Label" labelPosition='bottom' />)
 
     const labelEl = screen.getByText('Bottom Label')
     expect(labelEl).toBeInTheDocument()
