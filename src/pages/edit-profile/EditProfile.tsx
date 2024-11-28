@@ -154,7 +154,9 @@ const EditProfile = () => {
 
     const dataToUpdate: UpdateUserParams = rest
 
-    if (city && country) dataToUpdate.address = { city, country }
+    if (city && country) {
+      dataToUpdate.address = { city, country }
+    }
 
     if (typeof videoLink === 'string' || typeof videoLink === 'undefined') {
       dataToUpdate.videoLink = videoLink ?? ''
@@ -163,14 +165,17 @@ const EditProfile = () => {
         videoLink[userRole as keyof typeof videoLink] || ''
     }
 
-    if (notificationSettings)
+    if (notificationSettings) {
       dataToUpdate.notificationSettings = profileState.notificationSettings
+    }
 
-    if (professionalBlock)
+    if (professionalBlock) {
       dataToUpdate.professionalBlock = profileState.professionalBlock
+    }
 
-    if (aboutStudent) dataToUpdate.aboutStudent = aboutStudent
-
+    if (aboutStudent) {
+      dataToUpdate.aboutStudent = aboutStudent
+    }
     if (categories) {
       dataToUpdate.mainSubjects = categories
     }
