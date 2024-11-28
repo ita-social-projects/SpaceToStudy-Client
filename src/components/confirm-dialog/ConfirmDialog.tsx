@@ -11,6 +11,7 @@ import AppButton from '~/components/app-button/AppButton'
 import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 
 import { ButtonVariantEnum } from '~/types'
+import { Box } from '@mui/material'
 
 interface ConfirmDialogProps {
   message: string
@@ -42,10 +43,12 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
       onClose={onDismiss}
       open={open}
     >
-      <Typography sx={styles.title}>{t(title)}</Typography>
-      <IconButton onClick={onDismiss} sx={styles.icon}>
-        <CloseIcon />
-      </IconButton>
+      <Box sx={styles.header}>
+        <Typography sx={styles.title}>{t(title)}</Typography>
+        <IconButton onClick={onDismiss} sx={styles.icon}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <DialogContent sx={styles.content}>
         <Typography>{t(message)}</Typography>
       </DialogContent>

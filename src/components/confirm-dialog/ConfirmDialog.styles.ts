@@ -2,19 +2,24 @@ import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   root: {
-    minWidth: { xs: '280px', sm: '400px' }
+    minWidth: { xs: '280px', sm: '400px' },
+    maxWidth: '600px'
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    px: '16px'
   },
   icon: {
-    position: 'absolute',
     color: 'primary.600',
-    right: '32px',
-    top: '32px',
-    p: 0
+    p: 0,
+    mt: '20px',
+    alignSelf: 'start'
   },
   title: {
     color: 'primary.700',
     typography: TypographyVariantEnum.H5,
-    p: '26px 0px 20px 30px'
+    p: '20px 15px 15px 14px'
   },
   content: {
     color: 'primary.600',
