@@ -59,4 +59,22 @@ describe('CooperationContainer component ', () => {
       expect(navigateMock).toHaveBeenCalledWith(`./${activeCoop._id}`)
     })
   })
+
+  it('navigates to cooperation detail for Active status', async () => {
+    const activeCoop = { ...mockedCoop, status: StatusEnum.RequestToClose }
+    renderWithProviders(
+      <CooperationContainer
+        filterOptions={filterOptionsMock}
+        items={[activeCoop]}
+      />,
+      { preloadedState }
+    )
+
+    const card = screen.getByText(activeCoop.offer.subject.name)
+    userEvent.click(card)
+
+    await waitFor(() => {
+      expect(navigateMock).toHaveBeenCalledWith(`./${activeCoop._id}`)
+    })
+  })
 })
