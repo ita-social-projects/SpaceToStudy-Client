@@ -28,21 +28,21 @@ describe('AppSwitch Component', () => {
   })
 
   it('applies the correct Large size style', () => {
-    render(<AppSwitch size={'lg'} />)
+    render(<AppSwitch size='lg' />)
 
     const switchEl = screen.getByRole('checkbox')
     expect(switchEl).toBeInTheDocument()
   })
 
   it('applies the correct Medium size style', () => {
-    render(<AppSwitch size={'md'} />)
+    render(<AppSwitch size='md' />)
 
     const switchEl = screen.getByRole('checkbox')
     expect(switchEl).toBeInTheDocument()
   })
 
   it('applies the correct Small size style', () => {
-    render(<AppSwitch size={'sm'} />)
+    render(<AppSwitch size='sm' />)
 
     const switchEl = screen.getByRole('checkbox')
     expect(switchEl).toBeInTheDocument()
