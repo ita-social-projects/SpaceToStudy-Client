@@ -53,16 +53,7 @@ interface AlertProps extends MuiAlertProps {
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(
   (
-    {
-      title,
-      label,
-      description,
-      children,
-      icon,
-      onClose,
-      className,
-      ...props
-    }: AlertProps,
+    { title, label, description, children, icon, onClose, className, ...props },
     ref
   ) => {
     const handleClose = (event: SyntheticEvent) => {
