@@ -68,6 +68,7 @@ const UserProfile = () => {
   }
 
   const isTutor = preferredRole === UserRoleEnum.Tutor
+  const isStudent = preferredRole === UserRoleEnum.Student
 
   const shouldShowPresentation =
     (isTutor && isMyProfile) ||
@@ -88,7 +89,11 @@ const UserProfile = () => {
         <CompleteProfileBlock
           data={response}
           openAccordion={!!hash}
-          profileItems={isTutor ? profileItemsTutor : profileItemsStudent}
+          profileItems={
+            preferredRole === UserRoleEnum.Student
+              ? profileItemsStudent
+              : profileItemsTutor
+          }
         />
       )}
       {response.professionalBlock && (
