@@ -40,10 +40,6 @@ const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
   ) => {
     const isDisabled = disabled || loading
 
-    const loader = loading ? (
-      <CircularProgress className='radio-btn-loader' size={20} />
-    ) : null
-
     const radioClassNames = cn(
       `radio-${size}`,
       `radio-${color}`,
@@ -63,7 +59,9 @@ const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
       <FormControlLabel
         className={formControlClassNames}
         control={
-          loader || (
+          (loading && (
+            <CircularProgress className='radio-btn-loader' size={20} />
+          )) || (
             <Radio
               {...props}
               checked={checked}
