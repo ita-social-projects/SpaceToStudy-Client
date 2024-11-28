@@ -1,5 +1,5 @@
-import { screen, render } from '@testing-library/react'
-import { vi } from 'vitest'
+import { screen, render, fireEvent, waitFor } from '@testing-library/react'
+import { expect, vi } from 'vitest'
 import CooperationCompletion from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion'
 import { UserRoleEnum } from '~/types'
 
@@ -21,5 +21,25 @@ describe('CooperationCompletion Component', () => {
 
     const appSelect = screen.getByRole('combobox')
     expect(appSelect).toBeInTheDocument()
+
+    const closeButton = screen.getByTestId('close-cooperation-btn')
+    expect(closeButton).toBeInTheDocument()
+  })
+
+  it('should call mockCloseCooperation when closing cooperation', async () => {
+    render(
+      <CooperationCompletion
+        onCloseCooperation={mockOnCloseCooperation}
+        userRole={UserRoleEnum.Tutor}
+      />
+    )
+
+    const closeButton = screen.getByTestId('close-cooperation-btn')
+
+    fireEvent.click(closeButton)
+
+    await waitFor(() => {
+      expect(mockOnCloseCooperation).toHaveBeenCalled()
+    })
   })
 })

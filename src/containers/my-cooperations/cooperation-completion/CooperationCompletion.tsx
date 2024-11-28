@@ -46,6 +46,7 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
         title={t('cooperationsPage.cooperationDetails.closeCooperationTitle')}
       >
         <AppButton
+          data-testid='close-cooperation-btn'
           onClick={onCloseCooperation}
           size={SizeEnum.Medium}
           sx={styles.closeBtn}
