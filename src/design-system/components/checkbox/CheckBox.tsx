@@ -5,7 +5,7 @@ import { cn } from '~/utils/cn'
 
 import './CheckBox.scss'
 
-interface S2SCheckBoxProps extends Omit<CheckboxProps, 'size'> {
+interface CheckBoxProps extends Omit<CheckboxProps, 'size'> {
   variant: 'check' | 'middle'
   label: ReactNode
   labelPosition?: 'top' | 'bottom' | 'end'
@@ -14,7 +14,7 @@ interface S2SCheckBoxProps extends Omit<CheckboxProps, 'size'> {
   loading?: boolean
 }
 
-const CheckBox: FC<S2SCheckBoxProps> = ({
+const CheckBox: FC<CheckBoxProps> = ({
   color = 'primary',
   disabled = false,
   label,
