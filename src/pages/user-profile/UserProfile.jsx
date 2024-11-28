@@ -99,7 +99,9 @@ const UserProfile = () => {
       {response.professionalBlock && (
         <AboutTutorBlock data={response.professionalBlock} />
       )}
-      {isStudent && <AboutStudentBlock data={response.aboutStudent} />}
+      {response.aboutStudent && (
+        <AboutStudentBlock data={response.aboutStudent} />
+      )}
       {shouldShowPresentation && VideoPresentationComponent}
       <CommentsWithRatingBlock
         averageRating={user.reviewStats.averageRating}
