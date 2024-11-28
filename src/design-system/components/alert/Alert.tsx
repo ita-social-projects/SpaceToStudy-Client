@@ -1,4 +1,4 @@
-import { Ref, SyntheticEvent, forwardRef, ButtonHTMLAttributes } from 'react'
+import { SyntheticEvent, forwardRef, ButtonHTMLAttributes } from 'react'
 import {
   Alert as MuiAlert,
   AlertProps as MuiAlertProps,
@@ -51,9 +51,7 @@ interface AlertProps extends MuiAlertProps {
   label?: string
 }
 
-type AlertRef = Ref<HTMLDivElement>
-
-const Alert = forwardRef(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(
   (
     {
       title,
@@ -65,7 +63,7 @@ const Alert = forwardRef(
       className,
       ...props
     }: AlertProps,
-    forwardedRef: AlertRef
+    ref
   ) => {
     const handleClose = (event: SyntheticEvent) => {
       if (onClose) {
@@ -79,7 +77,7 @@ const Alert = forwardRef(
         icon={icon}
         iconMapping={iconMapping}
         onClose={handleClose}
-        ref={forwardedRef}
+        ref={ref}
         slots={{
           closeButton: () => <CloseButton label={label} />
         }}
