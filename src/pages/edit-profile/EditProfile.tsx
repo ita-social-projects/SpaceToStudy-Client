@@ -169,7 +169,9 @@ const EditProfile = () => {
     if (professionalBlock)
       dataToUpdate.professionalBlock = profileState.professionalBlock
 
-    if (aboutStudent) dataToUpdate.aboutStudent = aboutStudent
+    if (aboutStudent) {
+      dataToUpdate.aboutStudent = aboutStudent
+    }
 
     if (categories) {
       dataToUpdate.mainSubjects = categories
