@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import ToolTip from '~scss-components/tooltip/Tooltip'
+import GppMaybeIcon from '@mui/icons-material/GppMaybe'
 
 const meta: Meta<typeof ToolTip> = {
   title: 'Components/Tooltip',
@@ -72,7 +73,13 @@ type Story = StoryObj<typeof ToolTip>
 export const All: Story = {
   render: (args) => (
     <div style={{ display: 'grid', gap: '20px' }}>
-      <ToolTip {...args} position='up' title='Icon Tooltip' variant='icon' />
+      <ToolTip
+        {...args}
+        icon={<GppMaybeIcon />}
+        position='up'
+        title='Icon Tooltip (Exclamation)'
+        variant='icon'
+      />
       <ToolTip
         {...args}
         description='Description for text tooltip.'
@@ -82,9 +89,10 @@ export const All: Story = {
       />
       <ToolTip
         {...args}
-        description='Combines icon and text.'
+        description='Combines icon (Exclamation) and text.'
+        icon={<GppMaybeIcon />}
         position='right'
-        title='Icon & Text Tooltip right'
+        title='Icon & Text Tooltip Right'
         variant='icon-text'
       />
       <ToolTip
@@ -100,7 +108,7 @@ export const All: Story = {
     docs: {
       description: {
         story:
-          'Displays all tooltip variants (`icon`, `text`, `icon-text`) with different positions (`up`, `down`, `right`, `left`) for a comprehensive demonstration.'
+          'Displays all tooltip variants (`icon`, `text`, `icon-text`) with different positions (`up`, `down`, `right`, `left`) for a comprehensive demonstration. Includes custom icons (e.g., exclamation mark).'
       }
     }
   }
