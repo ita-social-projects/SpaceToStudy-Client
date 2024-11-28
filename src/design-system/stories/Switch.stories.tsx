@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react/*'
 import { AppSwitch } from '~/design-system/components/switch/Switch'
-import { SizeEnum } from '~/types'
 
 const meta: Meta<typeof AppSwitch> = {
   title: 'Components/AppSwitch',
@@ -40,7 +39,7 @@ const meta: Meta<typeof AppSwitch> = {
     },
     size: {
       description: 'The size of the switch.',
-      options: [SizeEnum.Small, SizeEnum.Medium, SizeEnum.Large],
+      options: ['sm', 'md', 'lg'],
       control: { type: 'radio' }
     },
     loading: {
@@ -55,7 +54,7 @@ const meta: Meta<typeof AppSwitch> = {
   args: {
     label: 'Switch',
     labelPosition: 'end',
-    size: SizeEnum.Medium,
+    size: 'md',
     loading: false,
     disabled: false
   }
@@ -67,7 +66,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     label: 'Default Switch',
-    size: SizeEnum.Medium,
+    size: 'md',
     disabled: false,
     loading: false
   },
@@ -83,7 +82,7 @@ export const Default: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled Switch',
-    size: SizeEnum.Medium,
+    size: 'md',
     disabled: true
   },
   parameters: {
@@ -98,7 +97,7 @@ export const Disabled: Story = {
 export const Loading: Story = {
   args: {
     label: 'Loading Switch',
-    size: SizeEnum.Medium,
+    size: 'md',
     loading: true
   },
   parameters: {
@@ -114,7 +113,7 @@ export const Loading: Story = {
 export const SmallSize: Story = {
   args: {
     label: 'Small Switch',
-    size: SizeEnum.Small,
+    size: 'sm',
     disabled: false
   },
   parameters: {
@@ -130,7 +129,7 @@ export const SmallSize: Story = {
 export const LargeSize: Story = {
   args: {
     label: 'Large Switch',
-    size: SizeEnum.Large,
+    size: 'lg',
     disabled: false
   },
   parameters: {
@@ -146,7 +145,7 @@ export const LargeSize: Story = {
 export const TopPosition: Story = {
   args: {
     label: 'Top Label Position',
-    size: SizeEnum.Medium,
+    size: 'md',
     labelPosition: 'top',
     disabled: false
   },
@@ -162,7 +161,7 @@ export const TopPosition: Story = {
 export const BottomPosition: Story = {
   args: {
     label: 'Bottom Label Position',
-    size: SizeEnum.Medium,
+    size: 'md',
     labelPosition: 'bottom',
     disabled: false
   },
@@ -178,7 +177,7 @@ export const BottomPosition: Story = {
 export const StartPosition: Story = {
   args: {
     label: 'Start Label Position',
-    size: SizeEnum.Medium,
+    size: 'md',
     labelPosition: 'start',
     disabled: false
   },
@@ -194,7 +193,7 @@ export const StartPosition: Story = {
 export const EndPosition: Story = {
   args: {
     label: 'End Label Position',
-    size: SizeEnum.Medium,
+    size: 'md',
     labelPosition: 'end',
     disabled: false
   },

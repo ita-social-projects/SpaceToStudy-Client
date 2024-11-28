@@ -57,7 +57,7 @@
 }
 
 .#{$prefix}switch {
-  &--small {
+  &--sm {
     @include root-mixin(45, 21);
 
     .MuiSwitch-thumb {
@@ -73,7 +73,7 @@
     }
   }
 
-  &--medium {
+  &--md {
     @include root-mixin(60, 28);
 
     .MuiSwitch-thumb {
@@ -89,7 +89,7 @@
     }
   }
 
-  &--large {
+  &--lg {
     @include root-mixin(75, 35);
 
     .MuiSwitch-thumb {
@@ -112,21 +112,21 @@
   gap: 10px;
   overflow: visible;
 
-  &--small {
+  &--sm {
     .MuiFormControlLabel-label {
       color: $body-text-color;
       font-size: $font-size-sm !important;
     }
   }
 
-  &--medium {
+  &--md {
     .MuiFormControlLabel-label {
       color: $body-text-color;
       font-size: $font-size-md !important;
     }
   }
 
-  &--large {
+  &--lg {
     .MuiFormControlLabel-label {
       color: $body-text-color;
       font-size: $font-size-lg !important;

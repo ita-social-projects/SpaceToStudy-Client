@@ -1,16 +1,15 @@
-import { SizeEnum } from '~/types'
 import Switch, { SwitchProps } from '@mui/material/Switch'
 import { FormControlLabel } from '@mui/material'
 import './Switch.scss'
 interface AppSwitchProps extends Omit<SwitchProps, 'size'> {
   labelPosition?: 'start' | 'end' | 'top' | 'bottom'
-  size?: SizeEnum
+  size?: 'sm' | 'md' | 'lg'
   label?: string
   loading?: boolean
 }
 export const AppSwitch = ({
   labelPosition = 'end',
-  size = SizeEnum.Medium,
+  size = 'md',
   label = '',
   loading,
   disabled,
