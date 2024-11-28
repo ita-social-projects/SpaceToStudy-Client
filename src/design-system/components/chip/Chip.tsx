@@ -1,6 +1,5 @@
 import React, { CSSProperties, useState } from 'react'
 import { cn } from '~/utils/cn'
-// import classNames from 'classnames'
 import CircleIcon from '@mui/icons-material/Circle'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -112,7 +111,7 @@ const FilterChip: React.FC<FilterChipProps> = ({
     >
       <ChipContent
         endIcon={endIcon}
-        label={selectedOption || label}
+        label={selectedOption ?? label}
         startIcon={startIcon}
       />
       {isOpen && (

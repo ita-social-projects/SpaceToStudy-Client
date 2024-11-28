@@ -1,6 +1,5 @@
 import type { Meta } from '@storybook/react'
 import Chip, { type ChipProps } from '~/design-system/components/chip/Chip'
-export {}
 
 const meta: Meta<typeof Chip> = {
   title: 'Components/Chip',
