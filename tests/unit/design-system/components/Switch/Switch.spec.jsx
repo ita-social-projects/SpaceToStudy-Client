@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { fireEvent } from '@testing-library/react'
 import {AppSwitch} from '~/design-system/components/switch/Switch'
-import {SizeEnum} from '~/types'
 
 describe('AppSwitch Component', () => {
   it('renders correctly with default props', () => {
@@ -29,21 +28,21 @@ describe('AppSwitch Component', () => {
   })
 
   it('applies the correct Large size style', () => {
-    render(<AppSwitch size={SizeEnum.Large} />)
+    render(<AppSwitch size={'lg'} />)
 
     const switchEl = screen.getByRole('checkbox')
     expect(switchEl).toBeInTheDocument()
   })
 
   it('applies the correct Medium size style', () => {
-    render(<AppSwitch size={SizeEnum.Medium} />)
+    render(<AppSwitch size={'md'} />)
 
     const switchEl = screen.getByRole('checkbox')
     expect(switchEl).toBeInTheDocument()
   })
 
   it('applies the correct Small size style', () => {
-    render(<AppSwitch size={SizeEnum.Small} />)
+    render(<AppSwitch size={'sm'} />)
 
     const switchEl = screen.getByRole('checkbox')
     expect(switchEl).toBeInTheDocument()
