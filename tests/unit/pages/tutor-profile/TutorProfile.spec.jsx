@@ -136,7 +136,7 @@ describe('UserProfile', () => {
       extraData: professionalBlockMock
     })
 
-    const aboutTutorTitle = screen.getByText('userProfilePage.aboutTutor.title')
+    const aboutTutorTitle = screen.getByText('userProfilePage.tutorAbout.title')
     expect(aboutTutorTitle).toBeInTheDocument()
   })
 
@@ -146,7 +146,7 @@ describe('UserProfile', () => {
     })
 
     const aboutTutorTitle = screen.queryByText(
-      'userProfilePage.aboutTutor.title'
+      'userProfilePage.tutorAbout.title'
     )
     expect(aboutTutorTitle).not.toBeInTheDocument()
   })

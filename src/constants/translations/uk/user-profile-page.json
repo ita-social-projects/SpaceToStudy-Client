@@ -25,13 +25,18 @@
   "videoPresentation": {
     "title": "Відео Презентація"
   },
-  "aboutTutor": {
+  "tutorAbout": {
     "title": "Про репетитора",
     "education": "Освіта",
     "workExperience": "Досвід роботи",
     "scientificActivities": "Наукова діяльність",
-    "awards": "Нагороди",
-    "socialMedia": "Соціальні медіа"
+    "awards": "Нагороди"
+  },
+  "studentAbout": {
+    "title": "Про студента",
+    "personalIntroduction": "Особисте представлення",
+    "learningGoals": "Навчальні цілі",
+    "learningActivities": "Навчальні активності"
   },
   "reviews": {
     "titleTutor": "Що говорять студенти",

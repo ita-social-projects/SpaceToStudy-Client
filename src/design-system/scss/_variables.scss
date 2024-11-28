@@ -1,0 +1,479 @@
+$prefix: 's2s-';
+
+/*=============================================
+ =                   COLORS                    =
+ =============================================*/
+
+/* Basic colors */
+
+$blue-gray-50: #eceff1 !default;
+$blue-gray-100: #cfd8dc !default;
+$blue-gray-200: #cfd8dc !default;
+$blue-gray-300: #90a4ae !default;
+$blue-gray-400: #78909c !default;
+$blue-gray-500: #607d8b !default;
+$blue-gray-600: #455a64 !default;
+$blue-gray-700: #37474f !default;
+$blue-gray-800: #263238 !default;
+$blue-gray-900: #13191c !default;
+
+$blue-grays: (
+  50: $blue-gray-50,
+  100: $blue-gray-100,
+  200: $blue-gray-200,
+  300: $blue-gray-300,
+  400: $blue-gray-400,
+  500: $blue-gray-500,
+  600: $blue-gray-600,
+  700: $blue-gray-700,
+  800: $blue-gray-800,
+  900: $blue-gray-900
+) !default;
+
+$turquoise-50: #f2fafa !default;
+$turquoise-100: #daf1f1 !default;
+$turquoise-200: #b5e3e3 !default;
+$turquoise-300: #91d4d4 !default;
+$turquoise-400: #6cc6c6 !default;
+$turquoise-500: #47b8b8 !default;
+$turquoise-600: #399393 !default;
+$turquoise-700: #2b6e6e !default;
+$turquoise-800: #1c4a4a !default;
+$turquoise-900: #0e2525 !default;
+
+$turquoises: (
+  50: $turquoise-50,
+  100: $turquoise-100,
+  200: $turquoise-200,
+  300: $turquoise-300,
+  400: $turquoise-400,
+  500: $turquoise-500,
+  600: $turquoise-600,
+  700: $turquoise-700,
+  800: $turquoise-800,
+  900: $turquoise-900
+) !default;
+
+$blue-50: #ecf5fa !default;
+$blue-100: #d6ecf7 !default;
+$blue-200: #add9ef !default;
+$blue-300: #85c7e8 !default;
+$blue-400: #5cb4e0 !default;
+$blue-500: #33a1d8 !default;
+$blue-600: #2981ad !default;
+$blue-700: #1f6182 !default;
+$blue-800: #144056 !default;
+$blue-900: #0a202b !default;
+
+$blues: (
+  50: $blue-50,
+  100: $blue-100,
+  200: $blue-200,
+  300: $blue-300,
+  400: $blue-400,
+  500: $blue-500,
+  600: $blue-600,
+  700: $blue-700,
+  800: $blue-800,
+  900: $blue-900
+) !default;
+
+$green-50: #f2f8ef !default;
+$green-100: #e2f2dc !default;
+$green-200: #c5e6b9 !default;
+$green-300: #a7d996 !default;
+$green-400: #8acd73 !default;
+$green-500: #6dc050 !default;
+$green-600: #579a40 !default;
+$green-700: #417330 !default;
+$green-800: #2c4d20 !default;
+$green-900: #162610 !default;
+
+$greens: (
+  50: $green-50,
+  100: $green-100,
+  200: $green-200,
+  300: $green-300,
+  400: $green-400,
+  500: $green-500,
+  600: $green-600,
+  700: $green-700,
+  800: $green-800,
+  900: $green-900
+) !default;
+
+$yellow-50: #fcf9ee !default;
+$yellow-100: #f9f0d2 !default;
+$yellow-200: #f4e0a4 !default;
+$yellow-300: #eed177 !default;
+$yellow-400: #e9c149 !default;
+$yellow-500: #e3b21c !default;
+$yellow-600: #b68e16 !default;
+$yellow-700: #886b11 !default;
+$yellow-800: #5b470b !default;
+$yellow-900: #2d2406 !default;
+
+$yellows: (
+  50: $yellow-50,
+  100: $yellow-100,
+  200: $yellow-200,
+  300: $yellow-300,
+  400: $yellow-400,
+  500: $yellow-500,
+  600: $yellow-600,
+  700: $yellow-700,
+  800: $yellow-800,
+  900: $yellow-900
+) !default;
+
+$purple-50: #f9eef7 !default;
+$purple-100: #f2ddee !default;
+$purple-200: #e6bbdc !default;
+$purple-300: #d99acb !default;
+$purple-400: #cd78b9 !default;
+$purple-500: #c056a8 !default;
+$purple-600: #9a4586 !default;
+$purple-700: #733465 !default;
+$purple-800: #4d2243 !default;
+$purple-900: #261122 !default;
+
+$purples: (
+  50: $purple-50,
+  100: $purple-100,
+  200: $purple-200,
+  300: $purple-300,
+  400: $purple-400,
+  500: $purple-500,
+  600: $purple-600,
+  700: $purple-700,
+  800: $purple-800,
+  900: $purple-900
+) !default;
+
+$red-50: #faeeee !default;
+$red-100: #f5d7d7 !default;
+$red-200: #ebafaf !default;
+$red-300: #e18686 !default;
+$red-400: #d75e5e !default;
+$red-500: #cd3636 !default;
+$red-600: #a42b2b !default;
+$red-700: #7b2020 !default;
+$red-800: #521616 !default;
+$red-900: #290b0b !default;
+
+$reds: (
+  50: $red-50,
+  100: $red-100,
+  200: $red-200,
+  300: $red-300,
+  400: $red-400,
+  500: $red-500,
+  600: $red-600,
+  700: $red-700,
+  800: $red-800,
+  900: $red-900
+) !default;
+
+$neutral-0: #fefefe !default;
+$neutral-50: #f7f8f8 !default;
+$neutral-100: #f1f2f3 !default;
+$neutral-150: #e4e6e7 !default;
+$neutral-200: #d6d9dc !default;
+$neutral-250: #c8ccd0 !default;
+$neutral-300: #babfc4 !default;
+$neutral-350: #adb3b8 !default;
+$neutral-400: #9fa6ad !default;
+$neutral-450: #9199a1 !default;
+$neutral-500: #838c95 !default;
+$neutral-550: #767f89 !default;
+$neutral-600: #6a737c !default;
+$neutral-650: #5e666e !default;
+$neutral-700: #525960 !default;
+$neutral-750: #474d52 !default;
+$neutral-800: #3b4045 !default;
+$neutral-850: #2f3337 !default;
+$neutral-900: #232629 !default;
+$neutral-950: #181a1b !default;
+$neutral-1000: #0c0d0e !default;
+
+$neutrals: (
+  0: $neutral-0,
+  50: $neutral-50,
+  100: $neutral-100,
+  150: $neutral-150,
+  200: $neutral-200,
+  250: $neutral-250,
+  300: $neutral-300,
+  350: $neutral-350,
+  400: $neutral-400,
+  450: $neutral-450,
+  500: $neutral-500,
+  550: $neutral-550,
+  600: $neutral-600,
+  650: $neutral-650,
+  700: $neutral-700,
+  750: $neutral-750,
+  800: $neutral-800,
+  850: $neutral-850,
+  900: $neutral-900,
+  950: $neutral-950,
+  1000: $neutral-1000
+) !default;
+
+/* Semantic colors */
+
+$body-text-color: var(--#{$prefix}body-text-color, $blue-gray-800) !default;
+$body-bg-color: var(--#{$prefix}body-bg-color, $neutral-50) !default;
+
+/*=============================================
+=                BORDERS                   =
+=============================================*/
+
+/* Border radiuses */
+
+$border-radius-2xs: 4px !default;
+$border-radius-xs: 6px !default;
+$border-radius-sm: 8px !default;
+$border-radius-md: 12px !default;
+$border-radius-lg: 16px !default;
+$border-radius-pill: 1000px !default;
+$border-radius-circle: 100% !default;
+
+$border-radiuses: (
+  2xs: $border-radius-2xs,
+  xs: $border-radius-xs,
+  sm: $border-radius-sm,
+  md: $border-radius-md,
+  lg: $border-radius-lg,
+  pill: $border-radius-pill,
+  circle: $border-radius-circle
+) !default;
+
+/* Border widths */
+
+$border-width-none: 0px !default;
+$border-width-xs: 1px !default;
+$border-width-sm: 1.5px !default;
+$border-width-md: 2px !default;
+$border-width-lg: 4px !default;
+$border-width-xl: 8px !default;
+
+$border-widths: (
+  none: $border-width-none,
+  xs: $border-width-xs,
+  sm: $border-width-sm,
+  md: $border-width-md,
+  lg: $border-width-lg,
+  xl: $border-width-xl
+) !default;
+
+/* Border style */
+
+$border-styles: (
+  solid: solid,
+  dashed: dashed,
+  dotted: dotted,
+  double: double
+);
+
+/* Border sides */
+
+$border-sides: (
+  top: top,
+  right: right,
+  bottom: bottom,
+  left: left
+);
+
+/*=============================================
+=                TYPOGRAPHY                   =
+=============================================*/
+
+/* Font families */
+
+$font-family-rubik: 'Rubik, -apple-system, Arial, sans-serif' !default;
+$font-family-inter: 'Inter, -apple-system, Arial, sans-serif' !default;
+
+$font-families: (
+  rubik: $font-family-rubik,
+  inter: $font-family-inter
+) !default;
+
+/* Font weights */
+
+$font-weight-regular: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-semibold: 600 !default;
+$font-weight-extrabold: 800 !default;
+
+$font-weights: (
+  regular: $font-weight-regular,
+  medium: $font-weight-medium,
+  semibold: $font-weight-semibold,
+  extrabold: $font-weight-extrabold
+) !default;
+
+/* Font sizes */
+
+$font-size-2xs: 10px !default;
+$font-size-xs: 12px !default;
+$font-size-sm: 14px !default;
+$font-size-md: 16px !default;
+$font-size-lg: 18px !default;
+$font-size-xl: 20px !default;
+$font-size-2xl: 24px !default;
+$font-size-3xl: 32px !default;
+$font-size-4xl: 48px !default;
+$font-size-5xl: 60px !default;
+$font-size-6xl: 72px !default;
+
+$font-sizes: (
+  2xs: $font-size-2xs,
+  xs: $font-size-xs,
+  sm: $font-size-sm,
+  md: $font-size-md,
+  lg: $font-size-lg,
+  xl: $font-size-xl,
+  2xl: $font-size-2xl,
+  3xl: $font-size-3xl,
+  4xl: $font-size-4xl,
+  5xl: $font-size-5xl,
+  6xl: $font-size-6xl
+) !default;
+
+/* Line heights */
+
+$line-height-xs: 14px !default;
+$line-height-sm: 16px !default;
+$line-height-md: 20px !default;
+$line-height-lg: 24px !default;
+$line-height-xl: 28px !default;
+$line-height-2xl: 32px !default;
+$line-height-3xl: 40px !default;
+$line-height-4xl: 56px !default;
+$line-height-5xl: 72px !default;
+$line-height-6xl: 84px !default;
+
+$line-heights: (
+  xs: $line-height-xs,
+  sm: $line-height-sm,
+  md: $line-height-md,
+  lg: $line-height-lg,
+  xl: $line-height-xl,
+  2xl: $line-height-2xl,
+  3xl: $line-height-3xl,
+  4xl: $line-height-4xl,
+  5xl: $line-height-5xl,
+  6xl: $line-height-6xl
+) !default;
+
+/* Letter spacings */
+
+$letter-spacing-sm: -1px !default;
+$letter-spacing-md: 0px !default;
+$letter-spacing-lg: 0.5px !default;
+$letter-spacing-xl: 1px !default;
+
+$letter-spacings: (
+  sm: $letter-spacing-sm,
+  md: $letter-spacing-md,
+  lg: $letter-spacing-lg,
+  xl: $letter-spacing-xl
+) !default;
+
+/* Base values */
+
+$font-family-base: var(--#{$prefix}font-family-rubik) !default;
+$font-size-base: var(--#{$prefix}font-size-md) !default;
+$font-weight-base: var(--#{$prefix}font-weight-regular) !default;
+$line-height-base: var(--#{$prefix}line-height-lg) !default;
+$letter-spacing-base: var(--#{$prefix}letter-spacing-lg) !default;
+
+/*=============================================
+=                BREAKPOINTS                  =
+=============================================*/
+
+$breakpoints: (
+  sm: 430px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1440px
+) !default;
+
+/*=============================================
+=                  SPACING                   =
+=============================================*/
+
+$space-baseline: 8px !default;
+
+$space-0: 0 !default;
+$space-0-25: $space-baseline * 0.25 !default;
+$space-0-5: $space-baseline * 0.5 !default;
+$space-1: $space-baseline !default;
+$space-1-5: $space-baseline * 1.5 !default;
+$space-2: $space-baseline * 2 !default;
+$space-3: $space-baseline * 3 !default;
+$space-4: $space-baseline * 4 !default;
+$space-5: $space-baseline * 5 !default;
+$space-6: $space-baseline * 6 !default;
+$space-7: $space-baseline * 7 !default;
+$space-8: $space-baseline * 8 !default;
+$space-9: $space-baseline * 9 !default;
+$space-10: $space-baseline * 10 !default;
+$space-11: $space-baseline * 11 !default;
+$space-12: $space-baseline * 12 !default;
+$space-13: $space-baseline * 13 !default;
+$space-14: $space-baseline * 14 !default;
+
+$spaces: (
+  0: $space-0,
+  '0-25': $space-0-25,
+  '0-5': $space-0-5,
+  1: $space-1,
+  '1-5': $space-1-5,
+  2: $space-2,
+  3: $space-3,
+  4: $space-4,
+  5: $space-5,
+  6: $space-6,
+  7: $space-7,
+  8: $space-8,
+  9: $space-9,
+  10: $space-10,
+  11: $space-11,
+  12: $space-12,
+  13: $space-13,
+  14: $space-14
+) !default;
+
+/*=============================================
+=                  SHADOWS                   =
+=============================================*/
+
+$box-shadow-xs:
+  0px 0px 2px 0px rgba(0, 0, 0, 0.08),
+  0px 2px 4px 0px rgba(0, 0, 0, 0.08) !default;
+$box-shadow-sm:
+  0px 0px 4px 0px rgba(0, 0, 0, 0.08),
+  0px 4px 8px 0px rgba(0, 0, 0, 0.1) !default;
+$box-shadow-md:
+  0px 0px 6px 0px rgba(0, 0, 0, 0.08),
+  0px 8px 16px 0px rgba(0, 0, 0, 0.1) !default;
+$box-shadow-lg:
+  0px 0px 8px 0px rgba(0, 0, 0, 0.08),
+  0px 10px 12px 0px rgba(0, 0, 0, 0.1) !default;
+$box-shadow-xl:
+  0px 0px 14px 0px rgba(0, 0, 0, 0.08),
+  0px 11px 18px 0px rgba(0, 0, 0, 0.1) !default;
+$box-shadow-2xl:
+  0px 0px 12px 0px rgba(0, 0, 0, 0.08),
+  0px 16px 32px 0px rgba(0, 0, 0, 0.1) !default;
+
+$box-shadows: (
+  xs: $box-shadow-xs,
+  sm: $box-shadow-sm,
+  md: $box-shadow-md,
+  lg: $box-shadow-lg,
+  xl: $box-shadow-xl,
+  2xl: $box-shadow-2xl
+) !default;

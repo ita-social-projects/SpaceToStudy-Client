@@ -16,7 +16,8 @@ import {
 } from '~/components/profile-item/complete-profile.constants'
 
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
-import AboutTutorBlock from '~/containers/user-profile/about-tutor-block/AboutTutorBlock'
+import AboutTutorBlock from '~/containers/user-profile/about-user-block/AboutTutorBlock'
+import AboutStudentBlock from '~/containers/user-profile/about-user-block/AboutStudentBlock'
 import VideoPresentation from '~/containers/user-profile/video-presentation/VideoPresentation'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 
@@ -67,6 +68,8 @@ const UserProfile = () => {
   }
 
   const isTutor = preferredRole === UserRoleEnum.Tutor
+  const isStudent = preferredRole === UserRoleEnum.Student
+
   const shouldShowPresentation =
     (isTutor && isMyProfile) ||
     (!isTutor && response.videoLink?.student) ||
@@ -96,6 +99,7 @@ const UserProfile = () => {
       {response.professionalBlock && (
         <AboutTutorBlock data={response.professionalBlock} />
       )}
+      {isStudent && <AboutStudentBlock />}
       {shouldShowPresentation && VideoPresentationComponent}
       <CommentsWithRatingBlock
         averageRating={user.reviewStats.averageRating}

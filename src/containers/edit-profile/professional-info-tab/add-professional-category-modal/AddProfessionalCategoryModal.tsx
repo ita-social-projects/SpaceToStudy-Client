@@ -214,7 +214,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       disableOptions={data.subjects as Array<Partial<SubjectInterface>>}
       handleChange={handleProfessionalSubjectChange(index)}
       handleSubjectDelete={() => handleSubjectDelete(subject._id || '')}
-      key={index}
+      key={subject._id}
       selectedCategory={data.category?._id || ''}
       subject={{
         ...subject

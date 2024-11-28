@@ -14,7 +14,9 @@ import { styles } from '~/pages/tutor-home/TutorHome.styles'
 import { translationKey } from '~/components/find-block/find-student-constants'
 import Calendar from '~/components/calendar/Calendar'
 import TutorSchedule from '~/components/tutor-schedule/TutorSchedule'
+import QuantityLessonsCard from '~/components/quantity-lessons-card/QuantityLessonsCard'
 import { Box } from '@mui/material'
+import StudentsInCategories from '~/components/students-in-categories/StudentsInCategories'
 
 const TutorHome = () => {
   const { t } = useTranslation()
@@ -39,6 +41,8 @@ const TutorHome = () => {
         <TutorSchedule />
         <Calendar />
       </Box>
+      <StudentsInCategories />
+      <QuantityLessonsCard />
       <ActiveStudentsBlock />
       <PopularCategories
         description={t('tutorHomePage.popularCategories.description')}

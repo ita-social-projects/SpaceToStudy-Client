@@ -21,13 +21,18 @@
   "videoPresentation": {
     "title": "Video Presentation"
   },
-  "aboutTutor": {
+  "tutorAbout": {
     "title": "About the tutor",
     "education": "Education",
     "workExperience": "Work experience",
     "scientificActivities": "Scientific activities",
-    "awards": "Awards",
-    "socialMedia": "Social media"
+    "awards": "Awards"
+  },
+  "studentAbout": {
+    "title": "About the student",
+    "personalIntroduction": "Personal Introduction",
+    "learningGoals": "Learning Goals",
+    "learningActivities": "Learning Activities"
   },
   "reviews":{
     "titleTutor":"What students say",

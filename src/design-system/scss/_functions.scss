@@ -1,0 +1,47 @@
+@use 'variables' as gv;
+@use 'sass:map';
+
+/**
+ * @function build-var-name
+ * Constructs a CSS variable name with an optional suffix, prefixed by a global prefix.
+ */
+
+@function build-var-name($name, $suffix: '') {
+  @if $suffix != null and $suffix != '' {
+    @return '--#{gv.$prefix}#{$name}-#{$suffix}';
+  }
+  @return '--#{gv.$prefix}#{$name}';
+}
+
+/**
+ * @function get-var
+ * Retrieves the value of a CSS variable by constructing its name using a base name and optional suffix.
+ */
+
+@function get-var($name, $suffix: '') {
+  $var-name: build-var-name($name, $suffix);
+  @return var(#{$var-name});
+}
+
+/**
+ * @function map-to-var-map
+ * Converts a map's values into CSS variables, constructing variable names using a base name and each key as a suffix.
+ */
+
+@function map-to-var-map($map, $var-name) {
+  $new-map: ();
+
+  @each $key, $value in $map {
+    $new-key: $key;
+    $new-value: get-var($var-name, $key);
+
+    $new-map: map.merge(
+      $new-map,
+      (
+        $new-key: $new-value
+      )
+    );
+  }
+
+  @return $new-map;
+}

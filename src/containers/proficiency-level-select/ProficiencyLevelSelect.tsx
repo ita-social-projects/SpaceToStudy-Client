@@ -60,7 +60,9 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
     >
       <Checkbox checked={value.indexOf(checkbox) > -1} />
       <ListItemText
-        primary={labels?.has(checkbox) ? t(labels.get(checkbox)!) : t(checkbox)}
+        primary={
+          labels?.has(checkbox) ? t(labels.get(checkbox) || '') : t(checkbox)
+        }
       />
     </MenuItem>
   ))
@@ -75,7 +77,7 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
 
   const renderSelectedValue = (selected: ProficiencyLevelEnum[]) => {
     const translatedValues = selected.map((level) =>
-      labels?.has(level) ? t(labels.get(level)!) : t(level)
+      labels?.has(level) ? t(labels.get(level) || '') : t(level)
     )
 
     return fillRange && selected.length > 1

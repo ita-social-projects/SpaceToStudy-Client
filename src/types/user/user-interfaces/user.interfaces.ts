@@ -61,6 +61,13 @@ export interface ProfessionalBlock {
   [key: string]: string | undefined
 }
 
+export interface AboutStudentData {
+  personalIntroduction: string
+  learningGoals: string
+  learningActivities: string
+  [key: string]: string
+}
+
 export interface UserGeneralInfo
   extends Pick<UserResponse, 'firstName' | 'lastName' | 'professionalSummary'> {
   country: UserResponse['address']['country'] | null
