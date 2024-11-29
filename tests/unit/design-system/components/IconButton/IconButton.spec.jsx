@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { IconButton } from '~/design-system/components/icon-button/IconButton';
-import { IconButtonVariant } from '~/types';
+import { IconButtonVariant } from '~/design-system/components/icon-button/IconButton.constants';
 import { vi } from 'vitest'
 
 describe('IconButton Component', () => {
