@@ -27,6 +27,20 @@ vi.mock('react-router-dom', async () => ({
   useNavigate: () => navigateMock
 }))
 
+const mockCloseModal = vi.fn()
+const mockOpenModal = vi.fn()
+
+vi.mock('~/context/modal-context', async () => {
+  const actual = await vi.importActual('~/context/modal-context')
+  return {
+    ...actual,
+    useModalContext: () => ({
+      closeModal: mockCloseModal,
+      openModal: mockOpenModal
+    })
+  }
+})
+
 describe('CooperationContainer component ', () => {
   it('should render card in container', () => {
     renderWithProviders(
@@ -75,6 +89,25 @@ describe('CooperationContainer component ', () => {
 
     await waitFor(() => {
       expect(navigateMock).toHaveBeenCalledWith(`./${activeCoop._id}`)
+    })
+  })
+
+  it('opens modal for Pending status', async () => {
+    const pendingCoop = { ...mockedCoop, status: StatusEnum.Pending }
+
+    renderWithProviders(
+      <CooperationContainer
+        filterOptions={filterOptionsMock}
+        items={[pendingCoop]}
+      />,
+      { preloadedState }
+    )
+
+    const card = screen.getByText(pendingCoop.offer.subject.name)
+    userEvent.click(card)
+
+    await waitFor(() => {
+      expect(mockOpenModal).toHaveBeenCalled()
     })
   })
 })
