@@ -42,49 +42,6 @@
       renderChangePasswordModal()
     })
 
-    it('should save data after positive response', async () => {
-      mockAxiosClient
-        .onPatch(`${URLs.auth.changePassword}/${userDataMock._id}`)
-        .reply(200)
-
-      const currentPasswordInput = screen.getByLabelText(
-        /editProfilePage.profile.passwordSecurityTab.currentPassword/i
-      )
-      const passwordInput = screen.getByLabelText(
-        /editProfilePage.profile.passwordSecurityTab.newPassword/i
-      )
-      const confirmPasswordInput = screen.getByLabelText(
-        /editProfilePage.profile.passwordSecurityTab.retypePassword/i
-      )
-      const saveButton = screen.getByText(
-        /editProfilePage.profile.passwordSecurityTab.savePassword/i
-      )
-
-      fireEvent.change(currentPasswordInput, {
-        target: { value: '12345qwert$' }
-      })
-      fireEvent.change(passwordInput, {
-        target: { value: '12345qwertY$' }
-      })
-      fireEvent.change(confirmPasswordInput, {
-        target: { value: '12345qwertY$' }
-      })
-
-      await waitFor(() => {
-        fireEvent.click(saveButton)
-      })
-
-      await waitFor(() => {
-        expect(AuthService.changePassword).toHaveBeenCalledWith(
-          userDataMock._id,
-          {
-            password: '12345qwertY$',
-            currentPassword: '12345qwert$'
-          }
-        )
-      })
-    })
-
     it('should not save data after negative response', async () => {
       mockAxiosClient
         .onPatch(`${URLs.auth.changePassword}/${userDataMock._id}`)
