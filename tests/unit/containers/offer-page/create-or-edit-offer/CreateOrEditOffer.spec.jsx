@@ -84,7 +84,7 @@ describe('CreateOrEditOffer', () => {
     const saveButton = screen.getByRole('button', {name: /offerPage.createOffer.buttonTitles.tutor/i})
     fireEvent.click(saveButton)
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(mockDispatch).toHaveBeenCalledWith(openAlert({
           severity: snackbarVariants.success,
           message: 'offerPage.createOffer.successMessage'
@@ -95,26 +95,26 @@ describe('CreateOrEditOffer', () => {
     })
   })
 
-  // it('should call different dispatch and navigate with #offer on successful response', () => {
-  //   vi.mock('react-router-dom', async () => ({
-  //     ...(await vi.importActual('react-router-dom')),
-  //     useLocation: () => ({hash: '#offer'})
-  //   }))
+  it('should call different dispatch and navigate with #offer on successful response', () => {
+    vi.mock('react-router-dom', async () => ({
+      ...(await vi.importActual('react-router-dom')),
+      useLocation: () => ({hash: '#offer'})
+    }))
     
-  //   const saveButton = screen.getByRole('button', {name: /offerPage.createOffer.buttonTitles.tutor/i})
-  //   fireEvent.click(saveButton)
+    const saveButton = screen.getByRole('button', {name: /offerPage.createOffer.buttonTitles.tutor/i})
+    fireEvent.click(saveButton)
 
-  //   waitFor(() => {
-  //     expect(mockDispatch).toHaveBeenCalledWith(openAlert({
-  //         severity: snackbarVariants.success,
-  //         message: 'offerPage.createOffer.extendedSuccessMessage.tutor',
-  //         duration: 10000,
-  //         isExtended: true,
-  //         route: '/my-offers'
-  //       }
-  //     ))
-  //     expect(mockCloseDrawer).toHaveBeenCalled()
-  //     expect(mockNavigate).toHaveBeenCalledWith('/my-profile#complete')
-  //   })
-  // })
+    waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith(openAlert({
+          severity: snackbarVariants.success,
+          message: 'offerPage.createOffer.extendedSuccessMessage.tutor',
+          duration: 10000,
+          isExtended: true,
+          route: '/my-offers'
+        }
+      ))
+      expect(mockCloseDrawer).toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith('/my-profile#complete')
+    })
+  })
 })
