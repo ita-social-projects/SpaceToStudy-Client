@@ -144,9 +144,3 @@ export enum InputFieldVariantEnum {
   Small = 'small',
   Outlined = 'outlined'
 }
-export enum IconButtonVariant {
-  Primary = 'primary',
-  Secondary = 'secondary',
-  Success = 'success',
-  Error = 'error'
-}
