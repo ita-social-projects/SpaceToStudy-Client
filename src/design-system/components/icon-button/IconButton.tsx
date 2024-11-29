@@ -4,7 +4,7 @@ import {
   IconButton as MuiIconButton
 } from '@mui/material'
 import React, { useState } from 'react'
-import { IconButtonVariant } from '~/types'
+import { IconButtonVariant } from './IconButton.constants'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import { cn } from '~/utils/cn'
 import './IconButton.scss'
