@@ -14,6 +14,7 @@ const mockedValues = {
   validNumber: "123",
   negativeNumber: '-5',
   shortPassword: '111a?',
+  longPassword: '1!vvvveeeerrrryyyylllloooonnnnggggppaasswwooorrddd',
   validPassword: 'Abcd1234!',
   passwordWithoutLetters: '1234567!',
   passwordWithoutNumbers: 'abc!dwga%g&sad',
@@ -128,13 +129,15 @@ describe('commonValidation', () => {
 
   it('Should return error when password is empty', () => {
     const result = passwordField(mockedValues.emptyField)
-    console.log(result)
     expect(result).toBe(errorMessages.emptyField)
   })
   
   it('Should return error that password cannot be shorter than 8 and longer than 25 characters', () => {
-    const result = passwordField(mockedValues.shortPassword)
-    expect(result).toBe(errorMessages.passwordLength)
+    const shortPasswordResult = passwordField(mockedValues.shortPassword);
+    const longPasswordResult = passwordField(mockedValues.longPassword);
+  
+    expect(shortPasswordResult).toBe(errorMessages.passwordLength);
+    expect(longPasswordResult).toBe(errorMessages.passwordLength);
   })
 
   it('Should return error that password must contain at least one alphabetic, one numeric and one special character', () => {
@@ -151,6 +154,21 @@ describe('commonValidation', () => {
     const result = passwordField(mockedValues.passwordWithInvalidSymbol)
     expect(result).toBe(errorMessages.passwordValidSymbols)
   })
+  
+  it('Should skip passwordComplex if the password meets the regex', () => {
+    const result = passwordField(mockedValues.validPassword);
+    expect(result).not.toBe(errorMessages.passwordComplex);
+  });
+
+  it('Should skip passwordValidSymbols if the password contains only valid symbols', () => {
+    const result = passwordField(mockedValues.validPassword);
+    expect(result).not.toBe(errorMessages.passwordValidSymbols);
+  });
+  
+  it('Should skip passwordLength if the password length is within range', () => {
+    const result = passwordField(mockedValues.validPassword);
+    expect(result).not.toBe(errorMessages.passwordLength);
+  });
 
   it('Should pass for valid password', () => {
     const result = passwordField(mockedValues.validPassword)
