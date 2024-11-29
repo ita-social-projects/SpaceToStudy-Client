@@ -45,6 +45,8 @@ import editProfilePage from './edit-profile.json'
 import quiz from './quiz.json'
 import bookmarkedOffers from './bookmarked-offers-page.json'
 import activeStudents from './active-students.json'
+import categories from './categories.json'
+import subjects from './subjects.json'
 
 const en = {
   translations: {
@@ -94,7 +96,9 @@ const en = {
     editProfilePage,
     quiz,
     bookmarkedOffers,
-    activeStudents
+    activeStudents,
+    categories,
+    subjects
   }
 }
 

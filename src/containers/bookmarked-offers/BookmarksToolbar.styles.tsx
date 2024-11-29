@@ -8,6 +8,7 @@ export const styles = {
     alignItems: 'center',
     gap: '10px',
     scrollMarginTop: '16px',
+    marginBottom: '16px',
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -17,7 +18,7 @@ export const styles = {
   searchBox: (theme: Theme) => ({
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '285px'
+      width: '295px'
     }
   }),
   filterInput: {
@@ -28,7 +29,7 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: '50px',
-    margin: '-20px 0 20px 0',
+    margin: '16px 0',
     [theme.breakpoints.up('md')]: {
       margin: '0px 0 0 0'
     }

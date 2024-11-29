@@ -15,20 +15,20 @@ import Accordions from '~/components/accordion/Accordions'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.styles'
-import {
-  aboutStudentKeys,
-  mockHandleStudentInputChange
-} from '~/containers/user-profile/about-user-block/about-user-block.constants'
+import { aboutStudentKeys } from '~/containers/user-profile/about-user-block/about-user-block.constants'
 
 interface AboutStudentAccordionProps {
   data: AboutStudentData
-  handleInputChange?: UseFormEventHandler<
+  handleInputChange: UseFormEventHandler<
     AboutStudentData,
     React.ChangeEvent<HTMLInputElement>
   >
 }
 
-const AboutStudentAccordion: FC<AboutStudentAccordionProps> = ({ data }) => {
+const AboutStudentAccordion: FC<AboutStudentAccordionProps> = ({
+  data,
+  handleInputChange
+}) => {
   const { t } = useTranslation()
   const [expandedItem, handleAccordionChange] = useAccordions({
     initialState: 0,
@@ -45,12 +45,12 @@ const AboutStudentAccordion: FC<AboutStudentAccordionProps> = ({ data }) => {
             'editProfilePage.profile.professionalTab.accordionStudent.textareaLabel'
           )}
           maxLength={1000}
-          onChange={mockHandleStudentInputChange}
+          onChange={handleInputChange(item)}
           value={data[item]}
         />
       )
     }))
-  }, [t, data])
+  }, [t, data, handleInputChange])
 
   return (
     <Accordions

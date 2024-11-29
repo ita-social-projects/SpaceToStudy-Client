@@ -19,6 +19,7 @@ import {
 import useConfirm from '~/hooks/use-confirm'
 import { styles } from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory.styles'
 import { getValidatedHexColor } from '~/utils/get-validated-hex-color'
+import { titleToCamel } from '~/utils/title-to-camel-case'
 
 interface ProfessionalCategoryProps {
   item: UserMainSubject
@@ -86,7 +87,9 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
       labelSx={styles.subjectChipLabel(categoryColor)}
       sx={styles.subjectChip(categoryColor)}
     >
-      {subject.name}
+      {t(`subjects.${titleToCamel(subject.name)}`, {
+        defaultValue: subject.name
+      })}
     </AppChip>
   ))
 
@@ -130,7 +133,9 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
           label={t('editProfilePage.profile.professionalTab.mainStudyCategory')}
         >
           <CategoryIcon sx={styles.categoryIcon(categoryColor)} />
-          {item.category.name}
+          {t(`categories.${titleToCamel(item.category.name)}`, {
+            defaultValue: item.category.name
+          })}
         </DescriptionItem>
         <DescriptionItem
           label={t('editProfilePage.profile.professionalTab.subject')}

@@ -68,7 +68,6 @@ const UserProfile = () => {
   }
 
   const isTutor = preferredRole === UserRoleEnum.Tutor
-  const isStudent = preferredRole === UserRoleEnum.Student
 
   const shouldShowPresentation =
     (isTutor && isMyProfile) ||
@@ -99,7 +98,9 @@ const UserProfile = () => {
       {response.professionalBlock && (
         <AboutTutorBlock data={response.professionalBlock} />
       )}
-      {isStudent && <AboutStudentBlock />}
+      {response.aboutStudent && (
+        <AboutStudentBlock data={response.aboutStudent} />
+      )}
       {shouldShowPresentation && VideoPresentationComponent}
       <CommentsWithRatingBlock
         averageRating={user.reviewStats.averageRating}

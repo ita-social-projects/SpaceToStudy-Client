@@ -147,6 +147,7 @@ const EditProfile = () => {
       videoLink,
       notificationSettings,
       professionalBlock,
+      aboutStudent,
       categories,
       ...rest
     } = changedFields
@@ -167,6 +168,10 @@ const EditProfile = () => {
 
     if (professionalBlock)
       dataToUpdate.professionalBlock = profileState.professionalBlock
+
+    if (aboutStudent) {
+      dataToUpdate.aboutStudent = aboutStudent
+    }
 
     if (categories) {
       dataToUpdate.mainSubjects = categories

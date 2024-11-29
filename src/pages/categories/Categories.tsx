@@ -32,6 +32,7 @@ import {
 import { itemsLoadLimit } from './Categories.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/categories/Categories.styles'
+import { titleToCamel } from '~/utils/title-to-camel-case'
 
 const Categories = () => {
   const { t, i18n } = useTranslation()
@@ -82,7 +83,9 @@ const Categories = () => {
             iconColor={item.appearance.color}
             key={item._id}
             link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
-            title={item.name}
+            title={t(`categories.${titleToCamel(item.name)}`, {
+              defaultValue: item.name
+            })}
           />
         )
       }),

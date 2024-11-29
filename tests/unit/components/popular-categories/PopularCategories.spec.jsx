@@ -2,7 +2,15 @@ import { screen, waitFor } from '@testing-library/react'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 import { URLs } from '~/constants/request'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { useTranslation } from 'react-i18next'
+import {titleToCamel} from '~/utils/title-to-camel-case'
+const { t } = useTranslation()
 
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key, options) => options?.defaultValue || key.split('.').pop(),
+  }),
+}));
 const items = [
   {
     _id: '1',
@@ -47,7 +55,7 @@ describe('PopularCategories', () => {
   })
 
   it('render card correctly', async () => {
-    const card = await screen.findByText('Math')
+    const card = await screen.findByText(t(`categories.${titleToCamel('Math')}`, { defaultValue: 'Math' }))
 
     expect(card).toBeInTheDocument()
   })

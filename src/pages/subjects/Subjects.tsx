@@ -28,7 +28,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { mapArrayByField } from '~/utils/map-array-by-field'
 import { getSuffixes } from '~/utils/get-translation-suffixes'
-
+import { fetchAndTranslateData } from '~/utils/fetch-and-translate-category'
 import {
   CategoryNameInterface,
   SizeEnum,
@@ -38,6 +38,7 @@ import {
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/subjects/Subjects.styles'
+import { titleToCamel } from '~/utils/title-to-camel-case'
 
 const Subjects = () => {
   const [match, setMatch] = useState<string>('')
@@ -108,7 +109,9 @@ const Subjects = () => {
             iconColor={item.category.appearance.color}
             key={item._id}
             link={`${authRoutes.findOffers.path}?categoryId=${categoryId}&subjectId=${item._id}`}
-            title={item.name}
+            title={t(`subjects.${titleToCamel(item.name)}`, {
+              defaultValue: item.name
+            })}
           />
         )
       }),
@@ -130,13 +133,19 @@ const Subjects = () => {
     const category = response.find((option) => option._id === categoryId)
     setCategoryName(category?.name ?? '')
   }
-
+  const fetchTranslatedCategories = useCallback(() => {
+    return fetchAndTranslateData(
+      () => categoryService.getCategoriesNames(),
+      'categories',
+      t
+    )
+  }, [t])
   const autoCompleteCategories = (
     <AsyncAutocomplete
       axiosProps={{ onResponse: onResponseCategory }}
-      labelField='name'
+      labelField='displayName'
       onChange={onCategoryChange}
-      service={categoryService.getCategoriesNames}
+      service={fetchTranslatedCategories}
       sx={styles.categoryInput}
       textFieldProps={{
         label: t('breadCrumbs.categories')
@@ -160,6 +169,10 @@ const Subjects = () => {
         style={styles.titleWithDescription}
         title={t('subjectsPage.subjects.title', {
           category: categoryName
+            ? t(`categories.${titleToCamel(categoryName)}`, {
+                defaultValue: categoryName
+              })
+            : categoryName
         })}
       />
 

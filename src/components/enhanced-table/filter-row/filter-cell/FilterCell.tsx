@@ -3,8 +3,30 @@ import TableCell from '@mui/material/TableCell'
 import SearchInput from '~/components/search-input/SearchInput'
 import DateFilter from '~/components/enhanced-table/date-filter/DateFilter'
 import EnumFilter from '~/components/enhanced-table/enum-filter/EnumFilter'
+import { TableColumn } from '~/types'
 
-const FilterCell = ({ column, filter, setFilter, clearFilter }) => {
+interface TableColumnProps<I> extends TableColumn<I> {
+  dataType: 'string'
+}
+
+interface Filter {
+  from: string | null
+  to: string | null
+}
+
+interface FilterCellProps<I, F> {
+  column: TableColumnProps<I>
+  filter?: F
+  setFilter: (filter: F) => void
+  clearFilter: () => void
+}
+
+const FilterCell = <I, F extends Filter | string>({
+  column,
+  filter,
+  setFilter,
+  clearFilter
+}: FilterCellProps<I, F>) => {
   const enums = (
     <EnumFilter
       clearFilter={clearFilter}
@@ -17,16 +39,16 @@ const FilterCell = ({ column, filter, setFilter, clearFilter }) => {
   const string = (
     <SearchInput
       data-testid='searchInput'
-      search={filter}
-      setSearch={setFilter}
+      search={filter as string}
+      setSearch={setFilter as React.Dispatch<React.SetStateAction<string>>}
     />
   )
 
   const date = (
     <DateFilter
       clearFilter={clearFilter}
-      filter={filter}
-      setFilter={setFilter}
+      filter={filter as Filter}
+      setFilter={setFilter as (filter: Filter) => void}
     />
   )
 

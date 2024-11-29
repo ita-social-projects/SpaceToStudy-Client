@@ -26,3 +26,14 @@ export const confirmPassword = (password, data) => {
         : ''
   })
 }
+
+export const logInPassword = (password) => {
+  return emptyField({
+    value: password,
+    emptyMessage: 'common.errorMessages.emptyField',
+    helperText:
+      password.length < 8 || password.length > 25
+        ? 'common.errorMessages.passwordLength'
+        : ''
+  })
+}

@@ -36,6 +36,11 @@ const userDataMock = {
     scientificActivities: 'Activities',
     awards: 'Awards'
   },
+  aboutStudent: {
+    personalIntroduction: '',
+    learningGoals: '',
+    learningActivities: ''
+  },
   notificationSettings: {
     isOfferStatusNotification: false,
     isChatNotification: false,
@@ -62,6 +67,11 @@ const expectedUserData = {
     workExperience: 'Experience',
     scientificActivities: 'Activities',
     awards: 'Awards'
+  },
+  aboutStudent: {
+    personalIntroduction: '',
+    learningGoals: '',
+    learningActivities: ''
   },
   notificationSettings: {
     isOfferStatusNotification: false,
@@ -93,6 +103,11 @@ const initialState = {
     workExperience: '',
     scientificActivities: '',
     awards: ''
+  },
+  aboutStudent: {
+    personalIntroduction: '',
+    learningGoals: '',
+    learningActivities: ''
   },
   notificationSettings: {
     isOfferStatusNotification: false,

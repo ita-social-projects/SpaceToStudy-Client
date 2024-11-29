@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { useModalContext } from '~/context/modal-context'
 
 import {
+  AboutStudentData,
   ButtonVariantEnum,
   ComponentEnum,
   MainUserRole,
@@ -33,7 +34,6 @@ import AboutStudentAccordion from '~/containers/edit-profile/professional-info-t
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppButton from '~/components/app-button/AppButton'
 import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
-import { aboutStudentData } from '~/containers/user-profile/about-user-block/about-user-block.constants'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
 import { highlightElem } from '~/containers/edit-profile/common.styles'
@@ -42,19 +42,39 @@ const ProfessionalInfoTab: FC = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { userRole } = useAppSelector((state) => state.appMain)
-  const { categories, professionalBlock } = useAppSelector(
+  const { categories, professionalBlock, aboutStudent } = useAppSelector(
     (state) => state.editProfile
   )
 
   const { openModal, closeModal } = useModalContext()
 
+  const isTutor = userRole === UserRoleEnum.Tutor
+
   const { isValid, data, handleInputChange } = useForm<ProfessionalBlock>({
     initialValues: professionalBlock
   })
 
-  const debouncedProfessionalBlockData = useDebounce(() => {
-    dispatch(setField({ field: 'professionalBlock', value: data }))
+  const {
+    isValid: isValidStudent,
+    data: dataStudent,
+    handleInputChange: handleInputChangeStudent
+  } = useForm<AboutStudentData>({
+    initialValues: aboutStudent
+  })
+
+  const debouncedAboutUserData = useDebounce(() => {
+    dispatch(
+      setField({
+        field: isTutor ? 'professionalBlock' : 'aboutStudent',
+        value: isTutor ? data : dataStudent
+      })
+    )
   }, 300)
+
+  useEffect(() => {
+    debouncedAboutUserData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, dataStudent])
 
   const { hash, pathname } = useLocation()
 
@@ -63,11 +83,6 @@ const ProfessionalInfoTab: FC = () => {
       scrollToAndHighlight(`${pathname}${hash}`)
     }
   }, [pathname, hash])
-
-  useEffect(() => {
-    debouncedProfessionalBlockData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
 
   const handleDeleteCategory = (categoryId: string) => {
     const userRoleToDeleteCategory = userRole as MainUserRole
@@ -78,9 +93,12 @@ const ProfessionalInfoTab: FC = () => {
 
   useEffect(() => {
     dispatch(
-      updateValidityStatus({ tab: 'professionalInfoTab', value: isValid })
+      updateValidityStatus({
+        tab: 'professionalInfoTab',
+        value: isValid && isValidStudent
+      })
     )
-  }, [isValid, dispatch])
+  }, [isValid, isValidStudent, dispatch])
 
   const openProfessionalCategoryModal: OpenProfessionalCategoryModalHandler = (
     initialValues,
@@ -100,7 +118,7 @@ const ProfessionalInfoTab: FC = () => {
     })
   }
 
-  const TutorInfo = (
+  const AboutUserInfo = (
     <Box component='section' id='education'>
       <Box sx={highlightElem}></Box>
       <TitleWithDescription
@@ -114,13 +132,16 @@ const ProfessionalInfoTab: FC = () => {
         )}
       />
       <Box sx={styles.accordionContainer}>
-        {userRole === UserRoleEnum.Tutor ? (
+        {isTutor ? (
           <AboutTutorAccordion
             data={data}
             handleInputChange={handleInputChange}
           />
         ) : (
-          <AboutStudentAccordion data={aboutStudentData} />
+          <AboutStudentAccordion
+            data={dataStudent}
+            handleInputChange={handleInputChangeStudent}
+          />
         )}
       </Box>
     </Box>
@@ -160,7 +181,7 @@ const ProfessionalInfoTab: FC = () => {
           openProfessionalCategoryModal={openProfessionalCategoryModal}
         />
       </Box>
-      {TutorInfo}
+      {AboutUserInfo}
     </Box>
   )
 }

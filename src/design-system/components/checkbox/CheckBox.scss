@@ -1,0 +1,91 @@
+@use '~scss/utilities' as *;
+
+.#{$prefix}checkbox {
+  display: flex;
+  align-items: center;
+  margin: var(--#{$prefix}space-0-25) var(--#{$prefix}space-1);
+
+  & > .#{$prefix}checkbox__input {
+    padding: var(--#{$prefix}space-0-5);
+    color: inherit;
+
+    &:hover {
+      background-color: var(--#{$prefix}blue-gray-50);
+    }
+  }
+
+  &--top {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+
+    & > span {
+      padding-left: var(--#{$prefix}space-0-5);
+    }
+  }
+
+  &--bottom {
+    flex-direction: column;
+    align-items: flex-start;
+
+    & > span {
+      padding-left: var(--#{$prefix}space-0-5);
+    }
+  }
+
+  &--end {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &--sm {
+    font-size: var(--#{$prefix}font-size-sm);
+
+    & > span > svg {
+      width: var(--#{$prefix}line-height-sm);
+      height: var(--#{$prefix}line-height-sm);
+    }
+  }
+
+  &--md {
+    font-size: var(--#{$prefix}font-size-md);
+
+    & > span > svg {
+      width: var(--#{$prefix}line-height-md);
+      height: var(--#{$prefix}line-height-md);
+    }
+  }
+
+  &--lg {
+    font-size: var(--#{$prefix}font-size-lg);
+
+    & > span > svg {
+      width: var(--#{$prefix}line-height-lg);
+      height: var(--#{$prefix}line-height-lg);
+    }
+  }
+
+  &--error {
+    color: var(--#{$prefix}red-500) !important;
+  }
+
+  &--success {
+    color: var(--#{$prefix}green-600) !important;
+  }
+
+  &--error,
+  &--success,
+  &--primary,
+  &--secondary {
+    .Mui-checked {
+      color: inherit !important;
+    }
+  }
+
+  &--disabled {
+    color: var(--#{$prefix}blue-gray-400) !important;
+  }
+
+  &__loader {
+    margin: var(--#{$prefix}space-0-25);
+  }
+}
