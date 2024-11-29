@@ -11,6 +11,7 @@ const mockedValues = {
   nameWithNumbers: 'name2',
   tooLongName: 'vvvveeeerrrryyyylllloooonnnnggggnnnnaaaammmmeeee',
   invalidNumber: '8w5',
+  validNumber: "123",
   negativeNumber: '-5',
   shortPassword: '111a?',
   validPassword: 'Abcd1234!',
@@ -118,6 +119,11 @@ describe('commonValidation', () => {
   it('Should return error that only positive number is allowed', () => {
     const result = numberField(mockedValues.negativeNumber)
     expect(result).toBe(errorMessages.positiveNumbersOnly)
+  })
+
+  it('Should pass for valid number input', () => {
+    const result = numberField(mockedValues.validNumber) 
+    expect(result).toBe('')
   })
 
   it('Should return error when password is empty', () => {
