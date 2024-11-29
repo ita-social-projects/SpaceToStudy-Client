@@ -13,9 +13,13 @@ const mockedValues = {
   invalidNumber: '8w5',
   negativeNumber: '-5',
   shortPassword: '111a?',
+  validPassword: 'Abcd1234!',
+  passwordWithoutLetters: '1234567!',
   passwordWithoutNumbers: 'abc!dwga%g&sad',
+  passwordWithoutSpecialChar: '12345abcde',
   passwordWithInvalidSymbol: '123#qw er58',
   invalidEmail: 'example2example.com',
+  validEmail: 'example1@example.com',
   shortText: 't',
   longText: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
   emptyField: '',
@@ -116,14 +120,25 @@ describe('commonValidation', () => {
     expect(result).toBe(errorMessages.positiveNumbersOnly)
   })
 
+  it('Should return error when password is empty', () => {
+    const result = passwordField(mockedValues.emptyField)
+    console.log(result)
+    expect(result).toBe(errorMessages.emptyField)
+  })
+  
   it('Should return error that password cannot be shorter than 8 and longer than 25 characters', () => {
     const result = passwordField(mockedValues.shortPassword)
     expect(result).toBe(errorMessages.passwordLength)
   })
 
   it('Should return error that password must contain at least one alphabetic, one numeric and one special character', () => {
-    const result = passwordField(mockedValues.passwordWithoutNumbers)
-    expect(result).toBe(errorMessages.passwordComplex)
+    const result1 = passwordField(mockedValues.passwordWithoutLetters)
+    const result2 = passwordField(mockedValues.passwordWithoutNumbers)
+    const result3 = passwordField(mockedValues.passwordWithoutSpecialChar)
+
+    expect(result1).toBe(errorMessages.passwordComplex)
+    expect(result2).toBe(errorMessages.passwordComplex)
+    expect(result3).toBe(errorMessages.passwordComplex)
   })
 
   it('Should return error that password must contain only valid symbols', () => {
@@ -131,9 +146,19 @@ describe('commonValidation', () => {
     expect(result).toBe(errorMessages.passwordValidSymbols)
   })
 
+  it('Should pass for valid password', () => {
+    const result = passwordField(mockedValues.validPassword)
+    expect(result).toBe('')
+  })
+
   it('Should return error that email is invalid', () => {
     const result = emailField(mockedValues.invalidEmail)
     expect(result).toBe(errorMessages.emailValid)
+  })
+
+  it('Should pass for valid email', () => {
+    const result = emailField(mockedValues.validEmail)
+    expect(result).toBe('')
   })
 
   it('Should return error that text is too short', () => {
