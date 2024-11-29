@@ -14,7 +14,7 @@ $icon-sizes: (
 );
 $icon-variants: (
   primary: (
-    bgtoggle: $blue-gray-100,
+    bg-toggle: $blue-gray-100,
     icon: $blue-gray-800,
     active-icon: $blue-gray-500,
     active-icon-toggle: $blue-gray-600,
@@ -25,7 +25,7 @@ $icon-variants: (
     bg-hover-toggle: rgba($blue-gray-400, 0.6)
   ),
   secondary: (
-    bgtoggle: $blue-gray-100,
+    bg-toggle: $blue-gray-100,
     icon: $blue-gray-600,
     active-icon: $blue-gray-500,
     active-icon-toggle: $blue-gray-600,
@@ -36,7 +36,7 @@ $icon-variants: (
     bg-hover-toggle: rgba($blue-gray-400, 0.6)
   ),
   success: (
-    bgtoggle: $green-100,
+    bg-toggle: $green-100,
     icon: $green-700,
     active-icon: $green-600,
     active-icon-toggle: $green-600,
@@ -47,7 +47,7 @@ $icon-variants: (
     bg-hover-toggle: $green-200
   ),
   error: (
-    bgtoggle: $red-100,
+    bg-toggle: $red-100,
     icon: $red-600,
     active-icon: $red-500,
     active-icon-toggle: $red-500,
@@ -82,7 +82,7 @@ $icon-variants: (
   $variant-data: map.get($icon-variants, $variant);
 
   @if $toggle-able == true {
-    background-color: map.get($variant-data, bgToggle);
+    background-color: map.get($variant-data, bg-toggle);
 
     .#{$prefix}icon {
       color: map.get($variant-data, icon);
