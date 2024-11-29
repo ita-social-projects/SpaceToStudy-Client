@@ -139,9 +139,3 @@ export enum SortByEnum {
   highestRating = 'highestRating',
   lowestRating = 'lowestRating'
 }
-
-export enum InputFieldVariantEnum {
-  Large = 'large',
-  Small = 'small',
-  Outlined = 'outlined'
-}
