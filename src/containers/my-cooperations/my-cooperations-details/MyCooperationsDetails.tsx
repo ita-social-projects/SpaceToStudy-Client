@@ -19,7 +19,6 @@ import useConfirm from '~/hooks/use-confirm'
 
 import {
   ButtonVariantEnum,
-  ErrorResponse,
   MyCooperationDetails,
   Offer,
   ServiceFunction,
@@ -37,9 +36,6 @@ import { getCategoryIcon } from '~/services/category-icon-service'
 import { getValidatedHexColor } from '~/utils/get-validated-hex-color'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { AxiosResponse } from 'axios'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { snackbarVariants } from '~/constants'
-import { getErrorKey } from '~/utils/get-error-key'
 import { setCooperationStatus } from '~/redux/features/cooperationsSlice'
 
 const MyCooperationsDetails = () => {
@@ -78,21 +74,11 @@ const MyCooperationsDetails = () => {
     void fetchStatusData()
   }
 
-  const onResponseError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
-
   const { fetchData: fetchStatusData } = useAxios({
     service: handleCooperationStatusChange,
     fetchOnMount: false,
     defaultResponse: null,
-    onResponse,
-    onResponseError
+    onResponse
   })
 
   const updateInfo = useCallback(() => {
