@@ -1,8 +1,11 @@
-import { CircularProgress, IconButtonProps } from '@mui/material'
+import {
+  CircularProgress,
+  IconButtonProps,
+  IconButton as MuiIconButton
+} from '@mui/material'
 import React, { useState } from 'react'
 import { IconButtonVariant } from '~/types'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
-import { IconButton as MuiIconButton } from '@mui/material'
 import { cn } from '~/utils/cn'
 import './IconButton.scss'
 
