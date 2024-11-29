@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import { IconButtonVariant } from '~/types'
+import { IconButtonVariant } from '~/design-system/components/icon-button/IconButton.constants'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 
 const meta: Meta<typeof IconButton> = {
