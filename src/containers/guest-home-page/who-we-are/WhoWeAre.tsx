@@ -44,7 +44,7 @@ const WhoWeAre = () => {
       <DividerComponent
         caption={'test'}
         orientation={'horizontal'}
-        size='sm'
+        size='small'
         textAlign='center'
         thickness='sm'
         type='ellipse'
@@ -54,9 +54,18 @@ const WhoWeAre = () => {
       <DividerComponent
         caption={'test'}
         orientation={'horizontal'}
-        size='md'
         textAlign='center'
         thickness='sm'
+        type='linear'
+        variant={'fullWidth'}
+      />
+
+      <DividerComponent
+        caption={'test'}
+        orientation={'horizontal'}
+        size='big'
+        textAlign='center'
+        thickness='md'
         type='ellipse'
         variant={'fullWidth'}
       />

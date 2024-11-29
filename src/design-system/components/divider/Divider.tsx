@@ -33,10 +33,11 @@ const DividerComponent: React.FC<DividerProps> = ({
     <Box className={'s2s-divider'}>
       {type === 'linear' ? (
         <Divider
-          className={cn('s2s-divider-line')} // remove cn
+          className={cn(`s2s-divider-line`, {
+            [`s2s-divider-line-${thickness}`]: thickness
+          })}
           orientation={orientation}
           textAlign={textAlign}
-          // thickness={thickness}
           variant={variant}
         >
           <Typography className='s2s-divider-caption'>{caption}</Typography>
@@ -44,7 +45,8 @@ const DividerComponent: React.FC<DividerProps> = ({
       ) : (
         <Box
           className={cn('s2s-divider-ellipse', {
-            [`s2s-divider-ellipse-${size}`]: size
+            [`s2s-divider-ellipse-${size}`]: size,
+            [`s2s-divider-ellipse-${thickness}`]: thickness
           })}
         ></Box>
       )}

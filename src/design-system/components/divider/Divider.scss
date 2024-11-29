@@ -1,11 +1,24 @@
-@use '~scss/utilities' as *;
+@use '~scss/utilities'as *;
 
 .#{$prefix}divider {
   width: 100%;
 
+  &-line-sm {}
+
   &-ellipse {
     border-radius: 50%;
-    background-color: #C8CCD0;
+
+    &-sm {
+      background-color: #C8CCD0;
+    }
+
+    &-md {
+      background-color: #9199A1;
+    }
+
+    &-lg {
+      background-color: #9199A1;
+    }
 
     &-small {
       width: 8px;
