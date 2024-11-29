@@ -149,3 +149,4 @@ export enum IconButtonVariant {
   Secondary = 'secondary',
   Success = 'success',
   Error = 'error'
+}

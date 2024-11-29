@@ -3,7 +3,9 @@ import React, { useState } from 'react'
 import { IconButtonVariant } from '~/types'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import { IconButton as MuiIconButton } from '@mui/material'
+import { cn } from '~/utils/cn'
 import './IconButton.scss'
+
 interface S2SIconButtonProps extends Omit<IconButtonProps, 'size'> {
   variant?: IconButtonVariant
   size?: 'xs' | 'sm' | 'md' | 'lg'
@@ -26,16 +28,16 @@ export const IconButton: React.FC<S2SIconButtonProps> = ({
       setIsToggled((prevState) => !prevState)
     }
   }
-  const classNamesContainerIconBG = [
+  const classNamesContainerIconBG = cn(
     's2s-icon-button',
     `s2s-icon-button--${size}`,
     `s2s-icon-button--${variant}${isToggled ? '-toggle-able' : ''}`
-  ].join(' ')
-  const classNamesContainerIcon = [
+  )
+  const classNamesContainerIcon = cn(
     's2s-icon',
     `s2s-icon--${size}`,
     `s2s-icon--${variant}${isToggled ? '-toggle-able' : ''}`
-  ].join(' ')
+  )
   const loaderSizes = {
     xs: 12,
     sm: 16,

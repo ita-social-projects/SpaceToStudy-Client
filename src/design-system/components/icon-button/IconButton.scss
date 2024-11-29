@@ -81,7 +81,7 @@ $icon-variants: (
 @mixin icon-bg-mixin-variant($variant, $toggle-able: false) {
   $variant-data: map.get($icon-variants, $variant);
 
-  @if $toggle-able {
+  @if $toggle-able == true {
     background-color: map.get($variant-data, bgToggle);
 
     .#{$prefix}icon {
