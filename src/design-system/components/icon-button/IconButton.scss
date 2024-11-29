@@ -1,59 +1,157 @@
 @use '~scss/utilities' as *;
+@use 'sass:map';
+$icon-sizes-bg: (
+  xs: 20,
+  sm: 24,
+  md: 32,
+  lg: 40
+);
+$icon-sizes: (
+  xs: 12,
+  sm: 16,
+  md: 20,
+  lg: 24
+);
+$icon-variants: (
+  primary: (
+    bgtoggle: $blue-gray-100,
+    icon: $blue-gray-800,
+    active-icon: $blue-gray-500,
+    active-icon-toggle: $blue-gray-600,
+    hover: rgba($blue-gray-400, 0.2),
+    active: rgba($blue-gray-400, 0.2),
+    focus: rgba($blue-gray-400, 0.4),
+    disabled: $blue-gray-300,
+    bg-hover-toggle: rgba($blue-gray-400, 0.6)
+  ),
+  secondary: (
+    bgtoggle: $blue-gray-100,
+    icon: $blue-gray-600,
+    active-icon: $blue-gray-500,
+    active-icon-toggle: $blue-gray-600,
+    hover: rgba($blue-gray-400, 0.2),
+    active: rgba($blue-gray-400, 0.2),
+    focus: rgba($blue-gray-400, 0.4),
+    disabled: $blue-gray-300,
+    bg-hover-toggle: rgba($blue-gray-400, 0.6)
+  ),
+  success: (
+    bgtoggle: $green-100,
+    icon: $green-700,
+    active-icon: $green-600,
+    active-icon-toggle: $green-600,
+    hover: $green-100,
+    active: $green-100,
+    focus: $green-200,
+    disabled: $green-300,
+    bg-hover-toggle: $green-200
+  ),
+  error: (
+    bgtoggle: $red-100,
+    icon: $red-600,
+    active-icon: $red-500,
+    active-icon-toggle: $red-500,
+    hover: $red-100,
+    active: $red-100,
+    focus: $red-200,
+    disabled: $red-300,
+    bg-hover-toggle: $red-200
+  )
+);
 
-@mixin icon-bg-mixin($diameter) {
-  width: #{$diameter}px;
-  height: #{$diameter}px;
+@mixin icon-bg-mixin($size) {
+  width: $size;
+  height: $size;
   box-shadow: none;
   background-color: transparent;
   transition:
     transform 0.3s ease,
     background-color 0.3s ease;
   padding: 0;
+
+  &:disabled {
+    background-color: none;
+  }
 }
-@mixin icon-mixin($diameter) {
-  width: #{$diameter}px;
-  height: #{$diameter}px;
+@mixin icon-mixin($size) {
+  width: $size;
+  height: $size;
   box-shadow: none;
-  transition:
-    transform 0.3s ease,
-    background-color 0.3s ease;
-
-  // .MuiSvgIcon-root {
-
-  // }
 }
-.#{$prefix}icon-button {
-  &--small {
-    @include icon-bg-mixin(20);
-  }
+@mixin icon-bg-mixin-variant($variant, $toggle-able: false) {
+  $variant-data: map.get($icon-variants, $variant);
 
-  &--medium {
-    @include icon-bg-mixin(24);
-  }
+  @if $toggle-able {
+    background-color: map.get($variant-data, bgToggle);
 
-  &--large {
-    @include icon-bg-mixin(32);
-  }
+    .#{$prefix}icon {
+      color: map.get($variant-data, icon);
+    }
 
-  &--extraLarge {
-    @include icon-bg-mixin(40);
+    &:hover {
+      background-color: map.get($variant-data, bg-hover-toggle);
+    }
+
+    &:active {
+      background-color: map.get($variant-data, bg-hover-toggle);
+      .#{$prefix}icon.MuiSvgIcon-root {
+        color: map.get($variant-data, active-icon-toggle);
+      }
+    }
+
+    &:focus {
+      background-color: map.get($variant-data, bg-hover-toggle);
+    }
+
+    &:disabled {
+      background-color: map.get($variant-data, bgToggle);
+      .#{$prefix}icon {
+        color: map.get($variant-data, disabled);
+      }
+    }
+  } @else {
+    .#{$prefix}icon {
+      color: map.get($variant-data, icon);
+    }
+
+    &:hover {
+      background-color: map.get($variant-data, hover);
+    }
+
+    &:active {
+      background-color: map.get($variant-data, active);
+      .#{$prefix}icon.MuiSvgIcon-root {
+        color: map.get($variant-data, active-icon);
+      }
+    }
+
+    &:focus {
+      background-color: map.get($variant-data, focus);
+    }
+
+    &:disabled {
+      .#{$prefix}icon {
+        color: map.get($variant-data, disabled);
+      }
+    }
   }
 }
 
-.#{$prefix}icon {
-  &--small {
-    @include icon-mixin(12);
+@each $name, $size in $icon-sizes-bg {
+  .#{$prefix}icon-button--#{$name} {
+    @include icon-bg-mixin($size + px);
   }
-
-  &--medium {
-    @include icon-mixin(16);
+}
+@each $name, $size in $icon-sizes {
+  .#{$prefix}icon--#{$name} {
+    @include icon-mixin($size + px);
   }
-
-  &--large {
-    @include icon-mixin(20);
+}
+@each $variant in map.keys($icon-variants) {
+  .#{$prefix}icon-button--#{$variant} {
+    @include icon-bg-mixin-variant($variant, false);
   }
-
-  &--extraLarge {
-    @include icon-mixin(24);
+  .#{$prefix}icon-button--#{$variant}-toggle-able {
+    @include icon-bg-mixin-variant($variant, true);
   }
 }
