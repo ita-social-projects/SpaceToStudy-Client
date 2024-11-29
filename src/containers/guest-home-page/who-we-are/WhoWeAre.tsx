@@ -35,6 +35,29 @@ const WhoWeAre = () => {
       <DividerComponent
         caption={'test'}
         orientation={'horizontal'}
+        textAlign='center'
+        thickness='sm'
+        type='linear'
+        variant={'fullWidth'}
+      />
+
+      <DividerComponent
+        caption={'test'}
+        orientation={'horizontal'}
+        size='sm'
+        textAlign='center'
+        thickness='sm'
+        type='ellipse'
+        variant={'fullWidth'}
+      />
+
+      <DividerComponent
+        caption={'test'}
+        orientation={'horizontal'}
+        size='md'
+        textAlign='center'
+        thickness='sm'
+        type='ellipse'
         variant={'fullWidth'}
       />
     </Box>

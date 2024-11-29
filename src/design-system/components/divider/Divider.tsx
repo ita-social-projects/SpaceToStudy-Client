@@ -1,11 +1,14 @@
 import { Box, Typography, Divider } from '@mui/material'
+import { cn } from '~/utils/cn'
 
 import '~scss-components/divider/Divider.scss'
 
 const variants = ['fullWidth', 'inset', 'middle'] as const
 const orientation = ['vertical', 'horizontal'] as const
-const thickness = ['vertical', 'horizontal'] as const
+const thickness = ['sm', 'md', 'lg'] as const
 const textAlign = ['left', 'right', 'center'] as const
+const type = ['ellipse', 'linear'] as const
+const size = ['small', 'big'] as const
 
 type DividerProps = {
   variant: (typeof variants)[number]
@@ -13,26 +16,38 @@ type DividerProps = {
   thickness: (typeof thickness)[number]
   textAlign: (typeof textAlign)[number]
   caption: string
+  type: (typeof type)[number]
+  size?: (typeof size)[number]
 }
 
 const DividerComponent: React.FC<DividerProps> = ({
   variant,
   orientation,
   thickness,
+  size,
   caption,
-  textAlign
+  textAlign,
+  type
 }) => {
   return (
     <Box className={'s2s-divider'}>
-      <Divider
-        className={cn('s2s-divider-line')}
-        orientation={orientation}
-        textAlign={textAlign}
-        // thickness={thickness}
-        variant={variant}
-      >
-        <Typography className='s2s-divider-caption'>{caption}</Typography>
-      </Divider>
+      {type === 'linear' ? (
+        <Divider
+          className={cn('s2s-divider-line')} // remove cn
+          orientation={orientation}
+          textAlign={textAlign}
+          // thickness={thickness}
+          variant={variant}
+        >
+          <Typography className='s2s-divider-caption'>{caption}</Typography>
+        </Divider>
+      ) : (
+        <Box
+          className={cn('s2s-divider-ellipse', {
+            [`s2s-divider-ellipse-${size}`]: size
+          })}
+        ></Box>
+      )}
     </Box>
   )
 }
