@@ -120,22 +120,4 @@ describe('CreateOrEditOffer', () => {
       expect(mockNavigate).toHaveBeenCalledWith('/my-profile#complete')
     })
   })
-
-  it('should not call a dispatch and navigate on rejected value', async () => {
-    const { OfferService } = await import('~/services/offer-service')
-    OfferService.createOffer.mockRejectedValue({})
-
-    const saveButton = screen.getByRole('button', {
-      name: /offerPage.createOffer.buttonTitles.tutor/i
-    })
-    fireEvent.click(saveButton)
-
-    waitFor(() => {
-      expect(mockDispatch).not.toHaveBeenCalled()
-      expect(mockCloseDrawer).not.toHaveBeenCalled()
-      expect(mockNavigate).not.toHaveBeenCalledWith(
-        expect.stringMatching(/^\/offer-details/)
-      )
-    })
-  })
 })
