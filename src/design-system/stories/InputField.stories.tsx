@@ -46,7 +46,9 @@ This component is ideal for building robust and user-friendly forms, search bars
     placeholder: '',
     search: true,
     error: false,
-    onChange: fn()
+    onChange: fn(),
+    onKeyDown: fn(),
+    onClear: fn()
   },
   argTypes: {
     value: {
@@ -90,10 +92,18 @@ type Story = StoryObj<typeof meta>
 
 const InputFieldTemplate = (args: InputFieldProps) => {
   const [value, setValue] = useState(args.value)
+
+  const handleClearInput = () => {
+    setValue('')
+  }
+  const handleKeyDown = args.onKeyDown
+
   return (
     <InputField
       {...args}
       onChange={(e) => setValue(e.target.value)}
+      onClear={handleClearInput}
+      onKeyDown={handleKeyDown}
       value={value}
     />
   )
