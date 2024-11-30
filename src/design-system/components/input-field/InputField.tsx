@@ -5,13 +5,13 @@ import ClearIcon from '@mui/icons-material/Clear'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import { cn } from '~/utils/cn'
 
-import { InputBaseProps } from '@mui/material/InputBase'
+import InputBase, { InputBaseProps } from '@mui/material/InputBase'
 
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material'
 
-export interface InputFieldProps extends InputBaseProps {
-  variant: InputFieldVariantEnum
+type BaseInputFieldProps = {
+  variant?: InputFieldVariantEnum
   label?: string
   disabled?: boolean
   value: string
@@ -19,8 +19,11 @@ export interface InputFieldProps extends InputBaseProps {
   helperText?: string
   search?: boolean
   error?: boolean
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onClear?: () => void
 }
+
+export type InputFieldProps = BaseInputFieldProps &
+  Omit<InputBaseProps, keyof BaseInputFieldProps>
 
 const InputField: React.FC<InputFieldProps> = ({
   variant = InputFieldVariantEnum.Small,
@@ -32,12 +35,12 @@ const InputField: React.FC<InputFieldProps> = ({
   error,
   search,
   onChange,
-  sx
+  onClear,
+  sx,
+  ref,
+  ...props
 }) => {
-  const clearInput = () => {
-    onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)
-  }
-
+  const shouldShowClearIcon = !disabled && value
   return (
     <Box sx={sx as SxProps}>
       <div
@@ -48,19 +51,22 @@ const InputField: React.FC<InputFieldProps> = ({
       >
         {search && <SearchIcon className='s2s-search-icon' />}
 
-        <input
+        <InputBase
           className='s2s-input-field'
           disabled={disabled}
+          inputRef={ref}
           onChange={onChange}
           placeholder={placeholder}
           value={value}
+          {...props}
         />
-
         <label className='s2s-input-label'>{label}</label>
         {error ? (
           <ErrorOutlineIcon className='s2s-error-icon' />
         ) : (
-          <ClearIcon className='s2s-clear-icon' onClick={clearInput} />
+          shouldShowClearIcon && (
+            <ClearIcon className='s2s-clear-icon' onClick={onClear} />
+          )
         )}
       </div>
       {helperText && (
@@ -77,5 +83,4 @@ const InputField: React.FC<InputFieldProps> = ({
     </Box>
   )
 }
-
 export default InputField

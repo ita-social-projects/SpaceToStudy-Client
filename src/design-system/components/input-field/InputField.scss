@@ -2,12 +2,13 @@
 
 .#{$prefix}input-container {
   width: 100%;
+  height: 100%;
   position: relative;
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  background-color: get-var('neutral-0');
-  padding: get-var('space-0') get-var('space-1');
+  background-color: inherit;
+  padding: get-var('space-0') get-var('space-1-5');
   gap: get-var('space-1');
 
   .#{$prefix}search-icon {
@@ -16,10 +17,11 @@
   }
 
   .#{$prefix}clear-icon {
+    position: absolute;
+    right: get-var('space-1-5');
     font-size: get-var('font-size-xl');
     color: get-var('blue-gray-600');
     cursor: pointer;
-    margin-left: auto;
     visibility: hidden;
   }
 
@@ -29,13 +31,18 @@
     margin-left: auto;
   }
 
-  input:focus + .#{$prefix}clear-icon,
-  input:not(:placeholder-shown) ~ .#{$prefix}clear-icon {
+  .MuiInputBase-root:has(.MuiInputBase-input:focus) ~ .#{$prefix}clear-icon,
+  .MuiInputBase-root:has(.MuiInputBase-input:not(:placeholder-shown))
+    ~ .#{$prefix}clear-icon {
     visibility: visible;
   }
 
-  input {
-    padding: get-var('space-1-5') get-var('space-1');
+  .s2s-input-field {
+    flex: 1;
+  }
+
+  .MuiInputBase-input {
+    padding: get-var('space-0') get-var('space-1');
     color: get-var('blue-gray-700');
     background: transparent;
     border: none;
@@ -66,11 +73,13 @@
     left: calc(get-var('space-4') + get-var('space-0-25'));
   }
 
-  input:focus + .#{$prefix}input-label,
-  input:not(:placeholder-shown) + .#{$prefix}input-label {
+  .MuiInputBase-root:has(.MuiInputBase-input:focus) + .s2s-input-label,
+  .MuiInputBase-root:has(.MuiInputBase-input:not(:placeholder-shown))
+    + .s2s-input-label {
+    top: 0;
     left: get-var('space-1');
-    top: get-var('space-0');
     font-size: get-var('font-size-xs');
+    color: get-var('blue-gray-700');
   }
 
   &_small {
@@ -95,7 +104,7 @@
 }
 
 %variant-large {
-  input {
+  .MuiInputBase-input {
     font-size: get-var('font-size-3xl');
     font-weight: get-var('font-weight-medium');
   }
@@ -106,7 +115,7 @@
 }
 
 %variant-small {
-  input {
+  .MuiInputBase-input {
     font-size: get-var('font-size-md');
     font-weight: get-var('font-weight-regular');
 
@@ -125,7 +134,7 @@
   background: transparent;
   border-radius: get-var('border-radius-2xs');
 
-  input {
+  .MuiInputBase-input {
     color: get-var('blue-gray-700');
     font-weight: get-var('font-weight-regular');
     padding: get-var('space-2') get-var('space-1');
@@ -140,7 +149,7 @@
     outline: get-var('border-width-xs') solid get-var('blue-gray-900');
     border-color: get-var('blue-gray-900');
 
-    input {
+    .MuiInputBase-input {
       font-size: get-var('font-size-md');
       color: get-var('blue-gray-800');
     }
@@ -153,7 +162,7 @@
   &:focus-within {
     outline: get-var('border-width-md') solid get-var('blue-gray-900');
 
-    input::placeholder {
+    .MuiInputBase-input::placeholder {
       color: get-var('blue-gray-900');
       font-family: get-var('font-family-rubik');
     }
@@ -165,7 +174,7 @@
   &.#{$prefix}input-container_error {
     outline: get-var('border-width-md') solid get-var('red-500');
 
-    input {
+    .MuiInputBase-input {
       color: get-var('red-500');
     }
     .#{$prefix}input-label {
@@ -173,7 +182,7 @@
     }
   }
 
-  input:focus::placeholder {
+  .MuiInputBase-input:focus::placeholder {
     opacity: 1;
     color: get-var('blue-gray-900');
     font-family: get-var('font-family-rubik');
@@ -216,7 +225,7 @@
 %status-error {
   color: get-var('red-500');
 
-  input {
+  .s2s-input-field {
     color: get-var('red-500');
   }
   .#{$prefix}input-label {
