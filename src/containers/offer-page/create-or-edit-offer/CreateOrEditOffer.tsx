@@ -26,7 +26,6 @@ import {
   ButtonVariantEnum,
   ComponentEnum,
   CreateOrUpdateOfferData,
-  ErrorResponse,
   Offer,
   OfferActionsEnum,
   ServiceFunction,
@@ -35,7 +34,6 @@ import {
 } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 interface CreateOrUpdateOfferProps {
   existingOffer?: Offer | null
@@ -61,14 +59,6 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     ? OfferActionsEnum.Edit
     : OfferActionsEnum.Create
 
-  const onResponseError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
   const onResponse = (response: Offer | null) => {
     if (hash == '#offer') {
       dispatch(
@@ -111,8 +101,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     service,
     fetchOnMount: false,
     defaultResponse: null,
-    onResponse,
-    onResponseError
+    onResponse
   })
 
   const {
