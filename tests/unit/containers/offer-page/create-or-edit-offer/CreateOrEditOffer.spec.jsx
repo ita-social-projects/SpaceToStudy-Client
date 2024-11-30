@@ -2,17 +2,14 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
 
 import { renderWithProviders } from '~tests/test-utils'
-import CreateOrEditOffer from '~/containers/offer-page/create-or-edit-offer/CreateOrEditOffer'
 import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
 import snackbarReducer, { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 import { expect } from 'vitest'
 import reducer from '~/redux/reducer'
-import { OfferService } from '~/services/offer-service'
 
 const mockDispatch = vi.fn()
 const mockCloseDrawer = vi.fn()
-const mockService = vi.fn(async () => ({ data: {} }))
 const mockNavigate = vi.fn()
 
 vi.mock('~/hooks/use-axios', async () => {
