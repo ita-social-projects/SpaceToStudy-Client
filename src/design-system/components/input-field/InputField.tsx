@@ -60,7 +60,7 @@ const InputField: React.FC<InputFieldProps> = ({
           value={value}
           {...props}
         />
-        <label className='s2s-input-label'>{label}</label>
+        {label && <label className='s2s-input-label'>{label}</label>}
         {error ? (
           <ErrorOutlineIcon className='s2s-error-icon' />
         ) : (

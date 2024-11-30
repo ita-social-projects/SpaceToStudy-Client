@@ -145,6 +145,10 @@
     }
   }
 
+  &:not(:has(.s2s-input-label)) .MuiInputBase-input::placeholder {
+    opacity: 1;
+  }
+
   &:hover {
     outline: get-var('border-width-xs') solid get-var('blue-gray-900');
     border-color: get-var('blue-gray-900');
