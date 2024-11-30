@@ -108,5 +108,8 @@ export const URLs = {
   },
   attachments: {
     post: '/attachments'
+  },
+  reviews: {
+    post: '/reviews'
   }
 }

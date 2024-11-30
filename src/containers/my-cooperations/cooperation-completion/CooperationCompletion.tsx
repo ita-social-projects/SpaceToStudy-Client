@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -9,16 +10,16 @@ import AppButton from '~/components/app-button/AppButton'
 import { useModalContext } from '~/context/modal-context'
 
 import { styles } from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion.styles'
-import { ButtonVariantEnum, SizeEnum } from '~/types'
+import { ButtonVariantEnum, SizeEnum, ReviewDataFromCooperation } from '~/types'
 import AddReviewModal from '~/containers/my-cooperations/add-review-modal/AddReviewModal'
 
-const CooperationCompletion = () => {
+const CooperationCompletion: FC<ReviewDataFromCooperation> = ({ data }) => {
   const { t } = useTranslation()
   const { openModal } = useModalContext()
 
   const openAddReviewModal = () => {
     openModal({
-      component: <AddReviewModal />
+      component: <AddReviewModal data={data} />
     })
   }
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -8,15 +8,20 @@ import TextField from '@mui/material/TextField'
 
 import Button from '~/design-system/components/button/Button'
 
+import { ReviewService } from '~/services/review-service'
 import { useAppSelector } from '~/hooks/use-redux'
-import { ComponentEnum } from '~/types'
+import { ComponentEnum, ReviewDataFromCooperation } from '~/types'
 import { styles } from '~/containers/my-cooperations/add-review-modal/AddReviewModal.styles'
 
-const AddReviewModal = () => {
+const AddReviewModal: FC<ReviewDataFromCooperation> = ({ data }) => {
   const [rating, setRating] = useState<number>(0)
   const [review, setReview] = useState<string>('')
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
+
+  const handleSubmit = async () => {
+    await ReviewService.submitReview({...data, comment: review, rating: rating})
+  }
 
   return (
     <Box component={ComponentEnum.Form} sx={styles.root}>
@@ -49,7 +54,7 @@ const AddReviewModal = () => {
         <Button color='tonal'>
           {t('cooperationsPage.cooperationDetails.cancel')}
         </Button>
-        <Button type='submit'>
+        <Button type='submit' onClick={handleSubmit}>
           {t('cooperationsPage.cooperationDetails.submit')}
         </Button>
       </Box>

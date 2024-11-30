@@ -71,6 +71,12 @@ const MyCooperationsDetails = () => {
 
   const { offer, price } = detailsResponse
 
+  const reviewData = {
+    targetUserId: displayedUser._id,
+    targetUserRole: displayedUser.role[0],
+    offer: detailsResponse.offer._id
+  }
+
   const CategoryIcon = getCategoryIcon(offer.category.appearance.icon)
   const categoryColor = getValidatedHexColor(offer.category.appearance.color)
 
@@ -106,7 +112,7 @@ const MyCooperationsDetails = () => {
     createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, displayedUser.photo)
 
   const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
-    <CooperationCompletion />
+    <CooperationCompletion data={reviewData}/>
   )
 
   return (
