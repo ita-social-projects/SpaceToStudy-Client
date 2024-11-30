@@ -36,7 +36,7 @@ vi.mock('~/hooks/use-redux', async () => {
   return {
     ...actual,
     useAppDispatch: () => mockDispatch,
-    useAppSelector: vi.fn(() => ({ userRole: 'tutor' })),
+    useAppSelector: vi.fn(() => ({ userRole: 'tutor' }))
   }
 })
 
@@ -65,9 +65,9 @@ const store = configureStore({
 
 describe('CreateOrEditOffer', () => {
   beforeEach(() => {
-    renderWithProviders(
-      <CreateOffer closeDrawer={mockCloseDrawer} />, {store}
-    )
+    renderWithProviders(<CreateOffer closeDrawer={mockCloseDrawer} />, {
+      store
+    })
   })
 
   afterEach(() => {
@@ -76,20 +76,21 @@ describe('CreateOrEditOffer', () => {
   })
 
   it('should call a dispatch and navigate on successful response', async () => {
-    const { OfferService } = await import(
-      '~/services/offer-service'
-    )
+    const { OfferService } = await import('~/services/offer-service')
     OfferService.createOffer.mockResolvedValue({})
 
-    const saveButton = screen.getByRole('button', {name: /offerPage.createOffer.buttonTitles.tutor/i})
+    const saveButton = screen.getByRole('button', {
+      name: /offerPage.createOffer.buttonTitles.tutor/i
+    })
     fireEvent.click(saveButton)
 
     waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledWith(openAlert({
+      expect(mockDispatch).toHaveBeenCalledWith(
+        openAlert({
           severity: snackbarVariants.success,
           message: 'offerPage.createOffer.successMessage'
-        }
-      ))
+        })
+      )
       expect(mockCloseDrawer).toHaveBeenCalled()
       expect(mockNavigate).toHaveBeenCalledWith('/offer-details')
     })
@@ -98,21 +99,24 @@ describe('CreateOrEditOffer', () => {
   it('should call different dispatch and navigate with #offer on successful response', () => {
     vi.mock('react-router-dom', async () => ({
       ...(await vi.importActual('react-router-dom')),
-      useLocation: () => ({hash: '#offer'})
+      useLocation: () => ({ hash: '#offer' })
     }))
-    
-    const saveButton = screen.getByRole('button', {name: /offerPage.createOffer.buttonTitles.tutor/i})
+
+    const saveButton = screen.getByRole('button', {
+      name: /offerPage.createOffer.buttonTitles.tutor/i
+    })
     fireEvent.click(saveButton)
 
     waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledWith(openAlert({
+      expect(mockDispatch).toHaveBeenCalledWith(
+        openAlert({
           severity: snackbarVariants.success,
           message: 'offerPage.createOffer.extendedSuccessMessage.tutor',
           duration: 10000,
           isExtended: true,
           route: '/my-offers'
-        }
-      ))
+        })
+      )
       expect(mockCloseDrawer).toHaveBeenCalled()
       expect(mockNavigate).toHaveBeenCalledWith('/my-profile#complete')
     })
