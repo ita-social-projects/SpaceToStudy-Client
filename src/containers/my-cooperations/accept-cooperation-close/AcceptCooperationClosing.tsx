@@ -1,42 +1,41 @@
-import { Box, Typography } from '@mui/material'
+import { Box, styled, Typography } from '@mui/material'
 import { FC } from 'react'
-import AppButton from '~/components/app-button/AppButton'
-
 import { styles } from './AcceptCooperationClosing.styles'
 import { ErrorOutlineRounded } from '@mui/icons-material'
-import { SizeEnum } from '~/types'
+import Button from '~/design-system/components/button/Button'
+import { useTranslation } from 'react-i18next'
 
 interface AcceptCooperationClosureProps {
   user: string
   onAccept: () => void
 }
 
+const BoldText = styled('span')({
+  fontWeight: 500
+})
+
 const AcceptCooperationClosing: FC<AcceptCooperationClosureProps> = ({
   user,
   onAccept
 }) => {
+  const { t } = useTranslation()
   return (
     <Box sx={styles.root}>
       <Box>
         <Box sx={styles.title}>
           <ErrorOutlineRounded />
-          <Typography>Cooperation closing process</Typography>
+          <Typography>{t('titles.acceptCooperationClosing')}</Typography>
         </Box>
         <Typography sx={styles.body}>
-          <span style={styles.span}>{user}</span> started a closing process for
-          the current cooperation. You will have{' '}
-          <span style={styles.span}> 1 month of access</span> to study materials
-          after the cooperation has been closed.
+          <BoldText>{user}</BoldText>
+          {t('cooperationDetailsPage.closingMessage1')}
+          <BoldText>{t('cooperationDetailsPage.accessDuration')}</BoldText>
+          {t('cooperationDetailsPage.closingMessage2')}
         </Typography>
       </Box>
-      <AppButton
-        color='error'
-        onClick={onAccept}
-        size={SizeEnum.Small}
-        sx={styles.button}
-      >
-        Accept
-      </AppButton>
+      <Button color='tonal-error' onClick={onAccept} size='xs'>
+        {t('cooperationDetailsPage.acceptBtn')}
+      </Button>
     </Box>
   )
 }

@@ -46,7 +46,7 @@ import {
   setCooperationStatus,
   setIsActivityCreated
 } from '~/redux/features/cooperationsSlice'
-import AcceptCooperationClosing from '../accept-cooperation-close/AcceptCooperationClosing'
+import AcceptCooperationClosing from '~/containers/my-cooperations/accept-cooperation-close/AcceptCooperationClosing'
 
 const CooperationDetails = () => {
   const dispatch = useAppDispatch()
@@ -139,7 +139,7 @@ const CooperationDetails = () => {
     return cooperationContent
   }
 
-  const handleCooperationStatusUpdate = async () => {
+  const isCooperationStatusUpdated = async () => {
     await cooperationService.updateCooperation({
       _id: id,
       status: StatusEnum.Closed
@@ -149,7 +149,7 @@ const CooperationDetails = () => {
   }
 
   const handleCooperationCloseAccept = () => {
-    void handleCooperationStatusUpdate()
+    void isCooperationStatusUpdated()
   }
 
   const cooperationCompletionConditions =

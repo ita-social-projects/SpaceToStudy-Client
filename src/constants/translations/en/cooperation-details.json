@@ -29,5 +29,9 @@
     "yourProgress": "Your progress",
     "completed": "completed",
     "needToComplete": "to complete"
-  }
+  },
+  "closingMessage1": " started a closing process for the current cooperation. You will have ",
+  "accessDuration": "1 month of access",
+  "closingMessage2": " to study materials after the cooperation has been closed.",
+  "acceptBtn": "Accept"
 }

@@ -133,7 +133,7 @@ const MyCooperationsDetails = () => {
 
   const handleCooperationStatusUpdate = async () => {
     const confirmed = await checkConfirmation({
-      title: 'titles.confirmCooperationClosing',
+      title: t('titles.confirmCooperationClosing'),
       message: t('cooperationsPage.closeCooperationModal.message'),
       check: true
     })
