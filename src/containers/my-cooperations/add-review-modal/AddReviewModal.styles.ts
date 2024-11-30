@@ -1,15 +1,15 @@
-import palette from '~/styles/app-theme/app.pallete'
-import { PositionEnum, TypographyVariantEnum } from '~/types'
-
-const { Subtitle1, Body2 } = TypographyVariantEnum
-
-const titleWithDescription = {
-  wrapper: { textAlign: PositionEnum.Left },
-  title: { typography: Subtitle1 },
-  description: { typography: Body2, color: palette.primary[500] }
-}
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
+  title: {
+    typography: TypographyVariantEnum.H5,
+    marginBottom: '3px'
+  },
+  description: {
+    typography: TypographyVariantEnum.Subtitle1,
+    color: 'primary.500',
+    marginBottom: '15px'
+  },
   root: { p: 5 },
   formWrapper: {
     m: '16px 0 24px 0',
@@ -19,7 +19,7 @@ export const styles = {
   },
   buttonGroup: {
     display: 'flex',
-    gap: 2
-  },
-  titleWithDescription
+    gap: 2,
+    justifyContent: 'right'
+  }
 }

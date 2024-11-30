@@ -14,7 +14,7 @@ import AddReviewModal from '~/containers/my-cooperations/add-review-modal/AddRev
 
 const CooperationCompletion = () => {
   const { t } = useTranslation()
-  const { openModal, closeModal } = useModalContext()
+  const { openModal } = useModalContext()
 
   const openAddReviewModal = () => {
     openModal({
@@ -35,10 +35,10 @@ const CooperationCompletion = () => {
         title={t('cooperationsPage.cooperationDetails.closeCooperationTitle')}
       >
         <AppButton
+          onClick={openAddReviewModal}
           size={SizeEnum.Medium}
           sx={styles.closeBtn}
           variant={ButtonVariantEnum.Text}
-          onClick={openAddReviewModal}
         >
           {t('cooperationsPage.cooperationDetails.closeCooperationBtn')}
         </AppButton>
