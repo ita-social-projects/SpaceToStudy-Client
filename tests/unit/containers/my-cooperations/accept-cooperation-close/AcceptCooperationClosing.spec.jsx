@@ -9,7 +9,7 @@ describe('AcceptCooperationClosing', () => {
   })
 
   it('should render the title correctly', () => {
-    const titleText = screen.getByText('Cooperation closing process')
+    const titleText = screen.getByText('titles.acceptCooperationClosing')
     expect(titleText).toBeInTheDocument()
   })
 })
