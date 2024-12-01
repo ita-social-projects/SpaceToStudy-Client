@@ -35,6 +35,25 @@ describe('EnrollOffer', () => {
     expect(levelSelect.value).toBe(newLevel)
   })
 
+  it('should display error message', () => {
+    const newAdditionalInfo = 'Some text'
+    const additionalInfoInput = screen.getByLabelText(
+      'offerDetailsPage.enrollOffer.labels.info'
+    )
+    fireEvent.change(additionalInfoInput, {
+      target: { value: newAdditionalInfo }
+    })
+    expect(additionalInfoInput.value).toBe(newAdditionalInfo)
+
+    const button = screen.getByText('button.createCooperation')
+    waitFor(() => fireEvent.click(button))
+
+    const errorMessage = screen.getByText(
+      'offerDetailsPage.errors.additionalInfo'
+    )
+    expect(errorMessage).toBeInTheDocument()
+  })
+
   it('should send form', () => {
     const button = screen.getByText('button.createCooperation')
 
