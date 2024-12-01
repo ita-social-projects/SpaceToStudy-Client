@@ -26,20 +26,20 @@ const Badge: React.FC<BadgeProps> = ({
   color = 'primary',
   ...props
 }) => {
-  const displayBadge = isVisible ? props.badgeContent : 0
+  const badgeContent = isVisible ? props.badgeContent : 0
   const badgeVariant = props.variant === 'sm' ? 'dot' : 'standard'
-  const maxContentShown =
+  const maxContent =
     props.variant === 'lg' ? (props.maxContent ?? 10) : undefined
-  const maxShown =
+  const isZeroShown =
     props.variant === 'lg' ? (props.isZeroShown ?? false) : undefined
 
   return (
     <MuiBadge
-      badgeContent={displayBadge}
+      badgeContent={badgeContent}
       color={color}
-      max={maxContentShown}
+      max={maxContent}
       overlap='circular'
-      showZero={maxShown}
+      showZero={isZeroShown}
       variant={badgeVariant}
     >
       {children}
