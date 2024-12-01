@@ -13,6 +13,7 @@ import { styles } from '~/components/app-text-area/AppTextArea.styles'
 interface AppTextAreaProps
   extends Omit<TextFieldProps, 'error' | 'helperText'> {
   maxLength?: number
+  minLength?: number
   errorMsg?: string
   value?: string
   textFieldStyles?: SxProps
@@ -24,6 +25,7 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   minRows = 4,
   maxRows = 4,
   maxLength,
+  minLength,
   title,
   value,
   sx,
@@ -35,6 +37,11 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   const textLengthStyle = isRightAligned
     ? styles.textLengthRight
     : styles.textLength
+  let isLengthValid = value?.length === maxLength ? 'error' : 'primary.300'
+  isLengthValid =
+    minLength && value?.length < minLength && value?.length !== 0
+      ? 'error'
+      : 'primary.300'
 
   return (
     <Box sx={spliceSx(styles.container, sx)}>
@@ -50,12 +57,7 @@ const AppTextArea: FC<AppTextAreaProps> = ({
       />
       {maxLength && (
         <Typography
-          color={
-            value?.length === maxLength ||
-            (value?.length < 30 && value?.length !== 0)
-              ? 'error'
-              : 'primary.300'
-          }
+          color={isLengthValid}
           sx={textLengthStyle}
           variant={TypographyVariantEnum.Body2}
         >

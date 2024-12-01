@@ -39,6 +39,6 @@ export const styles = {
   },
   errorText: {
     ml: '12.5px',
-    mt: '-17px'
+    mt: '3px'
   }
 }

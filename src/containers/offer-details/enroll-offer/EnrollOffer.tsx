@@ -154,24 +154,27 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
           onChange={handleFieldChange('price')}
           title={t('offerDetailsPage.enrollOffer.labels.preferredPrice')}
         />
-        <AppTextArea
-          fullWidth
-          label={t('offerDetailsPage.enrollOffer.labels.info')}
-          maxLength={1000}
-          onChange={handleInputChange('additionalInfo')}
-          sx={styles.textArea}
-          title={t('offerDetailsPage.enrollOffer.inputs.info')}
-          value={data.additionalInfo}
-        />
-        {errors.additionalInfo && (
-          <Typography
-            color='error'
-            sx={styles.errorText}
-            variant={TypographyVariantEnum.Caption}
-          >
-            {t('offerDetailsPage.errors.additionalInfo')}
-          </Typography>
-        )}
+        <Box>
+          <AppTextArea
+            fullWidth
+            label={t('offerDetailsPage.enrollOffer.labels.info')}
+            maxLength={1000}
+            minLength={30}
+            onChange={handleInputChange('additionalInfo')}
+            sx={styles.textArea}
+            title={t('offerDetailsPage.enrollOffer.inputs.info')}
+            value={data.additionalInfo}
+          />
+          {errors.additionalInfo && (
+            <Typography
+              color='error'
+              sx={styles.errorText}
+              variant={TypographyVariantEnum.Caption}
+            >
+              {t('offerDetailsPage.errors.additionalInfo')}
+            </Typography>
+          )}
+        </Box>
         <AppButton
           loading={loading}
           sx={styles.button}
