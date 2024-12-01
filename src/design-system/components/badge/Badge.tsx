@@ -27,7 +27,7 @@ const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   const badgeContent = isVisible ? props.badgeContent : 0
-  const badgeVariant = props.variant === 'sm' ? 'dot' : 'standard'
+  const variant = props.variant === 'sm' ? 'dot' : 'standard'
   const maxContent =
     props.variant === 'lg' ? (props.maxContent ?? 10) : undefined
   const isZeroShown =
@@ -40,7 +40,7 @@ const Badge: React.FC<BadgeProps> = ({
       max={maxContent}
       overlap='circular'
       showZero={isZeroShown}
-      variant={badgeVariant}
+      variant={variant}
     >
       {children}
     </MuiBadge>
