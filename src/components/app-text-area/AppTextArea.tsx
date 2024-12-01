@@ -37,11 +37,11 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   const textLengthStyle = isRightAligned
     ? styles.textLengthRight
     : styles.textLength
-  let isLengthValid = value?.length === maxLength ? 'error' : 'primary.300'
-  isLengthValid =
+  const isLengthTooShort =
     minLength && value?.length < minLength && value?.length !== 0
-      ? 'error'
-      : 'primary.300'
+  const isLengthTooLong = value?.length === maxLength
+  const isLengthValid =
+    isLengthTooShort || isLengthTooLong ? 'error' : 'primary.300'
 
   return (
     <Box sx={spliceSx(styles.container, sx)}>
