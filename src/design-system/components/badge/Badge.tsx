@@ -1,5 +1,4 @@
 import { Badge as MuiBadge, BadgeProps as MuiBadgeProps } from '@mui/material'
-import { FC } from 'react'
 
 type BadgeColor = 'primary' | 'success' | 'error'
 
@@ -15,23 +14,32 @@ type LargeBadgeProps = {
   maxContent?: number
   color?: BadgeColor
   isVisible?: boolean
-  showZero?: boolean
+  isZeroShown?: boolean
 }
 
 type BadgeProps = (LargeBadgeProps | SmallBadgeProps) &
   Omit<MuiBadgeProps, 'variant'>
 
-const Badge: FC<BadgeProps> = ({ children, ...props }) => {
-  const displayBadge = (props.isVisible ?? true) ? props.badgeContent : 0
+const Badge: React.FC<BadgeProps> = ({
+  children,
+  isVisible = true,
+  color = 'primary',
+  ...props
+}) => {
+  const displayBadge = isVisible ? props.badgeContent : 0
   const badgeVariant = props.variant === 'sm' ? 'dot' : 'standard'
+  const maxContentShown =
+    props.variant === 'lg' ? (props.maxContent ?? 10) : undefined
+  const maxShown =
+    props.variant === 'lg' ? (props.isZeroShown ?? false) : undefined
+
   return (
     <MuiBadge
       badgeContent={displayBadge}
-      color={props.color ?? 'primary'}
-      data-testid='badge'
-      max={props.variant === 'lg' ? (props.maxContent ?? 10) : undefined}
+      color={color}
+      max={maxContentShown}
       overlap='circular'
-      showZero={props.showZero}
+      showZero={maxShown}
       variant={badgeVariant}
     >
       {children}

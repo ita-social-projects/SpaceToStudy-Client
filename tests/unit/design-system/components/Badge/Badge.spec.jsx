@@ -4,7 +4,7 @@ import { screen, render } from '@testing-library/react'
 import Badge from '~scss-components/badge/Badge'
 
 describe('Badge Component', () => {
-  test('renders with "dot" variant when "sm" is passed', () => {
+  it('it should be rendered with "dot" variant when "sm" is passed', () => {
     render(
       <Badge variant='sm'>
         <IconButton>
@@ -20,7 +20,7 @@ describe('Badge Component', () => {
     expect(dotBadge).toBeInTheDocument()
   })
 
-  it('renders with correct badge content when "lg" is passed', () => {
+  it('it should be rendered with correct badge content when "lg" is passed', () => {
     render(
       <Badge variant='lg' badgeContent={5}>
         <IconButton>
@@ -33,7 +33,7 @@ describe('Badge Component', () => {
     expect(badgeContent).toBeInTheDocument
   })
 
-  it('hides badge content when "isVisible" is false', () => {
+  it('badge content should be hidden when "isVisible" is false', () => {
     render(
       <Badge variant='lg' badgeContent={5} isVisible={false}>
         <IconButton>

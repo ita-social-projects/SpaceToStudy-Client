@@ -54,7 +54,7 @@ The \`Badge\` component is a versatile and reusable component designed to enhanc
       control: { type: 'number' },
       defaultValue: 10
     },
-    showZero: {
+    isZeroShown: {
       description:
         'determines whether the badge displays a `0` when the `variant` is set to `lg` and `badgeContent` is `0`',
       control: { type: 'boolean' },
@@ -77,7 +77,7 @@ The \`Badge\` component is a versatile and reusable component designed to enhanc
     color: 'primary',
     badgeContent: 7,
     maxContent: 10,
-    showZero: false,
+    isZeroShown: false,
     isVisible: true
   }
 }
