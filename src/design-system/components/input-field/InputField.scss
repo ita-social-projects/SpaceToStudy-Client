@@ -229,7 +229,7 @@
 %status-error {
   color: get-var('red-500');
 
-  .s2s-input-field {
+  .#{$prefix}input-field {
     color: get-var('red-500');
   }
   .#{$prefix}input-label {
