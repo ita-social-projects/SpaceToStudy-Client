@@ -4,7 +4,8 @@ import {
   textField,
   helperTextHandler,
   nameField,
-  numberField
+  numberField,
+  youtubeVideoLink
 } from '~/utils/validations/common';
 
 const mockedValues = {
@@ -24,6 +25,8 @@ const mockedValues = {
   longText: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
   emptyField: '',
   spaceField: '    ',
+  invalidYoutubeLink: 'https://www.youtub.com/watch?v=12345',
+  validYoutubeLink: 'https://www.youtube.com/watch?v=12345',
 };
 
 const errorMessages = {
@@ -40,6 +43,7 @@ const errorMessages = {
   longText: 'common.errorMessages.longText',
   emptyField: 'common.errorMessages.emptyField',
   hasOnlySpaces: 'common.errorMessages.hasOnlySpaces',
+  youtubeLink: 'common.errorMessages.youtubeLink',
 };
 
 export const emailField = (value) => {
@@ -52,24 +56,24 @@ export const passwordField = (value) => {
 
 describe('commonValidation', () => {
   it('Should return error that only alphabetical characters are allowed', () => {
-    const result = nameField(mockedValues.nameWithNumbers)
-    expect(result).toBe(errorMessages.nameCharacters)
-  })
+    const result = nameField(mockedValues.nameWithNumbers);
+    expect(result).toBe(errorMessages.nameCharacters);
+  });
 
   it('Should return error that name is too long', () => {
-    const result = nameField(mockedValues.tooLongName)
-    expect(result).toBe(errorMessages.nameLength)
-  })
+    const result = nameField(mockedValues.tooLongName);
+    expect(result).toBe(errorMessages.nameLength);
+  });
 
   it('Should return error that only number are allowed', () => {
-    const result = numberField(mockedValues.invalidNumber)
-    expect(result).toBe(errorMessages.numbersOnly)
-  })
+    const result = numberField(mockedValues.invalidNumber);
+    expect(result).toBe(errorMessages.numbersOnly);
+  });
 
   it('Should return error that only positive number is allowed', () => {
-    const result = numberField(mockedValues.negativeNumber)
-    expect(result).toBe(errorMessages.positiveNumbersOnly)
-  })
+    const result = numberField(mockedValues.negativeNumber);
+    expect(result).toBe(errorMessages.positiveNumbersOnly);
+  });
 
   it('Should return error that password cannot be shorter than 8 and longer than 25 characters', () => {
     const result = passwordField(mockedValues.shortPassword);
@@ -124,5 +128,15 @@ describe('commonValidation', () => {
   it('Should return error that value must have non-space values', () => {
     const result = emptyField({ value: mockedValues.spaceField });
     expect(result).toBe(errorMessages.hasOnlySpaces);
+  });
+
+  it('Should return error for invalid youtube link', () => {
+    const result = youtubeVideoLink(mockedValues.invalidYoutubeLink);
+    expect(result).toBe(errorMessages.youtubeLink);
+  });
+
+  it('Should return no error for valid youtube link', () => {
+    const result = youtubeVideoLink(mockedValues.validYoutubeLink);
+    expect(result).toBe('');
   });
 });
