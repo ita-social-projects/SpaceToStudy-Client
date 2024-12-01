@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 
 import Box from '@mui/material/Box'
@@ -52,11 +52,24 @@ const CooperationDetails = () => {
   const { id } = useParams()
   const { isDesktop } = useBreakpoints()
   const { isActivityCreated } = useAppSelector(cooperationsSelector)
-  const [activeTab, setActiveTab] = useState<CooperationTabsEnum>(
-    CooperationTabsEnum.Activities
-  )
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
   const [editMode, setEditMode] = useState<boolean>(false)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const tab = searchParams.get('tab') as CooperationTabsEnum
+
+  const isTabInSearchParams = Object.values(CooperationTabsEnum).includes(tab)
+
+  const defaultTab = CooperationTabsEnum.Activities
+
+  const activeTab = isTabInSearchParams ? tab : defaultTab
+
+  useEffect(() => {
+    if (!isTabInSearchParams) {
+      setSearchParams({ tab: defaultTab })
+    }
+  }, [defaultTab, isTabInSearchParams, setSearchParams])
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -88,7 +101,7 @@ const CooperationDetails = () => {
   }
 
   const handleClick = (tab: CooperationTabsEnum) => {
-    setActiveTab(tab)
+    setSearchParams({ tab })
   }
 
   const handleNotesClick = () => {

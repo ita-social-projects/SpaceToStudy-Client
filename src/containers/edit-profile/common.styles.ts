@@ -5,7 +5,6 @@ export const rootContainer = {
   display: 'flex',
   flexDirection: 'column',
   boxSizing: 'border-box',
-  rowGap: '10px',
   maxWidth: '768px',
   width: '100%',
   p: '20px 40px',

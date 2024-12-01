@@ -11,6 +11,7 @@ import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
 
 import { UserRoleEnum } from '~/types'
 import { useAppSelector } from '~/hooks/use-redux'
+import AppProgressBarLine from '~/components/app-progress-bar-line/AppProgressBarLine'
 
 interface CooperationActivitiesViewProps {
   setEditMode: Dispatch<SetStateAction<boolean>>
@@ -22,13 +23,20 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
   const { sections } = useAppSelector(cooperationsSelector)
   const { userRole } = useAppSelector((state) => state.appMain)
   const isTutor = userRole === UserRoleEnum.Tutor
-
+  const percentValue = 23
   const onEdit = () => {
     setEditMode(true)
   }
 
   return (
     <Box sx={styles.root}>
+      <Box>
+        <AppProgressBarLine
+          isCooperationActivities
+          userRole=''
+          value={percentValue}
+        />
+      </Box>
       {sections.map((item) => (
         <CooperationSectionView item={item} key={item.id} />
       ))}

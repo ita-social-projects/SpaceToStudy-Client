@@ -23,6 +23,7 @@ import {
 } from '~/utils/helper-functions'
 import { CategoryInterface, ItemsWithCount, SortEnum } from '~/types'
 import { styles } from '~/components/popular-categories/PopularCategories.styles'
+import { titleToCamel } from '~/utils/title-to-camel-case'
 
 interface PopularCategoriesProps {
   title: string
@@ -68,7 +69,9 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
           iconColor={item.appearance.color}
           key={item._id}
           link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
-          title={item.name}
+          title={t(`categories.${titleToCamel(item.name)}`, {
+            defaultValue: item.name
+          })}
         />
       )),
     [response.items, oppositeRole, t]

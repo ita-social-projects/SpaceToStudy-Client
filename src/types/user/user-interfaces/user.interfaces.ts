@@ -6,7 +6,7 @@ import {
   RequestParams,
   Faq,
   DataByRole,
-  UpdatedPhoto,
+  EditProfilePhoto,
   UpdateFields,
   UserStatusEnum,
   UserMainSubject,
@@ -48,6 +48,7 @@ export interface UserResponse {
   FAQ: DataByRole<Faq[]>
   videoLink: DataByRole<string>
   professionalBlock?: ProfessionalBlock
+  aboutStudent?: AboutStudentData
   status: DataByRole<UserStatusEnum>
   notificationSettings: NotificationSettings
   bookmarkedOffers: string[]
@@ -78,7 +79,7 @@ export interface UpdateUserParams
   extends Partial<Pick<UserResponse, UpdateFields>> {
   mainSubjects?: DataByRole<UserMainSubject[]>
   videoLink?: string
-  photo?: UpdatedPhoto | null
+  photo?: EditProfilePhoto
 }
 
 export interface LoginParams {
@@ -108,6 +109,15 @@ export interface ChangePasswordParams {
   currentPassword: string
   password: string
   confirmPassword: string
+}
+
+export interface NewPassword {
+  confirmPassword?: string
+  password: string
+}
+
+export interface SendResetPasswordPayload {
+  password: string
 }
 
 export interface SignupResponse {

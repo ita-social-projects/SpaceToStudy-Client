@@ -9,7 +9,7 @@ vi.mock('~/hooks/use-confirm', () => {
   }
 })
 
-const errors = { email: false, password: false, rememberMe: false }
+const errors = { email: '', password: '', rememberMe: '' }
 const data = {
   email: 'email@mail.com',
   password: 'passTest1',

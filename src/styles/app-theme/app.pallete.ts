@@ -24,6 +24,8 @@ const palette = {
     turquoiseChat: '#A0F0F2',
     turquoiseLight: '#F5FFFF',
     turquoise50: '#F2FAFA',
+    turquoise100: '#DAF1F1',
+    turquoise500: '#47B8B8',
     turquoise700: '#2B6E6E',
     blueGray: '#607D8B',
     bismark: '#546E7A',

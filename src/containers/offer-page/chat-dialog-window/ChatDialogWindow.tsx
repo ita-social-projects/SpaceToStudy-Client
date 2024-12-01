@@ -19,7 +19,11 @@ import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import Loader from '~/components/loader/Loader'
 import { messageService } from '~/services/message-service'
 import { chatService } from '~/services/chat-service'
-import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
+import {
+  getGroupedByDate,
+  getIsNewDay,
+  studentOrTutor
+} from '~/utils/helper-functions'
 
 import {
   AdornmentPosition,
@@ -27,12 +31,16 @@ import {
   ChatResponse,
   ErrorResponse,
   GetMessagesResponse,
-  MessageInterface
+  MessageInterface,
+  UserRoleEnum
 } from '~/types'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.styles'
-import { questions } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.constants'
+import {
+  questionsForStudent,
+  questionsForTutor
+} from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import { getErrorMessage } from '~/utils/error-with-message'
@@ -276,6 +284,11 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     ) : (
       messagesListWithDate
     )
+
+  const questions =
+    studentOrTutor(chatInfo.authorRole) === UserRoleEnum.Tutor
+      ? questionsForTutor
+      : questionsForStudent
 
   const questionsList = chatIsCreating
     ? statusLoader(t('chatPage.creating'))

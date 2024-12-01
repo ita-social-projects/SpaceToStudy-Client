@@ -27,7 +27,10 @@
       "mainTitle": "Professional information",
       "mainDescription": "Here you can edit public professional information about yourself.",
       "categoriesTitle": "Your professional categories",
-      "categoriesDescription": "State your professional field you want to work in with your students.\nChoose at least one study category, one subject and one proficiency level.",
+      "categoriesDescription": {
+        "tutor": "State your professional field you want to work in with your students.\nChoose at least one study category and one subject.",
+        "student": "State the category you want to study.\nChoose at least one study category and one subject."
+      },
       "addCategoryBtn": "Add category",
       "addCategoryModal": {
         "title": "Your professional category",
@@ -47,13 +50,21 @@
       "proficiencyLevels": "Proficiency Levels",
       "editCategoryBtn": "Edit category",
       "deleteCategoryBtnDisabledTooltip": "You have opened cooperation(s)/offers with this category.\nPlease close it before deactivation",
-      "aboutTheTutorTitle": "About the tutor",
-      "aboutTheTutorDescription": "Describe your professional experience. This information will be displayed on your public profile.",
-      "accordion": {
+      "tutorAboutTitle": "About the tutor",
+      "tutorAboutDescription": "Describe your professional experience. This information will be displayed on your public profile.",
+      "studentAboutTitle": "About the student",
+      "studentAboutDescription": "Describe yourself and your learning experiance. This information will be displayed on your public profile.",
+      "accordionTutor": {
         "education": "Education",
         "workExperience": "Work experience",
         "scientificActivities": "Scientific activities",
         "awards": "Awards",
+        "textareaLabel": "Text here"
+      },
+      "accordionStudent": {
+        "personalIntroduction": "Personal Introduction",
+        "learningGoals": "Learning Goals",
+        "learningActivities": "Learning Activities",
         "textareaLabel": "Text here"
       }
     },

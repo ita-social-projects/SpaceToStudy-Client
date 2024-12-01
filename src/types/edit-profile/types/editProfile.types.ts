@@ -1,7 +1,8 @@
 import {
   CategoryNameInterface,
   SubjectNameInterface,
-  UserMainSubject
+  UserMainSubject,
+  UpdatedPhoto
 } from '~/types'
 
 export type OpenProfessionalCategoryModalHandler = (
@@ -13,3 +14,5 @@ export type UserMainSubjectFieldValues = string &
   boolean &
   CategoryNameInterface &
   SubjectNameInterface[]
+
+export type EditProfilePhoto = UpdatedPhoto | string | null

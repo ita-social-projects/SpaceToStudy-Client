@@ -1,0 +1,121 @@
+@use '~scss/utilities' as *;
+
+.#{$prefix}alert {
+  --#{$prefix}alert-padding-x: #{get-var('space-2')};
+  --#{$prefix}alert-padding-y: #{get-var('space-1-5')};
+  --#{$prefix}alert-inner-gap: #{get-var('space-0')};
+  --#{$prefix}alert-font-size: #{get-var('font-size-sm')};
+  --#{$prefix}alert-font-weight: #{get-var('font-weight-regular')};
+  --#{$prefix}alert-line-height: #{get-var('line-height-md')};
+  --#{$prefix}alert-border-width: #{get-var('border-width-xs')};
+  --#{$prefix}alert-border-radius: #{get-var('border-radius-xs')};
+  --#{$prefix}alert-shadow: #{get-var('box-shadow-xs')};
+  --#{$prefix}alert-color: #{get-var('blue-gray-800')};
+
+  position: relative;
+  padding: get-var('alert-padding-y') get-var('alert-padding-x');
+  font-size: get-var('alert-font-size');
+  line-height: get-var('alert-line-height');
+  font-weight: get-var('alert-font-weight');
+  border-width: get-var('alert-border-width');
+  border-radius: get-var('alert-border-radius');
+  box-shadow: get-var('alert-shadow');
+  gap: get-var('alert-inner-gap');
+  color: get-var('alert-color');
+
+  & .MuiAlertTitle-root {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-md;
+    line-height: $line-height-lg;
+  }
+
+  &.MuiAlert-filled {
+    color: $neutral-0;
+
+    .s2s-alert-close-button {
+      color: $blue-gray-50;
+    }
+  }
+
+  &.MuiAlert-outlined {
+    color: $neutral-0;
+
+    .s2s-alert-close-button {
+      color: $blue-gray-800;
+    }
+  }
+
+  &.MuiAlert-colorError {
+    border-color: $red-500;
+  }
+
+  &.MuiAlert-colorError.MuiAlert-filled {
+    color: $red-50;
+    background-color: $red-500;
+  }
+
+  &.MuiAlert-colorError.MuiAlert-outlined {
+    color: $red-800;
+    background-color: $red-50;
+  }
+
+  &.MuiAlert-colorWarning {
+    border-color: $yellow-500;
+  }
+
+  &.MuiAlert-colorWarning.MuiAlert-filled {
+    background-color: $yellow-500;
+  }
+
+  &.MuiAlert-colorWarning.MuiAlert-outlined {
+    color: $yellow-800;
+    background-color: $yellow-100;
+  }
+
+  &.MuiAlert-colorInfo {
+    border-color: $blue-500;
+  }
+
+  &.MuiAlert-colorInfo.MuiAlert-filled {
+    background-color: $blue-500;
+  }
+
+  &.MuiAlert-colorInfo.MuiAlert-outlined {
+    color: $blue-800;
+    background-color: $blue-100;
+  }
+
+  &.MuiAlert-colorSuccess {
+    border-color: $green-600;
+  }
+
+  &.MuiAlert-colorSuccess.MuiAlert-filled {
+    background-color: $green-600;
+  }
+
+  &.MuiAlert-colorSuccess.MuiAlert-outlined {
+    color: $green-800;
+    background-color: $green-100;
+  }
+
+  & .s2s-alert-close-button {
+    background: transparent;
+    border: none;
+    border-radius: $border-radius-md;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    line-height: $line-height-sm;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  & .s2s-alert-close-button-label {
+    margin: 0 0.5rem;
+    height: auto;
+  }
+}

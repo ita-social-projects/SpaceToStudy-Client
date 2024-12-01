@@ -33,6 +33,8 @@ import {
 } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
+import { fetchAndTranslateData } from '~/utils/fetch-and-translate-category'
+import { titleToCamel } from '~/utils/title-to-camel-case'
 
 interface SubjectGroupProps {
   subject: Partial<SubjectInterface>
@@ -51,10 +53,13 @@ function SubjectGroup({
 }: Readonly<SubjectGroupProps>) {
   const { t } = useTranslation()
 
-  const getSubjectsNames = useCallback(
-    () => subjectService.getSubjectsNames(selectedCategory),
-    [selectedCategory]
-  )
+  const getSubjectsNames = useCallback(() => {
+    return fetchAndTranslateData(
+      () => subjectService.getSubjectsNames(selectedCategory),
+      'subjects',
+      t
+    )
+  }, [selectedCategory, t])
 
   const handleDisableOptions = (option: Partial<SubjectInterface>) => {
     return disableOptions.some((subject) => subject._id === option._id)
@@ -75,7 +80,7 @@ function SubjectGroup({
           disabled={!selectedCategory}
           fullWidth
           getOptionDisabled={handleDisableOptions}
-          labelField='name'
+          labelField='displayName'
           onChange={(_, value) => handleChange(value!)}
           service={getSubjectsNames}
           textFieldProps={{
@@ -112,36 +117,38 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
 
   const formSubmission = () => {
     const userRoleCategory = userRole as MainUserRole
-    const { category } = data
-
-    // TODO: icon should be displayed accordingly to category
+    const { category, subjects } = data
     if (category.appearance === undefined) {
       category.appearance = { color: '#E3B21C', icon: 'ScienceRoundedIcon' }
     }
-
+    const sanitizedCategory = {
+      ...category,
+      name: t(`categories.${titleToCamel(category.name)}`, {
+        lng: 'en',
+        defaultValue: category.name
+      })
+    }
+    const sanitizedSubjects = subjects.map((subject) => ({
+      ...subject,
+      name: t(`subjects.${titleToCamel(subject.name)}`, {
+        lng: 'en',
+        defaultValue: subject.name
+      })
+    }))
+    const categoryData: UserMainSubject = {
+      ...data,
+      category: sanitizedCategory,
+      subjects: sanitizedSubjects,
+      _id: isEdit ? (initialValuesFromProps?._id ?? '') : crypto.randomUUID(),
+      isDeletionBlocked
+    }
     if (isEdit) {
-      const categoryToUpdate: UserMainSubject = {
-        _id: initialValuesFromProps?._id ?? '',
-        isDeletionBlocked,
-        ...data
-      }
       dispatch(
-        updateCategory({
-          category: categoryToUpdate,
-          userRole: userRoleCategory
-        })
+        updateCategory({ category: categoryData, userRole: userRoleCategory })
       )
     } else {
-      const categoryToAdd: UserMainSubject = {
-        _id: uuidv4(),
-        isDeletionBlocked,
-        ...data
-      }
       dispatch(
-        addCategory({
-          category: categoryToAdd,
-          userRole: userRoleCategory
-        })
+        addCategory({ category: categoryData, userRole: userRoleCategory })
       )
     }
     closeModal()
@@ -208,7 +215,13 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     )
     return isBlocked && isCurrent
   }
-
+  const fetchTranslatedCategories = useCallback(() => {
+    return fetchAndTranslateData(
+      () => categoryService.getCategoriesNames(),
+      'categories',
+      t
+    )
+  }, [t])
   const SubjectsGroup = data.subjects.map((subject, index) => (
     <SubjectGroup
       disableOptions={data.subjects as Array<Partial<SubjectInterface>>}
@@ -239,9 +252,9 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
           disabled={isDeletionBlocked}
           fullWidth
           getOptionDisabled={handleBlockOption}
-          labelField='name'
+          labelField='displayName'
           onChange={handleMainStudyCategoryChange}
-          service={categoryService.getCategoriesNames}
+          service={fetchTranslatedCategories}
           textFieldProps={{
             label: `${t(
               'editProfilePage.profile.professionalTab.mainStudyCategory'

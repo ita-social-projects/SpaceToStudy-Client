@@ -54,10 +54,14 @@ const LoginForm: React.FC<LoginFormProps> = ({
     openModal({ component: <ForgotPassword /> })
   }
 
+  const isDisabled =
+    !data.email ||
+    !data.password ||
+    !Object.values(errors).every((elem) => elem === '')
+
   return (
     <Box component='form' onSubmit={handleSubmit} sx={styles.form}>
       <AppTextField
-        autoFocus
         data-testid={'email'}
         errorMsg={t(errors.email ?? '')}
         fullWidth
@@ -108,7 +112,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       </Box>
 
       <AppButton
-        disabled={!data.email || !data.password}
+        disabled={isDisabled}
         loading={authLoading}
         sx={styles.loginButton}
         type='submit'

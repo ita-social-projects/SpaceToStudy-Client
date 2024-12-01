@@ -3,7 +3,7 @@ import { TypographyVariantEnum } from '~/types'
 export const styles = {
   calendarContainer: {
     width: { xs: '87%', sm: '380px', md: '561px' },
-    height: { xs: '257px', sm: '290px', md: '444px' },
+    height: { xs: '277px', sm: '315px', md: '500px' },
     m: { xs: '0px auto 0px', md: '40px 0px 0px', lg: '87px 0px 0px' },
     backgroundColor: 'basic.white',
     border: '1px solid basic.lightBlue',

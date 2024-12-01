@@ -1,9 +1,17 @@
 import ProfessionalCategory from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory'
 import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-
+import { useTranslation } from 'react-i18next'
+import {titleToCamel} from '~/utils/title-to-camel-case'
+const { t } = useTranslation()
 const mockOpenProfessionalCategoryModal = vi.fn()
 const mockedHandleDelete = vi.fn()
+
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key, options) => options?.defaultValue || key,
+  }),
+}))
 
 const categoryWithSubjects = {
   _id: '648850c4fdc2d1a130c24aea',
@@ -77,15 +85,17 @@ describe('ProfessionalCategory', () => {
 
   it('should render subjects correctly', () => {
     renderProfessionalCategoryWithItem(categoryWithSubjects)
-
-    const firstSubjectName = categoryWithSubjects.subjects[0].name
+  
+    const firstSubjectName = t(`subjects.${titleToCamel(categoryWithSubjects.subjects[0].name)}`, {
+      defaultValue: categoryWithSubjects.subjects[0].name,
+    })
     const firstSubjectNameElement = screen.getByText(firstSubjectName)
     expect(firstSubjectNameElement).toBeInTheDocument()
-
+  
     const subjectLabels = screen.getAllByText(
       /editProfilePage.profile.professionalTab.subject/
     )
-
+  
     expect(subjectLabels).toHaveLength(categoryWithSubjects.subjects.length)
   })
 

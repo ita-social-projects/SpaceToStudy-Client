@@ -1,0 +1,135 @@
+@use '~scss/utilities' as *;
+
+@mixin track-mixin($width, $border-width) {
+  position: absolute;
+  background-color: transparent !important;
+  border: #{$border-width} solid $blue-gray-200;
+  border-radius: calc(#{$width}px / 3);
+  opacity: 1 !important;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+@mixin thumb-mixin($diameter) {
+  width: #{$diameter}px;
+  height: #{$diameter}px;
+  box-shadow: none;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+
+@mixin switch-base-mixin($r-width, $t-width) {
+  position: relative;
+  color: $blue-gray-400;
+  padding: 0;
+  left: calc(#{$r-width}px / 10);
+
+  &.Mui-checked {
+    color: $blue-gray-800;
+    left: calc(#{$r-width}px - #{$t-width}px - (#{$r-width}px / 10) - 20px);
+  }
+
+  &.Mui-disabled {
+    color: $blue-gray-100;
+  }
+}
+
+@mixin root-mixin($width, $height) {
+  display: flex;
+  align-items: center;
+  width: #{$width}px;
+  height: #{$height}px;
+  overflow: visible;
+  padding: 0;
+  margin: 5px;
+
+  &:hover {
+    .MuiSwitch-track {
+      border-color: $blue-gray-500;
+
+      &.Mui-disabled {
+        border-color: $blue-gray-100 !important;
+      }
+    }
+  }
+}
+
+.#{$prefix}switch {
+  &--sm {
+    @include root-mixin(45, 21);
+
+    .MuiSwitch-thumb {
+      @include thumb-mixin(15);
+    }
+
+    .MuiSwitch-track {
+      @include track-mixin(45, $border-width-sm);
+    }
+
+    .MuiSwitch-switchBase {
+      @include switch-base-mixin(47, 15);
+    }
+  }
+
+  &--md {
+    @include root-mixin(60, 28);
+
+    .MuiSwitch-thumb {
+      @include thumb-mixin(20);
+    }
+
+    .MuiSwitch-track {
+      @include track-mixin(60, $border-width-md);
+    }
+
+    .MuiSwitch-switchBase {
+      @include switch-base-mixin(64, 20);
+    }
+  }
+
+  &--lg {
+    @include root-mixin(75, 35);
+
+    .MuiSwitch-thumb {
+      @include thumb-mixin(25);
+    }
+
+    .MuiSwitch-track {
+      @include track-mixin(75, $border-width-md);
+    }
+
+    .MuiSwitch-switchBase {
+      @include switch-base-mixin(81, 25);
+    }
+  }
+}
+
+.#{$prefix}form-label-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: visible;
+
+  &--sm {
+    .MuiFormControlLabel-label {
+      color: $body-text-color;
+      font-size: $font-size-sm !important;
+    }
+  }
+
+  &--md {
+    .MuiFormControlLabel-label {
+      color: $body-text-color;
+      font-size: $font-size-md !important;
+    }
+  }
+
+  &--lg {
+    .MuiFormControlLabel-label {
+      color: $body-text-color;
+      font-size: $font-size-lg !important;
+    }
+  }
+}

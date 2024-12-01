@@ -13,7 +13,7 @@ const validations: Validations = {
       return 'common.errorMessages.nameLength'
     }
     if (!validationPatterns.name.test(value)) {
-      return 'common.errorMessages.nameAlphabeticOnly'
+      return 'common.errorMessages.nameCharacters'
     }
     return ''
   },

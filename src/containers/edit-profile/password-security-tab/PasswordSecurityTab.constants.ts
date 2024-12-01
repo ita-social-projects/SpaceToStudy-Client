@@ -14,8 +14,21 @@ export const validatePassword = (passwordValue: string) => {
   return password(passwordValue)
 }
 
+export const validateNewPassword = (
+  newPasswordValue: string,
+  data: typeof initialValues
+) => {
+  if (newPasswordValue === data.currentPassword) {
+    return emptyField({
+      value: newPasswordValue,
+      helperText: 'common.errorMessages.currentAndNewPasswordsMatch'
+    })
+  }
+  return password(newPasswordValue)
+}
+
 export const validations = {
   currentPassword: validatePassword,
-  password: validatePassword,
+  password: validateNewPassword,
   confirmPassword
 }

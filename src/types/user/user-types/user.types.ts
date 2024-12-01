@@ -14,6 +14,7 @@ export type UpdateFields =
   | 'professionalSummary'
   | 'nativeLanguage'
   | 'professionalBlock'
+  | 'aboutStudent'
   | 'notificationSettings'
 
 export type MainUserRole = UserRoleEnum.Tutor | UserRoleEnum.Student

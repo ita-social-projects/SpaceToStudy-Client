@@ -6,8 +6,29 @@ import ClearIcon from '@mui/icons-material/Clear'
 import useMenu from '~/hooks/use-menu'
 import FilterCheckbox from '~/components/enhanced-table/filter-checkbox/FilterCheckbox'
 
-const EnumFilter = ({ column, filter, setFilter, clearFilter }) => {
+interface FilterEnum {
+  value: string
+  label: string
+}
+
+interface EnumFilterProps {
+  column: {
+    filterEnum: FilterEnum[]
+  }
+  filter: string[]
+  setFilter: (filter: string[]) => void
+  clearFilter: () => void
+}
+
+const EnumFilter: React.FC<EnumFilterProps> = ({
+  column,
+  filter,
+  setFilter,
+  clearFilter
+}) => {
   const { renderMenu, openMenu } = useMenu()
+
+  const isFilterEmpty = filter.length === 0
 
   const menuItems = column.filterEnum.map((filterEnum) => (
     <FilterCheckbox
@@ -21,7 +42,8 @@ const EnumFilter = ({ column, filter, setFilter, clearFilter }) => {
 
   const endAdornment = (
     <IconButton
-      className={filter.length ? 'visible' : 'hidden'}
+      aria-hidden={isFilterEmpty}
+      className={!isFilterEmpty ? 'visible' : 'hidden'}
       data-testid='clear-icon-in-filter'
       onClick={clearFilter}
     >

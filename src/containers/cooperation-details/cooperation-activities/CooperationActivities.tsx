@@ -24,7 +24,6 @@ import {
   cooperationsSelector,
   setResourcesAvailability
 } from '~/redux/features/cooperationsSlice'
-
 import { snackbarVariants } from '~/constants'
 import {
   ResourcesAvailabilityEnum,
@@ -55,7 +54,6 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
   const dispatch = useAppDispatch()
   const { sections, resourcesAvailability } =
     useAppSelector(cooperationsSelector)
-
   const handleResourcesAvailabilityChange = (
     status: ResourcesAvailabilityEnum
   ) => {

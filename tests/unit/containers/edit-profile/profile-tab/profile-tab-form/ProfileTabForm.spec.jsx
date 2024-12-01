@@ -56,7 +56,7 @@ describe('ProfileTabForm', () => {
     const removePhotoBtn = screen.getByRole('button', { name: 'common.remove' })
     fireEvent.click(removePhotoBtn)
 
-    expect(handleNonInputValueChange).toHaveBeenCalledWith('photo', null)
+    expect(handleNonInputValueChange).toHaveBeenCalledWith('photo', '')
   })
 
   it('should handle adding a photo', async () => {

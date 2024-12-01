@@ -33,13 +33,14 @@ const mockState = {
         isSimilarOffersNotification: false,
         isEmailNotification: false
       }
-    }
+    },
+    videoLink: { tutor: '', student: '' }
   }
 }
 
 const userMock = {
   role: userRole,
-  videoLink: { [userRole]: '' },
+  videoLink: { tutor: '', student: '' },
   mainSubjects: { [userRole]: [] },
   firstName: 'John',
   lastName: 'Doe',
@@ -226,53 +227,41 @@ describe('EditProfile', () => {
     expect(dataToUpdate).toHaveProperty('address', { city, country })
   })
 
-  it('should not include photo in dataToUpdate if profileState.photo is not an object', () => {
+  it('should not include photo in dataToUpdate if profileState.photo is a filled string', () => {
     const photo = 'stringInsteadOfObject'
     const profileState = { photo }
     const rest = {}
 
     const dataToUpdate = { ...rest }
-    if (typeof profileState.photo === 'object') {
+    if (typeof profileState.photo === 'object' || profileState.photo === '') {
       dataToUpdate.photo = profileState.photo
     }
 
     expect(dataToUpdate).not.toHaveProperty('photo')
   })
 
-  it('should not include videoLink in dataToUpdate if videoLink is null', () => {
-    const videoLink = null
+  it('should include photo in dataToUpdate if profileState.photo is empty string', () => {
+    const photo = ''
+    const profileState = { photo }
     const rest = {}
 
     const dataToUpdate = { ...rest }
-    if (videoLink) {
-      dataToUpdate.videoLink =
-        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    if (typeof profileState.photo === 'object' || profileState.photo === '') {
+      dataToUpdate.photo = profileState.photo
     }
 
-    expect(dataToUpdate).not.toHaveProperty('videoLink')
+    expect(dataToUpdate).toHaveProperty('photo')
   })
 
-  it('should include videoLink in dataToUpdate if videoLink is a string', () => {
-    const videoLink = 'http://video1234556443.com/video'
-    const rest = {}
-
-    const dataToUpdate = { ...rest }
-    if (videoLink) {
-      dataToUpdate.videoLink =
-        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
-    }
-
-    expect(dataToUpdate).toHaveProperty('videoLink', videoLink)
-  })
-
-  it('should include videoLink from userRole in dataToUpdate if videoLink is an object', () => {
+  it('should include string videoLink from userRole in dataToUpdate if videoLink do exist', () => {
     const videoLink = { tutor: 'http://video1111111.com/video' }
     const rest = {}
 
     const dataToUpdate = { ...rest }
     if (videoLink) {
-      dataToUpdate.videoLink =
-        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+      const updatedVideolink = videoLink[userRole]
+
+      dataToUpdate.videoLink = updatedVideolink
     }
 
     expect(dataToUpdate).toHaveProperty('videoLink', videoLink[userRole])

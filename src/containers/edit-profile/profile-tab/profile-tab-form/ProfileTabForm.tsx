@@ -99,8 +99,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
     void resizeImage(files[0])
   }
   const handleRemovePhoto = () => {
-    const updatedPhoto =
-      typeof photo === 'string' ? null : { src: '', name: '' }
+    const updatedPhoto = ''
     handleNonInputValueChange('photo', updatedPhoto)
   }
 

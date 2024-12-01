@@ -19,3 +19,5 @@ export const aboutTutorKeys: Array<keyof ProfessionalBlock> = [
   'scientificActivities',
   'awards'
 ]
+
+export const mockHandleStudentInputChange = () => null

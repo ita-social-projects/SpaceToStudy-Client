@@ -30,7 +30,7 @@ export const AuthService = {
   },
   resetPassword: (
     resetToken: string,
-    newPassword: string
+    newPassword: { password: string }
   ): Promise<AxiosResponse> => {
     const confirmUrl = createUrlPath(URLs.auth.resetPassword, resetToken)
     return axiosClient.patch(confirmUrl, newPassword)

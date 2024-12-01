@@ -18,6 +18,8 @@ export const styles = {
     p: '20px 0'
   },
   appButton: {
-    mt: '20px'
+    mt: '20px',
+    width: '192px',
+    height: '40px'
   }
 }

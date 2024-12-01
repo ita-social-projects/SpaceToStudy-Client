@@ -14,7 +14,7 @@ import {
   updateProfileData,
   updateValidityStatus
 } from '~/redux/features/editProfileSlice'
-import { EditProfileForm, MainUserRole } from '~/types'
+import { EditProfileForm, MainUserRole, UserRoleEnum } from '~/types'
 import { styles } from '~/containers/edit-profile/profile-tab/ProfileTab.styles'
 import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
 import { fieldsWithIncreasedHeight } from '~/components/profile-item/complete-profile.constants'
@@ -42,10 +42,7 @@ const ProfileTab: FC = () => {
     nativeLanguage,
     photo: photo ?? '',
     professionalSummary: professionalSummary || '',
-    videoLink:
-      typeof videoLink === 'string'
-        ? videoLink
-        : (videoLink?.[userRole as MainUserRole] ?? '')
+    videoLink: videoLink?.[userRole as MainUserRole] || ''
   }
 
   const {
@@ -62,7 +59,15 @@ const ProfileTab: FC = () => {
   })
 
   const debouncedUpdateProfileData = useDebounce(() => {
-    void dispatch(updateProfileData(data))
+    const payload = {
+      ...data,
+      videoLink: {
+        student: userRole === UserRoleEnum.Student ? data.videoLink : null,
+        tutor: userRole === UserRoleEnum.Tutor ? data.videoLink : null
+      }
+    }
+
+    dispatch(updateProfileData(payload))
   }, 300)
 
   const { hash, pathname } = useLocation()

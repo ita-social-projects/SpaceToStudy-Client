@@ -67,10 +67,14 @@ export const styles = {
     },
     title: {
       typography: { xs: 'button', sm: 'h5', md: 'h4' },
-      mb: 1
+      mb: 1,
+      whiteSpace: 'normal',
+      wordBreak: 'break-all',
+      maxWidth: '95%'
     },
     description: {
-      typography: { xs: 'body2', md: 'button' }
+      typography: { xs: 'body2', md: 'button' },
+      overflowWrap: 'break-word'
     }
   },
   doneIcon: {

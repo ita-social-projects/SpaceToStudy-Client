@@ -60,7 +60,8 @@ export enum ButtonVariantEnum {
 }
 
 export enum ButtonTypeEnum {
-  Submit = 'submit'
+  Submit = 'submit',
+  Button = 'button'
 }
 
 export enum VisibilityEnum {
@@ -137,4 +138,10 @@ export enum SortByEnum {
   Relevant = 'Relevant',
   highestRating = 'highestRating',
   lowestRating = 'lowestRating'
+}
+
+export enum InputFieldVariantEnum {
+  Large = 'large',
+  Small = 'small',
+  Outlined = 'outlined'
 }

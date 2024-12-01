@@ -24,5 +24,10 @@
   "tutoringSubject": "Предмет і рівень:",
   "aboutCooperation": "Про співпрацю:",
   "tutoringLanguages": "Мови:",
-  "pricing": "Ціна:"
+  "pricing": "Ціна:",
+  "progressBar": {
+    "yourProgress": "Ваш прогрес",
+    "completed": "виконано",
+    "needToComplete": "до завершення"
+  }
 }

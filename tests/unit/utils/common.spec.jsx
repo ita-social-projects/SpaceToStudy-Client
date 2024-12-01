@@ -3,6 +3,8 @@ import {
   emptyField,
   textField,
   helperTextHandler,
+  nameField,
+  numberField
 } from '~/utils/validations/common';
 
 const mockedValues = {
@@ -25,7 +27,7 @@ const mockedValues = {
 };
 
 const errorMessages = {
-  nameAlphabeticOnly: 'common.errorMessages.nameAlphabeticOnly',
+  nameCharacters: 'common.errorMessages.nameCharacters',
   nameLength: 'common.errorMessages.nameLength',
   numbersOnly: 'common.errorMessages.numbersOnly',
   positiveNumbersOnly: 'common.errorMessages.positiveNumbersOnly',
@@ -49,6 +51,26 @@ export const passwordField = (value) => {
 };
 
 describe('commonValidation', () => {
+  it('Should return error that only alphabetical characters are allowed', () => {
+    const result = nameField(mockedValues.nameWithNumbers)
+    expect(result).toBe(errorMessages.nameCharacters)
+  })
+
+  it('Should return error that name is too long', () => {
+    const result = nameField(mockedValues.tooLongName)
+    expect(result).toBe(errorMessages.nameLength)
+  })
+
+  it('Should return error that only number are allowed', () => {
+    const result = numberField(mockedValues.invalidNumber)
+    expect(result).toBe(errorMessages.numbersOnly)
+  })
+
+  it('Should return error that only positive number is allowed', () => {
+    const result = numberField(mockedValues.negativeNumber)
+    expect(result).toBe(errorMessages.positiveNumbersOnly)
+  })
+
   it('Should return error that password cannot be shorter than 8 and longer than 25 characters', () => {
     const result = passwordField(mockedValues.shortPassword);
     expect(result).toBe(errorMessages.passwordLength);

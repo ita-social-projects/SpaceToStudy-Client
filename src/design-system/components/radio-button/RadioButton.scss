@@ -1,0 +1,108 @@
+@use '~scss/utilities' as *;
+
+.radio-btn-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.#{$prefix}radio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &:hover {
+    .MuiRadio-root {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  &-sm {
+    font-size: $font-size-sm;
+  }
+
+  &-md {
+    font-size: $font-size-md;
+  }
+
+  &-lg {
+    font-size: $font-size-lg;
+  }
+
+  &-primary {
+    .MuiRadio-root {
+      color: $neutral-950;
+    }
+  }
+
+  &-success {
+    .MuiRadio-root {
+      color: $green-600;
+    }
+  }
+
+  &-error {
+    .MuiRadio-root {
+      color: $red-500;
+    }
+  }
+
+  &-disabled {
+    .MuiRadio-root {
+      opacity: 0.5;
+      pointer-events: none;
+      color: $neutral-600 !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .radio-sm {
+    width: $border-width-sm;
+    height: $border-width-sm;
+  }
+
+  .radio-md {
+    width: $border-width-md;
+    height: $border-width-md;
+  }
+
+  .radio-lg {
+    width: $border-width-lg;
+    height: $border-width-lg;
+  }
+
+  .Mui-checked {
+    &.radio-primary {
+      color: $neutral-950;
+    }
+
+    &.radio-success {
+      color: $green-600;
+    }
+
+    &.radio-error {
+      color: $red-500;
+    }
+  }
+
+  .MuiFormControlLabel-label {
+    font-size: inherit;
+    color: $body-text-color;
+    font-weight: normal;
+    margin-left: 8px;
+    margin-right: 8px;
+
+    &.radio-sm {
+      font-size: $font-size-sm;
+    }
+
+    &.radio-md {
+      font-size: $font-size-md;
+    }
+
+    &.radio-lg {
+      font-size: $font-size-lg;
+    }
+  }
+}

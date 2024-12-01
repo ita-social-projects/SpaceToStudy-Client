@@ -24,5 +24,10 @@
   "tutoringSubject": "Tutoring subject & level:",
   "aboutCooperation": "About cooperation:",
   "tutoringLanguages": "Tutoring languages:",
-  "pricing": "Pricing:"
+  "pricing": "Pricing:",
+  "progressBar": {
+    "yourProgress": "Your progress",
+    "completed": "completed",
+    "needToComplete": "to complete"
+  }
 }
