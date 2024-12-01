@@ -26,10 +26,13 @@ import {
   ErrorResponse,
   Offer,
   EnrollOfferForm,
-  ButtonTypeEnum
+  ButtonTypeEnum,
+  TypographyVariantEnum
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import { textField } from '~/utils/validations/common'
+import { Typography } from '@mui/material'
 
 interface EnrollOfferProps {
   offer: Offer
@@ -80,16 +83,32 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
     onResponseError: handleResponseError
   })
 
-  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
-    useForm<EnrollOfferForm>({
-      initialValues: {
-        proficiencyLevel: offer.proficiencyLevel[0],
-        price: offer.price,
-        additionalInfo: '',
-        title: offer.title
-      },
-      onSubmit: fetchData
-    })
+  const validateAdditionalInfo = (additionalInfoValue: string) => {
+    if (additionalInfoValue.length < 30 && additionalInfoValue.length !== 0) {
+      return textField(30, 1000)
+    }
+  }
+
+  const validations = {
+    additionalInfo: validateAdditionalInfo
+  }
+
+  const {
+    data,
+    errors,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleSubmit
+  } = useForm<EnrollOfferForm>({
+    initialValues: {
+      proficiencyLevel: offer.proficiencyLevel[0],
+      price: offer.price,
+      additionalInfo: '',
+      title: offer.title
+    },
+    validations: validations,
+    onSubmit: fetchData
+  })
 
   const levelOptions = offer.proficiencyLevel.map((level) => ({
     title: level,
@@ -144,6 +163,15 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
           title={t('offerDetailsPage.enrollOffer.inputs.info')}
           value={data.additionalInfo}
         />
+        {errors.additionalInfo && (
+          <Typography
+            color='error'
+            sx={styles.errorText}
+            variant={TypographyVariantEnum.Caption}
+          >
+            {t('offerDetailsPage.errors.additionalInfo')}
+          </Typography>
+        )}
         <AppButton
           loading={loading}
           sx={styles.button}

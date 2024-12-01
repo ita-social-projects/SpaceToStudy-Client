@@ -35,5 +35,8 @@
   "offerBanner": {
     "saveOfferButton": "Save Offer"
   },
-  "closeOffer": "Are you sure that you want to close this offer? You can't reopen this offer."
+  "closeOffer": "Are you sure that you want to close this offer? You can't reopen this offer.",
+  "errors": {
+    "additionalInfo": "Additional information cannot be shorter than 30 symbols"
+  }
 }

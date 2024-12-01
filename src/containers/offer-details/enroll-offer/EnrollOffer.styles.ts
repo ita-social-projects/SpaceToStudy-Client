@@ -36,5 +36,9 @@ export const styles = {
     p: '12px 24px',
     width: { xs: '100%', sm: 'fit-content' },
     minWidth: '280px'
+  },
+  errorText: {
+    ml: '12.5px',
+    mt: '-17px'
   }
 }

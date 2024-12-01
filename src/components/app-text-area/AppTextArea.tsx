@@ -50,7 +50,12 @@ const AppTextArea: FC<AppTextAreaProps> = ({
       />
       {maxLength && (
         <Typography
-          color={value?.length === maxLength ? 'error' : 'primary.300'}
+          color={
+            value?.length === maxLength ||
+            (value?.length < 30 && value?.length !== 0)
+              ? 'error'
+              : 'primary.300'
+          }
           sx={textLengthStyle}
           variant={TypographyVariantEnum.Body2}
         >
