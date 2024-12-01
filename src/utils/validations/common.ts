@@ -32,9 +32,6 @@ const validations: Validations = {
     ) {
       return 'common.errorMessages.passwordAlphabeticAndNumericAndSymbols'
     }
-    if (!validationPatterns.passwordValid.test(value)) {
-      return 'common.errorMessages.passwordValidSymbols'
-    }
     if (value.length < 8 || value.length > 25) {
       return 'common.errorMessages.passwordLength'
     }
