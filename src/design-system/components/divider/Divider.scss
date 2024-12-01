@@ -1,9 +1,15 @@
 @use '~scss/utilities'as *;
 
+.#{$prefix}divider-vertical {
+  height: 90px;
+}
+
+.#{$prefix}divider-md {
+  background-color: #9199A1;
+}
+
 .#{$prefix}divider {
   width: 100%;
-
-  &-line-sm {}
 
   &-ellipse {
     border-radius: 50%;

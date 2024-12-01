@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
+import Divider from '@mui/material/Divider'
 
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -69,6 +70,18 @@ const WhoWeAre = () => {
         type='ellipse'
         variant={'fullWidth'}
       />
+
+      <DividerComponent
+        caption={'test'}
+        orientation={'vertical'}
+        size='big'
+        textAlign='center'
+        thickness='md'
+        type='linear'
+        variant={'fullWidth'}
+      />
+
+      <Divider sx={{ backgroundColor: "teal", height: "3px", margin: "16px 0" }} />
     </Box>
   )
 }

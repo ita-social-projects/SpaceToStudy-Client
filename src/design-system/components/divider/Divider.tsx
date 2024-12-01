@@ -30,12 +30,12 @@ const DividerComponent: React.FC<DividerProps> = ({
   type
 }) => {
   return (
-    <Box className={'s2s-divider'}>
+    <Box className={cn('s2s-divider', {
+      [`s2s-divider-${orientation}`]: orientation
+    })}>
       {type === 'linear' ? (
         <Divider
-          className={cn(`s2s-divider-line`, {
-            [`s2s-divider-line-${thickness}`]: thickness
-          })}
+          className={'s2s-divider-line'}
           orientation={orientation}
           textAlign={textAlign}
           variant={variant}
