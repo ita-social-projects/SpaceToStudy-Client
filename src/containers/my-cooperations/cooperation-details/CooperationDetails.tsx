@@ -103,6 +103,19 @@ const CooperationDetails = () => {
     dispatch(setIsActivityCreated(true))
   }, [dispatch])
 
+  const handleCooperationStatusUpdate = useCallback(async () => {
+    await cooperationService.updateCooperation({
+      _id: id,
+      status: StatusEnum.Closed
+    })
+    setIsClosed(true)
+    dispatch(setCooperationStatus(StatusEnum.Closed))
+  }, [id, dispatch])
+
+  const handleCooperationCloseAccept = useCallback(() => {
+    void handleCooperationStatusUpdate()
+  }, [handleCooperationStatusUpdate])
+
   if (loading) {
     return <Loader pageLoad />
   }
@@ -139,20 +152,7 @@ const CooperationDetails = () => {
     return cooperationContent
   }
 
-  const isCooperationStatusUpdated = async () => {
-    await cooperationService.updateCooperation({
-      _id: id,
-      status: StatusEnum.Closed
-    })
-    setIsClosed(true)
-    dispatch(setCooperationStatus(StatusEnum.Closed))
-  }
-
-  const handleCooperationCloseAccept = () => {
-    void isCooperationStatusUpdated()
-  }
-
-  const cooperationCompletionConditions =
+  const isCooperationClosingRequestSend =
     response.needAction === userRole &&
     response.status === StatusEnum.RequestToClose
 
@@ -199,7 +199,7 @@ const CooperationDetails = () => {
         </Box>
       </Box>
       {activeTab === CooperationTabsEnum.Activities &&
-        cooperationCompletionConditions &&
+        isCooperationClosingRequestSend &&
         acceptClosingProccess}
       <Box sx={styles.notesBlock}>
         <Box sx={styles.pageContent}>{pageContent()}</Box>

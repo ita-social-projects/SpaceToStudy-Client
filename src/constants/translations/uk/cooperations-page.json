@@ -62,10 +62,10 @@
     "module": "Модуль"
   },
   "cooperationDetails": {
-    "completionTitle": "Завершення кооперації",
-    "closeCooperationTitle": "Завершити кооперацію",
+    "completionTitle": "Завершення співпраці",
+    "closeCooperationTitle": "Завершити співпрацю",
     "closeCooperationDescription": "Розпочніть процес завершення поточної співпраці, якщо ваше навчання зі студентом закінчилося.",
-    "closeCooperationBtn": "Завершити кооперацію",
+    "closeCooperationBtn": "Завершити співпрацю",
     "accessTitle": "Доступ до навчальних матеріалів",
     "accessDescription": "Визначте терміни доступу до навчальних матеріалів після завершення співпраці зі студентом.",
     "noAccess": "Не має доступу",
