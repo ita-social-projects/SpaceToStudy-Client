@@ -15,6 +15,7 @@ type LargeBadgeProps = {
   maxContent?: number
   color?: BadgeColor
   isVisible?: boolean
+  showZero?: boolean
 }
 
 type BadgeProps = (LargeBadgeProps | SmallBadgeProps) &
@@ -26,9 +27,11 @@ const Badge: FC<BadgeProps> = ({ children, ...props }) => {
   return (
     <MuiBadge
       badgeContent={displayBadge}
-      color={props.color}
+      color={props.color ?? 'primary'}
+      data-testid='badge'
       max={props.variant === 'lg' ? (props.maxContent ?? 10) : undefined}
       overlap='circular'
+      showZero={props.showZero}
       variant={badgeVariant}
     >
       {children}
