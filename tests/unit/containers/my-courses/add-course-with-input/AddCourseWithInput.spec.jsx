@@ -36,7 +36,7 @@ describe('AddCourseWithInput test', () => {
 
     expect(mockedFilterActions.updateFiltersInQuery).toHaveBeenCalled()
 
-    const clearButton = screen.getByTestId('ClearRoundedIcon')
+    const clearButton = screen.getByTestId('clearIcon')
 
     fireEvent.click(clearButton)
 
