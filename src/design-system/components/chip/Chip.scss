@@ -1,6 +1,6 @@
 @use '~/scss/utilities' as *;
 
-.chip {
+.#{$prefix}chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -25,7 +25,7 @@
     line-height: var(--#{$prefix}line-height-lg);
   }
 
-  &.disabled {
+  &.#{$prefix}disabled {
     opacity: 0.7;
     pointer-events: none;
   }
@@ -33,36 +33,36 @@
   &--filter {
     position: relative;
 
-    &.filled {
-      &.selected {
+    &.#{$prefix}filled {
+      &.#{$prefix}selected {
         background-color: var(--#{$prefix}blue-gray-100);
       }
 
-      &.unselected {
+      &.#{$prefix}unselected {
         background-color: var(--#{$prefix}blue-gray-50);
       }
     }
 
-    &.minimal {
+    &.#{$prefix}minimal {
       color: var(--#{$prefix}blue-gray-600);
 
       &:hover {
         color: var(--#{$prefix}blue-gray-800);
       }
 
-      &.selected,
-      &.unselected {
+      &.#{$prefix}selected,
+      &.#{$prefix}unselected {
         background-color: var(--#{$prefix}neutral-0);
       }
     }
 
-    &.minimal,
-    &.filled {
+    &.#{$prefix}minimal,
+    &.#{$prefix}filled {
       &:hover {
         box-shadow: var(--#{$prefix}box-shadow-xs);
       }
 
-      &.selected:not(.disabled) {
+      &.#{$prefix}selected {
         color: var(--#{$prefix}blue-gray-800);
 
         &:hover {
@@ -75,7 +75,7 @@
         }
       }
 
-      &.unselected:not(.disabled) {
+      &.#{$prefix}unselected {
         &:hover {
           background-color: var(--#{$prefix}blue-gray-50);
           color: var(--#{$prefix}blue-gray-800);
@@ -88,16 +88,22 @@
       }
     }
 
-    &.disabled {
+    &.#{$prefix}disabled {
       opacity: 1;
       color: var(--#{$prefix}blue-gray-500);
     }
 
-    .dropdown-menu {
+    .#{$prefix}btn {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .#{$prefix}dropdown-menu {
       position: absolute;
       top: 100%;
       left: 0;
-      background-color: white;
+      background-color: var(--#{$prefix}neutral-0);
       border: var(--#{$prefix}border-width-xs) solid
         var(--#{$prefix}blue-gray-300);
       border-radius: var(--#{$prefix}space-1);
@@ -108,7 +114,7 @@
       z-index: 10;
       box-shadow: var(--#{$prefix}box-shadow-xs);
 
-      .dropdown-item {
+      .#{$prefix}dropdown-item {
         padding: var(--#{$prefix}space-1) var(--#{$prefix}space-2);
         cursor: pointer;
         transition: background-color 0.2s;
@@ -123,26 +129,26 @@
   &--input {
     font-weight: var(--#{$prefix}font-weight-medium);
 
-    &.outlined,
-    &.filled-outlined {
+    &.#{$prefix}outlined,
+    &.#{$prefix}filled-outlined {
       background-color: var(--#{$prefix}neutral-0);
       color: var(--#{$prefix}blue-gray-800);
       border: var(--#{$prefix}border-width-sm) solid
         var(--#{$prefix}blue-gray-400);
 
-      &.disabled {
+      &.#{$prefix}disabled {
         opacity: 1;
         color: var(--#{$prefix}blue-gray-500);
         border-color: var(--#{$prefix}blue-gray-200);
       }
     }
 
-    &.filled-outlined {
+    &.#{$prefix}filled-outlined {
       background-color: var(--#{$prefix}blue-gray-50);
     }
   }
 
-  &--categories {
+  &-categories {
     display: inline-flex;
     gap: var(--#{$prefix}space-0-5);
   }
@@ -160,22 +166,22 @@
     border: var(--#{$prefix}border-width-sm) solid var(--chip-border-color);
   }
 
-  .startIcon,
-  .endIcon {
+  .#{$prefix}startIcon,
+  .#{$prefix}endIcon {
     display: flex;
     align-items: center;
     font-size: inherit;
   }
 
-  .startIcon {
+  .#{$prefix}startIcon {
     margin-right: var(--#{$prefix}space-1);
   }
 
-  .endIcon {
+  .#{$prefix}endIcon {
     margin-left: var(--#{$prefix}space-1);
   }
 
-  .label {
+  .#{$prefix}label {
     padding: var(--#{$prefix}space-0-5);
   }
 }

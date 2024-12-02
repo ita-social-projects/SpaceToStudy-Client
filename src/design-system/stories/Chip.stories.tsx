@@ -1,5 +1,6 @@
 import type { Meta } from '@storybook/react'
-import Chip, { type ChipProps } from '~/design-system/components/chip/Chip'
+import Chip from '~/design-system/components/chip/Chip'
+import { type ChipProps } from '~/design-system/components/chip/ChipTypes'
 
 const meta: Meta<typeof Chip> = {
   title: 'Components/Chip',

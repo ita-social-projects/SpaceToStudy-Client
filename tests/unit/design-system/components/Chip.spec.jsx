@@ -6,9 +6,10 @@ describe('Chip', () => {
     render(<Chip type='input' size='sm' label='Chip' disabled />)
 
     const chip = screen.getByText('Chip').parentElement
-    expect(chip).toHaveClass('chip--input')
-    expect(chip).toHaveClass('chip--sm')
-    expect(chip).toHaveClass('outlined')
+    expect(chip).toHaveClass('s2s-chip--input')
+    expect(chip).toHaveClass('s2s-chip--sm')
+    expect(chip).toHaveClass('s2s-outlined')
+    expect(chip).toHaveClass('s2s-disabled')
   })
 })
 
@@ -53,11 +54,11 @@ describe('FilterChip', () => {
     )
 
     fireEvent.click(screen.getByText('Filter Chip'))
-  
+
     const option1 = await screen.findByText('Option 1')
-  
+
     fireEvent.mouseDown(option1)
-  
+
     expect(screen.getByText('Option 1')).toBeInTheDocument()
     expect(screen.queryByText('Filter Chip')).not.toBeInTheDocument()
   })
@@ -74,7 +75,7 @@ describe('InputChip', () => {
     render(<Chip type='input' label='Input Chip' variant='outlined' />)
 
     const chip = screen.getByText('Input Chip').parentElement
-    expect(chip).toHaveClass('outlined')
+    expect(chip).toHaveClass('s2s-outlined')
   })
 })
 
