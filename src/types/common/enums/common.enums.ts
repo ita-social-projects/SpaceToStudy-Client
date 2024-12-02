@@ -139,4 +139,3 @@ export enum SortByEnum {
   highestRating = 'highestRating',
   lowestRating = 'lowestRating'
 }
-
