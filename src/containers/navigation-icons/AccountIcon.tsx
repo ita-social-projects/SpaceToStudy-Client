@@ -12,8 +12,9 @@ import { defaultResponses } from '~/constants'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
-import { UserResponse, UserRole } from '~/types'
+import { UpdatedPhoto, UserResponse, UserRole } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
+import { isUpdatedPhoto } from '~/utils/is-updated-photo'
 
 interface AccountIconProps {
   openMenu: (event: MouseEvent) => void
@@ -40,8 +41,15 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
   const { photo: statePhoto } = useAppSelector((state) => state.editProfile)
 
   const avatarSrc = useMemo(() => {
-    if (statePhoto?.src) {
-      return statePhoto.src
+    if (isUpdatedPhoto(statePhoto)) {
+      return (statePhoto as UpdatedPhoto).src
+    }
+
+    if (typeof statePhoto === 'string') {
+      return createUrlPath(
+        import.meta.env.VITE_APP_IMG_USER_URL || '',
+        statePhoto
+      )
     }
 
     if (photo) {

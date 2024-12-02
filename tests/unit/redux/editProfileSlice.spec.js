@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { vi } from 'vitest'
 import reducer, {
   setField,
   updateValidityStatus,
@@ -403,7 +404,10 @@ describe('editProfileSlice test', () => {
       nativeLanguage: 'nativeLanguage',
       photo: 'photo',
       professionalSummary: 'professionalSummary',
-      videoLink: 'videoLink'
+      videoLink: {
+        student: undefined,
+        tutor: 'videoLink'
+      }
     })
 
     expect(
@@ -417,7 +421,10 @@ describe('editProfileSlice test', () => {
           nativeLanguage: 'nativeLanguage',
           photo: 'photo',
           professionalSummary: 'professionalSummary',
-          videoLink: 'videoLink'
+          videoLink: {
+            student: undefined,
+            tutor: 'videoLink'
+          }
         })
       )
     ).toEqual(expectedState)

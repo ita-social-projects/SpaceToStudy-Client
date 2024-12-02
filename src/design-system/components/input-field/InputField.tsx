@@ -1,5 +1,3 @@
-import '~scss-components/input-field/InputField.scss'
-import { InputFieldVariantEnum } from '~/types'
 import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Clear'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
@@ -10,6 +8,8 @@ import { InputBaseProps } from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material'
 
+import { InputFieldVariantEnum } from './InputField.constants'
+import '~scss-components/input-field/InputField.scss'
 export interface InputFieldProps extends InputBaseProps {
   variant: InputFieldVariantEnum
   label?: string

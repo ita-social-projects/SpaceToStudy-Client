@@ -23,7 +23,7 @@ const mockedValues = {
 }
 
 const errorMessages = {
-  nameAlphabeticOnly: 'common.errorMessages.nameAlphabeticOnly',
+  nameCharacters: 'common.errorMessages.nameCharacters',
   nameLength: 'common.errorMessages.nameLength',
   numbersOnly: 'common.errorMessages.numbersOnly',
   positiveNumbersOnly: 'common.errorMessages.positiveNumbersOnly',
@@ -49,7 +49,7 @@ export const passwordField = (value) => {
 describe('commonValidation', () => {
   it('Should return error that only alphabetical characters are allowed', () => {
     const result = nameField(mockedValues.nameWithNumbers)
-    expect(result).toBe(errorMessages.nameAlphabeticOnly)
+    expect(result).toBe(errorMessages.nameCharacters)
   })
 
   it('Should return error that name is too long', () => {

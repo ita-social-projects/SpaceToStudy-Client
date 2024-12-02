@@ -1,9 +1,8 @@
 import {
   CategoryInterface,
-  SubjectNameInterface,
-  UpdatedPhoto
+  SubjectNameInterface
 } from '~/types/common/common.index'
-import { UserResponse } from '~/types/user/user.index'
+import { EditProfilePhoto, UserResponse, VideoUserRole } from '~/types'
 
 export interface EditProfileForm
   extends Pick<UserResponse, 'firstName' | 'lastName'> {
@@ -12,7 +11,12 @@ export interface EditProfileForm
   professionalSummary: string
   nativeLanguage: string | null
   videoLink: string
-  photo: string | UpdatedPhoto | null
+  photo: EditProfilePhoto
+}
+
+export interface EditProfileFormSubmitData
+  extends Omit<EditProfileForm, 'videoLink'> {
+  videoLink: { [key in VideoUserRole]: string | null }
 }
 
 export interface ProfessionalCategory {

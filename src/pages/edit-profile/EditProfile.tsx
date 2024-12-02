@@ -12,7 +12,6 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 
 import useConfirm from '~/hooks/use-confirm'
-
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -23,11 +22,10 @@ import {
   SizeEnum,
   UpdateUserParams,
   UserProfileTabsEnum,
-  UserRole
+  UserRole,
+  DataByRole
 } from '~/types'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
-
-import { styles } from '~/pages/edit-profile/EditProfile.styles'
 import {
   fetchUserById,
   updateUser,
@@ -37,6 +35,9 @@ import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
+
+import { styles } from '~/pages/edit-profile/EditProfile.styles'
+import { hasPhotoChanges } from '~/utils/has-photo-changes'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -74,8 +75,8 @@ const EditProfile = () => {
     activeTab === UserProfileTabsEnum.PasswordAndSecurity
 
   const hasChanges = (
-    initialData: Partial<EditProfileState>,
-    currentData: Partial<EditProfileState>
+    initialData: Partial<EditProfileState> | DataByRole<string>,
+    currentData: Partial<EditProfileState> | DataByRole<string>
   ): boolean => {
     return JSON.stringify(initialData) !== JSON.stringify(currentData)
   }
@@ -87,6 +88,10 @@ const EditProfile = () => {
       )
     }
     void fetchData()
+
+    return () => {
+      void fetchData()
+    }
   }, [dispatch, userId, userRole])
 
   useEffect(() => {
@@ -100,19 +105,29 @@ const EditProfile = () => {
 
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
     if (!initialEditProfileState || !profileState) return {}
+    const { videoLink: initialVideoLink } = initialEditProfileState
+    const { videoLink: currentVideoLink } = profileState
 
     const { photo: initialPhoto, ...initialData } = initialEditProfileState
     const { photo: currentPhoto, ...currentData } = profileState
 
-    const hasChanged =
-      hasChanges(initialData, currentData) || initialPhoto !== currentPhoto
+    const hasPhotoChanged = hasPhotoChanges(initialPhoto, currentPhoto)
+
+    const hasChanged = hasChanges(initialData, currentData) || hasPhotoChanged
 
     if (hasChanged) {
-      const changes: Partial<EditProfileState> = { ...currentData }
-
-      if (initialPhoto === currentPhoto) {
-        delete changes.photo
+      const changes: Partial<EditProfileState> = {
+        ...currentData
       }
+
+      if (!hasChanges(initialVideoLink, currentVideoLink)) {
+        delete changes.videoLink
+      }
+
+      if (hasPhotoChanged) {
+        changes.photo = currentPhoto
+      }
+
       return changes
     } else {
       return {}
@@ -149,6 +164,7 @@ const EditProfile = () => {
       professionalBlock,
       aboutStudent,
       categories,
+      photo,
       ...rest
     } = changedFields
 
@@ -156,11 +172,10 @@ const EditProfile = () => {
 
     if (city && country) dataToUpdate.address = { city, country }
 
-    if (typeof videoLink === 'string' || typeof videoLink === 'undefined') {
-      dataToUpdate.videoLink = videoLink ?? ''
-    } else if (typeof videoLink === 'object') {
-      dataToUpdate.videoLink =
-        videoLink[userRole as keyof typeof videoLink] || ''
+    if (videoLink) {
+      const updatedVideolink = videoLink[userRole as keyof DataByRole<string>]
+
+      dataToUpdate.videoLink = updatedVideolink
     }
 
     if (notificationSettings)
@@ -177,8 +192,8 @@ const EditProfile = () => {
       dataToUpdate.mainSubjects = categories
     }
 
-    if (typeof profileState.photo === 'object') {
-      dataToUpdate.photo = profileState.photo
+    if (typeof photo === 'object' || photo === '') {
+      dataToUpdate.photo = photo
     }
 
     await dispatch(

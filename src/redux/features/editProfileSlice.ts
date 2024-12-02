@@ -7,14 +7,14 @@ import {
 } from '~/redux/redux.constants'
 import {
   DataByRole,
-  EditProfileForm,
+  EditProfileFormSubmitData,
   ErrorResponse,
   MainUserRole,
   NotificationSettings,
   ProfessionalBlock,
   AboutStudentData,
   SubjectNameInterface,
-  UpdatedPhoto,
+  EditProfilePhoto,
   UpdateUserParams,
   UserMainSubject,
   UserMainSubjectFieldValues,
@@ -31,8 +31,8 @@ export interface EditProfileState {
   city: string | null
   professionalSummary?: string
   nativeLanguage: string | null
-  videoLink: DataByRole<string> | string
-  photo?: UpdatedPhoto | null
+  videoLink: DataByRole<string>
+  photo: EditProfilePhoto
   categories: DataByRole<UserMainSubject[]>
   professionalBlock: ProfessionalBlock
   aboutStudent: AboutStudentData
@@ -113,8 +113,11 @@ const updateStateFromPayload = (
   state.city = address?.city ?? null
   state.professionalSummary = professionalSummary
   state.nativeLanguage = nativeLanguage
-  state.photo = photo as UpdatedPhoto | null
-  state.videoLink = videoLink
+  state.photo = photo ?? null
+  state.videoLink = {
+    [UserRoleEnum.Tutor]: videoLink?.[UserRoleEnum.Tutor] ?? '',
+    [UserRoleEnum.Student]: videoLink?.[UserRoleEnum.Student] ?? ''
+  }
   state.categories = mainSubjects
   state.professionalBlock = professionalBlock || initialProfessoinalBlock
   state.aboutStudent = aboutStudent || initialAboutStudent
@@ -180,7 +183,10 @@ const editProfileSlice = createSlice({
       const { tab, value } = action.payload
       state.tabValidityStatus[tab] = value
     },
-    updateProfileData: (state, action: PayloadAction<EditProfileForm>) => {
+    updateProfileData: (
+      state,
+      action: PayloadAction<EditProfileFormSubmitData>
+    ) => {
       const {
         city,
         country,
@@ -197,9 +203,16 @@ const editProfileSlice = createSlice({
       state.firstName = firstName
       state.lastName = lastName
       state.nativeLanguage = nativeLanguage
-      state.photo = photo as UpdatedPhoto
+      state.photo = photo ?? null
       state.professionalSummary = professionalSummary
-      state.videoLink = videoLink
+
+      if (videoLink?.[UserRoleEnum.Tutor] !== null) {
+        state.videoLink[UserRoleEnum.Tutor] = videoLink[UserRoleEnum.Tutor]
+      }
+
+      if (videoLink?.[UserRoleEnum.Student] !== null) {
+        state.videoLink[UserRoleEnum.Student] = videoLink[UserRoleEnum.Student]
+      }
     },
     addCategory: (
       state,
