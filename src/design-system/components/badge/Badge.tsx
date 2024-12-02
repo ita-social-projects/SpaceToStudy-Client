@@ -1,4 +1,5 @@
 import { Badge as MuiBadge, BadgeProps as MuiBadgeProps } from '@mui/material'
+import './Badge.scss'
 
 type BadgeColor = 'primary' | 'success' | 'error'
 
@@ -36,6 +37,7 @@ const Badge: React.FC<BadgeProps> = ({
   return (
     <MuiBadge
       badgeContent={badgeContent}
+      className={`s2s-badge-${color}`}
       color={color}
       max={maxContent}
       overlap='circular'
