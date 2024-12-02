@@ -42,7 +42,27 @@ const WhoWeAre = () => {
         variant={'fullWidth'}
       />
 
-      <DividerComponent
+      <Divider
+        style={{
+          color: 'black'
+        }}
+        sx={{
+          width: '100%',
+          '&.MuiDivider-root': {
+            '&::before': {
+              border: `3px solid red`
+            }
+          }
+        }}
+        variant='middle'
+      >
+        {' '}
+        Editing as - xwqo{' '}
+      </Divider>
+
+      {/* the gold mine? */}
+
+      {/* <DividerComponent
         caption={'test'}
         orientation={'horizontal'}
         size='small'
@@ -79,9 +99,7 @@ const WhoWeAre = () => {
         thickness='md'
         type='linear'
         variant={'fullWidth'}
-      />
-
-      <Divider sx={{ backgroundColor: "teal", height: "3px", margin: "16px 0" }} />
+      /> */}
     </Box>
   )
 }
