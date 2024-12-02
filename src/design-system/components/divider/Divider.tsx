@@ -29,14 +29,28 @@ const DividerComponent: React.FC<DividerProps> = ({
   textAlign,
   type
 }) => {
+  const width = thickness === 'lg' ? '#9199A1' : '#C8CCD0'
+
   return (
-    <Box className={cn('s2s-divider', {
-      [`s2s-divider-${orientation}`]: orientation
-    })}>
+    <Box
+      className={cn('s2s-divider', {
+        [`s2s-divider-${orientation}`]: orientation
+      })}
+    >
       {type === 'linear' ? (
         <Divider
           className={'s2s-divider-line'}
           orientation={orientation}
+          sx={{
+            '&.MuiDivider-root': {
+              '&::before': {
+                border: `thin solid ${width}`
+              },
+              '&::after': {
+                border: `thin solid ${width}`
+              }
+            }
+          }}
           textAlign={textAlign}
           variant={variant}
         >
