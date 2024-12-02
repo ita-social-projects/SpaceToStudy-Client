@@ -66,7 +66,11 @@ const InputField: React.FC<InputFieldProps> = ({
           <ErrorOutlineIcon className='s2s-error-icon' />
         ) : (
           shouldShowClearIcon && (
-            <ClearIcon className='s2s-clear-icon' onClick={onClear} />
+            <ClearIcon
+              className='s2s-clear-icon'
+              data-testid='clearIcon'
+              onClick={onClear}
+            />
           )
         )}
       </div>
