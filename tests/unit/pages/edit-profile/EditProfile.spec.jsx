@@ -439,7 +439,7 @@ describe('EditProfile', () => {
   })
 
 
-  it('should replace the existing text in the "First name" field with test data', () => {
+  it('should replace the existing text in the "First name" field with test data and Update button becomes anable and active', () => {
     const testData = ["O'braian", "Мар'яна", "Анна-Марія", "Анна Марія"];
 
     const mockT = vi.fn((key) => {
