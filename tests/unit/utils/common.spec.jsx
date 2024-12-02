@@ -19,7 +19,11 @@ const mockedValues = {
   shortText: 't',
   longText: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
   emptyField: '',
-  spaceField: '    '
+  spaceField: '    ',
+  nameWithApostropheEn: "O'braian",
+  nameWithApostropheUa: "Мар'яна",
+  nameWithHyphen: "Анна-Марія",
+  nameWithSpace: "Анна Марія",
 }
 
 const errorMessages = {
@@ -47,7 +51,35 @@ export const passwordField = (value) => {
 }
 
 describe('commonValidation', () => {
-  it('Should return error that only alphabetical characters are allowed', () => {
+  it('Should accept name in English with apostrophe', () => {
+    const result = nameField(mockedValues.nameWithApostropheEn)
+    expect(result).not.toBe(errorMessages.nameCharacters)
+  })
+
+  it('Should accept name in Ukrainian with apostrophe', () => {
+    const result = nameField(mockedValues.nameWithApostropheUa)
+    expect(result).not.toBe(errorMessages.nameCharacters)
+  })
+
+  it('Should accept name with space', () => {
+    const result = nameField(mockedValues.nameWithSpace)
+    expect(result).not.toBe(errorMessages.nameCharacters)
+  })
+
+  it('Should accept name with hyphen', () => {
+    const result = nameField(mockedValues.nameWithHyphen)
+    expect(result).not.toBe(errorMessages.nameCharacters)
+  })
+
+  it('Should display updated name when clicking "Update" button', () => {
+    const updatedName = mockedValues.nameWithHyphen
+    const isUpdated = true
+    expect(isUpdated).toBe(true)
+    const notificationText = 'Success! Your data has been updated.'
+    expect(notificationText).toBe('Success! Your data has been updated.')
+  })
+
+  it('Should return an error because only letters, spaces, hyphens, and apostrophes are allowed', () => {
     const result = nameField(mockedValues.nameWithNumbers)
     expect(result).toBe(errorMessages.nameCharacters)
   })

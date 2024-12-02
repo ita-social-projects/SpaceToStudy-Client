@@ -1,8 +1,9 @@
-import { screen, waitFor, fireEvent } from '@testing-library/react'
+import { screen, waitFor, fireEvent, render } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import EditProfile from '~/pages/edit-profile/EditProfile'
+import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
 import { expect, vi } from 'vitest'
 import { snackbarVariants } from '~/constants'
 import { useAppSelector } from '~/hooks/use-redux'
@@ -70,6 +71,16 @@ const userMock = {
   }
 }
 
+const mockData = {
+  firstName: '',
+  photo: null,
+  videoLink: '',
+  errors: {
+    firstName: '',
+    videoLink: '',
+  },
+};
+
 vi.mock('~/hooks/use-confirm', () => ({
   default: () => ({ checkConfirmation: () => true })
 }))
@@ -129,6 +140,21 @@ vi.mock(
     }
   })
 )
+
+vi.mock('AppTextField', () => ({
+  __esModule: true,
+  default: ({ errorMsg, label, onBlur, onChange, placeholder, value, InputProps }) => (
+    <input
+      aria-label={label}
+      value={value || ''}
+      onBlur={onBlur}
+      onChange={onChange}
+      placeholder={placeholder}
+      aria-invalid={errorMsg ? 'true' : 'false'}
+      {...InputProps}
+    />
+  ),
+}));
 
 describe('EditProfile', () => {
   beforeEach(async () => {
@@ -411,4 +437,40 @@ describe('EditProfile', () => {
 
     expect(dataToUpdate).toHaveProperty('videoLink', '')
   })
-})
+
+
+  it('should replace the existing text in the "First name" field with test data', () => {
+    const testData = ["O'braian", "Мар'яна", "Анна-Марія", "Анна Марія"];
+
+    const mockT = vi.fn((key) => {
+      const translations = {
+        'common.labels.firstName': 'First Name',
+        'editProfilePage.updateBtn': 'Update',
+      };
+      return translations[key] || key;
+    });
+
+    const mockHandleInputChange = vi.fn();
+
+    render(
+      <ProfileTabForm
+        t={mockT}
+        data={mockData}
+        errors={mockData.errors}
+        handleInputChange={mockHandleInputChange}
+        handleBlur={() => {}}
+        openAlert={() => {}}
+      />
+    );
+
+    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
+    expect(firstNameInput).toBeInTheDocument();
+
+    for (const data of testData) {
+      fireEvent.change(firstNameInput, { target: { value: data } });
+
+      const updateButton = screen.getByText('editProfilePage.updateBtn')
+      expect(updateButton).not.toBeDisabled();
+    }
+  });
+});

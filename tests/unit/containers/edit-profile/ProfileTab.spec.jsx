@@ -1,8 +1,10 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event';
 import { UserRoleEnum } from '~/types'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { renderWithProviders } from '~tests/test-utils'
 import ProfileTab from '~/containers/edit-profile/profile-tab/ProfileTab'
+import { expect, vi } from 'vitest'
 
 vi.mock('~/components/title-with-description/TitleWithDescription', () => ({
   default: ({ description, title }) => (
@@ -144,5 +146,13 @@ describe('ProfileTab', () => {
 
     const photoInput = screen.queryByDisplayValue('')
     expect(photoInput).not.toBeInTheDocument()
+  })
+
+  it('should place cursor in the "First name" field when clicked', async() => {
+    renderWithMockData()
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+    await userEvent.click(firstNameInput)
+    expect(firstNameInput).toBeInTheDocument()
+    expect(firstNameInput).toHaveFocus()
   })
 })
