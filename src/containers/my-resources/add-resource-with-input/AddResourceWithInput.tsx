@@ -9,7 +9,6 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import SearchIcon from '@mui/icons-material/Search'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 
@@ -18,12 +17,14 @@ import { useDebounce } from '~/hooks/use-debounce'
 import { SortHook } from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import AppButton from '~/components/app-button/AppButton'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import InputField from '~scss-components/input-field/InputField'
+
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
 import { CategoryNameInterface, PositionEnum, SizeEnum } from '~/types'
+import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 interface AddResourceWithInputProps {
   btnText?: string
@@ -93,13 +94,14 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
           valueField={'name'}
         />
       )}
-      <InputWithIcon
-        endAdornment={<SearchIcon sx={styles.searchIcon} />}
+      <InputField
         onChange={onChange}
         onClear={onClear}
         placeholder={t(placeholder)}
+        search
         sx={styles.input}
         value={searchInput}
+        variant={InputFieldVariantEnum.Outlined}
       />
     </>
   )

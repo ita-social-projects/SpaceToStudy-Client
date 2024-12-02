@@ -14,14 +14,11 @@ export const styles = {
   },
 
   input: {
-    py: { xs: 0 },
     display: 'flex',
     flexGrow: '1',
-    gap: '8px',
     mr: { sm: 3, xs: 0 },
     mb: { sm: 0, xs: 2 },
     backgroundColor: 'basic.white',
-    borderRadius: '4px',
     maxHeight: '48px'
   }
 }

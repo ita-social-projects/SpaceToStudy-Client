@@ -20,8 +20,8 @@ export const styles = {
   inputWithFilter: { display: 'flex', gap: '16px' },
   searchIcon: { color: 'primary.700' },
   titleInput: {
+    height: '48px',
     maxWidth: '350px',
-    border: '1px solid',
     ...input
   },
   categoryInput: { maxWidth: '200px', ...input },

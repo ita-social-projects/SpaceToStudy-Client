@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { SelectChangeEvent } from '@mui/material/Select'
 import SimpleBar from 'simplebar-react'
-import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
@@ -15,7 +14,7 @@ import useSort from '~/hooks/table/use-sort'
 import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import InputField from '~scss-components/input-field/InputField'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import CoursesFilterBar from '~/containers/find-course/courses-filter-bar/CoursesFilterBar'
 import MyCorsesCardsList from '~/containers/my-courses/my-courses-container/MyCorsesCardsList'
@@ -38,6 +37,8 @@ import {
   UserRole,
   UserResponse
 } from '~/types'
+import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
+
 import { setIsActivityCreated } from '~/redux/features/cooperationsSlice'
 
 interface AddCourseTemplateModalProps {
@@ -178,13 +179,14 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
 
       <Box sx={styles.toolbar}>
         <Box sx={styles.toolbarContainer}>
-          <InputWithIcon
-            endAdornment={<SearchIcon sx={styles.searchIcon} />}
+          <InputField
             onChange={onSearchChange}
             onClear={onSearchReset}
             placeholder={t('common.search')}
+            search
             sx={styles.searchInput}
             value={searchValue}
+            variant={InputFieldVariantEnum.Small}
           />
           <Box onClick={toggleFilters} sx={styles.filtersBtn}>
             <FiltersToggle />

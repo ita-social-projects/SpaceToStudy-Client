@@ -1,7 +1,6 @@
 import { ChangeEvent, useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
@@ -9,7 +8,7 @@ import EnhancedTable, {
   EnhancedTableProps
 } from '~/components/enhanced-table/EnhancedTable'
 import AppButton from '~/components/app-button/AppButton'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import InputField from '~scss-components/input-field/InputField'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 import CheckboxWithTooltip from '~/components/checkbox-with-tooltip/CheckboxWithTooltip'
 
@@ -23,6 +22,7 @@ import {
   ResourcesTabsEnum,
   TableItem
 } from '~/types'
+import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 interface AddResourceModalProps<T>
   extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
@@ -78,13 +78,14 @@ const AddResourceModal = <T extends TableItem>({
       </Typography>
 
       <Box sx={styles.inputWithFilter}>
-        <InputWithIcon
-          endAdornment={<SearchIcon sx={styles.searchIcon} />}
+        <InputField
           onChange={handleInputChange}
           onClear={handleInputReset}
           placeholder={t('common.search')}
+          search
           sx={styles.titleInput}
           value={inputValue}
+          variant={InputFieldVariantEnum.Outlined}
         />
         <AppButtonMenu<CategoryNameInterface>
           selectedItems={selectedItems}

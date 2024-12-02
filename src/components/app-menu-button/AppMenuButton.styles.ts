@@ -6,10 +6,8 @@ export const styles = {
   input: {
     m: '0 auto',
     width: '100%',
-    borderRadius: '6px',
-    p: { xs: 0, sm: 0 },
-    border: `1px solid ${palette.primary[400]}`,
-    '& div': { pl: '10px' }
+    height: '40px',
+    p: { xs: 0, sm: 0 }
   },
   clearAll: {
     display: 'flex',

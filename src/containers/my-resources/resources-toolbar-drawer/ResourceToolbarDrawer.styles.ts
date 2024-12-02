@@ -35,11 +35,9 @@ export const styles = {
     }
   },
   input: {
-    flex: 1,
-    border: '1px solid',
-    borderColor: 'primary.200',
-    borderRadius: '4px',
-    '&:hover': { borderColor: 'primary.900' }
+    width: '100%',
+    height: '40px',
+    flex: 1
   },
   select: { flexDirection: 'column', rowGap: '3px', alignItems: 'left' },
   buttons: { display: 'flex', flexDirection: 'column', rowGap: '16px' }

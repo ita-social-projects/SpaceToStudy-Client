@@ -2,12 +2,11 @@ import { FC, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AddIcon from '@mui/icons-material/Add'
-import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 
 import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import AppButton from '~/components/app-button/AppButton'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import InputField from '~scss-components/input-field/InputField'
 import CoursesFilterBar from '~/containers/find-course/courses-filter-bar/CoursesFilterBar'
 import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer'
 
@@ -17,6 +16,7 @@ import { useDrawer } from '~/hooks/use-drawer'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { CourseFilters, FiltersActions } from '~/types'
+import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 
 interface AddCoursesWithInputProps {
@@ -63,13 +63,14 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
         handleToggle={handleToggle}
       />
       <CoursesFilterBar onValueChange={setSort} value={sort} />
-      <InputWithIcon
-        endAdornment={<SearchIcon sx={styles.searchIcon} />}
+      <InputField
         onChange={onChange}
         onClear={onClear}
         placeholder={t('common.search')}
+        search
         sx={styles.input}
         value={filters.title}
+        variant={InputFieldVariantEnum.Outlined}
       />
     </Box>
   )

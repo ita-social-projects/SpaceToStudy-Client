@@ -1,7 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import SearchIcon from '@mui/icons-material/Search'
 
 import { ResourceService } from '~/services/resource-service'
 import { useDrawer } from '~/hooks/use-drawer'
@@ -11,7 +10,7 @@ import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppSelect from '~/components/app-select/AppSelect'
 import AppButton from '~/components/app-button/AppButton'
 import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import InputField from '~scss-components/input-field/InputField'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 
 import { sortTranslationKeys } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
@@ -22,6 +21,7 @@ import {
   ResourceToolbarForm,
   SortEnum
 } from '~/types'
+import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 interface ResourcesToolBarDrawerProps {
   setCategories: Dispatch<SetStateAction<string[]>>
@@ -92,13 +92,14 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
             title={t('myResourcesPage.categories.category')}
             valueField={'name'}
           />
-          <InputWithIcon
-            endAdornment={<SearchIcon />}
+          <InputField
             onChange={handleInputChange('name')}
             onClear={() => resetData(['name'])}
             placeholder={t('common.search')}
+            search
             sx={styles.input}
             value={data.name}
+            variant={InputFieldVariantEnum.Outlined}
           />
           <AppSelect
             fields={sortTranslationKeys}

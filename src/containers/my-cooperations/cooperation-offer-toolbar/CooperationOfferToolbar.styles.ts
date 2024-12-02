@@ -9,10 +9,8 @@ export const styles = {
   searchIcon: { color: 'primary.700' },
   input: {
     flex: 1,
-    maxWidth: '580px',
-    border: '1px solid',
-    borderColor: 'primary.500',
-    borderRadius: '6px'
+    height: '48px',
+    maxWidth: '580px'
   },
   actionBlock: { display: 'flex', gap: '24px' },
   select: { flex: { xs: 1, sm: 0 } }

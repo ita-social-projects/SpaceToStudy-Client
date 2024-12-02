@@ -4,7 +4,9 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import ClearIcon from '@mui/icons-material/Clear'
 import AppButton from '~/components/app-button/AppButton'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+
+import InputField from '~scss-components/input-field/InputField'
+import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 import { styles } from '~/components/app-menu-button/AppMenuButton.styles'
 import { ButtonVariantEnum } from '~/types'
@@ -37,12 +39,14 @@ const AppMenuButton: FC<AppMenuButtonProps> = ({
   return (
     <>
       <Box sx={styles.inputWrapper}>
-        <InputWithIcon
+        <InputField
           onChange={handleInputChange}
           onClear={handleInputReset}
           placeholder={t('common.search')}
+          search
           sx={styles.input}
           value={inputValue}
+          variant={InputFieldVariantEnum.Outlined}
         />
       </Box>
       <AppButton

@@ -1,10 +1,10 @@
-import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import AppSelect from '~/components/app-select/AppSelect'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import InputField from '~scss-components/input-field/InputField'
+
 import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'
 import { FilterHook } from '~/hooks/table/use-filter'
 import { SortHook } from '~/hooks/table/use-sort'
@@ -18,6 +18,7 @@ import {
   MyCooperationsFilters,
   SelectFieldType
 } from '~/types'
+import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 interface CooperationOfferToolbarProps {
   filterOptions: FilterHook<MyCooperationsFilters>
@@ -66,13 +67,14 @@ const CooperationOfferToolbar: FC<CooperationOfferToolbarProps> = ({
 
   return (
     <Box sx={styles.root}>
-      <InputWithIcon
+      <InputField
         onChange={handleInputChange}
         onClear={handleInputReset}
         placeholder={t('cooperationsPage.search')}
-        startIcon={<SearchIcon sx={styles.searchIcon} />}
+        search
         sx={styles.input}
         value={inputValue}
+        variant={InputFieldVariantEnum.Outlined}
       />
       <Box sx={styles.actionBlock}>
         {!withoutSort && (

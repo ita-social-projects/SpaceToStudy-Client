@@ -2,13 +2,13 @@ import { KeyboardEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { InputBaseProps } from '@mui/material/InputBase'
-import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
-
 import AppButton from '~/components/app-button/AppButton'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import InputField from '~scss-components/input-field/InputField'
 
 import { ButtonVariantEnum } from '~/types'
+import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
+
 import { styles } from '~/components/search-filter-input/SearchFilterInput.styles'
 
 interface SearchFilterInputProps {
@@ -53,16 +53,16 @@ const SearchFilterInput = ({
 
   return (
     <Box sx={styles.container}>
-      <InputWithIcon
+      <InputField
         onChange={onChange}
         onClear={onClear}
         onKeyDown={onKeyDown}
-        startIcon={<SearchIcon sx={styles.searchIcon} />}
+        placeholder={t(`${textFieldProps?.placeholder}`)}
+        search
         sx={styles.input}
         value={search}
-        {...textFieldProps}
+        variant={InputFieldVariantEnum.Small}
       />
-
       <AppButton
         onClick={onSearch}
         sx={styles.searchBtn}

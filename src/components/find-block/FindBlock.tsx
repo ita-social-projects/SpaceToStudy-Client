@@ -2,12 +2,11 @@ import { ChangeEvent, KeyboardEvent, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import SearchIcon from '@mui/icons-material/Search'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import TitleBlock from '~/components/title-block/TitleBlock'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButton from '~/components/app-button/AppButton'
+import InputField from '~scss-components/input-field/InputField'
 
 import bag from '~/assets/img/student-home/bag.png'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -45,13 +44,12 @@ const FindBlock = ({ translationKey }: FindBlockProps) => {
       style={styles.container}
       translationKey={translationKey}
     >
-      <InputWithIcon
-        fullWidth={isMobile}
+      <InputField
         onChange={onChange}
         onClear={onClear}
         onKeyDown={handleEnterPress}
         placeholder={t(`${translationKey}.label`)}
-        startIcon={<SearchIcon />}
+        search
         sx={styles.input}
         value={inputValue}
       />
