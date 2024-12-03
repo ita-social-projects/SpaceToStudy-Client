@@ -77,7 +77,8 @@
     "reviewRating": "Rate your experience:",
     "reviewLabel": "Your review",
     "cancel": "Cancel",
-    "submit": "Submit"
+    "submit": "Submit",
+    "success": "Your review was submitted seccessfully"
   },
   "notes": {
     "noteText": "Note text...",
