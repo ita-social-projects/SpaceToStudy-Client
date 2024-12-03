@@ -5,7 +5,7 @@
 }
 
 .#{$prefix}divider-md {
-  background-color: #9199a1;
+  background-color: $neutral-450;
 }
 
 .#{$prefix}divider {
@@ -16,15 +16,15 @@
     border-radius: 50%;
 
     &-sm {
-      background-color: #c8ccd0;
+      background-color: $neutral-250;
     }
 
     &-md {
-      background-color: #9199a1;
+      background-color: $neutral-450;
     }
 
     &-lg {
-      background-color: #9199a1;
+      background-color: $neutral-450;
     }
 
     &-small {
