@@ -95,12 +95,6 @@ export const youtubeVideoLink = (value: string): string => {
   return ''
 }
 
-export const nullNumberFiled = (value: number): string | undefined => {
-  if(!value) {
-    return 'common.errorMessages.emptyField'
-  }
-}
-
 export const helperTextHandler = (
   value: string,
   marker: keyof Validations,

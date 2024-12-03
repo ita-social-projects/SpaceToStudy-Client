@@ -1,4 +1,3 @@
-import { nullNumberFiled } from '~/utils/validations/common'
 import { UserRoleEnum } from '~/types'
 
 export const initialValues = {
@@ -9,6 +8,4 @@ export const initialValues = {
   offer: ''
 }
 
-export const validations = {
-  // rating: (value: number) => nullNumberFiled(value)
-}
+export const validations = {}

@@ -112,7 +112,7 @@ const MyCooperationsDetails = () => {
     createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, displayedUser.photo)
 
   const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
-    <CooperationCompletion data={reviewData}/>
+    <CooperationCompletion data={reviewData} />
   )
 
   return (

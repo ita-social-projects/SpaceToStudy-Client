@@ -1,4 +1,4 @@
-import { useState, FC } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -16,34 +16,36 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 import { getErrorKey } from '~/utils/get-error-key'
+import { useModalContext } from '~/context/modal-context'
 import {
   initialValues,
   validations
 } from '~/containers/my-cooperations/add-review-modal/AddReviewModal.constants'
 
-import { ComponentEnum, ReviewDataFromCooperation, ReviewData, ErrorResponse } from '~/types'
+import {
+  ComponentEnum,
+  ReviewDataFromCooperation,
+  ReviewData,
+  ErrorResponse,
+  DataFromCooperation
+} from '~/types'
 import { styles } from '~/containers/my-cooperations/add-review-modal/AddReviewModal.styles'
 
 const AddReviewModal: FC<ReviewDataFromCooperation> = ({ data }) => {
-  // const [rating, setRating] = useState<number>(0)
-  // const [review, setReview] = useState<string>('')
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
   const dispatch = useAppDispatch()
+  const { closeModal } = useModalContext()
 
-  const onSubmit = async () => {
-    await ReviewService.submitReview({
-      ...data,
-      comment: reviewData.comment,
-      rating: reviewData.rating
-    })
-  }
-
-  const submitReview = () => {
+  const addReview = (data: {
+    dataFromCooperation: DataFromCooperation
+    comment: string
+    rating: number
+  }) => {
     return ReviewService.submitReview({
-      ...data,
-      comment: reviewData.comment,
-      rating: reviewData.rating
+      ...data.dataFromCooperation,
+      comment: data.comment,
+      rating: data.rating
     })
   }
 
@@ -54,6 +56,7 @@ const AddReviewModal: FC<ReviewDataFromCooperation> = ({ data }) => {
         message: 'cooperationsPage.cooperationDetails.success'
       })
     )
+    closeModal()
   }
 
   const handleResponseError = (error?: ErrorResponse) => {
@@ -65,6 +68,20 @@ const AddReviewModal: FC<ReviewDataFromCooperation> = ({ data }) => {
     )
   }
 
+  const { fetchData: sendReview } = useAxios({
+    service: addReview,
+    onResponse: handleResponse,
+    onResponseError: handleResponseError
+  })
+
+  const handleSubmitReview = async () => {
+    await sendReview({
+      dataFromCooperation: data,
+      comment: reviewData.comment,
+      rating: reviewData.rating
+    })
+  }
+
   const {
     data: reviewData,
     handleInputChange,
@@ -73,12 +90,16 @@ const AddReviewModal: FC<ReviewDataFromCooperation> = ({ data }) => {
   } = useForm<ReviewData>({
     initialValues,
     validations,
-    onSubmit,
+    onSubmit: handleSubmitReview,
     submitWithData: true
   })
 
   return (
-    <Box component={ComponentEnum.Form} sx={styles.root}>
+    <Box
+      component={ComponentEnum.Form}
+      onSubmit={handleSubmit}
+      sx={styles.root}
+    >
       <Typography sx={styles.title}>
         {t('cooperationsPage.cooperationDetails.reviewTitle')}
       </Typography>
@@ -91,8 +112,9 @@ const AddReviewModal: FC<ReviewDataFromCooperation> = ({ data }) => {
             {t('cooperationsPage.cooperationDetails.reviewRating')}
           </Typography>
           <Rating
-            // onChange={(e, newValue) => setRating(newValue ?? 0)}
-            onChange={(e, newValue) => handleNonInputValueChange('rating', newValue ?? 0)}
+            onChange={(e, newValue) =>
+              handleNonInputValueChange('rating', newValue ?? 0)
+            }
             value={reviewData.rating}
           />
         </Box>
@@ -100,13 +122,12 @@ const AddReviewModal: FC<ReviewDataFromCooperation> = ({ data }) => {
           label={t('cooperationsPage.cooperationDetails.reviewLabel')}
           minRows={3}
           multiline
-          // onChange={(e) => setReview(e.target.value)}
           onChange={handleInputChange('comment')}
           value={reviewData.comment}
         />
       </Box>
       <Box sx={styles.buttonGroup}>
-        <Button color='tonal' onClick={onSubmit}>
+        <Button color='tonal' onClick={() => closeModal()}>
           {t('cooperationsPage.cooperationDetails.cancel')}
         </Button>
         <Button type='submit'>
