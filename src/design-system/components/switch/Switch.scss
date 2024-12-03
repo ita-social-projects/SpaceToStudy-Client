@@ -44,21 +44,15 @@
   overflow: visible;
   padding: 0;
   margin: 5px;
-
-  &:hover {
-    .MuiSwitch-track {
-      border-color: $blue-gray-500;
-
-      &.Mui-disabled {
-        border-color: $blue-gray-100 !important;
-      }
-    }
-  }
 }
 
 .#{$prefix}switch {
   &--sm {
     @include root-mixin(45, 21);
+
+    &:not(.Mui-disabled):hover .MuiSwitch-track {
+      border-color: $blue-gray-500;
+    }
 
     .MuiSwitch-thumb {
       @include thumb-mixin(15);
@@ -66,6 +60,10 @@
 
     .MuiSwitch-track {
       @include track-mixin(45, $border-width-sm);
+
+      .Mui-disabled & {
+        border-color: $blue-gray-200 !important;
+      }
     }
 
     .MuiSwitch-switchBase {
@@ -76,12 +74,20 @@
   &--md {
     @include root-mixin(60, 28);
 
+    &:not(.Mui-disabled):hover .MuiSwitch-track {
+      border-color: $blue-gray-500;
+    }
+
     .MuiSwitch-thumb {
       @include thumb-mixin(20);
     }
 
     .MuiSwitch-track {
       @include track-mixin(60, $border-width-md);
+
+      .Mui-disabled & {
+        border-color: $blue-gray-200 !important;
+      }
     }
 
     .MuiSwitch-switchBase {
@@ -92,12 +98,20 @@
   &--lg {
     @include root-mixin(75, 35);
 
+    &:not(.Mui-disabled):hover .MuiSwitch-track {
+      border-color: $blue-gray-500;
+    }
+
     .MuiSwitch-thumb {
       @include thumb-mixin(25);
     }
 
     .MuiSwitch-track {
-      @include track-mixin(75, $border-width-md);
+      @include track-mixin(75, $border-width-lg - 1.5);
+
+      .Mui-disabled & {
+        border-color: $blue-gray-200 !important;
+      }
     }
 
     .MuiSwitch-switchBase {
