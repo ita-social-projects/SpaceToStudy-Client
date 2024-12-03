@@ -3,7 +3,7 @@ import {
   IconButtonProps,
   IconButton as MuiIconButton
 } from '@mui/material'
-import React, { useState } from 'react'
+import { FC } from 'react'
 import { IconButtonVariant } from './IconButton.constants'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import { cn } from '~/utils/cn'
@@ -15,31 +15,29 @@ interface S2SIconButtonProps extends Omit<IconButtonProps, 'size'> {
   loading?: boolean
   disabled?: boolean
   toggleAble?: boolean
+  isToggled?: boolean
+  onClick?: () => void
 }
 
-export const IconButton: React.FC<S2SIconButtonProps> = ({
+export const IconButton: FC<S2SIconButtonProps> = ({
   variant = IconButtonVariant.Primary,
   size = 'md',
   loading = false,
   disabled = false,
   toggleAble = false,
+  isToggled = false,
+  onClick,
   ...props
 }) => {
-  const [isToggled, setIsToggled] = useState<boolean>(false)
-  const handleClick = () => {
-    if (toggleAble) {
-      setIsToggled((prevState) => !prevState)
-    }
-  }
   const classNamesContainerIconBG = cn(
     's2s-icon-button',
     `s2s-icon-button--${size}`,
-    `s2s-icon-button--${variant}${isToggled ? '-toggle-able' : ''}`
+    `s2s-icon-button--${variant}${toggleAble && isToggled ? '-toggle-able' : ''}`
   )
   const classNamesContainerIcon = cn(
     's2s-icon',
     `s2s-icon--${size}`,
-    `s2s-icon--${variant}${isToggled ? '-toggle-able' : ''}`
+    `s2s-icon--${variant}${toggleAble && isToggled ? '-toggle-able' : ''}`
   )
   const loaderSizes = {
     xs: 12,
@@ -55,7 +53,7 @@ export const IconButton: React.FC<S2SIconButtonProps> = ({
     <MuiIconButton
       className={classNamesContainerIconBG}
       disabled={loading || disabled}
-      onClick={handleClick}
+      onClick={onClick}
       {...props}
     >
       {loading ? (

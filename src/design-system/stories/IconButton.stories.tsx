@@ -51,6 +51,10 @@ The \`IconButton\` component provides a compact and customizable icon button tha
     toggleAble: {
       description: 'Enables toggleable functionality for the button.',
       control: { type: 'boolean' }
+    },
+    isToggled: {
+      description: 'Set toggle styles for the button.',
+      control: { type: 'boolean' }
     }
   },
   args: {
@@ -58,7 +62,8 @@ The \`IconButton\` component provides a compact and customizable icon button tha
     size: 'lg',
     loading: false,
     disabled: false,
-    toggleAble: false
+    toggleAble: false,
+    isToggled: false
   }
 }
 
