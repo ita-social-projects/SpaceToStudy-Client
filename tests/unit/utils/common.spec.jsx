@@ -20,10 +20,13 @@ const mockedValues = {
   longText: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
   emptyField: '',
   spaceField: '    ',
-  nameWithApostropheEn: "O'braian",
-  nameWithApostropheUa: "Мар'яна",
-  nameWithHyphen: "Анна-Марія",
-  nameWithSpace: "Анна Марія",
+  firstNameWithApostropheEn: "O'braian",
+  firstNameWithApostropheUa: "Мар'яна",
+  firstNameWithHyphen: "Анна-Марія",
+  firstNameWithSpace: "Анна Марія",
+  lastNameWithApostrophe: "Mc'Neil",
+  lastNameWithApostropheAndHyphen: "O'Neill-Johnson",
+  lastNameWithSpace: "Van Gogh",
 }
 
 const errorMessages = {
@@ -51,23 +54,38 @@ export const passwordField = (value) => {
 }
 
 describe('commonValidation', () => {
-  it('Should accept name in English with apostrophe', () => {
-    const result = nameField(mockedValues.nameWithApostropheEn)
+  it('Should accept firstName in English with apostrophe', () => {
+    const result = nameField(mockedValues.firstNameWithApostropheEn)
     expect(result).not.toBe(errorMessages.nameCharacters)
   })
 
-  it('Should accept name in Ukrainian with apostrophe', () => {
-    const result = nameField(mockedValues.nameWithApostropheUa)
+  it('Should accept firstName in Ukrainian with apostrophe', () => {
+    const result = nameField(mockedValues.firstNameWithApostropheUa)
     expect(result).not.toBe(errorMessages.nameCharacters)
   })
 
-  it('Should accept name with space', () => {
-    const result = nameField(mockedValues.nameWithSpace)
+  it('Should accept firstName with space', () => {
+    const result = nameField(mockedValues.firstNameWithSpace)
     expect(result).not.toBe(errorMessages.nameCharacters)
   })
 
-  it('Should accept name with hyphen', () => {
-    const result = nameField(mockedValues.nameWithHyphen)
+  it('Should accept firstName with hyphen', () => {
+    const result = nameField(mockedValues.firstNameWithHyphen)
+    expect(result).not.toBe(errorMessages.nameCharacters)
+  })
+
+  it('Should accept lastName with apostrophe', () => {
+    const result = nameField(mockedValues.lastNameWithApostrophe)
+    expect(result).not.toBe(errorMessages.nameCharacters)
+  })
+
+  it('Should accept lastName with apostrophe and hyphen', () => {
+    const result = nameField(mockedValues.lastNameWithApostropheAndHyphen)
+    expect(result).not.toBe(errorMessages.nameCharacters)
+  })
+
+  it('Should accept lastName with space', () => {
+    const result = nameField(mockedValues.lastNameWithSpace)
     expect(result).not.toBe(errorMessages.nameCharacters)
   })
 

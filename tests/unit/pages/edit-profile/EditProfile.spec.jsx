@@ -73,10 +73,12 @@ const userMock = {
 
 const mockData = {
   firstName: '',
+  lastName: '',
   photo: null,
   videoLink: '',
   errors: {
     firstName: '',
+    lastName: '',
     videoLink: '',
   },
 };
@@ -468,6 +470,41 @@ describe('EditProfile', () => {
 
     for (const data of testData) {
       fireEvent.change(firstNameInput, { target: { value: data } });
+
+      const updateButton = screen.getByText('editProfilePage.updateBtn')
+      expect(updateButton).not.toBeDisabled();
+    }
+  });
+
+  it('should replace the existing text in the "Last name" field with test data and Update button becomes anable and active', () => {
+    const testData = ["Mc'Neil", "O'Neill-Johnson", "Van Gogh"];
+
+    const mockT = vi.fn((key) => {
+      const translations = {
+        'common.labels.lastName': 'Last Name',
+        'editProfilePage.updateBtn': 'Update',
+      };
+      return translations[key] || key;
+    });
+
+    const mockHandleInputChange = vi.fn();
+
+    render(
+      <ProfileTabForm
+        t={mockT}
+        data={mockData}
+        errors={mockData.errors}
+        handleInputChange={mockHandleInputChange}
+        handleBlur={() => {}}
+        openAlert={() => {}}
+      />
+    );
+
+    const lastNameInput = screen.getByLabelText(/common.labels.lastName/i)
+    expect(lastNameInput).toBeInTheDocument();
+
+    for (const data of testData) {
+      fireEvent.change(lastNameInput, { target: { value: data } });
 
       const updateButton = screen.getByText('editProfilePage.updateBtn')
       expect(updateButton).not.toBeDisabled();
