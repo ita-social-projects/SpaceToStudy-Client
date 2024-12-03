@@ -25,7 +25,7 @@ The \`DividerComponent\` is a versatile UI element used to visually separate con
 | \`caption\`     | \`string\`   | Text to display as a caption (for linear dividers only).  |
 | \`textAlign\`   | \`string\`   | Text alignment: \`left\`, \`center\`, or \`right\`.       |
 | \`type\`        | \`string\`   | Divider type: \`linear\` or \`ellipse\`.                 |
-| \`size\`        | \`string\`   | Optional size for ellipse dividers: \`small\`, \`big\`.  |
+| \`size\`        | \`string\`   | Optional size for ellipse dividers: \`small\`, \`large\`.  |
 
 #### Usage
 Use this component to add visual distinction between content elements. Supports custom styles via SCSS and dynamic configuration through props.
@@ -68,7 +68,7 @@ Use this component to add visual distinction between content elements. Supports 
     },
     size: {
       description: 'Size of the ellipse type divider (optional).',
-      options: ['small', 'big'],
+      options: ['small', 'large'],
       control: { type: 'radio' }
     }
   },
@@ -115,7 +115,7 @@ export const EllipseDividerSmall: Story = {
 export const EllipseDividerBig: Story = {
   args: {
     type: 'ellipse',
-    size: 'big',
+    size: 'large',
     thickness: 'lg'
   }
 }

@@ -8,7 +8,7 @@ const orientation = ['vertical', 'horizontal'] as const
 const thickness = ['sm', 'md', 'lg'] as const
 const textAlign = ['left', 'right', 'center'] as const
 const type = ['ellipse', 'linear'] as const
-const size = ['small', 'big'] as const
+const size = ['small', 'large'] as const
 
 type DividerProps = {
   variant: (typeof variants)[number]
