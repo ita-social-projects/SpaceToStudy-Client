@@ -159,7 +159,7 @@ const CooperationDetails = () => {
   const acceptClosingProccess = !isClosed && (
     <AcceptCooperationClosing
       onAccept={handleCooperationCloseAccept}
-      user={response.initiator.firstName || 'user'}
+      user={response.initiator.firstName ?? 'user'}
     />
   )
 
