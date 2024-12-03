@@ -1,93 +1,75 @@
-import { render, screen } from '@testing-library/react'
-import { fireEvent } from '@testing-library/react'
-import {AppSwitch} from '~/design-system/components/switch/Switch'
+import { render, screen } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+import { AppSwitch } from '~/design-system/components/switch/Switch';
 
 describe('AppSwitch Component', () => {
   it('renders correctly with default props', () => {
-    render(<AppSwitch />)
+    render(<AppSwitch />);
 
-    const switchEl = screen.getByRole('checkbox')
-    expect(switchEl).toBeInTheDocument()
-  })
+    const switchEl = screen.getByRole('checkbox');
+    expect(switchEl).toBeInTheDocument();
+    expect(switchEl).not.toBeDisabled();
+  });
 
-  it('triggers `onChange` when toggled', () => {
-    const handleChange = vi.fn()
-    render(<AppSwitch onChange={handleChange} />)
+  it('calls `onChange` when toggled', () => {
+    const handleChange = vi.fn();
+    render(<AppSwitch onChange={handleChange} />);
 
-    const switchEl = screen.getByRole('checkbox')
-    fireEvent.click(switchEl)
+    const switchEl = screen.getByRole('checkbox');
+    fireEvent.click(switchEl);
 
-    expect(handleChange).toHaveBeenCalledTimes(1)
-  })
+    expect(handleChange).toHaveBeenCalledTimes(1);
+  });
 
-  it('displays the label when provided', () => {
-    render(<AppSwitch label='Test Label' />)
+  it('renders label when provided', () => {
+    render(<AppSwitch label="Test Label" />);
 
-    const labelEl = screen.getByText('Test Label')
-    expect(labelEl).toBeInTheDocument()
-  })
+    const labelEl = screen.getByText('Test Label');
+    expect(labelEl).toBeInTheDocument();
+  });
 
-  it('applies the correct Large size style', () => {
-    render(<AppSwitch size='lg' />)
-
-    const switchEl = screen.getByRole('checkbox')
-    expect(switchEl).toBeInTheDocument()
-  })
-
-  it('applies the correct Medium size style', () => {
-    render(<AppSwitch size='md' />)
-
-    const switchEl = screen.getByRole('checkbox')
-    expect(switchEl).toBeInTheDocument()
-  })
-
-  it('applies the correct Small size style', () => {
-    render(<AppSwitch size='sm' />)
-
-    const switchEl = screen.getByRole('checkbox')
-    expect(switchEl).toBeInTheDocument()
-  })
+  describe('Size classes', () => {
+    it.each([
+      ['lg', 's2s-switch--lg'],
+      ['md', 's2s-switch--md'],
+      ['sm', 's2s-switch--sm'],
+    ])('applies the correct class for size: %s', (size, expectedClass) => {
+      render(<AppSwitch size={size} />);
+      const switchWrapper = screen.getByRole('checkbox').closest('.s2s-switch--lg, .s2s-switch--md, .s2s-switch--sm');
+      
+      expect(switchWrapper).toHaveClass(expectedClass);
+    });
+  });  
 
   it('is disabled when loading is true', () => {
-    render(<AppSwitch loading />)
+    render(<AppSwitch loading />);
+    const loaderEl = screen.getByTestId('loader');
 
-    const switchEl = screen.getByRole('checkbox')
-    expect(switchEl).toBeDisabled()
-  })
+    expect(loaderEl).toBeInTheDocument();
+    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
+  });
 
   it('is disabled when disabled prop is true', () => {
-    render(<AppSwitch disabled />)
+    render(<AppSwitch disabled />);
+    const switchEl = screen.getByRole('checkbox');
 
-    const switchEl = screen.getByRole('checkbox')
-    expect(switchEl).toBeDisabled()
-  })
+    expect(switchEl).toBeDisabled();
+  });
 
-  it('renders the label in the correct end position', () => {
-    render(<AppSwitch label="End Label" labelPosition='end' />)
+  describe('Label position', () => {
+    it.each([
+      ['end', 'End Label'],
+      ['start', 'Start Label'],
+      ['top', 'Top Label'],
+      ['bottom', 'Bottom Label'],
+    ])(
+      'renders label in correct position: %s',
+      (position, label) => {
+        render(<AppSwitch label={label} labelPosition={position} />);
+        const labelEl = screen.getByText(label);
 
-    const labelEl = screen.getByText('End Label')
-    expect(labelEl).toBeInTheDocument()
-  })
-
-  it('renders the label in the correct start position', () => {
-    render(<AppSwitch label="Start Label" labelPosition='start' />)
-
-    const labelEl = screen.getByText('Start Label')
-    expect(labelEl).toBeInTheDocument()
-  })
-
-  it('renders the label in the correct top position', () => {
-    render(<AppSwitch label="Top Label" labelPosition='top' />)
-
-    const labelEl = screen.getByText('Top Label')
-    expect(labelEl).toBeInTheDocument()
-  })
-
-  it('renders the label in the correct bottom position', () => {
-    render(<AppSwitch label="Bottom Label" labelPosition='bottom' />)
-
-    const labelEl = screen.getByText('Bottom Label')
-    expect(labelEl).toBeInTheDocument()
-  })
-
-})
+        expect(labelEl).toBeInTheDocument();
+      }
+    );
+  });
+});
