@@ -5,12 +5,12 @@ describe('DividerComponent', () => {
   it('renders a linear divider with caption', () => {
     render(
       <DividerComponent
-        variant="fullWidth"
-        orientation="horizontal"
-        thickness="md"
-        textAlign="center"
-        caption="Test Caption"
-        type="linear"
+        variant='fullWidth'
+        orientation='horizontal'
+        thickness='md'
+        textAlign='center'
+        caption='Test Caption'
+        type='linear'
       />
     );
 
@@ -22,12 +22,12 @@ describe('DividerComponent', () => {
   it('renders a linear thick divider', () => {
     render(
       <DividerComponent
-        variant="fullWidth"
-        orientation="horizontal"
-        thickness="lg"
-        textAlign="center"
-        caption="Thick Divider"
-        type="linear"
+        variant='fullWidth'
+        orientation='horizontal'
+        thickness='lg'
+        textAlign='center'
+        caption='Thick Divider'
+        type='linear'
       />
     );
 
@@ -40,13 +40,13 @@ describe('DividerComponent', () => {
   it('renders an ellipse divider with small size', () => {
     const { container } = render(
       <DividerComponent
-        variant="inset"
-        orientation="horizontal"
-        thickness="sm"
-        type="ellipse"
-        size="small"
-        caption=""
-        textAlign="center"
+        variant='inset'
+        orientation='horizontal'
+        thickness='sm'
+        type='ellipse'
+        size='small'
+        caption=''
+        textAlign='center'
       />
     );
 
@@ -58,12 +58,12 @@ describe('DividerComponent', () => {
   it('renders a vertical linear divider', () => {
     render(
       <DividerComponent
-        variant="middle"
-        orientation="vertical"
-        thickness="md"
-        type="linear"
-        caption="Vertical Divider"
-        textAlign="center"
+        variant='middle'
+        orientation='vertical'
+        thickness='md'
+        type='linear'
+        caption='Vertical Divider'
+        textAlign='center'
       />
     );
 
@@ -75,12 +75,12 @@ describe('DividerComponent', () => {
   it('applies custom thickness styling', () => {
     render(
       <DividerComponent
-        variant="middle"
-        orientation="horizontal"
-        thickness="lg"
-        type="linear"
-        caption="Styled Divider"
-        textAlign="left"
+        variant='middle'
+        orientation='horizontal'
+        thickness='lg'
+        type='linear'
+        caption='Styled Divider'
+        textAlign='left'
       />
     );
 

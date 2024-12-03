@@ -29,7 +29,7 @@ const DividerComponent: React.FC<DividerProps> = ({
   textAlign,
   type
 }) => {
-  const width = thickness === 'lg' ? '#9199A1' : '#C8CCD0'
+  const borderColor = thickness === 'lg' ? '#9199A1' : '#C8CCD0'
 
   return (
     <Box
@@ -44,10 +44,10 @@ const DividerComponent: React.FC<DividerProps> = ({
           sx={{
             '&.MuiDivider-root': {
               '&::before': {
-                border: `thin solid ${width}`
+                border: `thin solid ${borderColor}`
               },
               '&::after': {
-                border: `thin solid ${width}`
+                border: `thin solid ${borderColor}`
               }
             }
           }}
