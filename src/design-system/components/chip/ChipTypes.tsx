@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from 'react'
+import React, { CSSProperties } from 'react'
 import { cn } from '~/utils/cn'
 import CircleIcon from '@mui/icons-material/Circle'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
@@ -99,7 +99,14 @@ const BaseChip: React.FC<
   )
 }
 
-export const FilterChip: React.FC<FilterChipProps> = ({
+export const FilterChip: React.FC<
+  FilterChipProps & {
+    isOpen: boolean
+    selectedOption: string | null
+    setIsOpen: (isOpen: boolean) => void
+    onSelectChange: (option: string) => void
+  }
+> = ({
   type,
   label,
   options = [],
@@ -107,14 +114,15 @@ export const FilterChip: React.FC<FilterChipProps> = ({
   startIcon = <CircleIcon style={{ fontSize: 'inherit' }} />,
   endIcon = <ExpandMoreIcon style={{ fontSize: 'inherit' }} />,
   disabled = false,
-  size = 'md'
+  size = 'md',
+  isOpen,
+  setIsOpen,
+  selectedOption,
+  onSelectChange
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
-
   const handleSelect = (option: string) => {
-    setSelectedOption(option)
-    setIsOpen((prev) => !prev)
+    onSelectChange(option)
+    setIsOpen(false)
   }
 
   const isSelected = Boolean(selectedOption)
