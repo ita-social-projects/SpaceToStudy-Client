@@ -17,7 +17,7 @@ The \`Badge\` component is a versatile and reusable component designed to enhanc
 
 - **Variants:** 
   - \`sm\`: Displays the badge as a small dot (ideal for simple status indicators).
-  - \`lg\`: Displays the badge with a numeric or textual value.
+  - \`lg\`: Displays the badge with a numeric value.
 - **Visibility Control:** Use the \`isVisible\` prop to toggle the visibility of the badge dynamically. When set to \`false\`, the badge content is hidden.
 - **Content Customization:** 
   - \`badgeContent\`: Render a numeric value or any textual content.
