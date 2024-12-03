@@ -27,15 +27,15 @@ const LinkButton: FC<LinkButtonProps> = ({
     <Link
       className={cn(
         's2s-link-button',
-        `s2s-link-button__${variant}`,
-        `s2s-link-button__${size}`,
-        (disabled || loading) && 's2s-link-button__disabled',
-        loading && 's2s-link-button__loading'
+        `s2s-link-button_${variant}`,
+        `s2s-link-button_${size}`,
+        (disabled || loading) && 's2s-link-button_disabled',
+        loading && 's2s-link-button_loading'
       )}
       to={disabled ? '#' : to}
     >
-      {loading && <div className='s2s-link-button__loader'>{loader}</div>}
-      <div className='s2s-link-button__content'>{children}</div>
+      {loading && <div className='s2s-link-button_loader'>{loader}</div>}
+      <div className='s2s-link-button_content'>{children}</div>
     </Link>
   )
 }

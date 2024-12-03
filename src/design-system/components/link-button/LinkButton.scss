@@ -23,31 +23,31 @@
     border-radius: var(--#{$prefix}border-radius-2xs);
   }
 
-  & > &__loader {
+  & > &_loader {
     position: absolute;
   }
 
-  &__small {
+  &_small {
     @extend %size-small;
   }
 
-  &__medium {
+  &_medium {
     @extend %size-medium;
   }
 
-  &__light {
+  &_light {
     @extend %variant-light;
   }
 
-  &__dark {
+  &_dark {
     @extend %variant-dark;
   }
 
-  &__disabled {
+  &_disabled {
     pointer-events: none;
   }
 
-  &__loading .#{$prefix}link-button__content {
+  &_loading .#{$prefix}link-button_content {
     visibility: hidden;
   }
 }
@@ -93,7 +93,7 @@
     }
   }
 
-  &.#{$prefix}link-button__disabled {
+  &.#{$prefix}link-button_disabled {
     color: var(--#{$prefix}blue-gray-300);
   }
 }
@@ -123,7 +123,7 @@
     }
   }
 
-  &.#{$prefix}link-button__disabled {
+  &.#{$prefix}link-button_disabled {
     color: var(--#{$prefix}blue-gray-200);
   }
 }

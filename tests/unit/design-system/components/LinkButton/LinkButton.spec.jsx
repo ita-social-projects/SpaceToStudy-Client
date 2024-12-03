@@ -32,8 +32,8 @@ describe('LinkButton Component', () => {
   it('should have correct classes', () => {
     const linkElement = screen.getByRole('link')
     expect(linkElement).toHaveClass('s2s-link-button')
-    expect(linkElement).toHaveClass('s2s-link-button__light')
-    expect(linkElement).toHaveClass('s2s-link-button__medium')
+    expect(linkElement).toHaveClass('s2s-link-button_light')
+    expect(linkElement).toHaveClass('s2s-link-button_medium')
   })
 
   it('should have correct link', () => {
@@ -43,6 +43,6 @@ describe('LinkButton Component', () => {
 
   it('should not have disabled class', () => {
     const linkElement = screen.getByRole('link')
-    expect(linkElement).not.toHaveClass('s2s-link-button__disabled')
+    expect(linkElement).not.toHaveClass('s2s-link-button_disabled')
   })
 })
