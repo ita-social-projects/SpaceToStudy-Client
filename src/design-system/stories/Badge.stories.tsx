@@ -20,7 +20,7 @@ The \`Badge\` component is a versatile and reusable component designed to enhanc
   - \`lg\`: Displays the badge with a numeric value.
 - **Visibility Control:** Use the \`isVisible\` prop to toggle the visibility of the badge dynamically. When set to \`false\`, the badge content is hidden.
 - **Content Customization:** 
-  - \`badgeContent\`: Render a numeric value or any textual content.
+  - \`badgeContent\`: Render a numeric content.
   - \`maxContent\`: Specify the maximum value to display. If badgeContent exceeds this value, it displays \`maxContent+\`.
 - **Color Options:** Supports predefined color options: \`primary\`, \`success\`, and \`error\`, aligning with the design system.
 - **Children Support:** Seamlessly wrap any element (e.g., icons, text, buttons) with the badge, making it highly adaptable to your application's requirements.
