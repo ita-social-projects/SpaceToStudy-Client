@@ -187,6 +187,7 @@ export const Loading: Story = {
 export const ToggleAble: Story = {
   args: {
     toggleAble: true,
+    isToggled: true,
     variant: IconButtonVariant.Primary
   },
   parameters: {
