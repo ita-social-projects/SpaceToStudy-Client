@@ -157,7 +157,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   }
 
   const handleRedirectToChat = async () => {
-    if (!chatInfo.chatId) {
+    if (!chatInfo.chatId && !chatInfo.author._id) {
       setIsRedirected(true)
       await createNewChat()
     } else {
