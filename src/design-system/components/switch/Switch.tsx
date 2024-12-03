@@ -27,14 +27,10 @@ export const AppSwitch = ({
     loader
   ) : (
     <FormControlLabel
-      className={`s2s-form-label-box s2s-form-label-box--${size} ${
-        disabled || loading ? 's2s-disabled' : ''
-      }`}
+      className={`s2s-form-label-box s2s-form-label-box--${size}`}
       control={
         <Switch
-          className={`s2s-switch--${size} ${
-            disabled || loading ? 's2s-disabled' : ''
-          }`}
+          className={`s2s-switch--${size}`}
           disabled={loading || disabled}
           {...props}
         />

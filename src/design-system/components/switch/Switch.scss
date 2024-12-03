@@ -1,4 +1,25 @@
 @use '~scss/utilities' as *;
+@use 'sass:list';
+$sizes: (
+  sm: (
+    45,
+    21,
+    15,
+    $border-width-sm
+  ),
+  md: (
+    60,
+    28,
+    20,
+    $border-width-md
+  ),
+  lg: (
+    75,
+    35,
+    25,
+    $border-width-lg - 1.5
+  )
+);
 
 @mixin track-mixin($width, $border-width) {
   position: absolute;
@@ -9,6 +30,10 @@
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
+
+  .Mui-disabled & {
+    border-color: $blue-gray-100 !important;
+  }
 }
 
 @mixin thumb-mixin($diameter) {
@@ -47,75 +72,28 @@
 }
 
 .#{$prefix}switch {
-  &--sm {
-    @include root-mixin(45, 21);
+  @each $size, $values in $sizes {
+    &--#{$size} {
+      @include root-mixin(list.nth($values, 1), list.nth($values, 2));
 
-    &:not(.Mui-disabled):hover .MuiSwitch-track {
-      border-color: $blue-gray-500;
-    }
-
-    .MuiSwitch-thumb {
-      @include thumb-mixin(15);
-    }
-
-    .MuiSwitch-track {
-      @include track-mixin(45, $border-width-sm);
-
-      .Mui-disabled & {
-        border-color: $blue-gray-200 !important;
+      &:not(.Mui-disabled):hover .MuiSwitch-track {
+        border-color: $blue-gray-500;
       }
-    }
 
-    .MuiSwitch-switchBase {
-      @include switch-base-mixin(47, 15);
-    }
-  }
-
-  &--md {
-    @include root-mixin(60, 28);
-
-    &:not(.Mui-disabled):hover .MuiSwitch-track {
-      border-color: $blue-gray-500;
-    }
-
-    .MuiSwitch-thumb {
-      @include thumb-mixin(20);
-    }
-
-    .MuiSwitch-track {
-      @include track-mixin(60, $border-width-md);
-
-      .Mui-disabled & {
-        border-color: $blue-gray-200 !important;
+      .MuiSwitch-thumb {
+        @include thumb-mixin(list.nth($values, 3));
       }
-    }
 
-    .MuiSwitch-switchBase {
-      @include switch-base-mixin(64, 20);
-    }
-  }
-
-  &--lg {
-    @include root-mixin(75, 35);
-
-    &:not(.Mui-disabled):hover .MuiSwitch-track {
-      border-color: $blue-gray-500;
-    }
-
-    .MuiSwitch-thumb {
-      @include thumb-mixin(25);
-    }
-
-    .MuiSwitch-track {
-      @include track-mixin(75, $border-width-lg - 1.5);
-
-      .Mui-disabled & {
-        border-color: $blue-gray-200 !important;
+      .MuiSwitch-track {
+        @include track-mixin(list.nth($values, 1), list.nth($values, 4));
       }
-    }
 
-    .MuiSwitch-switchBase {
-      @include switch-base-mixin(81, 25);
+      .MuiSwitch-switchBase {
+        @include switch-base-mixin(
+          list.nth($values, 1) + 2,
+          list.nth($values, 3)
+        );
+      }
     }
   }
 }
@@ -126,24 +104,14 @@
   gap: 10px;
   overflow: visible;
 
-  &--sm {
-    .MuiFormControlLabel-label {
-      color: $body-text-color;
-      font-size: $font-size-sm !important;
-    }
-  }
-
-  &--md {
-    .MuiFormControlLabel-label {
-      color: $body-text-color;
-      font-size: $font-size-md !important;
-    }
-  }
-
-  &--lg {
-    .MuiFormControlLabel-label {
-      color: $body-text-color;
-      font-size: $font-size-lg !important;
+  @each $size,
+    $font-size in (sm: $font-size-sm, md: $font-size-md, lg: $font-size-lg)
+  {
+    &--#{$size} {
+      .MuiFormControlLabel-label {
+        color: $body-text-color;
+        font-size: $font-size !important;
+      }
     }
   }
 }
