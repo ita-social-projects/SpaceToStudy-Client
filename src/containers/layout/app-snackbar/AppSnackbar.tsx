@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import { closeAlert, snackbarSelector } from '~/redux/features/snackbarSlice'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { styles } from '~/containers/layout/app-snackbar/AppSnackbar.styles'
 
 const AppSnackbar = () => {
   const { isOpened, message, duration, severity, isExtended, route } =
@@ -30,10 +31,7 @@ const AppSnackbar = () => {
   }
 
   const actionButton = (
-    <Box
-      onClick={handleButtonClick}
-      sx={{ p: '4px 8px 0 30px', cursor: 'pointer' }}
-    >
+    <Box onClick={handleButtonClick} sx={styles.action}>
       {t('offerPage.createOffer.seeAll')}
     </Box>
   )
@@ -43,7 +41,7 @@ const AppSnackbar = () => {
   const extendedBody = (
     <>
       <Box>{firstMessage}</Box>
-      <Box sx={{ fontSize: '12px', fontWeight: '300' }}>{secondMessage}</Box>
+      <Box sx={styles.secondMessage}>{secondMessage}</Box>
     </>
   )
 
@@ -57,7 +55,7 @@ const AppSnackbar = () => {
       <Alert
         action={isExtended && actionButton}
         severity={severity}
-        sx={{ color: 'basic.white' }}
+        sx={styles.alert}
         variant='filled'
       >
         {isExtended ? extendedBody : actionBody}

@@ -60,24 +60,19 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     : OfferActionsEnum.Create
 
   const onResponse = (response: Offer | null) => {
-    if (hash == '#offer') {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.success,
-          message: `offerPage.createOffer.extendedSuccessMessage.${userRole}`,
-          duration: 10000,
-          isExtended: true,
-          route: authRoutes.myOffers.path
-        })
-      )
-    } else {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.success,
-          message: `offerPage.${offerAction}.successMessage`
-        })
-      )
-    }
+    const isHash = hash === '#offer' ? true : undefined
+
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: isHash
+          ? `offerPage.createOffer.extendedSuccessMessage.${userRole}`
+          : `offerPage.${offerAction}.successMessage`,
+        duration: isHash && 10000,
+        isExtended: isHash,
+        route: isHash && authRoutes.myOffers.path
+      })
+    )
 
     closeDrawer()
 
