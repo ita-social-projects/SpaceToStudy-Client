@@ -1,24 +1,30 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import {
+  ListItemText,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography
+} from '@mui/material'
+
 import RatingBlock from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock'
-import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock'
+import CommentsBlock from '~/containers/user-profile/comments-block/CommentsBlock'
 import Loader from '~/components/loader/Loader'
-import { RatingType, SortByEnum, UserRoleEnum } from '~/types'
+import { RatingType, SortByEnum, UserRoleEnum, ReviewsResponse } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
+
 import {
   responseMock,
   loadingMock,
   responseMockStudents,
   MockReview
 } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
-import {
-  ListItemText,
-  MenuItem,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { ReviewService } from '~/services/review-service'
+import { useAppSelector } from '~/hooks/use-redux'
+import useAxios from '~/hooks/use-axios'
+import { defaultResponses } from '~/constants'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
@@ -38,16 +44,27 @@ const CommentsWithRatingBlock = ({
   const [filter, setFilter] = useState<number | null>(null)
   const [sortBy, setSortBy] = useState<SortByEnum>(SortByEnum.Newest)
   const { t } = useTranslation()
+  const { userId } = useAppSelector((state) => state.appMain)
+
+  const getReviews = useCallback(
+    () => ReviewService.getUserReviews({ userId: userId, userRole: userRole }),
+    [userId, userRole]
+  )
+
+  const { response, loading } = useAxios<ReviewsResponse>({
+    service: getReviews,
+    defaultResponse: defaultResponses.itemsWithCount
+  })
 
   const titleKey =
     userRole === UserRoleEnum.Tutor
       ? 'userProfilePage.reviews.titleTutor'
       : 'userProfilePage.reviews.titleStudent'
 
-  const items: MockReview[] =
-    userRole === UserRoleEnum.Tutor
-      ? [...responseMock.items]
-      : [...responseMockStudents.items]
+  // const items: MockReview[] =
+  //   userRole === UserRoleEnum.Tutor
+  //     ? [...responseMock.items]
+  //     : [...responseMockStudents.items]
 
   const sortItems = Object.values(SortByEnum)
   const sortMenuItems = sortItems.map((el) => (
@@ -72,7 +89,7 @@ const CommentsWithRatingBlock = ({
     </MenuItem>
   ))
 
-  const filteredItems = items.filter(
+  const filteredItems = response.items.filter(
     (item) => filter === null || item.rating === filter
   )
 
@@ -98,7 +115,7 @@ const CommentsWithRatingBlock = ({
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.title}>{t(titleKey)}</Typography>
-      {loadingMock && !items.length ? (
+      {loadingMock && !response.count ? (
         <Loader data-testid='loader' />
       ) : (
         <>
@@ -138,7 +155,7 @@ const CommentsWithRatingBlock = ({
             data-testid='comments-block'
             isExpandable
             loadMore={() => null}
-            loading={loadingMock}
+            loading={loading}
           />
         </>
       )}

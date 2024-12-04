@@ -110,6 +110,7 @@ export const URLs = {
     post: '/attachments'
   },
   reviews: {
-    post: '/reviews'
+    post: '/reviews',
+    get: '/reviews'
   }
 }

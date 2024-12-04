@@ -1,4 +1,4 @@
-import { MockResponseItem } from '~/containers/user-profile/comments-block/CommentBlock'
+import { MockResponseItem } from '~/containers/user-profile/comments-block/CommentsBlock'
 
 export interface MockReview extends MockResponseItem {
   _id: string

@@ -11,6 +11,8 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { styles } from '~/containers/user-profile/comments-block/CommentsBlock.styles'
 
+import { ReviewResponse } from '~/types'
+
 export interface MockResponseItem {
   _id: string
   comment: string
@@ -51,7 +53,7 @@ export interface MockResponseItem {
 
 interface ComentsBlockProps {
   title?: string
-  data: MockResponseItem[]
+  data: ReviewResponse[]
   loading: boolean
   loadMore: () => void
   isExpandable: boolean
