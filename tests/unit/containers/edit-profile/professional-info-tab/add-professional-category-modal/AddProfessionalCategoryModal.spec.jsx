@@ -19,7 +19,7 @@ vi.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key, options) => options?.defaultValue || key,
   }),
-}));
+}))
 
 vi.mock('react-redux', async () => {
   const actual = await vi.importActual('react-redux')
@@ -75,7 +75,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
       /editProfilePage.profile.professionalTab.subject/
     )
   
-    await selectOption(categoryAutocomplete, t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }));
+    await selectOption(categoryAutocomplete, t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }))
 
     await act(async () => {
       fireEvent.change(professionalSubjects[0], {
@@ -83,9 +83,9 @@ describe('AddProfessionalCategoryModal without initial value', () => {
       })
     })
 
-    expect(professionalSubjects[0].value).toBe('Updated Gastronomy');
+    expect(professionalSubjects[0].value).toBe('Updated Gastronomy')
     if (professionalSubjects.length > 1) {
-      expect(professionalSubjects[1].value).not.toBe('Updated Gastronomy');
+      expect(professionalSubjects[1].value).not.toBe('Updated Gastronomy')
     }
   })
 
@@ -258,13 +258,13 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
       /editProfilePage.profile.professionalTab.subject/
     )
 
-    await selectOption(categoryAutocomplete,t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }));
+    await selectOption(categoryAutocomplete,t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }))
     await act(async () => {
       fireEvent.change(professionalSubjects[0], {
         target: { value: 'Gastronomy' }
       })
     })
-    expect(screen.getByDisplayValue('Gastronomy')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Gastronomy')).toBeInTheDocument()
     expect(professionalSubjects[1].value).toBe('Varenychky')
   })
 
@@ -300,9 +300,82 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
           defaultValue: subject.name
         })
   
-        const subjectElement = professionalSubjects[index];
+        const subjectElement = professionalSubjects[index]
         expect(subjectElement.value).toMatch(new RegExp(translatedSubjectName, 'i'))
       })
     })
+  })
+})
+describe('AddProfessionalCategoryModal when clearing categories and subjects', () => {
+  let categoryAutocomplete
+  let professionalSubjects
+  let submitButton
+
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <AddProfessionalCategoryModal
+          blockedCategoriesOptions={mockedBlockedCategory}
+          closeModal={mockCloseModal}
+          initialValues={initialValues}
+          isEdit
+        />
+      )
+    })
+    categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+    professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+    submitButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    )
+  })
+
+  it('should reset category and related subjects when category is cleared', async () => {
+    await selectOption(
+      categoryAutocomplete,
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' })
+    )
+    await waitFor(() => {
+      expect(professionalSubjects[0]).toHaveValue('Gastronomy')
+    })
+    await act(async () => {
+      fireEvent.change(categoryAutocomplete, { target: { value: '' } })
+    })
+    await waitFor(() => {
+      expect(categoryAutocomplete).toHaveValue('')
+    })
+    professionalSubjects.forEach(async (subject) => {
+      await waitFor(() => expect(subject).toHaveValue(''))
+    })
+    expect(submitButton).toBeDisabled()
+  })
+  
+  it('should disable "Save changes" button when category is cleared', async () => {
+    await selectOption(
+      categoryAutocomplete,
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' })
+    )
+    expect(submitButton).not.toBeDisabled()
+
+    await act(() =>
+      fireEvent.change(categoryAutocomplete, { target: { value: '' } })
+    )
+    expect(submitButton).toBeDisabled()
+  })
+
+  it('should allow clearing the main study category field', async () => {
+    await selectOption(
+      categoryAutocomplete,
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' })
+    )
+    expect(categoryAutocomplete.value).toBe('Cooking')
+
+    await act(() =>
+      fireEvent.change(categoryAutocomplete, { target: { value: '' } })
+    )
+    expect(categoryAutocomplete.value).toBe('')
   })
 })
