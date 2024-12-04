@@ -6,12 +6,12 @@ export const getInitialValues = (offer: Offer | null) => ({
   subject: offer?.subject._id ?? '',
   proficiencyLevel: offer?.proficiencyLevel ?? [],
   languages: offer?.languages ?? [],
-  enrolledUsers: offer?.enrolledUsers ?? [],
   title: offer?.title ?? '',
   description: offer?.description ?? '',
   price: offer?.price.toString() ?? '',
   status: offer?.status ?? StatusEnum.Active,
-  FAQ: offer?.FAQ ?? [{ question: '', answer: '', id: `${Date.now()}` }]
+  FAQ: offer?.FAQ ?? [{ question: '', answer: '', id: `${Date.now()}` }],
+  enrolledUsers: offer?.enrolledUsers ?? []
 })
 
 export const validations = {
