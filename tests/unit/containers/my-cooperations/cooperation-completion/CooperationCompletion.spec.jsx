@@ -29,6 +29,7 @@ describe('CooperationCompletion Component', () => {
   it('should call mockCloseCooperation when closing cooperation', async () => {
     render(
       <CooperationCompletion
+        cooperationStatus='active'
         onCloseCooperation={mockOnCloseCooperation}
         userRole={UserRoleEnum.Tutor}
       />

@@ -17,20 +17,18 @@ import {
   UserRoleEnum,
   StatusEnum
 } from '~/types'
-import { useAppSelector } from '~/hooks/use-redux'
-
 interface CooperationCompletionProps {
+  cooperationStatus: StatusEnum
   onCloseCooperation: () => void
   userRole: UserRoleEnum | ''
 }
 
 const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
+  cooperationStatus,
   onCloseCooperation,
   userRole
 }) => {
   const { t } = useTranslation()
-  const cooperationStatus = useAppSelector((state) => state.cooperations.status)
-
   const [materialsAccess, setMaterialsAccess] =
     useState<CooperationMaterialsAccessEnum>(
       CooperationMaterialsAccessEnum.OneMonthAccess

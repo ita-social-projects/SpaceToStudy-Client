@@ -45,6 +45,7 @@ const MyCooperationsDetails = () => {
   const { setChatInfo } = useChatContext()
   const userId = useAppSelector((state) => state.appMain.userId)
   const userRole = useAppSelector((state) => state.appMain.userRole)
+  const cooperationStatus = useAppSelector((state) => state.cooperations.status)
   const { checkConfirmation } = useConfirm()
   const dispatch = useAppDispatch()
 
@@ -233,6 +234,7 @@ const MyCooperationsDetails = () => {
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
       <CooperationCompletion
+        cooperationStatus={cooperationStatus}
         onCloseCooperation={onCooperationStatusUpdate}
         userRole={userRole}
       />
