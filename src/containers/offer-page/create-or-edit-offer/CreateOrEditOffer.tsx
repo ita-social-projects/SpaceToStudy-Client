@@ -60,7 +60,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     : OfferActionsEnum.Create
 
   const onResponse = (response: Offer | null) => {
-    const isHash = hash === '#offer' ? true : undefined
+    const isHash = hash === '#offer'
 
     dispatch(
       openAlert(

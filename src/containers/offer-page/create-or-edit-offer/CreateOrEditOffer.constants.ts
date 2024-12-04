@@ -6,6 +6,7 @@ export const getInitialValues = (offer: Offer | null) => ({
   subject: offer?.subject._id ?? '',
   proficiencyLevel: offer?.proficiencyLevel ?? [],
   languages: offer?.languages ?? [],
+  enrolledUsers: [],
   title: offer?.title ?? '',
   description: offer?.description ?? '',
   price: offer?.price.toString() ?? '',
