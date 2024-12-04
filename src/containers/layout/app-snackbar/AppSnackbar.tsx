@@ -20,10 +20,32 @@ const AppSnackbar = () => {
   const translatedMessage =
     typeof message === 'string' ? t(message) : t(message.text, message.options)
 
+  const actionBody = translatedMessage
+    .split(', ')
+    .map((line) => <Box key={line}>{line}</Box>)
+
   const handleButtonClick = () => {
     navigate(route!)
     handleClose()
   }
+
+  const actionButton = (
+    <Box
+      onClick={handleButtonClick}
+      sx={{ p: '4px 8px 0 30px', cursor: 'pointer' }}
+    >
+      {t('offerPage.createOffer.seeAll')}
+    </Box>
+  )
+
+  const [firstMessage, secondMessage] = translatedMessage.split(';')
+
+  const extendedBody = (
+    <>
+      <Box>{firstMessage}</Box>
+      <Box sx={{ fontSize: '12px', fontWeight: '300' }}>{secondMessage}</Box>
+    </>
+  )
 
   return (
     <Snackbar
@@ -33,32 +55,12 @@ const AppSnackbar = () => {
       open={isOpened}
     >
       <Alert
-        action={
-          isExtended && (
-            <Box
-              onClick={handleButtonClick}
-              sx={{ p: '4px 8px 0 30px', cursor: 'pointer' }}
-            >
-              {t('offerPage.createOffer.seeAll')}
-            </Box>
-          )
-        }
+        action={isExtended && actionButton}
         severity={severity}
         sx={{ color: 'basic.white' }}
         variant='filled'
       >
-        {isExtended ? (
-          <>
-            <Box>{translatedMessage.split(';')[0]}</Box>
-            <Box sx={{ fontSize: '12px', fontWeight: '300' }}>
-              {translatedMessage.split(';')[1]}
-            </Box>
-          </>
-        ) : (
-          translatedMessage
-            .split(', ')
-            .map((line) => <Box key={line}>{line}</Box>)
-        )}
+        {isExtended ? extendedBody : actionBody}
       </Alert>
     </Snackbar>
   )
