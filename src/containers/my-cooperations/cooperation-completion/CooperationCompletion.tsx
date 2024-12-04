@@ -14,8 +14,10 @@ import {
   ButtonVariantEnum,
   SizeEnum,
   CooperationMaterialsAccessEnum,
-  UserRoleEnum
+  UserRoleEnum,
+  StatusEnum
 } from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface CooperationCompletionProps {
   onCloseCooperation: () => void
@@ -27,6 +29,7 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
   userRole
 }) => {
   const { t } = useTranslation()
+  const cooperationStatus = useAppSelector((state) => state.cooperations.status)
 
   const [materialsAccess, setMaterialsAccess] =
     useState<CooperationMaterialsAccessEnum>(
@@ -47,6 +50,7 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
       >
         <AppButton
           data-testid='close-cooperation-btn'
+          disabled={cooperationStatus !== StatusEnum.Active}
           onClick={onCloseCooperation}
           size={SizeEnum.Medium}
           sx={styles.closeBtn}

@@ -152,16 +152,21 @@ const CooperationDetails = () => {
     return cooperationContent
   }
 
+  const closeCooperationInitiator =
+    response.needAction === response.receiverRole
+      ? response.initiator
+      : response.receiver
+
+  const acceptClosingProcess = !isClosed && (
+    <AcceptCooperationClosing
+      onAccept={handleCooperationCloseAccept}
+      user={closeCooperationInitiator.firstName}
+    />
+  )
+
   const isCooperationClosingRequestSend =
     response.needAction === userRole &&
     response.status === StatusEnum.RequestToClose
-
-  const acceptClosingProccess = !isClosed && (
-    <AcceptCooperationClosing
-      onAccept={handleCooperationCloseAccept}
-      user={response.initiator.firstName ?? 'user'}
-    />
-  )
 
   const iconConditionals = isNotesOpen ? (
     <KeyboardDoubleArrowRightIcon />
@@ -200,7 +205,7 @@ const CooperationDetails = () => {
       </Box>
       {activeTab === CooperationTabsEnum.Activities &&
         isCooperationClosingRequestSend &&
-        acceptClosingProccess}
+        acceptClosingProcess}
       <Box sx={styles.notesBlock}>
         <Box sx={styles.pageContent}>{pageContent()}</Box>
         {!isDesktop && isNotesOpen && (

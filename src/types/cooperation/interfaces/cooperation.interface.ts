@@ -17,11 +17,14 @@ export interface Cooperation extends CommonEntityFields {
     role: UserRoleEnum
   }
   initiator: Pick<UserResponse, 'firstName' | 'lastName'>
+  initiatorRole: 'tutor' | 'student'
   title: Offer['title']
   price: Offer['price']
   proficiencyLevel: ProficiencyLevelEnum
   status: StatusEnum
   needAction: UserRoleEnum
+  receiver: Pick<UserResponse, 'firstName' | 'lastName'>
+  receiverRole: 'tutor' | 'student'
   sections: CourseSection[]
 }
 
@@ -52,6 +55,7 @@ export interface MyCooperationDetails<TOffer extends Offer> {
   proficiencyLevel: ProficiencyLevelEnum
   initiator: UserResponse
   initiatorRole: UserRoleEnum
+  status: StatusEnum
 }
 
 export interface CreateCooperationsParams extends EnrollOfferForm {
