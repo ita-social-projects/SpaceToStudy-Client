@@ -13,11 +13,22 @@ interface CommentProps {
 }
 
 const Comment: FC<CommentProps> = ({ review }) => {
-  const { comment, author, rating, createdAt, offer, proficiencyLevel, targetUserRole } = review
+  const {
+    comment,
+    author,
+    rating,
+    createdAt,
+    offer,
+    proficiencyLevel,
+    targetUserRole
+  } = review
   const { firstName, lastName, photo, _id } = author
   const { category, subject } = offer
 
-  const authorRole = targetUserRole === UserRoleEnum.Tutor ? UserRoleEnum.Student : UserRoleEnum.Tutor
+  const authorRole =
+    targetUserRole === UserRoleEnum.Tutor
+      ? UserRoleEnum.Student
+      : UserRoleEnum.Tutor
 
   const coopDetails = `${category.name} - ${subject.name} - ${proficiencyLevel}`
 

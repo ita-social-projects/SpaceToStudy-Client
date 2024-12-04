@@ -15,12 +15,6 @@ import Loader from '~/components/loader/Loader'
 import { RatingType, SortByEnum, UserRoleEnum, ReviewsResponse } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
 
-import {
-  responseMock,
-  loadingMock,
-  responseMockStudents,
-  MockReview
-} from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import { ReviewService } from '~/services/review-service'
 import { useAppSelector } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
@@ -60,11 +54,6 @@ const CommentsWithRatingBlock = ({
     userRole === UserRoleEnum.Tutor
       ? 'userProfilePage.reviews.titleTutor'
       : 'userProfilePage.reviews.titleStudent'
-
-  // const items: MockReview[] =
-  //   userRole === UserRoleEnum.Tutor
-  //     ? [...responseMock.items]
-  //     : [...responseMockStudents.items]
 
   const sortItems = Object.values(SortByEnum)
   const sortMenuItems = sortItems.map((el) => (
@@ -115,7 +104,7 @@ const CommentsWithRatingBlock = ({
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.title}>{t(titleKey)}</Typography>
-      {loadingMock && !response.count ? (
+      {loading && !response.count ? (
         <Loader data-testid='loader' />
       ) : (
         <>
