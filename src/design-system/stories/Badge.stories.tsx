@@ -31,7 +31,7 @@ The \`Badge\` component is a versatile and reusable component designed to enhanc
   argTypes: {
     variant: {
       description:
-        'Specifies the style of the badge. `sm` displays the badge as a small dot for status indicators, while `lg` displays a numeric or textual value.',
+        'Specifies the style of the badge. `sm` displays the badge as a small dot for status indicators, while `lg` displays a numeric value.',
       control: { type: 'radio' },
       options: ['sm', 'lg']
     },
@@ -44,7 +44,7 @@ The \`Badge\` component is a versatile and reusable component designed to enhanc
     },
     badgeContent: {
       description:
-        'The content to be displayed inside the badge. Typically used for numeric values or short text. If the variant is set to "sm," this prop is ignored.',
+        'The content to be displayed inside the badge. If the variant is set to "sm," this prop is ignored.',
       control: { type: 'number' },
       defaultValue: 4
     },
