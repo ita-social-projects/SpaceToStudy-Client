@@ -63,15 +63,20 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     const isHash = hash === '#offer' ? true : undefined
 
     dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: isHash
-          ? `offerPage.createOffer.extendedSuccessMessage.${userRole}`
-          : `offerPage.${offerAction}.successMessage`,
-        duration: isHash && 10000,
-        isExtended: isHash,
-        route: isHash && authRoutes.myOffers.path
-      })
+      openAlert(
+        isHash
+          ? {
+              severity: snackbarVariants.success,
+              message: `offerPage.createOffer.extendedSuccessMessage.${userRole}`,
+              duration: 10000,
+              isExtended: true,
+              route: authRoutes.myOffers.path
+            }
+          : {
+              severity: snackbarVariants.success,
+              message: `offerPage.${offerAction}.successMessage`
+            }
+      )
     )
 
     closeDrawer()
