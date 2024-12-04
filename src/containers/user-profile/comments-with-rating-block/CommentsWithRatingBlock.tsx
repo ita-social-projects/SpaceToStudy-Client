@@ -18,7 +18,7 @@ import { styles } from '~/containers/user-profile/comments-with-rating-block/Com
 import { ReviewService } from '~/services/review-service'
 import { useAppSelector } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
-import { defaultResponses } from '~/constants'
+import { defaultReviewsResponse } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
@@ -47,7 +47,7 @@ const CommentsWithRatingBlock = ({
 
   const { response, loading } = useAxios<ReviewsResponse>({
     service: getReviews,
-    defaultResponse: defaultResponses.itemsWithCount
+    defaultResponse: defaultReviewsResponse
   })
 
   const titleKey =
@@ -78,7 +78,9 @@ const CommentsWithRatingBlock = ({
     </MenuItem>
   ))
 
-  const filteredItems = response.items.filter(
+  console.log(response)
+
+  const filteredItems = response.reviews.filter(
     (item) => filter === null || item.rating === filter
   )
 

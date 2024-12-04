@@ -1,5 +1,10 @@
 import { MockResponseItem } from '~/containers/user-profile/comments-block/CommentsBlock'
 
+export const defaultReviewsResponse = {
+  count: 0,
+  reviews: []
+}
+
 export interface MockReview extends MockResponseItem {
   _id: string
   comment: string

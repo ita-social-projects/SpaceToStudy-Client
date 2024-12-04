@@ -45,7 +45,7 @@ export interface ReviewResponse extends Omit<ReviewData, 'offer'> {
 
 export interface ReviewsResponse {
   count: number
-  items: ReviewResponse[]
+  reviews: ReviewResponse[]
 }
 
 export interface GetReviewsParams {
