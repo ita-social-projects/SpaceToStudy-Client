@@ -23,7 +23,6 @@ export type UserAvatarProps = BaseUserAvatarProps &
   Omit<MuiAvatarProps, keyof BaseUserAvatarProps>
 
 type Ref = MuiAvatarProps['ref']
-
 const UserAvatar = forwardRef(
   (
     {
@@ -40,46 +39,62 @@ const UserAvatar = forwardRef(
   ) => {
     const monogram = firstName.charAt(0) + lastName.charAt(0)
 
+    const avatarClass = cn('s2s-avatar', `s2s-avatar-${size}`)
+
+    let avatarContent
+    if (variant === 'photo' && src) {
+      avatarContent = (
+        <MuiAvatar
+          alt={monogram}
+          className={avatarClass}
+          onClick={onClick}
+          ref={forwardedRef}
+          src={src}
+          {...props}
+        />
+      )
+    } else if (variant === 'monogram') {
+      avatarContent = (
+        <MuiAvatar
+          onClick={onClick}
+          ref={forwardedRef}
+          {...props}
+          className={avatarClass}
+        >
+          {monogram}
+        </MuiAvatar>
+      )
+    } else if (variant === 'check') {
+      avatarContent = (
+        <MuiAvatar
+          onClick={onClick}
+          ref={forwardedRef}
+          {...props}
+          className={avatarClass}
+        >
+          <CheckIcon />
+        </MuiAvatar>
+      )
+    } else {
+      avatarContent = (
+        <MuiAvatar
+          onClick={onClick}
+          ref={forwardedRef}
+          {...props}
+          className={avatarClass}
+        />
+      )
+    }
+
     return (
       <div className='s2s-user-avatar'>
-        {variant === 'photo' && src ? (
-          <MuiAvatar
-            alt={monogram}
-            className={cn('s2s-avatar', `s2s-avatar-${size}`)}
-            onClick={onClick}
-            ref={forwardedRef}
-            src={src}
-            {...props}
-          />
-        ) : variant === 'monogram' ? (
-          <MuiAvatar
-            onClick={onClick}
-            ref={forwardedRef}
-            {...props}
-            className={cn('s2s-avatar', `s2s-avatar-${size}`)}
-          >
-            {monogram}
-          </MuiAvatar>
-        ) : variant === 'check' ? (
-          <MuiAvatar
-            onClick={onClick}
-            ref={forwardedRef}
-            {...props}
-            className={cn('s2s-avatar', `s2s-avatar-${size}`)}
-          >
-            <CheckIcon />
-          </MuiAvatar>
-        ) : (
-          <MuiAvatar
-            onClick={onClick}
-            ref={forwardedRef}
-            {...props}
-            className={cn('s2s-avatar', `s2s-avatar-${size}`)}
-          />
-        )}
+        {avatarContent}
         {isOnline && (
           <span
-            className={`s2s-user-avatar-status s2s-user-avatar-status-${size}`}
+            className={cn(
+              's2s-user-avatar-status',
+              `s2s-user-avatar-status-${size}`
+            )}
           />
         )}
       </div>
@@ -88,5 +103,4 @@ const UserAvatar = forwardRef(
 )
 
 UserAvatar.displayName = 'UserAvatar'
-
 export default UserAvatar
