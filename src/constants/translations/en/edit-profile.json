@@ -22,6 +22,14 @@
       "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public and uploaded to YouTube.",
       "errorTooltip": "There is a problem with your changes"
     },
+    "profileTab": {
+      "saveUnsavedChangesModal": {
+        "title": "You have unsaved changes",
+        "description": "Are you sure you want to leave this page without updating? All your recent changes will be discarded.",
+        "cancelBtn": "Leave",
+        "submitBtn": "Update"
+      }
+    },
     "professionalTab": {
       "tabTitle": "Professional info",
       "mainTitle": "Professional information",

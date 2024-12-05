@@ -1,7 +1,8 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Link,
+  useBlocker,
   useLocation,
   useNavigate,
   useSearchParams
@@ -95,6 +96,63 @@ const EditProfile = () => {
     }
   }, [loading, profileState, initialEditProfileState])
 
+  const changedProfileFields = useMemo<Partial<EditProfileState>>(() => {
+    if (!initialEditProfileState || !profileState) return {}
+
+    const changedInitial = {
+      firstName: initialEditProfileState.firstName,
+      lastName: initialEditProfileState.lastName,
+      photo: initialEditProfileState.photo,
+      city: initialEditProfileState.city,
+      country: initialEditProfileState.country,
+      nativeLanguage: initialEditProfileState.nativeLanguage,
+      professionalSummary: initialEditProfileState.professionalSummary,
+      videoLink: initialEditProfileState.videoLink
+    }
+
+    const changedCurrent = {
+      firstName: profileState.firstName,
+      lastName: profileState.lastName,
+      photo: profileState.photo,
+      city: profileState.city,
+      country: profileState.country,
+      nativeLanguage: profileState.nativeLanguage,
+      professionalSummary: profileState.professionalSummary,
+      videoLink: profileState.videoLink
+    }
+
+    const hasPhotoChanged = hasPhotoChanges(
+      changedInitial.photo,
+      changedCurrent.photo
+    )
+
+    const hasChanged =
+      hasChanges(changedInitial, changedCurrent) || hasPhotoChanged
+
+    if (hasChanged) {
+      const changes: Partial<EditProfileState> = {
+        ...changedCurrent
+      }
+
+      if (!hasChanges(changedInitial.videoLink, changedCurrent.videoLink)) {
+        delete changes.videoLink
+      }
+
+      if (hasPhotoChanged) {
+        changes.photo = changedCurrent.photo
+      }
+
+      return changes
+    } else {
+      return {}
+    }
+  }, [profileState, initialEditProfileState])
+
+  const isProfileChanged = useMemo<boolean>(
+    () => Object.keys(changedProfileFields).length > 0,
+    [changedProfileFields]
+  )
+
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
     if (!profileState || !initialEditProfileState) {
       return {}
@@ -121,10 +179,10 @@ const EditProfile = () => {
     }
   }
 
-  const { hash } = useLocation()
+  const { hash, search, pathname } = useLocation()
   const navigate = useNavigate()
 
-  const handleUpdateUser = async (): Promise<void> => {
+  const handleUpdateUser = useCallback(async (): Promise<void> => {
     const { country, city } = profileState
     const {
       videoLink,
@@ -184,7 +242,41 @@ const EditProfile = () => {
     if (hash) {
       navigate(`${authRoutes.myProfile.path}#complete`)
     }
-  }
+  }, [profileState, changedFields])
+
+  const blocker = useBlocker(isProfileChanged)
+  const { openDialog } = useConfirm()
+
+  useEffect(() => {
+    if (blocker && blocker.location) {
+      const hasPathnameChanged = pathname !== blocker.location.pathname
+      const hasSearchChanged = search !== blocker.location.search
+
+      if (hasSearchChanged && !hasPathnameChanged) {
+        blocker.proceed?.()
+      }
+
+      if (hasPathnameChanged) {
+        openDialog({
+          title: t(
+            'editProfilePage.profile.profileTab.saveUnsavedChangesModal.title'
+          ),
+          message: t(
+            'editProfilePage.profile.profileTab.saveUnsavedChangesModal.description'
+          ),
+          cancelButton: t(
+            'editProfilePage.profile.profileTab.saveUnsavedChangesModal.cancelBtn'
+          ),
+          confirmButton: t(
+            'editProfilePage.profile.profileTab.saveUnsavedChangesModal.submitBtn'
+          ),
+          sendConfirm: (isConfirmed) => {
+            isConfirmed ? void handleUpdateUser() : blocker.proceed?.()
+          }
+        })
+      }
+    }
+  }, [blocker, pathname, openDialog, search, t, handleUpdateUser])
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
 
