@@ -78,8 +78,6 @@ const CommentsWithRatingBlock = ({
     </MenuItem>
   ))
 
-  console.log(response)
-
   const filteredItems = response.reviews.filter(
     (item) => filter === null || item.rating === filter
   )
