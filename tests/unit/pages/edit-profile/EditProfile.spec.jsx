@@ -79,9 +79,16 @@ const mockData = {
   errors: {
     firstName: '',
     lastName: '',
-    videoLink: ''
-  }
-}
+    videoLink: '',
+  },
+};
+vi.mock('react-router-dom', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    useBlocker: vi.fn(),
+  };
+});
 
 vi.mock('~/hooks/use-confirm', () => ({
   default: () => ({ checkConfirmation: () => true })
