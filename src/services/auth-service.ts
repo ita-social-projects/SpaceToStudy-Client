@@ -43,6 +43,14 @@ export const AuthService = {
       createUrlPath(URLs.auth.changePassword, userId),
       params
     )
+  },
+  validateCurrentPassword: (
+    userId: string,
+    currentPassword: string
+  ): Promise<AxiosResponse<{ isValid: boolean }>> => {
+    console.log(currentPassword)
+    const url = createUrlPath(URLs.auth.validatePassword, userId)
+    return axiosClient.post(url, { currentPassword })
   }
 }
 

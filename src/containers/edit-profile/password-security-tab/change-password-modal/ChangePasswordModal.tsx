@@ -22,7 +22,6 @@ import { snackbarVariants } from '~/constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
-
 import {
   ButtonVariantEnum,
   ComponentEnum,
@@ -60,7 +59,43 @@ const ChangePasswordModal = () => {
       })
     }
   }
-
+  // const handleSubmitChangePassword = async () => {
+  //   try {
+  //     const response = await AuthService.validateCurrentPassword(
+  //       userId,
+  //       data.currentPassword
+  //     )
+  //     console.log(response)
+  //     if (!response.data.isValid) {
+  //       handleErrors(
+  //         'currentPassword',
+  //         t('common.errorMessages.incorrectCurrentPassword')
+  //       )
+  //       return
+  //     }
+  //     const confirmed = await checkConfirmation({
+  //       message: t(
+  //         'editProfilePage.profile.passwordSecurityTab.changePasswordConfirm'
+  //       ),
+  //       title: 'titles.confirmTitle',
+  //       check: true,
+  //     });
+  //     if (!confirmed) {
+  //       return;
+  //     }
+  //     resetErrors();
+  //     await sendChangedPassword({
+  //       password: data.password,
+  //       currentPassword: data.currentPassword,
+  //     });
+  //   } catch (error) {
+  //     console.error('Error during validateCurrentPassword:', error);
+  //     handleErrors(
+  //       'currentPassword',
+  //       t('common.errorMessages.incorrectCurrentPassword')
+  //     );
+  //   }
+  // }
   const handleResponse = () => {
     dispatch(
       openAlert({
@@ -79,7 +114,12 @@ const ChangePasswordModal = () => {
   )
 
   const handleResponseError = (error?: ErrorResponse) => {
-    if (error?.code === 'INCORRECT_CREDENTIALS') {
+    if (error?.code === 'WRONG_CURRENT_PASSWORD') {
+      handleErrors(
+        'currentPassword',
+        t('common.errorMessages.incorrectCurrentPassword')
+      )
+    } else if (error?.code === 'INCORRECT_CREDENTIALS') {
       handleErrors('password', t('common.errorMessages.samePasswords'))
     } else {
       handleErrors('currentPassword', t('common.errorMessages.currentPassword'))
@@ -89,7 +129,11 @@ const ChangePasswordModal = () => {
   const { loading, fetchData: sendChangedPassword } = useAxios({
     service: changePassword,
     onResponse: handleResponse,
-    onResponseError: handleResponseError,
+    // onResponseError: handleResponseError,
+    onResponseError: (error) => {
+      console.error('Error from service:', error)
+      handleResponseError(error)
+    },
     fetchOnMount: false
   })
 
@@ -107,7 +151,7 @@ const ChangePasswordModal = () => {
     initialValues: initialValues,
     validations: validations
   })
-
+  console.log(errors)
   const {
     inputVisibility: currentPasswordVisibility,
     showInputText: showCurrentPassword
@@ -151,7 +195,8 @@ const ChangePasswordModal = () => {
           <Box sx={styles.form}>
             <AppTextField
               InputProps={currentPasswordVisibility}
-              errorMsg={t(errors.currentPassword)}
+              // errorMsg={t(errors.currentPassword)}
+              errorMsg={errors.currentPassword ? t(errors.currentPassword) : ''}
               fullWidth
               label={t(
                 'editProfilePage.profile.passwordSecurityTab.currentPassword'
