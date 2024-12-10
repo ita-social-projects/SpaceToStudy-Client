@@ -1,11 +1,14 @@
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
 import Snackbar from '@mui/material/Snackbar'
-import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { closeAlert, snackbarSelector } from '~/redux/features/snackbarSlice'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+
+import Alert from '~scss-components/alert/Alert'
+
 import { styles } from '~/containers/layout/app-snackbar/AppSnackbar.styles'
 
 const AppSnackbar = () => {

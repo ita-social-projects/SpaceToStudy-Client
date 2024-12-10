@@ -17,6 +17,8 @@ import { cn } from '~/utils/cn'
 
 import '~scss-components/alert/Alert.scss'
 
+export type AlertColor = 'success' | 'info' | 'warning' | 'error'
+
 export const AlertTitle = ({ children, ...props }: AlertTitleProps) => {
   return <MuiAlertTitle {...props}>{children}</MuiAlertTitle>
 }
