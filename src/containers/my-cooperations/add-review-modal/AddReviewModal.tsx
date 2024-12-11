@@ -10,7 +10,6 @@ import Button from '~/design-system/components/button/Button'
 import { ReviewService } from '~/services/review-service'
 import { useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
-import useAxios from '~/hooks/use-axios'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
@@ -67,18 +66,18 @@ const AddReviewModal: React.FC<ReviewDataFromCooperation> = ({ data }) => {
     )
   }
 
-  const { fetchData: sendReview } = useAxios({
-    service: addReview,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
-  })
-
   const handleSubmitReview = async () => {
-    await sendReview({
+    const res = await addReview({
       dataFromCooperation: data,
       comment: reviewData.comment,
       rating: reviewData.rating
     })
+
+    if (res.data) {
+      handleResponse()
+    } else {
+      handleResponseError((res.request as { data: ErrorResponse }).data)
+    }
   }
 
   const {
