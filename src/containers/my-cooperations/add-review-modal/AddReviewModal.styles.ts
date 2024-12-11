@@ -1,6 +1,7 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
+  root: { p: 5 },
   title: {
     typography: TypographyVariantEnum.H5,
     marginBottom: '3px'
@@ -10,7 +11,6 @@ export const styles = {
     color: 'primary.500',
     marginBottom: '15px'
   },
-  root: { p: 5 },
   formWrapper: {
     m: '16px 0 24px 0',
     display: 'flex',

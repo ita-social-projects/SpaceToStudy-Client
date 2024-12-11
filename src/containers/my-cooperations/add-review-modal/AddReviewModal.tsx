@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -31,7 +30,7 @@ import {
 } from '~/types'
 import { styles } from '~/containers/my-cooperations/add-review-modal/AddReviewModal.styles'
 
-const AddReviewModal: FC<ReviewDataFromCooperation> = ({ data }) => {
+const AddReviewModal: React.FC<ReviewDataFromCooperation> = ({ data }) => {
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
   const dispatch = useAppDispatch()
@@ -127,7 +126,7 @@ const AddReviewModal: FC<ReviewDataFromCooperation> = ({ data }) => {
         />
       </Box>
       <Box sx={styles.buttonGroup}>
-        <Button color='tonal' onClick={() => closeModal()}>
+        <Button color='tonal' onClick={closeModal}>
           {t('cooperationsPage.cooperationDetails.cancel')}
         </Button>
         <Button type='submit'>

@@ -4,7 +4,7 @@ export const initialValues = {
   comment: '',
   rating: 0,
   targetUserId: '',
-  targetUserRole: 'student' as UserRoleEnum.Student,
+  targetUserRole: UserRoleEnum.Student,
   offer: ''
 }
 
