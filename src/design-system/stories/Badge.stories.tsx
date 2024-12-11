@@ -50,7 +50,7 @@ The \`Badge\` component is a versatile and reusable component designed to enhanc
     },
     maxContent: {
       description:
-        'Controls the visibility of the badge. When set to `false`, the badge content is hidden.',
+        'Specifies the maximum value displayed by the badge. When set to `0`, the badge content is hidden.',
       control: { type: 'number' },
       defaultValue: 10
     },
