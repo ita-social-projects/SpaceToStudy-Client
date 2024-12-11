@@ -10,7 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import MenuItem from '@mui/material/MenuItem'
 import InputBase from '@mui/material/InputBase'
-import Radio from '@mui/material/Radio'
+import RadioButton from '~/design-system/components/radio-button/RadioButton'
 import RadioGroup from '@mui/material/RadioGroup'
 import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -151,7 +151,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
     <Box key={item.id} sx={styles.answer}>
       <FormControlLabel
         checked={item.isCorrect}
-        control={isMultipleChoice ? <Checkbox /> : <Radio />}
+        control={isMultipleChoice ? <Checkbox /> : <RadioButton label='' />}
         label={
           <InputBase
             fullWidth
@@ -225,7 +225,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
         >
           <FormControlLabel
             checked={false}
-            control={isMultipleChoice ? <Checkbox /> : <Radio />}
+            control={isMultipleChoice ? <Checkbox /> : <RadioButton label='' />}
             disabled={isEmptyAnswer}
             label={t('questionPage.addNewOne')}
             value={0}

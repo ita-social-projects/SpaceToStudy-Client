@@ -1,4 +1,4 @@
-import Radio from '@mui/material/Radio'
+import RadioButton from '~/design-system/components/radio-button/RadioButton'
 import RadioGroup, { RadioGroupProps } from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Typography from '@mui/material/Typography'
@@ -28,7 +28,7 @@ const RadioButtonInputs = <T, U>({
   const radioButtonList = items.map((radio) => (
     <FormControlLabel
       checked={value === radio.value}
-      control={<Radio />}
+      control={<RadioButton label='' />}
       key={String(radio.value)}
       label={radio.title}
       sx={styles.radioItems}
