@@ -62,8 +62,7 @@ export const useFilterQuery = <T extends object>({
     setSearchParams([])
   }, [setSearchParams])
 
-  const activeFilterCount =
-    countActiveFilters && countActiveFilters(searchParams, defaultFilters)
+  const activeFilterCount = countActiveFilters?.(searchParams, defaultFilters)
 
   return {
     filters,
