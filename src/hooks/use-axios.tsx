@@ -57,8 +57,7 @@ const useAxios = <
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        void onResponse?.(responseData as TransformedResponse)
+        await onResponse?.(responseData as TransformedResponse)
       } catch (e) {
         const error = e as AxiosError<ErrorResponse>
         if (error.response) {
@@ -75,7 +74,6 @@ const useAxios = <
 
   useEffect(() => {
     if (fetchOnMount) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       void fetchData()
     }
   }, [fetchData, fetchOnMount])
