@@ -149,7 +149,7 @@ export const useForm = <T extends object>({
         }
       }
     }
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+
     isValid ? onSubmit && void onSubmit(submittedData) : setErrors(newErrors)
   }
 
