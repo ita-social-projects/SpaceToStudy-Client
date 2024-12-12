@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import {
   MenuItem,
   Menu as MuiMenu,
@@ -9,23 +9,25 @@ import '~scss-components/menu/Menu.scss'
 
 interface MenuItemProps {
   title: string
+  additionalInfo?: string
+  nestedMenuItems?: MenuItemProps[]
+  graphics?: ReactNode
 }
 
 interface MenuProps extends MuiMenuProps {
   menuItems: MenuItemProps[]
-  density?: 'density-1' | 'density-2'
+  density?: 1 | 2
 }
 
-const Menu: FC<MenuProps> = ({
-  menuItems,
-  open,
-  density = 'density-1'
-}: MenuProps) => {
+const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
   return (
-    <MuiMenu className={`s2s-menu s2s-menu--${density}`} open={open}>
+    <MuiMenu className={`s2s-menu s2s-menu--density-${density}`} open={open}>
       {menuItems.map((menuItem) => (
         <MenuItem className='s2s-menu__list-item' key={menuItem.title}>
-          {menuItem.title}
+          {menuItem.graphics && (
+            <div className='s2s-menu__item-graphics'>{menuItem.graphics}</div>
+          )}
+          <p className='s2s-menu__item-title'>{menuItem.title}</p>
         </MenuItem>
       ))}
     </MuiMenu>

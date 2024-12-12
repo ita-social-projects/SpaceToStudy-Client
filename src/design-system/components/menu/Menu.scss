@@ -1,7 +1,6 @@
 @use '~scss/utilities' as *;
 
 .#{$prefix}menu {
-  background-color: $neutral-0;
   border-radius: 6px;
   box-shadow:
     0 0 8px 0 rgba(0, 0, 0, 0.08),
@@ -21,15 +20,27 @@
     }
   }
 
+  &__item-graphics {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__item-title {
+    margin-left: 12px;
+  }
+
   &--density-1 &__list-item {
-    padding: 16px;
+    padding: 16px 8px;
     height: 48px;
     min-width: 200px;
   }
 
   &--density-2 &__list-item {
-    padding: 16px 16px 8px;
     height: 64px;
     min-width: 256px;
+    font-weight: 500;
   }
 }
