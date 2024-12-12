@@ -64,7 +64,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
     <Box>
       <AppAutoComplete
         getOptionLabel={(option: LanguageFilter) =>
-          option || t('common.languages.allLanguages')
+          option?.trim() ? option : t('common.languages.allLanguages')
         }
         onChange={handleLanguagesChange}
         options={languageValues}
