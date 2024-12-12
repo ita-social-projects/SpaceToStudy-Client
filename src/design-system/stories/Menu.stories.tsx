@@ -24,3 +24,27 @@ export const Default: Story = {
     ]
   }
 }
+
+export const WithAdditionalInfo: Story = {
+  args: {
+    open: true,
+    density: 2,
+    menuItems: [
+      {
+        title: 'Lesson',
+        additionalInfo: 'Explore comprehensive lessons on various topics',
+        graphics: <Book />
+      },
+      {
+        title: 'Quiz',
+        additionalInfo: 'Test your knowledge with engaging quizzes',
+        graphics: <Book />
+      },
+      {
+        title: 'Attachment',
+        additionalInfo: 'Access all your important files and documents',
+        graphics: <Book />
+      }
+    ]
+  }
+}

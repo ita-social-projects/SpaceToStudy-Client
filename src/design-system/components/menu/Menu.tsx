@@ -23,11 +23,16 @@ const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
   return (
     <MuiMenu className={`s2s-menu s2s-menu--density-${density}`} open={open}>
       {menuItems.map((menuItem) => (
-        <MenuItem className='s2s-menu__list-item' key={menuItem.title}>
+        <MenuItem className='s2s-menu__item' key={menuItem.title}>
           {menuItem.graphics && (
             <div className='s2s-menu__item-graphics'>{menuItem.graphics}</div>
           )}
-          <p className='s2s-menu__item-title'>{menuItem.title}</p>
+          <div className='s2s-menu__item-text-box'>
+            <span className='s2s-menu__item-additional-info'>
+              {menuItem.additionalInfo}
+            </span>
+            <span className='s2s-menu__item-title'>{menuItem.title}</span>
+          </div>
         </MenuItem>
       ))}
     </MuiMenu>
