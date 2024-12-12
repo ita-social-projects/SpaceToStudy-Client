@@ -144,6 +144,29 @@ const FindOffers = () => {
     })
   }
 
+  const renderOffersContent = () => {
+    if (offersLoading) {
+      return <Loader pageLoad />
+    }
+
+    if (!items.length) {
+      return (
+        <NotFoundResults
+          data
+          description={t('findOffers.notFound.description')}
+        />
+      )
+    }
+
+    return (
+      <OfferContainer
+        offerCards={items}
+        updateOffersInfo={updateInfo}
+        viewMode={cardsView}
+      />
+    )
+  }
+
   return (
     <PageWrapper>
       <OfferRequestBlock />
@@ -192,20 +215,7 @@ const FindOffers = () => {
             price={price}
           />
         </AppDrawer>
-        {offersLoading ? (
-          <Loader pageLoad />
-        ) : !items.length && !offersLoading ? (
-          <NotFoundResults
-            data
-            description={t('findOffers.notFound.description')}
-          />
-        ) : (
-          <OfferContainer
-            offerCards={items}
-            updateOffersInfo={updateInfo}
-            viewMode={cardsView}
-          />
-        )}
+        {renderOffersContent()}
       </Box>
       <AppPagination
         onChange={handlePageChange}

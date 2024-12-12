@@ -24,11 +24,17 @@ export const styles = {
     typography: TypographyVariantEnum.Body1,
     p: '8px 16px'
   }),
-  findMessageCard: (isMyMessage: boolean, isFiltered: boolean) => ({
-    backgroundColor: isFiltered
-      ? `basic.${isMyMessage ? 'turquoiseDark' : 'turquoiseChat'}`
-      : `primary.${isMyMessage ? 500 : 100}`
-  }),
+  findMessageCard: (isMyMessage: boolean, isFiltered: boolean) => {
+    let backgroundColor
+
+    if (isFiltered) {
+      backgroundColor = `basic.${isMyMessage ? 'turquoiseDark' : 'turquoiseChat'}`
+    } else {
+      backgroundColor = `primary.${isMyMessage ? 500 : 100}`
+    }
+
+    return { backgroundColor }
+  },
   date: (isMyMessage: boolean) => ({
     typography: TypographyVariantEnum.Caption,
     color: `primary.${isMyMessage ? 100 : 500}`,
