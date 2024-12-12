@@ -2,7 +2,7 @@ import { ErrorOutlineRounded } from '@mui/icons-material'
 import { render, screen } from '@testing-library/react'
 import { beforeEach, expect } from 'vitest'
 
-import CooperationActionBanner from '~/containers/my-cooperations/cooperation-action-Banner/CooperationActionBanner'
+import CooperationActionBanner from '~/containers/my-cooperations/cooperation-action-banner/CooperationActionBanner'
 
 describe('CooperationActionBanner', () => {
   beforeEach(() => {
