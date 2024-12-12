@@ -1,9 +1,8 @@
-import { Box, styled, Typography } from '@mui/material'
-import { FC } from 'react'
-import { styles } from './AcceptCooperationClosing.styles'
 import { ErrorOutlineRounded } from '@mui/icons-material'
-import Button from '~/design-system/components/button/Button'
+import { styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import CooperationActionModal from '~/containers/my-cooperations/cooperation-action-modal/CooperationActionModal'
+import Button from '~/design-system/components/button/Button'
 
 interface AcceptCooperationClosureProps {
   user: string
@@ -14,29 +13,30 @@ const BoldText = styled('span')({
   fontWeight: 500
 })
 
-const AcceptCooperationClosing: FC<AcceptCooperationClosureProps> = ({
+const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
   user,
   onAccept
 }) => {
   const { t } = useTranslation()
+
   return (
-    <Box sx={styles.root}>
-      <Box>
-        <Box sx={styles.title}>
-          <ErrorOutlineRounded />
-          <Typography>{t('titles.acceptCooperationClosing')}</Typography>
-        </Box>
-        <Typography sx={styles.body}>
+    <CooperationActionModal
+      actionButtons={
+        <Button color='tonal-error' onClick={onAccept} size='xs'>
+          {t('cooperationDetailsPage.acceptBtn')}
+        </Button>
+      }
+      description={
+        <>
           <BoldText>{user}</BoldText>
           {t('cooperationDetailsPage.closingMessage1')}
           <BoldText>{t('cooperationDetailsPage.accessDuration')}</BoldText>
           {t('cooperationDetailsPage.closingMessage2')}
-        </Typography>
-      </Box>
-      <Button color='tonal-error' onClick={onAccept} size='xs'>
-        {t('cooperationDetailsPage.acceptBtn')}
-      </Button>
-    </Box>
+        </>
+      }
+      icon={<ErrorOutlineRounded />}
+      title={t('titles.acceptCooperationClosing')}
+    />
   )
 }
 
