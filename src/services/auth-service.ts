@@ -38,19 +38,11 @@ export const AuthService = {
   changePassword: (
     userId: string,
     params: { password: string; currentPassword: string }
-  ): Promise<AxiosResponse<null>> => {
+  ): Promise<AxiosResponse> => {
     return axiosClient.patch(
       createUrlPath(URLs.auth.changePassword, userId),
       params
     )
-  },
-  validateCurrentPassword: (
-    userId: string,
-    currentPassword: string
-  ): Promise<AxiosResponse<{ isValid: boolean }>> => {
-    console.log(currentPassword)
-    const url = createUrlPath(URLs.auth.validatePassword, userId)
-    return axiosClient.post(url, { currentPassword })
   }
 }
 

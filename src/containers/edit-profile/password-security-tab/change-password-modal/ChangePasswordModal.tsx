@@ -51,51 +51,16 @@ const ChangePasswordModal = () => {
       title: 'titles.confirmTitle',
       check: true
     })
-    if (confirmed) {
-      resetErrors()
+    if (!confirmed) return
+    try {
       await sendChangedPassword({
         password: data.password,
         currentPassword: data.currentPassword
       })
+    } catch (err) {
+      data.currentPassword = ''
     }
   }
-  // const handleSubmitChangePassword = async () => {
-  //   try {
-  //     const response = await AuthService.validateCurrentPassword(
-  //       userId,
-  //       data.currentPassword
-  //     )
-  //     console.log(response)
-  //     if (!response.data.isValid) {
-  //       handleErrors(
-  //         'currentPassword',
-  //         t('common.errorMessages.incorrectCurrentPassword')
-  //       )
-  //       return
-  //     }
-  //     const confirmed = await checkConfirmation({
-  //       message: t(
-  //         'editProfilePage.profile.passwordSecurityTab.changePasswordConfirm'
-  //       ),
-  //       title: 'titles.confirmTitle',
-  //       check: true,
-  //     });
-  //     if (!confirmed) {
-  //       return;
-  //     }
-  //     resetErrors();
-  //     await sendChangedPassword({
-  //       password: data.password,
-  //       currentPassword: data.currentPassword,
-  //     });
-  //   } catch (error) {
-  //     console.error('Error during validateCurrentPassword:', error);
-  //     handleErrors(
-  //       'currentPassword',
-  //       t('common.errorMessages.incorrectCurrentPassword')
-  //     );
-  //   }
-  // }
   const handleResponse = () => {
     dispatch(
       openAlert({
@@ -129,14 +94,12 @@ const ChangePasswordModal = () => {
   const { loading, fetchData: sendChangedPassword } = useAxios({
     service: changePassword,
     onResponse: handleResponse,
-    // onResponseError: handleResponseError,
-    onResponseError: (error) => {
-      console.error('Error from service:', error)
+    onResponseError: (error: ErrorResponse) => {
       handleResponseError(error)
+      throw error
     },
     fetchOnMount: false
   })
-
   const {
     data,
     handleSubmit,
@@ -151,7 +114,6 @@ const ChangePasswordModal = () => {
     initialValues: initialValues,
     validations: validations
   })
-  console.log(errors)
   const {
     inputVisibility: currentPasswordVisibility,
     showInputText: showCurrentPassword
@@ -195,7 +157,6 @@ const ChangePasswordModal = () => {
           <Box sx={styles.form}>
             <AppTextField
               InputProps={currentPasswordVisibility}
-              // errorMsg={t(errors.currentPassword)}
               errorMsg={errors.currentPassword ? t(errors.currentPassword) : ''}
               fullWidth
               label={t(
