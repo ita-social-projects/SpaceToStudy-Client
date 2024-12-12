@@ -1,7 +1,7 @@
 import { ErrorOutlineRounded } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import CooperationActionModal from '~/containers/my-cooperations/cooperation-action-modal/CooperationActionModal'
+import CooperationActionBanner from '~/containers/my-cooperations/cooperation-action-banner/CooperationActionBanner'
 import Button from '~/design-system/components/button/Button'
 
 import { styles } from './AcceptCooperationClosing.styles'
@@ -18,7 +18,7 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
   const { t } = useTranslation()
 
   return (
-    <CooperationActionModal
+    <CooperationActionBanner
       actionButtons={
         <Button color='tonal-error' onClick={onAccept} size='xs'>
           {t('cooperationDetailsPage.acceptBtn')}

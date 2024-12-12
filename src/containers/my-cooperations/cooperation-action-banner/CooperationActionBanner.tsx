@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 
 import { type ReactNode } from 'react'
-import { styles } from './CooperationActionModal.styles'
+import { styles } from './CooperationActionBanner.styles'
 
 type Properties = {
   actionButtons?: ReactNode
@@ -11,7 +11,7 @@ type Properties = {
   title: string
 }
 
-const CooperationActionModal: React.FC<Properties> = ({
+const CooperationActionBanner: React.FC<Properties> = ({
   actionButtons,
   children,
   description,
@@ -35,4 +35,4 @@ const CooperationActionModal: React.FC<Properties> = ({
   )
 }
 
-export default CooperationActionModal
+export default CooperationActionBanner

@@ -2,12 +2,12 @@ import { ErrorOutlineRounded } from '@mui/icons-material'
 import { render, screen } from '@testing-library/react'
 import { beforeEach, expect } from 'vitest'
 
-import CooperationActionModal from '~/containers/my-cooperations/cooperation-action-modal/CooperationActionModal'
+import CooperationActionBanner from '~/containers/my-cooperations/cooperation-action-Banner/CooperationActionBanner'
 
-describe('CooperationActionModal', () => {
+describe('CooperationActionBanner', () => {
   beforeEach(() => {
     render(
-      <CooperationActionModal
+      <CooperationActionBanner
         description='cooperationDetailsPage.closingMessage'
         title='titles.acceptCooperationClosing'
         children='cooperationDetailsPage.someAdditionalText'
@@ -16,7 +16,7 @@ describe('CooperationActionModal', () => {
     )
   })
 
-  it('should render the CooperationActionModal with title, description, icon and children', () => {
+  it('should render the CooperationActionBanner with title, description, icon and children', () => {
     const titleText = screen.getByText('titles.acceptCooperationClosing')
     const descriptionText = screen.getByText(
       'cooperationDetailsPage.closingMessage'
