@@ -1,17 +1,15 @@
 import { ErrorOutlineRounded } from '@mui/icons-material'
-import { styled } from '@mui/material'
+import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import CooperationActionModal from '~/containers/my-cooperations/cooperation-action-modal/CooperationActionModal'
 import Button from '~/design-system/components/button/Button'
+
+import { styles } from './AcceptCooperationClosing.styles'
 
 interface AcceptCooperationClosureProps {
   user: string
   onAccept: () => void
 }
-
-const BoldText = styled('span')({
-  fontWeight: 500
-})
 
 const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
   user,
@@ -28,9 +26,13 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
       }
       description={
         <>
-          <BoldText>{user}</BoldText>
+          <Typography component='span' sx={styles.boldText}>
+            {user}
+          </Typography>
           {t('cooperationDetailsPage.closingMessage1')}
-          <BoldText>{t('cooperationDetailsPage.accessDuration')}</BoldText>
+          <Typography component='span' sx={styles.boldText}>
+            {t('cooperationDetailsPage.accessDuration')}
+          </Typography>
           {t('cooperationDetailsPage.closingMessage2')}
         </>
       }
