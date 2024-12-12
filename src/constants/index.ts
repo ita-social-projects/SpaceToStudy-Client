@@ -1,4 +1,4 @@
-import { AlertColor } from '~scss-components/alert/Alert'
+import { AlertColor } from '~/design-system/components/alert/Alert'
 
 export const s2s = 's2s'
 
