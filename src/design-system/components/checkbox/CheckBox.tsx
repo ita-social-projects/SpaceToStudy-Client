@@ -12,7 +12,7 @@ interface CheckBoxProps extends Omit<CheckboxProps, 'size'> {
   color?: 'primary' | 'secondary' | 'error' | 'success'
   size?: 'sm' | 'md' | 'lg'
   loading?: boolean
-  checked?: boolean
+  isChecked?: boolean
   onChange?: (
     event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
@@ -20,7 +20,7 @@ interface CheckBoxProps extends Omit<CheckboxProps, 'size'> {
 }
 
 const CheckBox: FC<CheckBoxProps> = ({
-  checked,
+  isChecked: externalIsChecked,
   onChange,
   color = 'primary',
   disabled = false,
@@ -31,15 +31,15 @@ const CheckBox: FC<CheckBoxProps> = ({
   size = 'md',
   ...props
 }) => {
-  const [internalChecked, setInternalChecked] = useState<boolean>(false)
+  const [internalIsChecked, setInternalIsChecked] = useState<boolean>(false)
 
-  const isCheckboxControllable = checked !== undefined
+  const isCheckboxControllable = externalIsChecked !== undefined
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newChecked = event.target.checked
 
     if (!isCheckboxControllable) {
-      setInternalChecked(newChecked)
+      setInternalIsChecked(newChecked)
     }
 
     onChange?.(event, newChecked)
@@ -52,7 +52,9 @@ const CheckBox: FC<CheckBoxProps> = ({
   }
 
   const loader = <Loader size={loaderSizeMapping[size]} />
-  const resolvedCheck = isCheckboxControllable ? checked : internalChecked
+  const resolvedIsCheck = isCheckboxControllable
+    ? externalIsChecked
+    : internalIsChecked
 
   return (
     <label
@@ -76,12 +78,12 @@ const CheckBox: FC<CheckBoxProps> = ({
       ) : (
         <Checkbox
           {...props}
-          checked={resolvedCheck}
+          checked={resolvedIsCheck}
           className='s2s-checkbox__input'
           color={color}
           data-testid='checkbox-input'
           disabled={disabled || loading}
-          indeterminate={variant === 'middle' && resolvedCheck}
+          indeterminate={variant === 'middle' && resolvedIsCheck}
           onChange={handleChange}
         />
       )}
