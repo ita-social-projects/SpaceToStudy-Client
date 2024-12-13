@@ -1,11 +1,11 @@
 import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
-import { FC, ReactNode, useState } from 'react'
+import { FC, ReactNode, useCallback, useState } from 'react'
 import Loader from '~/components/loader/Loader'
 import { cn } from '~/utils/cn'
 
 import './CheckBox.scss'
 
-interface CheckBoxProps extends Omit<CheckboxProps, 'size'> {
+interface CheckBoxProps extends Omit<CheckboxProps, 'size' | 'onChange'> {
   variant: 'check' | 'middle'
   label: ReactNode
   labelPosition?: 'top' | 'bottom' | 'end'
@@ -13,10 +13,7 @@ interface CheckBoxProps extends Omit<CheckboxProps, 'size'> {
   size?: 'sm' | 'md' | 'lg'
   loading?: boolean
   isChecked?: boolean
-  onChange?: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean
-  ) => void
+  onChange?: (checked: boolean) => void
 }
 
 const CheckBox: FC<CheckBoxProps> = ({
@@ -35,15 +32,18 @@ const CheckBox: FC<CheckBoxProps> = ({
 
   const isCheckboxControllable = externalIsChecked !== undefined
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newChecked = event.target.checked
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newChecked = event.target.checked
 
-    if (!isCheckboxControllable) {
-      setInternalIsChecked(newChecked)
-    }
+      if (!isCheckboxControllable) {
+        setInternalIsChecked(newChecked)
+      }
 
-    onChange?.(event, newChecked)
-  }
+      onChange?.(newChecked)
+    },
+    [onChange, isCheckboxControllable]
+  )
 
   const loaderSizeMapping: Record<string, number> = {
     sm: 14,
