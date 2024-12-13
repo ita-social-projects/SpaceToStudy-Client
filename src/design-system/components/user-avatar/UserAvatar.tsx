@@ -8,7 +8,7 @@ import CheckIcon from '@mui/icons-material/Check'
 import { cn } from '~/utils/cn'
 
 const variants = ['check', 'avatar', 'monogram', 'photo'] as const
-const sizes = ['sm', 'md', 'lg'] as const
+const sizes = ['sm', 'md', 'lg', 'profile-lg'] as const
 
 interface BaseUserAvatarProps {
   variant?: (typeof variants)[number]
