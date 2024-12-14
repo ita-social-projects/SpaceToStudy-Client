@@ -1,5 +1,5 @@
 import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
-import { type ChangeEvent, ReactNode, useCallback, useState } from 'react'
+import { type ChangeEvent, type ReactNode, useCallback, useState } from 'react'
 import Loader from '~/components/loader/Loader'
 import { cn } from '~/utils/cn'
 
@@ -12,12 +12,14 @@ interface CheckBoxProps extends Omit<CheckboxProps, 'size' | 'onChange'> {
   color?: 'primary' | 'secondary' | 'error' | 'success'
   size?: 'sm' | 'md' | 'lg'
   loading?: boolean
-  isChecked?: boolean
+  checked?: boolean
+  defaultChecked?: boolean
   onChange?: (checked: boolean) => void
 }
 
 const CheckBox: React.FC<CheckBoxProps> = ({
-  isChecked: externalIsChecked,
+  checked: externalIsChecked,
+  defaultChecked = false,
   onChange,
   color = 'primary',
   disabled = false,
@@ -28,7 +30,9 @@ const CheckBox: React.FC<CheckBoxProps> = ({
   size = 'md',
   ...props
 }) => {
-  const [internalIsChecked, setInternalIsChecked] = useState<boolean>(false)
+  const [internalIsChecked, setInternalIsChecked] = useState<boolean>(
+    defaultChecked ?? false
+  )
 
   const isCheckboxControllable = externalIsChecked !== undefined
 
