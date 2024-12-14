@@ -43,6 +43,10 @@
     background-color: $neutral-50;
   }
 
+  &--toggled {
+    background-color: $blue-gray-50;
+  }
+
   &__graphics {
     width: 40px;
     height: 40px;

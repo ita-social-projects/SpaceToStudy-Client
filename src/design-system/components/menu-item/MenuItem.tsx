@@ -1,23 +1,36 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { MenuItem as MuiMenuItem } from '@mui/material'
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
 
-import { MenuItemProps } from './menu-item.types'
+import { MenuItemProps as CommonMenuItemProps } from './menu-item.types'
 
 import '~scss-components/menu-item/MenuItem.scss'
+
+interface MenuItemProps extends CommonMenuItemProps {
+  density?: 1 | 2
+}
 
 const MenuItem: FC<MenuItemProps> = ({
   title,
   additionalInfo,
   density = 1,
-  dropDownIconVariant,
+  isDropdown = false,
   graphics,
-  variant = 'default'
+  variant = 'default',
+  onClick = () => {}
 }) => {
+  const [isToggled, setIsToggled] = useState(false)
+
+  const handleClick = () => {
+    setIsToggled((previous) => !previous)
+    onClick()
+  }
+
   return (
     <MuiMenuItem
-      className={`s2s-item s2s-item--density-${density} s2s-item--variant-${variant}`}
+      className={`s2s-item s2s-item--density-${density} s2s-item--variant-${variant} s2s-item--${isToggled ? 'toggled' : 'untoggled'}`}
       key={title}
+      onClick={handleClick}
     >
       <div className='s2s-item__main-info-box'>
         {graphics && <div className='s2s-item__graphics'>{graphics}</div>}
@@ -26,9 +39,9 @@ const MenuItem: FC<MenuItemProps> = ({
           <span className='s2s-item__title'>{title}</span>
         </div>
       </div>
-      {dropDownIconVariant && (
+      {isDropdown && (
         <div className='s2s-item__graphics'>
-          {dropDownIconVariant === 'down' ? <ArrowDropDown /> : <ArrowDropUp />}
+          {isToggled ? <ArrowDropUp /> : <ArrowDropDown />}
         </div>
       )}
     </MuiMenuItem>

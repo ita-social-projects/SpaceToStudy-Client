@@ -3,8 +3,8 @@ import { ReactNode } from 'react'
 export interface MenuItemProps {
   title: string
   additionalInfo?: string
-  density?: 1 | 2
-  dropDownIconVariant?: 'up' | 'down'
+  isDropdown?: boolean
   graphics?: ReactNode
   variant?: 'default' | 'nested'
+  onClick?: () => void
 }

@@ -1,4 +1,4 @@
-import { FC, Fragment } from 'react'
+import { FC, Fragment, useState } from 'react'
 import { Menu as MuiMenu, MenuProps as MuiMenuProps } from '@mui/material'
 
 import { MenuItemProps as NestedMenuItemProps } from '~scss-components/menu-item/menu-item.types'
@@ -10,27 +10,47 @@ interface MenuItemProps extends NestedMenuItemProps {
   nestedMenuItems?: NestedMenuItemProps[]
 }
 
-interface MenuProps extends MuiMenuProps {
+interface MenuProps extends Omit<MuiMenuProps, 'onClick'> {
   menuItems: MenuItemProps[]
   density?: 1 | 2
 }
 
 const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
+  const [expandedNestedItem, setExpandedNestedItem] = useState<string | null>(
+    null
+  )
+
+  const handleTopLevelItemClick = ({
+    nestedMenuItems,
+    title,
+    onClick
+  }: MenuItemProps) => {
+    nestedMenuItems &&
+      setExpandedNestedItem((previousTitle) =>
+        previousTitle === title ? null : title
+      )
+
+    onClick && onClick()
+  }
+
   return (
     <MuiMenu className={`s2s-menu s2s-menu--density-${density}`} open={open}>
-      {menuItems.map(({ nestedMenuItems, ...menuItemProps }) => (
-        <Fragment key={menuItemProps.title}>
+      {menuItems.map((item) => (
+        <Fragment key={item.title}>
           <MenuItem
-            {...menuItemProps}
+            {...item}
             density={density}
-            dropDownIconVariant={nestedMenuItems && 'down'}
+            isDropdown={Boolean(item.nestedMenuItems)}
+            onClick={() => handleTopLevelItemClick(item)}
           />
-          {nestedMenuItems &&
-            nestedMenuItems.map((nestedMenuItemProps) => (
+          {item.nestedMenuItems &&
+            expandedNestedItem === item.title &&
+            item.nestedMenuItems.map((nestedMenuItemProps) => (
               <MenuItem
                 {...nestedMenuItemProps}
                 density={density}
                 key={nestedMenuItemProps.title}
+                onClick={() => nestedMenuItemProps.onClick}
                 variant='nested'
               />
             ))}
