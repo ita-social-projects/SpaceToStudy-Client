@@ -7,6 +7,7 @@ import MenuItem from '../menu-item/MenuItem'
 import '~scss-components/menu/Menu.scss'
 
 interface MenuItemProps extends NestedMenuItemProps {
+  additionalInfo?: string
   nestedMenuItems?: NestedMenuItemProps[]
 }
 
@@ -41,7 +42,7 @@ const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
           ? item.nestedMenuItems.map((nestedMenuItem) => (
               <MenuItem
                 {...nestedMenuItem}
-                density={density}
+                density={1}
                 key={nestedMenuItem.title}
                 onClick={() => handleTopLevelItemClick(nestedMenuItem)}
                 variant='nested'

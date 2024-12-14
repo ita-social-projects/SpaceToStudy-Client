@@ -28,7 +28,11 @@ export const Default: Story = {
         graphics: <Checkbox />,
         onClick: () => alert('Quiz clicked')
       },
-      { title: 'Attachment', onClick: () => alert('Attachment clicked') }
+      {
+        title: 'Attachment',
+        isBottomBorder: true,
+        onClick: () => alert('Attachment clicked')
+      }
     ]
   }
 }

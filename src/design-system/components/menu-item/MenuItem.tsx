@@ -7,8 +7,11 @@ import { MenuItemProps as CommonMenuItemProps } from './menu-item.types'
 import '~scss-components/menu-item/MenuItem.scss'
 
 interface MenuItemProps extends CommonMenuItemProps {
+  additionalInfo?: string
+  isDropdown?: boolean
   density?: 1 | 2
   isToggled?: boolean
+  variant?: 'default' | 'nested'
 }
 
 const MenuItem: FC<MenuItemProps> = ({
@@ -17,6 +20,7 @@ const MenuItem: FC<MenuItemProps> = ({
   density = 1,
   isDropdown = false,
   isToggled = false,
+  isBottomBorder = false,
   graphics,
   variant = 'default',
   onClick = () => {}
@@ -27,7 +31,7 @@ const MenuItem: FC<MenuItemProps> = ({
 
   return (
     <MuiMenuItem
-      className={`s2s-item s2s-item--density-${density} s2s-item--variant-${variant} s2s-item--${isToggled ? 'toggled' : 'untoggled'}`}
+      className={`s2s-item s2s-item--density-${density} s2s-item--variant-${variant} s2s-item--${isToggled ? 'toggled' : 'untoggled'} s2s-item--${isBottomBorder ? 'bottom-border' : 'no-bottom-border'}`}
       key={title}
       onClick={handleClick}
     >

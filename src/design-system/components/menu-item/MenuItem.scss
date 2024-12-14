@@ -47,6 +47,10 @@
     background-color: $blue-gray-50;
   }
 
+  &--bottom-border {
+    border-top: 1px solid $blue-gray-100;
+  }
+
   &__graphics {
     width: 40px;
     height: 40px;
