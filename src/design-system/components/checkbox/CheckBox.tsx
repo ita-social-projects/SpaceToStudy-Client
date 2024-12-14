@@ -34,17 +34,17 @@ const CheckBox: React.FC<CheckBoxProps> = ({
     defaultChecked ?? false
   )
 
-  const isCheckboxControllable = externalIsChecked !== undefined
+  const isCheckboxControlled = externalIsChecked !== undefined
 
   const handleChange = useCallback(
     ({ target: { checked } }: ChangeEvent<HTMLInputElement>) => {
-      if (!isCheckboxControllable) {
+      if (!isCheckboxControlled) {
         setInternalIsChecked(checked)
       }
 
       onChange?.(checked)
     },
-    [onChange, isCheckboxControllable]
+    [onChange, isCheckboxControlled]
   )
 
   const loaderSizeMapping: Record<string, number> = {
@@ -54,7 +54,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
   }
 
   const loader = <Loader size={loaderSizeMapping[size]} />
-  const resolvedIsCheck = isCheckboxControllable
+  const resolvedIsCheck = isCheckboxControlled
     ? externalIsChecked
     : internalIsChecked
 
