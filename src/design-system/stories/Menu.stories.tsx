@@ -48,3 +48,38 @@ export const WithAdditionalInfo: Story = {
     ]
   }
 }
+
+export const WithNestedMenuItems: Story = {
+  args: {
+    open: true,
+    menuItems: [
+      {
+        title: 'Lesson',
+        graphics: <Book />,
+        nestedMenuItems: [
+          { title: 'Math', graphics: <Book /> },
+          { title: 'Science', graphics: <Book /> },
+          { title: 'History', graphics: <Book /> }
+        ]
+      },
+      {
+        title: 'Quiz',
+        graphics: <Book />,
+        nestedMenuItems: [
+          { title: 'Math', graphics: <Book /> },
+          { title: 'Science', graphics: <Book /> },
+          { title: 'History', graphics: <Book /> }
+        ]
+      },
+      {
+        title: 'Attachment',
+        graphics: <Book />,
+        nestedMenuItems: [
+          { title: 'Math', graphics: <Book /> },
+          { title: 'Science', graphics: <Book /> },
+          { title: 'History', graphics: <Book /> }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+@use '~scss/utilities' as *;
+
+.#{$prefix}item {
+  background-color: $neutral-0;
+  width: 100%;
+  color: $blue-gray-700;
+  padding: 16px 8px;
+
+  &:disabled {
+    color: $blue-gray-700;
+  }
+
+  &:hover {
+    background-color: $blue-gray-100;
+  }
+
+  &.selected {
+    background-color: $blue-gray-50;
+  }
+
+  &--density-1 {
+    height: 48px;
+    min-width: 200px;
+  }
+
+  &--density-2 {
+    height: 64px;
+    min-width: 256px;
+    padding-top: 30px;
+  }
+
+  &--density-2 &-title {
+    font-weight: $font-weight-medium;
+  }
+
+  &--density-2 &-additional-info {
+    line-height: $line-height-sm;
+  }
+
+  &--variant-nested {
+    background-color: $neutral-50;
+  }
+
+  &-graphics {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-text-box {
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    padding-right: 8px;
+  }
+
+  &-additional-info {
+    font-size: $font-size-xs;
+    color: $blue-gray-500;
+  }
+}
