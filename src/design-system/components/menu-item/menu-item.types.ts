@@ -4,7 +4,7 @@ export interface MenuItemProps {
   title: string
   additionalInfo?: string
   density?: 1 | 2
-  isDropDown?: boolean
+  dropDownIconVariant?: 'up' | 'down'
   graphics?: ReactNode
   variant?: 'default' | 'nested'
 }

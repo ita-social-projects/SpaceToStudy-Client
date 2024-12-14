@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { MenuItem as MuiMenuItem } from '@mui/material'
-import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
 
 import { MenuItemProps } from './menu-item.types'
 
@@ -10,7 +10,7 @@ const MenuItem: FC<MenuItemProps> = ({
   title,
   additionalInfo,
   density = 1,
-  isDropDown = false,
+  dropDownIconVariant,
   graphics,
   variant = 'default'
 }) => {
@@ -26,9 +26,9 @@ const MenuItem: FC<MenuItemProps> = ({
           <span className='s2s-item__title'>{title}</span>
         </div>
       </div>
-      {isDropDown && (
+      {dropDownIconVariant && (
         <div className='s2s-item__graphics'>
-          <ArrowDropDown />
+          {dropDownIconVariant === 'down' ? <ArrowDropDown /> : <ArrowDropUp />}
         </div>
       )}
     </MuiMenuItem>

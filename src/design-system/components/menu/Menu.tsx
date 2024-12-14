@@ -23,7 +23,7 @@ const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
           <MenuItem
             {...menuItemProps}
             density={density}
-            isDropDown={Boolean(nestedMenuItems)}
+            dropDownIconVariant={nestedMenuItems && 'down'}
           />
           {nestedMenuItems &&
             nestedMenuItems.map((nestedMenuItemProps) => (
