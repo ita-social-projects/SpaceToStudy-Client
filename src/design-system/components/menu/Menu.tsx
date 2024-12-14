@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react'
+import { FC, useState } from 'react'
 import { Menu as MuiMenu, MenuProps as MuiMenuProps } from '@mui/material'
 
 import { MenuItemProps as NestedMenuItemProps } from '~scss-components/menu-item/menu-item.types'
@@ -35,17 +35,16 @@ const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
 
   return (
     <MuiMenu className={`s2s-menu s2s-menu--density-${density}`} open={open}>
-      {menuItems.map((item) => (
-        <Fragment key={item.title}>
-          <MenuItem
-            {...item}
-            density={density}
-            isDropdown={Boolean(item.nestedMenuItems)}
-            onClick={() => handleTopLevelItemClick(item)}
-          />
-          {item.nestedMenuItems &&
-            expandedNestedItem === item.title &&
-            item.nestedMenuItems.map((nestedMenuItemProps) => (
+      {menuItems.flatMap((item) => [
+        <MenuItem
+          {...item}
+          density={density}
+          isDropdown={Boolean(item.nestedMenuItems)}
+          key={item.title}
+          onClick={() => handleTopLevelItemClick(item)}
+        />,
+        ...(item.nestedMenuItems && expandedNestedItem === item.title
+          ? item.nestedMenuItems.map((nestedMenuItemProps) => (
               <MenuItem
                 {...nestedMenuItemProps}
                 density={density}
@@ -53,9 +52,9 @@ const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
                 onClick={() => nestedMenuItemProps.onClick}
                 variant='nested'
               />
-            ))}
-        </Fragment>
-      ))}
+            ))
+          : [])
+      ])}
     </MuiMenu>
   )
 }
