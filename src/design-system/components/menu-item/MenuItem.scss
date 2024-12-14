@@ -5,6 +5,8 @@
   width: 100%;
   color: $blue-gray-700;
   padding: 16px 8px;
+  display: flex;
+  justify-content: space-between;
 
   &:disabled {
     color: $blue-gray-700;
@@ -41,7 +43,7 @@
     background-color: $neutral-50;
   }
 
-  &-graphics {
+  &__graphics {
     width: 40px;
     height: 40px;
     display: flex;
@@ -49,15 +51,20 @@
     justify-content: center;
   }
 
-  &-text-box {
+  &__text-box {
     margin-left: 12px;
     display: flex;
     flex-direction: column;
     padding-right: 8px;
   }
 
-  &-additional-info {
+  &__additional-info {
     font-size: $font-size-xs;
     color: $blue-gray-500;
+  }
+
+  &__main-info-box {
+    display: flex;
+    align-items: center;
   }
 }

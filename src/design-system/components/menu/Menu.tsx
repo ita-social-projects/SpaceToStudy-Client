@@ -20,7 +20,11 @@ const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
     <MuiMenu className={`s2s-menu s2s-menu--density-${density}`} open={open}>
       {menuItems.map(({ nestedMenuItems, ...menuItemProps }) => (
         <Fragment key={menuItemProps.title}>
-          <MenuItem {...menuItemProps} density={density} />
+          <MenuItem
+            {...menuItemProps}
+            density={density}
+            isDropDown={Boolean(nestedMenuItems)}
+          />
           {nestedMenuItems &&
             nestedMenuItems.map((nestedMenuItemProps) => (
               <MenuItem

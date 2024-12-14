@@ -52,9 +52,11 @@ export const WithAdditionalInfo: Story = {
 export const WithNestedMenuItems: Story = {
   args: {
     open: true,
+    density: 2,
     menuItems: [
       {
         title: 'Lesson',
+        additionalInfo: 'Explore comprehensive lessons on various topics',
         graphics: <Book />,
         nestedMenuItems: [
           { title: 'Math', graphics: <Book /> },
@@ -64,6 +66,7 @@ export const WithNestedMenuItems: Story = {
       },
       {
         title: 'Quiz',
+        additionalInfo: 'Test your knowledge with engaging quizzes',
         graphics: <Book />,
         nestedMenuItems: [
           { title: 'Math', graphics: <Book /> },
@@ -73,6 +76,7 @@ export const WithNestedMenuItems: Story = {
       },
       {
         title: 'Attachment',
+        additionalInfo: 'Files and documents',
         graphics: <Book />,
         nestedMenuItems: [
           { title: 'Math', graphics: <Book /> },
