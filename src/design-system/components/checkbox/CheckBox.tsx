@@ -30,9 +30,8 @@ const CheckBox: React.FC<CheckBoxProps> = ({
   size = 'md',
   ...props
 }) => {
-  const [internalIsChecked, setInternalIsChecked] = useState<boolean>(
-    defaultChecked ?? false
-  )
+  const [internalIsChecked, setInternalIsChecked] =
+    useState<boolean>(defaultChecked)
 
   const isCheckboxControlled = externalIsChecked !== undefined
 
