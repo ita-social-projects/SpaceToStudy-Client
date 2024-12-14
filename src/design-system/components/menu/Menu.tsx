@@ -16,21 +16,14 @@ interface MenuProps extends Omit<MuiMenuProps, 'onClick'> {
 }
 
 const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
-  const [expandedNestedItem, setExpandedNestedItem] = useState<string | null>(
-    null
-  )
+  const [toggledItem, setToggledItem] = useState<string | null>(null)
 
-  const handleTopLevelItemClick = ({
-    nestedMenuItems,
-    title,
-    onClick
-  }: MenuItemProps) => {
-    nestedMenuItems &&
-      setExpandedNestedItem((previousTitle) =>
-        previousTitle === title ? null : title
-      )
+  const handleTopLevelItemClick = ({ title, onClick }: MenuItemProps) => {
+    setToggledItem((previousTitle) => (previousTitle === title ? null : title))
 
-    onClick && onClick()
+    if (onClick) {
+      onClick()
+    }
   }
 
   return (
@@ -40,16 +33,17 @@ const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
           {...item}
           density={density}
           isDropdown={Boolean(item.nestedMenuItems)}
+          isToggled={toggledItem === item.title}
           key={item.title}
           onClick={() => handleTopLevelItemClick(item)}
         />,
-        ...(item.nestedMenuItems && expandedNestedItem === item.title
-          ? item.nestedMenuItems.map((nestedMenuItemProps) => (
+        ...(item.nestedMenuItems && toggledItem === item.title
+          ? item.nestedMenuItems.map((nestedMenuItem) => (
               <MenuItem
-                {...nestedMenuItemProps}
+                {...nestedMenuItem}
                 density={density}
-                key={nestedMenuItemProps.title}
-                onClick={() => nestedMenuItemProps.onClick}
+                key={nestedMenuItem.title}
+                onClick={() => handleTopLevelItemClick(nestedMenuItem)}
                 variant='nested'
               />
             ))

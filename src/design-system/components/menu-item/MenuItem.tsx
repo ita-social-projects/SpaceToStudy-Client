@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { MenuItem as MuiMenuItem } from '@mui/material'
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
 
@@ -8,6 +8,7 @@ import '~scss-components/menu-item/MenuItem.scss'
 
 interface MenuItemProps extends CommonMenuItemProps {
   density?: 1 | 2
+  isToggled?: boolean
 }
 
 const MenuItem: FC<MenuItemProps> = ({
@@ -15,14 +16,12 @@ const MenuItem: FC<MenuItemProps> = ({
   additionalInfo,
   density = 1,
   isDropdown = false,
+  isToggled = false,
   graphics,
   variant = 'default',
   onClick = () => {}
 }) => {
-  const [isToggled, setIsToggled] = useState(false)
-
   const handleClick = () => {
-    setIsToggled((previous) => !previous)
     onClick()
   }
 
