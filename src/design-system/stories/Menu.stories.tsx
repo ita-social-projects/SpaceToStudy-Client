@@ -44,7 +44,7 @@ type Story = StoryObj<typeof Menu>
 export const Default: Story = {
   args: {
     defaultOnItemClick(args) {
-      alert(`defaultOnItemClick args: ${JSON.stringify(args)}`)
+      alert(`defaultOnItemClick args: ${JSON.stringify(args)}.`)
     },
     menuItems: [
       {
@@ -66,7 +66,7 @@ export const Default: Story = {
 export const WithIcon: Story = {
   args: {
     defaultOnItemClick(args) {
-      alert(`defaultOnItemClick args: ${JSON.stringify(args)}`)
+      alert(`defaultOnItemClick args: ${JSON.stringify(args)}.`)
     },
     menuItems: [
       {
@@ -91,7 +91,7 @@ export const WithIcon: Story = {
 export const WithCheckbox: Story = {
   args: {
     defaultOnItemClick(args) {
-      alert(`defaultOnItemClick args: ${JSON.stringify(args)}`)
+      alert(`defaultOnItemClick args: ${JSON.stringify(args)}.`)
     },
     menuItems: [
       {
@@ -116,7 +116,7 @@ export const WithCheckbox: Story = {
 export const Mixed: Story = {
   args: {
     defaultOnItemClick(args) {
-      alert(`defaultOnItemClick args: ${JSON.stringify(args)}`)
+      alert(`defaultOnItemClick args: ${JSON.stringify(args)}.`)
     },
     menuItems: [
       {
@@ -127,7 +127,12 @@ export const Mixed: Story = {
       {
         title: 'Quiz',
         graphics: <Checkbox />,
-        defaultOnItemClickArgs: { path: '/quiz' }
+        defaultOnItemClickArgs: { path: '/quiz' },
+        onClick: () => {
+          alert(
+            'Quiz onClick called. Imagine there is custom checkbox filter logic here.'
+          )
+        }
       },
       {
         title: 'Attachment',
@@ -142,7 +147,7 @@ export const WithAdditionalInfo: Story = {
   args: {
     density: 2,
     defaultOnItemClick(args) {
-      alert(`${JSON.stringify(args.title)} clicked`)
+      alert(`${JSON.stringify(args.title)} clicked.`)
     },
     menuItems: [
       {
@@ -168,7 +173,7 @@ export const WithNestedMenuItems: Story = {
   args: {
     density: 2,
     defaultOnItemClick(args) {
-      alert(`${JSON.stringify(args.title)} clicked`)
+      alert(`${JSON.stringify(args.title)} clicked.`)
     },
     menuItems: [
       {
