@@ -3,7 +3,7 @@ import { TypographyVariantEnum } from '~/types'
 export const switchStyle = {
   width: '50px',
   height: '24px',
-  padding: 0,
+  // padding: 5px,
   '& .MuiSwitch-switchBase': {
     padding: '4px',
     '&.Mui-checked': {

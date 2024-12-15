@@ -143,6 +143,7 @@ const QuizSettingsContainer = ({
           <AppSelect
             fields={getQuizViewFields(t)}
             setValue={onViewTypeChange}
+            sx={styles.select}
             value={data.view}
           />
         </SettingItem>
