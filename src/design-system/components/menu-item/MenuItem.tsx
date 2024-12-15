@@ -21,6 +21,7 @@ const MenuItem: FC<MenuItemProps> = ({
   additionalInfo,
   graphics,
   onRemove,
+  alignVariant = 'left',
   colorVariant = 'default',
   density = 1,
   isDropdown = false,
@@ -41,6 +42,7 @@ const MenuItem: FC<MenuItemProps> = ({
         `s2s-item--density-${density}`,
         `s2s-item--variant-${variant}`,
         `s2s-item--color-${colorVariant}`,
+        `s2s-item--align-${alignVariant}`,
         isToggled && 's2s-item--toggled',
         isBottomBorder && 's2s-item--bottom-border',
         isDisabled && 's2s-item--disabled'

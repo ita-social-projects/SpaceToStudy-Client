@@ -89,13 +89,6 @@ const Menu: FC<MenuProps> = ({
     )
   }
 
-  if (items.length < 1) {
-    items.push({
-      title: noItemsMessage ?? 'No items',
-      isDisabled: true
-    })
-  }
-
   return (
     <MuiMenu
       anchorEl={anchorEl}
@@ -135,6 +128,17 @@ const Menu: FC<MenuProps> = ({
             ))
           : [])
       ])}
+      {isItemsRemovalEnabled &&
+        (items.length >= 1 ? (
+          <MenuItem
+            alignVariant='center'
+            colorVariant='secondary'
+            onClick={() => setItems([])}
+            title='Clear all'
+          />
+        ) : (
+          <MenuItem isDisabled title={noItemsMessage ?? 'No items.'} />
+        ))}
     </MuiMenu>
   )
 }

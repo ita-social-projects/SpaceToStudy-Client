@@ -19,6 +19,10 @@
     background-color: $blue-gray-50;
   }
 
+  &--align-center {
+    justify-content: center;
+  }
+
   &--density-1 {
     height: 48px;
   }
@@ -48,8 +52,12 @@
     color: $blue-gray-700;
   }
 
-  &--danger {
+  &--color-danger {
     color: $red-500;
+  }
+
+  &--color-secondary {
+    color: $blue-gray-500;
   }
 
   &--disabled {

@@ -4,7 +4,8 @@ export type OnItemClickArgs = Record<string, string | Event>
 
 export interface MenuItemProps {
   title: string
-  colorVariant?: 'default' | 'danger'
+  alignVariant?: 'left' | 'right' | 'center'
+  colorVariant?: 'default' | 'danger' | 'secondary'
   isDisabled?: boolean
   graphics?: ReactNode
   isBottomBorder?: boolean
