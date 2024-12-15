@@ -236,3 +236,45 @@ export const WithNestedMenuItems: Story = {
     ]
   }
 }
+
+export const CustomAnchorOrigin: Story = {
+  args: {
+    maxHeight: 100,
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'center'
+    },
+    menuItems: [
+      {
+        title: 'Lesson'
+      },
+      {
+        title: 'Quiz'
+      },
+      {
+        title: 'Attachment'
+      }
+    ]
+  }
+}
+
+export const CustomTransformOrigin: Story = {
+  args: {
+    maxHeight: 100,
+    transformOrigin: {
+      vertical: 'bottom',
+      horizontal: 'left'
+    },
+    menuItems: [
+      {
+        title: 'Lesson'
+      },
+      {
+        title: 'Quiz'
+      },
+      {
+        title: 'Attachment'
+      }
+    ]
+  }
+}

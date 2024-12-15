@@ -25,8 +25,8 @@ interface MenuProps {
   anchorOrigin?: PopoverOrigin
   density?: 1 | 2
   defaultOnItemClick?: (args: OnItemClickArgs) => void
+  maxHeight?: number
   transformOrigin?: PopoverOrigin
-  slotProps?: { paper: { style: { maxHeight: number } } }
 }
 
 const Menu: FC<MenuProps> = ({
@@ -34,6 +34,7 @@ const Menu: FC<MenuProps> = ({
   setAnchorEl,
   menuItems,
   defaultOnItemClick,
+  maxHeight,
   density = 1,
   ...menuProps
 }: MenuProps) => {
@@ -81,6 +82,11 @@ const Menu: FC<MenuProps> = ({
       className={`s2s-menu s2s-menu--density-${density}`}
       onClose={handleMenuClose}
       open={Boolean(anchorEl)}
+      slotProps={{
+        paper: {
+          style: { maxHeight: maxHeight }
+        }
+      }}
       {...menuProps}
     >
       {menuItems.flatMap((item) => [

@@ -18,13 +18,13 @@ interface MenuItemProps extends CommonMenuItemProps {
 const MenuItem: FC<MenuItemProps> = ({
   title,
   additionalInfo,
+  graphics,
   colorVariant = 'default',
   density = 1,
   isDropdown = false,
   isToggled = false,
   isBottomBorder = false,
   isDisabled = false,
-  graphics,
   variant = 'default',
   onClick = () => {}
 }) => {
