@@ -10,6 +10,80 @@ const meta: Meta<typeof Menu> = {
   title: 'Components/Menu',
   component: Menu,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+The Menu component is a dropdown menu that displays a list of items. 
+
+#### Key features:
+- **Menu Items:** Display a list of items in the menu. Each item can have a title, additional information, and an icon.
+- **Items Removal:** Enable or disable the removal of items from the menu.
+- **Default On Item Click:** Define the default function to call when a menu item is clicked.
+- **Customization:** Customize the appearance of the menu items using the provided props.
+        `
+      }
+    }
+  },
+  argTypes: {
+    anchorEl: {
+      description:
+        'The element that serves as the anchor for the menu. This element is used to position the menu and open it.'
+    },
+    setAnchorEl: {
+      description: 'Function to set the anchor element.'
+    },
+    menuItems: {
+      description: 'The list of menu items to be displayed.',
+      control: { type: 'object' }
+    },
+    anchorOrigin: {
+      description: 'The anchor origin point of the menu.',
+      control: { type: 'object' }
+    },
+    density: {
+      description: 'The density of the menu items.',
+      control: { type: 'radio' }
+    },
+    defaultOnItemClick: {
+      description: 'The default function to call when a menu item is clicked.'
+    },
+    isItemsRemovalEnabled: {
+      description: 'Determines whether the items can be removed from the menu.',
+      control: 'boolean'
+    },
+    noItemsMessage: {
+      description:
+        'The message to display when there are no items in the menu.',
+      control: { type: 'text' }
+    },
+    maxHeight: {
+      description: 'The maximum height of the menu.',
+      control: { type: 'number' }
+    },
+    minWidth: {
+      description: 'The minimum width of the menu.',
+      control: { type: 'number' }
+    },
+    transformOrigin: {
+      description: 'The transform origin point of the menu.',
+      control: { type: 'object' }
+    }
+  },
+  args: {
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'left'
+    },
+    isItemsRemovalEnabled: false,
+    noItemsMessage: 'No items to display.',
+    maxHeight: 200,
+    minWidth: 200,
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'left'
+    }
+  },
   decorators: [
     (Story, context) => {
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -60,6 +134,13 @@ export const Default: Story = {
         defaultOnItemClickArgs: { path: '/attachment' }
       }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'The most basic dropdown menu. Click on the button to open.'
+      }
+    }
   }
 }
 
@@ -85,6 +166,14 @@ export const WithIcon: Story = {
         defaultOnItemClickArgs: { path: '/attachment' }
       }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The dropdown menu with custom icons. Click on the button to open.'
+      }
+    }
   }
 }
 
@@ -110,6 +199,13 @@ export const WithCheckbox: Story = {
         defaultOnItemClickArgs: { path: '/attachment' }
       }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'The dropdown menu with checkboxes. Click on the button to open.'
+      }
+    }
   }
 }
 
@@ -140,6 +236,14 @@ export const Mixed: Story = {
         defaultOnItemClickArgs: { path: '/attachment' }
       }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The menu can have a mix of icons, checkboxes, and custom onClick functions. Click on the button to open.'
+      }
+    }
   }
 }
 
@@ -166,6 +270,14 @@ export const WithAdditionalInfo: Story = {
         graphics: <EditRounded />
       }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The dropdown menu with additional information and density value 2. Click on the button to open.'
+      }
+    }
   }
 }
 
@@ -234,6 +346,14 @@ export const WithNestedMenuItems: Story = {
         ]
       }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The dropdown menu with nested menu items and density value 2. A nested menu item is a menu item that contains another list of menu items. Click on the button to open.'
+      }
+    }
   }
 }
 
@@ -255,6 +375,14 @@ export const CustomAnchorOrigin: Story = {
         title: 'Attachment'
       }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The dropdown menu with a custom anchor origin point. Click on the button to open.'
+      }
+    }
   }
 }
 
@@ -276,6 +404,14 @@ export const CustomTransformOrigin: Story = {
         title: 'Attachment'
       }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The dropdown menu with a custom transform origin point. Click on the button to open.'
+      }
+    }
   }
 }
 
@@ -295,5 +431,13 @@ export const RemovableItems: Story = {
         title: 'You have a new cooperation'
       }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The dropdown menu with removable items. All top-level non-dropdown menu items can be removed. It is possible to set a custom message when there are no items in the menu. Click on the button to open.'
+      }
+    }
   }
 }
