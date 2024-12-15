@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { Menu as MuiMenu, MenuProps as MuiMenuProps } from '@mui/material'
+import { Menu as MuiMenu } from '@mui/material'
 
 import { MenuItemProps as NestedMenuItemProps } from '~scss-components/menu-item/menu-item.types'
 import MenuItem from '../menu-item/MenuItem'
@@ -11,24 +11,41 @@ interface MenuItemProps extends NestedMenuItemProps {
   nestedMenuItems?: NestedMenuItemProps[]
 }
 
-interface MenuProps extends Omit<MuiMenuProps, 'onClick'> {
+interface MenuProps {
+  anchorEl: HTMLElement | null
+  setAnchorEl: (anchorEl: HTMLElement | null) => void
   menuItems: MenuItemProps[]
   density?: 1 | 2
 }
 
-const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
+const Menu: FC<MenuProps> = ({
+  anchorEl,
+  setAnchorEl,
+  menuItems,
+  density = 1
+}: MenuProps) => {
   const [toggledItem, setToggledItem] = useState<string | null>(null)
 
-  const handleTopLevelItemClick = ({ title, onClick }: MenuItemProps) => {
+  const handleItemClick = ({ title, onClick }: MenuItemProps) => {
     setToggledItem((previousTitle) => (previousTitle === title ? null : title))
 
     if (onClick) {
       onClick()
+      handleMenuClose()
     }
   }
 
+  const handleMenuClose = () => {
+    setAnchorEl(null)
+  }
+
   return (
-    <MuiMenu className={`s2s-menu s2s-menu--density-${density}`} open={open}>
+    <MuiMenu
+      anchorEl={anchorEl}
+      className={`s2s-menu s2s-menu--density-${density}`}
+      onClose={handleMenuClose}
+      open={Boolean(anchorEl)}
+    >
       {menuItems.flatMap((item) => [
         <MenuItem
           {...item}
@@ -36,7 +53,7 @@ const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
           isDropdown={Boolean(item.nestedMenuItems)}
           isToggled={toggledItem === item.title}
           key={item.title}
-          onClick={() => handleTopLevelItemClick(item)}
+          onClick={() => handleItemClick(item)}
         />,
         ...(item.nestedMenuItems && toggledItem === item.title
           ? item.nestedMenuItems.map((nestedMenuItem) => (
@@ -44,7 +61,7 @@ const Menu: FC<MenuProps> = ({ menuItems, open, density = 1 }: MenuProps) => {
                 {...nestedMenuItem}
                 density={1}
                 key={nestedMenuItem.title}
-                onClick={() => handleTopLevelItemClick(nestedMenuItem)}
+                onClick={() => handleItemClick(nestedMenuItem)}
                 variant='nested'
               />
             ))

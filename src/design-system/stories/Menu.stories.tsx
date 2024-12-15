@@ -1,13 +1,40 @@
+import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import Menu from '~scss-components/menu/Menu'
+import Button from '~scss-components/button/Button'
 import { Book } from '@mui/icons-material'
 import { Checkbox } from '@mui/material'
 
 const meta: Meta<typeof Menu> = {
   title: 'Components/Menu',
   component: Menu,
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  decorators: [
+    (Story, context) => {
+      const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+      const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget)
+      }
+
+      return (
+        <div style={{ padding: '20px' }}>
+          <Button color='tonal' onClick={handleClick}>
+            Open Menu
+          </Button>
+
+          <Story
+            args={{
+              ...context.args,
+              anchorEl,
+              setAnchorEl
+            }}
+          />
+        </div>
+      )
+    }
+  ]
 }
 
 export default meta
@@ -16,7 +43,6 @@ type Story = StoryObj<typeof Menu>
 
 export const Default: Story = {
   args: {
-    open: true,
     menuItems: [
       {
         title: 'Lesson',
@@ -39,7 +65,6 @@ export const Default: Story = {
 
 export const WithAdditionalInfo: Story = {
   args: {
-    open: true,
     density: 2,
     menuItems: [
       {
@@ -66,7 +91,6 @@ export const WithAdditionalInfo: Story = {
 
 export const WithNestedMenuItems: Story = {
   args: {
-    open: true,
     density: 2,
     menuItems: [
       {
