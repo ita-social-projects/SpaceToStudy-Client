@@ -278,3 +278,22 @@ export const CustomTransformOrigin: Story = {
     ]
   }
 }
+
+export const RemovableItems: Story = {
+  args: {
+    isItemsRemovalEnabled: true,
+    noItemsMessage: 'No notifications yet.',
+    minWidth: 350,
+    menuItems: [
+      {
+        title: 'Your cooperation was accepted'
+      },
+      {
+        title: 'Your cooperation was declined'
+      },
+      {
+        title: 'You have a new cooperation'
+      }
+    ]
+  }
+}

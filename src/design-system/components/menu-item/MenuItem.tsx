@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { MenuItem as MuiMenuItem } from '@mui/material'
-import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
+import { ArrowDropDown, ArrowDropUp, CloseRounded } from '@mui/icons-material'
 
 import { MenuItemProps as CommonMenuItemProps } from './menu-item.types'
 
@@ -12,6 +12,7 @@ interface MenuItemProps extends CommonMenuItemProps {
   isDropdown?: boolean
   density?: 1 | 2
   isToggled?: boolean
+  onRemove?: () => void
   variant?: 'default' | 'nested'
 }
 
@@ -19,6 +20,7 @@ const MenuItem: FC<MenuItemProps> = ({
   title,
   additionalInfo,
   graphics,
+  onRemove,
   colorVariant = 'default',
   density = 1,
   isDropdown = false,
@@ -57,6 +59,11 @@ const MenuItem: FC<MenuItemProps> = ({
       {isDropdown && (
         <div className='s2s-item__graphics'>
           {isToggled ? <ArrowDropUp /> : <ArrowDropDown />}
+        </div>
+      )}
+      {onRemove && !isDropdown && !isDisabled && (
+        <div className='s2s-item__graphics' onClick={onRemove}>
+          <CloseRounded className='s2s-item__close' />
         </div>
       )}
     </MuiMenuItem>
