@@ -1,10 +1,17 @@
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { Menu as MuiMenu, PopoverOrigin } from '@mui/material'
 
-import { MenuItemProps as NestedMenuItemProps } from '~scss-components/menu-item/menu-item.types'
+import {
+  MenuItemProps as CommonMenuItemProps,
+  OnItemClickArgs
+} from '~scss-components/menu-item/menu-item.types'
 import MenuItem from '../menu-item/MenuItem'
 
 import '~scss-components/menu/Menu.scss'
+
+interface NestedMenuItemProps extends CommonMenuItemProps {
+  defaultOnItemClickArgs?: OnItemClickArgs
+}
 
 interface MenuItemProps extends NestedMenuItemProps {
   additionalInfo?: string
@@ -17,6 +24,7 @@ interface MenuProps {
   menuItems: MenuItemProps[]
   anchorOrigin?: PopoverOrigin
   density?: 1 | 2
+  defaultOnItemClick?: (args: OnItemClickArgs) => void
   transformOrigin?: PopoverOrigin
   slotProps?: { paper: { style: { maxHeight: number } } }
 }
@@ -25,23 +33,46 @@ const Menu: FC<MenuProps> = ({
   anchorEl,
   setAnchorEl,
   menuItems,
+  defaultOnItemClick,
   density = 1,
   ...menuProps
 }: MenuProps) => {
   const [toggledItem, setToggledItem] = useState<string | null>(null)
 
-  const handleItemClick = ({ title, onClick }: MenuItemProps) => {
-    setToggledItem((previousTitle) => (previousTitle === title ? null : title))
-
-    if (onClick) {
-      onClick()
-      handleMenuClose()
-    }
-  }
-
-  const handleMenuClose = () => {
+  const handleMenuClose = useCallback(() => {
     setAnchorEl(null)
-  }
+  }, [setAnchorEl])
+
+  const handleItemClick = useCallback(
+    ({
+      title,
+      defaultOnItemClickArgs,
+      onClick: customOnClick
+    }: MenuItemProps) => {
+      if (!customOnClick && !defaultOnItemClick) {
+        setToggledItem((previousTitle) =>
+          previousTitle === title ? null : title
+        )
+        return
+      }
+
+      if (customOnClick) {
+        customOnClick()
+        handleMenuClose()
+      } else if (defaultOnItemClick) {
+        const args: OnItemClickArgs =
+          defaultOnItemClickArgs === undefined
+            ? { title }
+            : { title, ...defaultOnItemClickArgs }
+
+        defaultOnItemClick(args)
+      }
+
+      setToggledItem(null)
+      handleMenuClose()
+    },
+    [defaultOnItemClick, handleMenuClose]
+  )
 
   return (
     <MuiMenu

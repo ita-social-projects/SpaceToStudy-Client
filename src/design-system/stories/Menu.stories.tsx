@@ -43,21 +43,24 @@ type Story = StoryObj<typeof Menu>
 
 export const Default: Story = {
   args: {
+    defaultOnItemClick(args) {
+      alert(`defaultOnItemClick args: ${JSON.stringify(args)}`)
+    },
     menuItems: [
       {
         title: 'Lesson',
         graphics: <Book />,
-        onClick: () => alert('Lesson clicked')
+        defaultOnItemClickArgs: { path: '/lesson' }
       },
       {
         title: 'Quiz',
         graphics: <Checkbox />,
-        onClick: () => alert('Quiz clicked')
+        defaultOnItemClickArgs: { path: '/quiz' }
       },
       {
         title: 'Attachment',
         isBottomBorder: true,
-        onClick: () => alert('Attachment clicked')
+        defaultOnItemClickArgs: { path: '/attachment' }
       }
     ]
   }
