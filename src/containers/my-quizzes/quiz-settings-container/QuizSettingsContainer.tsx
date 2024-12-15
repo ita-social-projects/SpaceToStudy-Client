@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import AppSwitch from '~/design-system/components/switch/Switch'
+import Switch from '~/design-system/components/switch/Switch'
 
 import { ResourceService } from '~/services/resource-service'
 import { useAppDispatch } from '~/hooks/use-redux'
@@ -152,7 +152,7 @@ const QuizSettingsContainer = ({
           subtitle={t('myResourcesPage.quizzes.questionsShuffleDesc')}
           title={t('myResourcesPage.quizzes.questionsShuffle')}
         >
-          <AppSwitch
+          <Switch
             checked={data.shuffle}
             data-testid='shuffle-switch'
             onChange={handleInputChange('shuffle')}
@@ -169,7 +169,7 @@ const QuizSettingsContainer = ({
           subtitle={t('myResourcesPage.quizzes.pointValuesDesc')}
           title={t('myResourcesPage.quizzes.pointValues')}
         >
-          <AppSwitch
+          <Switch
             checked={data.pointValues}
             data-testid='pointValues-switch'
             onChange={handleInputChange('pointValues')}
@@ -180,7 +180,7 @@ const QuizSettingsContainer = ({
           subtitle={t('myResourcesPage.quizzes.scoredUnscoredResponsesDesc')}
           title={t('myResourcesPage.quizzes.scoredUnscoredResponses')}
         >
-          <AppSwitch
+          <Switch
             checked={data.scoredResponses}
             data-testid='responses-switch'
             onChange={handleInputChange('scoredResponses')}
@@ -191,7 +191,7 @@ const QuizSettingsContainer = ({
           subtitle={t('myResourcesPage.quizzes.correctAnswersDesc')}
           title={t('myResourcesPage.quizzes.correctAnswers')}
         >
-          <AppSwitch
+          <Switch
             checked={data.correctAnswers}
             data-testid='correctAnswers-switch'
             onChange={handleInputChange('correctAnswers')}

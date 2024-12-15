@@ -3,7 +3,7 @@ import { TypographyProps } from '@mui/material/Typography'
 import { Typography } from '@mui/material'
 import { SxProps } from '@mui/system'
 import Tooltip from '@mui/material/Tooltip'
-import AppSwitch from '~/design-system/components/switch/Switch'
+import Switch from '~/design-system/components/switch/Switch'
 import Stack from '@mui/material/Stack'
 import { defaultStyles } from '~/components/app-content-switcher/AppContentSwitcher.styles'
 import { SwitchContent, SwitchOptions } from '~/types'
@@ -38,7 +38,7 @@ const AppContentSwitcher: FC<SwitcherProps> = ({
   return (
     <Stack sx={{ ...defaultStyles.stack, ...styles } as SxProps}>
       {renderBlock(switchOptions.left, active)}
-      <AppSwitch data-testid='switch' onChange={onChange} />
+      <Switch data-testid='switch' onChange={onChange} />
       {renderBlock(switchOptions.right, !active)}
     </Stack>
   )
