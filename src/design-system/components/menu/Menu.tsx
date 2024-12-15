@@ -47,9 +47,10 @@ const Menu: FC<MenuProps> = ({
     ({
       title,
       defaultOnItemClickArgs,
+      nestedMenuItems,
       onClick: customOnClick
     }: MenuItemProps) => {
-      if (!customOnClick && !defaultOnItemClick) {
+      if ((!customOnClick && !defaultOnItemClick) || nestedMenuItems) {
         setToggledItem((previousTitle) =>
           previousTitle === title ? null : title
         )

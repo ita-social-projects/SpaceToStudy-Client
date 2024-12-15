@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import Menu from '~scss-components/menu/Menu'
 import Button from '~scss-components/button/Button'
-import { Book } from '@mui/icons-material'
+import { EditRounded } from '@mui/icons-material'
 import { Checkbox } from '@mui/material'
 
 const meta: Meta<typeof Menu> = {
@@ -49,7 +49,79 @@ export const Default: Story = {
     menuItems: [
       {
         title: 'Lesson',
-        graphics: <Book />,
+        defaultOnItemClickArgs: { path: '/lesson' }
+      },
+      {
+        title: 'Quiz',
+        defaultOnItemClickArgs: { path: '/quiz' }
+      },
+      {
+        title: 'Attachment',
+        defaultOnItemClickArgs: { path: '/attachment' }
+      }
+    ]
+  }
+}
+
+export const WithIcon: Story = {
+  args: {
+    defaultOnItemClick(args) {
+      alert(`defaultOnItemClick args: ${JSON.stringify(args)}`)
+    },
+    menuItems: [
+      {
+        title: 'Lesson',
+        graphics: <EditRounded />,
+        defaultOnItemClickArgs: { path: '/lesson' }
+      },
+      {
+        title: 'Quiz',
+        graphics: <EditRounded />,
+        defaultOnItemClickArgs: { path: '/quiz' }
+      },
+      {
+        title: 'Attachment',
+        graphics: <EditRounded />,
+        defaultOnItemClickArgs: { path: '/attachment' }
+      }
+    ]
+  }
+}
+
+export const WithCheckbox: Story = {
+  args: {
+    defaultOnItemClick(args) {
+      alert(`defaultOnItemClick args: ${JSON.stringify(args)}`)
+    },
+    menuItems: [
+      {
+        title: 'Lesson',
+        graphics: <Checkbox />,
+        defaultOnItemClickArgs: { path: '/lesson' }
+      },
+      {
+        title: 'Quiz',
+        graphics: <Checkbox />,
+        defaultOnItemClickArgs: { path: '/quiz' }
+      },
+      {
+        title: 'Attachment',
+        graphics: <Checkbox />,
+        defaultOnItemClickArgs: { path: '/attachment' }
+      }
+    ]
+  }
+}
+
+export const Mixed: Story = {
+  args: {
+    defaultOnItemClick(args) {
+      alert(`defaultOnItemClick args: ${JSON.stringify(args)}`)
+    },
+    menuItems: [
+      {
+        title: 'Lesson',
+        graphics: <EditRounded />,
         defaultOnItemClickArgs: { path: '/lesson' }
       },
       {
@@ -69,24 +141,24 @@ export const Default: Story = {
 export const WithAdditionalInfo: Story = {
   args: {
     density: 2,
+    defaultOnItemClick(args) {
+      alert(`${JSON.stringify(args.title)} clicked`)
+    },
     menuItems: [
       {
         title: 'Lesson',
         additionalInfo: 'Explore comprehensive lessons on various topics',
-        graphics: <Book />,
-        onClick: () => alert('Lesson clicked')
+        graphics: <EditRounded />
       },
       {
         title: 'Quiz',
         additionalInfo: 'Test your knowledge with engaging quizzes',
-        graphics: <Book />,
-        onClick: () => alert('Quiz clicked')
+        graphics: <EditRounded />
       },
       {
         title: 'Attachment',
         additionalInfo: 'Access all your important files and documents',
-        graphics: <Book />,
-        onClick: () => alert('Attachment clicked')
+        graphics: <EditRounded />
       }
     ]
   }
@@ -95,70 +167,64 @@ export const WithAdditionalInfo: Story = {
 export const WithNestedMenuItems: Story = {
   args: {
     density: 2,
+    defaultOnItemClick(args) {
+      alert(`${JSON.stringify(args.title)} clicked`)
+    },
     menuItems: [
       {
         title: 'Lesson',
         additionalInfo: 'Explore comprehensive lessons on various topics',
-        graphics: <Book />,
+        graphics: <EditRounded />,
         nestedMenuItems: [
           {
             title: 'Math',
-            graphics: <Book />,
-            onClick: () => alert('Math clicked')
+            graphics: <EditRounded />
           },
           {
             title: 'Science',
-            graphics: <Book />,
-            onClick: () => alert('Science clicked')
+            graphics: <EditRounded />
           },
           {
             title: 'History',
-            graphics: <Book />,
-            onClick: () => alert('History clicked')
+            graphics: <EditRounded />
           }
         ]
       },
       {
         title: 'Quiz',
         additionalInfo: 'Test your knowledge with engaging quizzes',
-        graphics: <Book />,
+        graphics: <EditRounded />,
         nestedMenuItems: [
           {
             title: 'Geometry',
-            graphics: <Book />,
-            onClick: () => alert('Geometry clicked')
+            graphics: <EditRounded />
           },
           {
             title: 'Chemistry',
-            graphics: <Book />,
-            onClick: () => alert('Chemistry clicked')
+            graphics: <EditRounded />
           },
           {
             title: 'Modern History',
-            graphics: <Book />,
-            onClick: () => alert('Modern History clicked')
+            graphics: <EditRounded />
           }
         ]
       },
       {
         title: 'Attachment',
         additionalInfo: 'Files and documents',
-        graphics: <Book />,
+        graphics: <EditRounded />,
         nestedMenuItems: [
           {
             title: 'Solid of revolution',
-            graphics: <Book />,
-            onClick: () => alert('Solid of revolution clicked')
+            graphics: <EditRounded />
           },
           {
             title: 'Molecule',
-            graphics: <Book />,
-            onClick: () => alert('Molecule clicked')
+            graphics: <EditRounded />
           },
           {
             title: 'Modern world map',
-            graphics: <Book />,
-            onClick: () => alert('Modern world map clicked')
+            graphics: <EditRounded />
           }
         ]
       }
