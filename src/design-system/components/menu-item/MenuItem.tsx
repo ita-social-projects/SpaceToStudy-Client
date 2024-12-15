@@ -65,7 +65,13 @@ const MenuItem: FC<MenuItemProps> = ({
         </div>
       )}
       {onRemove && !isDropdown && !isDisabled && (
-        <div className='s2s-item__graphics' onClick={onRemove}>
+        <div
+          className='s2s-item__graphics'
+          onClick={(event) => {
+            event.stopPropagation()
+            onRemove()
+          }}
+        >
           <CloseRounded className='s2s-item__close' />
         </div>
       )}

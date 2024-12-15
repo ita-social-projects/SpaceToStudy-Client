@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
+import { EditRounded } from '@mui/icons-material'
+import { Checkbox } from '@mui/material'
 
 import Menu from '~scss-components/menu/Menu'
 import Button from '~scss-components/button/Button'
-import { EditRounded } from '@mui/icons-material'
-import { Checkbox } from '@mui/material'
 
 const meta: Meta<typeof Menu> = {
   title: 'Components/Menu',
