@@ -13,6 +13,9 @@ import {
 
 import '~scss-components/menu/Menu.scss'
 
+const removeAllItemsTitle = 'Clear all'
+const defaultNoItemsMessage = 'No items.'
+
 interface NestedMenuItemProps extends CommonMenuItemProps {
   defaultOnItemClickArgs?: OnItemClickArgs
 }
@@ -138,10 +141,13 @@ const Menu: FC<MenuProps> = ({
             alignVariant='center'
             colorVariant={MenuItemColorVariant.Secondary}
             onClick={() => setItems([])}
-            title='Clear all'
+            title={removeAllItemsTitle}
           />
         ) : (
-          <MenuItem isDisabled title={noItemsMessage ?? 'No items.'} />
+          <MenuItem
+            isDisabled
+            title={noItemsMessage ?? defaultNoItemsMessage}
+          />
         ))}
     </MuiMenu>
   )
