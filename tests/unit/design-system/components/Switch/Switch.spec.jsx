@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { fireEvent } from '@testing-library/react'
-import { AppSwitch } from '~/design-system/components/switch/Switch'
+import AppSwitch from '~/design-system/components/switch/Switch'
 
 describe('AppSwitch Component', () => {
   it('renders correctly with default props', () => {
@@ -36,10 +36,10 @@ describe('AppSwitch Component', () => {
     ])('applies the correct class for size: %s', (size, expectedClass) => {
       render(<AppSwitch size={size} />)
       const switchWrapper = screen.getByRole('checkbox').closest('.s2s-switch--lg, .s2s-switch--md, .s2s-switch--sm')
-      
+
       expect(switchWrapper).toHaveClass(expectedClass)
     })
-  })  
+  })
 
   it('is disabled when loading is true', () => {
     render(<AppSwitch loading />)

@@ -7,7 +7,8 @@ interface AppSwitchProps extends Omit<SwitchProps, 'size'> {
   label?: string
   loading?: boolean
 }
-export const AppSwitch = ({
+
+const AppSwitch = ({
   labelPosition = 'end',
   size = 'md',
   label = '',
@@ -40,3 +41,5 @@ export const AppSwitch = ({
     />
   )
 }
+
+export default AppSwitch

@@ -3,7 +3,7 @@ import { RootState } from '~/redux/store'
 import { ChangeEvent } from 'react'
 
 import Box from '@mui/system/Box'
-import Switch from '@mui/material/Switch'
+import AppSwitch from '~/design-system/components/switch/Switch'
 
 import SettingItem from '~/components/setting-item/SettingItem'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -43,12 +43,11 @@ const NotificationTab = () => {
       subtitle={t(option.subtitle)}
       title={t(option.title)}
     >
-      <Switch
+      <AppSwitch
         checked={getCheckedValue(option.field as keyof NotificationSettings)}
         onChange={handleSwitchChange(
           option.field as keyof NotificationSettings
         )}
-        sx={styles.switch}
       />
     </SettingItem>
   ))

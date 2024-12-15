@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import Switch from '@mui/material/Switch'
+import AppSwitch from '~/design-system/components/switch/Switch'
 
 import { ResourceService } from '~/services/resource-service'
 import { useAppDispatch } from '~/hooks/use-redux'
@@ -143,7 +143,6 @@ const QuizSettingsContainer = ({
           <AppSelect
             fields={getQuizViewFields(t)}
             setValue={onViewTypeChange}
-            sx={styles.select}
             value={data.view}
           />
         </SettingItem>
@@ -152,11 +151,10 @@ const QuizSettingsContainer = ({
           subtitle={t('myResourcesPage.quizzes.questionsShuffleDesc')}
           title={t('myResourcesPage.quizzes.questionsShuffle')}
         >
-          <Switch
+          <AppSwitch
             checked={data.shuffle}
             data-testid='shuffle-switch'
             onChange={handleInputChange('shuffle')}
-            sx={styles.switch}
           />
         </SettingItem>
       </Box>
@@ -170,11 +168,10 @@ const QuizSettingsContainer = ({
           subtitle={t('myResourcesPage.quizzes.pointValuesDesc')}
           title={t('myResourcesPage.quizzes.pointValues')}
         >
-          <Switch
+          <AppSwitch
             checked={data.pointValues}
             data-testid='pointValues-switch'
             onChange={handleInputChange('pointValues')}
-            sx={styles.switch}
           />
         </SettingItem>
 
@@ -182,11 +179,10 @@ const QuizSettingsContainer = ({
           subtitle={t('myResourcesPage.quizzes.scoredUnscoredResponsesDesc')}
           title={t('myResourcesPage.quizzes.scoredUnscoredResponses')}
         >
-          <Switch
+          <AppSwitch
             checked={data.scoredResponses}
             data-testid='responses-switch'
             onChange={handleInputChange('scoredResponses')}
-            sx={styles.switch}
           />
         </SettingItem>
 
@@ -194,11 +190,10 @@ const QuizSettingsContainer = ({
           subtitle={t('myResourcesPage.quizzes.correctAnswersDesc')}
           title={t('myResourcesPage.quizzes.correctAnswers')}
         >
-          <Switch
+          <AppSwitch
             checked={data.correctAnswers}
             data-testid='correctAnswers-switch'
             onChange={handleInputChange('correctAnswers')}
-            sx={styles.switch}
           />
         </SettingItem>
       </Box>
