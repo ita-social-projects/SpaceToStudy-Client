@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { Menu as MuiMenu } from '@mui/material'
+import { Menu as MuiMenu, PopoverOrigin } from '@mui/material'
 
 import { MenuItemProps as NestedMenuItemProps } from '~scss-components/menu-item/menu-item.types'
 import MenuItem from '../menu-item/MenuItem'
@@ -15,14 +15,18 @@ interface MenuProps {
   anchorEl: HTMLElement | null
   setAnchorEl: (anchorEl: HTMLElement | null) => void
   menuItems: MenuItemProps[]
+  anchorOrigin?: PopoverOrigin
   density?: 1 | 2
+  transformOrigin?: PopoverOrigin
+  slotProps?: { paper: { style: { maxHeight: number } } }
 }
 
 const Menu: FC<MenuProps> = ({
   anchorEl,
   setAnchorEl,
   menuItems,
-  density = 1
+  density = 1,
+  ...menuProps
 }: MenuProps) => {
   const [toggledItem, setToggledItem] = useState<string | null>(null)
 
@@ -45,6 +49,7 @@ const Menu: FC<MenuProps> = ({
       className={`s2s-menu s2s-menu--density-${density}`}
       onClose={handleMenuClose}
       open={Boolean(anchorEl)}
+      {...menuProps}
     >
       {menuItems.flatMap((item) => [
         <MenuItem
