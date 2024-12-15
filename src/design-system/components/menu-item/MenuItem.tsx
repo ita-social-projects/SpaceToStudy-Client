@@ -2,10 +2,11 @@ import { FC } from 'react'
 import { MenuItem as MuiMenuItem } from '@mui/material'
 import { ArrowDropDown, ArrowDropUp, CloseRounded } from '@mui/icons-material'
 
-import { MenuItemProps as CommonMenuItemProps } from './menu-item.types'
+import { MenuItemProps as CommonMenuItemProps } from './MenuItem.types'
+import { MenuItemColorVariant, MenuItemVariant } from './MenuItem.constants'
+import { cn } from '~/utils/cn'
 
 import '~scss-components/menu-item/MenuItem.scss'
-import { cn } from '~/utils/cn'
 
 interface MenuItemProps extends CommonMenuItemProps {
   additionalInfo?: string
@@ -13,7 +14,7 @@ interface MenuItemProps extends CommonMenuItemProps {
   density?: 1 | 2
   isToggled?: boolean
   onRemove?: () => void
-  variant?: 'default' | 'nested'
+  variant?: MenuItemVariant
 }
 
 const MenuItem: FC<MenuItemProps> = ({
@@ -22,13 +23,13 @@ const MenuItem: FC<MenuItemProps> = ({
   graphics,
   onRemove,
   alignVariant = 'left',
-  colorVariant = 'default',
+  colorVariant = MenuItemColorVariant.Default,
   density = 1,
   isDropdown = false,
   isToggled = false,
   isBottomBorder = false,
   isDisabled = false,
-  variant = 'default',
+  variant = MenuItemVariant.Default,
   onClick = () => {}
 }) => {
   const handleClick = () => {

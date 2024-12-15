@@ -4,8 +4,12 @@ import { Menu as MuiMenu, PopoverOrigin } from '@mui/material'
 import {
   MenuItemProps as CommonMenuItemProps,
   OnItemClickArgs
-} from '~scss-components/menu-item/menu-item.types'
+} from '~/design-system/components/menu-item/MenuItem.types'
 import MenuItem from '../menu-item/MenuItem'
+import {
+  MenuItemColorVariant,
+  MenuItemVariant
+} from '../menu-item/MenuItem.constants'
 
 import '~scss-components/menu/Menu.scss'
 
@@ -123,7 +127,7 @@ const Menu: FC<MenuProps> = ({
                 density={1}
                 key={nestedMenuItem.title}
                 onClick={() => handleItemClick(nestedMenuItem)}
-                variant='nested'
+                variant={MenuItemVariant.Nested}
               />
             ))
           : [])
@@ -132,7 +136,7 @@ const Menu: FC<MenuProps> = ({
         (items.length >= 1 ? (
           <MenuItem
             alignVariant='center'
-            colorVariant='secondary'
+            colorVariant={MenuItemColorVariant.Secondary}
             onClick={() => setItems([])}
             title='Clear all'
           />
