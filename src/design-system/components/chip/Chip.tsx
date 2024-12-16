@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import {
   ChipProps,
   FilterChip,
@@ -8,15 +7,20 @@ import {
 } from './ChipTypes'
 
 const Chip: React.FC<ChipProps> = (props) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
-
-  const handleSelectChange = (option: string) => {
-    setSelectedOption(option)
-  }
-
   switch (props.type) {
-    case 'filter':
+    case 'filter': {
+      const { isOpen, selectedOption, setIsOpen, onSelectChange } =
+        props as ChipProps & {
+          isOpen: boolean
+          selectedOption: string | null
+          setIsOpen: (isOpen: boolean) => void
+          onSelectChange: (option: string) => void
+        }
+
+      const handleSelectChange = (option: string) => {
+        onSelectChange(option)
+      }
+
       return (
         <FilterChip
           {...props}
@@ -26,6 +30,7 @@ const Chip: React.FC<ChipProps> = (props) => {
           setIsOpen={setIsOpen}
         />
       )
+    }
     case 'input':
       return <InputChip {...props} />
     case 'category':
