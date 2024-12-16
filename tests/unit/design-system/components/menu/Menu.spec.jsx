@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, waitFor } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import Menu from '~scss-components/menu/Menu'
 
 const resourcesMenuItems = [
@@ -19,18 +19,9 @@ const resourcesMenuItemsWithAdditionalInfo = [
   { title: 'Lesson', additionalInfo: 'This is a lesson' }
 ]
 
-const circleIcon = (
-  <svg
-    height='100'
-    width='100'
-    xmlns='http://www.w3.org/2000/svg'
-    data-testid='lesson-icon'
-  >
-    <circle r='45' cx='50' cy='50' fill='red' />
-  </svg>
-)
+const lessonIcon = <svg data-testid='lesson-icon' />
 
-const resourcesMenuItemsWithIcon = [{ title: 'Lesson', graphics: circleIcon }]
+const resourcesMenuItemsWithIcon = [{ title: 'Lesson', graphics: lessonIcon }]
 
 const noItemsCustomMessage = 'No items available.'
 
