@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { Checkbox } from '@mui/material'
 import { EditRounded } from '@mui/icons-material'
 
 import MenuItem from '~scss-components/menu-item/MenuItem'
@@ -145,6 +146,22 @@ export const WithGraphics: Story = {
       description: {
         story:
           'The menu item with an icon. It is possible to use text, icons, checkboxes, other nodes instead of the icon.'
+      }
+    }
+  }
+}
+
+export const WithCheckbox: Story = {
+  args: {
+    title: 'Assigment',
+    graphics: <Checkbox />,
+    onClick: () => alert('Item "With Graphics" was clicked.')
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The menu item with a checkbox. The checkbox is interactive and can be toggled.'
       }
     }
   }
