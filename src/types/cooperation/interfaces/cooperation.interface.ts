@@ -22,7 +22,11 @@ export interface Cooperation extends CommonEntityFields {
   price: Offer['price']
   proficiencyLevel: ProficiencyLevelEnum
   status: StatusEnum
-  needAction: UserRoleEnum
+  needAction: {
+    role: UserRoleEnum
+    type: string
+    messages: string[]
+  }
   receiver: Pick<UserResponse, 'firstName' | 'lastName'>
   receiverRole: 'tutor' | 'student'
   sections: CourseSection[]

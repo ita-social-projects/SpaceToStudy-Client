@@ -26,7 +26,9 @@ const cooperationMock = {
   price: 100,
   proficiencyLevel: 'Beginner',
   status: 'active',
-  needAction: 'tutor',
+  needAction: {
+    role: 'tutor'
+  },
   title: 'Cooperation title',
   initiator: { _id: userId, role: ['tutor'] },
   receiver: { _id: '123123', role: ['student'] },
