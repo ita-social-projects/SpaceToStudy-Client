@@ -144,7 +144,7 @@ const FindOffers = () => {
     })
   }
 
-  const renderOffersContent = () => {
+  const offersContent = useMemo(() => {
     if (offersLoading) {
       return <Loader pageLoad />
     }
@@ -165,7 +165,7 @@ const FindOffers = () => {
         viewMode={cardsView}
       />
     )
-  }
+  }, [offersLoading, items, updateInfo, cardsView, t])
 
   return (
     <PageWrapper>
@@ -215,7 +215,7 @@ const FindOffers = () => {
             price={price}
           />
         </AppDrawer>
-        {renderOffersContent()}
+        {offersContent}
       </Box>
       <AppPagination
         onChange={handlePageChange}

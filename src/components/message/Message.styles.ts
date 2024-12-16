@@ -25,13 +25,12 @@ export const styles = {
     p: '8px 16px'
   }),
   findMessageCard: (isMyMessage: boolean, isFiltered: boolean) => {
-    let backgroundColor
+    const basicShade = isMyMessage ? 'turquoiseDark' : 'turquoiseChat'
+    const primaryShade = isMyMessage ? 500 : 100
 
-    if (isFiltered) {
-      backgroundColor = `basic.${isMyMessage ? 'turquoiseDark' : 'turquoiseChat'}`
-    } else {
-      backgroundColor = `primary.${isMyMessage ? 500 : 100}`
-    }
+    const backgroundColor = isFiltered
+      ? `basic.${basicShade}`
+      : `primary.${primaryShade}`
 
     return { backgroundColor }
   },
