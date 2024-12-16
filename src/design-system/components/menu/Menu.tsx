@@ -64,7 +64,13 @@ const Menu: FC<MenuProps> = ({
       : []
   )
 
-  const toggleItem = (itemTitle: string) => {
+  const toggleAsSingleItem = (itemTitle: string) => {
+    setToggledItemsTitles((previousItems) =>
+      previousItems.includes(itemTitle) ? [] : [itemTitle]
+    )
+  }
+
+  const toggleAsOneOfMultipleItems = (itemTitle: string) => {
     setToggledItemsTitles((previousItems) =>
       previousItems.includes(itemTitle)
         ? previousItems.filter((i) => i !== itemTitle)
@@ -84,7 +90,9 @@ const Menu: FC<MenuProps> = ({
       nestedMenuItems,
       onClick: customOnClick
     }: MenuItemProps) => {
-      toggleItem(title)
+      allowToggleMultipleItems
+        ? toggleAsOneOfMultipleItems(title)
+        : toggleAsSingleItem(title)
 
       if ((!customOnClick && !defaultOnItemClick) || nestedMenuItems) {
         return
