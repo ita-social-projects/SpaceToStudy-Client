@@ -18,6 +18,7 @@ const defaultNoItemsMessage = 'No items.'
 
 interface NestedMenuItemProps extends CommonMenuItemProps {
   defaultOnItemClickArgs?: OnItemClickArgs
+  isInitiallyToggled?: boolean
 }
 
 interface MenuItemProps extends NestedMenuItemProps {
@@ -29,6 +30,7 @@ interface MenuProps {
   anchorEl: HTMLElement | null
   setAnchorEl: (anchorEl: HTMLElement | null) => void
   menuItems: MenuItemProps[]
+  allowToggleMultipleItems?: boolean
   anchorOrigin?: PopoverOrigin
   density?: 1 | 2
   defaultOnItemClick?: (args: OnItemClickArgs) => void
@@ -37,6 +39,7 @@ interface MenuProps {
   maxHeight?: number
   minWidth?: number
   transformOrigin?: PopoverOrigin
+  toggledItemsTitles: string[]
 }
 
 const Menu: FC<MenuProps> = ({
@@ -48,13 +51,29 @@ const Menu: FC<MenuProps> = ({
   minWidth,
   noItemsMessage,
   density = 1,
+  allowToggleMultipleItems = false,
   isItemsRemovalEnabled = false,
   ...menuProps
 }: MenuProps) => {
   const [items, setItems] = useState(menuItems)
-  const [toggledItem, setToggledItem] = useState<string | null>(null)
+  const [toggledItemsTitles, setToggledItemsTitles] = useState<string[]>(
+    allowToggleMultipleItems
+      ? menuItems
+          .filter((item) => item.isInitiallyToggled)
+          .map((item) => item.title)
+      : []
+  )
+
+  const toggleItem = (itemTitle: string) => {
+    setToggledItemsTitles((previousItems) =>
+      previousItems.includes(itemTitle)
+        ? previousItems.filter((i) => i !== itemTitle)
+        : [...previousItems, itemTitle]
+    )
+  }
 
   const handleMenuClose = useCallback(() => {
+    setToggledItemsTitles([])
     setAnchorEl(null)
   }, [setAnchorEl])
 
@@ -65,10 +84,9 @@ const Menu: FC<MenuProps> = ({
       nestedMenuItems,
       onClick: customOnClick
     }: MenuItemProps) => {
+      toggleItem(title)
+
       if ((!customOnClick && !defaultOnItemClick) || nestedMenuItems) {
-        setToggledItem((previousTitle) =>
-          previousTitle === title ? null : title
-        )
         return
       }
 
@@ -84,10 +102,14 @@ const Menu: FC<MenuProps> = ({
         defaultOnItemClick(args)
       }
 
-      setToggledItem(null)
+      if (allowToggleMultipleItems) {
+        return
+      }
+
       handleMenuClose()
     },
-    [defaultOnItemClick, handleMenuClose]
+
+    [defaultOnItemClick, handleMenuClose, allowToggleMultipleItems]
   )
 
   const handleItemRemoval = (title: string) => {
@@ -114,7 +136,7 @@ const Menu: FC<MenuProps> = ({
           {...item}
           density={density}
           isDropdown={Boolean(item.nestedMenuItems)}
-          isToggled={toggledItem === item.title}
+          isToggled={toggledItemsTitles.includes(item.title)}
           key={item.title}
           onClick={() => handleItemClick(item)}
           onRemove={
@@ -123,7 +145,7 @@ const Menu: FC<MenuProps> = ({
               : undefined
           }
         />,
-        ...(item.nestedMenuItems && toggledItem === item.title
+        ...(item.nestedMenuItems && toggledItemsTitles.includes(item.title)
           ? item.nestedMenuItems.map((nestedMenuItem) => (
               <MenuItem
                 {...nestedMenuItem}

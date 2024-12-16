@@ -179,31 +179,32 @@ export const WithIcon: Story = {
 
 export const WithCheckbox: Story = {
   args: {
+    allowToggleMultipleItems: true,
     defaultOnItemClick(args) {
-      alert(`defaultOnItemClick args: ${JSON.stringify(args)}.`)
+      alert(
+        `Imagine some filtering triggered, args object: ${JSON.stringify(args)} is received by default, use defaultOnItemClickArgs to pass custom args.`
+      )
     },
     menuItems: [
       {
         title: 'Lesson',
-        graphics: <Checkbox />,
-        defaultOnItemClickArgs: { path: '/lesson' }
+        graphics: <Checkbox />
       },
       {
         title: 'Quiz',
-        graphics: <Checkbox />,
-        defaultOnItemClickArgs: { path: '/quiz' }
+        graphics: <Checkbox />
       },
       {
         title: 'Attachment',
-        graphics: <Checkbox />,
-        defaultOnItemClickArgs: { path: '/attachment' }
+        graphics: <Checkbox />
       }
     ]
   },
   parameters: {
     docs: {
       description: {
-        story: 'The dropdown menu with checkboxes. Click on the button to open.'
+        story:
+          'The dropdown menu with checkboxes. Click on the button to open the menu.'
       }
     }
   }
