@@ -39,7 +39,6 @@ interface MenuProps {
   maxHeight?: number
   minWidth?: number
   transformOrigin?: PopoverOrigin
-  toggledItemsTitles: string[]
 }
 
 const Menu: FC<MenuProps> = ({
