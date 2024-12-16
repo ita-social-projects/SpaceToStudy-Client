@@ -7,6 +7,31 @@ const resourcesMenuItems = [
   { title: 'Attachment' }
 ]
 
+const resourcesMenuItemsWithCustomArgs = [
+  { title: 'Lesson', defaultOnItemClickArgs: { path: '/lesson' } }
+]
+
+const resourcesMenuItemsWithNestedItems = [
+  { title: 'Lesson', nestedMenuItems: [{ title: 'Art' }, { title: 'Math' }] }
+]
+
+const resourcesMenuItemsWithAdditionalInfo = [
+  { title: 'Lesson', additionalInfo: 'This is a lesson' }
+]
+
+const circleIcon = (
+  <svg
+    height='100'
+    width='100'
+    xmlns='http://www.w3.org/2000/svg'
+    data-testid='lesson-icon'
+  >
+    <circle r='45' cx='50' cy='50' fill='red' />
+  </svg>
+)
+
+const resourcesMenuItemsWithIcon = [{ title: 'Lesson', graphics: circleIcon }]
+
 const noItemsCustomMessage = 'No items available.'
 
 describe('Menu Component', () => {
@@ -16,7 +41,6 @@ describe('Menu Component', () => {
         anchorEl={document.createElement('div')}
         setAnchorEl={() => {}}
         menuItems={resourcesMenuItems}
-        toggledItemsTitles={[]}
       />
     )
 
@@ -25,7 +49,7 @@ describe('Menu Component', () => {
     expect(screen.getByText('Attachment')).toBeInTheDocument()
   })
 
-  test('should remove item when removal is enabled', async () => {
+  test('should remove item when removal is enabled', () => {
     const { getByText } = render(
       <Menu
         anchorEl={document.createElement('div')}
@@ -38,11 +62,9 @@ describe('Menu Component', () => {
     const removeButton = getByText('Clear all')
     fireEvent.click(removeButton)
 
-    await waitFor(() => {
-      expect(screen.queryByText('Lesson')).not.toBeInTheDocument()
-      expect(screen.queryByText('Quiz')).not.toBeInTheDocument()
-      expect(screen.queryByText('Attachment')).not.toBeInTheDocument()
-    })
+    expect(screen.queryByText('Lesson')).toBeNull()
+    expect(screen.queryByText('Quiz')).toBeNull()
+    expect(screen.queryByText('Attachment')).toBeNull()
   })
 
   test('should show no items message when no items left and removal is enabled', () => {
@@ -57,5 +79,126 @@ describe('Menu Component', () => {
     )
 
     expect(screen.getByText(noItemsCustomMessage)).toBeInTheDocument()
+  })
+
+  test('should set anchor element when clicking the button', () => {
+    const setAnchorEl = vi.fn()
+    const handleClick = vi.fn((event) => setAnchorEl(event.currentTarget))
+
+    render(
+      <div>
+        <button onClick={handleClick}>Open Menu</button>
+        <Menu
+          anchorEl={document.createElement('button')}
+          setAnchorEl={setAnchorEl}
+          menuItems={resourcesMenuItems}
+        />
+      </div>
+    )
+
+    const button = screen.getByText('Open Menu')
+    fireEvent.click(button)
+    expect(handleClick).toHaveBeenCalled()
+    expect(setAnchorEl).toHaveBeenCalledWith(button)
+  })
+
+  test('should trigger defaultOnItemClick with default arguments when a menu item is clicked', () => {
+    const defaultOnItemClick = vi.fn()
+    render(
+      <Menu
+        anchorEl={document.createElement('div')}
+        setAnchorEl={() => {}}
+        menuItems={resourcesMenuItems}
+        defaultOnItemClick={defaultOnItemClick}
+      />
+    )
+
+    const lesson = screen.getByText('Lesson')
+    fireEvent.click(lesson)
+    expect(defaultOnItemClick).toHaveBeenCalledWith({ title: 'Lesson' })
+  })
+
+  test('should trigger defaultOnItemClick with custom arguments when a menu item is clicked', () => {
+    const defaultOnItemClick = vi.fn()
+    render(
+      <Menu
+        anchorEl={document.createElement('div')}
+        setAnchorEl={() => {}}
+        menuItems={resourcesMenuItemsWithCustomArgs}
+        defaultOnItemClick={defaultOnItemClick}
+      />
+    )
+
+    const lesson = screen.getByText('Lesson')
+    fireEvent.click(lesson)
+    expect(defaultOnItemClick).toHaveBeenCalledWith({
+      title: 'Lesson',
+      path: '/lesson'
+    })
+  })
+
+  test('should trigger defaultOnItemClick default arguments when a nested menu item is clicked', () => {
+    const defaultOnItemClick = vi.fn()
+    render(
+      <Menu
+        anchorEl={document.createElement('div')}
+        setAnchorEl={() => {}}
+        menuItems={resourcesMenuItemsWithNestedItems}
+        defaultOnItemClick={defaultOnItemClick}
+      />
+    )
+
+    const lesson = screen.getByText('Lesson')
+    fireEvent.click(lesson)
+
+    const art = screen.getByText('Art')
+    fireEvent.click(art)
+    expect(defaultOnItemClick).toHaveBeenCalledWith({ title: 'Art' })
+  })
+
+  test('should show nested items when a menu item is clicked', () => {
+    render(
+      <Menu
+        anchorEl={document.createElement('div')}
+        setAnchorEl={() => {}}
+        menuItems={resourcesMenuItemsWithNestedItems}
+      />
+    )
+
+    const lesson = screen.getByText('Lesson')
+    fireEvent.click(lesson)
+
+    expect(screen.getByText('Art')).toBeInTheDocument()
+    expect(screen.getByText('Math')).toBeInTheDocument()
+  })
+
+  test('should display additional info when it is provided', () => {
+    render(
+      <Menu
+        anchorEl={document.createElement('div')}
+        setAnchorEl={() => {}}
+        menuItems={resourcesMenuItemsWithAdditionalInfo}
+      />
+    )
+
+    const lesson = screen.getByText('Lesson')
+    fireEvent.click(lesson)
+
+    expect(screen.getByText('This is a lesson')).toBeInTheDocument()
+  })
+
+  test('should display icon when it is provided', () => {
+    render(
+      <Menu
+        anchorEl={document.createElement('div')}
+        setAnchorEl={() => {}}
+        menuItems={resourcesMenuItemsWithIcon}
+      />
+    )
+
+    const lesson = screen.getByText('Lesson')
+    fireEvent.click(lesson)
+
+    expect(screen.getByTestId('lesson-icon')).toBeInTheDocument()
   })
 })
