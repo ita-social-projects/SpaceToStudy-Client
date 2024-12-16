@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Meta, StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 import { EditRounded } from '@mui/icons-material'
 import { Checkbox } from '@mui/material'
 
@@ -34,8 +34,28 @@ The Menu component is a dropdown menu that displays a list of items.
       description: 'Function to set the anchor element.'
     },
     menuItems: {
-      description: 'The list of menu items to be displayed.',
+      description: `
+The list of menu items to be displayed. Each menu item can have the following properties:
+- **title***: \`string\`
+- **additionalInfo**: \`string\`
+- **graphics**: \`ReactNode\`
+- **alignVariant**: \`'left' | 'center' | 'right'\`
+- **colorVariant**: \`MenuItemColorVariant\`
+- **defaultOnItemClickArgs**: \`OnItemClickArgs\`
+- **isBottomBorder**: \`boolean\`
+- **isDisabled**: \`boolean\`
+- **isInitiallyToggled**: \`boolean\`
+- **nestedMenuItems**: \`MenuItemProps[]\`
+- **onClick**: \`function\`
+
+Nested menu items can have all the same properties except \`nestedMenuItems\`.
+      `,
       control: { type: 'object' }
+    },
+    allowToggleMultipleItems: {
+      description:
+        'Determines whether multiple items can be toggled on and off.',
+      control: 'boolean'
     },
     anchorOrigin: {
       description: 'The anchor origin point of the menu.',

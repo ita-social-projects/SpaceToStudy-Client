@@ -22,7 +22,6 @@ interface NestedMenuItemProps extends CommonMenuItemProps {
 }
 
 interface MenuItemProps extends NestedMenuItemProps {
-  additionalInfo?: string
   nestedMenuItems?: NestedMenuItemProps[]
 }
 

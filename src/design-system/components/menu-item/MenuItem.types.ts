@@ -5,6 +5,7 @@ export type OnItemClickArgs = Record<string, string | Event>
 
 export interface MenuItemProps {
   title: string
+  additionalInfo?: string
   alignVariant?: 'left' | 'center' | 'right'
   colorVariant?: MenuItemColorVariant
   isDisabled?: boolean

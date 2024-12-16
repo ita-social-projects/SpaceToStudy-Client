@@ -9,7 +9,6 @@ import { cn } from '~/utils/cn'
 import '~scss-components/menu-item/MenuItem.scss'
 
 interface MenuItemProps extends CommonMenuItemProps {
-  additionalInfo?: string
   isDropdown?: boolean
   density?: 1 | 2
   isToggled?: boolean
