@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
-import IconButton from '@mui/material/IconButton'
 
 import {
   ButtonTypeEnum,
@@ -24,6 +23,7 @@ import { isSubmitDisabled } from '~/utils/is-submit-disabled'
 import useForm from '~/hooks/use-form'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'

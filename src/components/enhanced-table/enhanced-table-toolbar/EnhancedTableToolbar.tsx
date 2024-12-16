@@ -2,10 +2,10 @@ import { useTranslation } from 'react-i18next'
 import { ReactNode } from 'react'
 
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { styles } from './EnhancedTableToolbar.styles'
 import { TableActionFunc } from '~/types'
 

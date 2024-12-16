@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { IconButtonVariant } from '~/design-system/components/icon-button/IconButton.constants'
-import AddRoundedIcon from '@mui/icons-material/AddRounded'
 
 const meta: Meta<typeof IconButton> = {
   title: 'Components/IconButton',
@@ -25,6 +24,8 @@ The \`IconButton\` component provides a compact and customizable icon button tha
   },
   tags: ['autodocs'],
   argTypes: {
+    children: { table: { disable: true } },
+    to: { table: { disable: true } },
     variant: {
       description: 'The visual style of the button.',
       options: [
@@ -73,18 +74,10 @@ type Story = StoryObj<typeof meta>
 export const AllVariants: Story = {
   render: (args) => (
     <div style={{ display: 'flex', gap: '10px' }}>
-      <IconButton {...args} variant={IconButtonVariant.Primary}>
-        <AddRoundedIcon />
-      </IconButton>
-      <IconButton {...args} variant={IconButtonVariant.Secondary}>
-        <AddRoundedIcon />
-      </IconButton>
-      <IconButton {...args} variant={IconButtonVariant.Success}>
-        <AddRoundedIcon />
-      </IconButton>
-      <IconButton {...args} variant={IconButtonVariant.Error}>
-        <AddRoundedIcon />
-      </IconButton>
+      <IconButton {...args} variant={IconButtonVariant.Primary} />
+      <IconButton {...args} variant={IconButtonVariant.Secondary} />
+      <IconButton {...args} variant={IconButtonVariant.Success} />
+      <IconButton {...args} variant={IconButtonVariant.Error} />
     </div>
   ),
   parameters: {
@@ -99,8 +92,7 @@ export const AllVariants: Story = {
 
 export const Primary: Story = {
   args: {
-    variant: IconButtonVariant.Primary,
-    children: <AddRoundedIcon />
+    variant: IconButtonVariant.Primary
   },
   parameters: {
     docs: {
@@ -113,8 +105,7 @@ export const Primary: Story = {
 }
 export const Secondary: Story = {
   args: {
-    variant: IconButtonVariant.Secondary,
-    children: <AddRoundedIcon />
+    variant: IconButtonVariant.Secondary
   },
   parameters: {
     docs: {
@@ -128,8 +119,7 @@ export const Secondary: Story = {
 
 export const Success: Story = {
   args: {
-    variant: IconButtonVariant.Success,
-    children: <AddRoundedIcon />
+    variant: IconButtonVariant.Success
   },
   parameters: {
     docs: {
@@ -142,8 +132,7 @@ export const Success: Story = {
 }
 export const Error: Story = {
   args: {
-    variant: IconButtonVariant.Error,
-    children: <AddRoundedIcon />
+    variant: IconButtonVariant.Error
   },
   parameters: {
     docs: {

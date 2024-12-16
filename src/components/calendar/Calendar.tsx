@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import {
   CalendarPicker,
   LocalizationProvider,
@@ -9,6 +9,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { useState } from 'react'
 import { styles } from './Calendar.styles'
 import { PickersArrowSwitcher } from '@mui/x-date-pickers/internals'
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { isSameDay } from 'date-fns'
 import { getFormattedDate } from '~/utils/helper-functions'
 import EditCalendarIcon from '@mui/icons-material/EditCalendar'

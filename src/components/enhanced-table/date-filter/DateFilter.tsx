@@ -5,10 +5,10 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
 import ClearIcon from '@mui/icons-material/Clear'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { initialState, datePickersOptions } from './DateFilter.constants'
 import { styles } from './DateFilter.styles'
 

@@ -1,11 +1,11 @@
 import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import Drawer, { DrawerProps } from '@mui/material/Drawer'
-import IconButton from '@mui/material/IconButton'
 import CloseRounded from '@mui/icons-material/CloseRounded'
 
 import useConfirm from '~/hooks/use-confirm'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { styles } from '~/components/app-drawer/AppDrawer.styles'
 import { PositionEnum } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'

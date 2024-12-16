@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 import List from '@mui/material/List'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import CloseIcon from '@mui/icons-material/Close'
 import { FormHelperText, SxProps } from '@mui/material'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppButton from '~/components/app-button/AppButton'
 import { styles } from '~/components/file-uploader/FileUploader.styles'
 
@@ -75,7 +75,7 @@ const FileUploader: FC<FileUploaderProps> = ({
       <IconButton
         data-testid='delete-file'
         onClick={() => deleteFile(item)}
-        size={SizeEnum.Small}
+        size='sm'
       >
         <CloseIcon sx={styles.close} />
       </IconButton>

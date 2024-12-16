@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 
 const useInputVisibility = (inputError: string) => {
   const [showInputText, setShowInputText] = useState(false)
