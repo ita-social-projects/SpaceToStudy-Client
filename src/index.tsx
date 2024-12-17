@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 
 import { store } from '~/redux/store'
 import { setupInterceptors } from '~/services/setup-interceptors'
-import QueryProvider from '~/QueryProvider'
 import { router } from '~/router/router'
 import '~/styles/index.css'
 import '~scss/styles.scss'
@@ -16,9 +15,7 @@ const root = createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <QueryProvider>
-        <RouterProvider router={router} />
-      </QueryProvider>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 )
