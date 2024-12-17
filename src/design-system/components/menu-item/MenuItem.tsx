@@ -19,17 +19,17 @@ interface MenuItemProps extends CommonMenuItemProps {
 const MenuItem: FC<MenuItemProps> = ({
   title,
   additionalInfo,
-  graphics,
-  onRemove,
   alignVariant = 'left',
   colorVariant = MenuItemColorVariant.Default,
   density = 1,
+  graphics,
   isDropdown = false,
   isToggled = false,
   isBottomBorder = false,
   isDisabled = false,
-  variant = MenuItemVariant.Default,
-  onClick = () => {}
+  onClick,
+  onRemove,
+  variant = MenuItemVariant.Default
 }) => {
   const graphicsRef = useRef<HTMLDivElement | null>(null)
 
@@ -46,12 +46,28 @@ const MenuItem: FC<MenuItemProps> = ({
       }
     }
 
-    onClick()
+    onClick?.()
   }
 
-  const handleGraphicsClick = (event: React.MouseEvent) => {
+  const handleGraphicsClick = (
+    event: React.MouseEvent | React.KeyboardEvent
+  ) => {
     event.stopPropagation()
-    onClick()
+    onClick?.()
+  }
+
+  const handleEnterOrSpaceKeyDown = (
+    event: React.KeyboardEvent,
+    handleAction: (event: React.KeyboardEvent) => void
+  ) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleAction(event)
+    }
+  }
+
+  const handleRemoveItem = (event: React.MouseEvent | React.KeyboardEvent) => {
+    event.stopPropagation()
+    onRemove?.()
   }
 
   return (
@@ -75,7 +91,10 @@ const MenuItem: FC<MenuItemProps> = ({
           <div
             className='s2s-item__graphics'
             onClick={handleGraphicsClick}
+            onKeyDown={handleClick}
             ref={graphicsRef}
+            role='button'
+            tabIndex={0}
           >
             {graphics}
           </div>
@@ -93,10 +112,12 @@ const MenuItem: FC<MenuItemProps> = ({
       {onRemove && !isDropdown && !isDisabled && (
         <div
           className='s2s-item__graphics'
-          onClick={(event) => {
-            event.stopPropagation()
-            onRemove()
+          onClick={handleRemoveItem}
+          onKeyDown={(event) => {
+            handleEnterOrSpaceKeyDown(event, handleRemoveItem)
           }}
+          role='button'
+          tabIndex={0}
         >
           <CloseRounded className='s2s-item__close' />
         </div>
