@@ -93,7 +93,6 @@ const MenuItem: FC<MenuItemProps> = ({
             onClick={handleGraphicsClick}
             onKeyDown={handleClick}
             ref={graphicsRef}
-            role='button'
             tabIndex={0}
           >
             {graphics}
@@ -116,7 +115,6 @@ const MenuItem: FC<MenuItemProps> = ({
           onKeyDown={(event) => {
             handleEnterOrSpaceKeyDown(event, handleRemoveItem)
           }}
-          role='button'
           tabIndex={0}
         >
           <CloseRounded className='s2s-item__close' />
