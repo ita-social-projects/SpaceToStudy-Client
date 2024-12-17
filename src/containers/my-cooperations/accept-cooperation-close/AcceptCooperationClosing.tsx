@@ -48,6 +48,12 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
     if (inputError) setInputError(false)
   }
 
+  const isSubmitMessageShown = isReasonSubmitted ? (
+    <Typography sx={styles.textGray}>
+      {t('cooperationDetailsPage.submitMessage')}
+    </Typography>
+  ) : null
+
   const isHelperTextShown = inputError
     ? t('cooperationDetailsPage.inputError')
     : ''
@@ -100,11 +106,9 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
             </Button>
           </Box>
         </Box>
-      ) : isReasonSubmitted ? (
-        <Typography sx={styles.textGray}>
-          {t('cooperationDetailsPage.submitMessage')}
-        </Typography>
-      ) : null}
+      ) : (
+        isSubmitMessageShown
+      )}
     </CooperationActionBanner>
   )
 }
