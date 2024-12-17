@@ -8,6 +8,7 @@ import { styles } from './AcceptCooperationClosing.styles'
 import { useState } from 'react'
 import InputField from '~/design-system/components/input-field/InputField'
 import { InputFieldVariantEnum } from '~/design-system/components/input-field/InputField.constants'
+import useForm from '~/hooks/use-form'
 
 interface AcceptCooperationClosureProps {
   user: string
@@ -22,41 +23,47 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
 }) => {
   const { t } = useTranslation()
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
-  const [declineReason, setDeclineReason] = useState<string>('')
-  const [inputError, setInputError] = useState<boolean>(false)
   const [isReasonSubmitted, setIsReasonSubmitted] = useState<boolean>(false)
 
   const handleDecline = () => {
     setIsInputShown(true)
   }
 
+  const {
+    data,
+    errors,
+    trigger,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleSubmit
+  } = useForm({
+    initialValues: { declineReason: '' },
+    validations: {
+      declineReason: (value) =>
+        value ? '' : t('cooperationDetailsPage.inputError')
+    },
+    onSubmit: (formData) => {
+      if (formData) {
+        onReasonSubmit(formData.declineReason)
+      }
+    }
+  })
+
   const handleReasonSubmit = () => {
-    if (!declineReason.trim()) {
-      setInputError(true)
-    } else {
-      onReasonSubmit(declineReason.trim())
-      setDeclineReason('')
-      setIsInputShown(false)
+    const isValid = trigger('declineReason')
+    handleSubmit()
+    if (isValid && !errors.declineReason) {
       setIsReasonSubmitted(true)
+      setIsInputShown(false)
     }
   }
 
-  const handleInputChange = ({
-    target: { value }
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    setDeclineReason(value)
-    if (inputError) setInputError(false)
-  }
-
-  const isSubmitMessageShown = isReasonSubmitted ? (
-    <Typography sx={styles.textGray}>
-      {t('cooperationDetailsPage.submitMessage')}
-    </Typography>
-  ) : null
-
-  const isHelperTextShown = inputError
-    ? t('cooperationDetailsPage.inputError')
-    : ''
+  const isSubmitMessageShown =
+    isReasonSubmitted && !errors.declineReason ? (
+      <Typography sx={styles.textGray}>
+        {t('cooperationDetailsPage.submitMessage')}
+      </Typography>
+    ) : null
 
   return (
     <CooperationActionBanner
@@ -85,20 +92,20 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
       icon={<ErrorOutlineRounded />}
       title={t('titles.acceptCooperationClosing')}
     >
-      {isInputShown && !isReasonSubmitted ? (
+      {isInputShown ? (
         <Box sx={styles.inputBox}>
           <Typography sx={styles.textGray}>
             {t('cooperationDetailsPage.InputFieldLabel')}{' '}
           </Typography>
           <Box sx={styles.inputField}>
             <InputField
-              error={inputError}
-              helperText={isHelperTextShown}
-              onChange={handleInputChange}
-              onClear={() => setDeclineReason('')}
+              error={!!errors.declineReason}
+              helperText={errors.declineReason}
+              onChange={handleInputChange('declineReason')}
+              onClear={() => handleNonInputValueChange('declineReason', '')}
               placeholder={t('cooperationDetailsPage.inputFieldPlaceholder')}
               sx={styles.input}
-              value={declineReason}
+              value={data.declineReason}
               variant={InputFieldVariantEnum.Outlined}
             ></InputField>
             <Button color='tonal-error' onClick={handleReasonSubmit} size='md'>
