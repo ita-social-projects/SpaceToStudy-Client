@@ -31,7 +31,7 @@ const MenuItem: FC<MenuItemProps> = ({
   onRemove,
   variant = MenuItemVariant.Default
 }) => {
-  const graphicsRef = useRef<HTMLDivElement | null>(null)
+  const graphicsRef = useRef<HTMLButtonElement | null>(null)
 
   const handleClick = () => {
     if (graphicsRef.current) {
@@ -49,23 +49,12 @@ const MenuItem: FC<MenuItemProps> = ({
     onClick?.()
   }
 
-  const handleGraphicsClick = (
-    event: React.MouseEvent | React.KeyboardEvent
-  ) => {
+  const handleGraphicsClick = (event: React.MouseEvent) => {
     event.stopPropagation()
     onClick?.()
   }
 
-  const handleEnterOrSpaceKeyDown = (
-    event: React.KeyboardEvent,
-    handleAction: (event: React.KeyboardEvent) => void
-  ) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      handleAction(event)
-    }
-  }
-
-  const handleRemoveItem = (event: React.MouseEvent | React.KeyboardEvent) => {
+  const handleRemoveItem = (event: React.MouseEvent) => {
     event.stopPropagation()
     onRemove?.()
   }
@@ -88,14 +77,13 @@ const MenuItem: FC<MenuItemProps> = ({
     >
       <div className='s2s-item__main-info-box'>
         {graphics && (
-          <div
+          <button
             className='s2s-item__graphics'
             onClick={handleGraphicsClick}
-            onKeyDown={handleClick}
             ref={graphicsRef}
           >
             {graphics}
-          </div>
+          </button>
         )}
         <div className='s2s-item__text-box'>
           <span className='s2s-item__additional-info'>{additionalInfo}</span>
@@ -108,15 +96,9 @@ const MenuItem: FC<MenuItemProps> = ({
         </div>
       )}
       {onRemove && !isDropdown && !isDisabled && (
-        <div
-          className='s2s-item__graphics'
-          onClick={handleRemoveItem}
-          onKeyDown={(event) => {
-            handleEnterOrSpaceKeyDown(event, handleRemoveItem)
-          }}
-        >
+        <button className='s2s-item__graphics' onClick={handleRemoveItem}>
           <CloseRounded className='s2s-item__close' />
-        </div>
+        </button>
       )}
     </MuiMenuItem>
   )
