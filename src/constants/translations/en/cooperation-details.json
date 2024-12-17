@@ -33,5 +33,11 @@
   "closingMessage1": " started a closing process for the current cooperation. You will have ",
   "accessDuration": "1 month of access",
   "closingMessage2": " to study materials after the cooperation has been closed.",
-  "acceptBtn": "Accept"
+  "acceptBtn": "Accept",
+  "declineBtn": "Decline",
+  "submitBtn": "Submit",
+  "inputFieldPlaceholder": "Enter your reason for declining",
+  "InputFieldLabel": "Please provide a reason for declining to close the cooperation.",
+  "inputError": "This field is required.",
+  "submitMessage": "Your reason has been successfully submitted to the opposite party."
 }
