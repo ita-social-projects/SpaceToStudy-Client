@@ -9,6 +9,7 @@ import testingLibrary from 'eslint-plugin-testing-library'
 import globals from 'globals'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -19,6 +20,7 @@ const compat = new FlatCompat({
 })
 
 export default [
+  ...pluginQuery.configs['flat/recommended'],
   {
     ignores: ['src/assets/*', 'src/stories/assets/*', '.storybook/**/*']
   },
