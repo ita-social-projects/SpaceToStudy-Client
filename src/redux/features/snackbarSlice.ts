@@ -3,7 +3,7 @@ import { sliceNames } from '~/redux/redux.constants'
 import { RootState } from '~/redux/store'
 import { TOptions } from 'i18next/typescript/options'
 
-import { AlertColor } from '~/design-system/components/alert/Alert'
+import { type AlertColor } from '~/design-system/components/alert/Alert'
 
 interface ExtendedSnackbarMessage {
   text: string

@@ -74,9 +74,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(
         {...props}
       >
         {title && <AlertTitle>{title}</AlertTitle>}
-        {description && (
-          <p className={cn('s2s-alert-description')}>{description}</p>
-        )}
+        {description && <p className='s2s-alert-description'>{description}</p>}
       </MuiAlert>
     )
   }
