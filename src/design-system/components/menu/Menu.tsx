@@ -47,7 +47,7 @@ const Menu: FC<MenuProps> = ({
   defaultOnItemClick,
   maxHeight,
   minWidth,
-  noItemsMessage,
+  noItemsMessage = defaultNoItemsMessage,
   density = 1,
   allowToggleMultipleItems = false,
   isItemsRemovalEnabled = false,
@@ -172,10 +172,7 @@ const Menu: FC<MenuProps> = ({
             title={removeAllItemsTitle}
           />
         ) : (
-          <MenuItem
-            isDisabled
-            title={noItemsMessage ?? defaultNoItemsMessage}
-          />
+          <MenuItem isDisabled title={noItemsMessage} />
         ))}
     </MuiMenu>
   )
