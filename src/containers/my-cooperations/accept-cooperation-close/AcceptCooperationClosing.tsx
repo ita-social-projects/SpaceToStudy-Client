@@ -51,8 +51,9 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
 
   const handleReasonSubmit = () => {
     const isValid = trigger('declineReason')
-    handleSubmit()
+
     if (isValid && !errors.declineReason) {
+      handleSubmit()
       setIsReasonSubmitted(true)
       setIsInputShown(false)
     }
