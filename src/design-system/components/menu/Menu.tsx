@@ -53,7 +53,7 @@ const Menu: FC<MenuProps> = ({
   isItemsRemovalEnabled = false,
   ...menuProps
 }: MenuProps) => {
-  const [items, setItems] = useState(menuItems)
+  const [items, setItems] = useState<MenuItemProps[]>(menuItems)
   const [toggledItemsTitles, setToggledItemsTitles] = useState<string[]>(
     allowToggleMultipleItems
       ? menuItems
@@ -151,7 +151,7 @@ const Menu: FC<MenuProps> = ({
               : undefined
           }
         />,
-        ...(item.nestedMenuItems && toggledItemsTitles.includes(item.title)
+        ...(toggledItemsTitles.includes(item.title) && item.nestedMenuItems
           ? item.nestedMenuItems.map((nestedMenuItem) => (
               <MenuItem
                 {...nestedMenuItem}

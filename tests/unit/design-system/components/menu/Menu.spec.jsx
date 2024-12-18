@@ -26,10 +26,17 @@ const resourcesMenuItemsWithIcon = [{ title: 'Lesson', graphics: lessonIcon }]
 const noItemsCustomMessage = 'No items available.'
 
 describe('Menu Component', () => {
+  let anchor
+
+  beforeEach(() => {
+    render(<button data-testid='default-anchor' />)
+    anchor = screen.getByTestId('default-anchor')
+  })
+
   test('should render menu items', () => {
     render(
       <Menu
-        anchorEl={document.createElement('div')}
+        anchorEl={anchor}
         setAnchorEl={() => {}}
         menuItems={resourcesMenuItems}
       />
@@ -43,7 +50,7 @@ describe('Menu Component', () => {
   test('should remove item when removal is enabled', () => {
     const { getByText } = render(
       <Menu
-        anchorEl={document.createElement('div')}
+        anchorEl={anchor}
         setAnchorEl={() => {}}
         menuItems={resourcesMenuItems}
         isItemsRemovalEnabled={true}
@@ -61,7 +68,7 @@ describe('Menu Component', () => {
   test('should show no items message when no items left and removal is enabled', () => {
     render(
       <Menu
-        anchorEl={document.createElement('div')}
+        anchorEl={anchor}
         setAnchorEl={() => {}}
         menuItems={[]}
         noItemsMessage={noItemsCustomMessage}
@@ -77,14 +84,14 @@ describe('Menu Component', () => {
     const handleClick = vi.fn((event) => setAnchorEl(event.currentTarget))
 
     render(
-      <div>
+      <>
         <button onClick={handleClick}>Open Menu</button>
         <Menu
-          anchorEl={document.createElement('button')}
+          anchorEl={null}
           setAnchorEl={setAnchorEl}
           menuItems={resourcesMenuItems}
         />
-      </div>
+      </>
     )
 
     const button = screen.getByText('Open Menu')
@@ -97,7 +104,7 @@ describe('Menu Component', () => {
     const defaultOnItemClick = vi.fn()
     render(
       <Menu
-        anchorEl={document.createElement('div')}
+        anchorEl={anchor}
         setAnchorEl={() => {}}
         menuItems={resourcesMenuItems}
         defaultOnItemClick={defaultOnItemClick}
@@ -113,7 +120,7 @@ describe('Menu Component', () => {
     const defaultOnItemClick = vi.fn()
     render(
       <Menu
-        anchorEl={document.createElement('div')}
+        anchorEl={anchor}
         setAnchorEl={() => {}}
         menuItems={resourcesMenuItemsWithCustomArgs}
         defaultOnItemClick={defaultOnItemClick}
@@ -132,7 +139,7 @@ describe('Menu Component', () => {
     const defaultOnItemClick = vi.fn()
     render(
       <Menu
-        anchorEl={document.createElement('div')}
+        anchorEl={anchor}
         setAnchorEl={() => {}}
         menuItems={resourcesMenuItemsWithNestedItems}
         defaultOnItemClick={defaultOnItemClick}
@@ -150,7 +157,7 @@ describe('Menu Component', () => {
   test('should show nested items when a menu item is clicked', () => {
     render(
       <Menu
-        anchorEl={document.createElement('div')}
+        anchorEl={anchor}
         setAnchorEl={() => {}}
         menuItems={resourcesMenuItemsWithNestedItems}
       />
@@ -166,7 +173,7 @@ describe('Menu Component', () => {
   test('should display additional info when it is provided', () => {
     render(
       <Menu
-        anchorEl={document.createElement('div')}
+        anchorEl={anchor}
         setAnchorEl={() => {}}
         menuItems={resourcesMenuItemsWithAdditionalInfo}
       />
@@ -181,7 +188,7 @@ describe('Menu Component', () => {
   test('should display icon when it is provided', () => {
     render(
       <Menu
-        anchorEl={document.createElement('div')}
+        anchorEl={anchor}
         setAnchorEl={() => {}}
         menuItems={resourcesMenuItemsWithIcon}
       />

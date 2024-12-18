@@ -72,7 +72,6 @@ const MenuItem: FC<MenuItemProps> = ({
         isDisabled && 's2s-item--disabled'
       )}
       disabled={isDisabled}
-      key={title}
       onClick={handleClick}
     >
       <div className='s2s-item__main-info-box'>
