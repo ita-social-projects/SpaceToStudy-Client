@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react'
+import { FC, useState } from 'react'
 import { Menu as MuiMenu, PopoverOrigin } from '@mui/material'
 
 import {
@@ -76,47 +76,43 @@ const Menu: FC<MenuProps> = ({
     )
   }
 
-  const handleMenuClose = useCallback(() => {
+  const handleMenuClose = () => {
     setToggledItemsTitles([])
     setAnchorEl(null)
-  }, [setAnchorEl])
+  }
 
-  const handleItemClick = useCallback(
-    ({
-      title,
-      defaultOnItemClickArgs,
-      nestedMenuItems,
-      onClick: customOnClick
-    }: MenuItemProps) => {
-      allowToggleMultipleItems
-        ? toggleAsOneOfMultipleItems(title)
-        : toggleAsSingleItem(title)
+  const handleItemClick = ({
+    title,
+    defaultOnItemClickArgs,
+    nestedMenuItems,
+    onClick: customOnClick
+  }: MenuItemProps) => {
+    allowToggleMultipleItems
+      ? toggleAsOneOfMultipleItems(title)
+      : toggleAsSingleItem(title)
 
-      if ((!customOnClick && !defaultOnItemClick) || nestedMenuItems) {
-        return
-      }
+    if ((!customOnClick && !defaultOnItemClick) || nestedMenuItems) {
+      return
+    }
 
-      if (customOnClick) {
-        customOnClick()
-        handleMenuClose()
-      } else if (defaultOnItemClick) {
-        const args: OnItemClickArgs =
-          defaultOnItemClickArgs === undefined
-            ? { title }
-            : { title, ...defaultOnItemClickArgs }
-
-        defaultOnItemClick(args)
-      }
-
-      if (allowToggleMultipleItems) {
-        return
-      }
-
+    if (customOnClick) {
+      customOnClick()
       handleMenuClose()
-    },
+    } else if (defaultOnItemClick) {
+      const args: OnItemClickArgs =
+        defaultOnItemClickArgs === undefined
+          ? { title }
+          : { title, ...defaultOnItemClickArgs }
 
-    [defaultOnItemClick, handleMenuClose, allowToggleMultipleItems]
-  )
+      defaultOnItemClick(args)
+    }
+
+    if (allowToggleMultipleItems) {
+      return
+    }
+
+    handleMenuClose()
+  }
 
   const handleItemRemoval = (title: string) => {
     setItems((previousItems) =>
