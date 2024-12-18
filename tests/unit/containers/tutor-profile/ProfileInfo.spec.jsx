@@ -10,6 +10,23 @@ const mockNavigate = vi.fn()
 
 vi.mock('~/hooks/use-breakpoints')
 
+const mockSetChatInfo = vi.fn()
+const mockFetchData = vi.fn()
+
+vi.mock('~/context/chat-context', () => ({
+  useChatContext: () => ({
+    setChatInfo: mockSetChatInfo
+  })
+}))
+
+vi.mock('~/hooks/use-axios', () => ({
+  default: vi.fn(() => ({
+    response: [],
+    loading: false,
+    fetchData: vi.fn()
+  }))
+}))
+
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
   return {
@@ -172,21 +189,6 @@ describe('ProfileInfo component tests', () => {
   })
 })
 
-const mockSetChatInfo = vi.fn()
-const mockFetchData = vi.fn()
-
-vi.mock('~/context/chat-context', () => ({
-  useChatContext: () => ({
-    setChatInfo: mockSetChatInfo
-  })
-}))
-
-vi.mock('~/hooks/use-axios', () => ({
-  default: vi.fn(() => ({
-    fetchData: mockFetchData
-  }))
-}))
-
 const chatResponse = [
   {
     _id: 'chat456',
@@ -203,19 +205,15 @@ describe('onSendMessageClick tests', () => {
   })
 
   it('should set chat info for an existing chat', async () => {
-    useMatch.mockImplementation(() => false)
-
     useAxios.mockImplementation(() => ({
+      default: vi.fn(),
       response: chatResponse,
       loading: false,
       fetchData: mockFetchData
     }))
 
-    renderWithProviders(
-      <TestSnackbar>
-        <ProfileInfo myRole='tutor' userData={userData} />
-      </TestSnackbar>
-    )
+    useMatch.mockImplementation(() => false)
+    renderWithBreakpoints(laptopData, 'student')
 
     const sendMessageBtn = screen.getByText(
       /userProfilePage.profileInfo.sendMessage/i
@@ -235,18 +233,15 @@ describe('onSendMessageClick tests', () => {
   })
 
   it('should trigger fetchData when no existing chat is found', async () => {
-    useMatch.mockImplementation(() => false)
     useAxios.mockImplementation(() => ({
+      default: vi.fn(),
       response: [],
       loading: false,
       fetchData: mockFetchData
     }))
 
-    renderWithProviders(
-      <TestSnackbar>
-        <ProfileInfo myRole='tutor' userData={userData} />
-      </TestSnackbar>
-    )
+    useMatch.mockImplementation(() => false)
+    renderWithBreakpoints(laptopData, 'student')
 
     const sendMessageBtn = screen.getByText(
       /userProfilePage.profileInfo.sendMessage/i
