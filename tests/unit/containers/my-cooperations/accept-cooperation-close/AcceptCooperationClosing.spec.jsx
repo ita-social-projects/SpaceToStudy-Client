@@ -30,6 +30,7 @@ describe('AcceptCooperationClosing', () => {
     const declineBtn = screen.getByText('cooperationDetailsPage.declineBtn')
     fireEvent.click(declineBtn)
     expect(declineBtn).toBeInTheDocument()
+
     const inputLabel = screen.getByText(
       'cooperationDetailsPage.InputFieldLabel'
     )
@@ -39,9 +40,11 @@ describe('AcceptCooperationClosing', () => {
   it('shows error message when submitting empty input', () => {
     const declineBtn = screen.getByText('cooperationDetailsPage.declineBtn')
     fireEvent.click(declineBtn)
+
     const submitBtn = screen.getByText('cooperationDetailsPage.submitBtn')
     expect(submitBtn).toBeInTheDocument()
     fireEvent.click(submitBtn)
+
     const errorMessage = screen.getByText('cooperationDetailsPage.inputError')
     expect(errorMessage).toBeInTheDocument()
   })

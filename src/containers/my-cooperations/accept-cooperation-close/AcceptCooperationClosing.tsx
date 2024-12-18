@@ -26,10 +26,6 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
   const [isReasonSubmitted, setIsReasonSubmitted] = useState<boolean>(false)
 
-  // const emptyField = (value: string, errorMessage: string) => {
-  //   return value ? '' : errorMessage
-  // }
-
   const handleDeclineBtnClick = () => {
     setIsInputShown(true)
   }
@@ -62,13 +58,6 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
       setIsInputShown(false)
     }
   }, [handleSubmit, setIsInputShown, setIsReasonSubmitted, hasErrors, trigger])
-
-  // const isSubmitMessageShown =
-  //   isReasonSubmitted && !errors.declineReason ? (
-  //     <Typography sx={styles.textGray}>
-  //       {t('cooperationDetailsPage.submitMessage')}
-  //     </Typography>
-  //   ) : null
 
   const renderedInputField = useMemo(() => {
     if (isInputShown) {
