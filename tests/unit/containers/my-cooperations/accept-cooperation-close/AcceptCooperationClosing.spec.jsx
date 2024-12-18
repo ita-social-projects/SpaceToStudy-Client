@@ -26,7 +26,7 @@ describe('AcceptCooperationClosing', () => {
     expect(titleText).toBeInTheDocument()
   })
 
-  it('renders input field when decline button is clicked', () => {
+  it('should render input field when decline button is clicked', () => {
     const declineBtn = screen.getByText('cooperationDetailsPage.declineBtn')
     fireEvent.click(declineBtn)
     expect(declineBtn).toBeInTheDocument()
@@ -37,7 +37,7 @@ describe('AcceptCooperationClosing', () => {
     expect(inputLabel).toBeInTheDocument()
   })
 
-  it('shows error message when submitting empty input', () => {
+  it('should show error message when submitting empty input', () => {
     const declineBtn = screen.getByText('cooperationDetailsPage.declineBtn')
     fireEvent.click(declineBtn)
 

@@ -42,11 +42,12 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
     useForm({
       initialValues: { declineReason: '' },
       validations: {
-        declineReason: (value) =>
-          emptyField({
+        declineReason: (value) => {
+          return emptyField({
             value,
             emptyMessage: t('cooperationDetailsPage.inputError')
           })
+        }
       },
       onSubmit: (data) => {
         if (data) {
@@ -93,6 +94,7 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
         </Box>
       )
     }
+
     return (
       isReasonSubmitted &&
       !hasErrors && (
