@@ -5,18 +5,15 @@ export const styles = {
     fontWeight: 500
   },
   inputBox: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
     mb: '8px'
   },
-  inputField: {
+  inputContainer: {
     display: 'flex',
     gap: '16px',
-    width: '100%',
-    height: '50px'
+    height: '50px',
+    mt: '10px'
   },
-  input: {
+  inputField: {
     flex: 1
   },
   textGray: {
