@@ -5,7 +5,7 @@ import CooperationActionBanner from '~/containers/my-cooperations/cooperation-ac
 import Button from '~/design-system/components/button/Button'
 
 import { styles } from './AcceptCooperationClosing.styles'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import InputField from '~/design-system/components/input-field/InputField'
 import { InputFieldVariantEnum } from '~/design-system/components/input-field/InputField.constants'
 import useForm from '~/hooks/use-form'
@@ -25,6 +25,14 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
   const { t } = useTranslation()
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
   const [isReasonSubmitted, setIsReasonSubmitted] = useState<boolean>(false)
+
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    if (isInputShown && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [isInputShown])
 
   const handleDeclineBtnClick = () => {
     setIsInputShown(true)
@@ -73,6 +81,7 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
               onChange={handleInputChange('declineReason')}
               onClear={() => resetData(['declineReason'])}
               placeholder={t('cooperationDetailsPage.inputFieldPlaceholder')}
+              ref={inputRef}
               sx={styles.inputField}
               value={data.declineReason}
               variant={InputFieldVariantEnum.Outlined}
