@@ -235,7 +235,6 @@ describe('ChangePasswordModal', () => {
       fireEvent.click(confirmButton)
     })
     await waitFor(() => {
-      screen.debug()
       expect(screen.getByText(/common.errorMessages.incorrectCurrentPassword/i)).toBeInTheDocument()
       expect(currentPasswordInput).toHaveValue('')
     })
