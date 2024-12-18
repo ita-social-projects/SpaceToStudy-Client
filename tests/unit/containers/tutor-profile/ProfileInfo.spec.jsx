@@ -4,6 +4,7 @@ import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import { useMatch } from 'react-router-dom'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
+import useAxios from '~/hooks/use-axios'
 
 const mockNavigate = vi.fn()
 
@@ -168,5 +169,99 @@ describe('ProfileInfo component tests', () => {
         'ContentCopyRoundedIcon'
       )
     })
+  })
+})
+
+const mockSetChatInfo = vi.fn()
+const mockFetchData = vi.fn()
+
+vi.mock('~/context/chat-context', () => ({
+  useChatContext: () => ({
+    setChatInfo: mockSetChatInfo
+  })
+}))
+
+vi.mock('~/hooks/use-axios', () => ({
+  default: vi.fn(() => ({
+    fetchData: mockFetchData
+  }))
+}))
+
+const chatResponse = [
+  {
+    _id: 'chat456',
+    members: [
+      { user: { _id: '64822a1433ebe4890079bb60' } },
+      { user: { _id: 'otherUser' } }
+    ]
+  }
+]
+
+describe('onSendMessageClick tests', () => {
+  beforeEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('should set chat info for an existing chat', async () => {
+    useMatch.mockImplementation(() => false)
+
+    useAxios.mockImplementation(() => ({
+      response: chatResponse,
+      loading: false,
+      fetchData: mockFetchData
+    }))
+
+    renderWithProviders(
+      <TestSnackbar>
+        <ProfileInfo myRole='tutor' userData={userData} />
+      </TestSnackbar>
+    )
+
+    const sendMessageBtn = screen.getByText(
+      /userProfilePage.profileInfo.sendMessage/i
+    )
+    fireEvent.click(sendMessageBtn)
+
+    await waitFor(() => {
+      expect(mockSetChatInfo).toHaveBeenCalledWith({
+        author: userData,
+        authorRole: 'tutor',
+        chatId: 'chat456',
+        updateInfo: expect.any(Function)
+      })
+    })
+
+    expect(mockFetchData).not.toHaveBeenCalled()
+  })
+
+  it('should trigger fetchData when no existing chat is found', async () => {
+    useMatch.mockImplementation(() => false)
+    useAxios.mockImplementation(() => ({
+      response: [],
+      loading: false,
+      fetchData: mockFetchData
+    }))
+
+    renderWithProviders(
+      <TestSnackbar>
+        <ProfileInfo myRole='tutor' userData={userData} />
+      </TestSnackbar>
+    )
+
+    const sendMessageBtn = screen.getByText(
+      /userProfilePage.profileInfo.sendMessage/i
+    )
+    fireEvent.click(sendMessageBtn)
+
+    await waitFor(() => {
+      expect(mockSetChatInfo).toHaveBeenCalledWith({
+        author: userData,
+        authorRole: 'tutor',
+        chatId: '',
+        updateInfo: expect.any(Function)
+      })
+    })
+
+    expect(mockFetchData).toHaveBeenCalled()
   })
 })
