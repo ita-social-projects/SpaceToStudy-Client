@@ -52,7 +52,16 @@ const useAxios = <
       try {
         setLoading(true)
         const res = await service(params)
-        if (res.status >= 400 && res.status <= 526) throw res
+        if (res.status >= 400 && res.status <= 526) {
+          // throw res
+          throw new AxiosError(
+            'Request failed',
+            res.statusText,
+            res.config,
+            res.request,
+            res
+          )
+        }
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)
