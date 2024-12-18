@@ -4,9 +4,11 @@ import SearchInput from '~/components/search-input/SearchInput'
 import DateFilter from '~/components/enhanced-table/date-filter/DateFilter'
 import EnumFilter from '~/components/enhanced-table/enum-filter/EnumFilter'
 import { TableColumn } from '~/types'
+import { FilterEnum } from '~/types/components/enum-filter/enumFilter.interface'
 
 interface TableColumnProps<I> extends TableColumn<I> {
   dataType: 'string'
+  filterEnum: FilterEnum[]
 }
 
 interface Filter {
@@ -21,7 +23,7 @@ interface FilterCellProps<I, F> {
   clearFilter: () => void
 }
 
-const FilterCell = <I, F extends Filter | string>({
+const FilterCell = <I, F extends Filter | string | string[]>({
   column,
   filter,
   setFilter,
@@ -31,8 +33,8 @@ const FilterCell = <I, F extends Filter | string>({
     <EnumFilter
       clearFilter={clearFilter}
       column={column}
-      filter={filter}
-      setFilter={setFilter}
+      filter={filter as string[]}
+      setFilter={setFilter as (filter: string[]) => void}
     />
   )
 
