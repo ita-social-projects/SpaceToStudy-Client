@@ -197,7 +197,7 @@ describe('ChangePasswordModal', () => {
     fireEvent.change(currentPasswordInput, { target: { value: 'oldPassword' } })
     expect(currentPasswordInput).toHaveValue('oldPassword')
   })
-  it('displays an error message for incorrect current password', async () => {
+  it('should display an error message for incorrect current password', async () => {
     AuthService.changePassword.mockImplementation((id, data) => {
       if (data.currentPassword !== userDataMock.currentPassword) {
         return Promise.reject({

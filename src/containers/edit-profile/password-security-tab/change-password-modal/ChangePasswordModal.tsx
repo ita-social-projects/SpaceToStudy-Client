@@ -51,7 +51,9 @@ const ChangePasswordModal = () => {
       title: 'titles.confirmTitle',
       check: true
     })
-    if (!confirmed) return
+    if (!confirmed) {
+      return
+    }
     try {
       await sendChangedPassword({
         password: data.password,
