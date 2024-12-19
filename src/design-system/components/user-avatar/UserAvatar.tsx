@@ -14,8 +14,8 @@ interface BaseUserAvatarProps {
   variant?: (typeof variants)[number]
   src?: string
   size?: (typeof sizes)[number]
-  firstName: string
-  lastName: string
+  firstName?: string
+  lastName?: string
   isOnline?: boolean
 }
 
@@ -29,8 +29,8 @@ const UserAvatar = forwardRef(
       variant = 'avatar',
       src,
       size = 'sm',
-      firstName,
-      lastName,
+      firstName = '',
+      lastName = '',
       isOnline,
       onClick,
       ...props
