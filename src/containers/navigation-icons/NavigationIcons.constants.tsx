@@ -7,7 +7,7 @@ import MessageRoundedIcon from '@mui/icons-material/MessageRounded'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
 
-import { IconButtonProps } from '@mui/material/IconButton'
+import { type IconButtonProps } from '@mui/material/IconButton'
 
 import { authRoutes } from '~/router/constants/authRoutes'
 import { NotificationTypeEnums } from '~/types'

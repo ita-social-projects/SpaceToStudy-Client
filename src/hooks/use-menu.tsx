@@ -5,11 +5,7 @@ const useMenu = () => {
   const [anchorEl, setAnchorEl] = useState<MenuProps['anchorEl']>(null)
 
   const openMenu = (event?: MouseEvent) => {
-    if (event) {
-      setAnchorEl(event.currentTarget)
-    } else {
-      setAnchorEl(null)
-    }
+    setAnchorEl(event?.currentTarget ?? null)
   }
 
   const closeMenu = () => {

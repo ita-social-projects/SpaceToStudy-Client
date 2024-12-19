@@ -4,7 +4,7 @@ import {
   IconButton as MuiIconButton
 } from '@mui/material'
 import { FC } from 'react'
-import { To } from 'react-router-dom'
+import { type To } from 'react-router-dom'
 import { IconButtonVariant } from './IconButton.constants'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import { cn } from '~/utils/cn'
@@ -49,10 +49,12 @@ export const IconButton: FC<S2SIconButtonProps> = ({
     md: 20,
     lg: 24
   }
-
   const loader = (
     <CircularProgress data-testid='loader' size={loaderSizes[size]} />
   )
+  const buttonContent = loading
+    ? loader
+    : children || <AddRoundedIcon className={classNamesContainerIcon} />
   return (
     <MuiIconButton
       className={classNamesContainerIconBG}
@@ -60,9 +62,7 @@ export const IconButton: FC<S2SIconButtonProps> = ({
       onClick={onClick}
       {...props}
     >
-      {loading
-        ? loader
-        : children || <AddRoundedIcon className={classNamesContainerIcon} />}
+      {buttonContent}
     </MuiIconButton>
   )
 }
