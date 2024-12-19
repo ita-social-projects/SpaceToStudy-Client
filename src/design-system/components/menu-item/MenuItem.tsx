@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react'
+import { FC } from 'react'
 import { MenuItem as MuiMenuItem } from '@mui/material'
 import { ArrowDropDown, ArrowDropUp, CloseRounded } from '@mui/icons-material'
 
@@ -31,29 +31,6 @@ const MenuItem: FC<MenuItemProps> = ({
   onRemove,
   variant = MenuItemVariant.Default
 }) => {
-  const graphicsRef = useRef<HTMLButtonElement | null>(null)
-
-  const handleClick = () => {
-    if (graphicsRef.current) {
-      const interactiveElement =
-        graphicsRef.current.querySelector<HTMLInputElement>(
-          'input[type="radio"], input[type="checkbox"], [role="radio"], [role="checkbox"]'
-        )
-
-      if (interactiveElement) {
-        interactiveElement.click()
-        return
-      }
-    }
-
-    onClick?.()
-  }
-
-  const handleGraphicsClick = (event: React.MouseEvent) => {
-    event.stopPropagation()
-    onClick?.()
-  }
-
   const handleRemoveItem = (event: React.MouseEvent) => {
     event.stopPropagation()
     onRemove?.()
@@ -72,18 +49,10 @@ const MenuItem: FC<MenuItemProps> = ({
         isDisabled && 's2s-item--disabled'
       )}
       disabled={isDisabled}
-      onClick={handleClick}
+      onClick={onClick}
     >
       <div className='s2s-item__main-info-box'>
-        {graphics && (
-          <button
-            className='s2s-item__graphics'
-            onClick={handleGraphicsClick}
-            ref={graphicsRef}
-          >
-            {graphics}
-          </button>
-        )}
+        {graphics && <div className='s2s-item__graphics'>{graphics}</div>}
         <div className='s2s-item__text-box'>
           <span className='s2s-item__additional-info'>{additionalInfo}</span>
           <span className='s2s-item__title'>{title}</span>
