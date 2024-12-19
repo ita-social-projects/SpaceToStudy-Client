@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { ErrorOutlineRounded } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 import { Typography } from '@mui/material'
+import Button from '~/design-system/components/button/Button'
 
 import CooperationActionBanner from '~/containers/my-cooperations/cooperation-action-banner/CooperationActionBanner'
 
@@ -9,16 +10,22 @@ import { styles } from './CooperationClosureDeclinedModal.styles'
 
 export interface CooperationClosureDeclinedModalProps {
   message: string
+  onSend: () => void
   user: string
 }
 
 const CooperationClosureDeclinedModal: FC<
   CooperationClosureDeclinedModalProps
-> = ({ message, user }) => {
+> = ({ message, onSend, user }) => {
   const { t } = useTranslation()
 
   return (
     <CooperationActionBanner
+      actionButtons={
+        <Button color='tonal-error' onClick={onSend} size='xs'>
+          {t('cooperationDetailsPage.resendRequestBtn')}
+        </Button>
+      }
       description={
         <>
           <Typography component='span' sx={styles.boldText}>
