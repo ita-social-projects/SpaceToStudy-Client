@@ -39,5 +39,6 @@
   "inputFieldPlaceholder": "Enter your reason for declining",
   "InputFieldLabel": "Please provide a reason for declining to close the cooperation.",
   "inputError": "This field is required.",
-  "submitMessage": "Your reason has been successfully submitted to the opposite party."
+  "submitMessage": "Your reason has been successfully submitted to the opposite party.",
+  "cooperationCloseDeclinedMessage": "declined the cooperation closing process due to the following reason:"
 }
