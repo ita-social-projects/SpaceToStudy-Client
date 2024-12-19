@@ -88,6 +88,14 @@ Nested menu items can have all the same properties except \`nestedMenuItems\`.
     transformOrigin: {
       description: 'The transform origin point of the menu.',
       control: { type: 'object' }
+    },
+    toggledItemsTitles: {
+      description:
+        'The titles of the items that are currently toggled. Used for controlled toggling.'
+    },
+    onToggleItemsChange: {
+      description:
+        'Function called when the toggled items change. Used for controlled toggling.'
     }
   },
   args: {
@@ -113,7 +121,7 @@ Nested menu items can have all the same properties except \`nestedMenuItems\`.
       }
 
       return (
-        <div style={{ padding: '20px' }}>
+        <>
           <Button color='tonal' onClick={handleClick}>
             Open Menu
           </Button>
@@ -125,7 +133,7 @@ Nested menu items can have all the same properties except \`nestedMenuItems\`.
               setAnchorEl
             }}
           />
-        </div>
+        </>
       )
     }
   ]
@@ -458,6 +466,70 @@ export const RemovableItems: Story = {
       description: {
         story:
           'The dropdown menu with removable items. All top-level non-dropdown menu items can be removed. It is possible to set a custom message when there are no items in the menu. Click on the button to open.'
+      }
+    }
+  }
+}
+
+export const WithCustomToggling: Story = {
+  render: (args) => {
+    const CustomTogglingComponent = () => {
+      const initialToggledItemsTitles = ['Lesson', 'Quiz', 'Attachment']
+      const [toggledItemsTitles, setToggledItemsTitles] = useState<string[]>(
+        initialToggledItemsTitles
+      )
+
+      const handleToggleItemsChange = (updatedItemTitles: string[]) => {
+        alert(
+          `Imagine this is some custom logic: ${updatedItemTitles.join(', ')} that happens when toggling items.`
+        )
+        setToggledItemsTitles(updatedItemTitles)
+      }
+
+      return (
+        <Menu
+          {...args}
+          menuItems={[
+            {
+              title: 'Lesson',
+              additionalInfo: 'Explore comprehensive lessons on various topics',
+              graphics: <EditRounded />,
+              nestedMenuItems: [
+                {
+                  title: 'Math',
+                  graphics: <EditRounded />
+                }
+              ]
+            },
+            {
+              title: 'Quiz',
+              additionalInfo: 'Test your knowledge with engaging quizzes',
+              graphics: <EditRounded />,
+              nestedMenuItems: [
+                {
+                  title: 'Geometry',
+                  graphics: <EditRounded />
+                },
+                {
+                  title: 'Chemistry',
+                  graphics: <EditRounded />
+                }
+              ]
+            }
+          ]}
+          onToggleItemsChange={handleToggleItemsChange}
+          toggledItemsTitles={toggledItemsTitles}
+        />
+      )
+    }
+
+    return <CustomTogglingComponent />
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'It is possible to control the toggling of items in the menu by providing the `toggledItemsTitles` and `onToggleItemsChange` props. Click on the button to open.'
       }
     }
   }

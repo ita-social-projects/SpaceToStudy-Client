@@ -38,6 +38,8 @@ interface MenuProps {
   maxHeight?: number
   minWidth?: number
   transformOrigin?: PopoverOrigin
+  toggledItemsTitles?: string[]
+  onToggleItemsChange?: (newTitles: string[]) => void
 }
 
 const Menu: FC<MenuProps> = ({
@@ -51,16 +53,33 @@ const Menu: FC<MenuProps> = ({
   density = 1,
   allowToggleMultipleItems = false,
   isItemsRemovalEnabled = false,
+  toggledItemsTitles: customToggledItemsTitles,
+  onToggleItemsChange,
   ...menuProps
 }: MenuProps) => {
   const [items, setItems] = useState<MenuItemProps[]>(menuItems)
-  const [toggledItemsTitles, setToggledItemsTitles] = useState<string[]>(
+  const [internalToggledItemsTitles, setInternalToggledItemsTitles] = useState<
+    string[]
+  >(
     allowToggleMultipleItems
       ? menuItems
           .filter((item) => item.isInitiallyToggled)
           .map((item) => item.title)
       : []
   )
+
+  const toggledItemsTitles =
+    customToggledItemsTitles && onToggleItemsChange
+      ? customToggledItemsTitles
+      : internalToggledItemsTitles
+
+  const setToggledItemsTitles = (
+    updater: (prevItems: string[]) => string[]
+  ) => {
+    onToggleItemsChange
+      ? onToggleItemsChange(updater(toggledItemsTitles))
+      : setInternalToggledItemsTitles(updater)
+  }
 
   const toggleAsSingleItem = (itemTitle: string) => {
     setToggledItemsTitles((previousItems) =>
@@ -77,7 +96,6 @@ const Menu: FC<MenuProps> = ({
   }
 
   const handleMenuClose = () => {
-    setToggledItemsTitles([])
     setAnchorEl(null)
   }
 
@@ -111,6 +129,7 @@ const Menu: FC<MenuProps> = ({
       return
     }
 
+    setToggledItemsTitles(() => [])
     handleMenuClose()
   }
 
