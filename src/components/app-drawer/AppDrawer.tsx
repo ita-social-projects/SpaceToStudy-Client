@@ -16,7 +16,7 @@ interface AppDrawerProps extends Omit<DrawerProps, 'anchor'> {
   onClose: () => void
   anchor?:
     | DrawerProps['anchor']
-    | Exclude<PositionEnum, 'start' | 'vertical' | 'end'>
+    | Exclude<PositionEnum, 'start' | 'vertical' | 'end' | 'center'>
 }
 
 const AppDrawer: FC<AppDrawerProps> = ({
