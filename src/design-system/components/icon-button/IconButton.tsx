@@ -54,7 +54,7 @@ export const IconButton: FC<S2SIconButtonProps> = ({
   )
   const buttonContent = loading
     ? loader
-    : children || <AddRoundedIcon className={classNamesContainerIcon} />
+    : (children ?? <AddRoundedIcon className={classNamesContainerIcon} />)
   return (
     <MuiIconButton
       className={classNamesContainerIconBG}
