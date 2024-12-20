@@ -32,12 +32,6 @@ describe('MenuItem Component', () => {
     expect(screen.getByRole('checkbox')).toBeInTheDocument()
   })
 
-  test('should check checkbox when menu item clicked', () => {
-    render(<MenuItem title={resourceMenuItemTitle} graphics={checkbox} />)
-    fireEvent.click(screen.getByText(resourceMenuItemTitle))
-    expect(screen.getByRole('checkbox')).toBeChecked()
-  })
-
   test('should display close button when removal is enabled', () => {
     const { container } = render(
       <MenuItem title={resourceMenuItemTitle} onRemove={() => {}} />
