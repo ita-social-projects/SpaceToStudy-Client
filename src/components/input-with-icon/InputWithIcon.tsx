@@ -10,6 +10,7 @@ import { styles } from '~/components/input-with-icon/InputWithIcon.styles'
 interface InputWithIconProps extends InputBaseProps {
   startIcon?: ReactNode
   onClear: () => void
+  value: string
 }
 
 const InputWithIcon: FC<InputWithIconProps> = ({
