@@ -38,15 +38,6 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
     setIsInputShown(true)
   }
 
-  const handleSubmitReason = useCallback(
-    (data: { declineReason: string } | undefined) => {
-      if (data) {
-        onReasonSubmit(data.declineReason)
-      }
-    },
-    [onReasonSubmit]
-  )
-
   const { data, errors, trigger, handleInputChange, handleSubmit, resetData } =
     useForm({
       initialValues: { declineReason: '' },
@@ -58,12 +49,11 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
           })
         }
       },
-      // onSubmit: (data) => {
-      //   if (data) {
-      //     onReasonSubmit(data.declineReason)
-      //   }
-      // }
-      onSubmit: handleSubmitReason
+      onSubmit: (data) => {
+        if (data) {
+          onReasonSubmit(data.declineReason)
+        }
+      }
     })
 
   const hasErrors = Boolean(errors.declineReason)
@@ -132,7 +122,11 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
           <Button color='tonal-error' onClick={onAccept} size='xs'>
             {t('cooperationDetailsPage.acceptBtn')}
           </Button>
-          <Button onClick={handleDeclineClick} size='xs'>
+          <Button
+            disabled={isReasonSubmitted}
+            onClick={handleDeclineClick}
+            size='xs'
+          >
             {t('cooperationDetailsPage.declineBtn')}
           </Button>
         </>
