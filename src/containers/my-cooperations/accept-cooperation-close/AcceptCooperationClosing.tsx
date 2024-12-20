@@ -38,6 +38,15 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
     setIsInputShown(true)
   }
 
+  const handleSubmitReason = useCallback(
+    (data: { declineReason: string } | undefined) => {
+      if (data) {
+        onReasonSubmit(data.declineReason)
+      }
+    },
+    [onReasonSubmit]
+  )
+
   const { data, errors, trigger, handleInputChange, handleSubmit, resetData } =
     useForm({
       initialValues: { declineReason: '' },
@@ -49,11 +58,12 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
           })
         }
       },
-      onSubmit: (data) => {
-        if (data) {
-          onReasonSubmit(data.declineReason)
-        }
-      }
+      // onSubmit: (data) => {
+      //   if (data) {
+      //     onReasonSubmit(data.declineReason)
+      //   }
+      // }
+      onSubmit: handleSubmitReason
     })
 
   const hasErrors = Boolean(errors.declineReason)
