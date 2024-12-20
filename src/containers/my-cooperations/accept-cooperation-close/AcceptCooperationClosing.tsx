@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ErrorOutlineRounded } from '@mui/icons-material'
 import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
@@ -5,7 +6,6 @@ import CooperationActionBanner from '~/containers/my-cooperations/cooperation-ac
 import Button from '~/design-system/components/button/Button'
 
 import { styles } from './AcceptCooperationClosing.styles'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import InputField from '~/design-system/components/input-field/InputField'
 import { InputFieldVariantEnum } from '~/design-system/components/input-field/InputField.constants'
 import useForm from '~/hooks/use-form'
@@ -34,7 +34,7 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
     }
   }, [isInputShown])
 
-  const handleDeclineBtnClick = () => {
+  const handleDeclineClick = () => {
     setIsInputShown(true)
   }
 
@@ -122,7 +122,7 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
           <Button color='tonal-error' onClick={onAccept} size='xs'>
             {t('cooperationDetailsPage.acceptBtn')}
           </Button>
-          <Button onClick={handleDeclineBtnClick} size='xs'>
+          <Button onClick={handleDeclineClick} size='xs'>
             {t('cooperationDetailsPage.declineBtn')}
           </Button>
         </>
