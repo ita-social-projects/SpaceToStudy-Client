@@ -1,41 +1,28 @@
 import {
   useQuery as useReactQuery,
+  QueryKey,
   UseQueryOptions
 } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
+import { ErrorResponse } from '~/types'
 
-interface UseQueryProps<
-  TQueryFnData,
-  TError,
-  TData,
-  TQueryKey extends unknown[]
-> {
-  queryKey: TQueryKey
-  queryFn: () => Promise<TQueryFnData>
-  options?: UseQueryOptions<TQueryFnData, TError, TData>
+interface UseQueryProps<TData, TError, TSelect> {
+  queryKey: QueryKey
+  queryFn: () => Promise<TData>
+  options?: UseQueryOptions<TData, TError, TSelect>
 }
 
-const useQuery = <
-  TQueryFnData,
-  TError = AxiosError,
-  TData = TQueryFnData,
-  TQueryKey extends unknown[] = []
->({
+const useQuery = <TData, TError = ErrorResponse, TSelect = TData>({
   queryKey,
   queryFn,
   options
-}: UseQueryProps<TQueryFnData, TError, TData, TQueryKey>) => {
-  const { isLoading, error, data, refetch } = useReactQuery<
-    TQueryFnData,
-    TError,
-    TData
-  >({
+}: UseQueryProps<TData, TError, TSelect>) => {
+  const query = useReactQuery<TData, TError, TSelect>({
     queryKey,
     queryFn,
     ...options
   })
 
-  return { isLoading, error, data, refetch }
+  return query
 }
 
 export default useQuery
