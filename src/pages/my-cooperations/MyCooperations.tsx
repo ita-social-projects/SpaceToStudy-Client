@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { setPageLoad } from '~/redux/reducer'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useQuery from '~/hooks/use-query'
 import useSort from '~/hooks/table/use-sort'
@@ -39,7 +38,6 @@ const MyCooperations = () => {
     CardsViewEnum.Inline
   )
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
   const [searchParams, setSearchParams] = useSearchParams()
   const activeTab = searchParams.get('tab')
@@ -98,10 +96,6 @@ const MyCooperations = () => {
     title: t(title),
     value
   }))
-
-  useLayoutEffect(() => {
-    void dispatch(setPageLoad(isLoading))
-  }, [dispatch, isLoading])
 
   return (
     <PageWrapper>
