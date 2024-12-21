@@ -7,7 +7,7 @@ import {
 } from '~/types'
 
 export interface ResourceBase {
-  id: string
+  id?: string
   description: string
   resourceType: ResourceType
   isDuplicate?: boolean
