@@ -184,11 +184,10 @@ export const adjustColumns = <
 export const spliceSx = (
   defaultStyles?: SxProps<Theme>,
   newStyles?: SxProps<Theme>
-) =>
-  ({
-    ...defaultStyles,
-    ...newStyles
-  }) as SxProps
+) => ({
+  ...defaultStyles,
+  ...newStyles
+})
 
 export const studentOrTutor = (userRole: '' | UserRole) =>
   userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
