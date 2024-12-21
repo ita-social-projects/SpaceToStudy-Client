@@ -12,7 +12,7 @@ interface AppButtonProps extends Omit<ButtonProps, 'size'> {
   disabled?: boolean
   component?: ElementType
   to?: string
-  size?: 'small' | 'medium' | 'large' | 'extraLarge' | 'xxl' | SizeEnum | null
+  size?: `${SizeEnum}` | SizeEnum | null
 }
 
 const AppButton: FC<AppButtonProps> = ({
