@@ -14,14 +14,15 @@ import {
   removeColumnRules
 } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.constants'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
-import { Cooperation, SizeEnum, StatusEnum } from '~/types'
+import { Cooperation, ErrorResponse, SizeEnum, StatusEnum } from '~/types'
 import { useNavigate } from 'react-router-dom'
+import { type QueryObserverResult } from '@tanstack/react-query'
 
 interface CooperationContainerProps {
   items: Cooperation[]
   showTable: boolean
   sort: SortHook
-  getCooperations: () => Promise<void>
+  getCooperations: () => Promise<QueryObserverResult<unknown, ErrorResponse>>
 }
 
 const CooperationContainer: FC<CooperationContainerProps> = ({

@@ -33,10 +33,11 @@ import { styles } from '~/containers/my-cooperations/accept-cooperation-modal/Ac
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import { type QueryObserverResult } from '@tanstack/react-query'
 
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
-  getCooperations: () => Promise<void>
+  getCooperations: () => Promise<QueryObserverResult<unknown, ErrorResponse>>
 }
 
 const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
