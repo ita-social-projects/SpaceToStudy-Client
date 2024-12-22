@@ -82,17 +82,17 @@ const Menu: React.FC<MenuProps> = ({
   }
 
   const toggleAsSingleItem = (itemTitle: string) => {
-    setToggledItemsTitles((previousItems) =>
-      previousItems.includes(itemTitle) ? [] : [itemTitle]
-    )
+    setToggledItemsTitles((previousItems) => {
+      return previousItems.includes(itemTitle) ? [] : [itemTitle]
+    })
   }
 
   const toggleAsOneOfMultipleItems = (itemTitle: string) => {
-    setToggledItemsTitles((previousItems) =>
-      previousItems.includes(itemTitle)
-        ? previousItems.filter((i) => i !== itemTitle)
+    setToggledItemsTitles((previousItems) => {
+      return previousItems.includes(itemTitle)
+        ? previousItems.filter((item) => item !== itemTitle)
         : [...previousItems, itemTitle]
-    )
+    })
   }
 
   const handleMenuClose = () => {
