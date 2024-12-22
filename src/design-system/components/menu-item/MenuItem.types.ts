@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
-import { MenuItemColorVariant } from './MenuItem.constants'
+import { type ReactNode } from 'react'
+import { type MenuItemColorVariant } from './MenuItem.constants'
 
 export type OnItemClickArgs = Record<string, string | Event>
 

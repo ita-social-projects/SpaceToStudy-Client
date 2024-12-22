@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { MenuItem as MuiMenuItem } from '@mui/material'
 import { ArrowDropDown, ArrowDropUp, CloseRounded } from '@mui/icons-material'
 
@@ -16,7 +15,7 @@ interface MenuItemProps extends CommonMenuItemProps {
   variant?: MenuItemVariant
 }
 
-const MenuItem: FC<MenuItemProps> = ({
+const MenuItem: React.FC<MenuItemProps> = ({
   title,
   additionalInfo,
   alignVariant = 'left',

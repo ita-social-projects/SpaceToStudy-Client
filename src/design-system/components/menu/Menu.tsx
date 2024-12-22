@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import { Menu as MuiMenu, PopoverOrigin } from '@mui/material'
 
 import {
@@ -42,7 +42,7 @@ interface MenuProps {
   onToggleItemsChange?: (newTitles: string[]) => void
 }
 
-const Menu: FC<MenuProps> = ({
+const Menu: React.FC<MenuProps> = ({
   anchorEl,
   setAnchorEl,
   menuItems,
