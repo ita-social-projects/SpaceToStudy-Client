@@ -30,7 +30,8 @@ import {
   Quiz,
   QuizTabsEnum,
   ComponentEnum,
-  QuizSettings
+  QuizSettings,
+  ResourcesTypesEnum
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
@@ -102,7 +103,7 @@ const QuizSettingsContainer = ({
   const { fetchData: createQuiz } = useAxios<Quiz, CreateQuizParams>({
     service: createQuizService,
     fetchOnMount: false,
-    defaultResponse,
+    defaultResponse: { ...defaultResponse, id: '' },
     onResponse,
     onResponseError
   })
@@ -117,8 +118,10 @@ const QuizSettingsContainer = ({
               title,
               description,
               items: questions,
-              category,
-              settings: data
+              category: { _id: '', name: category as string },
+              settings: data,
+              id: '',
+              resourceType: ResourcesTypesEnum.Quiz
             })
       }
     })
