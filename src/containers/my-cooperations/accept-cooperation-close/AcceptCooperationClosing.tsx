@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { ErrorOutlineRounded } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+
 import CooperationActionBanner from '~/containers/my-cooperations/cooperation-action-banner/CooperationActionBanner'
+import CooperationActionInput from '../cooperation-action-input/CooperationActionInput'
 import Button from '~/design-system/components/button/Button'
 
 import { styles } from './AcceptCooperationClosing.styles'
@@ -55,13 +57,16 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
         </>
       }
       icon={<ErrorOutlineRounded />}
-      isInputShown={isInputShown}
-      isReasonSubmitted={isReasonSubmitted}
-      onReasonSubmit={onReasonSubmit}
-      setIsInputShown={setIsInputShown}
-      setIsReasonSubmitted={setIsReasonSubmitted}
       title={t('titles.acceptCooperationClosing')}
-    />
+    >
+      <CooperationActionInput
+        isInputShown={isInputShown}
+        isReasonSubmitted={isReasonSubmitted}
+        onReasonSubmit={onReasonSubmit}
+        setIsInputShown={setIsInputShown}
+        setIsReasonSubmitted={setIsReasonSubmitted}
+      />
+    </CooperationActionBanner>
   )
 }
 

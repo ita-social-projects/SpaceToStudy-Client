@@ -7,6 +7,7 @@ import Button from '~/design-system/components/button/Button'
 import CooperationActionBanner from '~/containers/my-cooperations/cooperation-action-banner/CooperationActionBanner'
 
 import { styles } from './CooperationClosureDeclinedBanner.styles'
+import CooperationActionInput from '../cooperation-action-input/CooperationActionInput'
 
 export interface CooperationClosureDeclinedBannerProps {
   message: string
@@ -41,11 +42,14 @@ const CooperationClosureDeclinedBanner: React.FC<
         </>
       }
       icon={<ErrorOutlineRounded />}
-      isInputShown={isInputShown}
-      onReasonSubmit={onSend}
-      setIsInputShown={setIsInputShown}
       title={t('titles.cooperationClosureDeclined')}
-    />
+    >
+      <CooperationActionInput
+        isInputShown={isInputShown}
+        onReasonSubmit={onSend}
+        setIsInputShown={setIsInputShown}
+      />
+    </CooperationActionBanner>
   )
 }
 
