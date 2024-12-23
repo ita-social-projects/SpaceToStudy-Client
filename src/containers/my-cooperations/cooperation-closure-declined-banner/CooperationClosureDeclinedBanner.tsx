@@ -6,17 +6,17 @@ import { Typography } from '@mui/material'
 import Button from '~/design-system/components/button/Button'
 import CooperationActionBanner from '~/containers/my-cooperations/cooperation-action-banner/CooperationActionBanner'
 
-import { styles } from './CooperationClosureDeclinedModal.styles'
+import { styles } from './CooperationClosureDeclinedBanner.styles'
 
-export interface CooperationClosureDeclinedModalProps {
+export interface CooperationClosureDeclinedBannerProps {
   message: string
   onReasonSubmit: (reason: string) => void
   onSend: () => void
   user: string
 }
 
-const CooperationClosureDeclinedModal: React.FC<
-  CooperationClosureDeclinedModalProps
+const CooperationClosureDeclinedBanner: React.FC<
+  CooperationClosureDeclinedBannerProps
 > = ({ message, onReasonSubmit, onSend, user }) => {
   const { t } = useTranslation()
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
@@ -49,4 +49,4 @@ const CooperationClosureDeclinedModal: React.FC<
   )
 }
 
-export default CooperationClosureDeclinedModal
+export default CooperationClosureDeclinedBanner
