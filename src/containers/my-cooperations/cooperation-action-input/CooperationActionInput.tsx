@@ -11,6 +11,8 @@ import Button from '~/design-system/components/button/Button'
 import { styles } from './CooperationActionInput.styles'
 
 type CooperationActionInputProps = {
+  inputLabel: string
+  inputPlaceholderMessage: string
   isInputShown: boolean
   isReasonSubmitted?: boolean
   onReasonSubmit: (reason: string) => void
@@ -19,6 +21,8 @@ type CooperationActionInputProps = {
 }
 
 const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
+  inputLabel,
+  inputPlaceholderMessage,
   isInputShown,
   isReasonSubmitted: customIsReasonSubmitted,
   onReasonSubmit,
@@ -73,16 +77,14 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
   if (isInputShown) {
     return (
       <Box sx={styles.inputBox}>
-        <Typography sx={styles.textGray}>
-          {t('cooperationDetailsPage.InputFieldLabel')}
-        </Typography>
+        <Typography sx={styles.textGray}>{inputLabel}</Typography>
         <Box sx={styles.inputContainer}>
           <InputField
             error={hasErrors}
             helperText={errors.declineReason}
             onChange={handleInputChange('declineReason')}
             onClear={() => resetData(['declineReason'])}
-            placeholder={t('cooperationDetailsPage.inputFieldPlaceholder')}
+            placeholder={inputPlaceholderMessage}
             ref={inputRef}
             sx={styles.inputField}
             value={data.declineReason}

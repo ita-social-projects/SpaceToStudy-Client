@@ -60,6 +60,10 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
       title={t('titles.acceptCooperationClosing')}
     >
       <CooperationActionInput
+        inputLabel={t('cooperationDetailsPage.declineInputFieldLabel')}
+        inputPlaceholderMessage={t(
+          t('cooperationDetailsPage.declineInputFieldPlaceholder')
+        )}
         isInputShown={isInputShown}
         isReasonSubmitted={isReasonSubmitted}
         onReasonSubmit={onReasonSubmit}

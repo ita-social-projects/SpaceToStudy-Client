@@ -45,6 +45,10 @@ const CooperationClosureDeclinedBanner: React.FC<
       title={t('titles.cooperationClosureDeclined')}
     >
       <CooperationActionInput
+        inputLabel={t('cooperationDetailsPage.responseInputFieldLabel')}
+        inputPlaceholderMessage={t(
+          t('cooperationDetailsPage.responseInputFieldPlaceholder')
+        )}
         isInputShown={isInputShown}
         onReasonSubmit={onSend}
         setIsInputShown={setIsInputShown}
