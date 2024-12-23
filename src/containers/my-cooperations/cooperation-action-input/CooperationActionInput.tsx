@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
@@ -70,54 +70,40 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
     }
   }, [handleSubmit, setIsInputShown, setIsReasonSubmitted, hasErrors, trigger])
 
-  const renderedInputField = useMemo(() => {
-    if (isInputShown) {
-      return (
-        <Box sx={styles.inputBox}>
-          <Typography sx={styles.textGray}>
-            {t('cooperationDetailsPage.InputFieldLabel')}
-          </Typography>
-          <Box sx={styles.inputContainer}>
-            <InputField
-              error={hasErrors}
-              helperText={errors.declineReason}
-              onChange={handleInputChange('declineReason')}
-              onClear={() => resetData(['declineReason'])}
-              placeholder={t('cooperationDetailsPage.inputFieldPlaceholder')}
-              ref={inputRef}
-              sx={styles.inputField}
-              value={data.declineReason}
-              variant={InputFieldVariantEnum.Outlined}
-            ></InputField>
-            <Button color='tonal-error' onClick={handleReasonSubmit} size='sm'>
-              {t('cooperationDetailsPage.submitBtn')}
-            </Button>
-          </Box>
-        </Box>
-      )
-    }
-
+  if (isInputShown) {
     return (
-      isReasonSubmitted &&
-      !hasErrors && (
+      <Box sx={styles.inputBox}>
         <Typography sx={styles.textGray}>
-          {t('cooperationDetailsPage.submitMessage')}
+          {t('cooperationDetailsPage.InputFieldLabel')}
         </Typography>
-      )
+        <Box sx={styles.inputContainer}>
+          <InputField
+            error={hasErrors}
+            helperText={errors.declineReason}
+            onChange={handleInputChange('declineReason')}
+            onClear={() => resetData(['declineReason'])}
+            placeholder={t('cooperationDetailsPage.inputFieldPlaceholder')}
+            ref={inputRef}
+            sx={styles.inputField}
+            value={data.declineReason}
+            variant={InputFieldVariantEnum.Outlined}
+          ></InputField>
+          <Button color='tonal-error' onClick={handleReasonSubmit} size='sm'>
+            {t('cooperationDetailsPage.submitBtn')}
+          </Button>
+        </Box>
+      </Box>
     )
-  }, [
-    isInputShown,
-    isReasonSubmitted,
-    data.declineReason,
-    errors.declineReason,
-    hasErrors,
-    resetData,
-    handleInputChange,
-    handleReasonSubmit,
-    t
-  ])
+  }
 
-  return <>{renderedInputField}</>
+  return (
+    isReasonSubmitted &&
+    !hasErrors && (
+      <Typography sx={styles.textGray}>
+        {t('cooperationDetailsPage.submitMessage')}
+      </Typography>
+    )
+  )
 }
 
 export default CooperationActionInput
