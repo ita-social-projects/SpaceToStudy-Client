@@ -40,5 +40,20 @@ export const styles = {
       xs: 'end',
       sm: 'auto'
     }
+  },
+  inputBox: {
+    mb: '8px'
+  },
+  inputContainer: {
+    display: 'flex',
+    gap: '16px',
+    height: '50px',
+    mt: '10px'
+  },
+  inputField: {
+    flex: 1
+  },
+  textGray: {
+    color: palette.basic.darkGray
   }
 } satisfies Record<string, SxProps>

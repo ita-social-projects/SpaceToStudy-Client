@@ -1,4 +1,5 @@
 import { TypographyVariantEnum } from '~/types'
+import palette from '~/styles/app-theme/app.pallete'
 
 export const styles = {
   boldText: {
@@ -6,6 +7,6 @@ export const styles = {
   },
   secondaryText: {
     typography: TypographyVariantEnum.Body2,
-    color: 'basic.bismark'
+    color: palette.basic.bismark
   }
 }
