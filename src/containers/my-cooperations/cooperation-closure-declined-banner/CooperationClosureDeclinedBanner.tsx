@@ -10,22 +10,24 @@ import { styles } from './CooperationClosureDeclinedBanner.styles'
 
 export interface CooperationClosureDeclinedBannerProps {
   message: string
-  onReasonSubmit: (reason: string) => void
-  onSend: () => void
+  onSend: (answer: string) => void
   user: string
 }
 
 const CooperationClosureDeclinedBanner: React.FC<
   CooperationClosureDeclinedBannerProps
-> = ({ message, onReasonSubmit, onSend, user }) => {
+> = ({ message, onSend, user }) => {
   const { t } = useTranslation()
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
-  const [isReasonSubmitted, setIsReasonSubmitted] = useState<boolean>(false)
+
+  const handleResendRequest = () => {
+    setIsInputShown(true)
+  }
 
   return (
     <CooperationActionBanner
       actionButtons={
-        <Button color='tonal-error' onClick={onSend} size='xs'>
+        <Button color='tonal-error' onClick={handleResendRequest} size='xs'>
           {t('cooperationDetailsPage.resendRequestBtn')}
         </Button>
       }
@@ -40,10 +42,8 @@ const CooperationClosureDeclinedBanner: React.FC<
       }
       icon={<ErrorOutlineRounded />}
       isInputShown={isInputShown}
-      isReasonSubmitted={isReasonSubmitted}
-      onReasonSubmit={onReasonSubmit}
+      onReasonSubmit={onSend}
       setIsInputShown={setIsInputShown}
-      setIsReasonSubmitted={setIsReasonSubmitted}
       title={t('titles.cooperationClosureDeclined')}
     />
   )

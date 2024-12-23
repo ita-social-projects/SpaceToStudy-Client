@@ -1,4 +1,11 @@
-import { type ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
@@ -15,10 +22,10 @@ type Properties = {
   description: ReactNode
   icon?: ReactNode
   isInputShown: boolean
-  isReasonSubmitted: boolean
+  isReasonSubmitted?: boolean
   onReasonSubmit: (reason: string) => void
   setIsInputShown: (value: boolean) => void
-  setIsReasonSubmitted: (value: boolean) => void
+  setIsReasonSubmitted?: (value: boolean) => void
   title: string
 }
 
@@ -27,14 +34,20 @@ const CooperationActionBanner: React.FC<Properties> = ({
   description,
   icon,
   isInputShown,
-  isReasonSubmitted,
+  isReasonSubmitted: customIsReasonSubmitted,
   onReasonSubmit,
   setIsInputShown,
-  setIsReasonSubmitted,
+  setIsReasonSubmitted: customSetIsReasonSubmitted,
   title
 }) => {
   const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const [internalIsReasonSubmitted, setInternalIsReasonSubmitted] =
+    useState<boolean>(false)
+
+  const isReasonSubmitted = customIsReasonSubmitted ?? internalIsReasonSubmitted
+  const setIsReasonSubmitted =
+    customSetIsReasonSubmitted ?? setInternalIsReasonSubmitted
 
   useEffect(() => {
     if (isInputShown && inputRef.current) {
@@ -67,7 +80,7 @@ const CooperationActionBanner: React.FC<Properties> = ({
 
     if (isValid && !hasErrors) {
       handleSubmit()
-      setIsReasonSubmitted(true)
+      setIsReasonSubmitted && setIsReasonSubmitted(true)
       setIsInputShown(false)
     }
   }, [handleSubmit, setIsInputShown, setIsReasonSubmitted, hasErrors, trigger])
