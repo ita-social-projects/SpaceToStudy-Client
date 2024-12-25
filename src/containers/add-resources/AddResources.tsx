@@ -3,7 +3,8 @@ import { useCallback, useState } from 'react'
 import { useAppDispatch } from '~/hooks/use-redux'
 import useSelect from '~/hooks/table/use-select'
 import useSort from '~/hooks/table/use-sort'
-import useAxios from '~/hooks/use-axios'
+// import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { useModalContext } from '~/context/modal-context'
@@ -82,10 +83,26 @@ const AddResources = <T extends CourseResource | Question>({
     [dispatch]
   )
 
-  const { loading, response } = useAxios<ItemsWithCount<T>>({
-    service: getMyResources,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError
+  // const { loading, response } = useAxios<ItemsWithCount<T>>({
+  //   service: getMyResources,
+  //   defaultResponse: defaultResponses.itemsWithCount,
+  //   onResponseError
+  // })
+
+  const { isLoading: loading, data } = useQuery<
+    ItemsWithCount<T>,
+    ErrorResponse
+  >({
+    queryKey: ['resources'],
+    queryFn: async () => {
+      try {
+        const response = await getMyResources()
+        return response.data
+      } catch (error) {
+        onResponseError(error as ErrorResponse)
+        return defaultResponses.itemsWithCount
+      }
+    }
   })
 
   const onRowClick = useCallback(
@@ -123,7 +140,8 @@ const AddResources = <T extends CourseResource | Question>({
 
   const getItems = useCallback(
     (inputValue: string, selectedCategories: string[]) => {
-      return response.items.filter((item) => {
+      if (!data?.items) return []
+      return data?.items.filter((item) => {
         const titleMatch =
           'title' in item
             ? item.title
@@ -146,7 +164,7 @@ const AddResources = <T extends CourseResource | Question>({
         return titleMatch && categoryMatch
       })
     },
-    [response.items]
+    [data?.items]
   )
 
   const props = {
