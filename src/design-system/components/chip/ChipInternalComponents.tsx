@@ -1,7 +1,7 @@
 import CircleIcon from '@mui/icons-material/Circle'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { CSSProperties, useCallback, useState } from 'react'
+import { type CSSProperties, useCallback, useState } from 'react'
 
 import { cn } from '~/utils/cn'
 
