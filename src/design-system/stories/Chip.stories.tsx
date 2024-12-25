@@ -1,8 +1,7 @@
 import type { Meta } from '@storybook/react'
 import { fn } from '@storybook/test'
-import { useState } from 'react'
+import { type ComponentProps, useState } from 'react'
 import Chip from '~/design-system/components/chip/Chip'
-import { type ChipProps } from '~/design-system/components/chip/types'
 
 const meta: Meta<typeof Chip> = {
   title: 'Components/Chip',
@@ -58,6 +57,8 @@ With multiple types, sizes, and visual states, it offers flexibility to suit var
 }
 
 export default meta
+
+type ChipProps = ComponentProps<typeof Chip>
 
 type AllChipProps = ChipProps &
   Record<'filterVariant', Extract<ChipProps, { type: 'filter' }>['variant']> &
