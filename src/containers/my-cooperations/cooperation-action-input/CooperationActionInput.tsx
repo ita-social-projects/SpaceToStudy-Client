@@ -59,7 +59,8 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
         if (data) {
           onReasonSubmit(data.declineReason)
         }
-      }
+      },
+      submitWithData: true
     })
 
   const hasErrors = Boolean(errors.declineReason)

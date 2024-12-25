@@ -32,7 +32,7 @@ describe('AcceptCooperationClosing', () => {
     expect(declineBtn).toBeInTheDocument()
 
     const inputLabel = screen.getByText(
-      'cooperationDetailsPage.InputFieldLabel'
+      'cooperationDetailsPage.declineInputFieldLabel'
     )
     expect(inputLabel).toBeInTheDocument()
   })
