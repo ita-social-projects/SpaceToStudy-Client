@@ -70,7 +70,7 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
 
     if (isValid && !hasErrors) {
       handleSubmit()
-      setIsReasonSubmitted && setIsReasonSubmitted(true)
+      setIsReasonSubmitted?.(true)
       setIsInputShown(false)
     }
   }, [handleSubmit, setIsInputShown, setIsReasonSubmitted, hasErrors, trigger])
