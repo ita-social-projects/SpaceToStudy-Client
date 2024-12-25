@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ErrorOutlineRounded } from '@mui/icons-material'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { Typography } from '@mui/material'
 
 import Button from '~/design-system/components/button/Button'
@@ -34,10 +34,13 @@ const CooperationClosureDeclinedBanner: React.FC<
       }
       description={
         <>
-          <Typography component='span' sx={styles.boldText}>
-            {user}
-          </Typography>
-          {` ${t('cooperationDetailsPage.cooperationCloseDeclinedMessage')}`}
+          <Trans
+            components={{
+              userWrapper: <Typography component='span' sx={styles.boldText} />
+            }}
+            i18nKey='cooperationDetailsPage.cooperationCloseDeclinedMessage'
+            values={{ user: user }}
+          />
           <Typography sx={styles.secondaryText}>{message}</Typography>
         </>
       }
