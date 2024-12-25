@@ -180,15 +180,15 @@ describe('FilterChip', () => {
     expect(onIsOpenChange).toHaveBeenCalledWith(false)
   })
 
-  it('should call the onSelectedChange after changing selectedOption state', async () => {
-    const onSelectedChange = vi.fn()
+  it('should call the onSelectedOptionChange after changing selectedOption state', async () => {
+    const onSelectedOptionChange = vi.fn()
 
     render(
       <Chip
         type='filter'
         label='Filter Chip'
         options={['Option 1', 'Option 2']}
-        onSelectedChange={onSelectedChange}
+        onSelectedOptionChange={onSelectedOptionChange}
       />
     )
 
@@ -200,8 +200,8 @@ describe('FilterChip', () => {
 
     fireEvent.click(option2)
 
-    expect(onSelectedChange).toHaveBeenCalledOnce()
-    expect(onSelectedChange).toHaveBeenCalledWith('Option 2')
+    expect(onSelectedOptionChange).toHaveBeenCalledOnce()
+    expect(onSelectedOptionChange).toHaveBeenCalledWith('Option 2')
   })
 })
 

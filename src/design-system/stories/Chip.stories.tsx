@@ -42,7 +42,7 @@ With multiple types, sizes, and visual states, it offers flexibility to suit var
    - **isOpen**: An optional open state (\`boolean\`). Makes the Chip component controllable by \`isOpen\` state
    - **selectedOption**: An optional selected option state (\`string\` or \`null\`). Makes the Chip component controllable by \`selectedOption\` state
    - **onIsOpenChange**: An optional callback that is called after the \`isOpen\` state has been changed.
-   - **onSelectedChange**: An optional callback that is called after the \`selectedOption\` state has been changed.
+   - **onSelectedOptionChange**: An optional callback that is called after the \`selectedOption\` state has been changed.
 2. **Input Chip** (\`type: 'input'\`):
    - **variant**: Supports \`filled\`, \`outlined\`, and \`filled-outlined\` styles.
    - **onRemoveButtonClick**: An optional callback that is called after the remove button has been clicked.
@@ -100,7 +100,7 @@ All.args = {
   detail: 'Details',
   options: ['Option 1', 'Option 2', 'Option 3'],
   onIsOpenChange: fn(),
-  onSelectedChange: fn(),
+  onSelectedOptionChange: fn(),
   onRemoveButtonClick: fn()
 }
 All.argTypes = {
@@ -185,7 +185,7 @@ All.argTypes = {
       'Callback that is called after the open state has been changed.',
     if: { arg: 'type', eq: 'filter' }
   },
-  onSelectedChange: {
+  onSelectedOptionChange: {
     control: false,
     description:
       'Callback that is called after the selected state has been changed.',
@@ -247,7 +247,7 @@ FilterChipUncontrolled.args = {
   variant: 'filled',
   disabled: false,
   onIsOpenChange: fn(),
-  onSelectedChange: fn()
+  onSelectedOptionChange: fn()
 }
 FilterChipUncontrolled.argTypes = {
   type: {
@@ -305,7 +305,7 @@ FilterChipUncontrolled.argTypes = {
     description:
       'Callback that is called after the open state has been changed.'
   },
-  onSelectedChange: {
+  onSelectedOptionChange: {
     control: false,
     description:
       'Callback that is called after the selected state has been changed.'
@@ -326,7 +326,7 @@ export const FilterChipControlled = (
         {...args}
         isOpen={isOpen}
         onIsOpenChange={setIsOpen}
-        onSelectedChange={setSelectedOption}
+        onSelectedOptionChange={setSelectedOption}
         selectedOption={selectedOption}
       />
     </div>

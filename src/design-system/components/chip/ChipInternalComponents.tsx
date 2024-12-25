@@ -60,7 +60,7 @@ const FilterChip: React.FC<FilterChipProps> = ({
   isOpen: externalIsOpen,
   label,
   onIsOpenChange,
-  onSelectedChange,
+  onSelectedOptionChange,
   options = [],
   selectedOption: externalSelectedOption,
   size = 'md',
@@ -91,11 +91,11 @@ const FilterChip: React.FC<FilterChipProps> = ({
           setInternalSelectedOption(selectedOption)
         }
 
-        onSelectedChange?.(selectedOption)
+        onSelectedOptionChange?.(selectedOption)
         handleToggleIsOpen()
       }
     },
-    [handleToggleIsOpen, isSelectedStateControlled, onSelectedChange]
+    [handleToggleIsOpen, isSelectedStateControlled, onSelectedOptionChange]
   )
 
   const resolvedSelectedOption = isSelectedStateControlled
