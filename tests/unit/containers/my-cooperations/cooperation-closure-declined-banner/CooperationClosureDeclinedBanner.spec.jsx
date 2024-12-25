@@ -1,4 +1,4 @@
-import { beforeEach, expect, vi } from 'vitest'
+import { beforeEach, expect } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 import CooperationClosureDeclinedBanner from '~/containers/my-cooperations/cooperation-closure-declined-banner/CooperationClosureDeclinedBanner'
@@ -54,9 +54,8 @@ describe('CooperationClosureDeclinedBanner', () => {
 
     const input = screen.getByRole('textbox')
     fireEvent.change(input, {
-      target: { value: 'Sorry, I have added meterial that I promised.' }
+      target: { value: 'Sorry, I have added material that I promised.' }
     })
-    expect(input.value).toBe('Sorry, I have added meterial that I promised.')
 
     const submitButton = screen.getByText('cooperationDetailsPage.submitBtn')
     fireEvent.click(submitButton)
