@@ -1,39 +1,32 @@
-import React, { useState } from 'react'
 import {
-  ChipProps,
+  CategoryChip,
   FilterChip,
   InputChip,
-  CategoryChip,
   StateChip
-} from './ChipTypes'
+} from './ChipInternalComponents'
+import { type ChipProps } from './types'
 
 const Chip: React.FC<ChipProps> = (props) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
-
-  const handleSelectChange = (option: string) => {
-    setSelectedOption(option)
-  }
-
   switch (props.type) {
-    case 'filter':
-      return (
-        <FilterChip
-          {...props}
-          isOpen={isOpen}
-          onSelectChange={handleSelectChange}
-          selectedOption={selectedOption}
-          setIsOpen={setIsOpen}
-        />
-      )
-    case 'input':
+    case 'filter': {
+      return <FilterChip {...props} />
+    }
+
+    case 'input': {
       return <InputChip {...props} />
-    case 'category':
+    }
+
+    case 'category': {
       return <CategoryChip {...props} />
-    case 'state':
+    }
+
+    case 'state': {
       return <StateChip {...props} />
-    default:
+    }
+
+    default: {
       return null
+    }
   }
 }
 
