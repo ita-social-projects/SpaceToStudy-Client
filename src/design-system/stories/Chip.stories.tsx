@@ -37,9 +37,9 @@ With multiple types, sizes, and visual states, it offers flexibility to suit var
 1. **Filter Chip** (\`type: 'filter'\`):
    - **variant**: Defines the visual style (\`filled\` or \`minimal\`).
    - **initialIsOpen**: An optional initial open state (\`boolean\`).
-   - **initialSelectedOption**: An optional initial selected optional state (\`string\` or \`null\`).
-   - **isOpen**: An optional open state (\`boolean\`). Makes the Chip component controllable by \`isOpen\` state
-   - **selectedOption**: An optional selected option state (\`string\` or \`null\`). Makes the Chip component controllable by \`selectedOption\` state
+   - **initialSelectedOption**: An optional initial selected state (\`string\` or \`null\`).
+   - **isOpen**: An optional open state (\`boolean\`). Makes the Chip component controllable by \`isOpen\` state.
+   - **selectedOption**: An optional selected option state (\`string\` or \`null\`). Makes the Chip component controllable by \`selectedOption\` state.
    - **onIsOpenChange**: An optional callback that is called after the \`isOpen\` state has been changed.
    - **onSelectedOptionChange**: An optional callback that is called after the \`selectedOption\` state has been changed.
 2. **Input Chip** (\`type: 'input'\`):
@@ -339,8 +339,7 @@ FilterChipControlled.args = {
   label: 'Filter Chip',
   options: ['Option 1', 'Option 2', 'Option 3'],
   variant: 'filled',
-  disabled: false,
-  initialIsOpen: true
+  disabled: false
 }
 FilterChipControlled.argTypes = {
   type: {
