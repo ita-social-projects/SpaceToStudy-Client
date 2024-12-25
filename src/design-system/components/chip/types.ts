@@ -34,7 +34,7 @@ type FilterChipProps = CommonChipProps<'filter'> &
     initialSelectedOption?: string | null
     isOpen?: boolean
     onIsOpenChange?: (isOpen: boolean) => void
-    onSelectedChange?: (option: string) => void
+    onSelectedOptionChange?: (option: string) => void
     options: string[]
     selectedOption?: string | null
     variant?: 'filled' | 'minimal'
