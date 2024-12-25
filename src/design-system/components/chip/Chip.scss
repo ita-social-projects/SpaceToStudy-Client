@@ -93,7 +93,13 @@
       color: var(--#{$prefix}blue-gray-500);
     }
 
-    .#{$prefix}btn {
+    .#{$prefix}dropdown-trigger {
+      background: transparent;
+      border: none;
+      padding: 0;
+      width: 100%;
+      color: inherit;
+      line-height: inherit;
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -115,6 +121,12 @@
       box-shadow: var(--#{$prefix}box-shadow-xs);
 
       .#{$prefix}dropdown-item {
+        background: transparent;
+        border: none;
+        width: 100%;
+        text-align: start;
+        line-height: inherit;
+        color: inherit;
         padding: var(--#{$prefix}space-1) var(--#{$prefix}space-2);
         cursor: pointer;
         transition: background-color 0.2s;
@@ -145,6 +157,22 @@
 
     &.#{$prefix}filled-outlined {
       background-color: var(--#{$prefix}blue-gray-50);
+    }
+
+    .#{$prefix}input-chip-remove-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: var(--#{$prefix}space-0-25) var(--#{$prefix}space-0-25);
+      background: transparent;
+      border: none;
+      border-radius: $border-radius-xs;
+      cursor: pointer;
+      color: inherit;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
     }
   }
 
