@@ -53,7 +53,7 @@ const BaseChip: React.FC<BaseChipProps> = ({
 }
 
 const FilterChip: React.FC<FilterChipProps> = ({
-  disabled = false,
+  disabled,
   endIcon = <ExpandMoreIcon style={{ fontSize: 'inherit' }} />,
   initialIsOpen = false,
   initialSelectedOption: initialSelectedOption = null,
