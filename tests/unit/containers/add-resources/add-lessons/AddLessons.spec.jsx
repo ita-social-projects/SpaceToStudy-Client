@@ -66,10 +66,10 @@ describe('Tests for AddResources container', () => {
   })
 
   it('should display list of all resources with category', async () => {
-    const displayedLessons = screen.getAllByText(
+    const displayedLessons = await screen.findAllByText(
       lessonDataMock.category.name
-    ).length
-    expect(displayedLessons).toBe(10)
+    )
+    expect(displayedLessons.length).toBe(10)
   })
 
   it('should filter resources', () => {

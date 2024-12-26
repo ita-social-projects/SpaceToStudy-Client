@@ -63,8 +63,8 @@ describe('Tests for AddResources container', () => {
     vi.clearAllMocks()
   })
 
-  it('should display list of all attachments with category', () => {
-    const displayedAttachments = screen.getAllByText(
+  it('should display list of all attachments with category', async () => {
+    const displayedAttachments = await screen.findAllByText(
       attachmentDataMock.category.name
     )
     expect(displayedAttachments.length).toBe(10)
