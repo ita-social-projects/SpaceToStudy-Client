@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import {
   CategoryChip,
   FilterChip,
@@ -6,28 +7,30 @@ import {
 } from './ChipInternalComponents'
 import { type ChipProps } from './types'
 
-const Chip: React.FC<ChipProps> = (props) => {
+const Chip = forwardRef<HTMLDivElement, ChipProps>((props, reference) => {
   switch (props.type) {
     case 'filter': {
-      return <FilterChip {...props} />
+      return <FilterChip {...props} ref={reference} />
     }
 
     case 'input': {
-      return <InputChip {...props} />
+      return <InputChip {...props} ref={reference} />
     }
 
     case 'category': {
-      return <CategoryChip {...props} />
+      return <CategoryChip {...props} ref={reference} />
     }
 
     case 'state': {
-      return <StateChip {...props} />
+      return <StateChip {...props} ref={reference} />
     }
 
     default: {
       return null
     }
   }
-}
+})
+
+Chip.displayName = 'Chip'
 
 export default Chip
