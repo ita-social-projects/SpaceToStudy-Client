@@ -5,6 +5,7 @@ import reducer from '~/redux/reducer'
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles'
 import { screen, render, waitFor, fireEvent, act } from '@testing-library/react'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
+import QueryProvider from '~/QueryProvider'
 import PopupsProvider from '~/PopupsProvider'
 import cooperationsReducer from '~/redux/features/cooperationsSlice'
 import snackbarReducer from '~/redux/features/snackbarSlice'
@@ -38,7 +39,9 @@ export const renderWithProviders = (
       <MemoryRouter initialEntries={[initialEntries]}>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
-            <PopupsProvider>{children}</PopupsProvider>
+            <QueryProvider>
+              <PopupsProvider>{children}</PopupsProvider>
+            </QueryProvider>
           </ThemeProvider>
         </StyledEngineProvider>
       </MemoryRouter>
