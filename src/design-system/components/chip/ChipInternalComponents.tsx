@@ -56,7 +56,7 @@ const FilterChip = forwardRef<HTMLDivElement, FilterChipProps>(
       disabled,
       endIcon = <ExpandMoreIcon style={{ fontSize: 'inherit' }} />,
       initialIsOpen = false,
-      initialSelectedOption: initialSelectedOption = null,
+      initialSelectedOption = null,
       isOpen: externalIsOpen,
       label,
       onIsOpenChange,
