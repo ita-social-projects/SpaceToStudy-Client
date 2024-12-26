@@ -8,12 +8,7 @@ import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
-import {
-  CourseResource,
-  ResourceAvailability,
-  ResourceAvailabilityStatusEnum,
-  Resource
-} from '~/types'
+import { CourseResource, ResourceAvailability, Resource } from '~/types'
 
 import useDroppable from '~/hooks/use-droppable'
 import useDndSensor from '~/hooks/use-dnd-sensor'
@@ -53,7 +48,35 @@ const ResourcesList: FC<ResourcesListProps> = ({
     sensors
   } = useDndSensor({
     items: itemsForSort,
-    setItems: sortResources,
+    setItems: (newItems) => {
+      sortResources(newItems)
+      if (activeItem) {
+        const activeResource = cooperationData.find(
+          (item) => item.resource.id === activeItem.id
+        )
+        if (
+          activeResource &&
+          activeResource.availability &&
+          updateAvailability
+        ) {
+          updateAvailability(
+            activeResource.resource,
+            activeResource.availability
+          )
+        }
+      }
+      const inactiveResources = cooperationData.filter(
+        (item) => item.resource.id !== activeItem?.id
+      )
+      inactiveResources.forEach((inactiveResource) => {
+        if (inactiveResource.availability && updateAvailability) {
+          updateAvailability(
+            inactiveResource.resource,
+            inactiveResource.availability
+          )
+        }
+      })
+    },
     idProp: 'id'
   })
 
@@ -84,7 +107,10 @@ const ResourcesList: FC<ResourcesListProps> = ({
   const resourceItems = cooperationData?.map((item) => {
     return renderItem(item.resource, item.availability as ResourceAvailability)
   })
-
+  const getAvailabilityForActiveItem = (id: string | null) => {
+    return cooperationData.find((item) => item.resource.id === id)
+      ?.availability as ResourceAvailability
+  }
   const resourceListContent = enabled && (
     <>
       <SortableContext
@@ -97,7 +123,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
         {activeItem &&
           renderItem(
             activeItem,
-            { status: ResourceAvailabilityStatusEnum.Open, date: null },
+            getAvailabilityForActiveItem(activeItem.id),
             false
           )}
       </DragOverlay>
