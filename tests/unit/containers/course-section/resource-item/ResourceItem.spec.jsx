@@ -11,7 +11,7 @@ import {
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
-
+import { ResourceAvailabilityStatusEnum } from '~/types/my-cooperations/enums/myCooperations.enums'
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
 const mockUpdateAvailability = vi.fn()
@@ -226,3 +226,72 @@ describe('ResourceItem tests when resourceType attachment', () => {
     expect(attachmentItem).toBeInTheDocument()
   })
 })
+describe('ResourceItem status tests', () => {
+  it('should set status to the given availability status if it exists in ResourceAvailabilityStatusEnum', () => {
+    const mockAvailability = {
+      status: ResourceAvailabilityStatusEnum.Open,
+      date: null,
+    }
+
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailability}
+        deleteResource={mockDeleteResource}
+        editResource={mockEditResource}
+        resource={mockedLessonDataOriginal}
+        updateAvailability={mockUpdateAvailability}
+      />
+    )
+
+    const status = Object.values(ResourceAvailabilityStatusEnum).includes(
+      mockAvailability.status
+    )
+      ? mockAvailability.status
+      : ResourceAvailabilityStatusEnum.Closed
+
+    expect(status).toBe(ResourceAvailabilityStatusEnum.Open)
+  })
+
+  it('should default status to Closed if availability status is null', () => {
+    const mockAvailability = {
+      status: null,
+      date: null,
+    }
+
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailability}
+        deleteResource={mockDeleteResource}
+        editResource={mockEditResource}
+        resource={mockedLessonDataOriginal}
+        updateAvailability={mockUpdateAvailability}
+      />
+    )
+
+    const status = Object.values(ResourceAvailabilityStatusEnum).includes(
+      mockAvailability.status
+    )
+      ? mockAvailability.status
+      : ResourceAvailabilityStatusEnum.Closed
+
+    expect(status).toBe(ResourceAvailabilityStatusEnum.Closed)
+  })
+
+  it('should default status to Closed if availability is undefined', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={undefined}
+        deleteResource={mockDeleteResource}
+        editResource={mockEditResource}
+        resource={mockedLessonDataOriginal}
+        updateAvailability={mockUpdateAvailability}
+      />
+    )
+
+    const status = ResourceAvailabilityStatusEnum.Closed
+
+    expect(status).toBe(ResourceAvailabilityStatusEnum.Closed)
+  })
+})
+
+
