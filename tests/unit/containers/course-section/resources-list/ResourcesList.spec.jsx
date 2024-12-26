@@ -1,6 +1,6 @@
 import { renderWithProviders } from '~tests/test-utils'
 import { screen } from '@testing-library/react'
-
+import userEvent from '@testing-library/user-event'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
 
 import { ResourcesTypesEnum as ResourceType } from '~/types'
@@ -121,4 +121,24 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
 
     expect(overlayItem).not.toBeInTheDocument()
   })
+  it('calls getAvailabilityForActiveItem correctly', () => {
+    const getAvailabilityForActiveItem = (id) => {
+      return mockedCooperationData.find((item) => item.resource.id === id)?.availability
+    }
+
+    const availability = getAvailabilityForActiveItem('1')
+
+    expect(availability).toEqual(mockedCooperationData[0].availability)
+  })
+
+  it('handles empty or null activeItem correctly in getAvailabilityForActiveItem', () => {
+    const getAvailabilityForActiveItem = (id) => {
+      return mockedCooperationData.find((item) => item.resource.id === id)?.availability
+    }
+
+    const availability = getAvailabilityForActiveItem(null)
+
+    expect(availability).toBeUndefined()
+  })
 })
+
