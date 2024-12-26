@@ -71,12 +71,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
     [ResourceType.Quiz]: 'quiz/'
   }
 
-  useEffect(() => {
-    resourcesAvailability === ResourcesAvailabilityEnum.OpenManually &&
-      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Closed)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resourcesAvailability])
-
   const handleDeleteResource = useCallback(() => {
     deleteResource?.(resource)
   }, [deleteResource, resource])
@@ -93,9 +87,11 @@ const ResourceItem: FC<ResourceItemProps> = ({
     const type = resourceType ?? resource.resourceType
     return resourceIcons[type] ?? null
   }, [resourceType, resource.resourceType])
-
-  const status = availability?.status ?? ResourceAvailabilityStatusEnum.Open
-
+  const status = Object.values(ResourceAvailabilityStatusEnum).includes(
+    availability?.status as ResourceAvailabilityStatusEnum
+  )
+    ? (availability?.status as ResourceAvailabilityStatusEnum)
+    : ResourceAvailabilityStatusEnum.Closed
   const shouldShowDatePicker =
     status === ResourceAvailabilityStatusEnum.OpenFrom
 
@@ -111,14 +107,18 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   const setAvailabilityStatus = useCallback(
     (status: ResourceAvailabilityStatusEnum) => {
-      updateAvailability?.(resource, {
+      return updateAvailability?.(resource, {
         status,
         date: null
       })
     },
     [resource, updateAvailability]
   )
-
+  useEffect(() => {
+    if (resourcesAvailability === ResourcesAvailabilityEnum.OpenManually) {
+      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Closed)
+    }
+  }, [resourcesAvailability, setAvailabilityStatus])
   const formattedDate = availability?.date
     ? getFormattedDate({
         date: availability?.date,
