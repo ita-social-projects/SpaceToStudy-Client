@@ -25,7 +25,36 @@ interface ResourcesListProps {
   ) => void
   isCooperation?: boolean
 }
-
+export const renderItem = (
+  item: CourseResource,
+  availability: ResourceAvailability,
+  isDragOver = false,
+  deleteResource: (resource: CourseResource) => void,
+  editResource: (resource: CourseResource) => void,
+  isCooperation: boolean,
+  updateAvailability?: (
+    resource: CourseResource,
+    availability: ResourceAvailability
+  ) => void
+) => (
+  <SortableWrapper
+    id={item.id}
+    key={item.id}
+    onDragEndStyles={styles.section(isDragOver)}
+    onDragStartStyles={styles.section(true)}
+  >
+    <DragHandle iconStyles={styles.dragIcon} />
+    <ResourceItem
+      availability={availability}
+      deleteResource={deleteResource}
+      editResource={editResource}
+      isCooperation={isCooperation}
+      key={item.id}
+      resource={item}
+      updateAvailability={updateAvailability}
+    />
+  </SortableWrapper>
+)
 const ResourcesList: FC<ResourcesListProps> = ({
   cooperationData = [],
   sortResources,
@@ -75,33 +104,25 @@ const ResourcesList: FC<ResourcesListProps> = ({
     },
     idProp: 'id'
   })
-
-  const renderItem = (
+  const renderNewItem = (
     item: CourseResource,
     availability: ResourceAvailability,
     isDragOver = false
-  ) => (
-    <SortableWrapper
-      id={item.id}
-      key={item.id}
-      onDragEndStyles={styles.section(isDragOver)}
-      onDragStartStyles={styles.section(true)}
-    >
-      <DragHandle iconStyles={styles.dragIcon} />
-      <ResourceItem
-        availability={availability}
-        deleteResource={deleteResource}
-        editResource={editResource}
-        isCooperation={isCooperation}
-        key={item.id}
-        resource={item}
-        updateAvailability={updateAvailability}
-      />
-    </SortableWrapper>
-  )
-
+  ) =>
+    renderItem(
+      item,
+      availability,
+      isDragOver,
+      deleteResource,
+      editResource,
+      isCooperation,
+      updateAvailability
+    )
   const resourceItems = cooperationData?.map((item) => {
-    return renderItem(item.resource, item.availability as ResourceAvailability)
+    return renderNewItem(
+      item.resource,
+      item.availability as ResourceAvailability
+    )
   })
   const getAvailabilityForActiveItem = (id: string | null) => {
     return cooperationData.find((item) => item.resource.id === id)
@@ -117,7 +138,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
       </SortableContext>
       <DragOverlay>
         {activeItem &&
-          renderItem(
+          renderNewItem(
             activeItem,
             activeItem.availability ||
               getAvailabilityForActiveItem(activeItem.id),

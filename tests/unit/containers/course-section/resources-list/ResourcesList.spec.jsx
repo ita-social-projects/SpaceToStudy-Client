@@ -1,10 +1,9 @@
 import { renderWithProviders } from '~tests/test-utils'
 import { screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
-
+import { DragOverlay } from '@dnd-kit/core'
 import { ResourcesTypesEnum as ResourceType } from '~/types'
-
+import { renderItem } from '~/containers/course-section/resources-list/ResourcesList'
 export const mockedCooperationData = [
   {
     availability: { status: 'open', date: null },
@@ -78,7 +77,7 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
     )
   })
 
-  it('calls sortResources with new items on setItems update', () => {
+  it('should call sortResources with new items on setItems update', () => {
     const newItems = [
       mockedCooperationData[1].resource,
       mockedCooperationData[0].resource,
@@ -86,20 +85,6 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
     mockSortResources(newItems)
 
     expect(mockSortResources).toHaveBeenCalledWith(newItems)
-  })
-
-  it('updates availability for active item on drag start', () => {
-    const activeItem = mockedCooperationData[0]
-
-    mockUpdateAvailability(
-      activeItem.resource,
-      activeItem.availability
-    )
-
-    expect(mockUpdateAvailability).toHaveBeenCalledWith(
-      activeItem.resource,
-      activeItem.availability
-    )
   })
 
   it('updates availability for inactive items after drag ends', () => {
@@ -115,10 +100,72 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
       inactiveItem.availability
     )
   })
-
-  it('does not render DragOverlay when no active item', () => {
+  it('should update availability for active and inactive resources on setItems', () => {
+    const newItems = [
+      mockedCooperationData[1].resource,
+      mockedCooperationData[0].resource,
+    ]
+    const activeItem = mockedCooperationData[0]
+    const mockActiveItem = mockedCooperationData.find(
+      (item) => item.resource.id === activeItem.resource.id
+    )
+  
+    mockSortResources(newItems)
+    if (mockActiveItem?.availability) {
+      mockUpdateAvailability(
+        mockActiveItem.resource,
+        mockActiveItem.availability
+      )
+    }
+  
+    expect(mockSortResources).toHaveBeenCalledWith(newItems)
+  
+    expect(mockUpdateAvailability).toHaveBeenCalledWith(
+      activeItem.resource,
+      activeItem.availability
+    )
+    mockedCooperationData
+      .filter((item) => item.resource.id !== activeItem.resource.id)
+      .forEach((inactiveItem) => {
+        if (inactiveItem.availability) {
+          expect(mockUpdateAvailability).toHaveBeenCalledWith(
+            inactiveItem.resource,
+            inactiveItem.availability
+          )
+        }
+      })
+  })
+  it('should render DragOverlay when activeItem is present', async () => {
+    const activeItem = mockedCooperationData[0]
+  
+    renderWithProviders(
+      <DragOverlay>
+        {activeItem &&
+          renderItem(
+            activeItem.resource,
+            activeItem.availability ||
+              mockedCooperationData.find((item) => item.resource.id === activeItem.resource.id)?.availability,
+            false,
+            mockDeleteResource,
+            mockEditResource,
+            true,
+            mockUpdateAvailability
+          )}
+      </DragOverlay>
+    )
+  
+    const overlayItem = await screen.findByText(activeItem.resource.title)
+    expect(overlayItem).toBeInTheDocument()
+  })  
+  it('should not render DragOverlay when no active item', () => {
     const overlayItem = screen.queryByText(mockedCooperationData[0].resource.title)
 
+    expect(overlayItem).not.toBeInTheDocument()
+  })
+  it('does not render DragOverlay when activeItem is null', () => {
+    renderWithProviders(<DragOverlay>{null}</DragOverlay>)
+  
+    const overlayItem = screen.queryByText(mockedCooperationData[0].resource.title)
     expect(overlayItem).not.toBeInTheDocument()
   })
   it('calls getAvailabilityForActiveItem correctly', () => {
@@ -136,9 +183,11 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
       return mockedCooperationData.find((item) => item.resource.id === id)?.availability
     }
 
-    const availability = getAvailabilityForActiveItem(null)
+  const nullAvailability = getAvailabilityForActiveItem(null)
+  expect(nullAvailability).toBeUndefined()
 
-    expect(availability).toBeUndefined()
+  const notFoundAvailability = getAvailabilityForActiveItem('999')
+  expect(notFoundAvailability).toBeUndefined()
   })
 })
 
