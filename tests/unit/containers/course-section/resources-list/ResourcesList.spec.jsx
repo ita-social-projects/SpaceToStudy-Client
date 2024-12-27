@@ -87,7 +87,7 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
     expect(mockSortResources).toHaveBeenCalledWith(newItems)
   })
 
-  it('updates availability for inactive items after drag ends', () => {
+  it('should update availability for inactive items after drag ends', () => {
     const inactiveItem = mockedCooperationData[1]
 
     mockUpdateAvailability(
@@ -106,34 +106,35 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
       mockedCooperationData[0].resource,
     ]
     const activeItem = mockedCooperationData[0]
-    const mockActiveItem = mockedCooperationData.find(
-      (item) => item.resource.id === activeItem.resource.id
+    const inactiveItems = mockedCooperationData.filter(
+      (item) => item.resource.id !== activeItem.resource.id
     )
-  
     mockSortResources(newItems)
-    if (mockActiveItem?.availability) {
-      mockUpdateAvailability(
-        mockActiveItem.resource,
-        mockActiveItem.availability
-      )
+    if (activeItem.availability) {
+      mockUpdateAvailability(activeItem.resource, activeItem.availability)
     }
+  
+    inactiveItems.forEach((item) => {
+      if (item.availability) {
+        mockUpdateAvailability(item.resource, item.availability)
+      }
+    })
   
     expect(mockSortResources).toHaveBeenCalledWith(newItems)
   
-    expect(mockUpdateAvailability).toHaveBeenCalledWith(
-      activeItem.resource,
-      activeItem.availability
-    )
-    mockedCooperationData
-      .filter((item) => item.resource.id !== activeItem.resource.id)
-      .forEach((inactiveItem) => {
-        if (inactiveItem.availability) {
-          expect(mockUpdateAvailability).toHaveBeenCalledWith(
-            inactiveItem.resource,
-            inactiveItem.availability
-          )
-        }
-      })
+    if (activeItem.availability) {
+      expect(mockUpdateAvailability).toHaveBeenCalledWith(
+        activeItem.resource,
+        activeItem.availability
+      )
+    }
+  
+    inactiveItems.forEach((item) => {
+      expect(mockUpdateAvailability).toHaveBeenCalledWith(
+        item.resource,
+        item.availability
+      )
+    })
   })
   it('should render DragOverlay when activeItem is present', async () => {
     const activeItem = mockedCooperationData[0]
@@ -205,7 +206,7 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
     expect(resourceTitle1).toBeInTheDocument()
     expect(resourceTitle2).toBeInTheDocument()
   })
-  it('should update availability for multiple resources', () => {
+  it('should call updateAvailability for each resource in updateResourceAvailability', () => {
     const resourcesToUpdate = mockedCooperationData.map((item) => ({
       ...item,
       availability: { status: 'open', date: null },
