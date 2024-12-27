@@ -43,5 +43,5 @@
   "inputError": "Це поле є обов'язковим для заповнення.",
   "submitMessage": "Вашу причину було успішно надіслано протилежній стороні.",
   "cooperationCloseDeclinedMessage": "<userWrapper>{{user}}</userWrapper> відмовив(-ла) у закритті співпраці з наступної причини:",
-  "resendRequestBtn": "Запросити повторно"
+  "resendRequestBtn": "Надіслати повторно"
 }
