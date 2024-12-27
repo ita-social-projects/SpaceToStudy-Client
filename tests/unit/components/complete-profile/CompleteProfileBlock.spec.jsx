@@ -48,8 +48,7 @@ const mockDataEmpty = {
 describe('CompleteProfile test when user data is filled', () => {
   beforeEach(() => {
     useQuery.mockReturnValue({
-      data: { items: ['item1'], count: 1 },
-      loading: false
+      data: { items: ['item1'], count: 1 }
     })
   })
 
@@ -89,8 +88,7 @@ describe('CompleteProfile test when user data is filled', () => {
 describe('CompleteProfile test when user data is empty', () => {
   beforeEach(() => {
     useQuery.mockReturnValue({
-      data: { items: [], count: 0 },
-      loading: false
+      data: { items: [], count: 0 }
     })
   })
 

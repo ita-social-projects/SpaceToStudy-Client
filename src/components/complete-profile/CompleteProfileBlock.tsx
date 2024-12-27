@@ -53,20 +53,16 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
     }
   }, [openAccordion])
 
-  const getMyOffers = useCallback(
-    () =>
-      OfferService.getUsersOffers({
-        id: userId
-      }),
-    [userId]
-  )
+  const getMyOffers = useCallback(async () => {
+    const response = await OfferService.getUsersOffers({
+      id: userId
+    })
+    return response.data as { items: Offer[]; count: number }
+  }, [userId])
 
   const { data: queryData } = useQuery({
     queryKey: ['complete-profile-block', userId, isOfferCreated],
-    queryFn: async () => {
-      const response = await getMyOffers()
-      return response.data as { items: Offer[]; count: number }
-    }
+    queryFn: getMyOffers
   })
 
   const checkIfHasNonEmptyFields = (
