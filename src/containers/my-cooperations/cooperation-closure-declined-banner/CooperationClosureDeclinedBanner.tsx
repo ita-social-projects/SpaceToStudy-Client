@@ -10,6 +10,7 @@ import { styles } from './CooperationClosureDeclinedBanner.styles'
 import CooperationActionInput from '../cooperation-action-input/CooperationActionInput'
 
 export interface CooperationClosureDeclinedBannerProps {
+  isAnswerSubmitted: boolean
   message: string
   onSend: (answer: string) => void
   user: string
@@ -17,7 +18,7 @@ export interface CooperationClosureDeclinedBannerProps {
 
 const CooperationClosureDeclinedBanner: React.FC<
   CooperationClosureDeclinedBannerProps
-> = ({ message, onSend, user }) => {
+> = ({ isAnswerSubmitted, message, onSend, user }) => {
   const { t } = useTranslation()
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
 
@@ -53,6 +54,7 @@ const CooperationClosureDeclinedBanner: React.FC<
           t('cooperationDetailsPage.responseInputFieldPlaceholder')
         )}
         isInputShown={isInputShown}
+        isReasonSubmitted={isAnswerSubmitted}
         onReasonSubmit={onSend}
         setIsInputShown={setIsInputShown}
       />

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
@@ -14,29 +14,21 @@ type CooperationActionInputProps = {
   inputLabel: string
   inputPlaceholderMessage: string
   isInputShown: boolean
-  isReasonSubmitted?: boolean
+  isReasonSubmitted: boolean
   onReasonSubmit: (reason: string) => void
   setIsInputShown: (value: boolean) => void
-  setIsReasonSubmitted?: (value: boolean) => void
 }
 
 const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
   inputLabel,
   inputPlaceholderMessage,
+  isReasonSubmitted,
   isInputShown,
-  isReasonSubmitted: customIsReasonSubmitted,
   onReasonSubmit,
-  setIsInputShown,
-  setIsReasonSubmitted: customSetIsReasonSubmitted
+  setIsInputShown
 }) => {
   const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const [internalIsReasonSubmitted, setInternalIsReasonSubmitted] =
-    useState<boolean>(false)
-
-  const isReasonSubmitted = customIsReasonSubmitted ?? internalIsReasonSubmitted
-  const setIsReasonSubmitted =
-    customSetIsReasonSubmitted ?? setInternalIsReasonSubmitted
 
   useEffect(() => {
     if (isInputShown && inputRef.current) {
@@ -70,10 +62,9 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
 
     if (isValid && !hasErrors) {
       handleSubmit()
-      setIsReasonSubmitted?.(true)
       setIsInputShown(false)
     }
-  }, [handleSubmit, setIsInputShown, setIsReasonSubmitted, hasErrors, trigger])
+  }, [handleSubmit, setIsInputShown, hasErrors, trigger])
 
   if (isInputShown) {
     return (

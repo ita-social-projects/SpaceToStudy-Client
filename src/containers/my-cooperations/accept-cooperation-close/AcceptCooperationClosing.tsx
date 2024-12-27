@@ -11,18 +11,19 @@ import { styles } from './AcceptCooperationClosing.styles'
 
 interface AcceptCooperationClosureProps {
   user: string
+  isReasonSubmitted: boolean
   onAccept: () => void
   onReasonSubmit: (reason: string) => void
 }
 
 const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
   user,
+  isReasonSubmitted,
   onAccept,
   onReasonSubmit
 }) => {
   const { t } = useTranslation()
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
-  const [isReasonSubmitted, setIsReasonSubmitted] = useState<boolean>(false)
 
   const handleDeclineClick = () => {
     setIsInputShown(true)
@@ -68,7 +69,6 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
         isReasonSubmitted={isReasonSubmitted}
         onReasonSubmit={onReasonSubmit}
         setIsInputShown={setIsInputShown}
-        setIsReasonSubmitted={setIsReasonSubmitted}
       />
     </CooperationActionBanner>
   )

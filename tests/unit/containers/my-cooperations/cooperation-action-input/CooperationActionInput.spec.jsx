@@ -52,29 +52,7 @@ describe('CooperationActionInput', () => {
     expect(errorMessage).toBeInTheDocument()
   })
 
-  it('should use custom isReasonSubmitted if provided on valid reason submit', () => {
-    const setIsReasonSubmittedMock = vi.fn()
-    render(
-      <CooperationActionInput
-        {...inputProps}
-        isReasonSubmitted={false}
-        setIsReasonSubmitted={setIsReasonSubmittedMock}
-      />
-    )
-
-    const input = screen.getByRole('textbox')
-    fireEvent.change(input, {
-      target: { value: inputMessage }
-    })
-
-    const submitButton = screen.getByText('cooperationDetailsPage.submitBtn')
-    fireEvent.click(submitButton)
-
-    expect(inputProps.onReasonSubmit).toHaveBeenCalled()
-    expect(setIsReasonSubmittedMock).toHaveBeenCalledWith(true)
-  })
-
-  it('should handle missing setIsReasonSubmitted gracefully', async () => {
+  it('should handle onReasonSubmit', async () => {
     render(<CooperationActionInput {...inputProps} />)
 
     const input = screen.getByRole('textbox')
