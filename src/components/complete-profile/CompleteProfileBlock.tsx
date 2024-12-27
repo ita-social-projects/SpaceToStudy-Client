@@ -61,19 +61,13 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
     [userId]
   )
 
-  const { data: queryData, refetch } = useQuery({
-    queryKey: ['complete-profile-block', userId],
+  const { data: queryData } = useQuery({
+    queryKey: ['complete-profile-block', userId, isOfferCreated],
     queryFn: async () => {
       const response = await getMyOffers()
       return response.data as { items: Offer[]; count: number }
     }
   })
-
-  useEffect(() => {
-    if (isOfferCreated) {
-      void refetch()
-    }
-  }, [isOfferCreated, refetch])
 
   const checkIfHasNonEmptyFields = (
     obj: Record<string, string | undefined>
