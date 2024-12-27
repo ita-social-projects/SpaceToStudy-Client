@@ -4,6 +4,7 @@ import ResourcesList from '~/containers/course-section/resources-list/ResourcesL
 import { DragOverlay } from '@dnd-kit/core'
 import { ResourcesTypesEnum as ResourceType } from '~/types'
 import { renderItem } from '~/containers/course-section/resources-list/ResourcesList'
+
 export const mockedCooperationData = [
   {
     availability: { status: 'open', date: null },
@@ -179,17 +180,22 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
     expect(availability).toEqual(mockedCooperationData[0].availability)
   })
 
-  it('should handle empty or null activeItem correctly in getAvailabilityForActiveItem', () => {
+  it('should handle null activeItem correctly in getAvailabilityForActiveItem', () => {
     const getAvailabilityForActiveItem = (id) => {
       return mockedCooperationData.find((item) => item.resource.id === id)?.availability
     }
 
   const nullAvailability = getAvailabilityForActiveItem(null)
   expect(nullAvailability).toBeUndefined()
-
-  const notFoundAvailability = getAvailabilityForActiveItem('999')
-  expect(notFoundAvailability).toBeUndefined()
   })
+  it('should return undefined for non-existent id in getAvailabilityForActiveItem', () => {
+    const getAvailabilityForActiveItem = (id) => {
+      return mockedCooperationData.find((item) => item.resource.id === id)?.availability
+    }
+    const notExistAvailability = getAvailabilityForActiveItem('non-existent-id')
+    expect(notExistAvailability).toBeUndefined()
+  })
+  
   it('should render resources in the correct order after sorting', async () => {
     const sortedItems = [
       mockedCooperationData[1].resource,
@@ -219,6 +225,17 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
     resourcesToUpdate.forEach((resource) => {
       expect(mockUpdateAvailability).toHaveBeenCalledWith(resource.resource, resource.availability)
     })
-  })  
+  })
+  it('should handle null values in updateResourceAvailability gracefully', () => {
+    const invalidData = [
+      { resource: null, availability: null },
+    ]
+  
+    invalidData.forEach((item) => {
+      expect(() =>
+        mockUpdateAvailability(item.resource, item.availability)
+      ).not.toThrow()
+    })
+  })       
 })
 
