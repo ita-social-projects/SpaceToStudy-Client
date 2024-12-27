@@ -77,7 +77,7 @@ const MyCooperations = () => {
   )
 
   const { isLoading, data, refetch } = useQuery({
-    queryKey: ['cooperations'],
+    queryKey: ['cooperations', filters, sort, page, activeTab],
     queryFn: async () => {
       const response = await getMyCooperations()
 
