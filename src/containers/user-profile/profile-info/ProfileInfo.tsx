@@ -27,7 +27,6 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { useChatContext } from '~/context/chat-context'
 import useAxios from '~/hooks/use-axios'
-import { useCallback } from 'react'
 import { chatService } from '~/services/chat-service'
 import { DoneItem } from './ProfileInfo.constants'
 
@@ -40,7 +39,6 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { setChatInfo } = useChatContext()
-  const getChats = useCallback(() => chatService.getChats(), [])
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const dispatch = useAppDispatch()
   const isMyProfile = useMatch(authRoutes.myProfile.path)
@@ -139,20 +137,20 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
     response: listOfChats,
     loading: isChatsLoading,
     fetchData
-  } = useAxios({
-    service: getChats,
+  } = useAxios<ChatResponse[]>({
+    service: () => chatService.getChats(),
     defaultResponse: []
   })
 
   const onSendMessageClick = () => {
-    const existedChat = listOfChats.find((chat: ChatResponse) =>
-      chat.members.some((member) => member.user._id == userData._id)
-    ) as ChatResponse | undefined
+    const existedChat = listOfChats.find((chat: ChatResponse) => {
+      return chat.members.some((member) => member.user._id == userData._id)
+    })
 
     setChatInfo({
       author: userData,
       authorRole: userData.role[0] as UserRoleEnum.Student | UserRoleEnum.Tutor,
-      chatId: existedChat?._id || '',
+      chatId: existedChat?._id ?? '',
       updateInfo: () => {}
     })
 
