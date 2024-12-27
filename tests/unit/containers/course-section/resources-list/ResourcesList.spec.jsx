@@ -1,5 +1,5 @@
 import { renderWithProviders } from '~tests/test-utils'
-import { screen } from '@testing-library/react'
+import { findByText, screen, fireEvent } from '@testing-library/react'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
 import { DragOverlay } from '@dnd-kit/core'
 import { ResourcesTypesEnum as ResourceType } from '~/types'
@@ -204,11 +204,10 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
   
     mockSortResources(sortedItems)
   
-    expect(mockSortResources).toHaveBeenCalledWith(sortedItems);
+    expect(mockSortResources).toHaveBeenCalledWith(sortedItems)
   
     const resourceTitle1 = await screen.findByText(sortedItems[0].title)
     const resourceTitle2 = await screen.findByText(sortedItems[1].title)
-  
     expect(resourceTitle1).toBeInTheDocument()
     expect(resourceTitle2).toBeInTheDocument()
   })
@@ -236,6 +235,43 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
         mockUpdateAvailability(item.resource, item.availability)
       ).not.toThrow()
     })
-  })       
+  })
+  it('should not change status after drag and drop item', async () =>  {
+    const sortedItems = [
+      mockedCooperationData[1].resource,
+      mockedCooperationData[0].resource,
+    ]
+    mockSortResources(sortedItems)
+    const activeItem = mockedCooperationData[0]
+    
+    if (activeItem.availability) {
+      mockUpdateAvailability(activeItem.resource, activeItem.availability)
+    }
+  
+    if (activeItem.availability) {
+      expect(mockUpdateAvailability).toHaveBeenCalledWith(
+        activeItem.resource,
+        activeItem.availability
+      )
+    }
+
+    const dragButtons = await screen.findAllByTestId('drag-handle')
+
+    const firstDragButton = dragButtons[0]
+    const secondDragButton = dragButtons[1]
+
+    expect(firstDragButton).toBeInTheDocument()
+    expect(secondDragButton).toBeInTheDocument()
+
+    fireEvent.dragStart(firstDragButton)
+    fireEvent.dragOver(secondDragButton)
+    fireEvent.drop(secondDragButton)
+    fireEvent.dragEnd(firstDragButton)
+
+    const inputAvailability = await screen.findAllByTestId('app-select')
+
+    expect(inputAvailability[1]).toHaveValue('closed')
+    
+  })
 })
 
