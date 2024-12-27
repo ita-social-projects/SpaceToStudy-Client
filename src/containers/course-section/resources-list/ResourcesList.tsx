@@ -28,14 +28,14 @@ interface ResourcesListProps {
 export const renderItem = (
   item: CourseResource,
   availability: ResourceAvailability,
-  isDragOver = false,
   deleteResource: (resource: CourseResource) => void,
   editResource: (resource: CourseResource) => void,
   isCooperation: boolean,
   updateAvailability?: (
     resource: CourseResource,
     availability: ResourceAvailability
-  ) => void
+  ) => void,
+  isDragOver = false
 ) => (
   <SortableWrapper
     id={item.id}
@@ -83,24 +83,14 @@ const ResourcesList: FC<ResourcesListProps> = ({
         const activeResource = cooperationData.find(
           (item) => item.resource.id === activeItem.id
         )
-        if (activeResource?.availability && updateAvailability) {
-          updateAvailability(
-            activeResource.resource,
-            activeResource.availability
-          )
+        if (activeResource) {
+          updateResourceAvailability([activeResource])
         }
       }
       const inactiveResources = cooperationData.filter(
         (item) => item.resource.id !== activeItem?.id
       )
-      inactiveResources.forEach((inactiveResource) => {
-        if (inactiveResource.availability && updateAvailability) {
-          updateAvailability(
-            inactiveResource.resource,
-            inactiveResource.availability
-          )
-        }
-      })
+      updateResourceAvailability(inactiveResources)
     },
     idProp: 'id'
   })
@@ -112,12 +102,19 @@ const ResourcesList: FC<ResourcesListProps> = ({
     renderItem(
       item,
       availability,
-      isDragOver,
       deleteResource,
       editResource,
       isCooperation,
-      updateAvailability
+      updateAvailability,
+      isDragOver
     )
+  const updateResourceAvailability = (items: Resource[]) => {
+    items.forEach((item) => {
+      if (item.availability && updateAvailability) {
+        updateAvailability(item.resource, item.availability)
+      }
+    })
+  }
   const resourceItems = cooperationData?.map((item) => {
     return renderNewItem(
       item.resource,

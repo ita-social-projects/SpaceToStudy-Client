@@ -11,7 +11,6 @@ export interface ResourceAvailability {
   date: string | null
 }
 
-// export type CourseResource = Lesson | Quiz | Attachment
 export type CourseResource = (Lesson | Quiz | Attachment) & {
   availability?: ResourceAvailability
 }
