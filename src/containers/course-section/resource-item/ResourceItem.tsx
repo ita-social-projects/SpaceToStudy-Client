@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react'
+import { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
@@ -15,8 +15,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import AppSelect from '~/components/app-select/AppSelect'
-import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
-import { useAppSelector } from '~/hooks/use-redux'
 
 import {
   resourceIcons,
@@ -28,7 +26,6 @@ import {
   CourseResource,
   ResourceAvailability,
   ResourceAvailabilityStatusEnum,
-  ResourcesAvailabilityEnum,
   ResourcesTypesEnum as ResourceType,
   SizeEnum
 } from '~/types'
@@ -62,8 +59,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { resourcesAvailability } = useAppSelector(cooperationsSelector)
-
   const { isDuplicate } = resource
 
   const routeMap = {
@@ -107,18 +102,13 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   const setAvailabilityStatus = useCallback(
     (status: ResourceAvailabilityStatusEnum) => {
-      return updateAvailability?.(resource, {
+      updateAvailability?.(resource, {
         status,
         date: null
       })
     },
     [resource, updateAvailability]
   )
-  useEffect(() => {
-    if (resourcesAvailability === ResourcesAvailabilityEnum.OpenManually) {
-      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Closed)
-    }
-  }, [resourcesAvailability, setAvailabilityStatus])
   const formattedDate = availability?.date
     ? getFormattedDate({
         date: availability?.date,

@@ -54,11 +54,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
         const activeResource = cooperationData.find(
           (item) => item.resource.id === activeItem.id
         )
-        if (
-          activeResource &&
-          activeResource.availability &&
-          updateAvailability
-        ) {
+        if (activeResource?.availability && updateAvailability) {
           updateAvailability(
             activeResource.resource,
             activeResource.availability
@@ -123,13 +119,13 @@ const ResourcesList: FC<ResourcesListProps> = ({
         {activeItem &&
           renderItem(
             activeItem,
-            getAvailabilityForActiveItem(activeItem.id),
+            activeItem.availability ||
+              getAvailabilityForActiveItem(activeItem.id),
             false
           )}
       </DragOverlay>
     </>
   )
-
   return (
     <DndContext
       onDragCancel={handleDragCancel}
