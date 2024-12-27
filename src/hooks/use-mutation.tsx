@@ -1,9 +1,9 @@
 import {
   useMutation as useReactMutation,
-  UseMutationOptions,
-  UseMutationResult
+  type UseMutationOptions,
+  type UseMutationResult
 } from '@tanstack/react-query'
-import { AxiosResponse } from 'axios'
+import { type AxiosResponse } from 'axios'
 
 import { ErrorResponse } from '~/types'
 import { handleAxiosResponse } from '~/utils/handle-axios-response'
