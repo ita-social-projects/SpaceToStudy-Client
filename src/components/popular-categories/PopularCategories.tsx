@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material/styles'
-import { FC, useMemo, useCallback } from 'react'
+import { useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,7 +12,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { useAppSelector } from '~/hooks/use-redux'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { categoryService } from '~/services/category-service'
-import { AxiosResponse } from 'axios'
+import { type AxiosResponse } from 'axios'
 
 import { itemsLoadLimit } from '~/components/popular-categories/PopularCategories.constants'
 import {
@@ -31,7 +31,7 @@ interface PopularCategoriesProps {
   title: string
 }
 
-const PopularCategories: FC<PopularCategoriesProps> = ({
+const PopularCategories: React.FC<PopularCategoriesProps> = ({
   description,
   sx,
   title
