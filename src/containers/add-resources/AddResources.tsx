@@ -89,11 +89,12 @@ const AddResources = <T extends CourseResource | Question>({
   //   onResponseError
   // })
 
-  const { isLoading: loading, data } = useQuery<
-    ItemsWithCount<T>,
-    ErrorResponse
-  >({
-    queryKey: ['resources'],
+  const {
+    isLoading: loading,
+    data
+    // error
+  } = useQuery<ItemsWithCount<T>, ErrorResponse>({
+    queryKey: ['resources', sort],
     queryFn: async () => {
       try {
         const response = await getMyResources()
@@ -102,8 +103,16 @@ const AddResources = <T extends CourseResource | Question>({
         onResponseError(error as ErrorResponse)
         return defaultResponses.itemsWithCount
       }
+      // const response = await getMyResources()
+      // return response.data
     }
   })
+
+  // useEffect(() => {
+  //   if (error) {
+  //     onResponseError(error)
+  //   }
+  // }, [error, onResponseError])
 
   const onRowClick = useCallback(
     (item: T) => {
@@ -140,29 +149,31 @@ const AddResources = <T extends CourseResource | Question>({
 
   const getItems = useCallback(
     (inputValue: string, selectedCategories: string[]) => {
-      if (!data?.items) return []
-      return data?.items.filter((item) => {
-        const titleMatch =
-          'title' in item
-            ? item.title
-                .toLocaleLowerCase()
-                .includes(inputValue.toLocaleLowerCase())
-            : item.fileName
-                .toLocaleLowerCase()
-                .split('.')
-                .slice(0, -1)
-                .join('.')
-                .includes(inputValue.toLocaleLowerCase())
+      // if (!data?.items) return []
+      return (
+        data?.items.filter((item) => {
+          const titleMatch =
+            'title' in item
+              ? item.title
+                  .toLocaleLowerCase()
+                  .includes(inputValue.toLocaleLowerCase())
+              : item.fileName
+                  .toLocaleLowerCase()
+                  .split('.')
+                  .slice(0, -1)
+                  .join('.')
+                  .includes(inputValue.toLocaleLowerCase())
 
-        const categoryId =
-          typeof item.category !== 'string' ? item.category?._id : null
+          const categoryId =
+            typeof item.category !== 'string' ? item.category?._id : null
 
-        const categoryMatch =
-          selectedCategories.length === 0 ||
-          selectedCategories.includes(String(categoryId))
+          const categoryMatch =
+            selectedCategories.length === 0 ||
+            selectedCategories.includes(String(categoryId))
 
-        return titleMatch && categoryMatch
-      })
+          return titleMatch && categoryMatch
+        }) ?? []
+      )
     },
     [data?.items]
   )
