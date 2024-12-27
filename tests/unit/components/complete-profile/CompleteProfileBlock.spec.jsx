@@ -6,9 +6,9 @@ import {
   profileItemsStudent
 } from '~/components/profile-item/complete-profile.constants'
 import { renderWithProviders } from '~tests/test-utils'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 
-vi.mock('~/hooks/use-axios')
+vi.mock('~/hooks/use-query')
 vi.mock('~/services/offer-service')
 
 const badRoute = '/tutor/myProfile'
@@ -47,8 +47,8 @@ const mockDataEmpty = {
 
 describe('CompleteProfile test when user data is filled', () => {
   beforeEach(() => {
-    useAxios.mockReturnValue({
-      response: { items: ['item1'], count: 1 },
+    useQuery.mockReturnValue({
+      data: { items: ['item1'], count: 1 },
       loading: false
     })
   })
@@ -88,8 +88,8 @@ describe('CompleteProfile test when user data is filled', () => {
 
 describe('CompleteProfile test when user data is empty', () => {
   beforeEach(() => {
-    useAxios.mockReturnValue({
-      response: { items: [], count: 0 },
+    useQuery.mockReturnValue({
+      data: { items: [], count: 0 },
       loading: false
     })
   })
