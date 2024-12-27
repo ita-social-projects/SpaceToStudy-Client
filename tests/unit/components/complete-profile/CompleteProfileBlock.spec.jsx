@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
 import {
   profileItemsTutor,
@@ -7,6 +7,7 @@ import {
 } from '~/components/profile-item/complete-profile.constants'
 import { renderWithProviders } from '~tests/test-utils'
 import useQuery from '~/hooks/use-query'
+import { OfferService } from '~/services/offer-service'
 
 vi.mock('~/hooks/use-query')
 vi.mock('~/services/offer-service')
@@ -44,6 +45,35 @@ const mockDataEmpty = {
     tutor: ''
   }
 }
+
+describe('getUsersOffers should return correct response', () => {
+  it('should call getUsersOffers and return data', async () => {
+    OfferService.getUsersOffers.mockResolvedValue({
+      data: { items: [{ title: 'Mock offer', price: 100 }], count: 1 }
+    })
+
+    useQuery.mockImplementation(({ queryFn }) => ({
+      queryData: queryFn(),
+      isLoading: false,
+      error: null
+    }))
+
+    renderWithProviders(
+      <CompleteProfileBlock
+        data={mockDataFilled}
+        profileItems={profileItemsTutor}
+      />,
+      {
+        initialEntries: badRoute,
+        preloadedState: { appMain: { userRole: 'tutor' } }
+      }
+    )
+
+    await waitFor(() => {
+      expect(OfferService.getUsersOffers).toHaveBeenCalled()
+    })
+  })
+})
 
 describe('CompleteProfile test when user data is filled', () => {
   beforeEach(() => {
