@@ -137,7 +137,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
         {activeItem &&
           renderNewItem(
             activeItem,
-            activeItem.availability ||
+            activeItem.availability ??
               getAvailabilityForActiveItem(activeItem.id),
             false
           )}

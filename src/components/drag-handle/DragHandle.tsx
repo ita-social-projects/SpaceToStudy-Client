@@ -16,7 +16,7 @@ const DragHandle: FC<DragHandleProps> = ({ iconStyles, wrapperStyles }) => {
   const { attributes, listeners, ref } = useSortableItemContext()
   return (
     <Box
-      data-testid={`drag-handle`}
+      data-testid='drag-handle'
       ref={ref}
       sx={wrapperStyles}
       {...attributes}
