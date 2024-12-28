@@ -2,9 +2,9 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 
 import { renderWithProviders } from '~tests/test-utils'
 import ActiveStudentsBlock from '~/components/active-students/ActiveStudentsBlock'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 
-vi.mock('~/hooks/use-axios')
+vi.mock('~/hooks/use-query')
 
 const navigateMock = vi.fn()
 
@@ -59,48 +59,40 @@ const mockedCooperations = [
 ]
 
 const mockedData = {
-  loading: false,
-  response: {
+  isLoading: false,
+  data: {
     items: mockedCooperations,
-    count: 1
-  },
-  fetchData: vi.fn()
+    count: mockedCooperations.length
+  }
 }
 
 const mockedLoading = {
-  loading: true,
-  response: null,
-  fetchData: vi.fn()
+  isLoading: true,
+  data: null
 }
 
 const noCooperationsMock = {
-  loading: false,
-  response: {
+  isLoading: false,
+  data: {
     items: [],
     count: 0
-  },
-  error: null,
-  fetchData: vi.fn()
+  }
 }
 
 const errorCooperationsMock = {
-  loading: false,
-  response: {
-    items: [],
-    count: 0
-  },
+  isLoading: false,
+  isError: true,
+  data: null,
   error: {
     code: 'not found',
     message: 'cooperation not found',
     status: '404'
-  },
-  fetchData: vi.fn()
+  }
 }
 
 describe('ActiveStudentsBlock', () => {
-  useAxios.mockImplementation(() => mockedData)
-
   it('should render active students', () => {
+    useQuery.mockReturnValue(mockedData)
     renderWithProviders(<ActiveStudentsBlock />)
 
     for (const cooperation of mockedCooperations) {
@@ -115,6 +107,7 @@ describe('ActiveStudentsBlock', () => {
   })
 
   it('should navigate to /my-cooperations on Show More button click', () => {
+    useQuery.mockReturnValue(mockedData)
     renderWithProviders(<ActiveStudentsBlock />)
 
     const showMoreButton = screen.getByTestId('showMore')
@@ -124,31 +117,31 @@ describe('ActiveStudentsBlock', () => {
   })
 
   it('should render Loader when loading', () => {
-    useAxios.mockImplementation(() => mockedLoading)
+    useQuery.mockReturnValue(mockedLoading)
     renderWithProviders(<ActiveStudentsBlock />)
 
     expect(screen.getByTestId('loader')).toBeInTheDocument()
   })
 
   it('should render add student button when no active cooperations available', () => {
-    useAxios.mockImplementation(() => noCooperationsMock)
+    useQuery.mockReturnValue(noCooperationsMock)
     renderWithProviders(<ActiveStudentsBlock />)
     const addStudent = screen.getByTestId('addStudent')
     expect(addStudent).toBeInTheDocument()
   })
 
   it('should navigate to /categories/subjects/find-offers on add student button click', () => {
-    useAxios.mockImplementation(() => noCooperationsMock)
+    useQuery.mockReturnValue(noCooperationsMock)
     renderWithProviders(<ActiveStudentsBlock />)
 
-    const showMoreButton = screen.getByTestId('addStudent')
-    fireEvent.click(showMoreButton)
+    const addStudentButton = screen.getByTestId('addStudent')
+    fireEvent.click(addStudentButton)
 
     waitFor(() => expect(navigateMock).toHaveBeenCalled())
   })
 
   it('should not render on error', () => {
-    useAxios.mockImplementation(() => errorCooperationsMock)
+    useQuery.mockReturnValue(errorCooperationsMock)
     renderWithProviders(<ActiveStudentsBlock />)
 
     expect(screen.queryByText('activeStudents.title')).not.toBeInTheDocument()
