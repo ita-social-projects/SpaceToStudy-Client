@@ -77,7 +77,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
     <AppIconButton
       data-testid='icon-btn'
       onClick={() => (!isMyProfile ? void copyProfileLink() : null)}
-      size={isLaptopAndAbove ? SizeEnum.Large : SizeEnum.Small}
+      size={isLaptopAndAbove ? 'lg' : 'sm'}
       sx={styles.iconBtn}
       to={isMyProfile?.pathname && authRoutes.editProfile.path}
     >

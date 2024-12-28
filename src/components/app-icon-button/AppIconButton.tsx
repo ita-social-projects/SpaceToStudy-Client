@@ -4,10 +4,22 @@ import { FC } from 'react'
 import { Link, LinkProps } from 'react-router-dom'
 import { ComponentEnum } from '~/types'
 
-type AppIconButtonProps = Omit<IconButtonProps, 'size'> & Partial<LinkProps>
+type AppIconButtonProps = Omit<IconButtonProps, 'size'> &
+  Partial<LinkProps> & {
+    size?: 'xs' | 'sm' | 'md' | 'lg'
+  }
 
-const AppIconButton: FC<AppIconButtonProps> = ({ to, ...props }) => (
-  <IconButton component={to ? Link : ComponentEnum.Button} to={to} {...props} />
+const AppIconButton: FC<AppIconButtonProps> = ({
+  to,
+  size = 'md',
+  ...props
+}) => (
+  <IconButton
+    component={to ? Link : ComponentEnum.Button}
+    size={size}
+    to={to}
+    {...props}
+  />
 )
 
 export default AppIconButton
