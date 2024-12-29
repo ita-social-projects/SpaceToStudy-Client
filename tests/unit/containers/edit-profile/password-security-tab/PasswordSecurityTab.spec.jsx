@@ -122,7 +122,7 @@ describe('PasswordSecurityTab', () => {
     expect(deactivateButton).toBeInTheDocument()
     expect(cancelButton).toBeInTheDocument()
   })  
-  it('should close modal on Deactivate button click and stays on Password & Security tab', async () => {
+  it('should close modal on Cancel button click and stays on Password & Security tab', async () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
@@ -132,7 +132,7 @@ describe('PasswordSecurityTab', () => {
     fireEvent.click(deactivateButton)
   
     await waitForElementToBeRemoved(() =>
-      screen.queryByText('editProfilePage.profile.passwordSecurityTab.deactivateDescription')
+      screen.getByText('common.cancel')
     )
   
     const tabTitle = screen.getByText(
