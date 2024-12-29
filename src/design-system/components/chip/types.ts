@@ -2,7 +2,7 @@ import { type CSSProperties, type ReactNode } from 'react'
 
 type ChipType = 'category' | 'filter' | 'input' | 'state'
 
-type ChipColor =
+export type ChipColor =
   | 'blue'
   | 'blue-gray'
   | 'green'

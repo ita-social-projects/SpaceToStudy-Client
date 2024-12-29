@@ -11,7 +11,7 @@
   cursor: pointer;
 
   &--sm {
-    font-size: var(--#{$prefix}font-size-sm);
+    font-size: 10px;
     line-height: var(--#{$prefix}line-height-sm);
   }
 
