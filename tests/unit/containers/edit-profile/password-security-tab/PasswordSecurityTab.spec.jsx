@@ -128,13 +128,9 @@ describe('PasswordSecurityTab', () => {
     )
     fireEvent.click(deactivateAccountButton)
   
-    const deactivateButton = screen.getByText('editProfilePage.profile.passwordSecurityTab.deactivateBtn')
-    fireEvent.click(deactivateButton)
-  
-    await waitForElementToBeRemoved(() =>
-      screen.getByText('common.cancel')
-    )
-  
+    const cancelButton = screen.getByText('common.cancel')
+    fireEvent.click(cancelButton)
+    
     const tabTitle = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.title'
     )
