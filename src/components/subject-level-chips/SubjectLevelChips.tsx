@@ -3,8 +3,8 @@ import { FC, useMemo } from 'react'
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material'
 
-import AppChip from '~/components/app-chip/AppChip'
-import palette from '~/styles/app-theme/app.pallete'
+import Chip from '~scss-components/chip/Chip'
+// import palette from '~/styles/app-theme/app.pallete'
 import { spliceSx } from '~/utils/helper-functions'
 
 import { ProficiencyLevelEnum } from '~/types'
@@ -20,7 +20,7 @@ interface SubjectLevelChipsProps {
 const SubjectLevelChips: FC<SubjectLevelChipsProps> = ({
   proficiencyLevel,
   subject,
-  color = palette.success[600],
+  // color = palette.success[600], once the db gets updated
   sx
 }) => {
   const proficiencyLevelText = useMemo(() => {
@@ -33,12 +33,12 @@ const SubjectLevelChips: FC<SubjectLevelChipsProps> = ({
 
   return (
     <Box sx={spliceSx(styles.chips, sx)}>
-      <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip(color)}>
-        {subject}
-      </AppChip>
-      <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip(color)}>
-        {proficiencyLevelText}
-      </AppChip>
+      <Chip
+        detail={proficiencyLevelText}
+        label={subject || ''}
+        size='sm'
+        type='category'
+      ></Chip>
     </Box>
   )
 }
