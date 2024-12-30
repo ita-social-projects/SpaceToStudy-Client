@@ -44,6 +44,16 @@ type Properties<
   >
 } & RequiredQueryProperties<TQueryFnData, TError, TData, TQueryKey>
 
+type DefaultUseQueryResult<TData, TError> = Pick<
+  UseQueryResult<TData, TError>,
+  ReturningQueryParams
+>
+
+type UseQueryResultWithInitialData<TData, TError> = Pick<
+  DefinedUseQueryResult<TData, TError>,
+  ReturningQueryParams
+>
+
 function useQuery<
   TQueryFnData,
   TError = ResponseError,
@@ -56,7 +66,7 @@ function useQuery<
       OptionalQueryOptions
     >
   } & RequiredQueryProperties<TQueryFnData, TError, TData, TQueryKey>
-): Pick<DefinedUseQueryResult<TData, TError>, ReturningQueryParams>
+): UseQueryResultWithInitialData<TData, TError>
 
 function useQuery<
   TQueryFnData,
@@ -70,7 +80,7 @@ function useQuery<
       OptionalQueryOptions
     >
   } & RequiredQueryProperties<TQueryFnData, TError, TData, TQueryKey>
-): Pick<UseQueryResult<TData, TError>, ReturningQueryParams>
+): DefaultUseQueryResult<TData, TError>
 
 function useQuery<
   TQueryFnData,
@@ -79,7 +89,7 @@ function useQuery<
   TQueryKey extends QueryKey = QueryKey
 >(
   properties: RequiredQueryProperties<TQueryFnData, TError, TData, TQueryKey>
-): Pick<UseQueryResult<TData, TError>, ReturningQueryParams>
+): DefaultUseQueryResult<TData, TError>
 
 function useQuery<
   TQueryFnData,
@@ -88,7 +98,7 @@ function useQuery<
   TQueryKey extends QueryKey = QueryKey
 >(
   properties: Properties<TQueryFnData, TError, TData, TQueryKey>
-): Pick<UseQueryResult<TData, TError>, ReturningQueryParams> {
+): DefaultUseQueryResult<TData, TError> {
   const { options, queryFn, queryKey } = properties
 
   const { data, error, isError, isFetching, isLoading, refetch } =
