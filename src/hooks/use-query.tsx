@@ -8,7 +8,7 @@ import {
   useQuery as useReactQuery
 } from '@tanstack/react-query'
 
-import { type ResponseError } from '~/types'
+import { type ResponseError } from '~/exceptions'
 
 type RequiredQueryOptions = 'queryFn' | 'queryKey'
 type OptionalQueryOptions = 'enabled' | 'initialData' | 'select' | 'staleTime'

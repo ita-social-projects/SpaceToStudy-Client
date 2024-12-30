@@ -21,15 +21,3 @@ export type ServiceFunction<Response, Params = undefined> = (
 export interface AxiosResponseError extends AxiosError<ErrorResponse> {
   config: InternalAxiosRequestConfig & { _isRetry: boolean }
 }
-
-export class ResponseError extends Error {
-  code?: string
-  status?: number
-
-  constructor({ code, message, status }: Partial<ErrorResponse>) {
-    super(message)
-
-    this.code = code
-    this.status = status
-  }
-}
