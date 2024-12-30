@@ -1,29 +1,40 @@
 import {
   useMutation as useReactMutation,
+  type QueryKey,
   type UseMutationOptions,
   type UseMutationResult
 } from '@tanstack/react-query'
-import { type AxiosResponse } from 'axios'
 
+import { queryClient } from '~/plugins/queryClient'
 import { ErrorResponse } from '~/types'
-import { handleAxiosResponse } from '~/utils/handle-axios-response'
+
+type UseMutationProps<TData, TError, TVariables, TContext> = {
+  queryKey?: QueryKey
+} & UseMutationOptions<TData, TError, TVariables, TContext>
 
 const useMutation = <
   TData = unknown,
   TError = ErrorResponse,
   TVariables = void,
   TContext = unknown
->(
-  options: UseMutationOptions<TData, TError, TVariables, TContext>
-): UseMutationResult<TData, TError, TVariables, TContext> => {
+>({
+  queryKey,
+  ...mutationOptions
+}: UseMutationProps<TData, TError, TVariables, TContext>): UseMutationResult<
+  TData,
+  TError,
+  TVariables,
+  TContext
+> => {
   const mutation = useReactMutation<TData, TError, TVariables, TContext>({
-    ...options,
-    mutationFn: async (variables: TVariables) => {
-      const response = (await options.mutationFn!(variables)) as Promise<
-        AxiosResponse<TData>
-      >
-
-      return handleAxiosResponse(response)
+    ...mutationOptions,
+    onSuccess: async (...args) => {
+      if (mutationOptions.onSuccess) {
+        await mutationOptions.onSuccess(...args)
+      }
+      if (queryKey) {
+        await queryClient.invalidateQueries({ queryKey })
+      }
     }
   })
 
