@@ -22,7 +22,7 @@ export const setupInterceptors = (): void => {
     },
     async (error: AxiosResponseError) => {
       if (error.response?.data.code !== 'UNAUTHORIZED') {
-        return Promise.resolve(error)
+        return Promise.reject(error)
       }
 
       const originalRequest = error.config as InternalAxiosRequestConfig
