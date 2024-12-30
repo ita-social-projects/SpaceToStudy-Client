@@ -54,6 +54,9 @@ const useAxios = <
         const res = await service(
           params as Params extends undefined ? undefined : Params
         )
+        if (res.status >= 400 && res.status <= 526) {
+          throw res
+        }
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)

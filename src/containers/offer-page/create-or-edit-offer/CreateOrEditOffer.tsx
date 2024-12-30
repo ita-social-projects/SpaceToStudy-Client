@@ -30,7 +30,8 @@ import {
   OfferActionsEnum,
   ServiceFunction,
   SizeEnum,
-  StatusEnum
+  StatusEnum,
+  UserRoleEnum
 } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -70,7 +71,10 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
               message: `offerPage.createOffer.extendedSuccessMessage.${userRole}`,
               duration: 10000,
               isExtended: true,
-              route: authRoutes.myOffers.path
+              route:
+                userRole === UserRoleEnum.Tutor
+                  ? authRoutes.myOffers.path
+                  : authRoutes.myRequests.path
             }
           : {
               severity: snackbarVariants.success,

@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import { fireEvent } from '@testing-library/react'
-import { AppSwitch } from '~/design-system/components/switch/Switch'
+import Switch from '~/design-system/components/switch/Switch'
 
-describe('AppSwitch Component', () => {
+describe('Switch Component', () => {
   it('renders correctly with default props', () => {
-    render(<AppSwitch />)
+    render(<Switch />)
 
     const switchEl = screen.getByRole('checkbox')
     expect(switchEl).toBeInTheDocument()
@@ -13,7 +13,7 @@ describe('AppSwitch Component', () => {
 
   it('calls `onChange` when toggled', () => {
     const handleChange = vi.fn()
-    render(<AppSwitch onChange={handleChange} />)
+    render(<Switch onChange={handleChange} />)
 
     const switchEl = screen.getByRole('checkbox')
     fireEvent.click(switchEl)
@@ -22,7 +22,7 @@ describe('AppSwitch Component', () => {
   })
 
   it('renders label when provided', () => {
-    render(<AppSwitch label="Test Label" />)
+    render(<Switch label="Test Label" />)
 
     const labelEl = screen.getByText('Test Label')
     expect(labelEl).toBeInTheDocument()
@@ -34,15 +34,15 @@ describe('AppSwitch Component', () => {
       ['md', 's2s-switch--md'],
       ['sm', 's2s-switch--sm'],
     ])('applies the correct class for size: %s', (size, expectedClass) => {
-      render(<AppSwitch size={size} />)
+      render(<Switch size={size} />)
       const switchWrapper = screen.getByRole('checkbox').closest('.s2s-switch--lg, .s2s-switch--md, .s2s-switch--sm')
-      
+
       expect(switchWrapper).toHaveClass(expectedClass)
     })
-  })  
+  })
 
   it('is disabled when loading is true', () => {
-    render(<AppSwitch loading />)
+    render(<Switch loading />)
     const loaderEl = screen.getByTestId('loader')
 
     expect(loaderEl).toBeInTheDocument()
@@ -50,7 +50,7 @@ describe('AppSwitch Component', () => {
   })
 
   it('is disabled when disabled prop is true', () => {
-    render(<AppSwitch disabled />)
+    render(<Switch disabled />)
     const switchEl = screen.getByRole('checkbox')
 
     expect(switchEl).toBeDisabled()
@@ -65,7 +65,7 @@ describe('AppSwitch Component', () => {
     ])(
       'renders label in correct position: %s',
       (position, label) => {
-        render(<AppSwitch label={label} labelPosition={position} />)
+        render(<Switch label={label} labelPosition={position} />)
         const labelEl = screen.getByText(label)
 
         expect(labelEl).toBeInTheDocument()

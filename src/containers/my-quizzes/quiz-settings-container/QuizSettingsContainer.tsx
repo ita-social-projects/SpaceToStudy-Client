@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import Switch from '@mui/material/Switch'
+import Switch from '~/design-system/components/switch/Switch'
 
 import { ResourceService } from '~/services/resource-service'
 import { useAppDispatch } from '~/hooks/use-redux'
@@ -156,7 +156,6 @@ const QuizSettingsContainer = ({
             checked={data.shuffle}
             data-testid='shuffle-switch'
             onChange={handleInputChange('shuffle')}
-            sx={styles.switch}
           />
         </SettingItem>
       </Box>
@@ -174,7 +173,6 @@ const QuizSettingsContainer = ({
             checked={data.pointValues}
             data-testid='pointValues-switch'
             onChange={handleInputChange('pointValues')}
-            sx={styles.switch}
           />
         </SettingItem>
 
@@ -186,7 +184,6 @@ const QuizSettingsContainer = ({
             checked={data.scoredResponses}
             data-testid='responses-switch'
             onChange={handleInputChange('scoredResponses')}
-            sx={styles.switch}
           />
         </SettingItem>
 
@@ -198,7 +195,6 @@ const QuizSettingsContainer = ({
             checked={data.correctAnswers}
             data-testid='correctAnswers-switch'
             onChange={handleInputChange('correctAnswers')}
-            sx={styles.switch}
           />
         </SettingItem>
       </Box>

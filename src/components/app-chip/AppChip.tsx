@@ -1,12 +1,7 @@
 import { ReactNode, ReactElement } from 'react'
 
-import {
-  Chip,
-  IconButton,
-  SvgIconProps,
-  Typography,
-  TypographyProps
-} from '@mui/material'
+import { Chip, SvgIconProps, Typography, TypographyProps } from '@mui/material'
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import { SxProps } from '@mui/system'
 
@@ -36,7 +31,7 @@ const AppChip: React.FC<AppChipProps> = ({
         handleDelete && (
           <IconButton
             data-testid='close-btn'
-            size='small'
+            size='sm'
             sx={styles.deleteButton}
           >
             <CloseRoundedIcon fontSize='small' />

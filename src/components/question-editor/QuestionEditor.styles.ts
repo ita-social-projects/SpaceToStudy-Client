@@ -45,6 +45,10 @@ export const styles = {
     mb: '8px',
     '.MuiFormControlLabel-label': {
       width: '100%'
+    },
+    '& label': {
+      ml: '13px',
+      mr: '0px'
     }
   },
   editorBlock: {
@@ -79,7 +83,8 @@ export const styles = {
     color: 'primary.600',
     cursor: isEmptyAnswer ? 'auto' : 'pointer',
     '& label': {
-      mr: '8px'
+      ml: '1px',
+      mr: '0px'
     }
   }),
   addIcon: (isEmptyAnswer: boolean) => ({

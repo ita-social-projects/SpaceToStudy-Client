@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom'
 
 import Checkbox from '@mui/material/Checkbox'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { styles } from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow.styles'
 import useMenu from '~/hooks/use-menu'
 import {

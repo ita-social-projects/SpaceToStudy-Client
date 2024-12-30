@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 import { Carousel, CarouselProps, useCarousel } from 'nuka-carousel'
-import IconButton from '@mui/material/IconButton'
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import {
   ArrowBackIosRounded,
   ArrowForwardIosRounded

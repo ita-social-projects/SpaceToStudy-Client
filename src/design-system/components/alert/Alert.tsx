@@ -17,6 +17,8 @@ import { cn } from '~/utils/cn'
 
 import '~scss-components/alert/Alert.scss'
 
+export type AlertColor = 'success' | 'info' | 'warning' | 'error'
+
 export const AlertTitle = ({ children, ...props }: AlertTitleProps) => {
   return <MuiAlertTitle {...props}>{children}</MuiAlertTitle>
 }
@@ -52,10 +54,7 @@ interface AlertProps extends MuiAlertProps {
 }
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(
-  (
-    { title, label, description, children, icon, onClose, className, ...props },
-    ref
-  ) => {
+  ({ title, label, description, icon, onClose, className, ...props }, ref) => {
     const handleClose = (event: SyntheticEvent) => {
       if (onClose) {
         onClose(event)
@@ -75,8 +74,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(
         {...props}
       >
         {title && <AlertTitle>{title}</AlertTitle>}
-        {description && <p>{description}</p>}
-        {children}
+        {description && <p className='s2s-alert-description'>{description}</p>}
       </MuiAlert>
     )
   }

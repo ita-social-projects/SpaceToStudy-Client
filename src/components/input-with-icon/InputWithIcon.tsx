@@ -1,10 +1,10 @@
 import { FC, ReactNode } from 'react'
-import IconButton from '@mui/material/IconButton'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 import Box from '@mui/material/Box'
 import InputBase, { InputBaseProps } from '@mui/material/InputBase'
 import { SxProps } from '@mui/material'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { styles } from '~/components/input-with-icon/InputWithIcon.styles'
 
 interface InputWithIconProps extends InputBaseProps {

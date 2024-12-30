@@ -1,20 +1,26 @@
 import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
-import { FC, ReactNode, useState } from 'react'
+import { type ChangeEvent, type ReactNode, useCallback, useState } from 'react'
 import Loader from '~/components/loader/Loader'
 import { cn } from '~/utils/cn'
 
 import './CheckBox.scss'
 
-interface CheckBoxProps extends Omit<CheckboxProps, 'size'> {
+interface CheckBoxProps extends Omit<CheckboxProps, 'size' | 'onChange'> {
   variant: 'check' | 'middle'
   label: ReactNode
   labelPosition?: 'top' | 'bottom' | 'end'
   color?: 'primary' | 'secondary' | 'error' | 'success'
   size?: 'sm' | 'md' | 'lg'
   loading?: boolean
+  checked?: boolean
+  defaultChecked?: boolean
+  onChange?: (checked: boolean) => void
 }
 
-const CheckBox: FC<CheckBoxProps> = ({
+const CheckBox: React.FC<CheckBoxProps> = ({
+  checked: externalIsChecked,
+  defaultChecked = false,
+  onChange,
   color = 'primary',
   disabled = false,
   label,
@@ -24,11 +30,21 @@ const CheckBox: FC<CheckBoxProps> = ({
   size = 'md',
   ...props
 }) => {
-  const [checked, setChecked] = useState<boolean>(false)
+  const [internalIsChecked, setInternalIsChecked] =
+    useState<boolean>(defaultChecked)
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked)
-  }
+  const isCheckboxControlled = externalIsChecked !== undefined
+
+  const handleChange = useCallback(
+    ({ target: { checked } }: ChangeEvent<HTMLInputElement>) => {
+      if (!isCheckboxControlled) {
+        setInternalIsChecked(checked)
+      }
+
+      onChange?.(checked)
+    },
+    [onChange, isCheckboxControlled]
+  )
 
   const loaderSizeMapping: Record<string, number> = {
     sm: 14,
@@ -37,6 +53,9 @@ const CheckBox: FC<CheckBoxProps> = ({
   }
 
   const loader = <Loader size={loaderSizeMapping[size]} />
+  const resolvedIsCheck = isCheckboxControlled
+    ? externalIsChecked
+    : internalIsChecked
 
   return (
     <label
@@ -60,12 +79,12 @@ const CheckBox: FC<CheckBoxProps> = ({
       ) : (
         <Checkbox
           {...props}
-          checked={checked}
+          checked={resolvedIsCheck}
           className='s2s-checkbox__input'
           color={color}
           data-testid='checkbox-input'
           disabled={disabled || loading}
-          indeterminate={variant === 'middle' && checked}
+          indeterminate={variant === 'middle' && resolvedIsCheck}
           onChange={handleChange}
         />
       )}

@@ -118,4 +118,14 @@
     margin: 0 0.5rem;
     height: auto;
   }
+
+  & .s2s-alert-description {
+    margin: 0;
+  }
+
+  & .MuiAlert-action {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    line-height: $line-height-sm;
+  }
 }

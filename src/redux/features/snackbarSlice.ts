@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction, Draft } from '@reduxjs/toolkit'
-import { AlertColor } from '@mui/material/Alert'
 import { sliceNames } from '~/redux/redux.constants'
 import { RootState } from '~/redux/store'
 import { TOptions } from 'i18next/typescript/options'
+
+import { type AlertColor } from '~/design-system/components/alert/Alert'
 
 interface ExtendedSnackbarMessage {
   text: string

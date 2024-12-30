@@ -4,8 +4,8 @@ import Menu, { MenuProps } from '@mui/material/Menu'
 const useMenu = () => {
   const [anchorEl, setAnchorEl] = useState<MenuProps['anchorEl']>(null)
 
-  const openMenu = (event: MouseEvent) => {
-    setAnchorEl(event.currentTarget)
+  const openMenu = (event?: MouseEvent) => {
+    setAnchorEl(event?.currentTarget ?? null)
   }
 
   const closeMenu = () => {

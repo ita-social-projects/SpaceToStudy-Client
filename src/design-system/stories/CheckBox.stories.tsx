@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { useState } from 'react'
 import CheckBox from '~scss-components/checkbox/CheckBox'
 
 const meta: Meta<typeof CheckBox> = {
@@ -17,6 +18,10 @@ The \`CheckBox\` component is a highly customizable and user-friendly checkbox d
 - **Sizes:** Select from \`sm\`, \`md\`, or \`lg\` to match the checkbox to the context—whether it’s a compact form or a prominent control.
 - **Loading State:** When an action is in progress, the checkbox displays a spinner and becomes temporarily non-interactive, enhancing user feedback.
 - **Colors:** Use predefined color options like \`primary\`, \`secondary\`, \`success\`, or \`error\` to align the checkbox with your application's theme.
+
+#### Controlled vs. Uncontrolled States:
+- **Controlled Checkbox:** A checkbox is considered controlled when its state is managed by a parent component using the \`checked\` prop. In this case, the parent component controls the checked state, and the checkbox becomes a controlled component, meaning its state can be set externally.
+- **Uncontrolled Checkbox:** In contrast, when the \`checked\` prop is not provided, the checkbox is considered uncontrolled. It manages its own internal state and changes its state based on user interaction.
 
 
 This component is ideal for use in forms, settings pages, or any interface requiring intuitive selection controls. Whether you need a straightforward checkbox or a visually distinctive option with loading feedback, the \`CheckBox\` component adapts to your design and functionality needs.
@@ -61,6 +66,19 @@ This component is ideal for use in forms, settings pages, or any interface requi
     },
     label: {
       description: 'The content to be displayed as the label of the checkbox.'
+    },
+    checked: {
+      description:
+        'When provided, the checkbox becomes controlled. This value determines its checked state, overriding internal state management.',
+      control: 'boolean'
+    },
+    defaultChecked: {
+      description:
+        'Determines the initial checked state of the checkbox when the component is first rendered. It only applies when the checkbox is not controlled via the `checked` prop',
+      control: 'boolean'
+    },
+    onChange: {
+      description: 'Callback fired when the checkbox state changes.'
     }
   }
 }
@@ -83,6 +101,41 @@ export const Default: Story = {
           'The default configuration of the checkbox with a primary color, medium size, and label positioned at the end.'
       }
     }
+  }
+}
+
+export const Controlled: Story = {
+  args: {
+    ...Default.args,
+    label: 'Controlled checkbox',
+    checked: false
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'A checkbox controlled by the parent component using the `checked` prop. Changes to its state are managed internally unless the `checked` prop is externally set. In that case, it becomes a controlled component.'
+      }
+    }
+  },
+  render: (args) => {
+    const ControlledCheckBox = () => {
+      const [isChecked, setIsChecked] = useState(args.checked)
+
+      return (
+        <div>
+          <CheckBox
+            {...args}
+            checked={isChecked}
+            onChange={(checked) => {
+              setIsChecked(checked)
+            }}
+          />
+          <p>Checkbox is currently {isChecked ? 'checked' : 'unchecked'}</p>
+        </div>
+      )
+    }
+    return <ControlledCheckBox />
   }
 }
 

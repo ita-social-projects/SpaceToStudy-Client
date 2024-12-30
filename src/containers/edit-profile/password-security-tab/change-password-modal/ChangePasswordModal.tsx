@@ -22,7 +22,6 @@ import { snackbarVariants } from '~/constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
-
 import {
   ButtonVariantEnum,
   ComponentEnum,
@@ -52,15 +51,18 @@ const ChangePasswordModal = () => {
       title: 'titles.confirmTitle',
       check: true
     })
-    if (confirmed) {
-      resetErrors()
+    if (!confirmed) {
+      return
+    }
+    try {
       await sendChangedPassword({
         password: data.password,
         currentPassword: data.currentPassword
       })
+    } catch (err) {
+      data.currentPassword = ''
     }
   }
-
   const handleResponse = () => {
     dispatch(
       openAlert({
@@ -79,7 +81,12 @@ const ChangePasswordModal = () => {
   )
 
   const handleResponseError = (error?: ErrorResponse) => {
-    if (error?.code === 'INCORRECT_CREDENTIALS') {
+    if (error?.code === 'WRONG_CURRENT_PASSWORD') {
+      handleErrors(
+        'currentPassword',
+        t('common.errorMessages.incorrectCurrentPassword')
+      )
+    } else if (error?.code === 'INCORRECT_CREDENTIALS') {
       handleErrors('password', t('common.errorMessages.samePasswords'))
     } else {
       handleErrors('currentPassword', t('common.errorMessages.currentPassword'))
@@ -89,10 +96,12 @@ const ChangePasswordModal = () => {
   const { loading, fetchData: sendChangedPassword } = useAxios({
     service: changePassword,
     onResponse: handleResponse,
-    onResponseError: handleResponseError,
+    onResponseError: (error: ErrorResponse) => {
+      handleResponseError(error)
+      throw error
+    },
     fetchOnMount: false
   })
-
   const {
     data,
     handleSubmit,
@@ -107,7 +116,6 @@ const ChangePasswordModal = () => {
     initialValues: initialValues,
     validations: validations
   })
-
   const {
     inputVisibility: currentPasswordVisibility,
     showInputText: showCurrentPassword
@@ -151,7 +159,7 @@ const ChangePasswordModal = () => {
           <Box sx={styles.form}>
             <AppTextField
               InputProps={currentPasswordVisibility}
-              errorMsg={t(errors.currentPassword)}
+              errorMsg={errors.currentPassword ? t(errors.currentPassword) : ''}
               fullWidth
               label={t(
                 'editProfilePage.profile.passwordSecurityTab.currentPassword'

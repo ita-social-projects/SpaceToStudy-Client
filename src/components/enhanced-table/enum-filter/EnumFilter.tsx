@@ -1,8 +1,8 @@
 import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import ClearIcon from '@mui/icons-material/Clear'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import useMenu from '~/hooks/use-menu'
 import FilterCheckbox from '~/components/enhanced-table/filter-checkbox/FilterCheckbox'
 

@@ -1,11 +1,14 @@
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
 import Snackbar from '@mui/material/Snackbar'
-import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { closeAlert, snackbarSelector } from '~/redux/features/snackbarSlice'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+
+import Alert from '~/design-system/components/alert/Alert'
+
 import { styles } from '~/containers/layout/app-snackbar/AppSnackbar.styles'
 
 const AppSnackbar = () => {
@@ -21,10 +24,6 @@ const AppSnackbar = () => {
   const translatedMessage =
     typeof message === 'string' ? t(message) : t(message.text, message.options)
 
-  const actionBody = translatedMessage
-    .split(', ')
-    .map((line) => <Box key={line}>{line}</Box>)
-
   const handleButtonClick = () => {
     navigate(route!)
     handleClose()
@@ -36,14 +35,9 @@ const AppSnackbar = () => {
     </Box>
   )
 
-  const [firstMessage, secondMessage] = translatedMessage.split(';')
-
-  const extendedBody = (
-    <>
-      <Box>{firstMessage}</Box>
-      <Box sx={styles.secondMessage}>{secondMessage}</Box>
-    </>
-  )
+  const [firstMessage, secondMessage] = isExtended
+    ? translatedMessage.split(';')
+    : translatedMessage.split(', ')
 
   return (
     <Snackbar
@@ -54,12 +48,11 @@ const AppSnackbar = () => {
     >
       <Alert
         action={isExtended && actionButton}
+        description={secondMessage}
         severity={severity}
-        sx={styles.alert}
+        title={firstMessage}
         variant='filled'
-      >
-        {isExtended ? extendedBody : actionBody}
-      </Alert>
+      />
     </Snackbar>
   )
 }

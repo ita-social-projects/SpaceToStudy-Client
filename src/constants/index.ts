@@ -1,4 +1,4 @@
-import { AlertColor } from '@mui/material/Alert'
+import { type AlertColor } from '~/design-system/components/alert/Alert'
 
 export const s2s = 's2s'
 

@@ -5,6 +5,7 @@ export const styles = {
   },
   radioItems: {
     color: 'basic.black',
-    mb: '8px'
+    mb: '8px',
+    ml: '10px'
   }
 }

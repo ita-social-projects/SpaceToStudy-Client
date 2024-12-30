@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
 import TurnedIn from '@mui/icons-material/TurnedIn'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/components/offer-card/offer-actions/OfferActions.styles'

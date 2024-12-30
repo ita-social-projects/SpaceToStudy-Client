@@ -14,7 +14,6 @@ import {
   AutocompleteRenderInputParams
 } from '@mui/material/Autocomplete'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
 import {
@@ -25,6 +24,7 @@ import {
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppButton from '~/components/app-button/AppButton'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'

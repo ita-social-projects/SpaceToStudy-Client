@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { useAppSelector } from '~/hooks/use-redux'
 import { AxiosResponse } from 'axios'
 
-import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
+import UserAvatar from '~/design-system/components/user-avatar/UserAvatar'
 
 import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
@@ -58,19 +58,23 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
   }, [photo, statePhoto])
 
   if (loading) {
-    return <Avatar sx={styles.accountIcon} />
+    return (
+      <UserAvatar firstName='' lastName='' src='' sx={styles.accountIcon} />
+    )
   }
 
   return (
     <Tooltip arrow title={t('iconsTooltip.account')}>
-      <Avatar
-        alt='User Avatar'
+      <UserAvatar
+        firstName={firstName}
+        lastName={lastName}
         onClick={openMenu}
         src={avatarSrc}
         sx={styles.accountIcon}
+        variant='photo'
       >
         {!loading && firstName && lastName && `${firstName[0]}${lastName[0]}`}
-      </Avatar>
+      </UserAvatar>
     </Tooltip>
   )
 }

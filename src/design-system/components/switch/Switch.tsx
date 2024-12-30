@@ -1,4 +1,4 @@
-import Switch, { SwitchProps } from '@mui/material/Switch'
+import MUISwitch, { SwitchProps } from '@mui/material/Switch'
 import { CircularProgress, FormControlLabel } from '@mui/material'
 import './Switch.scss'
 interface AppSwitchProps extends Omit<SwitchProps, 'size'> {
@@ -7,7 +7,8 @@ interface AppSwitchProps extends Omit<SwitchProps, 'size'> {
   label?: string
   loading?: boolean
 }
-export const AppSwitch = ({
+
+const Switch = ({
   labelPosition = 'end',
   size = 'md',
   label = '',
@@ -29,7 +30,7 @@ export const AppSwitch = ({
     <FormControlLabel
       className={`s2s-form-label-box s2s-form-label-box--${size}`}
       control={
-        <Switch
+        <MUISwitch
           className={`s2s-switch--${size}`}
           disabled={loading || disabled}
           {...props}
@@ -40,3 +41,5 @@ export const AppSwitch = ({
     />
   )
 }
+
+export default Switch

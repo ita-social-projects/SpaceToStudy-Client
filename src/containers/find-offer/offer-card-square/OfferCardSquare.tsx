@@ -2,12 +2,12 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import TurnedIn from '@mui/icons-material/TurnedIn'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
