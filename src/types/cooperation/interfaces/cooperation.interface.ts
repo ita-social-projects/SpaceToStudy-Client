@@ -12,9 +12,9 @@ import {
 } from '~/types'
 
 export enum NeedActionTypeEnum {
-  WaitingForAnswer = 'Waiting for answer',
-  WaitingForApproval = 'Waiting for approval',
-  Price = 'Price'
+  WaitingForAnswer = 'waiting for answer',
+  WaitingForApproval = 'waiting for approval',
+  Price = 'price'
 }
 
 export interface Cooperation extends CommonEntityFields {
