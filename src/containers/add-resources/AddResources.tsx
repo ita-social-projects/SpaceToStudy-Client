@@ -131,29 +131,30 @@ const AddResources = <T extends CourseResource | Question>({
 
   const getItems = useCallback(
     (inputValue: string, selectedCategories: string[]) => {
-      if (!data?.items) return []
-      return data?.items.filter((item) => {
-        const titleMatch =
-          'title' in item
-            ? item.title
-                .toLocaleLowerCase()
-                .includes(inputValue.toLocaleLowerCase())
-            : item.fileName
-                .toLocaleLowerCase()
-                .split('.')
-                .slice(0, -1)
-                .join('.')
-                .includes(inputValue.toLocaleLowerCase())
+      return (
+        data?.items.filter((item) => {
+          const titleMatch =
+            'title' in item
+              ? item.title
+                  .toLocaleLowerCase()
+                  .includes(inputValue.toLocaleLowerCase())
+              : item.fileName
+                  .toLocaleLowerCase()
+                  .split('.')
+                  .slice(0, -1)
+                  .join('.')
+                  .includes(inputValue.toLocaleLowerCase())
 
-        const categoryId =
-          typeof item.category !== 'string' ? item.category?._id : null
+          const categoryId =
+            typeof item.category !== 'string' ? item.category?._id : null
 
-        const categoryMatch =
-          selectedCategories.length === 0 ||
-          selectedCategories.includes(String(categoryId))
+          const categoryMatch =
+            selectedCategories.length === 0 ||
+            selectedCategories.includes(String(categoryId))
 
-        return titleMatch && categoryMatch
-      })
+          return titleMatch && categoryMatch
+        }) ?? []
+      )
     },
     [data?.items]
   )
