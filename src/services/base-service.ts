@@ -1,21 +1,31 @@
-import { isAxiosError } from 'axios'
+import { isAxiosError, type RawAxiosRequestHeaders } from 'axios'
 import { ResponseError } from '~/exceptions'
 import { axiosClient } from '~/plugins/axiosClient'
 import { type ErrorResponse, type HttpMethod } from '~/types'
 
 type RequestParams = {
   data?: unknown
+  headers?: RawAxiosRequestHeaders
   method: HttpMethod
+  timeout?: number
   url: string
 }
 
 export const baseService = {
-  request: async <T = unknown>({ method, url, data }: RequestParams) => {
+  request: async <T = unknown>({
+    data,
+    headers,
+    method,
+    timeout,
+    url
+  }: RequestParams) => {
     try {
       const response = await axiosClient.request<T>({
-        url,
+        data,
+        headers,
         method,
-        data
+        timeout,
+        url
       })
 
       return response.data
