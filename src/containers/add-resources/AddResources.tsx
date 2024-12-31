@@ -1,9 +1,8 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 
 import { useAppDispatch } from '~/hooks/use-redux'
 import useSelect from '~/hooks/table/use-select'
 import useSort from '~/hooks/table/use-sort'
-// import useAxios from '~/hooks/use-axios'
 import useQuery from '~/hooks/use-query'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
@@ -83,36 +82,19 @@ const AddResources = <T extends CourseResource | Question>({
     [dispatch]
   )
 
-  // const { loading, response } = useAxios<ItemsWithCount<T>>({
-  //   service: getMyResources,
-  //   defaultResponse: defaultResponses.itemsWithCount,
-  //   onResponseError
-  // })
-
-  const {
-    isLoading: loading,
-    data
-    // error
-  } = useQuery<ItemsWithCount<T>, ErrorResponse>({
-    queryKey: ['resources', sort],
+  const { data, isLoading, error, isError } = useQuery<ItemsWithCount<T>>({
+    queryKey: ['resources', sort, resourceTab],
     queryFn: async () => {
-      try {
-        const response = await getMyResources()
-        return response.data
-      } catch (error) {
-        onResponseError(error as ErrorResponse)
-        return defaultResponses.itemsWithCount
-      }
-      // const response = await getMyResources()
-      // return response.data
+      const response = await getMyResources()
+      return response.data ?? defaultResponses.itemsWithCount
     }
   })
 
-  // useEffect(() => {
-  //   if (error) {
-  //     onResponseError(error)
-  //   }
-  // }, [error, onResponseError])
+  useEffect(() => {
+    if (isError) {
+      onResponseError(error as ErrorResponse)
+    }
+  }, [error, isError, onResponseError])
 
   const onRowClick = useCallback(
     (item: T) => {
@@ -149,31 +131,29 @@ const AddResources = <T extends CourseResource | Question>({
 
   const getItems = useCallback(
     (inputValue: string, selectedCategories: string[]) => {
-      // if (!data?.items) return []
-      return (
-        data?.items.filter((item) => {
-          const titleMatch =
-            'title' in item
-              ? item.title
-                  .toLocaleLowerCase()
-                  .includes(inputValue.toLocaleLowerCase())
-              : item.fileName
-                  .toLocaleLowerCase()
-                  .split('.')
-                  .slice(0, -1)
-                  .join('.')
-                  .includes(inputValue.toLocaleLowerCase())
+      if (!data?.items) return []
+      return data?.items.filter((item) => {
+        const titleMatch =
+          'title' in item
+            ? item.title
+                .toLocaleLowerCase()
+                .includes(inputValue.toLocaleLowerCase())
+            : item.fileName
+                .toLocaleLowerCase()
+                .split('.')
+                .slice(0, -1)
+                .join('.')
+                .includes(inputValue.toLocaleLowerCase())
 
-          const categoryId =
-            typeof item.category !== 'string' ? item.category?._id : null
+        const categoryId =
+          typeof item.category !== 'string' ? item.category?._id : null
 
-          const categoryMatch =
-            selectedCategories.length === 0 ||
-            selectedCategories.includes(String(categoryId))
+        const categoryMatch =
+          selectedCategories.length === 0 ||
+          selectedCategories.includes(String(categoryId))
 
-          return titleMatch && categoryMatch
-        }) ?? []
-      )
+        return titleMatch && categoryMatch
+      })
     },
     [data?.items]
   )
@@ -187,7 +167,7 @@ const AddResources = <T extends CourseResource | Question>({
     isSelection: true,
     onAddItems,
     onCreateResourceCopy,
-    data: { loading, getItems },
+    data: { loading: isLoading, getItems },
     onRowClick,
     resourceTab,
     showCheckboxWithTooltip
