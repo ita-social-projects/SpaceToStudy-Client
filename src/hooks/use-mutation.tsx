@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-query'
 
 import { queryClient } from '~/plugins/queryClient'
-import { ErrorResponse } from '~/types'
+import { type ErrorResponse } from '~/types'
 
 type UseMutationProps<TData, TError, TVariables, TContext> = {
   queryKey?: QueryKey
