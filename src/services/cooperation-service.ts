@@ -18,11 +18,9 @@ import { baseService } from '~/services/base-service'
 
 export const cooperationService = {
   getCooperations: async (params: GetCooperationsParams) => {
-    const { status, search } = params
-
     const url = getFullUrl({
       pathname: URLs.cooperations.get,
-      searchParameters: { status, search }
+      searchParameters: { ...params }
     })
 
     return baseService.request<ItemsWithCount<Cooperation>>({
