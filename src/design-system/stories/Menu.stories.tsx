@@ -85,6 +85,10 @@ Nested menu items can have all the same properties except \`nestedMenuItems\`.
       description: 'The minimum width of the menu.',
       control: { type: 'number' }
     },
+    removeAllItemsTitle: {
+      description: 'The title of the button to remove all items',
+      control: { type: 'text' }
+    },
     transformOrigin: {
       description: 'The transform origin point of the menu.',
       control: { type: 'object' }

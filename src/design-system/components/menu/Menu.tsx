@@ -11,9 +11,9 @@ import {
   MenuItemVariant
 } from '../menu-item/MenuItem.constants'
 
-import '~scss-components/menu/Menu.scss'
+import './Menu.scss'
 
-const removeAllItemsTitle = 'Clear all'
+const dafaultRemoveAllItemsTitle = 'Clear all'
 const defaultNoItemsMessage = 'No items.'
 
 interface NestedMenuItemProps extends CommonMenuItemProps {
@@ -37,6 +37,7 @@ interface MenuProps {
   noItemsMessage?: string
   maxHeight?: number
   minWidth?: number
+  removeAllItemsTitle: string
   transformOrigin?: PopoverOrigin
   toggledItemsTitles?: string[]
   onToggleItemsChange?: (newTitles: string[]) => void
@@ -49,6 +50,7 @@ const Menu: React.FC<MenuProps> = ({
   defaultOnItemClick,
   maxHeight,
   minWidth,
+  removeAllItemsTitle = dafaultRemoveAllItemsTitle,
   noItemsMessage = defaultNoItemsMessage,
   density = 1,
   allowToggleMultipleItems = false,
