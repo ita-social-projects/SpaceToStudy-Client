@@ -5,7 +5,7 @@ import { MenuItemProps as CommonMenuItemProps } from './MenuItem.types'
 import { MenuItemColorVariant, MenuItemVariant } from './MenuItem.constants'
 import { cn } from '~/utils/cn'
 
-import '~scss-components/menu-item/MenuItem.scss'
+import './MenuItem.scss'
 
 interface MenuItemProps extends CommonMenuItemProps {
   isDropdown?: boolean
@@ -22,10 +22,10 @@ const MenuItem: React.FC<MenuItemProps> = ({
   colorVariant = MenuItemColorVariant.Default,
   density = 1,
   graphics,
-  isDropdown = false,
-  isToggled = false,
-  isBottomBorder = false,
-  isDisabled = false,
+  isDropdown,
+  isToggled,
+  isBottomBorder,
+  isDisabled,
   onClick,
   onRemove,
   variant = MenuItemVariant.Default
