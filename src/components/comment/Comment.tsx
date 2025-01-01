@@ -1,9 +1,12 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import AppRating from '~/components/app-rating/AppRating'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 import { ReviewResponse, UserRoleEnum } from '~/types'
 import { styles } from '~/components/comment/Comment.styles'
@@ -30,7 +33,7 @@ const Comment: FC<CommentProps> = ({ review }) => {
       ? UserRoleEnum.Student
       : UserRoleEnum.Tutor
 
-  const coopDetails = `${category.name} - ${subject.name} - ${proficiencyLevel}`
+  const cooperationDetailsText = `${category.name} - ${subject.name} - ${proficiencyLevel}`
 
   return (
     <Box sx={styles.root}>
@@ -44,7 +47,14 @@ const Comment: FC<CommentProps> = ({ review }) => {
         sx={styles.userInfo}
       />
       <Box sx={styles.description}>
-        <Typography sx={styles.coopDetails}>{coopDetails}</Typography>
+        <Link
+          style={{ textDecoration: 'none' }}
+          to={`${authRoutes.offerDetails.path}/${offer._id}`}
+        >
+          <Typography sx={styles.coopDetails}>
+            {cooperationDetailsText}
+          </Typography>
+        </Link>
         <AppRating readOnly showNumber sx={styles.rating} value={rating} />
         <Typography sx={styles.comment}>{comment}</Typography>
       </Box>
