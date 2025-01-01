@@ -16,6 +16,8 @@ export const ReviewService = {
   getUserReviews: (
     params: GetReviewsParams
   ): Promise<AxiosResponse<ReviewsResponse>> => {
-    return axiosClient.get(URLs.reviews.get, { params })
+    return axiosClient.get(
+      `${URLs.reviews.get}?user=${params.userId}&role=${params.userRole}`
+    )
   }
 }

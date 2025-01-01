@@ -16,7 +16,6 @@ import { RatingType, SortByEnum, UserRoleEnum, ReviewsResponse } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
 
 import { ReviewService } from '~/services/review-service'
-import { useAppSelector } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
 import { defaultReviewsResponse } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 
@@ -26,6 +25,7 @@ interface CommentsWithRatingBlockProps {
   reviewsCount: RatingType[]
   labels?: ReadonlyMap<SortByEnum, string>
   userRole: UserRoleEnum
+  userId: string
 }
 
 const CommentsWithRatingBlock = ({
@@ -33,12 +33,12 @@ const CommentsWithRatingBlock = ({
   totalReviews,
   reviewsCount,
   labels,
-  userRole
+  userRole,
+  userId
 }: CommentsWithRatingBlockProps) => {
   const [filter, setFilter] = useState<number | null>(null)
   const [sortBy, setSortBy] = useState<SortByEnum>(SortByEnum.Newest)
   const { t } = useTranslation()
-  const { userId } = useAppSelector((state) => state.appMain)
 
   const getReviews = useCallback(
     () => ReviewService.getUserReviews({ userId: userId, userRole: userRole }),

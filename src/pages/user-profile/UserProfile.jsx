@@ -107,6 +107,7 @@ const UserProfile = () => {
         reviewsCount={reviews}
         totalReviews={user.reviewStats.totalReviews}
         userRole={preferredRole}
+        userId={response._id}
       />
     </PageWrapper>
   )
