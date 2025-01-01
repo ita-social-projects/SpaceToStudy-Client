@@ -19,7 +19,7 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { ProfileItemType } from '../profile-item/complete-profile.constants'
 import { useAppSelector } from '~/hooks/use-redux'
-import { Offer, UserResponse, UserRole, VideoUserRole } from '~/types'
+import { UserResponse, UserRole, VideoUserRole } from '~/types'
 import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles'
 import { OfferService } from '~/services/offer-service'
 import { useDrawer } from '~/hooks/use-drawer'
@@ -53,12 +53,13 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
     }
   }, [openAccordion])
 
-  const getMyOffers = useCallback(async () => {
-    const response = await OfferService.getUsersOffers({
-      id: userId
-    })
-    return response.data as { items: Offer[]; count: number }
-  }, [userId])
+  const getMyOffers = useCallback(
+    () =>
+      OfferService.getUsersOffers({
+        id: userId
+      }),
+    [userId]
+  )
 
   const { data: queryData } = useQuery({
     queryKey: ['complete-profile-block', userId, isOfferCreated],

@@ -1,15 +1,17 @@
 import { AxiosResponse } from 'axios'
 import { URLs } from '~/constants/request'
 import { axiosClient } from '~/plugins/axiosClient'
-import { createUrlPath } from '~/utils/helper-functions'
+import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
 import {
   Offer,
   PriceRangeParams,
   PriceRangeResponse,
   GetOffersParams,
   CreateOrUpdateOfferData,
-  GetMyOffersParams
+  GetMyOffersParams,
+  ItemsWithCount
 } from '~/types'
+import { baseService } from './base-service'
 
 export const OfferService = {
   getOffers: async (params?: GetOffersParams): Promise<AxiosResponse> => {
@@ -31,9 +33,17 @@ export const OfferService = {
   getOffer: async (id: string): Promise<AxiosResponse<Offer>> =>
     await axiosClient.get(createUrlPath(URLs.offers.get, id)),
 
-  getUsersOffers: async (params: GetMyOffersParams): Promise<AxiosResponse> => {
+  getUsersOffers: (params: GetMyOffersParams) => {
+    const { sort, ...rest } = params
     const user = createUrlPath(URLs.users.get, params.id)
-    return await axiosClient.get(`${user}${URLs.offers.get}`, { params })
+    const resultUrl = getFullUrl({
+      pathname: `${user}${URLs.offers.get}`,
+      searchParameters: { ...sort, ...rest }
+    })
+    return baseService.request<ItemsWithCount<Offer>>({
+      method: 'GET',
+      url: resultUrl
+    })
   },
 
   getPriceRange: async (
