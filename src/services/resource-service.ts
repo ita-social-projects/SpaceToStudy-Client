@@ -34,14 +34,12 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Lesson>>> =>
     await axiosClient.get(URLs.resources.lessons.get, { params }),
 
-  getUsersLessonsQuery: async (params: GetResourcesParams = {}) => {
-    const { sort, ...rest } = params
-
+  getUsersLessonsQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Lesson>>({
       method: 'GET',
       url: getFullUrl({
         pathname: URLs.resources.lessons.get,
-        searchParameters: { ...sort, ...rest }
+        searchParameters: params
       })
     })
   },
@@ -61,14 +59,12 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> =>
     await axiosClient.get(URLs.quizzes.get, { params }),
 
-  getQuizzesQuery: async (params: GetResourcesParams = {}) => {
-    const { sort, ...rest } = params
-
+  getQuizzesQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Quiz>>({
       method: 'GET',
       url: getFullUrl({
         pathname: URLs.quizzes.get,
-        searchParameters: { ...sort, ...rest }
+        searchParameters: params
       })
     })
   },
@@ -88,14 +84,12 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>
     await axiosClient.get(URLs.resources.attachments.get, { params }),
 
-  getAttachmentsQuery: async (params: GetResourcesParams = {}) => {
-    const { sort, ...rest } = params
-
+  getAttachmentsQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Attachment>>({
       method: 'GET',
       url: getFullUrl({
         pathname: URLs.resources.attachments.get,
-        searchParameters: { ...sort, ...rest }
+        searchParameters: params
       })
     })
   },
@@ -119,14 +113,12 @@ export const ResourceService = {
     return axiosClient.get(URLs.resources.questions.get, { params })
   },
 
-  getQuestionsQuery: (params: GetResourcesParams = {}) => {
-    const { sort, ...rest } = params
-
+  getQuestionsQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Question>>({
       method: 'GET',
       url: getFullUrl({
         pathname: URLs.resources.questions.get,
-        searchParameters: { ...sort, ...rest }
+        searchParameters: params
       })
     })
   },
