@@ -36,7 +36,8 @@ const questionResponseMock = {
 
 const mockRequestService = vi.fn(() =>
   Promise.resolve({
-    data: { items: responseItemsMock, count: responseItemsMock.length }
+    items: responseItemsMock,
+    count: responseItemsMock.length
   })
 )
 

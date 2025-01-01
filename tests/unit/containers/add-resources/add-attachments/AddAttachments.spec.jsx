@@ -35,7 +35,8 @@ const attachmentMockData = {
 
 const mockRequestService = vi.fn(() =>
   Promise.resolve({
-    data: { items: responseItemsMock, count: responseItemsMock.length }
+    items: responseItemsMock,
+    count: responseItemsMock.length
   })
 )
 const mockOnAddResources = () => {}

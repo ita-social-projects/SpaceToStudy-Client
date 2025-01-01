@@ -34,9 +34,9 @@ const resourcesMockData = {
 }
 
 const mockRequestService = vi.fn(() =>
-  Promise.resolve({
-    data: { items: responseItemsMock, count: responseItemsMock.length }
-  })
+  Promise.resolve(
+{ items: responseItemsMock, count: responseItemsMock.length }
+  )
 )
 
 const mockOnAddResources = () => {}
