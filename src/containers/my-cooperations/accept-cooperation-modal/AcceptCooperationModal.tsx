@@ -1,6 +1,7 @@
 import { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
+import { type QueryObserverResult } from '@tanstack/react-query'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -33,11 +34,12 @@ import { styles } from '~/containers/my-cooperations/accept-cooperation-modal/Ac
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import { type QueryObserverResult } from '@tanstack/react-query'
 
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
-  getCooperations: () => Promise<QueryObserverResult<unknown, ErrorResponse>>
+  getCooperations: () => Promise<
+    QueryObserverResult<{ items: Cooperation[]; count: number }>
+  >
 }
 
 const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({

@@ -21,6 +21,7 @@ import { getScreenBasedLimit } from '~/utils/helper-functions'
 
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
+  defaultResponse,
   initialFilters,
   initialSort,
   sortTranslationKeys,
@@ -76,13 +77,16 @@ const MyCooperations = () => {
     [filters, page, itemsPerPage, sort]
   )
 
-  const { isLoading, data, refetch } = useQuery({
-    queryKey: ['cooperations', filters, sort, page, activeTab],
-    queryFn: async () => {
-      const response = await getMyCooperations()
-
-      return response.data as { items: Cooperation[]; count: number }
-    }
+  const {
+    isLoading,
+    data = defaultResponse,
+    refetch
+  } = useQuery<{
+    items: Cooperation[]
+    count: number
+  }>({
+    queryKey: ['cooperations', filters, sort, page],
+    queryFn: getMyCooperations
   })
 
   const handleTabClick = (tabName: string, tabValue: string) => {
@@ -132,14 +136,14 @@ const MyCooperations = () => {
         <>
           <CooperationContainer
             getCooperations={refetch}
-            items={data?.items ?? []}
+            items={data.items}
             showTable={showTable}
             sort={sortOptions}
           />
           <AppPagination
             onChange={handleChangePage}
             page={page}
-            pageCount={data?.count ? Math.ceil(data.count / itemsPerPage) : 0}
+            pageCount={Math.ceil(data.count / itemsPerPage)}
             sx={styles.pagination}
           />
         </>
