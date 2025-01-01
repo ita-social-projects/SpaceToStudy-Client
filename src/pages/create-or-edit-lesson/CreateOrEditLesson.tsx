@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect } from 'react'
+import { SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -19,6 +19,7 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import { useAppDispatch } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
 
@@ -169,36 +170,23 @@ const CreateOrEditLesson = () => {
     submitWithData: true
   })
 
-  const getLesson = (id?: string): Promise<AxiosResponse> => {
+  const getLesson = (id?: string) => {
     return ResourceService.getLesson(id)
   }
 
-  const handleResponseLesson = (lesson: LessonData) => {
-    for (const key in data) {
-      const validKey = key as keyof LessonData
-      handleNonInputValueChange(validKey, lesson[validKey])
+  const { isLoading, error } = useQuery({
+    queryKey: [id],
+    queryFn: () => getLesson(id),
+    options: {
+      initialData: defaultResponse
     }
-  }
-
-  const { loading: getLessonLoading, fetchData: fetchDataLesson } = useAxios<
-    LessonData,
-    string
-  >({
-    service: getLesson,
-    fetchOnMount: false,
-    defaultResponse,
-    onResponse: handleResponseLesson,
-    onResponseError: handleResponseError
   })
 
-  useEffect(() => {
-    if (id) {
-      void fetchDataLesson(id)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  if (error) {
+    handleResponseError()
+  }
 
-  if (getLessonLoading) {
+  if (isLoading) {
     return <Loader pageLoad />
   }
 

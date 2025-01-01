@@ -26,14 +26,19 @@ import {
   GetQuestion
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
+import { baseService } from '~/services/base-service'
 
 export const ResourceService = {
   getUsersLessons: async (
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Lesson>>> =>
     await axiosClient.get(URLs.resources.lessons.get, { params }),
-  getLesson: async (id?: string): Promise<AxiosResponse<Lesson>> =>
-    await axiosClient.get(createUrlPath(URLs.resources.lessons.get, id)),
+  getLesson: async (id?: string) => {
+    return baseService.request<Lesson>({
+      method: 'GET',
+      url: createUrlPath(URLs.resources.lessons.get, id)
+    })
+  },
   deleteLesson: async (id: string): Promise<AxiosResponse<Lesson>> =>
     await axiosClient.delete(createUrlPath(URLs.resources.lessons.delete, id)),
   addLesson: async (data: LessonData): Promise<AxiosResponse> =>
