@@ -28,7 +28,6 @@ import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service'
 import videoImgProfile from '~/assets/img/user-profile-page/presentationVideoImg.png'
 
-import { responseMock } from '~/pages/user-profile/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { scrollToHash } from '~/utils/hash-scroll'
 
@@ -37,8 +36,6 @@ const UserProfile = () => {
   const [searchParams] = useSearchParams()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const paramsRole = searchParams.get('role')
-  const { user } = responseMock
-  const { reviews } = user.reviewStats || {}
 
   const { hash, pathname } = useLocation()
 
@@ -103,11 +100,9 @@ const UserProfile = () => {
       )}
       {shouldShowPresentation && VideoPresentationComponent}
       <CommentsWithRatingBlock
-        averageRating={user.reviewStats.averageRating}
-        reviewsCount={reviews}
-        totalReviews={user.reviewStats.totalReviews}
+        averageRating={response.averageRating[preferredRole]}
         userRole={preferredRole}
-        userId={response._id}
+        userId={preferredId}
       />
     </PageWrapper>
   )

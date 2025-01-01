@@ -14,28 +14,6 @@ export const responseMock = {
     lastLoginAs: 'student',
     bookmarkedOffers: [],
     createdAt: '2023-03-07T07:59:04.615Z',
-    updatedAt: '2023-03-07T07:59:04.615Z',
-    reviewStats: {
-      reviews: [
-        {
-          count: 1,
-          rating: 1
-        },
-        {
-          count: 1,
-          rating: 3
-        },
-        {
-          count: 3,
-          rating: 5
-        },
-        {
-          count: 2,
-          rating: 4
-        }
-      ],
-      totalReviews: 7,
-      averageRating: 3.8
-    }
+    updatedAt: '2023-03-07T07:59:04.615Z'
   }
 }

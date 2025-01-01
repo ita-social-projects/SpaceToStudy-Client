@@ -8,36 +8,37 @@ import AppRatingLarge from '~/components/app-rating-large/AppRatingLarge'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { RatingType } from '~/types'
+import { ReviewResponse } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock.styles'
 
 interface RatingBlockProps {
   setFilter: (filter: number | null) => void
   averageRating: number
-  totalReviews: number
-  reviewsCount: RatingType[]
+  reviewCount: number
+  reviews: ReviewResponse[]
   activeFilter: number | null
 }
 
 const RatingBlock: FC<RatingBlockProps> = ({
   setFilter,
   averageRating,
-  totalReviews,
-  reviewsCount,
+  reviewCount,
+  reviews,
   activeFilter
 }) => {
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
-  const ratings = reviewsCount.reduce((acc, { count, rating }) => {
-    acc[rating] = count
-    return acc
-  }, Array<number>(6).fill(0))
+
+  const ratingCounts = reviews.reduce((counts, review) => {
+    counts[review.rating] += 1
+    return counts
+  }, new Array<number>(6).fill(0))
 
   const resetFilters = () => setFilter(null)
 
-  const progresBars = ratings
+  const progressBars = ratingCounts
     .map((rating, idx: number) => {
-      const starPercent = (rating / totalReviews) * 100
+      const starPercent = (rating / reviewCount) * 100
       const active = !activeFilter || activeFilter === idx
       const handleProgresBarClick = () => {
         if (rating) {
@@ -73,11 +74,11 @@ const RatingBlock: FC<RatingBlockProps> = ({
     .reverse()
 
   const ratingComponent = isMobile ? (
-    <AppRatingMobile reviewsCount={totalReviews} value={averageRating} />
+    <AppRatingMobile reviewsCount={reviewCount} value={averageRating} />
   ) : (
     <AppRatingLarge
       readOnly
-      reviewsCount={totalReviews}
+      reviewsCount={reviewCount}
       sx={styles.rating}
       value={averageRating}
     />
@@ -87,7 +88,7 @@ const RatingBlock: FC<RatingBlockProps> = ({
     <Box sx={styles.root}>
       {ratingComponent}
       <Box sx={styles.progressBarRoot}>
-        {progresBars}
+        {progressBars}
         {activeFilter && (
           <Typography
             data-testid='reset-filter'

@@ -12,7 +12,7 @@ import {
 import RatingBlock from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock'
 import CommentsBlock from '~/containers/user-profile/comments-block/CommentsBlock'
 import Loader from '~/components/loader/Loader'
-import { RatingType, SortByEnum, UserRoleEnum, ReviewsResponse } from '~/types'
+import { SortByEnum, UserRoleEnum, ReviewsResponse } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
 
 import { ReviewService } from '~/services/review-service'
@@ -21,8 +21,6 @@ import { defaultReviewsResponse } from '~/containers/user-profile/comments-with-
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
-  totalReviews: number
-  reviewsCount: RatingType[]
   labels?: ReadonlyMap<SortByEnum, string>
   userRole: UserRoleEnum
   userId: string
@@ -30,8 +28,6 @@ interface CommentsWithRatingBlockProps {
 
 const CommentsWithRatingBlock = ({
   averageRating,
-  totalReviews,
-  reviewsCount,
   labels,
   userRole,
   userId
@@ -112,9 +108,9 @@ const CommentsWithRatingBlock = ({
             activeFilter={filter}
             averageRating={averageRating}
             data-testid='rating-block'
-            reviewsCount={reviewsCount}
+            reviewCount={response.count}
+            reviews={response.reviews}
             setFilter={setFilter}
-            totalReviews={totalReviews}
           />
           <Box sx={styles.container}>
             <Box sx={styles.innerBox}>
