@@ -33,7 +33,7 @@ import {
   tabsInfo
 } from '~/pages/my-offers/MyOffers.constants'
 import { CardsViewEnum } from '~/types'
-import { useQuery } from '@tanstack/react-query'
+import useQuery from '~/hooks/use-query'
 
 type TabName = keyof typeof tabsInfo
 
