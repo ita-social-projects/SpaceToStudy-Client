@@ -47,7 +47,9 @@ const LocationSelectionInputs = <
 
   useEffect(() => {
     if (hasCountries && !hasCities && data.city) {
-      const countryByName = countries.find(({ name }) => name === data.country)
+      const countryByName = countries.find(
+        (country) => country.name === data.country
+      )
 
       if (countryByName) {
         void fetchCities(countryByName.iso2)
@@ -68,7 +70,9 @@ const LocationSelectionInputs = <
       return
     }
 
-    const countryByName = countries.find(({ name }) => name === countryName)
+    const countryByName = countries.find(
+      (country) => country.name === countryName
+    )
 
     if (countryByName) {
       void fetchCities(countryByName.iso2)
