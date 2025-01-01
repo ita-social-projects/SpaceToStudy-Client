@@ -8,12 +8,22 @@ import {
   CategoriesParams,
   ItemsWithCount
 } from '~/types'
+import { baseService } from '~/services/base-service'
+import { getFullUrl } from '~/utils/helper-functions'
 
 export const categoryService = {
-  getCategories: (
-    params?: Partial<CategoriesParams>
-  ): Promise<AxiosResponse<ItemsWithCount<CategoryInterface>>> => {
-    return axiosClient.get(URLs.categories.get, { params })
+  getCategories: (params?: Partial<CategoriesParams>) => {
+    const { sort, ...rest } = params || {}
+
+    const resultUrl = getFullUrl({
+      pathname: URLs.categories.get,
+      searchParameters: { ...sort, ...rest }
+    })
+    console.log(resultUrl)
+    return baseService.request<ItemsWithCount<CategoryInterface>>({
+      method: 'GET',
+      url: resultUrl
+    })
   },
   getCategoriesNames: (): Promise<AxiosResponse<CategoryNameInterface[]>> => {
     return axiosClient.get(URLs.categories.getNames)
