@@ -174,7 +174,7 @@ const CreateOrEditLesson = () => {
     return ResourceService.getLesson(id)
   }
 
-  const { isLoading, error } = useQuery({
+  const { isLoading, isError } = useQuery({
     queryKey: [id],
     queryFn: () => getLesson(id),
     options: {
@@ -182,7 +182,7 @@ const CreateOrEditLesson = () => {
     }
   })
 
-  if (error) {
+  if (isError) {
     handleResponseError()
   }
 
