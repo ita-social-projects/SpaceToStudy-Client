@@ -19,7 +19,7 @@ export const categoryService = {
       pathname: URLs.categories.get,
       searchParameters: { ...sort, ...rest }
     })
-    console.log(resultUrl)
+
     return baseService.request<ItemsWithCount<CategoryInterface>>({
       method: 'GET',
       url: resultUrl
