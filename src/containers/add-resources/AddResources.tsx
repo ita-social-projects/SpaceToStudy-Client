@@ -14,15 +14,14 @@ import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddRe
 import { adjustColumns } from '~/utils/helper-functions'
 import { getErrorKey } from '~/utils/get-error-key'
 import {
-  ErrorResponse,
   GetResourcesParams,
   ItemsWithCount,
   CourseResource,
   TableColumn,
   RemoveColumnRules,
   Question,
-  ServiceFunction,
-  ResourcesTabsEnum
+  ResourcesTabsEnum,
+  ServiceFunctionNew
 } from '~/types'
 
 interface AddResourcesProps<T extends CourseResource | Question> {
@@ -31,7 +30,7 @@ interface AddResourcesProps<T extends CourseResource | Question> {
   resourceTab: ResourcesTabsEnum
   columns: TableColumn<T>[]
   removeColumnRules: RemoveColumnRules<T>
-  requestService: ServiceFunction<ItemsWithCount<T>, GetResourcesParams>
+  requestService: ServiceFunctionNew<ItemsWithCount<T>, GetResourcesParams>
   showCheckboxWithTooltip?: boolean
 }
 
@@ -70,31 +69,24 @@ const AddResources = <T extends CourseResource | Question>({
     [sort, requestService]
   )
 
-  const onResponseError = useCallback(
-    (error?: ErrorResponse) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['resources', sort, resourceTab],
+    queryFn: getMyResources,
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
+  })
+
+  useEffect(() => {
+    if (error) {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
           message: getErrorKey(error)
         })
       )
-    },
-    [dispatch]
-  )
-
-  const { data, isLoading, error, isError } = useQuery<ItemsWithCount<T>>({
-    queryKey: ['resources', sort, resourceTab],
-    queryFn: async () => {
-      const response = await getMyResources()
-      return response.data ?? defaultResponses.itemsWithCount
     }
-  })
-
-  useEffect(() => {
-    if (isError) {
-      onResponseError(error as ErrorResponse)
-    }
-  }, [error, isError, onResponseError])
+  }, [error, dispatch])
 
   const onRowClick = useCallback(
     (item: T) => {
@@ -131,32 +123,30 @@ const AddResources = <T extends CourseResource | Question>({
 
   const getItems = useCallback(
     (inputValue: string, selectedCategories: string[]) => {
-      return (
-        data?.items.filter((item) => {
-          const titleMatch =
-            'title' in item
-              ? item.title
-                  .toLocaleLowerCase()
-                  .includes(inputValue.toLocaleLowerCase())
-              : item.fileName
-                  .toLocaleLowerCase()
-                  .split('.')
-                  .slice(0, -1)
-                  .join('.')
-                  .includes(inputValue.toLocaleLowerCase())
+      return data.items.filter((item) => {
+        const titleMatch =
+          'title' in item
+            ? item.title
+                .toLocaleLowerCase()
+                .includes(inputValue.toLocaleLowerCase())
+            : item.fileName
+                .toLocaleLowerCase()
+                .split('.')
+                .slice(0, -1)
+                .join('.')
+                .includes(inputValue.toLocaleLowerCase())
 
-          const categoryId =
-            typeof item.category !== 'string' ? item.category?._id : null
+        const categoryId =
+          typeof item.category !== 'string' ? item.category?._id : null
 
-          const categoryMatch =
-            selectedCategories.length === 0 ||
-            selectedCategories.includes(String(categoryId))
+        const categoryMatch =
+          selectedCategories.length === 0 ||
+          selectedCategories.includes(String(categoryId))
 
-          return titleMatch && categoryMatch
-        }) ?? []
-      )
+        return titleMatch && categoryMatch
+      })
     },
-    [data?.items]
+    [data.items]
   )
 
   const props = {

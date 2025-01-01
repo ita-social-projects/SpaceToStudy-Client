@@ -175,7 +175,7 @@ const CreateOrEditQuizContainer = ({
           columns={columns}
           onAddResources={onAddQuestions}
           removeColumnRules={removeColumnRules}
-          requestService={ResourceService.getQuestions}
+          requestService={ResourceService.getQuestionsQuery}
           resourceTab={ResourcesTabsEnum.Questions}
           resources={questions}
         />
