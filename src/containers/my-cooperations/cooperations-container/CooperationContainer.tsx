@@ -15,7 +15,7 @@ import {
   removeColumnRules
 } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.constants'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
-import { Cooperation, SizeEnum, StatusEnum } from '~/types'
+import { Cooperation, ItemsWithCount, SizeEnum, StatusEnum } from '~/types'
 import { useNavigate } from 'react-router-dom'
 
 interface CooperationContainerProps {
@@ -23,7 +23,7 @@ interface CooperationContainerProps {
   showTable: boolean
   sort: SortHook
   getCooperations: () => Promise<
-    QueryObserverResult<{ items: Cooperation[]; count: number }>
+    QueryObserverResult<ItemsWithCount<Cooperation>>
   >
 }
 

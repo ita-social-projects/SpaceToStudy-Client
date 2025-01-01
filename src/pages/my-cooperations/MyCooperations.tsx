@@ -28,7 +28,12 @@ import {
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
 import { itemsLoadLimit } from '~/constants'
-import { CardsViewEnum, Cooperation, UserRoleEnum } from '~/types'
+import {
+  CardsViewEnum,
+  Cooperation,
+  ItemsWithCount,
+  UserRoleEnum
+} from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 import TabFilterList from '~/components/tab-filter-list/TabFilterList'
 
@@ -81,10 +86,7 @@ const MyCooperations = () => {
     isLoading,
     data = defaultResponse,
     refetch
-  } = useQuery<{
-    items: Cooperation[]
-    count: number
-  }>({
+  } = useQuery<ItemsWithCount<Cooperation>>({
     queryKey: ['cooperations', filters, sort, page],
     queryFn: getMyCooperations
   })

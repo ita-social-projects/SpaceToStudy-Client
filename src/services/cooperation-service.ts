@@ -10,7 +10,8 @@ import {
   Offer,
   MyCooperationDetails,
   UpdateCooperationsSections,
-  Cooperation
+  Cooperation,
+  ItemsWithCount
 } from '~/types'
 import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
 import { baseService } from '~/services/base-service'
@@ -24,10 +25,7 @@ export const cooperationService = {
       searchParameters: { status, search }
     })
 
-    return baseService.request<{
-      items: Cooperation[]
-      count: number
-    }>({
+    return baseService.request<ItemsWithCount<Cooperation>>({
       method: 'GET',
       url
     })

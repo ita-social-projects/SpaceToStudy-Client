@@ -26,6 +26,7 @@ import {
   ComponentEnum,
   Cooperation,
   ErrorResponse,
+  ItemsWithCount,
   StatusEnum,
   UpdateCooperationsParams
 } from '~/types'
@@ -38,7 +39,7 @@ import { getErrorKey } from '~/utils/get-error-key'
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
   getCooperations: () => Promise<
-    QueryObserverResult<{ items: Cooperation[]; count: number }>
+    QueryObserverResult<ItemsWithCount<Cooperation>>
   >
 }
 
