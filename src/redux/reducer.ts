@@ -1,11 +1,13 @@
-import { PayloadAction, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import { parseJwt } from '~/utils/helper-functions'
 import {
   createAsyncThunk,
-  isPending,
+  createSlice,
+  isAnyOf,
   isFulfilled,
-  isRejected
+  isPending,
+  isRejected,
+  PayloadAction
 } from '@reduxjs/toolkit'
+import { parseJwt } from '~/utils/helper-functions'
 import { AuthService, authService } from '~/services/auth-service'
 import { AxiosError } from 'axios'
 import { AccessToken, ErrorResponse, UserRole, UserStatusEnum } from '~/types'

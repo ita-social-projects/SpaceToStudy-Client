@@ -1,40 +1,36 @@
-import React, { useState } from 'react'
+import { forwardRef } from 'react'
 import {
-  ChipProps,
+  CategoryChip,
   FilterChip,
   InputChip,
-  CategoryChip,
   StateChip
-} from './ChipTypes'
+} from './ChipInternalComponents'
+import { type ChipProps } from './types'
 
-const Chip: React.FC<ChipProps> = (props) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
-
-  const handleSelectChange = (option: string) => {
-    setSelectedOption(option)
-  }
-
+const Chip = forwardRef<HTMLDivElement, ChipProps>((props, reference) => {
   switch (props.type) {
-    case 'filter':
-      return (
-        <FilterChip
-          {...props}
-          isOpen={isOpen}
-          onSelectChange={handleSelectChange}
-          selectedOption={selectedOption}
-          setIsOpen={setIsOpen}
-        />
-      )
-    case 'input':
-      return <InputChip {...props} />
-    case 'category':
-      return <CategoryChip {...props} />
-    case 'state':
-      return <StateChip {...props} />
-    default:
+    case 'filter': {
+      return <FilterChip {...props} ref={reference} />
+    }
+
+    case 'input': {
+      return <InputChip {...props} ref={reference} />
+    }
+
+    case 'category': {
+      return <CategoryChip {...props} ref={reference} />
+    }
+
+    case 'state': {
+      return <StateChip {...props} ref={reference} />
+    }
+
+    default: {
       return null
+    }
   }
-}
+})
+
+Chip.displayName = 'Chip'
 
 export default Chip

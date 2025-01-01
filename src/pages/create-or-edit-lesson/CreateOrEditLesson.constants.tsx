@@ -24,6 +24,7 @@ export const defaultResponse = {
   title: '',
   updatedAt: '',
   _id: '',
+  id: '',
   content: '',
   category: null,
   resourceType: ResourceType.Lesson

@@ -5,11 +5,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import useMenu from '~/hooks/use-menu'
 import FilterCheckbox from '~/components/enhanced-table/filter-checkbox/FilterCheckbox'
-
-interface FilterEnum {
-  value: string
-  label: string
-}
+import { FilterEnum } from '~/types/components/enum-filter/enumFilter.interface'
 
 interface EnumFilterProps {
   column: {

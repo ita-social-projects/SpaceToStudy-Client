@@ -2,7 +2,8 @@ import { vi } from 'vitest'
 import {
   screen,
   fireEvent,
-  waitForElementToBeRemoved
+  waitForElementToBeRemoved,
+  within
 } from '@testing-library/react'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
@@ -92,5 +93,47 @@ describe('PasswordSecurityTab', () => {
     })
 
     expect(deactivateDescription).not.toBeInTheDocument()
+  })
+  it('should open the modal when clicking the Deactivate account button', async () => {
+    const deactivateAccountButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
+    )
+    fireEvent.click(deactivateAccountButton)
+
+    const modal = screen.getByRole('dialog')
+    const deactivateTitle = within(modal).getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateTitle'
+    )
+    const deactivateDescription = within(modal).getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateDescription'
+    )
+    expect(deactivateTitle).toBeInTheDocument()
+    expect(deactivateDescription).toBeInTheDocument()
+  })
+  it('should render Deactivate and Cancel buttons in the modal', async () => {
+    const deactivateAccountButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
+    )
+    fireEvent.click(deactivateAccountButton)
+  
+    const deactivateButton = screen.getByText('editProfilePage.profile.passwordSecurityTab.deactivateBtn')
+    const cancelButton = screen.getByText('common.cancel')
+  
+    expect(deactivateButton).toBeInTheDocument()
+    expect(cancelButton).toBeInTheDocument()
+  })  
+  it('should close modal on Cancel button click and stays on Password & Security tab', async () => {
+    const deactivateAccountButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
+    )
+    fireEvent.click(deactivateAccountButton)
+  
+    const cancelButton = screen.getByText('common.cancel')
+    fireEvent.click(cancelButton)
+    
+    const tabTitle = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.title'
+    )
+    expect(tabTitle).toBeInTheDocument()
   })
 })

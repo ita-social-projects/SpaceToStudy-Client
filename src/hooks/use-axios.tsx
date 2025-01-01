@@ -51,15 +51,16 @@ const useAxios = <
 
       try {
         setLoading(true)
-        const res = await service(params)
+        const res = await service(
+          params as Params extends undefined ? undefined : Params
+        )
         if (res.status >= 400 && res.status <= 526) {
           throw res
         }
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        onResponse && onResponse(responseData as TransformedResponse)?.catch()
+        await onResponse?.(responseData as TransformedResponse)
       } catch (e) {
         const error = e as AxiosError<ErrorResponse>
         if (error.response) {

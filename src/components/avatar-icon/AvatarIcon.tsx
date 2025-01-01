@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Avatar from '@mui/material/Avatar'
+import UserAvatar from '~/design-system/components/user-avatar/UserAvatar'
 import { SxProps } from '@mui/system'
 import { getInitials, spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/avatar-icon/AvatarIcon.styles'
@@ -18,13 +18,16 @@ const AvatarIcon: FC<AvatarIconProps> = ({
   sx
 }) => {
   return (
-    <Avatar
-      alt='User Avatar'
+    <UserAvatar
+      firstName={firstName}
+      lastName={lastName}
+      size='profile-lg'
       src={photo ?? ''}
       sx={spliceSx(styles.avatar, sx)}
+      variant='photo'
     >
       {getInitials(firstName, lastName)}
-    </Avatar>
+    </UserAvatar>
   )
 }
 

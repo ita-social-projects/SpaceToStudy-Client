@@ -3,5 +3,6 @@
   "discardOffer": "Відхилити зміни пропозиції?",
   "discardChanges": "Зберегти останні зміни?",
   "confirmCooperationClosing": "Підтвердження припинення cпівпраці",
-  "acceptCooperationClosing": "Процес припинення співпраці"
+  "acceptCooperationClosing": "Процес припинення співпраці",
+  "cooperationClosureDeclined": "Відмова від припинення співпраці"
 }

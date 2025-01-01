@@ -3,6 +3,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useMemo,
   useReducer
 } from 'react'
 import {
@@ -75,18 +76,19 @@ const StepProvider = ({ children, initialValues }: StepProviderProps) => {
     []
   )
 
+  const stepValue = useMemo(
+    () => ({
+      stepData: state,
+      handleSubjects,
+      handlePhoto,
+      handleLanguage,
+      handleGeneralInfo
+    }),
+    [state, handleSubjects, handlePhoto, handleLanguage, handleGeneralInfo]
+  )
+
   return (
-    <StepContext.Provider
-      value={{
-        stepData: state,
-        handleSubjects,
-        handlePhoto,
-        handleLanguage,
-        handleGeneralInfo
-      }}
-    >
-      {children}
-    </StepContext.Provider>
+    <StepContext.Provider value={stepValue}>{children}</StepContext.Provider>
   )
 }
 

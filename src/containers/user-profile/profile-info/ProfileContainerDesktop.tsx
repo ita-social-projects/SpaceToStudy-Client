@@ -12,13 +12,14 @@ import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneIt
 import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
 import { UserResponse } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
+import { DoneItem } from './ProfileInfo.constants'
 
 interface ProfileContainerDesktopProps {
   actionIcon: ReactNode
   accInfo: ReactNode
   buttonGroup: ReactNode
   defaultQuantity: number
-  doneItems: { title: string; description: string }[]
+  doneItems: DoneItem[]
   userData: UserResponse
   chipItems: string[]
 }

@@ -36,8 +36,12 @@
   "acceptBtn": "Прийняти",
   "declineBtn": "Відхилити",
   "submitBtn": "Підтвердити",
-  "inputFieldPlaceholder": "Введіть причину відмови",
-  "InputFieldLabel": "Будь ласка, вкажіть причину відмови від закриття співпраці.",
+  "declineInputFieldPlaceholder": "Введіть причину відмови",
+  "declineInputFieldLabel": "Будь ласка, вкажіть причину відмови від закриття співпраці.",
+  "responseInputFieldPlaceholder": "Введіть коментар щодо повторного запиту",
+  "responseInputFieldLabel": "Будь ласка, вкажіть причину повторного надсилання запиту.",
   "inputError": "Це поле є обов'язковим для заповнення.",
-  "submitMessage": "Вашу причину було успішно надіслано протилежній стороні."
+  "submitMessage": "Вашу причину було успішно надіслано протилежній стороні.",
+  "cooperationCloseDeclinedMessage": "<userWrapper>{{user}}</userWrapper> відмовив(-ла) у закритті співпраці з наступної причини:",
+  "resendRequestBtn": "Надіслати повторно"
 }

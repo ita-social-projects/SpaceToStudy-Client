@@ -21,3 +21,5 @@ export type ServiceFunction<Response, Params = undefined> = (
 export interface AxiosResponseError extends AxiosError<ErrorResponse> {
   config: InternalAxiosRequestConfig & { _isRetry: boolean }
 }
+
+export type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE'

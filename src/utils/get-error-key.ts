@@ -3,4 +3,4 @@ interface ErrorResponse {
 }
 
 export const getErrorKey = (error?: ErrorResponse) =>
-  `errors.${error && error.code ? error.code : 'UNKNOWN_ERROR'}`
+  `errors.${error?.code ? error.code : 'UNKNOWN_ERROR'}`

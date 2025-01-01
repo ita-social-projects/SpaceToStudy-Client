@@ -26,7 +26,7 @@ describe('AvatarIcon Component', () => {
       />
     )
 
-    const avatarElement = screen.getByAltText('User Avatar')
+    const avatarElement = screen.getByAltText('JD')
 
     expect(avatarElement).toBeInTheDocument()
     expect(avatarElement).toHaveAttribute('src', mockPhoto)
