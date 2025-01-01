@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import Box from '@mui/system/Box'
 import { useCallback } from 'react'
 
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import { cooperationService } from '~/services/cooperation-service'
 import { defaultResponse } from '~/pages/my-cooperations/MyCooperations.constants'
 import Loader from '../loader/Loader'
@@ -23,13 +23,22 @@ const ActiveStudentsBlock = () => {
     []
   )
 
-  const { loading, response, error } = useAxios<ItemsWithCount<Cooperation>>({
-    service: getMyCooperations,
-    defaultResponse
+  const {
+    isLoading,
+    data = defaultResponse,
+    error
+  } = useQuery<ItemsWithCount<Cooperation>>({
+    queryKey: ['cooperations'],
+    queryFn: getMyCooperations
   })
 
-  if (loading) return <Loader pageLoad size={50} />
-  if (error) return null
+  if (isLoading) {
+    return <Loader pageLoad size={50} />
+  }
+
+  if (error) {
+    return null
+  }
 
   const onShowMoreClick = () => {
     navigate('/my-cooperations')
@@ -39,7 +48,7 @@ const ActiveStudentsBlock = () => {
     navigate('/categories/subjects/find-offers')
   }
 
-  if (!response.items.length)
+  if (!data.items.length)
     return (
       <>
         <Typography sx={styles.title}>{t('activeStudents.title')}</Typography>
@@ -61,7 +70,7 @@ const ActiveStudentsBlock = () => {
       </>
     )
 
-  const activeStudents = response.items.map((cooperation) => (
+  const activeStudents = data.items.map((cooperation) => (
     <ActiveStudent
       cooperationId={cooperation._id}
       firstName={cooperation.user.firstName}
