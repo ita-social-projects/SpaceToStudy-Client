@@ -21,19 +21,13 @@ import { getScreenBasedLimit } from '~/utils/helper-functions'
 
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
-  defaultResponse,
   initialFilters,
   initialSort,
   sortTranslationKeys,
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
-import { itemsLoadLimit } from '~/constants'
-import {
-  CardsViewEnum,
-  Cooperation,
-  ItemsWithCount,
-  UserRoleEnum
-} from '~/types'
+import { defaultResponses, itemsLoadLimit } from '~/constants'
+import { CardsViewEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 import TabFilterList from '~/components/tab-filter-list/TabFilterList'
 
@@ -82,13 +76,12 @@ const MyCooperations = () => {
     [filters, page, itemsPerPage, sort]
   )
 
-  const {
-    isLoading,
-    data = defaultResponse,
-    refetch
-  } = useQuery<ItemsWithCount<Cooperation>>({
+  const { isLoading, data, refetch } = useQuery({
     queryKey: ['cooperations', filters, sort, page],
-    queryFn: getMyCooperations
+    queryFn: getMyCooperations,
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
   })
 
   const handleTabClick = (tabName: string, tabValue: string) => {

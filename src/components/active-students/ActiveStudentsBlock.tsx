@@ -4,15 +4,14 @@ import { useCallback } from 'react'
 
 import useQuery from '~/hooks/use-query'
 import { cooperationService } from '~/services/cooperation-service'
-import { defaultResponse } from '~/pages/my-cooperations/MyCooperations.constants'
 import Loader from '../loader/Loader'
-import { Cooperation, ItemsWithCount } from '~/types'
 import ActiveStudent from './ActiveStudent'
 import AppIconButton from '../app-icon-button/AppIconButton'
 import { Add, MoreHoriz } from '@mui/icons-material'
 import { styles } from './ActiveStudentsBlock.styles'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { defaultResponses } from '~/constants'
 
 const ActiveStudentsBlock = () => {
   const { t } = useTranslation()
@@ -23,13 +22,12 @@ const ActiveStudentsBlock = () => {
     []
   )
 
-  const {
-    isLoading,
-    data = defaultResponse,
-    error
-  } = useQuery<ItemsWithCount<Cooperation>>({
+  const { isLoading, data, error } = useQuery({
     queryKey: ['cooperations'],
-    queryFn: getMyCooperations
+    queryFn: getMyCooperations,
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
   })
 
   if (isLoading) {
