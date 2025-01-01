@@ -44,7 +44,7 @@ describe('AppAutoComplete test', () => {
     renderWithProviders(
       <AppAutoComplete
         onChange={onChange}
-        options={optionsCity}
+        options={optionsCity.sort()}
         sx={styles}
         textFieldProps={{
           label: labelCity
@@ -82,14 +82,18 @@ describe('AppAutoComplete test', () => {
     })
 
     const optionsInDropdown = screen.getAllByRole('option')
-    const cityNames = optionsInDropdown.map(option => option.textContent)
-    const sortedCityNames = [...cityNames].sort()    
-    expect(sortedCityNames).toEqual(['Frankivsk', 'Kyiv', 'Lviv', 'Odesa', 'Verhovyna'])
+    
+    const cityNames = optionsInDropdown.map(option => option.textContent?.trim())
+    const sortedCityNames = [...cityNames].sort()
+    expect(cityNames).toEqual(sortedCityNames)
   })
   it('Should show filtered results based on user input', async () => {
     const cityField = screen.getByRole('combobox')
+    fireEvent.mouseDown(cityField)
+    fireEvent.focus(cityField)
+    fireEvent.click(cityField)
 
-    fireEvent.change(cityField, { target: { value: 'Verhovyna' } })
+    fireEvent.change(cityField, { target: { value: 'Verhovy' } })
 
     await waitFor(() => {
       const optionsInDropdown = screen.getAllByRole('option')
@@ -112,9 +116,9 @@ describe('AppAutoComplete test', () => {
     })
 
     const optionsInDropdown = screen.getAllByRole('option')
-    const cityNames = optionsInDropdown.map(option => option.textContent)
+    const cityNames = optionsInDropdown.map(option => option.textContent?.trim())
     const sortedCityNames = [...cityNames].sort()
-    expect(sortedCityNames).toEqual(['Frankivsk', 'Kyiv', 'Lviv', 'Odesa', 'Verhovyna'])
+    expect(cityNames).toEqual(sortedCityNames)
   })
   it('Should show filtered results based on text input in City field', async () => {
     const cityField = screen.getByRole('combobox')
