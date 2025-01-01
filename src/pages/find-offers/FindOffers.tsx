@@ -33,15 +33,12 @@ import { useDrawer } from '~/hooks/use-drawer'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
-import useAxios from '~/hooks/use-axios'
 import { getOpositeRole } from '~/utils/helper-functions'
 
 import {
   CardsViewEnum,
   CardsView,
   SizeEnum,
-  GetOffersParams,
-  GetOffersResponse,
   PositionEnum,
   StatusEnum,
   UserRole
@@ -53,6 +50,7 @@ import {
 } from '~/pages/find-offers/FindOffers.constants'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
 import { fetchUserById } from '~/redux/features/editProfileSlice'
+import useQuery from '~/hooks/use-query'
 
 const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
@@ -72,18 +70,36 @@ const FindOffers = () => {
     })
 
   const getOffers = useCallback(
-    (params?: GetOffersParams) => OfferService.getOffers(params),
-    []
+    () =>
+      OfferService.getOffers({
+        ...filters,
+        status: StatusEnum.Active,
+        limit: itemsPerPage,
+        skip: (Number(filters.page) - 1) * itemsPerPage
+      }),
+    [filters]
   )
 
+  // const {
+  //   response: offersResponse,
+  //   loading: offersLoading,
+  //   fetchData
+  // } = useAxios<GetOffersResponse, GetOffersParams>({
+  //   service: getOffers,
+  //   defaultResponse,
+  //   fetchOnMount: false
+  // })
+
   const {
-    response: offersResponse,
-    loading: offersLoading,
-    fetchData
-  } = useAxios<GetOffersResponse, GetOffersParams>({
-    service: getOffers,
-    defaultResponse,
-    fetchOnMount: false
+    isLoading: offersLoading,
+    data: offersResponse,
+    refetch: fetchData
+  } = useQuery({
+    queryKey: ['offers', filters, searchParams.toString()],
+    queryFn: getOffers,
+    options: {
+      initialData: defaultResponse
+    }
   })
 
   const { items, count: offersCount } = offersResponse
@@ -101,21 +117,16 @@ const FindOffers = () => {
     return { minPrice, maxPrice }
   }, [items])
 
-  const updateInfo = useCallback(() => {
-    void fetchData({
-      ...filters,
-      status: StatusEnum.Active,
-      limit: itemsPerPage,
-      skip: (Number(filters.page) - 1) * itemsPerPage
-    })
-  }, [fetchData, filters])
+  // const updateInfo = useCallback(() => {
+  //   void fetchData()
+  // }, [fetchData])
 
-  const searchString = searchParams.toString()
+  // const searchString = searchParams.toString()
 
-  useEffect(() => {
-    updateInfo()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData, searchString])
+  // useEffect(() => {
+  //   updateInfo()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [fetchData, searchString])
 
   useEffect(() => {
     void dispatch(
