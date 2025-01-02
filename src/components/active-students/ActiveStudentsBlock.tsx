@@ -71,7 +71,6 @@ const ActiveStudentsBlock = () => {
       subjectName={cooperation.offer.subject.name}
     />
   ))
-  //comment
   return (
     <>
       <Typography sx={styles.title}>{t('activeStudents.title')}</Typography>
