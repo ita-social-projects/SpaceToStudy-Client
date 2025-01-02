@@ -13,44 +13,6 @@ import { styles } from '~/containers/user-profile/comments-block/CommentsBlock.s
 
 import { ReviewResponse } from '~/types'
 
-export interface MockResponseItem {
-  _id: string
-  comment: string
-  rating: number
-  author: {
-    _id: string
-    role: string[]
-    firstName: string
-    lastName: string
-    photo: string
-    email: string
-    categories: never[]
-    lastLogin: string
-    createdAt: string
-    updatedAt: string
-    __v: number
-  }
-  targetUserId: string
-  targetUserRole: string
-  offer: {
-    _id: string
-    price: number
-    proficiencyLevel: string[]
-    description: string
-    languages: string[]
-    authorRole: string
-    userId: string
-    subject: { _id: string; name: string }
-    category: { _id: string; name: string }
-    createdAt: string
-    updatedAt: string
-    __v: number
-  }
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-
 interface ComentsBlockProps {
   title?: string
   data: ReviewResponse[]
