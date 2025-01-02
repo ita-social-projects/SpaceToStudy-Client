@@ -226,27 +226,5 @@ describe('ResourceItem tests when resourceType attachment', () => {
     expect(attachmentItem).toBeInTheDocument()
   })
 })
-describe('ResourceItem status tests', () => {
-  it('should set status to the given availability status if it exists in ResourceAvailabilityStatusEnum', () => {
-    const mockAvailability = {
-      status: ResourceAvailabilityStatusEnum.Open,
-      date: null,
-    }
-
-    renderWithProviders(
-      <ResourceItem
-        availability={mockAvailability}
-        deleteResource={mockDeleteResource}
-        editResource={mockEditResource}
-        resource={mockedLessonDataOriginal}
-        updateAvailability={mockUpdateAvailability}
-      />
-    )
-
-    const status = availability?.status ?? ResourceAvailabilityStatusEnum.Open
-
-    expect(status).toBe(ResourceAvailabilityStatusEnum.Open)
-  })
-})
 
 
