@@ -34,9 +34,9 @@ export const OfferService = {
     await axiosClient.get(createUrlPath(URLs.offers.get, id)),
 
   getUsersOffers: (params: GetMyOffersParams) => {
-    const user = createUrlPath(URLs.users.get, params.id)
     const resultUrl = getFullUrl({
-      pathname: `${user}${URLs.offers.get}`,
+      pathname: URLs.users.offers,
+      parameters: { id: params.id },
       searchParameters: params
     })
     return baseService.request<ItemsWithCount<Offer>>({
