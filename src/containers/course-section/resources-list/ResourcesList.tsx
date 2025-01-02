@@ -25,36 +25,6 @@ interface ResourcesListProps {
   ) => void
   isCooperation?: boolean
 }
-export const renderItem = (
-  item: CourseResource,
-  availability: ResourceAvailability,
-  deleteResource: (resource: CourseResource) => void,
-  editResource: (resource: CourseResource) => void,
-  isCooperation: boolean,
-  updateAvailability?: (
-    resource: CourseResource,
-    availability: ResourceAvailability
-  ) => void,
-  isDragOver = false
-) => (
-  <SortableWrapper
-    id={item.id}
-    key={item.id}
-    onDragEndStyles={styles.section(isDragOver)}
-    onDragStartStyles={styles.section(true)}
-  >
-    <DragHandle iconStyles={styles.dragIcon} />
-    <ResourceItem
-      availability={availability}
-      deleteResource={deleteResource}
-      editResource={editResource}
-      isCooperation={isCooperation}
-      key={item.id}
-      resource={item}
-      updateAvailability={updateAvailability}
-    />
-  </SortableWrapper>
-)
 const ResourcesList: FC<ResourcesListProps> = ({
   cooperationData = [],
   sortResources,
@@ -81,6 +51,36 @@ const ResourcesList: FC<ResourcesListProps> = ({
     setItems: sortResources,
     idProp: 'id'
   })
+  const renderItem = (
+    item: CourseResource,
+    availability: ResourceAvailability,
+    deleteResource: (resource: CourseResource) => void,
+    editResource: (resource: CourseResource) => void,
+    isCooperation: boolean,
+    updateAvailability?: (
+      resource: CourseResource,
+      availability: ResourceAvailability
+    ) => void,
+    isDragOver = false
+  ) => (
+    <SortableWrapper
+      id={item.id ?? ''}
+      key={item.id ?? ''}
+      onDragEndStyles={styles.section(isDragOver)}
+      onDragStartStyles={styles.section(true)}
+    >
+      <DragHandle iconStyles={styles.dragIcon} />
+      <ResourceItem
+        availability={availability}
+        deleteResource={deleteResource}
+        editResource={editResource}
+        isCooperation={isCooperation}
+        key={item.id}
+        resource={item}
+        updateAvailability={updateAvailability}
+      />
+    </SortableWrapper>
+  )
   const renderNewItem = (
     item: CourseResource,
     availability: ResourceAvailability,
@@ -102,14 +102,16 @@ const ResourcesList: FC<ResourcesListProps> = ({
       item.availability as ResourceAvailability
     )
   })
-  const getAvailabilityForActiveItem = (id: string | null) => {
+  const getAvailabilityForActiveItem = (id: string | null | undefined) => {
     return cooperationData.find((item) => item.resource.id === id)
       ?.availability as ResourceAvailability
   }
   const resourceListContent = enabled && (
     <>
       <SortableContext
-        items={cooperationData?.map((item) => item.resource.id)}
+        items={cooperationData
+          ?.map((item) => item.resource.id)
+          .filter((id): id is string => id !== undefined)}
         strategy={verticalListSortingStrategy}
       >
         <Box sx={styles.root}>{resourceItems}</Box>

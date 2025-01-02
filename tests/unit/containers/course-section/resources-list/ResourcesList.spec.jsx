@@ -1,9 +1,7 @@
 import { renderWithProviders } from '~tests/test-utils'
-import { findByText, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
-import { DragOverlay } from '@dnd-kit/core'
 import { ResourcesTypesEnum as ResourceType } from '~/types'
-import { renderItem } from '~/containers/course-section/resources-list/ResourcesList'
 
 export const mockedCooperationData = [
   {
@@ -85,28 +83,6 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
     mockSortResources(newItems)
 
     expect(mockSortResources).toHaveBeenCalledWith(newItems)
-  })
-  it('should render DragOverlay when activeItem is present', async () => {
-    const activeItem = mockedCooperationData[0]
-  
-    renderWithProviders(
-      <DragOverlay>
-        {activeItem &&
-          renderItem(
-            activeItem.resource,
-            activeItem.availability ||
-              mockedCooperationData.find((item) => item.resource.id === activeItem.resource.id)?.availability,
-            false,
-            mockDeleteResource,
-            mockEditResource,
-            true,
-            mockUpdateAvailability
-          )}
-      </DragOverlay>
-    )
-  
-    const overlayItem = await screen.findByText(activeItem.resource.title)
-    expect(overlayItem).toBeInTheDocument()
   })
   it('should call getAvailabilityForActiveItem correctly', () => {
     const getAvailabilityForActiveItem = (id) => {

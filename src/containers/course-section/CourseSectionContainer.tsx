@@ -129,12 +129,14 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const handleResourceAvailabilityChange = useCallback(
     (resource: CourseResource, availability: ResourceAvailability) => {
-      resourceEventHandler?.({
-        type: CourseResourceEventType.ResourceUpdateAvailability,
-        sectionId: sectionData.id,
-        resourceId: resource.id,
-        availability
-      })
+      if (resource.id) {
+        resourceEventHandler?.({
+          type: CourseResourceEventType.ResourceUpdateAvailability,
+          sectionId: sectionData.id,
+          resourceId: resource.id,
+          availability
+        })
+      }
     },
     [sectionData, resourceEventHandler]
   )
@@ -153,12 +155,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
         void ResourceService.deleteAttachment(resource._id)
       }
     }
-
-    resourceEventHandler?.({
-      type: CourseResourceEventType.ResourceRemoved,
-      sectionId: sectionData.id,
-      resourceId: resource.id
-    })
+    if (resource.id) {
+      resourceEventHandler?.({
+        type: CourseResourceEventType.ResourceRemoved,
+        sectionId: sectionData.id,
+        resourceId: resource.id
+      })
+    }
   }
 
   const handleEditAttachment = (params?: UpdateAttachmentParams) =>
