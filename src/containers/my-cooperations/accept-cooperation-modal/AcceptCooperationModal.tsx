@@ -26,7 +26,7 @@ import {
   ComponentEnum,
   Cooperation,
   ErrorResponse,
-  ItemsWithCount,
+  type ItemsWithCount,
   StatusEnum,
   UpdateCooperationsParams
 } from '~/types'

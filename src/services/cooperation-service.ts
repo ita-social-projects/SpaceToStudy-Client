@@ -10,8 +10,8 @@ import {
   Offer,
   MyCooperationDetails,
   UpdateCooperationsSections,
-  Cooperation,
-  ItemsWithCount
+  type Cooperation,
+  type ItemsWithCount
 } from '~/types'
 import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
 import { baseService } from '~/services/base-service'
