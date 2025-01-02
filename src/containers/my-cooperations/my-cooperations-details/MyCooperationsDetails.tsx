@@ -39,7 +39,6 @@ const MyCooperationsDetails = () => {
   const navigate = useNavigate()
   const { setChatInfo } = useChatContext()
   const userId = useAppSelector((state) => state.appMain.userId)
-  const userRole = useAppSelector((state) => state.appMain.userRole)
 
   const getDetails: ServiceFunction<
     MyCooperationDetails<Offer> | null,
@@ -111,9 +110,7 @@ const MyCooperationsDetails = () => {
     displayedUser.photo &&
     createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, displayedUser.photo)
 
-  const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
-    <CooperationCompletion data={reviewData} />
-  )
+  const cooperationCompletion = <CooperationCompletion data={reviewData} />
 
   return (
     <Box>
