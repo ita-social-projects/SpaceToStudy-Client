@@ -156,7 +156,6 @@ const cooperationsSlice = createSlice({
           availability
         })
       )
-      console.log(action.payload.resources)
     },
 
     updateResource(
