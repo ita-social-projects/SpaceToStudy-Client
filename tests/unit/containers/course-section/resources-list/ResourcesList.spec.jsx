@@ -33,7 +33,6 @@ export const mockedCooperationData = [
     resourceType: ResourceType.Lesson
   }
 ]
-
 const mockedSetResources = vi.fn()
 const mockSortResources = vi.fn()
 const mockDeleteResource = vi.fn()
