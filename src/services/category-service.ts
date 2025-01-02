@@ -13,11 +13,9 @@ import { getFullUrl } from '~/utils/helper-functions'
 
 export const categoryService = {
   getCategories: (params?: Partial<CategoriesParams>) => {
-    const { sort, ...rest } = params || {}
-
     const resultUrl = getFullUrl({
       pathname: URLs.categories.get,
-      searchParameters: { ...sort, ...rest }
+      searchParameters: params
     })
 
     return baseService.request<ItemsWithCount<CategoryInterface>>({

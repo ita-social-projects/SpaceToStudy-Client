@@ -1,7 +1,7 @@
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import { Sort } from '~/types'
 
-export interface RequestParams {
+export type RequestParams = {
   limit?: number
   skip?: number
   sort?: Sort
