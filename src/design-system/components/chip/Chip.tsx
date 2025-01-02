@@ -6,7 +6,6 @@ import {
   StateChip
 } from './ChipInternalComponents'
 import { type ChipProps } from './types'
-export { type ChipColor } from './types'
 
 const Chip = forwardRef<HTMLDivElement, ChipProps>((props, reference) => {
   switch (props.type) {
