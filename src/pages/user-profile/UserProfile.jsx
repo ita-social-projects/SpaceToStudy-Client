@@ -80,7 +80,7 @@ const UserProfile = () => {
 
   return (
     <PageWrapper>
-      <ProfileInfo myRole={userRole} userData={response} />
+      <ProfileInfo myRole={preferredRole} userData={response} />
       {isMyProfile && (
         <CompleteProfileBlock
           data={response}

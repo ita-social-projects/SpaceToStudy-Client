@@ -142,7 +142,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
       >
         {t(
           `userProfilePage.profileInfo.${
-            myRole !== Student ? 'studentRequests' : 'tutorOffers'
+            myRole === Student ? 'studentRequests' : 'tutorOffers'
           }`
         )}
       </AppButton>

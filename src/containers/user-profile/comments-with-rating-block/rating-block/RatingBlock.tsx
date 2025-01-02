@@ -38,7 +38,7 @@ const RatingBlock: FC<RatingBlockProps> = ({
 
   const progressBars = ratingCounts
     .map((rating, idx: number) => {
-      const starPercent = (rating / reviewCount) * 100
+      const starPercent = reviewCount ? (rating / reviewCount) * 100 : 0
       const active = !activeFilter || activeFilter === idx
       const handleProgresBarClick = () => {
         if (rating) {
