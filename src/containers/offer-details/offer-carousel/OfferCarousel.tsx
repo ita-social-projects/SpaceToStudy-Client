@@ -55,11 +55,6 @@ const OfferCarousel = ({ offer }: OfferCarouselProps) => {
     [offer]
   )
 
-  // const { response } = useAxios<GetOffersResponse>({
-  //   service: getOffers,
-  //   defaultResponse
-  // })
-
   const { data: response } = useQuery<GetOffersResponse>({
     queryKey: ['offers', offer],
     queryFn: getOffers,

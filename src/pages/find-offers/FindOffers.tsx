@@ -80,16 +80,6 @@ const FindOffers = () => {
     [filters]
   )
 
-  // const {
-  //   response: offersResponse,
-  //   loading: offersLoading,
-  //   fetchData
-  // } = useAxios<GetOffersResponse, GetOffersParams>({
-  //   service: getOffers,
-  //   defaultResponse,
-  //   fetchOnMount: false
-  // })
-
   const {
     isLoading: offersLoading,
     data: offersResponse,
@@ -116,17 +106,6 @@ const FindOffers = () => {
 
     return { minPrice, maxPrice }
   }, [items])
-
-  // const updateInfo = useCallback(() => {
-  //   void fetchData()
-  // }, [fetchData])
-
-  // const searchString = searchParams.toString()
-
-  // useEffect(() => {
-  //   updateInfo()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [fetchData, searchString])
 
   useEffect(() => {
     void dispatch(

@@ -15,25 +15,24 @@ import {
 import { baseService } from './base-service'
 
 export const OfferService = {
-  // getOffers: async (params?: GetOffersParams): Promise<AxiosResponse> => {
-  //   const category = createUrlPath(URLs.categories.get, params?.categoryId)
-  //   const subject = createUrlPath(URLs.subjects.get, params?.subjectId)
-  //   return await axiosClient.get(`${category}${subject}${URLs.offers.get}`, {
-  //     params
-  //   })
-  // },
-  getOffers: async (params?: GetOffersParams) => {
+  getOffers: async (params: GetOffersParams = {}) => {
     const category = createUrlPath(URLs.categories.get, params?.categoryId)
     const subject = createUrlPath(URLs.subjects.get, params?.subjectId)
+    const { languages, proficiencyLevel, ...rest } = params
     const resultUrl = getFullUrl({
       pathname: `${category}${subject}${URLs.offers.get}`,
-      searchParameters: { ...params }
+      searchParameters: {
+        languages: Object.assign({}, languages),
+        proficiencyLevel: Object.assign({}, proficiencyLevel),
+        ...rest
+      }
     })
     return baseService.request<ItemsWithCount<Offer>>({
       method: 'GET',
       url: resultUrl
     })
   },
+
   createOffer: async (data: CreateOrUpdateOfferData): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.offers.create, data),
 
