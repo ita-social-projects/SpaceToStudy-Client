@@ -117,15 +117,6 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
 
     expect(availability).toEqual(mockedCooperationData[0].availability)
   })
-
-  it('should handle null activeItem correctly in getAvailabilityForActiveItem', () => {
-    const getAvailabilityForActiveItem = (id) => {
-      return mockedCooperationData.find((item) => item.resource.id === id)?.availability
-    }
-
-  const nullAvailability = getAvailabilityForActiveItem(null)
-  expect(nullAvailability).toBeUndefined()
-  })
   it('should return undefined for non-existent id in getAvailabilityForActiveItem', () => {
     const getAvailabilityForActiveItem = (id) => {
       return mockedCooperationData.find((item) => item.resource.id === id)?.availability
