@@ -26,6 +26,7 @@ import { useDrawer } from '~/hooks/use-drawer'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
 import useQuery from '~/hooks/use-query'
+import { defaultResponse } from '~/pages/my-offers/MyOffers.constants'
 
 interface CompleteProfileBlockProps {
   profileItems: ProfileItemType[]
@@ -63,7 +64,10 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
 
   const { data: queryData } = useQuery({
     queryKey: ['complete-profile-block', userId, isOfferCreated],
-    queryFn: getMyOffers
+    queryFn: getMyOffers,
+    options: {
+      initialData: defaultResponse
+    }
   })
 
   const checkIfHasNonEmptyFields = (

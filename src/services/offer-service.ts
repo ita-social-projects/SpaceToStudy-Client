@@ -37,7 +37,7 @@ export const OfferService = {
     const user = createUrlPath(URLs.users.get, params.id)
     const resultUrl = getFullUrl({
       pathname: `${user}${URLs.offers.get}`,
-      searchParameters: { ...params }
+      searchParameters: params
     })
     return baseService.request<ItemsWithCount<Offer>>({
       method: 'GET',
