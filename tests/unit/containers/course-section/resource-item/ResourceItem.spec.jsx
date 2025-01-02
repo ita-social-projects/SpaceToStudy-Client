@@ -11,6 +11,7 @@ import {
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
+
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
 const mockUpdateAvailability = vi.fn()
