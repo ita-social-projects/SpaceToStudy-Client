@@ -11,7 +11,6 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 import CreateOrEditLesson from '~/pages/create-or-edit-lesson/CreateOrEditLesson'
-
 const mockNavigate = vi.fn()
 const mockedCategory = { _id: 'categoryId', name: 'categoryName' }
 
@@ -44,7 +43,7 @@ vi.mock('react-router-dom', async () => ({
 describe('CreateOrEditLesson component test', () => {
   beforeAll(() => {
     mockAxiosClient
-      .onGet(URLs.resources.attachments.get)
+      .onGet(new RegExp(URLs.resources.attachments.get))
       .reply(200, mockedAttachmentsResponse)
 
     mockAxiosClient
