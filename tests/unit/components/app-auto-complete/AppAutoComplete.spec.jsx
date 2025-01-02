@@ -5,7 +5,7 @@ import { vi } from 'vitest'
 
 const value = null
 const labelCountry = 'common.labels.country'
-const optionsCountry = ['Finland', 'France', 'Georgia', 'Germany']
+const optionsCountry = ['Ukraine', 'Finland', 'France', 'Georgia', 'Germany']
 const labelCity = 'common.labels.city'
 const optionsCity = ['Verhovyna', 'Frankivsk', 'Kyiv', 'Lviv', 'Odesa']
 const onChange = vi.fn()
@@ -16,7 +16,7 @@ describe('AppAutoComplete test', () => {
     renderWithProviders(
       <AppAutoComplete
         onChange={onChange}
-        options={optionsCountry}
+        options={optionsCountry.sort()}
         sx={styles}
         textFieldProps={{
           label: labelCountry
@@ -37,6 +37,72 @@ describe('AppAutoComplete test', () => {
     fireEvent.click(option)
 
     expect(onChange).toHaveBeenCalled()
+  })
+  it('Should display dropdown list in alphabetic order and show text cursor when clicking on Country field', async () => {
+    const countryField = screen.getByRole('combobox')
+    fireEvent.mouseDown(countryField)
+    fireEvent.focus(countryField)
+    fireEvent.click(countryField)
+
+    await waitFor(() => {
+      expect(countryField).toHaveFocus()
+    })
+    
+    await waitFor(() => {
+      expect(screen.getByRole('listbox')).toBeInTheDocument()
+    })
+
+    const optionsInDropdown = screen.getAllByRole('option')
+    const countryNames = optionsInDropdown.map(option => option.textContent?.trim())
+    const sortedCountryNames = [...countryNames].sort()
+    expect(countryNames).toEqual(sortedCountryNames)
+  })
+  it('Should show filtered results based on user input', async () => {
+    const countryField = screen.getByRole('combobox')
+    fireEvent.mouseDown(countryField)
+    fireEvent.focus(countryField)
+    fireEvent.click(countryField)
+
+    fireEvent.change(countryField, { target: { value: 'Ukr' } })
+
+    await waitFor(() => {
+      const optionsInDropdown = screen.getAllByRole('option')
+      expect(optionsInDropdown[0]).toHaveTextContent('Ukraine')
+    })
+  })
+  it('Should show filtered results based on user input. Case insensitive', async () => {
+    const countryField = screen.getByRole('combobox')
+    fireEvent.mouseDown(countryField)
+    fireEvent.focus(countryField)
+    fireEvent.click(countryField)
+
+    fireEvent.change(countryField, { target: { value: 'germ' } })
+
+    await waitFor(() => {
+      const optionsInDropdown = screen.getAllByRole('option')
+      expect(optionsInDropdown[0]).toHaveTextContent('Germany')
+    })
+  })
+  it('Should clear the Country field when Backspace key is pressed and show dropdown list is displayed with countries in alphabetic order', async () => {
+    const countryField = screen.getByRole('combobox')
+    fireEvent.mouseDown(countryField)
+    fireEvent.focus(countryField)
+    fireEvent.click(countryField)
+    
+    fireEvent.change(countryField, { target: { value: 'Ukraine' } })
+    fireEvent.change(countryField, { target: { value: '' } })
+
+    await waitFor(() => {
+      expect(countryField).toHaveValue('')
+      expect(countryField).toHaveFocus()
+      expect(screen.getByRole('listbox')).toBeInTheDocument()
+    })
+
+    
+    const optionsInDropdown = screen.getAllByRole('option')
+    const countryNames = optionsInDropdown.map(option => option.textContent?.trim())
+    const sortedCountryNames = [...countryNames].sort()
+    expect(countryNames).toEqual(sortedCountryNames)
   })
 })
 describe('AppAutoComplete test', () => {
