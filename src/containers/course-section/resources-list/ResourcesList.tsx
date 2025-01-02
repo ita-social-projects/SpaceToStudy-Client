@@ -64,11 +64,12 @@ const ResourcesList: FC<ResourcesListProps> = ({
   isCooperation = false
 }) => {
   const { enabled } = useDroppable()
-
-  const itemsForSort: CourseResource[] = cooperationData.map(
-    (item) => item.resource
-  )
-
+  const itemsForSort = cooperationData.map((item) => {
+    return {
+      availability: item.availability,
+      ...item.resource
+    }
+  })
   const {
     activeItem,
     handleDragCancel,
@@ -77,21 +78,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
     sensors
   } = useDndSensor({
     items: itemsForSort,
-    setItems: (newItems) => {
-      sortResources(newItems)
-      if (activeItem) {
-        const activeResource = cooperationData.find(
-          (item) => item.resource.id === activeItem.id
-        )
-        if (activeResource) {
-          updateResourceAvailability([activeResource])
-        }
-      }
-      const inactiveResources = cooperationData.filter(
-        (item) => item.resource.id !== activeItem?.id
-      )
-      updateResourceAvailability(inactiveResources)
-    },
+    setItems: sortResources,
     idProp: 'id'
   })
   const renderNewItem = (
@@ -108,13 +95,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
       updateAvailability,
       isDragOver
     )
-  const updateResourceAvailability = (items: Resource[]) => {
-    items.forEach((item) => {
-      if (item.availability && updateAvailability) {
-        updateAvailability(item.resource, item.availability)
-      }
-    })
-  }
+
   const resourceItems = cooperationData?.map((item) => {
     return renderNewItem(
       item.resource,

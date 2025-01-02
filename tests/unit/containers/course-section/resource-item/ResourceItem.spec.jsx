@@ -243,54 +243,9 @@ describe('ResourceItem status tests', () => {
       />
     )
 
-    const status = Object.values(ResourceAvailabilityStatusEnum).includes(
-      mockAvailability.status
-    )
-      ? mockAvailability.status
-      : ResourceAvailabilityStatusEnum.Closed
+    const status = availability?.status ?? ResourceAvailabilityStatusEnum.Open
 
     expect(status).toBe(ResourceAvailabilityStatusEnum.Open)
-  })
-
-  it('should default status to Closed if availability status is null', () => {
-    const mockAvailability = {
-      status: null,
-      date: null,
-    }
-
-    renderWithProviders(
-      <ResourceItem
-        availability={mockAvailability}
-        deleteResource={mockDeleteResource}
-        editResource={mockEditResource}
-        resource={mockedLessonDataOriginal}
-        updateAvailability={mockUpdateAvailability}
-      />
-    )
-
-    const status = Object.values(ResourceAvailabilityStatusEnum).includes(
-      mockAvailability.status
-    )
-      ? mockAvailability.status
-      : ResourceAvailabilityStatusEnum.Closed
-
-    expect(status).toBe(ResourceAvailabilityStatusEnum.Closed)
-  })
-
-  it('should default status to Closed if availability is undefined', () => {
-    renderWithProviders(
-      <ResourceItem
-        availability={undefined}
-        deleteResource={mockDeleteResource}
-        editResource={mockEditResource}
-        resource={mockedLessonDataOriginal}
-        updateAvailability={mockUpdateAvailability}
-      />
-    )
-
-    const status = ResourceAvailabilityStatusEnum.Closed
-
-    expect(status).toBe(ResourceAvailabilityStatusEnum.Closed)
   })
 })
 

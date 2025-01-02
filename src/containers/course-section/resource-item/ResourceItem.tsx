@@ -82,11 +82,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
     const type = resourceType ?? resource.resourceType
     return resourceIcons[type] ?? null
   }, [resourceType, resource.resourceType])
-  const status = Object.values(ResourceAvailabilityStatusEnum).includes(
-    availability?.status as ResourceAvailabilityStatusEnum
-  )
-    ? (availability?.status as ResourceAvailabilityStatusEnum)
-    : ResourceAvailabilityStatusEnum.Closed
+  const status = availability?.status ?? ResourceAvailabilityStatusEnum.Open
   const shouldShowDatePicker =
     status === ResourceAvailabilityStatusEnum.OpenFrom
 
