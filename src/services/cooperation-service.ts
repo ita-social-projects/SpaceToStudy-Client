@@ -20,7 +20,7 @@ export const cooperationService = {
   getCooperations: async (params: GetCooperationsParams) => {
     const url = getFullUrl({
       pathname: URLs.cooperations.get,
-      searchParameters: { ...params }
+      searchParameters: params
     })
 
     return baseService.request<ItemsWithCount<Cooperation>>({
