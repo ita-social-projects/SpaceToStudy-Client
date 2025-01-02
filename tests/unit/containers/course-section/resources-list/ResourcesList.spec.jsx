@@ -133,7 +133,6 @@ describe('ResourcesList setItems and DragOverlay tests', () => {
         activeItem.availability
       )
     }
-
     const dragButtons = await screen.findAllByTestId('drag-handle')
 
     const firstDragButton = dragButtons[0]
