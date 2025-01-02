@@ -33,7 +33,7 @@ export const ResourceService = {
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Lesson>>> =>
     await axiosClient.get(URLs.resources.lessons.get, { params }),
-   getUsersLessonsQuery: (params?: GetResourcesParams) => {
+  getUsersLessonsQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Lesson>>({
       method: 'GET',
       url: getFullUrl({
