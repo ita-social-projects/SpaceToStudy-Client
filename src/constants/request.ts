@@ -4,7 +4,7 @@ export const URLs = {
   },
   location: {
     getCountries: '/location/countries',
-    getCities: 'location/cities'
+    getCitiesByCountryName: '/location/cities/:countryName'
   },
   auth: {
     login: '/auth/login',

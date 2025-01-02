@@ -1,15 +1,22 @@
-import { AxiosResponse } from 'axios'
-
-import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
-import { axiosClient } from '~/plugins/axiosClient'
-import { Country } from '~/types'
+import { type Country } from '~/types'
+import { getFullUrl } from '~/utils/helper-functions'
+import { baseService } from './base-service'
 
-export const LocationService = {
-  getCountries: (): Promise<AxiosResponse<Country[]>> => {
-    return axiosClient.get(URLs.location.getCountries)
+export const locationService = {
+  getCountries: () => {
+    return baseService.request<Country[]>({
+      method: 'GET',
+      url: URLs.location.getCountries
+    })
   },
-  getCities: (country: string = ''): Promise<AxiosResponse<string[]>> => {
-    return axiosClient.get(createUrlPath(URLs.location.getCities, country))
+  getCitiesByCountryName: (countryName: string) => {
+    return baseService.request<string[]>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.location.getCitiesByCountryName,
+        parameters: { countryName }
+      })
+    })
   }
 }
