@@ -7,17 +7,23 @@ import { ComponentEnum } from '~/types'
 type AppIconButtonProps = Omit<IconButtonProps, 'size'> &
   Partial<LinkProps> & {
     size?: 'xs' | 'sm' | 'md' | 'lg'
+    toggleAble?: boolean
+    isToggled?: boolean
   }
 
 const AppIconButton: FC<AppIconButtonProps> = ({
   to,
   size = 'md',
+  toggleAble = false,
+  isToggled = false,
   ...props
 }) => (
   <IconButton
     component={to ? Link : ComponentEnum.Button}
+    isToggled={isToggled}
     size={size}
     to={to}
+    toggleAble={toggleAble}
     {...props}
   />
 )

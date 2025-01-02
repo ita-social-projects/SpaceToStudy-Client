@@ -34,12 +34,5 @@ export const styles = {
     alignItems: 'center',
     gap: '10px',
     color: palette.basic.blueGray
-  },
-  showMoreButton: {
-    background: palette.basic.grey,
-    color: palette.basic.lightBlue,
-    width: '70px',
-    height: '70px',
-    fontSize: '24px'
   }
 }

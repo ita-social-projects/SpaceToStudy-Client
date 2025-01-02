@@ -149,10 +149,13 @@ const cooperationsSlice = createSlice({
 
       if (!section) return
 
-      section.resources = action.payload.resources.map((resource) => ({
-        resource,
-        resourceType: resource.resourceType
-      }))
+      section.resources = action.payload.resources.map(
+        ({ availability, ...resource }) => ({
+          resource,
+          resourceType: resource.resourceType,
+          availability
+        })
+      )
     },
 
     updateResource(

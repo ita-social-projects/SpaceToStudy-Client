@@ -3,14 +3,27 @@ import {
   screen,
   fireEvent,
   waitForElementToBeRemoved,
-  within
+  within,
+  waitFor
 } from '@testing-library/react'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
 
 const userDataMock = {
   _id: 123456
 }
+
+const mockDispatch = vi.fn()
+
+vi.mock('~/redux/features/snackbarSlice', async () => {
+  const actual = await vi.importActual('~/redux/features/snackbarSlice')
+  return {
+    ...actual,
+    openAlert: vi.fn()
+  }
+})
 
 vi.mock('~/services/auth-service', () => ({
   AuthService: {
@@ -135,5 +148,24 @@ describe('PasswordSecurityTab', () => {
       'editProfilePage.profile.passwordSecurityTab.title'
     )
     expect(tabTitle).toBeInTheDocument()
+  })
+  it('should appear success message after clicking the Deactivate button', async () => {
+    const deactivateAccountButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
+    )
+    fireEvent.click(deactivateAccountButton)
+  
+    const deactivateButton = screen.getByText('editProfilePage.profile.passwordSecurityTab.deactivateBtn')
+    expect(deactivateButton).toBeInTheDocument()
+    fireEvent.click(deactivateButton)
+
+    waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: 'offerPage.createOffer.successMessage'
+        })
+      )
+    })
   })
 })

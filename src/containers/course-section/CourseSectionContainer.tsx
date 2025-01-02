@@ -57,7 +57,6 @@ import { useModalContext } from '~/context/modal-context'
 import useAxios from '~/hooks/use-axios'
 import useMenu from '~/hooks/use-menu'
 import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
-
 interface SectionProps extends CourseSectionHandlers {
   sectionData: CourseSection
   isCooperation?: boolean
@@ -154,7 +153,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
         void ResourceService.deleteAttachment(resource._id)
       }
     }
-
     resourceEventHandler?.({
       type: CourseResourceEventType.ResourceRemoved,
       sectionId: sectionData.id,
@@ -297,7 +295,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           columns={lessonColumns}
           onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeLessonColumnRules}
-          requestService={ResourceService.getUsersLessons}
+          requestService={ResourceService.getUsersLessonsQuery}
           resourceTab={resourcesData.lessons.resourceTab}
           resources={lessons}
           showCheckboxWithTooltip
@@ -313,7 +311,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           columns={quizColumns}
           onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeQuizColumnRules}
-          requestService={ResourceService.getQuizzes}
+          requestService={ResourceService.getQuizzesQuery}
           resourceTab={resourcesData.quizzes.resourceTab}
           resources={quizzes}
           showCheckboxWithTooltip
@@ -329,7 +327,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           columns={attachmentColumns}
           onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeAttachmentColumnRules}
-          requestService={ResourceService.getAttachments}
+          requestService={ResourceService.getAttachmentsQuery}
           resourceTab={resourcesData.attachments.resourceTab}
           resources={attachments}
           showCheckboxWithTooltip

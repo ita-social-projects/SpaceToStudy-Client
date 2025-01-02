@@ -1,9 +1,9 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 
 import { useAppDispatch } from '~/hooks/use-redux'
 import useSelect from '~/hooks/table/use-select'
 import useSort from '~/hooks/table/use-sort'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { useModalContext } from '~/context/modal-context'
@@ -14,15 +14,14 @@ import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddRe
 import { adjustColumns } from '~/utils/helper-functions'
 import { getErrorKey } from '~/utils/get-error-key'
 import {
-  ErrorResponse,
   GetResourcesParams,
   ItemsWithCount,
   CourseResource,
   TableColumn,
   RemoveColumnRules,
   Question,
-  ServiceFunction,
-  ResourcesTabsEnum
+  ResourcesTabsEnum,
+  ServiceFunctionNew
 } from '~/types'
 
 interface AddResourcesProps<T extends CourseResource | Question> {
@@ -31,7 +30,7 @@ interface AddResourcesProps<T extends CourseResource | Question> {
   resourceTab: ResourcesTabsEnum
   columns: TableColumn<T>[]
   removeColumnRules: RemoveColumnRules<T>
-  requestService: ServiceFunction<ItemsWithCount<T>, GetResourcesParams>
+  requestService: ServiceFunctionNew<ItemsWithCount<T>, GetResourcesParams>
   showCheckboxWithTooltip?: boolean
 }
 
@@ -70,23 +69,24 @@ const AddResources = <T extends CourseResource | Question>({
     [sort, requestService]
   )
 
-  const onResponseError = useCallback(
-    (error?: ErrorResponse) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['resources', sort, resourceTab],
+    queryFn: getMyResources,
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
+  })
+
+  useEffect(() => {
+    if (error) {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
           message: getErrorKey(error)
         })
       )
-    },
-    [dispatch]
-  )
-
-  const { loading, response } = useAxios<ItemsWithCount<T>>({
-    service: getMyResources,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError
-  })
+    }
+  }, [error, dispatch])
 
   const onRowClick = useCallback(
     (item: T) => {
@@ -123,7 +123,7 @@ const AddResources = <T extends CourseResource | Question>({
 
   const getItems = useCallback(
     (inputValue: string, selectedCategories: string[]) => {
-      return response.items.filter((item) => {
+      return data.items.filter((item) => {
         const titleMatch =
           'title' in item
             ? item.title
@@ -146,7 +146,7 @@ const AddResources = <T extends CourseResource | Question>({
         return titleMatch && categoryMatch
       })
     },
-    [response.items]
+    [data.items]
   )
 
   const props = {
@@ -158,7 +158,7 @@ const AddResources = <T extends CourseResource | Question>({
     isSelection: true,
     onAddItems,
     onCreateResourceCopy,
-    data: { loading, getItems },
+    data: { loading: isLoading, getItems },
     onRowClick,
     resourceTab,
     showCheckboxWithTooltip

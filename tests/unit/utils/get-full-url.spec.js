@@ -17,9 +17,19 @@ const QUERY_PARAMETERS_WITH_MULTIPLE_VALUES = {
   query2: ['value3', 'value4']
 }
 
-const QUERY_PARAMETERS_WITH_UNDEFINED_VALUE = {
+const QUERY_PARAMETERS_WITH_NESTED_OBJECT = {
+  query: {
+    query1: 'value1',
+    query2: 'value2',
+    query3: null,
+    query4: undefined
+  }
+}
+
+const QUERY_PARAMETERS_WITH_UNDEFINED_OR_NULL_VALUE = {
   query1: 'value1',
-  query2: undefined
+  query2: undefined,
+  query3: null
 }
 
 describe('getFullUrl helper function', () => {
@@ -77,10 +87,19 @@ describe('getFullUrl helper function', () => {
     )
   })
 
-  it('should return valid url with query parameters with undefined value', () => {
+  it('should return valid url with query parameters with nested object values', () => {
     const resultUrl = getFullUrl({
       pathname: '',
-      searchParameters: QUERY_PARAMETERS_WITH_UNDEFINED_VALUE
+      searchParameters: QUERY_PARAMETERS_WITH_NESTED_OBJECT
+    })
+
+    expect(resultUrl).toBe('?query%5Bquery1%5D=value1&query%5Bquery2%5D=value2')
+  })
+
+  it('should return valid url with query parameters with undefined or null value', () => {
+    const resultUrl = getFullUrl({
+      pathname: '',
+      searchParameters: QUERY_PARAMETERS_WITH_UNDEFINED_OR_NULL_VALUE
     })
 
     expect(resultUrl).toBe('?query1=value1')

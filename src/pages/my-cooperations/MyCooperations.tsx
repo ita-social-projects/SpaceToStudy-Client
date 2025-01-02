@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { setPageLoad } from '~/redux/reducer'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useFilter from '~/hooks/table/use-filter'
@@ -22,13 +21,12 @@ import { getScreenBasedLimit } from '~/utils/helper-functions'
 
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
-  defaultResponse,
   initialFilters,
   initialSort,
   sortTranslationKeys,
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
-import { itemsLoadLimit } from '~/constants'
+import { defaultResponses, itemsLoadLimit } from '~/constants'
 import { CardsViewEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 import TabFilterList from '~/components/tab-filter-list/TabFilterList'
@@ -40,7 +38,6 @@ const MyCooperations = () => {
     CardsViewEnum.Inline
   )
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
   const [searchParams, setSearchParams] = useSearchParams()
   const activeTab = searchParams.get('tab')
@@ -79,13 +76,12 @@ const MyCooperations = () => {
     [filters, page, itemsPerPage, sort]
   )
 
-  const {
-    loading,
-    response,
-    fetchData: getCooperations
-  } = useAxios({
-    service: getMyCooperations,
-    defaultResponse
+  const { isLoading, data, refetch } = useQuery({
+    queryKey: ['cooperations', filters, sort, page],
+    queryFn: getMyCooperations,
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
   })
 
   const handleTabClick = (tabName: string, tabValue: string) => {
@@ -99,10 +95,6 @@ const MyCooperations = () => {
     title: t(title),
     value
   }))
-
-  useLayoutEffect(() => {
-    void dispatch(setPageLoad(loading))
-  }, [dispatch, loading])
 
   return (
     <PageWrapper>
@@ -133,20 +125,20 @@ const MyCooperations = () => {
         view={itemsView}
         withoutSort={showTable}
       />
-      {loading ? (
+      {isLoading ? (
         <Loader pageLoad size={50} />
       ) : (
         <>
           <CooperationContainer
-            getCooperations={getCooperations}
-            items={response.items}
+            getCooperations={refetch}
+            items={data.items}
             showTable={showTable}
             sort={sortOptions}
           />
           <AppPagination
             onChange={handleChangePage}
             page={page}
-            pageCount={Math.ceil(response.count / itemsPerPage)}
+            pageCount={Math.ceil(data.count / itemsPerPage)}
             sx={styles.pagination}
           />
         </>

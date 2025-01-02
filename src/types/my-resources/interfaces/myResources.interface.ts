@@ -26,7 +26,7 @@ export interface Categories extends CommonEntityFields {
   author: string
 }
 
-export interface GetResourcesParams extends Partial<RequestParams> {
+export type GetResourcesParams = Partial<RequestParams> & {
   title?: string
   fileName?: string
 }

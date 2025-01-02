@@ -184,11 +184,10 @@ export const adjustColumns = <
 export const spliceSx = (
   defaultStyles?: SxProps<Theme>,
   newStyles?: SxProps<Theme>
-) =>
-  ({
-    ...defaultStyles,
-    ...newStyles
-  }) as SxProps
+) => ({
+  ...defaultStyles,
+  ...newStyles
+})
 
 export const studentOrTutor = (userRole: '' | UserRole) =>
   userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
@@ -225,11 +224,17 @@ export const createUrlPath = (
   return `${trimmedUrl}${paramsString}${queryParamsString}`
 }
 
+type SearchParameterValue =
+  | string
+  | string[]
+  | number
+  | number[]
+  | null
+  | undefined
+  | Record<string, string | number | null | undefined>
+
 const getSearchParametersEntries = (
-  searchParameters: Record<
-    string,
-    string | string[] | number | number[] | undefined
-  >
+  searchParameters: Record<string, SearchParameterValue>
 ) => {
   const searchParametersEntries: [string, string][] = []
 
@@ -245,6 +250,20 @@ const getSearchParametersEntries = (
         searchParametersEntries.push([
           searchParameterName,
           String(parameterValue)
+        ])
+      }
+    } else if (typeof searchParameterValue === 'object') {
+      for (const parameterKey in searchParameterValue) {
+        const searchParameterObjectKey = `${searchParameterName}[${parameterKey}]`
+        const searchParameterObjectValue = searchParameterValue[parameterKey]
+
+        if (!searchParameterObjectValue) {
+          continue
+        }
+
+        searchParametersEntries.push([
+          searchParameterObjectKey,
+          String(searchParameterObjectValue)
         ])
       }
     } else {
@@ -265,10 +284,7 @@ export const getFullUrl = ({
 }: {
   parameters?: Record<string, string>
   pathname: string
-  searchParameters?: Record<
-    string,
-    string | string[] | number | number[] | undefined
-  >
+  searchParameters?: Record<string, SearchParameterValue>
 }) => {
   let resultUrl = pathname
 

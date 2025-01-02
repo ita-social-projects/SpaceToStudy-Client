@@ -9,7 +9,7 @@ export const LocationService = {
   getCountries: (): Promise<AxiosResponse<Country[]>> => {
     return axiosClient.get(URLs.location.getCountries)
   },
-  getCities: (country: string): Promise<AxiosResponse<string[]>> => {
+  getCities: (country: string = ''): Promise<AxiosResponse<string[]>> => {
     return axiosClient.get(createUrlPath(URLs.location.getCities, country))
   }
 }

@@ -8,12 +8,7 @@ import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
-import {
-  CourseResource,
-  ResourceAvailability,
-  ResourceAvailabilityStatusEnum,
-  Resource
-} from '~/types'
+import { CourseResource, ResourceAvailability, Resource } from '~/types'
 
 import useDroppable from '~/hooks/use-droppable'
 import useDndSensor from '~/hooks/use-dnd-sensor'
@@ -30,7 +25,6 @@ interface ResourcesListProps {
   ) => void
   isCooperation?: boolean
 }
-
 const ResourcesList: FC<ResourcesListProps> = ({
   cooperationData = [],
   sortResources,
@@ -40,11 +34,12 @@ const ResourcesList: FC<ResourcesListProps> = ({
   isCooperation = false
 }) => {
   const { enabled } = useDroppable()
-
-  const itemsForSort: CourseResource[] = cooperationData.map(
-    (item) => item.resource
-  )
-
+  const itemsForSort = cooperationData.map((item) => {
+    return {
+      availability: item.availability,
+      ...item.resource
+    }
+  })
   const {
     activeItem,
     handleDragCancel,
@@ -56,15 +51,21 @@ const ResourcesList: FC<ResourcesListProps> = ({
     setItems: sortResources,
     idProp: 'id'
   })
-
   const renderItem = (
     item: CourseResource,
     availability: ResourceAvailability,
+    deleteResource: (resource: CourseResource) => void,
+    editResource: (resource: CourseResource) => void,
+    isCooperation: boolean,
+    updateAvailability?: (
+      resource: CourseResource,
+      availability: ResourceAvailability
+    ) => void,
     isDragOver = false
   ) => (
     <SortableWrapper
-      id={item.id}
-      key={item.id}
+      id={item.id ?? ''}
+      key={item.id ?? ''}
       onDragEndStyles={styles.section(isDragOver)}
       onDragStartStyles={styles.section(true)}
     >
@@ -80,30 +81,52 @@ const ResourcesList: FC<ResourcesListProps> = ({
       />
     </SortableWrapper>
   )
+  const renderNewItem = (
+    item: CourseResource,
+    availability: ResourceAvailability,
+    isDragOver = false
+  ) =>
+    renderItem(
+      item,
+      availability,
+      deleteResource,
+      editResource,
+      isCooperation,
+      updateAvailability,
+      isDragOver
+    )
 
   const resourceItems = cooperationData?.map((item) => {
-    return renderItem(item.resource, item.availability as ResourceAvailability)
+    return renderNewItem(
+      item.resource,
+      item.availability as ResourceAvailability
+    )
   })
-
+  const getAvailabilityForActiveItem = (id: string | null | undefined) => {
+    return cooperationData.find((item) => item.resource.id === id)
+      ?.availability as ResourceAvailability
+  }
   const resourceListContent = enabled && (
     <>
       <SortableContext
-        items={cooperationData?.map((item) => item.resource.id)}
+        items={cooperationData
+          ?.map((item) => item.resource.id)
+          .filter((id): id is string => id !== undefined)}
         strategy={verticalListSortingStrategy}
       >
         <Box sx={styles.root}>{resourceItems}</Box>
       </SortableContext>
       <DragOverlay>
         {activeItem &&
-          renderItem(
+          renderNewItem(
             activeItem,
-            { status: ResourceAvailabilityStatusEnum.Open, date: null },
+            activeItem.availability ??
+              getAvailabilityForActiveItem(activeItem.id),
             false
           )}
       </DragOverlay>
     </>
   )
-
   return (
     <DndContext
       onDragCancel={handleDragCancel}

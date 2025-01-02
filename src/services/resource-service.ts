@@ -25,7 +25,7 @@ import {
   ApiMethodEnum,
   GetQuestion
 } from '~/types'
-import { createUrlPath } from '~/utils/helper-functions'
+import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
 import { baseService } from '~/services/base-service'
 
 export const ResourceService = {
@@ -33,6 +33,15 @@ export const ResourceService = {
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Lesson>>> =>
     await axiosClient.get(URLs.resources.lessons.get, { params }),
+   getUsersLessonsQuery: (params?: GetResourcesParams) => {
+    return baseService.request<ItemsWithCount<Lesson>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.resources.lessons.get,
+        searchParameters: params
+      })
+    })
+  },
   getLesson: async (id?: string) => {
     return baseService.request<Lesson>({
       method: 'GET',
@@ -52,6 +61,15 @@ export const ResourceService = {
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> =>
     await axiosClient.get(URLs.quizzes.get, { params }),
+  getQuizzesQuery: (params?: GetResourcesParams) => {
+    return baseService.request<ItemsWithCount<Quiz>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.quizzes.get,
+        searchParameters: params
+      })
+    })
+  },
   getQuiz: async (id?: string): Promise<AxiosResponse<Quiz>> =>
     await axiosClient.get(createUrlPath(URLs.quizzes.get, id)),
   addQuiz: async (data?: CreateQuizParams): Promise<AxiosResponse> =>
@@ -67,6 +85,15 @@ export const ResourceService = {
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>
     await axiosClient.get(URLs.resources.attachments.get, { params }),
+  getAttachmentsQuery: (params?: GetResourcesParams) => {
+    return baseService.request<ItemsWithCount<Attachment>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.resources.attachments.get,
+        searchParameters: params
+      })
+    })
+  },
   updateAttachment: async (params?: UpdateAttachmentParams) =>
     await axiosClient.patch(
       createUrlPath(URLs.resources.attachments.patch, params?.id),
@@ -85,6 +112,15 @@ export const ResourceService = {
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
     return axiosClient.get(URLs.resources.questions.get, { params })
+  },
+  getQuestionsQuery: (params?: GetResourcesParams) => {
+    return baseService.request<ItemsWithCount<Question>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.resources.questions.get,
+        searchParameters: params
+      })
+    })
   },
   getQuestion: async (id?: string): Promise<AxiosResponse<GetQuestion>> =>
     await axiosClient.get(createUrlPath(URLs.resources.questions.get, id)),

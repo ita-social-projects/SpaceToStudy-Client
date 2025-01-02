@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react'
+import { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
@@ -15,8 +15,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import AppSelect from '~/components/app-select/AppSelect'
-import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
-import { useAppSelector } from '~/hooks/use-redux'
 
 import {
   resourceIcons,
@@ -28,7 +26,6 @@ import {
   CourseResource,
   ResourceAvailability,
   ResourceAvailabilityStatusEnum,
-  ResourcesAvailabilityEnum,
   ResourcesTypesEnum as ResourceType,
   SizeEnum
 } from '~/types'
@@ -62,20 +59,12 @@ const ResourceItem: FC<ResourceItemProps> = ({
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { resourcesAvailability } = useAppSelector(cooperationsSelector)
-
   const { isDuplicate } = resource
 
   const routeMap = {
     [ResourceType.Lesson]: 'lesson-details/',
     [ResourceType.Quiz]: 'quiz/'
   }
-
-  useEffect(() => {
-    resourcesAvailability === ResourcesAvailabilityEnum.OpenManually &&
-      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Closed)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resourcesAvailability])
 
   const handleDeleteResource = useCallback(() => {
     deleteResource?.(resource)
@@ -93,9 +82,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
     const type = resourceType ?? resource.resourceType
     return resourceIcons[type] ?? null
   }, [resourceType, resource.resourceType])
-
   const status = availability?.status ?? ResourceAvailabilityStatusEnum.Open
-
   const shouldShowDatePicker =
     status === ResourceAvailabilityStatusEnum.OpenFrom
 
@@ -118,7 +105,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
     },
     [resource, updateAvailability]
   )
-
   const formattedDate = availability?.date
     ? getFormattedDate({
         date: availability?.date,
