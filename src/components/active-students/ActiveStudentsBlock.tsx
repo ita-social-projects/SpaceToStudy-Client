@@ -52,7 +52,7 @@ const ActiveStudentsBlock = () => {
             onClick={onAddStudentClick}
             sx={styles.showMoreWrapper}
           >
-            <AppIconButton size='medium' sx={styles.showMoreButton}>
+            <AppIconButton size='md' sx={styles.showMoreButton}>
               <Add />
             </AppIconButton>
             <Typography>{t('activeStudents.addStudent')}</Typography>
@@ -82,7 +82,7 @@ const ActiveStudentsBlock = () => {
           onClick={onShowMoreClick}
           sx={styles.showMoreWrapper}
         >
-          <AppIconButton size='medium' sx={styles.showMoreButton}>
+          <AppIconButton size='md' sx={styles.showMoreButton}>
             <MoreHoriz />
           </AppIconButton>
           <Typography>{t('activeStudents.showMore')}</Typography>
