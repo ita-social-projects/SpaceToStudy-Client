@@ -1,4 +1,3 @@
-import { SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -52,6 +51,7 @@ import {
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import { type ResponseError } from '~/exceptions'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
@@ -61,7 +61,7 @@ const CreateOrEditLesson = () => {
   const navigate = useNavigate()
   const { id } = useParams()
 
-  const handleResponseError = (error?: ErrorResponse) => {
+  const handleResponseError = (error?: ErrorResponse | ResponseError) => {
     const errorKey = getErrorKey(error)
 
     dispatch(
@@ -151,7 +151,7 @@ const CreateOrEditLesson = () => {
   })
 
   const onCategoryChange = (
-    _: SyntheticEvent,
+    _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
     handleNonInputValueChange('category', value?._id ?? null)
@@ -174,7 +174,7 @@ const CreateOrEditLesson = () => {
     return ResourceService.getLesson(id)
   }
 
-  const { isLoading, isError } = useQuery({
+  const { isLoading, error } = useQuery({
     queryKey: [id],
     queryFn: () => getLesson(id),
     options: {
@@ -182,8 +182,8 @@ const CreateOrEditLesson = () => {
     }
   })
 
-  if (isError) {
-    handleResponseError()
+  if (error) {
+    handleResponseError(error)
   }
 
   if (isLoading) {
