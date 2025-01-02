@@ -11,7 +11,6 @@ import {
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
-import { ResourceAvailabilityStatusEnum } from '~/types/my-cooperations/enums/myCooperations.enums'
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
 const mockUpdateAvailability = vi.fn()
@@ -226,5 +225,3 @@ describe('ResourceItem tests when resourceType attachment', () => {
     expect(attachmentItem).toBeInTheDocument()
   })
 })
-
-
