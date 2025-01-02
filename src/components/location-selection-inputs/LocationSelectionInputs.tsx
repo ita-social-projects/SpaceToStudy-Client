@@ -1,4 +1,4 @@
-import { SyntheticEvent, useCallback, useEffect } from 'react'
+import { SyntheticEvent, useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FilterOptionsState, createFilterOptions } from '@mui/material'
 
@@ -22,79 +22,93 @@ const LocationSelectionInputs = <
 }: LocationSelectionInputsProps<T>) => {
   const { t } = useTranslation()
 
-  const getCountries = useCallback(() => LocationService.getCountries(), [])
-  const getCities = useCallback(
-    (country?: string) => LocationService.getCities(country ?? ''),
-    []
-  )
-
   const {
     loading: loadingCountries,
     response: countries,
     fetchData: fetchCountries
   } = useAxios<Country[]>({
-    service: getCountries,
+    service: LocationService.getCountries,
     fetchOnMount: false,
     defaultResponse: defaultResponses.array
   })
-
-  const countriesNames = countries.map((country) => country.name)
 
   const {
     loading: loadingCities,
     fetchData: fetchCities,
     response: cities
   } = useAxios<string[], string>({
-    service: getCities,
+    service: LocationService.getCities,
     fetchOnMount: false,
     defaultResponse: defaultResponses.array
   })
 
+  const hasCountries = countries.length > 0
+  const hasCities = cities.length > 0
+
   useEffect(() => {
-    if (countries.length && data.city && !cities.length) {
-      const country = countries.find((country) => country.name === data.country)
-      country && void fetchCities(country.iso2)
-    }
-  }, [data.country, data.city, countries, cities.length, fetchCities])
-
-  const onChangeCountry = async (_: SyntheticEvent, value: string | null) => {
-    if (data.country !== value) {
-      onDataChange('city', null)
-      onDataChange('country', value)
-    }
-
-    if (value) {
-      const selectedCountry = countries.find(
-        (country) => country.name === value
+    if (hasCountries && !hasCities && data.city) {
+      const countryByName = countries.find(
+        (country) => country.name === data.country
       )
 
-      if (selectedCountry) {
-        await fetchCities(selectedCountry.iso2)
+      if (countryByName) {
+        void fetchCities(countryByName.iso2)
       }
+    }
+  }, [countries, data, fetchCities, hasCountries, hasCities])
+
+  const handleCountryChange = (
+    _: SyntheticEvent,
+    countryName: string | null
+  ) => {
+    if (data.country !== countryName) {
+      onDataChange('city', null)
+      onDataChange('country', countryName)
+    }
+
+    if (!countryName) {
+      return
+    }
+
+    const countryByName = countries.find(
+      (country) => country.name === countryName
+    )
+
+    if (countryByName) {
+      void fetchCities(countryByName.iso2)
     }
   }
 
-  const onChangeCity = (_: SyntheticEvent, value: string | null) => {
-    onDataChange('city', value)
+  const handleCityChange = (_: SyntheticEvent, cityName: string | null) => {
+    onDataChange('city', cityName)
   }
 
-  const onFocusCountry = !countries.length ? fetchCountries : undefined
+  const handleSelectorFocus = useCallback(() => {
+    if (!hasCountries) {
+      void fetchCountries()
+    }
+  }, [fetchCountries, hasCountries])
 
   const filterOptions = (
     options: string[],
-    state: FilterOptionsState<unknown>
+    state: FilterOptionsState<string>
   ) => {
-    const defaultFilterOptions = createFilterOptions()
+    const defaultFilterOptions = createFilterOptions<string>()
+
     return defaultFilterOptions(options, state).slice(0, 100)
   }
+
+  const countriesNames = useMemo(() => {
+    return countries.map((country) => country.name)
+  }, [countries])
 
   return (
     <>
       <AppAutoComplete
         fullWidth
         loading={loadingCountries}
-        onChange={onChangeCountry}
-        onFocus={onFocusCountry}
+        onChange={handleCountryChange}
+        onFocus={handleSelectorFocus}
         options={countriesNames}
         sx={{ mb: '25px' }}
         textFieldProps={{
@@ -102,14 +116,13 @@ const LocationSelectionInputs = <
         }}
         value={data.country}
       />
-
       <AppAutoComplete
         disabled={!data.country}
         filterOptions={filterOptions}
         fullWidth
         loading={loadingCities}
-        onChange={onChangeCity}
-        onFocus={onFocusCountry}
+        onChange={handleCityChange}
+        onFocus={handleSelectorFocus}
         options={cities}
         sx={{ mb: '25px' }}
         textFieldProps={{

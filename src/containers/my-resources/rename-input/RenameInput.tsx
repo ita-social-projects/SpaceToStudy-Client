@@ -1,10 +1,10 @@
 import { FC, useState, useRef, useEffect, ChangeEvent } from 'react'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
 import ClearIcon from '@mui/icons-material/Clear'
 import DoneIcon from '@mui/icons-material/Done'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { styles } from '~/containers/my-resources/rename-input/RenameInput.styles'
 import { snackbarVariants } from '~/constants'
 

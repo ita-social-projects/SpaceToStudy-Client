@@ -1,26 +1,26 @@
 import { Meta, StoryObj } from '@storybook/react/*'
-import { AppSwitch } from '~/design-system/components/switch/Switch'
+import Switch from '~/design-system/components/switch/Switch'
 
-const meta: Meta<typeof AppSwitch> = {
-  title: 'Components/AppSwitch',
-  component: AppSwitch,
+const meta: Meta<typeof Switch> = {
+  title: 'Components/Switch',
+  component: Switch,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component: `
-  ### AppSwitch
-  
-  The **AppSwitch** component is a flexible switch element used for toggling between two states (on/off) in your application. It includes customizable sizes, states, and label positions to suit various use cases.
-  
+  ### Switch
+
+  The **Switch** component is a flexible switch element used for toggling between two states (on/off) in your application. It includes customizable sizes, states, and label positions to suit various use cases.
+
   ---
-  
+
   **Key Features:**
   - 🏷️ **Label Customization**: Easily add labels and position them relative to the switch.
   - 🖼️ **Sizes**: Supports small, medium, and large sizes.
   - 🔄 **Loading State**: Indicate in-progress actions with a loading spinner.
   - 🚫 **Disabled State**: Prevent user interaction when required.
-  
+
   This component is ideal for settings toggles, feature switches, and more.
           `
       }

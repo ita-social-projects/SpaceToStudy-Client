@@ -14,6 +14,16 @@ vi.mock('~/hooks/use-menu', () => ({
   })
 }))
 
+vi.mock('@mui/material/Tooltip', () => ({
+  ...vi.importActual('@mui/material/Tooltip'),
+  default: ({ children, title }) => (
+    <div>
+      {title}
+      {children}
+    </div>
+  ),
+}));
+
 describe('test with guest role', () => {
   beforeEach(() => {
     renderWithProviders(

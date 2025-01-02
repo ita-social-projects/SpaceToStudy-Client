@@ -1,7 +1,7 @@
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import { Sort } from '~/types'
 
-export interface RequestParams {
+export type RequestParams = {
   limit?: number
   skip?: number
   sort?: Sort
@@ -21,3 +21,5 @@ export type ServiceFunction<Response, Params = undefined> = (
 export interface AxiosResponseError extends AxiosError<ErrorResponse> {
   config: InternalAxiosRequestConfig & { _isRetry: boolean }
 }
+
+export type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE'

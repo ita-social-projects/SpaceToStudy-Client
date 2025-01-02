@@ -1,0 +1,20 @@
+@use '~scss/utilities' as *;
+
+@mixin badge-style($bg-color, $color) {
+  & > .MuiBadge-dot {
+    background-color: $bg-color;
+  }
+
+  & > .MuiBadge-standard {
+    background-color: $bg-color;
+    color: $color;
+  }
+}
+
+.#{$prefix}badge-error {
+  @include badge-style(var(--#{$prefix}red-500), var(--#{$prefix}neutral-50));
+}
+
+.#{$prefix}badge-success {
+  @include badge-style(var(--#{$prefix}green-600), var(--#{$prefix}neutral-50));
+}

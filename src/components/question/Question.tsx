@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import CheckIcon from '@mui/icons-material/Check'
-import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
@@ -17,6 +16,7 @@ import useMenu from '~/hooks/use-menu'
 import IconTitleDescription from '~/components/icon-title-description/IconTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
 import DragHandle from '~/components/drag-handle/DragHandle'
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 
 import {
   ColorEnum,

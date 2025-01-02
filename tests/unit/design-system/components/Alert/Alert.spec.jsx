@@ -11,16 +11,6 @@ describe('Alert Component', () => {
     expect(screen.getByText('Test Description')).toBeInTheDocument()
   })
 
-  test('renders children content', () => {
-    render(
-      <Alert>
-        <span>Child Content</span>
-      </Alert>
-    )
-
-    expect(screen.getByText('Child Content')).toBeInTheDocument()
-  })
-
   test('renders the icon provided via the icon prop', () => {
     render(<Alert icon={<InfoOutlined data-testid='custom-icon' />} />)
 

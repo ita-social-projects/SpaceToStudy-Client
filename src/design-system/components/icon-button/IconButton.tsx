@@ -4,6 +4,7 @@ import {
   IconButton as MuiIconButton
 } from '@mui/material'
 import { FC } from 'react'
+import { type To } from 'react-router-dom'
 import { IconButtonVariant } from './IconButton.constants'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import { cn } from '~/utils/cn'
@@ -16,7 +17,9 @@ interface S2SIconButtonProps extends Omit<IconButtonProps, 'size'> {
   disabled?: boolean
   toggleAble?: boolean
   isToggled?: boolean
-  onClick?: () => void
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  to?: To
+  children?: React.ReactNode
 }
 
 export const IconButton: FC<S2SIconButtonProps> = ({
@@ -27,6 +30,7 @@ export const IconButton: FC<S2SIconButtonProps> = ({
   toggleAble = false,
   isToggled = false,
   onClick,
+  children,
   ...props
 }) => {
   const classNamesContainerIconBG = cn(
@@ -45,10 +49,12 @@ export const IconButton: FC<S2SIconButtonProps> = ({
     md: 20,
     lg: 24
   }
-
   const loader = (
     <CircularProgress data-testid='loader' size={loaderSizes[size]} />
   )
+  const buttonContent = loading
+    ? loader
+    : (children ?? <AddRoundedIcon className={classNamesContainerIcon} />)
   return (
     <MuiIconButton
       className={classNamesContainerIconBG}
@@ -56,11 +62,7 @@ export const IconButton: FC<S2SIconButtonProps> = ({
       onClick={onClick}
       {...props}
     >
-      {loading ? (
-        loader
-      ) : (
-        <AddRoundedIcon className={classNamesContainerIcon} />
-      )}
+      {buttonContent}
     </MuiIconButton>
   )
 }

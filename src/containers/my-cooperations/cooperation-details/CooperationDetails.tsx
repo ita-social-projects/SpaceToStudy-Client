@@ -37,13 +37,16 @@ import {
   PositionEnum,
   Cooperation,
   SizeEnum,
-  ButtonVariantEnum
+  ButtonVariantEnum,
+  StatusEnum
 } from '~/types'
 import {
   cooperationsSelector,
   setCooperationSections,
+  setCooperationStatus,
   setIsActivityCreated
 } from '~/redux/features/cooperationsSlice'
+import AcceptCooperationClosing from '~/containers/my-cooperations/accept-cooperation-close/AcceptCooperationClosing'
 
 const CooperationDetails = () => {
   const dispatch = useAppDispatch()
@@ -54,6 +57,9 @@ const CooperationDetails = () => {
   const { isActivityCreated } = useAppSelector(cooperationsSelector)
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
   const [editMode, setEditMode] = useState<boolean>(false)
+  const [isClosed, setIsClosed] = useState<boolean>(false)
+  const { userRole } = useAppSelector((state) => state.appMain)
+  const cooperationStatus = useAppSelector((state) => state.cooperations.status)
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -88,13 +94,27 @@ const CooperationDetails = () => {
 
   useEffect(() => {
     dispatch(setCooperationSections(response.sections))
+    dispatch(setCooperationStatus(response.status))
     setEditMode(Boolean(response?.sections?.length))
-  }, [response.sections, dispatch])
+  }, [response.sections, response.status, dispatch])
 
   const handleEditMode = useCallback(() => {
     setEditMode((prev) => !prev)
     dispatch(setIsActivityCreated(true))
   }, [dispatch])
+
+  const handleCooperationStatusUpdate = useCallback(async () => {
+    await cooperationService.updateCooperation({
+      _id: id,
+      status: StatusEnum.Closed
+    })
+    setIsClosed(true)
+    dispatch(setCooperationStatus(StatusEnum.Closed))
+  }, [id, dispatch])
+
+  const handleCooperationCloseAccept = useCallback(() => {
+    void handleCooperationStatusUpdate()
+  }, [handleCooperationStatusUpdate])
 
   if (loading) {
     return <Loader pageLoad />
@@ -132,6 +152,24 @@ const CooperationDetails = () => {
     return cooperationContent
   }
 
+  const closeCooperationInitiator =
+    response.needAction === response.receiverRole
+      ? response.initiator
+      : response.receiver
+
+  const acceptClosingProcess = !isClosed && (
+    <AcceptCooperationClosing
+      isReasonSubmitted={false}
+      onAccept={handleCooperationCloseAccept}
+      onReasonSubmit={() => {}}
+      user={closeCooperationInitiator.firstName}
+    />
+  )
+
+  const isCooperationClosingRequestSend =
+    response.needAction === userRole &&
+    response.status === StatusEnum.RequestToClose
+
   const iconConditionals = isNotesOpen ? (
     <KeyboardDoubleArrowRightIcon />
   ) : (
@@ -141,7 +179,7 @@ const CooperationDetails = () => {
   return (
     <PageWrapper>
       <Box sx={styles.header}>
-        <StatusChip status={response.status} />
+        <StatusChip status={cooperationStatus} />
         <TitleWithDescription
           key={crypto.randomUUID()}
           style={styles.cooperationTitle}
@@ -167,6 +205,9 @@ const CooperationDetails = () => {
           </AppButton>
         </Box>
       </Box>
+      {activeTab === CooperationTabsEnum.Activities &&
+        isCooperationClosingRequestSend &&
+        acceptClosingProcess}
       <Box sx={styles.notesBlock}>
         <Box sx={styles.pageContent}>{pageContent()}</Box>
         {!isDesktop && isNotesOpen && (

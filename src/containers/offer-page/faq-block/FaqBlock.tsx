@@ -4,9 +4,9 @@ import { useAppSelector } from '~/hooks/use-redux'
 
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppTextField from '~/components/app-text-field/AppTextField'

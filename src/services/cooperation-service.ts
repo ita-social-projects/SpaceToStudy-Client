@@ -9,15 +9,25 @@ import {
   CreateOrUpdateNoteParams,
   Offer,
   MyCooperationDetails,
-  UpdateCooperationsSections
+  UpdateCooperationsSections,
+  type Cooperation,
+  type ItemsWithCount
 } from '~/types'
-import { createUrlPath } from '~/utils/helper-functions'
+import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
+import { baseService } from '~/services/base-service'
 
 export const cooperationService = {
-  getCooperations: async (
-    params: GetCooperationsParams
-  ): Promise<AxiosResponse> =>
-    await axiosClient.get(URLs.cooperations.get, { params }),
+  getCooperations: async (params: GetCooperationsParams) => {
+    const url = getFullUrl({
+      pathname: URLs.cooperations.get,
+      searchParameters: params
+    })
+
+    return baseService.request<ItemsWithCount<Cooperation>>({
+      method: 'GET',
+      url
+    })
+  },
   createCooperation: async (
     data: CreateCooperationsParams
   ): Promise<AxiosResponse> =>

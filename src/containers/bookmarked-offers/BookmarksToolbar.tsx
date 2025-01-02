@@ -1,9 +1,10 @@
 import { FormEvent, forwardRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, IconButton } from '@mui/material'
+import { Box } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppSelect from '~/components/app-select/AppSelect'
 import FilterInput from '~/components/filter-input/FilterInput'
 import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'

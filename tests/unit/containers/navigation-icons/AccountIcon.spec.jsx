@@ -23,7 +23,7 @@ describe('AccountIcon test with user role', () => {
   })
 
   it('should render click menu icon and open account menu after click on it', () => {
-    const AccountIconButton = screen.getByAltText('User Avatar')
+    const AccountIconButton = screen.getByAltText('JD')
     expect(AccountIconButton).toBeInTheDocument()
 
     fireEvent.click(AccountIconButton)

@@ -2,10 +2,10 @@ import { FC, Dispatch, SetStateAction } from 'react'
 
 import Box from '@mui/material/Box'
 import EditIcon from '@mui/icons-material/Edit'
-import { IconButton } from '@mui/material'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
 import { styles } from '~/containers/cooperation-details/cooperation-activities-view/CooperationActivitiesView.style'
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 
 import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
 

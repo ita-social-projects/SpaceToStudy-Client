@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
@@ -8,6 +8,7 @@ const onDataChangeMock = vi.fn()
 
 const mockCities = ['City1', 'City2', 'City3']
 const mockCountries = [
+  { name: 'Ukraine', iso2: 'UA' },
   { name: 'Country1', iso2: 'C1' },
   { name: 'Country2', iso2: 'C2' },
   { name: 'Country3', iso2: 'C3' }
@@ -51,4 +52,12 @@ describe('LocationSelectionInputs', () => {
     const cityOption = screen.getByLabelText('common.labels.city')
     await selectOption(cityOption, newCity)
   })
+  it('enables city field after selecting a country', async () => {
+    const countryOption = screen.getByLabelText('common.labels.country')
+    await selectOption(countryOption, 'Ukraine')
+
+    expect(onDataChangeMock).toHaveBeenCalledWith('country', 'Ukraine')
+    expect(screen.getByLabelText('common.labels.city')).not.toBeDisabled()
+  })
 })
+

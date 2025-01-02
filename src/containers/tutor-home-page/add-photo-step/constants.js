@@ -1,4 +1,4 @@
-export const MB = 1_000_000
+export const MB = 1_048_576
 
 export const validationData = {
   maxFileSize: 5 * MB,

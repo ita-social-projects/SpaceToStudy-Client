@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import Box from '@mui/material/Box'
 import Dialog from '@mui/material/Dialog'
-import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { PaperProps } from '@mui/material'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import useConfirm from '~/hooks/use-confirm'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/components/popup-dialog/PopupDialog.styles'

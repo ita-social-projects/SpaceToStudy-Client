@@ -40,10 +40,10 @@ export const useForm = <T extends object>({
   submitWithData
 }: UseFormProps<T>): UseFormOutput<T> => {
   const [data, setData] = useState<T>(initialValues)
-  const [isDirty, setDirty] = useState<boolean>(false)
+  const [isDirty, setIsDirty] = useState<boolean>(false)
   const [isFormValid, setIsFormValid] = useState<boolean>(true)
   const [errors, setErrors] = useState<UseFormErrors<T>>(initialErrors)
-  const [isTouched, setTouched] = useState<Record<keyof T, boolean>>(
+  const [isTouched, setIsTouched] = useState<Record<keyof T, boolean>>(
     getEmptyValues(initialValues, false)
   )
 
@@ -70,16 +70,26 @@ export const useForm = <T extends object>({
 
   const handleInputChange =
     (key: keyof T) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value =
+      const nameRegex = /[^a-zA-Z\u0400-\u04FF]/g
+
+      let value =
         event.target.type === 'checkbox'
           ? event.target.checked
           : event.target.value
+
+      if (
+        (key === 'firstName' || key === 'lastName') &&
+        typeof value === 'string'
+      ) {
+        value = value.replace(nameRegex, '')
+      }
+
       setData((prev) => {
         const newData = {
           ...prev,
           [key]: value
         }
-        setDirty(!isEqual(newData, initialValues))
+        setIsDirty(!isEqual(newData, initialValues))
         return newData
       })
       checkForError(key, event.target.value)
@@ -94,7 +104,7 @@ export const useForm = <T extends object>({
         ...prev,
         [key]: value
       }
-      setDirty(!isEqual(newData, initialValues))
+      setIsDirty(!isEqual(newData, initialValues))
       return newData
     })
     checkForError(key, value)
@@ -109,7 +119,7 @@ export const useForm = <T extends object>({
 
   const handleBlur =
     (key: keyof T) => (event: React.FocusEvent<HTMLInputElement>) => {
-      setDirty(!isEqual(data, initialValues))
+      setIsDirty(!isEqual(data, initialValues))
 
       const valid = validateValue(key, event.target.value)
 
@@ -117,7 +127,7 @@ export const useForm = <T extends object>({
         ...prev,
         [key]: valid ?? ''
       }))
-      setTouched((prev) => ({
+      setIsTouched((prev) => ({
         ...prev,
         [key]: true
       }))
@@ -146,11 +156,14 @@ export const useForm = <T extends object>({
   const trigger = (key?: keyof T | (keyof T)[]): boolean => {
     if (!validations) return true
 
-    const fieldNames = key
-      ? Array.isArray(key)
-        ? key
-        : [key]
-      : (Object.keys(validations) as (keyof T)[])
+    let fieldNames: (keyof T)[]
+
+    if (key) {
+      fieldNames = Array.isArray(key) ? key : [key]
+    } else {
+      fieldNames = Object.keys(validations) as (keyof T)[]
+    }
+
     let isValid = true
 
     fieldNames.forEach((field) => {

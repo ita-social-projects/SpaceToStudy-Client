@@ -2,7 +2,6 @@ import { ChangeEvent, MouseEvent, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import Checkbox from '@mui/material/Checkbox'
@@ -10,11 +9,12 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import MenuItem from '@mui/material/MenuItem'
 import InputBase from '@mui/material/InputBase'
-import Radio from '@mui/material/Radio'
+import RadioButton from '~/design-system/components/radio-button/RadioButton'
 import RadioGroup from '@mui/material/RadioGroup'
 import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import useMenu from '~/hooks/use-menu'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
@@ -151,7 +151,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
     <Box key={item.id} sx={styles.answer}>
       <FormControlLabel
         checked={item.isCorrect}
-        control={isMultipleChoice ? <Checkbox /> : <Radio />}
+        control={isMultipleChoice ? <Checkbox /> : <RadioButton label='' />}
         label={
           <InputBase
             fullWidth
@@ -225,7 +225,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
         >
           <FormControlLabel
             checked={false}
-            control={isMultipleChoice ? <Checkbox /> : <Radio />}
+            control={isMultipleChoice ? <Checkbox /> : <RadioButton label='' />}
             disabled={isEmptyAnswer}
             label={t('questionPage.addNewOne')}
             value={0}

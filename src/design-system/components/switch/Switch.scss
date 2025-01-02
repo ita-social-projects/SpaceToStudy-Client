@@ -101,7 +101,6 @@ $sizes: (
 .#{$prefix}form-label-box {
   display: flex;
   align-items: center;
-  gap: 10px;
   overflow: visible;
 
   @each $size,
@@ -111,6 +110,8 @@ $sizes: (
       .MuiFormControlLabel-label {
         color: $body-text-color;
         font-size: $font-size !important;
+        margin-left: 0px;
+        margin-right: 0px;
       }
     }
   }

@@ -17,9 +17,8 @@ export interface MyCooperationsFilters {
   search: string
 }
 
-export interface GetCooperationsParams
-  extends Partial<MyCooperationsFilters>,
-    RequestParams {}
+export type GetCooperationsParams = Partial<MyCooperationsFilters> &
+  RequestParams
 
 export interface ScreenBasedLimits {
   desktop?: number

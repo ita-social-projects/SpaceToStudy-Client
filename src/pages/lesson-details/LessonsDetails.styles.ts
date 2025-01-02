@@ -9,7 +9,11 @@ export const styles = {
   titleWithDescription: {
     wrapper: { mb: '24px' },
     title: { typography: TypographyVariantEnum.H4, mb: '16px' },
-    description: { typography: TypographyVariantEnum.Body2 }
+    description: {
+      typography: TypographyVariantEnum.Body2,
+      wordWrap: 'break-word',
+      overflowWrap: 'break-word'
+    }
   },
   content: {
     p: '16px 16px 0',
@@ -18,7 +22,9 @@ export const styles = {
     },
     '& :last-child': {
       mb: '0'
-    }
+    },
+    wordWrap: 'break-word',
+    overflowWrap: 'break-word'
   },
   attachmentList: {
     pt: '16px',

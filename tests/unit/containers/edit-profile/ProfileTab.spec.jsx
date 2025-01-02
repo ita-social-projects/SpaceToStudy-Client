@@ -27,6 +27,13 @@ vi.mock(
           required
           value={data.firstName}
         />
+        <input
+          onBlur={handleBlur('lastName')}
+          onChange={handleInputChange('lastName')}
+          placeholder={'lastName'}
+          required
+          value={data.lastName}
+        />
       </div>
     )
   })
@@ -155,4 +162,18 @@ describe('ProfileTab', () => {
     expect(firstNameInput).toBeInTheDocument()
     expect(firstNameInput).toHaveFocus()
   })
+
+  it('should place cursor in the "Last name" field when clicked', async () => {
+    renderWithMockData();
+  
+    const lastNameInput = screen.getByPlaceholderText('lastName');
+    expect(lastNameInput).toBeInTheDocument();
+    expect(document.activeElement).not.toBe(lastNameInput);
+  
+    await userEvent.click(lastNameInput);
+  
+    expect(document.activeElement).toBe(lastNameInput);
+    expect(lastNameInput).toHaveFocus()
+  });
+  
 })

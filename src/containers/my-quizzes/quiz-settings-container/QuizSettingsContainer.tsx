@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import Switch from '@mui/material/Switch'
+import Switch from '~/design-system/components/switch/Switch'
 
 import { ResourceService } from '~/services/resource-service'
 import { useAppDispatch } from '~/hooks/use-redux'
@@ -30,7 +30,8 @@ import {
   Quiz,
   QuizTabsEnum,
   ComponentEnum,
-  QuizSettings
+  QuizSettings,
+  ResourcesTypesEnum
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
@@ -102,7 +103,7 @@ const QuizSettingsContainer = ({
   const { fetchData: createQuiz } = useAxios<Quiz, CreateQuizParams>({
     service: createQuizService,
     fetchOnMount: false,
-    defaultResponse,
+    defaultResponse: { ...defaultResponse, id: '' },
     onResponse,
     onResponseError
   })
@@ -117,8 +118,10 @@ const QuizSettingsContainer = ({
               title,
               description,
               items: questions,
-              category,
-              settings: data
+              category: { _id: '', name: category as string },
+              settings: data,
+              id: '',
+              resourceType: ResourcesTypesEnum.Quiz
             })
       }
     })
@@ -156,7 +159,6 @@ const QuizSettingsContainer = ({
             checked={data.shuffle}
             data-testid='shuffle-switch'
             onChange={handleInputChange('shuffle')}
-            sx={styles.switch}
           />
         </SettingItem>
       </Box>
@@ -174,7 +176,6 @@ const QuizSettingsContainer = ({
             checked={data.pointValues}
             data-testid='pointValues-switch'
             onChange={handleInputChange('pointValues')}
-            sx={styles.switch}
           />
         </SettingItem>
 
@@ -186,7 +187,6 @@ const QuizSettingsContainer = ({
             checked={data.scoredResponses}
             data-testid='responses-switch'
             onChange={handleInputChange('scoredResponses')}
-            sx={styles.switch}
           />
         </SettingItem>
 
@@ -198,7 +198,6 @@ const QuizSettingsContainer = ({
             checked={data.correctAnswers}
             data-testid='correctAnswers-switch'
             onChange={handleInputChange('correctAnswers')}
-            sx={styles.switch}
           />
         </SettingItem>
       </Box>

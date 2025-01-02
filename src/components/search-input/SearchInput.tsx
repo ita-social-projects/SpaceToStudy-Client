@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
 import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { styles } from './SearchInput.styles'
 
 interface SearchInputProps {

@@ -26,16 +26,15 @@ import {
   ButtonVariantEnum,
   ComponentEnum,
   CreateOrUpdateOfferData,
-  ErrorResponse,
   Offer,
   OfferActionsEnum,
   ServiceFunction,
   SizeEnum,
-  StatusEnum
+  StatusEnum,
+  UserRoleEnum
 } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 interface CreateOrUpdateOfferProps {
   existingOffer?: Offer | null
@@ -61,22 +60,31 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     ? OfferActionsEnum.Edit
     : OfferActionsEnum.Create
 
-  const onResponseError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
   const onResponse = (response: Offer | null) => {
+    const isHash = hash === '#offer'
+
     dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: `offerPage.${offerAction}.successMessage`
-      })
+      openAlert(
+        isHash
+          ? {
+              severity: snackbarVariants.success,
+              message: `offerPage.createOffer.extendedSuccessMessage.${userRole}`,
+              duration: 10000,
+              isExtended: true,
+              route:
+                userRole === UserRoleEnum.Tutor
+                  ? authRoutes.myOffers.path
+                  : authRoutes.myRequests.path
+            }
+          : {
+              severity: snackbarVariants.success,
+              message: `offerPage.${offerAction}.successMessage`
+            }
+      )
     )
+
     closeDrawer()
+
     if (hash == '#offer') {
       navigate(`${authRoutes.myProfile.path}#complete`)
       updateOffer!(true)
@@ -97,8 +105,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     service,
     fetchOnMount: false,
     defaultResponse: null,
-    onResponse,
-    onResponseError
+    onResponse
   })
 
   const {

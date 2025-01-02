@@ -1,4 +1,9 @@
-import { InternalAxiosRequestConfig, AxiosHeaders, AxiosResponse } from 'axios'
+import {
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+  AxiosError,
+  AxiosHeaders
+} from 'axios'
 import { axiosClient } from '~/plugins/axiosClient'
 import i18n from '~/plugins/i18n'
 import { checkAuth } from '~/redux/reducer'
@@ -22,7 +27,15 @@ export const setupInterceptors = (): void => {
     },
     async (error: AxiosResponseError) => {
       if (error.response?.data.code !== 'UNAUTHORIZED') {
-        return Promise.resolve(error)
+        return Promise.reject(
+          new AxiosError(
+            error.message,
+            error.code,
+            error.config,
+            error.request,
+            error.response
+          )
+        )
       }
 
       const originalRequest = error.config as InternalAxiosRequestConfig

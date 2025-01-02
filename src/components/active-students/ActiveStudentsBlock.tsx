@@ -2,17 +2,16 @@ import { Typography } from '@mui/material'
 import Box from '@mui/system/Box'
 import { useCallback } from 'react'
 
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import { cooperationService } from '~/services/cooperation-service'
-import { defaultResponse } from '~/pages/my-cooperations/MyCooperations.constants'
 import Loader from '../loader/Loader'
-import { Cooperation, ItemsWithCount } from '~/types'
 import ActiveStudent from './ActiveStudent'
 import AppIconButton from '../app-icon-button/AppIconButton'
 import { Add, MoreHoriz } from '@mui/icons-material'
 import { styles } from './ActiveStudentsBlock.styles'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { defaultResponses } from '~/constants'
 
 const ActiveStudentsBlock = () => {
   const { t } = useTranslation()
@@ -23,13 +22,21 @@ const ActiveStudentsBlock = () => {
     []
   )
 
-  const { loading, response, error } = useAxios<ItemsWithCount<Cooperation>>({
-    service: getMyCooperations,
-    defaultResponse
+  const { isLoading, data, error } = useQuery({
+    queryKey: ['cooperations'],
+    queryFn: getMyCooperations,
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
   })
 
-  if (loading) return <Loader pageLoad size={50} />
-  if (error) return null
+  if (isLoading) {
+    return <Loader pageLoad size={50} />
+  }
+
+  if (error) {
+    return null
+  }
 
   const onShowMoreClick = () => {
     navigate('/my-cooperations')
@@ -39,7 +46,7 @@ const ActiveStudentsBlock = () => {
     navigate('/categories/subjects/find-offers')
   }
 
-  if (!response.items.length)
+  if (!data.items.length)
     return (
       <>
         <Typography sx={styles.title}>{t('activeStudents.title')}</Typography>
@@ -61,7 +68,7 @@ const ActiveStudentsBlock = () => {
       </>
     )
 
-  const activeStudents = response.items.map((cooperation) => (
+  const activeStudents = data.items.map((cooperation) => (
     <ActiveStudent
       cooperationId={cooperation._id}
       firstName={cooperation.user.firstName}

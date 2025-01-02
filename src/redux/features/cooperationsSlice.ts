@@ -8,19 +8,22 @@ import {
   CourseSection,
   ResourceAvailabilityStatusEnum,
   ResourceAvailability,
-  ResourcesAvailabilityEnum
+  ResourcesAvailabilityEnum,
+  StatusEnum
 } from '~/types'
 
 interface CooperationsState {
   isActivityCreated: boolean
   sections: CourseSection[]
   resourcesAvailability: ResourcesAvailabilityEnum
+  status: StatusEnum
 }
 
 const initialState: CooperationsState = {
   isActivityCreated: false,
   sections: [],
-  resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
+  resourcesAvailability: ResourcesAvailabilityEnum.OpenAll,
+  status: StatusEnum.Active
 }
 
 export const initialCooperationSectionData: CourseSection = {
@@ -239,6 +242,9 @@ const cooperationsSlice = createSlice({
           }
         }
       }
+    },
+    setCooperationStatus(state, action: PayloadAction<StatusEnum>) {
+      state.status = action.payload
     }
   }
 })
@@ -256,7 +262,8 @@ export const {
   updateResource,
   deleteResource,
   setResourcesAvailability,
-  updateResourceAvailability
+  updateResourceAvailability,
+  setCooperationStatus
 } = actions
 
 export const cooperationsSelector = (state: RootState) => state.cooperations

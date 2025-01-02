@@ -2,12 +2,12 @@ import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import Link from '@mui/material/Link'
 import { MenuProps } from '@mui/material'
 
+import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppMenu from '~/components/app-menu/AppMenu'
 import AppButton from '~/components/app-button/AppButton'
 import { ButtonVariantEnum, Notification, SizeEnum } from '~/types'

@@ -48,9 +48,6 @@ const meta: Meta<typeof Alert> = {
     icon: {
       description:
         'Override the icon displayed before the children. Unless provided, the icon is mapped to the value of the severity prop.'
-    },
-    children: {
-      description: 'The content of the alert.'
     }
   }
 }

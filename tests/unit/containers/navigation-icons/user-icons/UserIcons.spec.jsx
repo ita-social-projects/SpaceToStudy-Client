@@ -12,6 +12,16 @@ vi.mock('~/containers/navigation-icons/AccountIcon', () => ({
   }
 }))
 
+vi.mock('@mui/material/Tooltip', () => ({
+  ...vi.importActual('@mui/material/Tooltip'),
+  default: ({ children, title }) => (
+    <div>
+      {title}
+      {children}
+    </div>
+  ),
+}));
+
 describe('test with user role', () => {
   const preloadedState = { appMain: { loading: false, userRole: 'student' } }
 

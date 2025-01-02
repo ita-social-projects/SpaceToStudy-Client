@@ -28,6 +28,7 @@ import {
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { DoneItem } from './ProfileInfo.constants'
 
 interface ProfileInfoProps {
   userData: UserResponse
@@ -77,7 +78,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
     <AppIconButton
       data-testid='icon-btn'
       onClick={() => (!isMyProfile ? void copyProfileLink() : null)}
-      size={isLaptopAndAbove ? SizeEnum.Large : SizeEnum.Small}
+      size={isLaptopAndAbove ? 'lg' : 'sm'}
       sx={styles.iconBtn}
       to={isMyProfile?.pathname && authRoutes.editProfile.path}
     >
@@ -120,7 +121,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
     />
   ))
 
-  const doneItems = [
+  const doneItems: DoneItem[] = [
     userData.nativeLanguage && {
       title: t('userProfilePage.profileInfo.nativeLanguage'),
       description: userData.nativeLanguage
@@ -130,8 +131,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
         title: t('userProfilePage.profileInfo.location'),
         description: `${userData.address.city}, ${userData.address.country}`
       }
-  ].filter(Boolean)
-
+  ].filter((item): item is DoneItem => !!item)
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
       <AppButton

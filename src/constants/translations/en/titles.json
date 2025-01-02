@@ -1,5 +1,8 @@
 {
   "confirmTitle": "Please Confirm",
   "discardOffer": "Discard offer changes?",
-  "discardChanges": "Discard recent changes?"
+  "discardChanges": "Discard recent changes?",
+  "confirmCooperationClosing": "Confirmation of cooperation closing",
+  "acceptCooperationClosing": "Cooperation closing process",
+  "cooperationClosureDeclined": "Cooperation closure declined"
 }

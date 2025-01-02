@@ -1,5 +1,8 @@
 {
   "confirmTitle": "Підтвердіть вихід",
   "discardOffer": "Відхилити зміни пропозиції?",
-  "discardChanges": "Зберегти останні зміни?"
+  "discardChanges": "Зберегти останні зміни?",
+  "confirmCooperationClosing": "Підтвердження припинення cпівпраці",
+  "acceptCooperationClosing": "Процес припинення співпраці",
+  "cooperationClosureDeclined": "Відмова від припинення співпраці"
 }
