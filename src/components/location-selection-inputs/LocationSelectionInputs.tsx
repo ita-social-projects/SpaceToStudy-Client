@@ -3,10 +3,9 @@ import { type SyntheticEvent, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
-import { locationService } from '~/services/location-service'
-
 import { defaultResponses } from '~/constants'
 import useQuery from '~/hooks/use-query'
+import { locationService } from '~/services/location-service'
 import { type EditProfileForm } from '~/types'
 
 interface LocationSelectionInputsProps<T> {
