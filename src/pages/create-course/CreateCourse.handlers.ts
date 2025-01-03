@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
-
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import {
   CreateCourseContext,
@@ -40,7 +38,7 @@ export const addNewSection = ({
   sections,
   setSectionsData
 }: CreateCourseContext): void => {
-  const newSectionData = { ...sectionInitialData, id: uuidv4() }
+  const newSectionData = { ...sectionInitialData, id: crypto.randomUUID() }
   const updatedSections = [...sections, newSectionData]
 
   setSectionsData(updatedSections)
@@ -107,7 +105,7 @@ export const addSectionResources = (
       return {
         resource: {
           ...newDuplicateResource,
-          id: uuidv4(),
+          id: crypto.randomUUID(),
           ...(isDuplicate ? { _id: '', isDuplicate: true } : { _id })
         },
         resourceType: resource.resourceType
