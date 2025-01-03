@@ -7,7 +7,7 @@ import { locationService } from '~/services/location-service'
 
 import { defaultResponses } from '~/constants'
 import useQuery from '~/hooks/use-query'
-import { EditProfileForm } from '~/types'
+import { type EditProfileForm } from '~/types'
 
 interface LocationSelectionInputsProps<T> {
   onDataChange: (key: keyof T, value: string | null) => void
