@@ -1,6 +1,6 @@
 import { URLs } from '~/constants/request'
 import { mockAxiosClient } from '~tests/test-utils'
-import { LocationService } from '~/services/location-service'
+import { locationService } from '~/services/location-service'
 
 const countriesDataMock = ['Ukraine', 'Belgium']
 const citiesDataMock = ['Antwerp', 'Brussels']
@@ -12,18 +12,22 @@ describe('locationService tests', () => {
       .onGet(URLs.location.getCountries)
       .reply(200, countriesDataMock)
 
-    const result = await LocationService.getCountries()
+    const result = await locationService.getCountries()
 
-    expect(result.data).toEqual(countriesDataMock)
+    expect(result).toEqual(countriesDataMock)
   })
 
   it('should return cities', async () => {
     mockAxiosClient
-      .onGet(`${URLs.location.getCities}/${country}`)
+      .onGet(
+        new RegExp(
+          URLs.location.getCitiesByCountryName.replace(':countryName', '')
+        )
+      )
       .reply(200, citiesDataMock)
 
-    const result = await LocationService.getCities(country)
+    const result = await locationService.getCitiesByCountryName(country)
 
-    expect(result.data).toEqual(citiesDataMock)
+    expect(result).toEqual(citiesDataMock)
   })
 })
