@@ -188,9 +188,10 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
           title={t('editProfilePage.profile.generalTab.locationTitle')}
         />
         <Box sx={styles.dividedInputs}>
-          <LocationSelectionInputs<EditProfileForm>
+          <LocationSelectionInputs
             data={data}
             onDataChange={handleNonInputValueChange}
+            sx={styles.locationInput}
           />
         </Box>
       </Box>

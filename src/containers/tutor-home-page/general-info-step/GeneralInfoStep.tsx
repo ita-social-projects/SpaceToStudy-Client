@@ -1,30 +1,20 @@
-import { createFilterOptions, FilterOptionsState } from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import {
-  type ReactNode,
-  type SyntheticEvent,
-  useCallback,
-  useEffect,
-  useMemo
-} from 'react'
+import { type ReactNode, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import img from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
-import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import Loader from '~/components/loader/Loader'
+import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
 import { validations } from '~/components/user-steps-wrapper/constants'
-import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep.styles'
 import { useStepContext } from '~/context/step-context'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useForm from '~/hooks/use-form'
-import useQuery from '~/hooks/use-query'
 import { useAppSelector } from '~/hooks/use-redux'
-import { locationService } from '~/services/location-service'
 import { userService } from '~/services/user-service'
 import { type UserGeneralInfo, type UserRole } from '~/types'
 
@@ -64,65 +54,6 @@ const GeneralInfoStep = ({
     },
     ...validations
   })
-
-  const {
-    data: countries = defaultResponses.array,
-    isLoading: isLoadingCountries
-  } = useQuery({
-    queryFn: locationService.getCountries,
-    queryKey: ['countries'],
-    options: {
-      staleTime: Infinity
-    }
-  })
-
-  const handleGetCities = useCallback(async () => {
-    const countryByName = countries.find(
-      (country) => country.name === data.country
-    )
-
-    if (countryByName) {
-      return await locationService.getCitiesByCountryName(countryByName.iso2)
-    }
-
-    return defaultResponses.array
-  }, [countries, data.country])
-
-  const { data: cities = defaultResponses.array, isLoading: isLoadingCities } =
-    useQuery({
-      queryFn: handleGetCities,
-      queryKey: ['cities', data.country, countries.length],
-      options: {
-        staleTime: Infinity
-      }
-    })
-
-  const handleCountryChange = (
-    _: SyntheticEvent,
-    countryName: string | null
-  ) => {
-    if (data.country !== countryName) {
-      handleNonInputValueChange('city', null)
-      handleNonInputValueChange('country', countryName)
-    }
-  }
-
-  const handleCityChange = (_: SyntheticEvent, cityName: string | null) => {
-    handleNonInputValueChange('city', cityName)
-  }
-
-  const filterOptions = (
-    options: string[],
-    state: FilterOptionsState<string>
-  ) => {
-    const defaultFilterOptions = createFilterOptions<string>()
-
-    return defaultFilterOptions(options, state).slice(0, 300)
-  }
-
-  const countriesNames = useMemo(() => {
-    return countries.map((country) => country.name)
-  }, [countries])
 
   const getUserById = useCallback(
     () => userService.getUserById(userId, userRole as UserRole),
@@ -204,27 +135,10 @@ const GeneralInfoStep = ({
               type='text'
               value={data.lastName}
             />
-            <AppAutoComplete
-              loading={isLoadingCountries}
-              onChange={handleCountryChange}
-              options={countriesNames}
+            <LocationSelectionInputs
+              data={data}
+              onDataChange={handleNonInputValueChange}
               sx={{ mb: '30px' }}
-              textFieldProps={{
-                label: t('common.labels.country')
-              }}
-              value={data.country}
-            />
-            <AppAutoComplete
-              disabled={!data.country}
-              filterOptions={filterOptions}
-              loading={isLoadingCities}
-              onChange={handleCityChange}
-              options={cities}
-              sx={{ mb: '30px' }}
-              textFieldProps={{
-                label: t('common.labels.city')
-              }}
-              value={data.city}
             />
           </Box>
           <AppTextArea

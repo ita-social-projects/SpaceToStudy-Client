@@ -1,4 +1,8 @@
-import { type FilterOptionsState, createFilterOptions } from '@mui/material'
+import {
+  type FilterOptionsState,
+  type SxProps,
+  createFilterOptions
+} from '@mui/material'
 import { type SyntheticEvent, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -8,17 +12,17 @@ import useQuery from '~/hooks/use-query'
 import { locationService } from '~/services/location-service'
 import { type EditProfileForm } from '~/types'
 
-interface LocationSelectionInputsProps<T> {
-  onDataChange: (key: keyof T, value: string | null) => void
-  data: T
+interface LocationSelectionInputsProps {
+  onDataChange: (key: 'country' | 'city', value: string | null) => void
+  data: Pick<EditProfileForm, 'country' | 'city'>
+  sx?: SxProps
 }
 
-const LocationSelectionInputs = <
-  T extends Pick<EditProfileForm, 'country' | 'city'>
->({
+const LocationSelectionInputs: React.FC<LocationSelectionInputsProps> = ({
   onDataChange,
-  data
-}: LocationSelectionInputsProps<T>) => {
+  data,
+  sx
+}) => {
   const { t } = useTranslation()
 
   const {
@@ -87,7 +91,7 @@ const LocationSelectionInputs = <
         loading={isLoadingCountries}
         onChange={handleCountryChange}
         options={countriesNames}
-        sx={{ mb: '25px' }}
+        sx={sx}
         textFieldProps={{
           label: t('common.labels.country')
         }}
@@ -100,7 +104,7 @@ const LocationSelectionInputs = <
         loading={isLoadingCities}
         onChange={handleCityChange}
         options={cities}
-        sx={{ mb: '25px' }}
+        sx={sx}
         textFieldProps={{
           label: t('common.labels.city')
         }}
