@@ -1,4 +1,4 @@
-import { isValidUUID } from '~/utils/validations/isValidUUID'
+import { isValidUUID } from '~tests/test-utils'
 
 import reducer, {
   setCooperationSections,
