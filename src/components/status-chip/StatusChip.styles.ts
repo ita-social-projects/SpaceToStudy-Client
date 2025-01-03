@@ -1,5 +1,5 @@
 import { StatusEnum } from '~/types'
-import { type ChipColor } from '~scss-components/chip/types'
+import { type ChipColor } from '~scss-components/chip/Chip'
 
 export const statusColors: Record<StatusEnum, ChipColor> = {
   [StatusEnum.Pending]: 'blue',
