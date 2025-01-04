@@ -131,7 +131,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
       resourceEventHandler?.({
         type: CourseResourceEventType.ResourceUpdateAvailability,
         sectionId: sectionData.id,
-        resourceId: resource.id,
+        resourceId: resource.id ?? '',
         availability
       })
     },
@@ -155,7 +155,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
     resourceEventHandler?.({
       type: CourseResourceEventType.ResourceRemoved,
       sectionId: sectionData.id,
-      resourceId: resource.id
+      resourceId: resource.id ?? ''
     })
   }
 
