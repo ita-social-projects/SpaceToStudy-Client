@@ -50,13 +50,20 @@ export const ResourceService = {
   },
   deleteLesson: async (id: string): Promise<AxiosResponse<Lesson>> =>
     await axiosClient.delete(createUrlPath(URLs.resources.lessons.delete, id)),
-  addLesson: async (data: LessonData): Promise<AxiosResponse> =>
-    await axiosClient.post(URLs.resources.lessons.add, data),
-  editLesson: async (data: LessonData, id?: string): Promise<AxiosResponse> =>
-    await axiosClient.patch(
-      createUrlPath(URLs.resources.lessons.patch, id),
+  addLesson: async (data: LessonData) => {
+    return baseService.request<Lesson>({
+      method: 'POST',
+      url: createUrlPath(URLs.resources.lessons.add),
       data
-    ),
+    })
+  },
+  editLesson: async (data: LessonData, id?: string) => {
+    return baseService.request<Lesson>({
+      method: 'PATCH',
+      url: createUrlPath(URLs.resources.lessons.patch, id),
+      data
+    })
+  },
   getQuizzes: async (
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> =>

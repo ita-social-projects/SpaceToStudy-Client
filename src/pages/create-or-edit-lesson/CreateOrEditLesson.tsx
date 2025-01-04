@@ -1,6 +1,6 @@
+import { useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
@@ -17,8 +17,8 @@ import FileEditor from '~/components/file-editor/FileEditor'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import { useAppDispatch } from '~/hooks/use-redux'
-import useAxios from '~/hooks/use-axios'
 import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
 
@@ -61,23 +61,26 @@ const CreateOrEditLesson = () => {
   const navigate = useNavigate()
   const { id } = useParams()
 
-  const handleResponseError = (error?: ErrorResponse | ResponseError) => {
-    const errorKey = getErrorKey(error)
+  const handleResponseError = useCallback(
+    (error?: ErrorResponse | ResponseError) => {
+      const errorKey = getErrorKey(error)
 
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: error
-          ? {
-              text: errorKey,
-              options: {
-                message: getErrorMessage(error.message)
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error
+            ? {
+                text: errorKey,
+                options: {
+                  message: getErrorMessage(error.message)
+                }
               }
-            }
-          : errorKey
-      })
-    )
-  }
+            : errorKey
+        })
+      )
+    },
+    [dispatch]
+  )
   const navigateToLessonTab = () => {
     navigate(
       createUrlPath(authRoutes.myResources.root.path, '', { tab: 'lessons' })
@@ -126,28 +129,24 @@ const CreateOrEditLesson = () => {
     handleNonInputValueChange('content', content)
   }
 
-  const addLesson = (): Promise<AxiosResponse> => {
+  const addLesson = (): Promise<Lesson> => {
     return ResourceService.addLesson(data)
   }
 
-  const { fetchData: fetchAddLesson } = useAxios<Lesson, LessonData>({
-    service: addLesson,
-    fetchOnMount: false,
-    defaultResponse,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
+  const { mutate: fetchAddLesson } = useMutation({
+    mutationFn: addLesson,
+    onSuccess: handleResponse,
+    onError: handleResponseError
   })
 
-  const editLesson = (): Promise<AxiosResponse> => {
+  const editLesson = (): Promise<Lesson> => {
     return ResourceService.editLesson(data, id)
   }
 
-  const { fetchData: fetchEditedLesson } = useAxios<null, LessonData>({
-    service: editLesson,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
+  const { mutate: fetchEditedLesson } = useMutation({
+    mutationFn: editLesson,
+    onSuccess: handleResponse,
+    onError: handleResponseError
   })
 
   const onCategoryChange = (
@@ -166,7 +165,13 @@ const CreateOrEditLesson = () => {
   } = useForm<LessonData>({
     initialValues,
     validations,
-    onSubmit: id ? fetchEditedLesson : fetchAddLesson,
+    onSubmit: () => {
+      if (id) {
+        fetchEditedLesson()
+      } else {
+        fetchAddLesson()
+      }
+    },
     submitWithData: true
   })
 
@@ -174,17 +179,37 @@ const CreateOrEditLesson = () => {
     return ResourceService.getLesson(id)
   }
 
-  const { isLoading, error } = useQuery({
-    queryKey: [id],
+  const {
+    isLoading,
+    error,
+    data: lesson
+  } = useQuery({
+    queryKey: ['lesson', id],
     queryFn: () => getLesson(id),
     options: {
-      initialData: defaultResponse
+      initialData: id ? undefined : defaultResponse,
+      enabled: Boolean(id)
     }
   })
 
-  if (error) {
-    handleResponseError(error)
-  }
+  console.log('id', id)
+
+  console.log('lesson', lesson)
+
+  useEffect(() => {
+    if (lesson && id) {
+      for (const key in data) {
+        const validKey = key as keyof LessonData
+        handleNonInputValueChange(validKey, lesson[validKey])
+      }
+    }
+  }, [data, handleNonInputValueChange, lesson, id])
+
+  useEffect(() => {
+    if (error) {
+      handleResponseError(error)
+    }
+  }, [error, handleResponseError])
 
   if (isLoading) {
     return <Loader pageLoad />
