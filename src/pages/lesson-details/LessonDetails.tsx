@@ -77,7 +77,7 @@ const LessonDetails = () => {
     })
   }
 
-  const attachmentsList = data.attachments.map((attachment) => (
+  const attachmentsList = data?.attachments?.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachment}>
       <IconExtensionWithTitle
         size={attachment.size}

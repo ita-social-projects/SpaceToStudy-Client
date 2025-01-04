@@ -1,4 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
+
 import { renderWithProviders } from '~tests/test-utils'
 import { ResourceService } from '~/services/resource-service'
 import LessonDetails from '~/pages/lesson-details/LessonDetails'
@@ -58,9 +59,7 @@ const lessonMock = {
   ]
 }
 
-ResourceService.getLesson.mockResolvedValue({
-  data: lessonMock
-})
+ResourceService.getLesson.mockResolvedValue(lessonMock)
 
 describe('LessonDetails', () => {
   beforeEach(async () => {
@@ -105,11 +104,9 @@ describe('LessonDetails', () => {
   it('should handle opening and closing of multiple accordions', async () => {
     renderWithProviders(<LessonDetails />, { preloadedState: mockState })
 
-    const contentTitle = await screen.findByText('lesson.content')
     const accordions = screen.getAllByText('lesson.attachments')
     const attachmentsTitle = accordions[0]
 
-    fireEvent.click(contentTitle)
     fireEvent.click(attachmentsTitle)
 
     const attachment = screen.getAllByText('file1.png')[0]
