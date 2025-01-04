@@ -192,10 +192,6 @@ const CreateOrEditLesson = () => {
     }
   })
 
-  console.log('id', id)
-
-  console.log('lesson', lesson)
-
   useEffect(() => {
     if (lesson && id) {
       for (const key in data) {
@@ -203,7 +199,7 @@ const CreateOrEditLesson = () => {
         handleNonInputValueChange(validKey, lesson[validKey])
       }
     }
-  }, [data, handleNonInputValueChange, lesson, id])
+  }, [lesson, id])
 
   useEffect(() => {
     if (error) {
