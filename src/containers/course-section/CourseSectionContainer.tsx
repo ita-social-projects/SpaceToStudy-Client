@@ -1,6 +1,5 @@
 import { useState, FC, useMemo, useCallback, FocusEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { v4 as uuidv4 } from 'uuid'
 
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -256,7 +255,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
             isDuplicate: isDuplicate
           })
 
-          newResources.push(newLesson.data as Lesson)
+          newResources.push(newLesson)
         } else if (resource.resourceType === ResourcesTypesEnum.Quiz) {
           const quiz = resource as Quiz
           const newQuiz = await ResourceService.addQuiz({
@@ -266,7 +265,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
             isDuplicate: isDuplicate,
             resourceType: ResourcesTypesEnum.Quiz,
             category: null,
-            id: uuidv4()
+            id: crypto.randomUUID()
           })
           newResources.push(newQuiz.data as Quiz)
         }
