@@ -211,7 +211,7 @@ const CreateOrEditLesson = () => {
     return <Loader pageLoad />
   }
 
-  const attachmentsList = data.attachments.map((attachment) => (
+  const attachmentsList = data?.attachments?.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>
       <IconExtensionWithTitle
         size={attachment.size}
