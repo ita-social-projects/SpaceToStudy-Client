@@ -1,4 +1,4 @@
-import { useState, FC, useMemo, useCallback, FocusEvent } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { MenuItem } from '@mui/material'
@@ -63,7 +63,7 @@ interface SectionProps extends CourseSectionHandlers {
 
 type OpenModalFunction = () => void
 
-const CourseSectionContainer: FC<SectionProps> = ({
+const CourseSectionContainer: React.FC<SectionProps> = ({
   sectionData,
   handleSectionInputChange,
   resourceEventHandler,
@@ -77,7 +77,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
 
-  const handleDescriptionBlur = (event: FocusEvent<HTMLInputElement>) => {
+  const handleDescriptionBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     handleSectionInputChange(sectionData.id, 'description', event.target.value)
   }
 
