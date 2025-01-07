@@ -3,16 +3,18 @@ type SearchParameterValue =
   | string[]
   | number
   | number[]
+  | boolean
+  | boolean[]
   | null
   | undefined
-  | Record<string, string | number | null | undefined>
+  | Record<string, string | number | boolean | null | undefined>
 
 const getSearchParametersEntries = (
   searchParameters: Record<string, SearchParameterValue>
 ) => {
   const searchParametersEntries: [
     string,
-    string | number | null | undefined
+    string | number | boolean | null | undefined
   ][] = []
 
   for (const [searchParameterName, searchParameterValue] of Object.entries(
@@ -24,7 +26,7 @@ const getSearchParametersEntries = (
 
         return [searchParameterArrayKey, parameterValue] as [
           string,
-          string | number
+          string | number | boolean
         ]
       })
 
