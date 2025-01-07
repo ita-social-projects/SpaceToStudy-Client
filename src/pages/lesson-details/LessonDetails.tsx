@@ -6,7 +6,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import EditIcon from '@mui/icons-material/Edit'
 import DOMPurify from 'dompurify'
 
-import Loader from '~/components/loader/Loader'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import useQuery from '~/hooks/use-query'
@@ -49,7 +48,7 @@ const LessonDetails = () => {
     return defaultResponse
   }, [lessonId])
 
-  const { isLoading, isError, data } = useQuery({
+  const { isError, data } = useQuery({
     queryKey: ['lesson', lessonId],
     queryFn: getLesson,
     options: {
@@ -62,10 +61,6 @@ const LessonDetails = () => {
       responseError()
     }
   }, [isError, responseError])
-
-  if (isLoading) {
-    return <Loader pageLoad />
-  }
 
   const handleEditLesson = () => {
     openModal({

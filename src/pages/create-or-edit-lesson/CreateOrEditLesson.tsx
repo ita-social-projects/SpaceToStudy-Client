@@ -7,7 +7,6 @@ import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import Loader from '~/components/loader/Loader'
 import AddResources from '~/containers/add-resources/AddResources'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import { useModalContext } from '~/context/modal-context'
@@ -170,11 +169,7 @@ const CreateOrEditLesson = () => {
     }
   }, [id])
 
-  const {
-    isLoading,
-    error,
-    data: lesson
-  } = useQuery({
+  const { error, data: lesson } = useQuery({
     queryKey: ['lesson', id],
     queryFn: getLesson,
     options: {
@@ -209,10 +204,6 @@ const CreateOrEditLesson = () => {
       handleResponseError(error)
     }
   }, [error, handleResponseError])
-
-  if (isLoading) {
-    return <Loader pageLoad />
-  }
 
   const attachmentsList = data.attachments?.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>
