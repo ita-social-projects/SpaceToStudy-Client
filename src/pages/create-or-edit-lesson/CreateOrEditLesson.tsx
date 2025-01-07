@@ -39,7 +39,6 @@ import {
   ButtonTypeEnum,
   ButtonVariantEnum,
   ComponentEnum,
-  type ErrorResponse,
   type LessonData,
   SizeEnum,
   TextFieldVariantEnum,
@@ -60,7 +59,7 @@ const CreateOrEditLesson = () => {
   const { id } = useParams()
 
   const handleResponseError = useCallback(
-    (error?: ErrorResponse | ResponseError) => {
+    (error: ResponseError) => {
       const errorKey = getErrorKey(error)
 
       dispatch(
