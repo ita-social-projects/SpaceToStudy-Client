@@ -139,16 +139,6 @@ const CreateOrEditLesson = () => {
     onError: handleResponseError
   })
 
-  const editLesson = (): Promise<Lesson> => {
-    return ResourceService.editLesson(data, id)
-  }
-
-  const { mutate: fetchEditedLesson } = useMutation({
-    mutationFn: editLesson,
-    onSuccess: handleResponse,
-    onError: handleResponseError
-  })
-
   const onCategoryChange = (
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
@@ -176,7 +166,11 @@ const CreateOrEditLesson = () => {
   })
 
   const getLesson = useCallback(() => {
-    return ResourceService.getLesson(id)
+    if (id) {
+      return ResourceService.getLesson(id)
+    }
+
+    return defaultResponse
   }, [id])
 
   const {
@@ -187,11 +181,25 @@ const CreateOrEditLesson = () => {
     queryKey: ['lesson', id],
     queryFn: getLesson,
     options: {
-      initialData: id ? undefined : defaultResponse,
+      initialData: defaultResponse,
       enabled: Boolean(id)
     }
   })
 
+  const editLesson = useCallback(async () => {
+    if (id) {
+      return ResourceService.editLesson(data, id)
+    }
+
+    return Promise.resolve(defaultResponse)
+  }, [data, id])
+
+  const { mutate: fetchEditedLesson } = useMutation({
+    mutationFn: editLesson,
+    onSuccess: handleResponse,
+    onError: handleResponseError
+  })
+  console.log('data', data)
   useEffect(() => {
     if (lesson && id) {
       for (const key in data) {

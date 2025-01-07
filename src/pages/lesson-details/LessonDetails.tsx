@@ -42,7 +42,11 @@ const LessonDetails = () => {
   )
 
   const getLesson = useCallback(() => {
-    return ResourceService.getLesson(lessonId)
+    if (lessonId) {
+      return ResourceService.getLesson(lessonId)
+    }
+
+    return defaultResponse
   }, [lessonId])
 
   const { isLoading, isError, data } = useQuery({

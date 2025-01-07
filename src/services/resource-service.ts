@@ -42,10 +42,13 @@ export const ResourceService = {
       })
     })
   },
-  getLesson: async (id?: string) => {
+  getLesson: async (id: string) => {
     return baseService.request<Lesson>({
       method: 'GET',
-      url: createUrlPath(URLs.resources.lessons.get, id)
+      url: getFullUrl({
+        pathname: URLs.resources.lessons.getById,
+        parameters: { id }
+      })
     })
   },
   deleteLesson: async (id: string): Promise<AxiosResponse<Lesson>> =>
@@ -57,10 +60,13 @@ export const ResourceService = {
       data
     })
   },
-  editLesson: async (data: LessonData, id?: string) => {
+  editLesson: async (data: LessonData, id: string) => {
     return baseService.request<Lesson>({
       method: 'PATCH',
-      url: createUrlPath(URLs.resources.lessons.patch, id),
+      url: getFullUrl({
+        pathname: URLs.resources.lessons.patch,
+        parameters: { id }
+      }),
       data
     })
   },
