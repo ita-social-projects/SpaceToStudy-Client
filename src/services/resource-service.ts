@@ -25,7 +25,8 @@ import {
   ApiMethodEnum,
   GetQuestion
 } from '~/types'
-import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
+import { createUrlPath } from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
 import { baseService } from './base-service'
 
 export const ResourceService = {

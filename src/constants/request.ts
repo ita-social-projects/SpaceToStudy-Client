@@ -110,4 +110,4 @@ export const URLs = {
   attachments: {
     post: '/attachments'
   }
-}
+} as const
