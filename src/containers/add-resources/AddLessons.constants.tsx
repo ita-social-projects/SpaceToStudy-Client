@@ -25,7 +25,9 @@ export const columns = [
     calculatedCellValue: (lesson: Lesson, { t }: AdditionalPropsInterface) =>
       lesson.category ? (
         <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
-          {lesson.category.name}
+          {typeof lesson.category === 'string'
+            ? lesson.category
+            : lesson.category.name}
         </AppChip>
       ) : (
         <Typography sx={styles.date}>

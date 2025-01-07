@@ -61,7 +61,7 @@ export const ResourceService = {
     })
   },
   editLesson: async (data: LessonData, id: string) => {
-    return baseService.request<Lesson>({
+    return baseService.request<void>({
       method: 'PATCH',
       url: getFullUrl({
         pathname: URLs.resources.lessons.patch,

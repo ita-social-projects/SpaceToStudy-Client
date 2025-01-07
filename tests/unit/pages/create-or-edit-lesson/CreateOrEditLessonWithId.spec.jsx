@@ -27,7 +27,7 @@ describe('CreateOrEditLesson with id', () => {
   beforeAll(() => {
     vi.spyOn(baseService, 'request').mockImplementation((config) => {
       if (config.method === 'PATCH') {
-        return Promise.resolve({ data: {} })
+        return Promise.resolve()
       }
       if (config.method === 'GET') {
         return Promise.resolve({ data: mockLesson })

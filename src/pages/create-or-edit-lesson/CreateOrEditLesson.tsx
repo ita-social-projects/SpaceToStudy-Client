@@ -40,14 +40,13 @@ import {
   ButtonTypeEnum,
   ButtonVariantEnum,
   ComponentEnum,
-  ErrorResponse,
-  Lesson,
-  LessonData,
+  type ErrorResponse,
+  type LessonData,
   SizeEnum,
   TextFieldVariantEnum,
-  Attachment,
+  type Attachment,
   ResourcesTabsEnum,
-  CategoryNameInterface
+  type CategoryNameInterface
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
@@ -129,7 +128,7 @@ const CreateOrEditLesson = () => {
     handleNonInputValueChange('content', content)
   }
 
-  const addLesson = (): Promise<Lesson> => {
+  const addLesson = () => {
     return ResourceService.addLesson(data)
   }
 
@@ -169,8 +168,6 @@ const CreateOrEditLesson = () => {
     if (id) {
       return ResourceService.getLesson(id)
     }
-
-    return defaultResponse
   }, [id])
 
   const {
@@ -188,10 +185,8 @@ const CreateOrEditLesson = () => {
 
   const editLesson = useCallback(async () => {
     if (id) {
-      return ResourceService.editLesson(data, id)
+      await ResourceService.editLesson(data, id)
     }
-
-    return Promise.resolve(defaultResponse)
   }, [data, id])
 
   const { mutate: fetchEditedLesson } = useMutation({
@@ -263,7 +258,7 @@ const CreateOrEditLesson = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <CategoryDropdown
-          category={data.category}
+          category={typeof data.category === 'string' ? data.category : ''}
           onCategoryChange={onCategoryChange}
         />
         <Divider sx={styles.divider} />

@@ -71,7 +71,7 @@ export const URLs = {
   resources: {
     lessons: {
       add: '/lessons',
-      get: '/lessons/',
+      get: '/lessons',
       getById: '/lessons/:id',
       delete: '/lessons',
       patch: '/lessons/:id'

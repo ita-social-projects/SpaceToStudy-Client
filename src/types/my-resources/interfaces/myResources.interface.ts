@@ -1,5 +1,6 @@
-import {
+import type {
   Attachment,
+  Category,
   CommonEntityFields,
   RequestParams,
   ResourcesTypesEnum as ResourceType
@@ -17,7 +18,7 @@ export interface Lesson extends CommonEntityFields, ResourceBase {
   author: string
   content: string
   attachments: Attachment[]
-  category: string | null
+  category: Category | string | null
 }
 
 export interface Categories extends CommonEntityFields {
