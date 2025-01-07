@@ -175,9 +175,9 @@ const CreateOrEditLesson = () => {
     submitWithData: true
   })
 
-  const getLesson = (id?: string) => {
+  const getLesson = useCallback(() => {
     return ResourceService.getLesson(id)
-  }
+  }, [id])
 
   const {
     isLoading,
@@ -185,7 +185,7 @@ const CreateOrEditLesson = () => {
     data: lesson
   } = useQuery({
     queryKey: ['lesson', id],
-    queryFn: () => getLesson(id),
+    queryFn: getLesson,
     options: {
       initialData: id ? undefined : defaultResponse,
       enabled: Boolean(id)

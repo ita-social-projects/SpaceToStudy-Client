@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
@@ -53,9 +53,11 @@ const LessonDetails = () => {
     }
   })
 
-  if (isError) {
-    responseError()
-  }
+  useEffect(() => {
+    if (isError) {
+      responseError()
+    }
+  }, [isError, responseError])
 
   if (isLoading) {
     return <Loader pageLoad />
@@ -77,7 +79,7 @@ const LessonDetails = () => {
     })
   }
 
-  const attachmentsList = data?.attachments?.map((attachment) => (
+  const attachmentsList = data.attachments?.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachment}>
       <IconExtensionWithTitle
         size={attachment.size}
