@@ -199,7 +199,7 @@ const CreateOrEditLesson = () => {
     onSuccess: handleResponse,
     onError: handleResponseError
   })
-  console.log('data', data)
+
   useEffect(() => {
     if (lesson && id) {
       for (const key in data) {
