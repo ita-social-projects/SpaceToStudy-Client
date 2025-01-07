@@ -53,7 +53,7 @@ export const ResourceService = {
   addLesson: async (data: LessonData) => {
     return baseService.request<Lesson>({
       method: 'POST',
-      url: createUrlPath(URLs.resources.lessons.add),
+      url: URLs.resources.lessons.add,
       data
     })
   },
