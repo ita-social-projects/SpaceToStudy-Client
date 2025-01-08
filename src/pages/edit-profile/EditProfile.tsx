@@ -194,17 +194,15 @@ const EditProfile = () => {
       dataToUpdate.aboutStudent = aboutStudent
     }
 
-    if (categories) {
-      if (categories[userRole]) {
-        dataToUpdate.mainSubjects = {
-          [userRole]: categories[userRole].map((item) => ({
-            category: { _id: item.category._id },
-            subjects: item.subjects.map((subject) => ({
-              _id: subject._id
-            }))
+    if (categories && categories[userRole]) {
+      dataToUpdate.mainSubjects = {
+        [userRole]: categories[userRole].map((item) => ({
+          category: { _id: item.category._id },
+          subjects: item.subjects.map((subject) => ({
+            _id: subject._id
           }))
-        } as StudentOrTutor<SubjectCategory[]>
-      }
+        }))
+      } as StudentOrTutor<SubjectCategory[]>
     }
 
     if (typeof photo === 'object' || photo === '') {

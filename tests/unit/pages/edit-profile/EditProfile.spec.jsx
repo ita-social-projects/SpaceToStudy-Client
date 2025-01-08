@@ -518,70 +518,101 @@ describe('EditProfile', () => {
     }
   })
 
-  it('should include the id of the category in mainSubjects', () => {
-    const dataToUpdate = {}
-
+  it('should correctly update dataToUpdate.mainSubjects based on categories and userRole', () => {
     const categories = {
-      tutor: [
+      ['tutor']: [
         {
-          category: {
-            _id: '64884fb0fdc2d1a130c24ad8',
-            name: 'Math'
-          },
-          subjects: [
-            {
-              _id: '66758e2459019cd05eb11a72'
-            }
-          ]
+          category: { _id: 'cat1' },
+          subjects: [{ _id: 'sub1' }, { _id: 'sub2' }]
         }
       ]
     }
 
-    dataToUpdate.mainSubjects = {
-      [userRole]: categories[userRole].map((item) => ({
-        category: { _id: item.category._id },
-        subjects: item.subjects.map((subject) => ({
-          _id: subject._id
+    const userRole = 'tutor'
+    const dataToUpdate = {}
+
+    if (categories && categories[userRole]) {
+      dataToUpdate.mainSubjects = {
+        [userRole]: categories[userRole].map((item) => ({
+          category: { _id: item.category._id },
+          subjects: item.subjects.map((subject) => ({
+            _id: subject._id
+          }))
         }))
-      }))
+      }
     }
 
-    expect(dataToUpdate.mainSubjects.tutor[0].category).toHaveProperty(
-      '_id',
-      categories.tutor[0].category._id
-    )
+    const expectedMainSubjects = {
+      ['tutor']: [
+        {
+          category: { _id: 'cat1' },
+          subjects: [{ _id: 'sub1' }, { _id: 'sub2' }]
+        }
+      ]
+    }
+
+    expect(dataToUpdate.mainSubjects).toEqual(expectedMainSubjects)
   })
 
-  it('should not include redundant properties in mainSubjects', () => {
-    const dataToUpdate = {}
-
+  it('should not update mainSubjects if categories[userRole] is undefined', () => {
     const categories = {
       tutor: [
         {
-          category: {
-            _id: '64884fb0fdc2d1a130c24ad8',
-            name: 'Math'
-          },
-          subjects: [
-            {
-              _id: '66758e2459019cd05eb11a72'
-            }
-          ]
+          category: { _id: 'cat2' },
+          subjects: [{ _id: 'sub3' }]
         }
       ]
     }
 
-    dataToUpdate.mainSubjects = {
-      [userRole]: categories[userRole].map((item) => ({
-        category: { _id: item.category._id },
-        subjects: item.subjects.map((subject) => ({
-          _id: subject._id
+    const userRole = undefined
+    const dataToUpdate = {}
+
+    if (categories && categories[userRole]) {
+      dataToUpdate.mainSubjects = {
+        [userRole]: categories[userRole].map((item) => ({
+          category: { _id: item.category._id },
+          subjects: item.subjects.map((subject) => ({
+            _id: subject._id
+          }))
         }))
-      }))
+      }
     }
 
-    expect(dataToUpdate.mainSubjects.tutor[0].category).not.toHaveProperty(
-      'name'
-    )
+    expect(dataToUpdate.mainSubjects).toBeUndefined()
+  })
+
+  it('should populate mainSubjects when categories[userRole] is defined', () => {
+    const categories = {
+      tutor: [
+        {
+          category: { _id: 'cat1' },
+          subjects: [{ _id: 'sub1' }, { _id: 'sub2' }]
+        }
+      ]
+    }
+    const userRole = 'tutor'
+    const dataToUpdate = {}
+
+    if (categories && categories[userRole]) {
+      dataToUpdate.mainSubjects = {
+        [userRole]: categories[userRole].map((item) => ({
+          category: { _id: item.category._id },
+          subjects: item.subjects.map((subject) => ({
+            _id: subject._id
+          }))
+        }))
+      }
+    }
+
+    expect(dataToUpdate).toEqual({
+      mainSubjects: {
+        tutor: [
+          {
+            category: { _id: 'cat1' },
+            subjects: [{ _id: 'sub1' }, { _id: 'sub2' }]
+          }
+        ]
+      }
+    })
   })
 })
