@@ -531,7 +531,7 @@ describe('EditProfile', () => {
     const userRole = 'tutor'
     const dataToUpdate = {}
 
-    if (categories && categories[userRole]) {
+    if (categories?.[userRole]) {
       dataToUpdate.mainSubjects = {
         [userRole]: categories[userRole].map((item) => ({
           category: { _id: item.category._id },
@@ -567,7 +567,7 @@ describe('EditProfile', () => {
     const userRole = undefined
     const dataToUpdate = {}
 
-    if (categories && categories[userRole]) {
+    if (categories?.[userRole]) {
       dataToUpdate.mainSubjects = {
         [userRole]: categories[userRole].map((item) => ({
           category: { _id: item.category._id },
@@ -593,7 +593,7 @@ describe('EditProfile', () => {
     const userRole = 'tutor'
     const dataToUpdate = {}
 
-    if (categories && categories[userRole]) {
+    if (categories?.[userRole]) {
       dataToUpdate.mainSubjects = {
         [userRole]: categories[userRole].map((item) => ({
           category: { _id: item.category._id },
