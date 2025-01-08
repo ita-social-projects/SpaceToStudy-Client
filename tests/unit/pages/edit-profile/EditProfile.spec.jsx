@@ -518,7 +518,41 @@ describe('EditProfile', () => {
     }
   })
 
-  it('should not include the name of the category in mainSubjects', () => {
+  it('should include the id of the category in mainSubjects', () => {
+    const dataToUpdate = {}
+
+    const categories = {
+      tutor: [
+        {
+          category: {
+            _id: '64884fb0fdc2d1a130c24ad8',
+            name: 'Math'
+          },
+          subjects: [
+            {
+              _id: '66758e2459019cd05eb11a72'
+            }
+          ]
+        }
+      ]
+    }
+
+    dataToUpdate.mainSubjects = {
+      [userRole]: categories[userRole].map((item) => ({
+        category: { _id: item.category._id },
+        subjects: item.subjects.map((subject) => ({
+          _id: subject._id
+        }))
+      }))
+    }
+
+    expect(dataToUpdate.mainSubjects.tutor[0].category).toHaveProperty(
+      '_id',
+      categories.tutor[0].category._id
+    )
+  })
+
+  it('should not include redundant properties in mainSubjects', () => {
     const dataToUpdate = {}
 
     const categories = {
