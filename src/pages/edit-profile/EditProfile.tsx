@@ -204,7 +204,6 @@ const EditProfile = () => {
         }))
       } as StudentOrTutor<SubjectCategory[]>
     }
-    ß
 
     if (typeof photo === 'object' || photo === '') {
       dataToUpdate.photo = photo
