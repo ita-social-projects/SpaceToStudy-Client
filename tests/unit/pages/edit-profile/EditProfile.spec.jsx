@@ -79,9 +79,9 @@ const mockData = {
   errors: {
     firstName: '',
     lastName: '',
-    videoLink: '',
-  },
-};
+    videoLink: ''
+  }
+}
 
 vi.mock('~/hooks/use-confirm', () => ({
   default: () => ({ checkConfirmation: () => true })
@@ -145,7 +145,15 @@ vi.mock(
 
 vi.mock('AppTextField', () => ({
   __esModule: true,
-  default: ({ errorMsg, label, onBlur, onChange, placeholder, value, InputProps }) => (
+  default: ({
+    errorMsg,
+    label,
+    onBlur,
+    onChange,
+    placeholder,
+    value,
+    InputProps
+  }) => (
     <input
       aria-label={label}
       value={value || ''}
@@ -155,8 +163,8 @@ vi.mock('AppTextField', () => ({
       aria-invalid={errorMsg ? 'true' : 'false'}
       {...InputProps}
     />
-  ),
-}));
+  )
+}))
 
 describe('EditProfile', () => {
   beforeEach(async () => {
@@ -440,19 +448,18 @@ describe('EditProfile', () => {
     expect(dataToUpdate).toHaveProperty('videoLink', '')
   })
 
-
   it('should replace the existing text in the "First name" field with test data and Update button becomes anable and active', () => {
-    const testData = ["O'braian", "Мар'яна", "Анна-Марія", "Анна Марія"];
+    const testData = ["O'braian", "Мар'яна", 'Анна-Марія', 'Анна Марія']
 
     const mockT = vi.fn((key) => {
       const translations = {
         'common.labels.firstName': 'First Name',
-        'editProfilePage.updateBtn': 'Update',
-      };
-      return translations[key] || key;
-    });
+        'editProfilePage.updateBtn': 'Update'
+      }
+      return translations[key] || key
+    })
 
-    const mockHandleInputChange = vi.fn();
+    const mockHandleInputChange = vi.fn()
 
     render(
       <ProfileTabForm
@@ -463,31 +470,31 @@ describe('EditProfile', () => {
         handleBlur={() => {}}
         openAlert={() => {}}
       />
-    );
+    )
 
     const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
-    expect(firstNameInput).toBeInTheDocument();
+    expect(firstNameInput).toBeInTheDocument()
 
     for (const data of testData) {
-      fireEvent.change(firstNameInput, { target: { value: data } });
+      fireEvent.change(firstNameInput, { target: { value: data } })
 
       const updateButton = screen.getByText('editProfilePage.updateBtn')
-      expect(updateButton).not.toBeDisabled();
+      expect(updateButton).not.toBeDisabled()
     }
-  });
+  })
 
   it('should replace the existing text in the "Last name" field with test data and Update button becomes anable and active', () => {
-    const testData = ["Mc'Neil", "O'Neill-Johnson", "Van Gogh"];
+    const testData = ["Mc'Neil", "O'Neill-Johnson", 'Van Gogh']
 
     const mockT = vi.fn((key) => {
       const translations = {
         'common.labels.lastName': 'Last Name',
-        'editProfilePage.updateBtn': 'Update',
-      };
-      return translations[key] || key;
-    });
+        'editProfilePage.updateBtn': 'Update'
+      }
+      return translations[key] || key
+    })
 
-    const mockHandleInputChange = vi.fn();
+    const mockHandleInputChange = vi.fn()
 
     render(
       <ProfileTabForm
@@ -498,16 +505,49 @@ describe('EditProfile', () => {
         handleBlur={() => {}}
         openAlert={() => {}}
       />
-    );
+    )
 
     const lastNameInput = screen.getByLabelText(/common.labels.lastName/i)
-    expect(lastNameInput).toBeInTheDocument();
+    expect(lastNameInput).toBeInTheDocument()
 
     for (const data of testData) {
-      fireEvent.change(lastNameInput, { target: { value: data } });
+      fireEvent.change(lastNameInput, { target: { value: data } })
 
       const updateButton = screen.getByText('editProfilePage.updateBtn')
-      expect(updateButton).not.toBeDisabled();
+      expect(updateButton).not.toBeDisabled()
     }
-  });
-});
+  })
+
+  it('should not include the name of the category in mainSubjects', () => {
+    const dataToUpdate = {}
+
+    const categories = {
+      tutor: [
+        {
+          category: {
+            _id: '64884fb0fdc2d1a130c24ad8',
+            name: 'Math'
+          },
+          subjects: [
+            {
+              _id: '66758e2459019cd05eb11a72'
+            }
+          ]
+        }
+      ]
+    }
+
+    dataToUpdate.mainSubjects = {
+      [userRole]: categories[userRole].map((item) => ({
+        category: { _id: item.category._id },
+        subjects: item.subjects.map((subject) => ({
+          _id: subject._id
+        }))
+      }))
+    }
+
+    expect(dataToUpdate.mainSubjects.tutor[0].category).not.toHaveProperty(
+      'name'
+    )
+  })
+})
