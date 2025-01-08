@@ -1,4 +1,4 @@
-import {
+import type {
   CreatedAt,
   LastLogin,
   Address,
@@ -10,7 +10,9 @@ import {
   UpdateFields,
   UserStatusEnum,
   UserMainSubject,
-  NotificationSettings
+  NotificationSettings,
+  SubjectCategory,
+  UserRoleEnum
 } from '~/types'
 
 export interface LocalStorage {
@@ -76,9 +78,14 @@ export interface UserGeneralInfo
   city: UserResponse['address']['city'] | null
 }
 
+export type StudentOrTutor<T> = Pick<
+  DataByRole<T>,
+  UserRoleEnum.Student | UserRoleEnum.Tutor
+>
+
 export interface UpdateUserParams
   extends Partial<Pick<UserResponse, UpdateFields>> {
-  mainSubjects?: DataByRole<UserMainSubject[]>
+  mainSubjects?: StudentOrTutor<SubjectCategory[]>
   videoLink?: string
   photo?: EditProfilePhoto
 }

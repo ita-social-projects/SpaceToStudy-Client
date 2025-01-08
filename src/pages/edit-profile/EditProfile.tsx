@@ -20,10 +20,13 @@ import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
   ButtonVariantEnum,
   SizeEnum,
-  UpdateUserParams,
+  type UpdateUserParams,
   UserProfileTabsEnum,
-  UserRole,
-  DataByRole
+  type UserRole,
+  type DataByRole,
+  type UserRoleEnum,
+  type SubjectCategory,
+  type StudentOrTutor
 } from '~/types'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 import {
@@ -58,7 +61,10 @@ const EditProfile = () => {
     (state) => state.editProfile
   )
 
-  const { userId, userRole } = useAppSelector((state) => state.appMain)
+  const { userId, userRole } = useAppSelector((state) => state.appMain) as {
+    userId: string
+    userRole: UserRoleEnum.Student | UserRoleEnum.Tutor
+  }
 
   const { checkConfirmation } = useConfirm()
 
@@ -173,7 +179,7 @@ const EditProfile = () => {
     if (city && country) dataToUpdate.address = { city, country }
 
     if (videoLink) {
-      const updatedVideolink = videoLink[userRole as keyof DataByRole<string>]
+      const updatedVideolink = videoLink[userRole]
 
       dataToUpdate.videoLink = updatedVideolink
     }
@@ -189,7 +195,16 @@ const EditProfile = () => {
     }
 
     if (categories) {
-      dataToUpdate.mainSubjects = categories
+      if (categories[userRole]) {
+        dataToUpdate.mainSubjects = {
+          [userRole]: categories[userRole].map((item) => ({
+            category: { _id: item.category._id },
+            subjects: item.subjects.map((subject) => ({
+              _id: subject._id
+            }))
+          }))
+        } as StudentOrTutor<SubjectCategory[]>
+      }
     }
 
     if (typeof photo === 'object' || photo === '') {

@@ -1,4 +1,4 @@
-import {
+import type {
   CategoryInterface,
   SubjectNameInterface
 } from '~/types/common/common.index'
@@ -22,6 +22,11 @@ export interface EditProfileFormSubmitData
 export interface ProfessionalCategory {
   category: Pick<CategoryInterface, '_id' | 'name' | 'appearance'>
   subjects: SubjectNameInterface[]
+}
+
+export interface SubjectCategory {
+  category: Pick<CategoryInterface, '_id'>
+  subjects: Pick<SubjectNameInterface, '_id'>[]
 }
 
 export interface UserMainSubject extends ProfessionalCategory {
