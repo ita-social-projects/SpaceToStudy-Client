@@ -194,7 +194,7 @@ const EditProfile = () => {
       dataToUpdate.aboutStudent = aboutStudent
     }
 
-    if (categories && categories[userRole]) {
+    if (categories?.[userRole]) {
       dataToUpdate.mainSubjects = {
         [userRole]: categories[userRole].map((item) => ({
           category: { _id: item.category._id },
@@ -204,6 +204,7 @@ const EditProfile = () => {
         }))
       } as StudentOrTutor<SubjectCategory[]>
     }
+    ß
 
     if (typeof photo === 'object' || photo === '') {
       dataToUpdate.photo = photo
