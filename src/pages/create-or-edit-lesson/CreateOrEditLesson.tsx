@@ -60,13 +60,11 @@ const CreateOrEditLesson = () => {
 
   const handleResponseError = useCallback(
     (error: ResponseError) => {
-      const errorKey = getErrorKey(error)
-
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
           message: {
-            text: errorKey,
+            text: getErrorKey(error),
             options: {
               message: getErrorMessage(error.message)
             }
@@ -76,6 +74,7 @@ const CreateOrEditLesson = () => {
     },
     [dispatch]
   )
+
   const navigateToLessonTab = () => {
     navigate(
       createUrlPath(authRoutes.myResources.root.path, '', { tab: 'lessons' })
@@ -124,16 +123,6 @@ const CreateOrEditLesson = () => {
     handleNonInputValueChange('content', content)
   }
 
-  const addLesson = () => {
-    return ResourceService.addLesson(data)
-  }
-
-  const { mutate: fetchAddLesson } = useMutation({
-    mutationFn: addLesson,
-    onSuccess: handleResponse,
-    onError: handleResponseError
-  })
-
   const onCategoryChange = (
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
@@ -158,6 +147,16 @@ const CreateOrEditLesson = () => {
       }
     },
     submitWithData: true
+  })
+
+  const addLesson = useCallback(() => {
+    return ResourceService.addLesson(data)
+  }, [data])
+
+  const { mutate: fetchAddLesson } = useMutation({
+    mutationFn: addLesson,
+    onSuccess: handleResponse,
+    onError: handleResponseError
   })
 
   const getLesson = useCallback(() => {
