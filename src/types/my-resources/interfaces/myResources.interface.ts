@@ -18,7 +18,7 @@ export interface Lesson extends CommonEntityFields, ResourceBase {
   author: string
   content: string
   attachments: Attachment[]
-  category: Category | string | null
+  category: Category | null
 }
 
 export interface Categories extends CommonEntityFields {

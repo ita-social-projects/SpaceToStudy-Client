@@ -43,7 +43,7 @@ export const ResourceService = {
     })
   },
   getLesson: async (id: string) => {
-    return baseService.request<Lesson>({
+    return baseService.request<Lesson & { category: string | null }>({
       method: 'GET',
       url: getFullUrl({
         pathname: URLs.resources.lessons.getById,
@@ -54,7 +54,7 @@ export const ResourceService = {
   deleteLesson: async (id: string): Promise<AxiosResponse<Lesson>> =>
     await axiosClient.delete(createUrlPath(URLs.resources.lessons.delete, id)),
   addLesson: async (data: LessonData) => {
-    return baseService.request<Lesson>({
+    return baseService.request<Lesson & { category: string | null }>({
       method: 'POST',
       url: URLs.resources.lessons.add,
       data

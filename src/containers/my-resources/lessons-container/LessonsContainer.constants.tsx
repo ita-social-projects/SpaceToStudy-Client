@@ -55,9 +55,7 @@ export const columns: TableColumn<Lesson>[] = [
     calculatedCellValue: (item: Lesson, { t }: AdditionalPropsInterface) =>
       item.category ? (
         <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
-          {typeof item.category === 'string'
-            ? item.category
-            : item.category.name}
+          {item.category.name}
         </AppChip>
       ) : (
         <Typography sx={styles.date}>
