@@ -162,7 +162,7 @@ const EditProfile = () => {
   const { hash } = useLocation()
   const navigate = useNavigate()
 
-  const handleUpdateUser = async (): Promise<void> => {
+  const handleUpdateUser = async () => {
     const { country, city } = profileState
     const {
       videoLink,
