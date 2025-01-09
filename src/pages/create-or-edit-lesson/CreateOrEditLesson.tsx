@@ -65,14 +65,12 @@ const CreateOrEditLesson = () => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: error
-            ? {
-                text: errorKey,
-                options: {
-                  message: getErrorMessage(error.message)
-                }
-              }
-            : errorKey
+          message: {
+            text: errorKey,
+            options: {
+              message: getErrorMessage(error.message)
+            }
+          }
         })
       )
     },
