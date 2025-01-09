@@ -3,7 +3,7 @@ import {
   type SxProps,
   createFilterOptions
 } from '@mui/material'
-import { type SyntheticEvent, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
@@ -58,7 +58,7 @@ const LocationSelectionInputs: React.FC<LocationSelectionInputsProps> = ({
     })
 
   const handleCountryChange = (
-    _: SyntheticEvent,
+    _: React.SyntheticEvent,
     countryName: string | null
   ) => {
     if (data.country !== countryName) {
@@ -67,7 +67,10 @@ const LocationSelectionInputs: React.FC<LocationSelectionInputsProps> = ({
     }
   }
 
-  const handleCityChange = (_: SyntheticEvent, cityName: string | null) => {
+  const handleCityChange = (
+    _: React.SyntheticEvent,
+    cityName: string | null
+  ) => {
     onDataChange('city', cityName)
   }
 
