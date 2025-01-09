@@ -213,6 +213,8 @@ const CreateOrEditLesson = () => {
     </Box>
   ))
 
+  const category = typeof data.category === 'string' ? data.category : ''
+
   return (
     <PageWrapper>
       <Box
@@ -245,7 +247,7 @@ const CreateOrEditLesson = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <CategoryDropdown
-          category={typeof data.category === 'string' ? data.category : ''}
+          category={category}
           onCategoryChange={onCategoryChange}
         />
         <Divider sx={styles.divider} />
