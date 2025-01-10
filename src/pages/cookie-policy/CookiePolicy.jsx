@@ -11,9 +11,9 @@ import { styles } from './CookiePolicy.styles'
 const CookiePolicy = () => {
   const { t } = useTranslation()
 
-  const cookieItems = cookieItemsData.map((item, index) => {
+  const cookieItems = cookieItemsData.map((item) => {
     return (
-      <Box key={index} sx={styles.wrapper}>
+      <Box key={item.id} sx={styles.wrapper}>
         <Typography sx={styles.title}>{t(item.title)}</Typography>
 
         <Typography sx={item.subtitle && styles.subtitle}>

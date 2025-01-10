@@ -8,7 +8,7 @@ import {
   updateResourcesOrder
 } from '~/pages/create-course/CreateCourse.handlers'
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
-import { isValidUUID } from '~/utils/validations/isValidUUID'
+import { isValidUUID } from '~tests/test-utils'
 
 describe('Test CreateCourse handlers:', () => {
   it('addNewSection: should add a new section with a unique ID', () => {

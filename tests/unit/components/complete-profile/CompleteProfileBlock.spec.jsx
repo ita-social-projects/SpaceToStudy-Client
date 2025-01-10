@@ -1,14 +1,15 @@
 import { vi } from 'vitest'
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
 import {
   profileItemsTutor,
   profileItemsStudent
 } from '~/components/profile-item/complete-profile.constants'
 import { renderWithProviders } from '~tests/test-utils'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
+import { OfferService } from '~/services/offer-service'
 
-vi.mock('~/hooks/use-axios')
+vi.mock('~/hooks/use-query')
 vi.mock('~/services/offer-service')
 
 const badRoute = '/tutor/myProfile'
@@ -45,11 +46,39 @@ const mockDataEmpty = {
   }
 }
 
+describe('getUsersOffers should return correct response', () => {
+  it('should call getUsersOffers and return data', async () => {
+    OfferService.getUsersOffers.mockResolvedValue({
+      data: { items: [{ title: 'Mock offer', price: 100 }], count: 1 }
+    })
+
+    useQuery.mockImplementation(({ queryFn }) => ({
+      queryData: queryFn(),
+      isLoading: false,
+      error: null
+    }))
+
+    renderWithProviders(
+      <CompleteProfileBlock
+        data={mockDataFilled}
+        profileItems={profileItemsTutor}
+      />,
+      {
+        initialEntries: badRoute,
+        preloadedState: { appMain: { userRole: 'tutor' } }
+      }
+    )
+
+    await waitFor(() => {
+      expect(OfferService.getUsersOffers).toHaveBeenCalled()
+    })
+  })
+})
+
 describe('CompleteProfile test when user data is filled', () => {
   beforeEach(() => {
-    useAxios.mockReturnValue({
-      response: { items: ['item1'], count: 1 },
-      loading: false
+    useQuery.mockReturnValue({
+      data: { items: ['item1'], count: 1 }
     })
   })
 
@@ -88,9 +117,8 @@ describe('CompleteProfile test when user data is filled', () => {
 
 describe('CompleteProfile test when user data is empty', () => {
   beforeEach(() => {
-    useAxios.mockReturnValue({
-      response: { items: [], count: 0 },
-      loading: false
+    useQuery.mockReturnValue({
+      data: { items: [], count: 0 }
     })
   })
 

@@ -2,7 +2,6 @@ import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
-import { v4 as uuidv4 } from 'uuid'
 
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -198,7 +197,7 @@ const CreateCourse = () => {
     course.sections.forEach((section) => {
       section.id = section._id ?? section.id
       section.resources?.forEach((resource) => {
-        resource.resource.id ||= uuidv4()
+        resource.resource.id ||= crypto.randomUUID()
       })
     })
     Object.keys(courseData).forEach((key) => {

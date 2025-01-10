@@ -66,7 +66,7 @@ const Answer: FC<AnswerProps> = ({
     _,
     checked
   ) => {
-    onCheckboxChange && onCheckboxChange(checked)
+    onCheckboxChange?.(checked)
   }
 
   const iconStyles = styles.icon(answerStatus)

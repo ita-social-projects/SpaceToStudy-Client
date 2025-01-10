@@ -8,7 +8,7 @@ import CardWithLink from '~/components/card-with-link/CardWithLink'
 import CardsList from '~/components/cards-list/CardsList'
 import Loader from '~/components/loader/Loader'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useAppSelector } from '~/hooks/use-redux'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -21,7 +21,7 @@ import {
   getScreenBasedLimit,
   spliceSx
 } from '~/utils/helper-functions'
-import { CategoryInterface, ItemsWithCount, SortEnum } from '~/types'
+import { SortEnum } from '~/types'
 import { styles } from '~/components/popular-categories/PopularCategories.styles'
 import { titleToCamel } from '~/utils/title-to-camel-case'
 
@@ -51,16 +51,20 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
       }),
     [itemsToShow]
   )
-  const { response, loading } = useAxios<ItemsWithCount<CategoryInterface>>({
-    service: getCategories,
-    defaultResponse: defaultResponses.itemsWithCount
+
+  const { data, isLoading } = useQuery({
+    queryFn: getCategories,
+    queryKey: ['categories'],
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
   })
 
   const oppositeRole = getOpositeRole(userRole)
 
   const cards = useMemo(
     () =>
-      response.items.map((item) => (
+      data.items.map((item) => (
         <CardWithLink
           description={t('common.offerCount', {
             count: item.totalOffers[oppositeRole]
@@ -74,7 +78,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
           })}
         />
       )),
-    [response.items, oppositeRole, t]
+    [data, oppositeRole, t]
   )
 
   const onClickButton = () => {
@@ -88,7 +92,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
         style={styles.titleWithDescription}
         title={title}
       />
-      {loading && !response ? (
+      {isLoading && !data ? (
         <Loader />
       ) : (
         <CardsList

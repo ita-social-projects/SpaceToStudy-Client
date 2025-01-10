@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -17,10 +17,9 @@ import { useSearchParams } from 'react-router-dom'
 import useFilter from '~/hooks/table/use-filter'
 import usePagination from '~/hooks/table/use-pagination'
 import useSort from '~/hooks/table/use-sort'
-import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useDrawer } from '~/hooks/use-drawer'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { useAppSelector } from '~/hooks/use-redux'
 import { OfferService } from '~/services/offer-service'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -34,7 +33,7 @@ import {
   tabsInfo
 } from '~/pages/my-offers/MyOffers.constants'
 import { CardsViewEnum } from '~/types'
-import { setPageLoad } from '~/redux/reducer'
+import useQuery from '~/hooks/use-query'
 
 type TabName = keyof typeof tabsInfo
 
@@ -43,7 +42,6 @@ const MyOffers = () => {
     CardsViewEnum.Inline
   )
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
   const [searchParams, setSearchParams] = useSearchParams()
   const activeTab = searchParams.get('tab')
@@ -88,9 +86,12 @@ const MyOffers = () => {
     [userId, filters, page, itemsPerPage, sort]
   )
 
-  const { loading, response } = useAxios({
-    service: getMyOffers,
-    defaultResponse
+  const { isLoading, data } = useQuery({
+    queryKey: ['offers', userId, filters, sort, page],
+    queryFn: getMyOffers,
+    options: {
+      initialData: defaultResponse
+    }
   })
 
   const handleTabClick = (tabName: string, tabValue: string) => {
@@ -104,10 +105,6 @@ const MyOffers = () => {
     title: t(title),
     value
   }))
-
-  useLayoutEffect(() => {
-    void dispatch(setPageLoad(loading))
-  }, [dispatch, loading])
 
   return (
     <PageWrapper>
@@ -136,19 +133,19 @@ const MyOffers = () => {
         view={itemsView}
         withoutSort={showTable}
       />
-      {loading ? (
+      {isLoading ? (
         <Loader pageLoad size={50} />
       ) : (
         <>
           <MyOffersContainer
-            items={response.items}
+            items={data.items}
             showTable={showTable}
             sort={sortOptions}
           />
           <AppPagination
             onChange={handleChangePage}
             page={page}
-            pageCount={Math.ceil(response.count / itemsPerPage)}
+            pageCount={Math.ceil(data.count / itemsPerPage)}
             sx={styles.pagination}
           />
         </>

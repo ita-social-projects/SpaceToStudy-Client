@@ -18,9 +18,9 @@ const StudentHowItWorks = () => {
 
   const { path } = authRoutes.findOffers
 
-  const cards = howItWorksCards.map((item, index) => {
+  const cards = howItWorksCards.map((item) => {
     return (
-      <Box key={index} sx={styles.cardWrapper}>
+      <Box key={item.id} sx={styles.cardWrapper}>
         <Box
           alt={item.title}
           component='img'
