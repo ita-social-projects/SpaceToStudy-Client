@@ -9,7 +9,7 @@ import {
   ItemsWithCount
 } from '~/types'
 import { baseService } from '~/services/base-service'
-import { getFullUrl } from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
 
 export const categoryService = {
   getCategories: (params?: Partial<CategoriesParams>) => {
