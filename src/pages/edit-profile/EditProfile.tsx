@@ -42,6 +42,20 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/edit-profile/EditProfile.styles'
 import { hasPhotoChanges } from '~/utils/has-photo-changes'
 
+export const mapMainSubjects = (
+  categories: Partial<Record<UserRoleEnum, SubjectCategory[]>>,
+  userRole: UserRoleEnum
+) => {
+  return {
+    [userRole]: categories[userRole]!.map((item) => ({
+      category: { _id: item.category._id },
+      subjects: item.subjects.map((subject) => ({
+        _id: subject._id
+      }))
+    }))
+  } as StudentOrTutor<SubjectCategory[]>
+}
+
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
     typeof profileState | null
@@ -195,14 +209,7 @@ const EditProfile = () => {
     }
 
     if (categories?.[userRole]) {
-      dataToUpdate.mainSubjects = {
-        [userRole]: categories[userRole].map((item) => ({
-          category: { _id: item.category._id },
-          subjects: item.subjects.map((subject) => ({
-            _id: subject._id
-          }))
-        }))
-      } as StudentOrTutor<SubjectCategory[]>
+      dataToUpdate.mainSubjects = mapMainSubjects(categories, userRole)
     }
 
     if (typeof photo === 'object' || photo === '') {

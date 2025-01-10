@@ -8,6 +8,8 @@ import { expect, vi } from 'vitest'
 import { snackbarVariants } from '~/constants'
 import { useAppSelector } from '~/hooks/use-redux'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
+import { mapMainSubjects } from '~/pages/edit-profile/EditProfile'
+import { UserRoleEnum } from '~/types'
 
 const userId = '63f5d0ebb'
 const userRole = 'tutor'
@@ -613,6 +615,38 @@ describe('EditProfile', () => {
           }
         ]
       }
+    })
+  })
+})
+
+describe('mapMainSubjects', () => {
+  const mockCategories = {
+    [UserRoleEnum.Tutor]: [
+      {
+        category: { _id: 'cat1', name: 'Category 1' },
+        subjects: [
+          { _id: 'sub1', name: 'Subject 1' },
+          { _id: 'sub2', name: 'Subject 2' }
+        ]
+      }
+    ],
+    [UserRoleEnum.Student]: [
+      {
+        category: { _id: 'cat2', name: 'Category 2' },
+        subjects: [{ _id: 'sub3', name: 'Subject 3' }]
+      }
+    ]
+  }
+
+  it('should return the mapped mainSubjects for a valid userRole', () => {
+    const result = mapMainSubjects(mockCategories, UserRoleEnum.Tutor)
+    expect(result).toEqual({
+      [UserRoleEnum.Tutor]: [
+        {
+          category: { _id: 'cat1' },
+          subjects: [{ _id: 'sub1' }, { _id: 'sub2' }]
+        }
+      ]
     })
   })
 })
