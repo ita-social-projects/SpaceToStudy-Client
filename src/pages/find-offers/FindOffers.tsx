@@ -69,23 +69,21 @@ const FindOffers = () => {
       countActiveFilters: countActiveOfferFilters
     })
 
-  const getOffers = useCallback(
-    () =>
-      OfferService.getOffers({
-        ...filters,
-        status: StatusEnum.Active,
-        limit: itemsPerPage,
-        skip: (Number(filters.page) - 1) * itemsPerPage
-      }),
-    [filters]
-  )
+  const getOffers = useCallback(() => {
+    return OfferService.getOffers({
+      ...filters,
+      status: StatusEnum.Active,
+      limit: itemsPerPage,
+      skip: (Number(filters.page) - 1) * itemsPerPage
+    })
+  }, [filters])
 
   const {
     isLoading: offersLoading,
     data: offersResponse,
     refetch: fetchData
   } = useQuery({
-    queryKey: ['offers', filters, searchParams.toString()],
+    queryKey: ['offers', filters, searchParams],
     queryFn: getOffers,
     options: {
       initialData: defaultResponse
@@ -112,6 +110,10 @@ const FindOffers = () => {
       fetchUserById({ userId, role: userRole as UserRole, isEdit: false })
     )
   }, [dispatch, userId, userRole])
+
+  const updateInfo = useCallback(() => {
+    void fetchData()
+  }, [fetchData])
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 

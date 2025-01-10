@@ -9,11 +9,11 @@ import AppCard from '~/components/app-card/AppCard'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppCarousel from '~/components/app-carousel/AppCarousel'
 import {
-  GetOffersResponse,
   Offer,
   ButtonVariantEnum,
   StatusEnum,
-  ErrorResponse
+  ErrorResponse,
+  ItemsWithCount
 } from '~/types'
 import { OfferService } from '~/services/offer-service'
 import { defaultResponse } from '~/pages/find-offers/FindOffers.constants'
@@ -41,22 +41,20 @@ const OfferCarousel = ({ offer }: OfferCarouselProps) => {
 
   const slidesToShow = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const getOffers = useCallback(
-    () =>
-      OfferService.getOffers({
-        authorRole: offer.authorRole,
-        subjectId: offer.subject._id,
-        proficiencyLevel: offer.proficiencyLevel,
-        languages: offer.languages,
-        excludedOfferId: offer._id,
-        status: StatusEnum.Active,
-        limit: 9
-      }),
-    [offer]
-  )
+  const getOffers = useCallback(() => {
+    return OfferService.getOffers({
+      authorRole: offer.authorRole,
+      subjectId: offer.subject._id,
+      proficiencyLevel: offer.proficiencyLevel,
+      languages: offer.languages,
+      excludedOfferId: offer._id,
+      status: StatusEnum.Active,
+      limit: 9
+    })
+  }, [offer])
 
-  const { data: response } = useQuery<GetOffersResponse>({
-    queryKey: ['offers', offer],
+  const { data: response } = useQuery<ItemsWithCount<Offer>>({
+    queryKey: ['suggested-offers', offer],
     queryFn: getOffers,
     options: {
       initialData: defaultResponse
