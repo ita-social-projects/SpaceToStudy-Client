@@ -10,7 +10,9 @@ import {
   CooperationTabsEnum,
   ProficiencyLevelEnum,
   StatusEnum,
-  UserRoleEnum
+  UserRoleEnum,
+  Faq,
+  DataByRole
 } from '~/types'
 
 export type MyCooperationsTabsData = {
@@ -36,8 +38,24 @@ export const tabsData: MyCooperationsTabsData = {
   }
 }
 
+/*
+    | 'subject'
+    | 'title'
+    | 'category'
+    | 'price'
+    | '_id'
+    | 'chatId'
+    | 'languages'
+    | 'author'
+    | 'proficiencyLevel'
+    | 'description'
+*/
+
 export const defaultResponse: Cooperation = {
   offer: {
+    description: '',
+    chatId: '',
+    price: 0,
     title: '',
     category: {
       _id: '',
@@ -57,22 +75,73 @@ export const defaultResponse: Cooperation = {
       _id: '',
       name: ''
     },
-    price: 0,
-    _id: ''
+    _id: '',
+    languages: [], // Default to an empty array
+    author: {
+      _id: '',
+      firstName: '',
+      lastName: '',
+      photo: null,
+      FAQ: DataByRole<Faq[]>
+    }
   },
   user: {
     _id: '',
     firstName: '',
     lastName: '',
-    role: UserRoleEnum.Tutor
+    role: UserRoleEnum.Tutor,
+    photo: null
   },
   title: '',
   price: 0,
   proficiencyLevel: ProficiencyLevelEnum.Beginner,
+  chatId: '',
   status: StatusEnum.Active,
   needAction: UserRoleEnum.Tutor,
   sections: [],
   createdAt: '',
   updatedAt: '',
-  _id: ''
+  _id: '',
+  initiator: {
+    _id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    nativeLanguage: null,
+    address: {
+      city: '',
+      country: ''
+    },
+    notificationSettings: {
+      email: true,
+      push: true
+    },
+    bookmarkedOffers: [],
+    lastLogin: '',
+    createdAt: '',
+    updatedAt: ''
+  },
+  initiatorRole: 'student',
+  receiver: {
+    _id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    nativeLanguage: null,
+    address: {
+      city: '',
+      country: '',
+      street: '',
+      postalCode: ''
+    },
+    notificationSettings: {
+      email: true,
+      push: true
+    },
+    bookmarkedOffers: [],
+    lastLogin: '',
+    createdAt: '',
+    updatedAt: ''
+  },
+  receiverRole: 'tutor'
 }

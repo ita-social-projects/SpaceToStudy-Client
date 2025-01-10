@@ -6,56 +6,37 @@ import {
   Offer,
   UserResponse,
   UserRoleEnum,
-  SubjectInterface,
-  CategoryInterface,
   CourseSection
 } from '~/types'
 
 export interface Cooperation extends CommonEntityFields {
-  offer: Pick<Offer, 'subject' | 'title' | 'category' | 'price' | '_id'>
-  user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo' | '_id'> & {
-    role: UserRoleEnum
-  }
-  initiator: Pick<UserResponse, 'firstName' | 'lastName'>
-  initiatorRole: 'tutor' | 'student'
-  title: Offer['title']
-  price: Offer['price']
-  proficiencyLevel: ProficiencyLevelEnum
-  status: StatusEnum
-  needAction: UserRoleEnum
-  receiver: Pick<UserResponse, 'firstName' | 'lastName'>
-  receiverRole: 'tutor' | 'student'
-  sections: CourseSection[]
-}
-
-export interface MyCooperationDetails<TOffer extends Offer> {
   offer: Pick<
-    TOffer,
+    Offer,
     | 'subject'
     | 'title'
     | 'category'
     | 'price'
     | '_id'
+    | 'chatId'
+    | 'languages'
     | 'author'
     | 'proficiencyLevel'
     | 'description'
-    | 'languages'
-    | 'chatId'
   >
-  price: number
-  title: string
-  description: string
-  receiver: UserResponse
-  receiverRole: UserRoleEnum
-  languages: string[]
-  chatId: string
-  author: UserResponse
-  subject: Pick<SubjectInterface, 'name'>
-  category: CategoryInterface
-  proficiencyLevel: ProficiencyLevelEnum
+  user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo' | '_id'> & {
+    role: UserRoleEnum
+  }
   initiator: UserResponse
-  initiatorRole: UserRoleEnum
+  initiatorRole: 'tutor' | 'student'
+  title: Offer['title']
+  price: Offer['price']
+  proficiencyLevel: ProficiencyLevelEnum
+  chatId: string
   status: StatusEnum
+  needAction: UserRoleEnum
+  receiver: UserResponse
+  receiverRole: 'tutor' | 'student'
+  sections: CourseSection[]
 }
 
 export interface CreateCooperationsParams extends EnrollOfferForm {

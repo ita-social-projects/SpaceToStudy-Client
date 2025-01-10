@@ -7,11 +7,11 @@ import {
   GetCooperationsParams,
   UpdateCooperationsParams,
   CreateOrUpdateNoteParams,
-  Offer,
-  MyCooperationDetails,
-  UpdateCooperationsSections
+  UpdateCooperationsSections,
+  Cooperation
 } from '~/types'
-import { createUrlPath } from '~/utils/helper-functions'
+import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
+import { baseService } from '~/services/base-service'
 
 export const cooperationService = {
   getCooperations: async (
@@ -29,10 +29,23 @@ export const cooperationService = {
       createUrlPath(URLs.cooperations.update, data._id),
       data
     ),
-  getCooperationById: async (
-    id?: string
-  ): Promise<AxiosResponse<MyCooperationDetails<Offer>>> =>
-    await axiosClient.get(createUrlPath(URLs.cooperations.get, id))
+  getCooperationById: async (id: string) => {
+    console.log(id)
+
+    const url = getFullUrl({
+      pathname: URLs.cooperations.getById,
+      parameters: {
+        id
+      }
+    })
+
+    console.log(url)
+
+    return await baseService.request<Cooperation>({
+      method: 'GET',
+      url
+    })
+  }
 }
 
 export const CooperationNotesService = {

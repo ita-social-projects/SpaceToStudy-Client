@@ -9,6 +9,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import MessageIcon from '@mui/icons-material/Message'
 
 import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import { cooperationService } from '~/services/cooperation-service'
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
@@ -19,9 +20,6 @@ import useConfirm from '~/hooks/use-confirm'
 
 import {
   ButtonVariantEnum,
-  MyCooperationDetails,
-  Offer,
-  ServiceFunction,
   SizeEnum,
   StatusEnum,
   UpdateCooperationStatusParams,
@@ -49,19 +47,17 @@ const MyCooperationsDetails = () => {
   const { checkConfirmation } = useConfirm()
   const dispatch = useAppDispatch()
 
-  const getDetails: ServiceFunction<
-    MyCooperationDetails<Offer> | null,
-    undefined
-  > = useCallback(() => cooperationService.getCooperationById(id), [id])
+  const getDetails = useCallback(
+    () => cooperationService.getCooperationById(id),
+    [id]
+  )
 
-  const {
-    response: detailsResponse,
-    loading: detailsLoading,
-    fetchData
-  } = useAxios<MyCooperationDetails<Offer> | null>({
-    service: getDetails,
-    defaultResponse: null
+  const { data, isLoading } = useQuery({
+    queryFn: getDetails,
+    queryKey: ['cooperationId', id]
   })
+
+  console.log(data)
 
   const handleCooperationStatusChange = (
     params: UpdateCooperationStatusParams
@@ -83,20 +79,18 @@ const MyCooperationsDetails = () => {
   })
 
   const updateInfo = useCallback(() => {
-    void fetchData
-  }, [fetchData])
+    void fetchStatusData
+  }, [fetchStatusData])
 
-  if (detailsLoading || !detailsResponse) {
+  if (isLoading || !data) {
     return <Loader pageLoad />
   }
 
   const displayedUser =
-    detailsResponse.initiator._id === userId
-      ? detailsResponse.receiver
-      : detailsResponse.initiator
+    data.initiator._id === userId ? data.receiver : data.initiator
   const isTutor = displayedUser.role[0] === UserRoleEnum.Tutor
 
-  const { offer, price } = detailsResponse
+  const { offer, price } = data
 
   const CategoryIcon = getCategoryIcon(offer.category.appearance.icon)
   const categoryColor = getValidatedHexColor(offer.category.appearance.color)

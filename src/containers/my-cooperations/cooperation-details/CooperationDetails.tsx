@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
 
 import Box from '@mui/material/Box'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
@@ -15,7 +14,7 @@ import Loader from '~/components/loader/Loader'
 import StatusChip from '~/components/status-chip/StatusChip'
 import AppButton from '~/components/app-button/AppButton'
 
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
@@ -35,7 +34,6 @@ import { cooperationService } from '~/services/cooperation-service'
 import {
   CooperationTabsEnum,
   PositionEnum,
-  Cooperation,
   SizeEnum,
   ButtonVariantEnum,
   StatusEnum
@@ -52,7 +50,7 @@ const CooperationDetails = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { id } = useParams()
+  const { id = '' } = useParams()
   const { isDesktop } = useBreakpoints()
   const { isActivityCreated } = useAppSelector(cooperationsSelector)
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
@@ -82,21 +80,30 @@ const CooperationDetails = () => {
     [navigate]
   )
 
-  const getCooperation = useCallback((): Promise<AxiosResponse> => {
-    return cooperationService.getCooperationById(id)
-  }, [id])
+  const getCooperation = useCallback(
+    () => cooperationService.getCooperationById(id),
+    [id]
+  )
 
-  const { loading, response } = useAxios<Cooperation, string>({
-    service: getCooperation,
-    defaultResponse,
-    onResponseError: responseError
+  const { data, isLoading, isError, error } = useQuery({
+    queryFn: getCooperation,
+    queryKey: ['cooperation'],
+    options: {
+      initialData: defaultResponse
+    }
   })
 
   useEffect(() => {
-    dispatch(setCooperationSections(response.sections))
-    dispatch(setCooperationStatus(response.status))
-    setEditMode(Boolean(response?.sections?.length))
-  }, [response.sections, response.status, dispatch])
+    if (isError && error) {
+      responseError()
+    }
+  }, [responseError, isError, error])
+
+  useEffect(() => {
+    dispatch(setCooperationSections(data.sections))
+    dispatch(setCooperationStatus(data.status))
+    setEditMode(Boolean(data?.sections?.length))
+  }, [data.sections, data.status, dispatch])
 
   const handleEditMode = useCallback(() => {
     setEditMode((prev) => !prev)
@@ -116,7 +123,7 @@ const CooperationDetails = () => {
     void handleCooperationStatusUpdate()
   }, [handleCooperationStatusUpdate])
 
-  if (loading) {
+  if (isLoading) {
     return <Loader pageLoad />
   }
 
@@ -153,9 +160,7 @@ const CooperationDetails = () => {
   }
 
   const closeCooperationInitiator =
-    response.needAction === response.receiverRole
-      ? response.initiator
-      : response.receiver
+    data.needAction === data.receiverRole ? data.initiator : data.receiver
 
   const acceptClosingProcess = !isClosed && (
     <AcceptCooperationClosing
@@ -167,8 +172,7 @@ const CooperationDetails = () => {
   )
 
   const isCooperationClosingRequestSend =
-    response.needAction === userRole &&
-    response.status === StatusEnum.RequestToClose
+    data.needAction === userRole && data.status === StatusEnum.RequestToClose
 
   const iconConditionals = isNotesOpen ? (
     <KeyboardDoubleArrowRightIcon />
@@ -183,7 +187,7 @@ const CooperationDetails = () => {
         <TitleWithDescription
           key={crypto.randomUUID()}
           style={styles.cooperationTitle}
-          title={response.title}
+          title={data.title}
         />
       </Box>
       <Box sx={styles.tabsWrapper}>
