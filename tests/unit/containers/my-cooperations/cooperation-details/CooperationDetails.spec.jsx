@@ -1,6 +1,13 @@
 import { screen, waitFor, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import {
+  ProficiencyLevelEnum,
+  StatusEnum,
+  UserRoleEnum,
+  LanguagesEnum,
+  UserStatusEnum
+} from '~/types'
 
 import CooperationDetails from '~/containers/my-cooperations/cooperation-details/CooperationDetails'
 
