@@ -21,12 +21,12 @@ import { ProfileItemType } from '../profile-item/complete-profile.constants'
 import { useAppSelector } from '~/hooks/use-redux'
 import { UserResponse, UserRole, VideoUserRole } from '~/types'
 import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles'
-import useAxios from '~/hooks/use-axios'
 import { OfferService } from '~/services/offer-service'
-import { defaultResponse } from '~/pages/my-offers/MyOffers.constants'
 import { useDrawer } from '~/hooks/use-drawer'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
+import useQuery from '~/hooks/use-query'
+import { defaultResponse } from '~/pages/my-offers/MyOffers.constants'
 
 interface CompleteProfileBlockProps {
   profileItems: ProfileItemType[]
@@ -62,16 +62,13 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
     [userId]
   )
 
-  const { response, fetchData } = useAxios({
-    service: getMyOffers,
-    defaultResponse
-  })
-
-  useEffect(() => {
-    if (isOfferCreated) {
-      void fetchData()
+  const { data: queryData } = useQuery({
+    queryKey: ['complete-profile-block', userId, isOfferCreated],
+    queryFn: getMyOffers,
+    options: {
+      initialData: defaultResponse
     }
-  }, [isOfferCreated, fetchData])
+  })
 
   const checkIfHasNonEmptyFields = (
     obj: Record<string, string | undefined>
@@ -95,12 +92,12 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           case 'video':
             return data.videoLink?.[userRole as VideoUserRole]
           case 'offer':
-            return response.items.length
+            return queryData?.items.length
           default:
             return data[item.id as keyof UserResponse]
         }
       }),
-    [data, profileItems, response, userRole]
+    [data, profileItems, queryData, userRole]
   )
 
   const valueProgressBar = Math.floor(

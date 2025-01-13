@@ -34,9 +34,9 @@ const resourcesMockData = {
 }
 
 const mockRequestService = vi.fn(() =>
-  Promise.resolve({
-    data: { items: responseItemsMock, count: responseItemsMock.length }
-  })
+  Promise.resolve(
+{ items: responseItemsMock, count: responseItemsMock.length }
+  )
 )
 
 const mockOnAddResources = () => {}
@@ -66,10 +66,10 @@ describe('Tests for AddResources container', () => {
   })
 
   it('should display list of all resources with category', async () => {
-    const displayedLessons = screen.getAllByText(
+    const displayedLessons = await screen.findAllByText(
       lessonDataMock.category.name
-    ).length
-    expect(displayedLessons).toBe(10)
+    )
+    expect(displayedLessons.length).toBe(10)
   })
 
   it('should filter resources', () => {

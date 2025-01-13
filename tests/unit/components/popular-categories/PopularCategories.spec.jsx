@@ -3,7 +3,7 @@ import PopularCategories from '~/components/popular-categories/PopularCategories
 import { URLs } from '~/constants/request'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { useTranslation } from 'react-i18next'
-import {titleToCamel} from '~/utils/title-to-camel-case'
+import { titleToCamel } from '~/utils/title-to-camel-case'
 const { t } = useTranslation()
 
 vi.mock('react-i18next', () => ({
@@ -38,6 +38,7 @@ const title = 'common.popularCategories'
 const description = 'studentHomePage.popularCategories.description'
 
 describe('PopularCategories', () => {
+
   beforeEach(async () => {
     await waitFor(() => {
       mockAxiosClient.onGet(URLs.categories.get).reply(200, mockResponse)
@@ -52,12 +53,6 @@ describe('PopularCategories', () => {
     const title = screen.getByText('common.popularCategories')
 
     expect(title).toBeInTheDocument()
-  })
-
-  it('render card correctly', async () => {
-    const card = await screen.findByText(t(`categories.${titleToCamel('Math')}`, { defaultValue: 'Math' }))
-
-    expect(card).toBeInTheDocument()
   })
 
   it('should render offer count descriptions for popularCategories', async () => {

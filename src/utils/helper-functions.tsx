@@ -184,11 +184,10 @@ export const adjustColumns = <
 export const spliceSx = (
   defaultStyles?: SxProps<Theme>,
   newStyles?: SxProps<Theme>
-) =>
-  ({
-    ...defaultStyles,
-    ...newStyles
-  }) as SxProps
+) => ({
+  ...defaultStyles,
+  ...newStyles
+})
 
 export const studentOrTutor = (userRole: '' | UserRole) =>
   userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
@@ -223,70 +222,6 @@ export const createUrlPath = (
   const paramsString = params ? `/${params.replace(/^\/+/g, '')}` : ''
 
   return `${trimmedUrl}${paramsString}${queryParamsString}`
-}
-
-const getSearchParametersEntries = (
-  searchParameters: Record<
-    string,
-    string | string[] | number | number[] | undefined
-  >
-) => {
-  const searchParametersEntries: [string, string][] = []
-
-  for (const [searchParameterName, searchParameterValue] of Object.entries(
-    searchParameters
-  )) {
-    if (!searchParameterValue) {
-      continue
-    }
-
-    if (Array.isArray(searchParameterValue)) {
-      for (const parameterValue of searchParameterValue) {
-        searchParametersEntries.push([
-          searchParameterName,
-          String(parameterValue)
-        ])
-      }
-    } else {
-      searchParametersEntries.push([
-        searchParameterName,
-        String(searchParameterValue)
-      ])
-    }
-  }
-
-  return searchParametersEntries
-}
-
-export const getFullUrl = ({
-  parameters,
-  pathname,
-  searchParameters
-}: {
-  parameters?: Record<string, string>
-  pathname: string
-  searchParameters?: Record<
-    string,
-    string | string[] | number | number[] | undefined
-  >
-}) => {
-  let resultUrl = pathname
-
-  if (parameters) {
-    for (const [parameterName, parameterValue] of Object.entries(parameters)) {
-      resultUrl = resultUrl.replace(`:${parameterName}`, parameterValue)
-    }
-  }
-
-  if (!searchParameters) {
-    return resultUrl
-  }
-
-  const searchParametersEntries = getSearchParametersEntries(searchParameters)
-
-  const urlSearchParameters = new URLSearchParams(searchParametersEntries)
-
-  return `${resultUrl}?${String(urlSearchParameters)}`
 }
 
 export const ellipsisTextStyle = (linesCount: number) => ({

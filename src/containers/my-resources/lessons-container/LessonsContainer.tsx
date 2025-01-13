@@ -80,7 +80,7 @@ const LessonsContainer = () => {
   )
 
   const deleteLesson = useCallback(
-    (id?: string) => ResourceService.deleteLesson(id || ''),
+    (id?: string) => ResourceService.deleteLesson(id ?? ''),
     []
   )
 

@@ -63,7 +63,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
 
   const handleSelectedChat = () => {
     setSelectedChat(chat)
-    closeDrawer && closeDrawer()
+    closeDrawer?.()
   }
 
   const formattedTime =

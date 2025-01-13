@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '~/redux/store'
 import { sliceNames } from '~/redux/redux.constants'
@@ -49,10 +48,10 @@ const cooperationsSlice = createSlice({
     ) {
       state.sections = (action.payload ?? []).map((section) => ({
         ...section,
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         resources: (section.resources ?? []).map((resource) => ({
           ...resource,
-          resource: { ...resource.resource, id: uuidv4() }
+          resource: { ...resource.resource, id: crypto.randomUUID() }
         }))
       }))
     },
@@ -64,7 +63,7 @@ const cooperationsSlice = createSlice({
       }>
     ) {
       const newSectionData = { ...initialCooperationSectionData }
-      newSectionData.id = uuidv4()
+      newSectionData.id = crypto.randomUUID()
       const newSections = [...state.sections]
       newSections.splice(
         action.payload.index ?? state.sections.length,
@@ -149,10 +148,13 @@ const cooperationsSlice = createSlice({
 
       if (!section) return
 
-      section.resources = action.payload.resources.map((resource) => ({
-        resource,
-        resourceType: resource.resourceType
-      }))
+      section.resources = action.payload.resources.map(
+        ({ availability, ...resource }) => ({
+          resource,
+          resourceType: resource.resourceType,
+          availability
+        })
+      )
     },
 
     updateResource(

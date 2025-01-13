@@ -35,7 +35,8 @@ const attachmentMockData = {
 
 const mockRequestService = vi.fn(() =>
   Promise.resolve({
-    data: { items: responseItemsMock, count: responseItemsMock.length }
+    items: responseItemsMock,
+    count: responseItemsMock.length
   })
 )
 const mockOnAddResources = () => {}
@@ -63,8 +64,8 @@ describe('Tests for AddResources container', () => {
     vi.clearAllMocks()
   })
 
-  it('should display list of all attachments with category', () => {
-    const displayedAttachments = screen.getAllByText(
+  it('should display list of all attachments with category', async () => {
+    const displayedAttachments = await screen.findAllByText(
       attachmentDataMock.category.name
     )
     expect(displayedAttachments.length).toBe(10)

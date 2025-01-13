@@ -1,6 +1,5 @@
 import { FC, SyntheticEvent, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { v4 as uuidv4 } from 'uuid'
 
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -194,7 +193,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
   const handleSubjectAdd = () => {
     const newSubjects = [
       ...data.subjects,
-      { ...professionalSubjectTemplate, _id: uuidv4() }
+      { ...professionalSubjectTemplate, _id: crypto.randomUUID() }
     ]
     handleDataChange({
       subjects: newSubjects

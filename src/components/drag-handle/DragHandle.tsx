@@ -15,7 +15,13 @@ interface DragHandleProps {
 const DragHandle: FC<DragHandleProps> = ({ iconStyles, wrapperStyles }) => {
   const { attributes, listeners, ref } = useSortableItemContext()
   return (
-    <Box ref={ref} sx={wrapperStyles} {...attributes} {...listeners}>
+    <Box
+      data-testid='drag-handle'
+      ref={ref}
+      sx={wrapperStyles}
+      {...attributes}
+      {...listeners}
+    >
       <DragIndicatorIcon sx={{ ...styles.dragIcon, ...iconStyles }} />
     </Box>
   )

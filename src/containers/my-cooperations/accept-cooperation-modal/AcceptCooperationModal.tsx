@@ -1,6 +1,7 @@
 import { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
+import { type QueryObserverResult } from '@tanstack/react-query'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -25,6 +26,7 @@ import {
   ComponentEnum,
   Cooperation,
   ErrorResponse,
+  type ItemsWithCount,
   StatusEnum,
   UpdateCooperationsParams
 } from '~/types'
@@ -36,7 +38,9 @@ import { getErrorKey } from '~/utils/get-error-key'
 
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
-  getCooperations: () => Promise<void>
+  getCooperations: () => Promise<
+    QueryObserverResult<ItemsWithCount<Cooperation>>
+  >
 }
 
 const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({

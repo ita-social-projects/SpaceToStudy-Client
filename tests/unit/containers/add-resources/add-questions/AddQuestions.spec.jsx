@@ -36,7 +36,8 @@ const questionResponseMock = {
 
 const mockRequestService = vi.fn(() =>
   Promise.resolve({
-    data: { items: responseItemsMock, count: responseItemsMock.length }
+    items: responseItemsMock,
+    count: responseItemsMock.length
   })
 )
 
@@ -65,11 +66,11 @@ describe('AddQuestions', () => {
     vi.clearAllMocks()
   })
 
-  it('should render title and question', () => {
-    const title = screen.getByText('myResourcesPage.questions.add')
+  it('should render title and question', async () => {
+    const title = await screen.findByText('myResourcesPage.questions.add')
     expect(title).toBeInTheDocument()
 
-    const questions = screen.getByText('1First Question')
+    const questions = await screen.findByText('1First Question')
     expect(questions).toBeInTheDocument()
   })
 })

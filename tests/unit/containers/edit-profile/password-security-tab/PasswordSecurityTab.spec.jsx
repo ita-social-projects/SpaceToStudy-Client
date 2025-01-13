@@ -2,14 +2,28 @@ import { vi } from 'vitest'
 import {
   screen,
   fireEvent,
-  waitForElementToBeRemoved
+  waitForElementToBeRemoved,
+  within,
+  waitFor
 } from '@testing-library/react'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
 
 const userDataMock = {
   _id: 123456
 }
+
+const mockDispatch = vi.fn()
+
+vi.mock('~/redux/features/snackbarSlice', async () => {
+  const actual = await vi.importActual('~/redux/features/snackbarSlice')
+  return {
+    ...actual,
+    openAlert: vi.fn()
+  }
+})
 
 vi.mock('~/services/auth-service', () => ({
   AuthService: {
@@ -92,5 +106,66 @@ describe('PasswordSecurityTab', () => {
     })
 
     expect(deactivateDescription).not.toBeInTheDocument()
+  })
+  it('should open the modal when clicking the Deactivate account button', async () => {
+    const deactivateAccountButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
+    )
+    fireEvent.click(deactivateAccountButton)
+
+    const modal = screen.getByRole('dialog')
+    const deactivateTitle = within(modal).getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateTitle'
+    )
+    const deactivateDescription = within(modal).getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateDescription'
+    )
+    expect(deactivateTitle).toBeInTheDocument()
+    expect(deactivateDescription).toBeInTheDocument()
+  })
+  it('should render Deactivate and Cancel buttons in the modal', async () => {
+    const deactivateAccountButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
+    )
+    fireEvent.click(deactivateAccountButton)
+  
+    const deactivateButton = screen.getByText('editProfilePage.profile.passwordSecurityTab.deactivateBtn')
+    const cancelButton = screen.getByText('common.cancel')
+  
+    expect(deactivateButton).toBeInTheDocument()
+    expect(cancelButton).toBeInTheDocument()
+  })  
+  it('should close modal on Cancel button click and stays on Password & Security tab', async () => {
+    const deactivateAccountButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
+    )
+    fireEvent.click(deactivateAccountButton)
+  
+    const cancelButton = screen.getByText('common.cancel')
+    fireEvent.click(cancelButton)
+    
+    const tabTitle = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.title'
+    )
+    expect(tabTitle).toBeInTheDocument()
+  })
+  it('should appear success message after clicking the Deactivate button', async () => {
+    const deactivateAccountButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
+    )
+    fireEvent.click(deactivateAccountButton)
+  
+    const deactivateButton = screen.getByText('editProfilePage.profile.passwordSecurityTab.deactivateBtn')
+    expect(deactivateButton).toBeInTheDocument()
+    fireEvent.click(deactivateButton)
+
+    waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: 'offerPage.createOffer.successMessage'
+        })
+      )
+    })
   })
 })

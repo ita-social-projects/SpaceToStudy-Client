@@ -70,7 +70,7 @@ export const useForm = <T extends object>({
 
   const handleInputChange =
     (key: keyof T) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const nameRegex = /[^a-zA-Z\u0400-\u04FF]/g
+      const nameRegex = /[^a-zA-Z\u0400-\u04FF'\- ]/g
 
       let value =
         event.target.type === 'checkbox'

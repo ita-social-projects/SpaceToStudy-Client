@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
 import { FC } from 'react'
+import { type QueryObserverResult } from '@tanstack/react-query'
 
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import AcceptCooperationModal from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperationModal'
@@ -14,14 +15,16 @@ import {
   removeColumnRules
 } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.constants'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
-import { Cooperation, SizeEnum, StatusEnum } from '~/types'
+import { Cooperation, type ItemsWithCount, SizeEnum, StatusEnum } from '~/types'
 import { useNavigate } from 'react-router-dom'
 
 interface CooperationContainerProps {
   items: Cooperation[]
   showTable: boolean
   sort: SortHook
-  getCooperations: () => Promise<void>
+  getCooperations: () => Promise<
+    QueryObserverResult<ItemsWithCount<Cooperation>>
+  >
 }
 
 const CooperationContainer: FC<CooperationContainerProps> = ({

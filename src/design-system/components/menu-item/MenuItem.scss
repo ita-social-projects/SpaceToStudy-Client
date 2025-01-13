@@ -1,0 +1,106 @@
+@use '~scss/utilities' as *;
+
+.#{$prefix}item {
+  background-color: $neutral-0;
+  width: 100%;
+  padding: 16px 8px;
+  display: flex;
+  justify-content: space-between;
+
+  &:disabled {
+    color: $blue-gray-700;
+  }
+
+  &:hover {
+    background-color: $blue-gray-100;
+  }
+
+  &.selected {
+    background-color: $blue-gray-50;
+  }
+
+  &--align-center {
+    justify-content: center;
+  }
+
+  &--align-right {
+    justify-content: flex-end;
+  }
+
+  &--density-1 {
+    height: 48px;
+  }
+
+  &--density-2 {
+    height: 64px;
+    padding-top: 30px;
+  }
+
+  &--density-2 &-title {
+    font-weight: $font-weight-medium;
+  }
+
+  &--density-2 &-additional-info {
+    line-height: $line-height-sm;
+  }
+
+  &--variant-nested {
+    background-color: $neutral-50;
+  }
+
+  &--toggled {
+    background-color: $blue-gray-50;
+  }
+
+  &--default {
+    color: $blue-gray-700;
+  }
+
+  &--color-danger {
+    color: $red-500;
+  }
+
+  &--color-secondary {
+    color: $blue-gray-500;
+  }
+
+  &--disabled {
+    color: $blue-gray-700;
+  }
+
+  &--bottom-border {
+    border-bottom: 1px solid $blue-gray-100;
+  }
+
+  &__graphics {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+  }
+
+  &__text-box {
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    padding-right: 8px;
+  }
+
+  &__additional-info {
+    font-size: $font-size-xs;
+    color: $blue-gray-500;
+    line-height: $line-height-sm;
+  }
+
+  &__main-info-box {
+    display: flex;
+    align-items: center;
+  }
+
+  &__close {
+    font-size: $font-size-sm;
+  }
+}
