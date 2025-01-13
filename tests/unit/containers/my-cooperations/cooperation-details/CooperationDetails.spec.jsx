@@ -22,43 +22,153 @@ const mockState = {
 }
 
 const cooperationMock = {
-  _id: '123456789',
-  price: 100,
-  proficiencyLevel: 'Beginner',
-  status: 'active',
-  needAction: 'tutor',
-  title: 'Cooperation title',
-  initiator: { _id: userId, role: ['tutor'] },
-  receiver: { _id: '123123', role: ['student'] },
+  _id: 'default-id',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
   offer: {
-    title: 'Title',
-    description: 'Description',
-    languages: ['Ukrainian', 'English'],
-    author: {
-      firstName: 'Michael',
-      lastName: 'Scarn',
-      photo: '1701182621626.jpg',
-      professionalSummary: 'Agent'
-    },
     subject: {
-      name: 'Algebra'
+      _id: 'someId',
+      name: 'Default Subject'
     },
+    title: 'Default Offer Title',
     category: {
-      name: 'Mathematics',
+      _id: 'someId',
+      name: 'Default Category',
       appearance: {
-        color: '#1234'
+        icon: 'icon',
+        color: 'red'
+      },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      totalOffers: {
+        student: 1,
+        tutor: 1
       }
     },
-    proficiencyLevel: ['INTERMEDIATE']
+    price: 0,
+    _id: 'default-offer-id',
+    chatId: 'default-chat-id',
+    languages: [LanguagesEnum.English],
+    author: {
+      _id: 'author-id',
+      totalReviews: { student: 10, tutor: 5 },
+      photo: 'https://example.com/photo.jpg',
+      professionalSummary: 'An experienced tutor in math and science.',
+      firstName: 'John',
+      lastName: 'Doe',
+      FAQ: { student: [], tutor: [] },
+      averageRating: { student: 4.8, tutor: 4.9 }
+    },
+    proficiencyLevel: [ProficiencyLevelEnum.Beginner],
+    description: 'Default offer description'
   },
   user: {
-    _id: '123456',
-    firstName: 'Name',
-    lastName: 'Surname',
-    role: 'tutor'
+    firstName: 'Default',
+    lastName: 'User',
+    photo: null,
+    _id: 'default-user-id',
+    role: UserRoleEnum.Student
   },
-  createdAt: '2024-01-12T11:28:34.397Z',
-  updatedAt: '2024-01-12T11:28:34.397Z'
+  initiator: {
+    _id: 'default-initiator-id',
+    role: [],
+    firstName: 'Default',
+    lastName: 'Initiator',
+    email: 'initiator@example.com',
+    mainSubjects: { student: [], tutor: [] },
+    totalReviews: { student: 0, tutor: 0 },
+    averageRating: { student: 0, tutor: 0 },
+    nativeLanguage: null,
+    address: {
+      city: 'Default City',
+      country: 'Default Country'
+    },
+    professionalSummary: '',
+    photo: null,
+    lastLogin: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    FAQ: {
+      student: [],
+      tutor: []
+    },
+    videoLink: {
+      student: '',
+      tutor: ''
+    },
+    professionalBlock: undefined,
+    aboutStudent: undefined,
+    status: {
+      student: UserStatusEnum.Active,
+      tutor: UserStatusEnum.Active
+    },
+    notificationSettings: {
+      isOfferStatusNotification: true,
+      isChatNotification: false,
+      isSimilarOffersNotification: false,
+      isEmailNotification: false
+    },
+    bookmarkedOffers: [],
+    lastSeen: null
+  },
+  initiatorRole: 'student',
+  title: 'Default Cooperation Title',
+  price: 0,
+  proficiencyLevel: ProficiencyLevelEnum.Beginner,
+  chatId: 'default-chat-id',
+  status: StatusEnum.Pending,
+  needAction: UserRoleEnum.Student,
+  receiver: {
+    _id: 'default-receiver-id',
+    role: [],
+    firstName: 'Default',
+    lastName: 'Receiver',
+    email: 'receiver@example.com',
+    mainSubjects: { student: [], tutor: [] },
+    totalReviews: { student: 0, tutor: 0 },
+    averageRating: { student: 0, tutor: 0 },
+    nativeLanguage: null,
+    address: {
+      city: 'Default City',
+      country: 'Default Country'
+    },
+    professionalSummary: '',
+    photo: null,
+    lastLogin: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    FAQ: {
+      student: [],
+      tutor: []
+    },
+    videoLink: {
+      student: '',
+      tutor: ''
+    },
+    professionalBlock: undefined,
+    aboutStudent: undefined,
+    status: {
+      student: UserStatusEnum.Active,
+      tutor: UserStatusEnum.Active
+    },
+    notificationSettings: {
+      isOfferStatusNotification: true,
+      isChatNotification: false,
+      isSimilarOffersNotification: false,
+      isEmailNotification: false
+    },
+    bookmarkedOffers: [],
+    lastSeen: null
+  },
+  receiverRole: 'tutor',
+  sections: [
+    {
+      id: 'default-section-id',
+      title: 'Default Section Title',
+      description: 'Default Section Description',
+      resources: []
+    }
+  ]
 }
 
 vi.mock(
