@@ -43,13 +43,12 @@ export interface FilterQueryHook<T> {
   filterQueryActions: FiltersActions<T>
 }
 
-export interface GetOffersParams
-  extends Partial<FindOffersFilters>,
-    Partial<Omit<RequestParams, 'sort'>> {
-  status?: Offer['status']
-  excludedOfferId?: Offer['_id']
-  languages?: Offer['languages']
-}
+export type GetOffersParams = Partial<FindOffersFilters> &
+  Partial<Omit<RequestParams, 'sort'>> & {
+    status?: Offer['status']
+    excludedOfferId?: Offer['_id']
+    languages?: Offer['languages']
+  }
 
 export interface CreateOrUpdateOfferData
   extends Pick<

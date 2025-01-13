@@ -30,7 +30,11 @@ export const URLs = {
   offers: {
     create: '/offers',
     update: '/offers',
-    get: '/offers'
+    get: '/categories/subjects/offers',
+    getByCategoryAndSubjectId:
+      '/categories/:categoryId/subjects/:subjectId/offers',
+    getByCategoryId: '/categories/:categoryId/subjects/offers',
+    getBySubjectId: '/categories/subjects/:subjectId/offers'
   },
   courses: {
     get: '/courses',

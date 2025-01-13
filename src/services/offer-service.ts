@@ -15,21 +15,35 @@ import {
 import { baseService } from './base-service'
 
 export const OfferService = {
-  getOffers: async (params: GetOffersParams = {}) => {
-    const category = createUrlPath(URLs.categories.get, params?.categoryId)
-    const subject = createUrlPath(URLs.subjects.get, params?.subjectId)
-    const { languages, proficiencyLevel, ...rest } = params
-    const resultUrl = getFullUrl({
-      pathname: `${category}${subject}${URLs.offers.get}`,
-      searchParameters: {
-        languages: Object.assign({}, languages),
-        proficiencyLevel: Object.assign({}, proficiencyLevel),
-        ...rest
-      }
+  getOffers: async (params?: GetOffersParams) => {
+    const categoryId = params?.categoryId
+    const subjectId = params?.subjectId
+    let url = getFullUrl({
+      pathname: URLs.offers.get,
+      searchParameters: params
     })
+    if (categoryId && subjectId) {
+      url = getFullUrl({
+        pathname: URLs.offers.getByCategoryAndSubjectId,
+        parameters: { categoryId, subjectId },
+        searchParameters: params
+      })
+    } else if (categoryId) {
+      url = getFullUrl({
+        pathname: URLs.offers.getByCategoryId,
+        parameters: { categoryId },
+        searchParameters: params
+      })
+    } else if (subjectId) {
+      url = getFullUrl({
+        pathname: URLs.offers.getBySubjectId,
+        parameters: { subjectId },
+        searchParameters: params
+      })
+    }
     return baseService.request<ItemsWithCount<Offer>>({
       method: 'GET',
-      url: resultUrl
+      url
     })
   },
 
