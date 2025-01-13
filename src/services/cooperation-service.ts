@@ -30,16 +30,12 @@ export const cooperationService = {
       data
     ),
   getCooperationById: async (id: string) => {
-    console.log(id)
-
     const url = getFullUrl({
       pathname: URLs.cooperations.getById,
       parameters: {
         id
       }
     })
-
-    console.log(url)
 
     return await baseService.request<Cooperation>({
       method: 'GET',

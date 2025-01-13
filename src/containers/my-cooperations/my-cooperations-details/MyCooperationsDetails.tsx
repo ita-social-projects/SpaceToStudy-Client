@@ -54,10 +54,8 @@ const MyCooperationsDetails = () => {
 
   const { data, isLoading } = useQuery({
     queryFn: getDetails,
-    queryKey: ['cooperationId', id]
+    queryKey: ['cooperationDetails', id]
   })
-
-  console.log(data)
 
   const handleCooperationStatusChange = (
     params: UpdateCooperationStatusParams

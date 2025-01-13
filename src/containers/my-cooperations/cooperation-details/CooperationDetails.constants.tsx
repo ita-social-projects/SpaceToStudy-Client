@@ -11,8 +11,8 @@ import {
   ProficiencyLevelEnum,
   StatusEnum,
   UserRoleEnum,
-  Faq,
-  DataByRole
+  LanguagesEnum,
+  UserStatusEnum
 } from '~/types'
 
 export type MyCooperationsTabsData = {
@@ -38,110 +38,152 @@ export const tabsData: MyCooperationsTabsData = {
   }
 }
 
-/*
-    | 'subject'
-    | 'title'
-    | 'category'
-    | 'price'
-    | '_id'
-    | 'chatId'
-    | 'languages'
-    | 'author'
-    | 'proficiencyLevel'
-    | 'description'
-*/
-
 export const defaultResponse: Cooperation = {
+  _id: 'default-id',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
   offer: {
-    description: '',
-    chatId: '',
-    price: 0,
-    title: '',
-    category: {
-      _id: '',
-      name: '',
-      appearance: {
-        icon: '',
-        color: ''
-      },
-      totalOffers: {
-        [UserRoleEnum.Student]: 0,
-        [UserRoleEnum.Tutor]: 0
-      },
-      createdAt: '',
-      updatedAt: ''
-    },
     subject: {
-      _id: '',
-      name: ''
+      _id: 'someId',
+      name: 'Default Subject'
     },
-    _id: '',
-    languages: [], // Default to an empty array
+    title: 'Default Offer Title',
+    category: {
+      _id: 'someId',
+      name: 'Default Category',
+      appearance: {
+        icon: 'icon',
+        color: 'red'
+      },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      totalOffers: {
+        student: 1,
+        tutor: 1
+      }
+    },
+    price: 0,
+    _id: 'default-offer-id',
+    chatId: 'default-chat-id',
+    languages: [LanguagesEnum.English],
     author: {
-      _id: '',
-      firstName: '',
-      lastName: '',
-      photo: null,
-      FAQ: DataByRole<Faq[]>
-    }
+      _id: 'author-id',
+      totalReviews: { student: 10, tutor: 5 },
+      photo: 'https://example.com/photo.jpg',
+      professionalSummary: 'An experienced tutor in math and science.',
+      firstName: 'John',
+      lastName: 'Doe',
+      FAQ: { student: [], tutor: [] },
+      averageRating: { student: 4.8, tutor: 4.9 }
+    },
+    proficiencyLevel: [ProficiencyLevelEnum.Beginner],
+    description: 'Default offer description'
   },
   user: {
-    _id: '',
-    firstName: '',
-    lastName: '',
-    role: UserRoleEnum.Tutor,
-    photo: null
+    firstName: 'Default',
+    lastName: 'User',
+    photo: null,
+    _id: 'default-user-id',
+    role: UserRoleEnum.Student
   },
-  title: '',
-  price: 0,
-  proficiencyLevel: ProficiencyLevelEnum.Beginner,
-  chatId: '',
-  status: StatusEnum.Active,
-  needAction: UserRoleEnum.Tutor,
-  sections: [],
-  createdAt: '',
-  updatedAt: '',
-  _id: '',
   initiator: {
-    _id: '',
-    firstName: '',
-    lastName: '',
-    email: '',
+    _id: 'default-initiator-id',
+    role: [],
+    firstName: 'Default',
+    lastName: 'Initiator',
+    email: 'initiator@example.com',
+    mainSubjects: { student: [], tutor: [] },
+    totalReviews: { student: 0, tutor: 0 },
+    averageRating: { student: 0, tutor: 0 },
     nativeLanguage: null,
     address: {
-      city: '',
-      country: ''
+      city: 'Default City',
+      country: 'Default Country'
+    },
+    professionalSummary: '',
+    photo: null,
+    lastLogin: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    FAQ: {
+      student: [],
+      tutor: []
+    },
+    videoLink: {
+      student: '',
+      tutor: ''
+    },
+    professionalBlock: undefined,
+    aboutStudent: undefined,
+    status: {
+      student: UserStatusEnum.Active,
+      tutor: UserStatusEnum.Active
     },
     notificationSettings: {
-      email: true,
-      push: true
+      isOfferStatusNotification: true,
+      isChatNotification: false,
+      isSimilarOffersNotification: false,
+      isEmailNotification: false
     },
     bookmarkedOffers: [],
-    lastLogin: '',
-    createdAt: '',
-    updatedAt: ''
+    lastSeen: null
   },
   initiatorRole: 'student',
+  title: 'Default Cooperation Title',
+  price: 0,
+  proficiencyLevel: ProficiencyLevelEnum.Beginner,
+  chatId: 'default-chat-id',
+  status: StatusEnum.Pending,
+  needAction: UserRoleEnum.Student,
   receiver: {
-    _id: '',
-    firstName: '',
-    lastName: '',
-    email: '',
+    _id: 'default-receiver-id',
+    role: [],
+    firstName: 'Default',
+    lastName: 'Receiver',
+    email: 'receiver@example.com',
+    mainSubjects: { student: [], tutor: [] },
+    totalReviews: { student: 0, tutor: 0 },
+    averageRating: { student: 0, tutor: 0 },
     nativeLanguage: null,
     address: {
-      city: '',
-      country: '',
-      street: '',
-      postalCode: ''
+      city: 'Default City',
+      country: 'Default Country'
+    },
+    professionalSummary: '',
+    photo: null,
+    lastLogin: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    FAQ: {
+      student: [],
+      tutor: []
+    },
+    videoLink: {
+      student: '',
+      tutor: ''
+    },
+    professionalBlock: undefined,
+    aboutStudent: undefined,
+    status: {
+      student: UserStatusEnum.Active,
+      tutor: UserStatusEnum.Active
     },
     notificationSettings: {
-      email: true,
-      push: true
+      isOfferStatusNotification: true,
+      isChatNotification: false,
+      isSimilarOffersNotification: false,
+      isEmailNotification: false
     },
     bookmarkedOffers: [],
-    lastLogin: '',
-    createdAt: '',
-    updatedAt: ''
+    lastSeen: null
   },
-  receiverRole: 'tutor'
+  receiverRole: 'tutor',
+  sections: [
+    {
+      id: 'default-section-id',
+      title: 'Default Section Title',
+      description: 'Default Section Description',
+      resources: []
+    }
+  ]
 }
