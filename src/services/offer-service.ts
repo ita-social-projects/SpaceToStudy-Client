@@ -15,30 +15,29 @@ import {
 import { baseService } from './base-service'
 
 export const OfferService = {
-  getOffers: async (params?: GetOffersParams) => {
-    const categoryId = params?.categoryId
-    const subjectId = params?.subjectId
+  getOffers: async (params: GetOffersParams) => {
+    const { categoryId, subjectId, ...restParams } = params
     let url = getFullUrl({
       pathname: URLs.offers.get,
-      searchParameters: params
+      searchParameters: restParams
     })
     if (categoryId && subjectId) {
       url = getFullUrl({
         pathname: URLs.offers.getByCategoryAndSubjectId,
         parameters: { categoryId, subjectId },
-        searchParameters: params
+        searchParameters: restParams
       })
     } else if (categoryId) {
       url = getFullUrl({
         pathname: URLs.offers.getByCategoryId,
         parameters: { categoryId },
-        searchParameters: params
+        searchParameters: restParams
       })
     } else if (subjectId) {
       url = getFullUrl({
         pathname: URLs.offers.getBySubjectId,
         parameters: { subjectId },
-        searchParameters: params
+        searchParameters: restParams
       })
     }
     return baseService.request<ItemsWithCount<Offer>>({

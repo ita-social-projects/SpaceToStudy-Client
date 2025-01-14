@@ -17,7 +17,9 @@ describe('offerService getOffers function tests', () => {
     mockAxiosClient
       .onGet(
         new RegExp(
-          `^${URLs.offers.getByCategoryAndSubjectId.replace(':categoryId', categoryId).replace(':subjectId', subjectId)}`
+          URLs.offers.getByCategoryAndSubjectId
+            .replace(':categoryId', categoryId)
+            .replace(':subjectId', subjectId)
         )
       )
       .reply(200, mockOffer)
@@ -32,7 +34,7 @@ describe('offerService getOffers function tests', () => {
     mockAxiosClient
       .onGet(
         new RegExp(
-          `^${URLs.offers.getByCategoryId.replace(':categoryId', categoryId)}`
+          URLs.offers.getByCategoryId.replace(':categoryId', categoryId)
         )
       )
       .reply(200, mockOffer)
@@ -45,9 +47,7 @@ describe('offerService getOffers function tests', () => {
   it('should find offer by subjectId', async () => {
     mockAxiosClient
       .onGet(
-        new RegExp(
-          `^${URLs.offers.getBySubjectId.replace(':subjectId', subjectId)}`
-        )
+        new RegExp(URLs.offers.getBySubjectId.replace(':subjectId', subjectId))
       )
       .reply(200, mockOffer)
     const result = await OfferService.getOffers({
@@ -57,10 +57,8 @@ describe('offerService getOffers function tests', () => {
   })
 
   it('should find all offers', async () => {
-    mockAxiosClient
-      .onGet(new RegExp(`^${URLs.offers.get}`))
-      .reply(200, offersMock)
-    const result = await OfferService.getOffers()
+    mockAxiosClient.onGet(new RegExp(URLs.offers.get)).reply(200, offersMock)
+    const result = await OfferService.getOffers({})
     expect(result).toEqual(offersMock)
   })
 })

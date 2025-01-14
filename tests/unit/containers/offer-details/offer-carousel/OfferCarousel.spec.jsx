@@ -23,7 +23,10 @@ describe('OfferCarousel with data', () => {
     mockAxiosClient
       .onGet(
         new RegExp(
-          `^${URLs.offers.getBySubjectId.replace(':subjectId', mockOffer.subject._id)}`
+          URLs.offers.getBySubjectId.replace(
+            ':subjectId',
+            mockOffer.subject._id
+          )
         )
       )
       .reply(200, { items: [{ ...mockOffer, _id: 'id2' }], count: 1 })
@@ -66,28 +69,14 @@ describe('OfferCarousel without data', () => {
     mockAxiosClient
       .onGet(
         new RegExp(
-          `^${URLs.offers.getBySubjectId.replace(':subjectId', mockOffer.subject._id)}`
+          URLs.offers.getBySubjectId.replace(
+            ':subjectId',
+            mockOffer.subject._id
+          )
         )
       )
       .reply(200, { items: [], count: 0 })
     useAxios.mockImplementation(() => emptyData)
-
-    global.ResizeObserver = vi.fn().mockImplementation(() => ({
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-      disconnect: vi.fn()
-    }))
-
-    window.matchMedia = vi.fn().mockImplementation((query) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn()
-    }))
   })
 
   beforeEach(() => {

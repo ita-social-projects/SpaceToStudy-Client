@@ -33,6 +33,7 @@ import { useDrawer } from '~/hooks/use-drawer'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
+import useQuery from '~/hooks/use-query'
 import { getOpositeRole } from '~/utils/helper-functions'
 
 import {
@@ -50,7 +51,6 @@ import {
 } from '~/pages/find-offers/FindOffers.constants'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
 import { fetchUserById } from '~/redux/features/editProfileSlice'
-import useQuery from '~/hooks/use-query'
 
 const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)

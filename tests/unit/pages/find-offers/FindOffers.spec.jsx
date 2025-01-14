@@ -48,9 +48,7 @@ describe('FindOffers component with data', () => {
 
   beforeEach(async () => {
     window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
-    mockAxiosClient
-      .onGet(new RegExp(`^${URLs.offers.get}`))
-      .reply(200, offersMock)
+    mockAxiosClient.onGet(new RegExp(URLs.offers.get)).reply(200, offersMock)
     await waitFor(() => {
       useFilterQuery.mockReturnValue(filterQueryMock)
       useBreakpoints.mockImplementation(() => desktopData)
@@ -106,7 +104,7 @@ describe('FindOffers component without data', () => {
 
   beforeEach(async () => {
     mockAxiosClient
-      .onGet(new RegExp(`^${URLs.offers.get}`))
+      .onGet(new RegExp(URLs.offers.get))
       .reply(200, { items: [], count: 0 })
     await waitFor(() => {
       useFilterQuery.mockReturnValue(filterQueryMock)
@@ -121,7 +119,7 @@ describe('FindOffers component without data', () => {
     vi.clearAllMocks()
   })
 
-  it('should render FindOffers component without data', async () => {
+  it('should render FindOffers component without data', () => {
     expect(
       screen.getByText('findOffers.offerRequestBlock.title.tutor')
     ).toBeInTheDocument()
@@ -142,9 +140,7 @@ describe('FindOffers component with no scroll', () => {
   }
 
   beforeEach(async () => {
-    mockAxiosClient
-      .onGet(new RegExp(`^${URLs.offers.get}`))
-      .reply(200, offersMock)
+    mockAxiosClient.onGet(new RegExp(URLs.offers.get)).reply(200, offersMock)
     await waitFor(() => {
       useFilterQuery.mockReturnValue(filterQueryMock)
       useBreakpoints.mockImplementation(() => mobileData)
