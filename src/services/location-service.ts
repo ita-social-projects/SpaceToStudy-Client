@@ -1,6 +1,6 @@
 import { URLs } from '~/constants/request'
 import { type Country } from '~/types'
-import { getFullUrl } from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
 import { baseService } from './base-service'
 
 export const locationService = {
