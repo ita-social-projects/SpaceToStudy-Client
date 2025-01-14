@@ -3,7 +3,7 @@ import { TypographyVariantEnum } from '~/types'
 export const styles = {
   root: { p: '32px', width: '481px' },
   title: { typography: TypographyVariantEnum.H6 },
-  form: { pt: '24px' },
+  form: { pt: '24px', mb: '24px' },
   textField: {
     '.MuiInputLabel-asterisk': {
       display: 'none'
