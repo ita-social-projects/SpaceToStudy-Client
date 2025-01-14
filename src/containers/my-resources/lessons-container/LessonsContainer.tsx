@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
@@ -8,7 +8,7 @@ import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyRes
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import usePagination from '~/hooks/table/use-pagination'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
@@ -19,13 +19,7 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
-import {
-  ItemsWithCount,
-  GetResourcesParams,
-  Lesson,
-  ErrorResponse,
-  ResourcesTabsEnum
-} from '~/types'
+import { Lesson, ErrorResponse, ResourcesTabsEnum } from '~/types'
 import {
   adjustColumns,
   createUrlPath,
@@ -69,7 +63,7 @@ const LessonsContainer = () => {
 
   const getMyLessons = useCallback(
     () =>
-      ResourceService.getUsersLessons({
+      ResourceService.getUsersLessonsQuery({
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
@@ -84,14 +78,29 @@ const LessonsContainer = () => {
     []
   )
 
-  const { response, loading, fetchData } = useAxios<
-    ItemsWithCount<Lesson>,
-    GetResourcesParams
-  >({
-    service: getMyLessons,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError
+  const {
+    data: response,
+    isLoading,
+    isError,
+    error,
+    refetch: originalFetchData
+  } = useQuery({
+    queryFn: getMyLessons,
+    queryKey: ['lessonData'],
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
   })
+
+  const fetchData = async (): Promise<void> => {
+    await originalFetchData()
+  }
+
+  useEffect(() => {
+    if (isError && error) {
+      onResponseError()
+    }
+  }, [isError, error, onResponseError])
 
   const onEdit = (id: string) => {
     const resource = response.items.find((item) => item._id === id)
@@ -131,7 +140,7 @@ const LessonsContainer = () => {
         setItems={setSelectedItems}
         sortOptions={sortOptions}
       />
-      {loading ? (
+      {isLoading ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Lesson> {...props} />
