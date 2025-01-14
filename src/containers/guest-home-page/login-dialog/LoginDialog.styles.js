@@ -7,6 +7,7 @@ const style = {
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
+    padding: { xs: '0px', sm: '70px 0px' },
     gap: { lg: '122px', md: '40px' },
     maxHeight: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' }
   },
@@ -24,11 +25,10 @@ const style = {
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
-    height: '551px',
     boxSizing: 'border-box',
     borderTop: { xs: '1px solid', sm: 'none' },
     borderColor: { xs: 'primary.100' },
-    pt: { xs: '24px', sm: '64px' },
+    pt: { xs: '24px', sm: '0px' },
     pl: { xs: '8px', sm: '96px', md: '16px' }
   },
   title: {

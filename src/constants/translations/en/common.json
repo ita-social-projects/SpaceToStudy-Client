@@ -73,7 +73,7 @@
   },
   "errorMessages": {
     "emailValid": "Email should follow format: “email@domain.com”",
-    "passwordLength": "Password cannot be shorter than 8 and longer than 25 characters",
+    "passwordLength": "Password must be 8-25 characters long",
     "passwordAlphabeticAndNumeric": "Password must contain at least one alphabetic and one numeric character",
     "passwordValidSymbols": "Password must contain only alphabetic, numeric and special characters",
     "emptyField": "This field cannot be empty",

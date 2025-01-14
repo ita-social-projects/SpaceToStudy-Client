@@ -2,7 +2,7 @@ export const styles = {
   form: {
     display: 'flex',
     flexDirection: 'column',
-    width: { sm: '340px' }
+    minWidth: { sm: '340px' }
   },
   loginOptionsContainer: {
     display: 'flex',

@@ -75,7 +75,7 @@
   },
   "errorMessages": {
     "emailValid": "Формат ел.пошти: “email@domain.com”",
-    "passwordLength": "Пароль не може бути коротшим за 8 і довшим за 25 символів",
+    "passwordLength": "Пароль має бути від 8 до 25 символів",
     "passwordAlphabeticAndNumeric": "Пароль повинен містити принаймні одну літеру та одну цифру",
     "passwordValidSymbols": "Пароль повинен містити лише букви, цифри та спеціальні символи",
     "emptyField": "Це поле не може бути порожнім",
