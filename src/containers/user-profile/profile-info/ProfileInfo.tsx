@@ -17,7 +17,7 @@ import ProfileContainerMobile from '~/containers/user-profile/profile-info/Profi
 import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
 
 import { authRoutes } from '~/router/constants/authRoutes'
-import { snackbarVariants } from '~/constants'
+import { defaultResponses, snackbarVariants } from '~/constants'
 
 import { UserRoleEnum, UserResponse,
   SizeEnum,
@@ -138,12 +138,12 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
     loading: isChatsLoading,
     fetchData
   } = useAxios<ChatResponse[]>({
-    service: () => chatService.getChats(),
-    defaultResponse: []
+    service: chatService.getChats,
+    defaultResponse: defaultResponses.array
   })
 
   const onSendMessageClick = () => {
-    const existedChat = listOfChats.find((chat: ChatResponse) => {
+    const existedChat = listOfChats.find((chat) => {
       return chat.members.some((member) => member.user._id == userData._id)
     })
 
