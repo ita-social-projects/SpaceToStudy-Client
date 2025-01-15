@@ -32,8 +32,7 @@ import {
   GetResourcesCategoriesParams,
   ErrorResponse,
   ResourcesTabsEnum,
-  CreateCategoriesParams,
-  CategoryNameInterface
+  CreateCategoriesParams
 } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -41,6 +40,8 @@ import { styles } from '~/containers/my-resources/categories-container/Categorie
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import useMutation from '~/hooks/use-mutation'
+import useQuery from '~/hooks/use-query'
 
 const CategoriesContainer = () => {
   const { t } = useTranslation()
@@ -118,12 +119,13 @@ const CategoriesContainer = () => {
     onResponseError
   })
 
-  const { response: allCategoriesNames, fetchData: fetchAllCategoriesNames } =
-    useAxios<CategoryNameInterface[]>({
-      service: ResourceService.getResourcesCategoriesNames,
-      defaultResponse: [],
-      onResponseError,
-      fetchOnMount: true
+  const { data: allCategoriesNames, refetch: fetchAllCategoriesNames } =
+    useQuery({
+      queryKey: ['categoriesNames'],
+      queryFn: ResourceService.getResourcesCategoriesName,
+      options: {
+        initialData: []
+      }
     })
 
   const onCategoryUpdate = useCallback(async () => {
@@ -138,14 +140,22 @@ const CategoriesContainer = () => {
     [fetchData, fetchAllCategoriesNames, onResponse]
   )
 
-  const { fetchData: handleCreateCategory } = useAxios({
-    service: createCategory,
-    defaultResponse: null,
-    fetchOnMount: false,
-    onResponseError,
-    onResponse: onCategoryCreate
+  const { mutate: handleCreateCategory } = useMutation({
+    mutationFn: (params?: CreateCategoriesParams) => createCategory(params),
+    onSuccess: async (response) => {
+      await onCategoryCreate(response)
+    },
+    onError: (error: ErrorResponse) => {
+      onResponseError(error)
+    }
   })
-
+  const handleCreateCategoryPromise = async (params?: CreateCategoriesParams) =>
+    new Promise<void>((resolve, reject) => {
+      handleCreateCategory(params, {
+        onSuccess: () => resolve(),
+        onError: (error) => reject(error)
+      })
+    })
   const existingCategoriesNames = allCategoriesNames?.map((item) => item.name)
 
   const onAdd = () => {
@@ -153,7 +163,7 @@ const CategoriesContainer = () => {
       component: (
         <AddCategoriesModal
           closeModal={closeModal}
-          createCategories={handleCreateCategory}
+          createCategories={handleCreateCategoryPromise}
           existingCategoriesNames={existingCategoriesNames}
         />
       )

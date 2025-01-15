@@ -166,10 +166,6 @@ export const ResourceService = {
   },
   createResourceCategory: async (
     params?: CreateCategoriesParams
-  ): Promise<AxiosResponse<Categories>> =>
-    await axiosClient.post(URLs.resources.resourcesCategories.post, params),
-  createCategory: async (
-    params?: CreateCategoriesParams
   ): Promise<Categories> => {
     return await baseService.request<Categories>({
       method: 'POST',
