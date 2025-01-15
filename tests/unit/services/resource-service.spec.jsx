@@ -26,7 +26,7 @@ describe('resourseService tests', () => {
   })
 
   it('should fetch a quiz by ID', async () => {
-    const quizId = '6641388f36ebdb0432a3a2e5';
+    const quizId = '6641388f36ebdb0432a3a2e5'
     const mockQuizData = {
       _id: quizId,
       title: 'Sample Quiz',
@@ -39,21 +39,21 @@ describe('resourseService tests', () => {
         shuffle: false,
         pointValues: true,
         scoredResponses: true,
-        correctAnswers: true,
+        correctAnswers: true
       },
       createdAt: '2024-01-01T00:00:00.000Z',
-      updatedAt: '2024-01-01T00:00:00.000Z',
-    };
+      updatedAt: '2024-01-01T00:00:00.000Z'
+    }
 
     mockAxiosClient
       .onGet(URLs.quizzes.getById.replace(':id', quizId))
-      .reply(200, mockQuizData);
+      .reply(200, mockQuizData)
 
-    const result = await ResourceService.getQuizQuery(quizId);
+    const result = await ResourceService.getQuizQuery(quizId)
 
     expect(mockAxiosClient.history.get[0].url).toBe(
       URLs.quizzes.getById.replace(':id', quizId)
-    );
-    expect(result).toEqual(mockQuizData);
+    )
+    expect(result).toEqual(mockQuizData)
   })
 })
