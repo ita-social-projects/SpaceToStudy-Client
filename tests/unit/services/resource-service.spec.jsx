@@ -3,6 +3,11 @@ import { mockAxiosClient } from '~tests/test-utils'
 import { ResourceService } from '~/services/resource-service'
 
 describe('resourseService tests', () => {
+  afterEach(() => {
+    mockAxiosClient.resetHistory() 
+    mockAxiosClient.reset() 
+  })
+
   it('should edit a lesson', async () => {
     const lessonId = '6255bc080a75adf9223df444'
     const lessonData = {
