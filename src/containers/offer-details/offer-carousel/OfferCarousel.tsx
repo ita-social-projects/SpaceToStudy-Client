@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
+import useQuery from '~/hooks/use-query'
 import AppCard from '~/components/app-card/AppCard'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppCarousel from '~/components/app-carousel/AppCarousel'
@@ -22,7 +23,6 @@ import { snackbarVariants as variants } from '~/constants'
 import { getErrorKey } from '~/utils/get-error-key'
 import { useToggleBookmark } from '~/utils/toggle-bookmark'
 import { useCallback } from 'react'
-import useQuery from '~/hooks/use-query'
 
 interface OfferCarouselProps {
   offer: Offer
