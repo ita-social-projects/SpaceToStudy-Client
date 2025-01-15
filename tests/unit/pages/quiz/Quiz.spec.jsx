@@ -50,6 +50,10 @@ describe('Quiz Page', () => {
     })
   })
 
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('should render Quiz page with title and description', async () => {
     const title = await screen.findByText('JS Quiz')
     const description = await screen.findByText('Js')
