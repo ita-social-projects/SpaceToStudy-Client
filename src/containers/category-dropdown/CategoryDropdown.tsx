@@ -15,7 +15,6 @@ import {
   Categories,
   CategoryNameInterface,
   ComponentEnum,
-  CreateCategoriesParams,
   ErrorResponse
 } from '~/types'
 import { styles } from '~/containers/category-dropdown/CategoryDropdown.styles'
@@ -71,25 +70,12 @@ const CategoryDropdown = ({
       component: (
         <AddCategoriesModal
           closeModal={closeModal}
-          createCategories={handleCreateCategoryPromise}
+          createCategories={handleCreateCategory}
           existingCategoriesNames={allCategoriesNames.map((item) => item.name)}
         />
       )
     })
   }
-
-  const handleCreateCategoryPromise = async (params?: CreateCategoriesParams) =>
-    new Promise<void>((resolve, reject) => {
-      handleCreateCategory(params, {
-        onSuccess: () => resolve(),
-        onError: (error) => reject(error)
-      })
-    })
-  const createCategory = useCallback(
-    async (params?: CreateCategoriesParams): Promise<Categories> =>
-      await ResourceService.createResourceCategory(params),
-    []
-  )
 
   const onResponseCategory = useCallback(
     async (response: Categories | null) => {
@@ -113,7 +99,7 @@ const CategoryDropdown = ({
   )
 
   const { mutate: handleCreateCategory } = useMutation({
-    mutationFn: (params?: CreateCategoriesParams) => createCategory(params),
+    mutationFn: ResourceService.createResourceCategory,
     onSuccess: async (response) => {
       await onResponseCategory(response)
     },
