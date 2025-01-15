@@ -24,7 +24,7 @@ import { defaultResponses } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 
-import { ComponentEnum, QuizViewEnum, Quiz } from '~/types'
+import { ComponentEnum, QuizViewEnum } from '~/types'
 
 const QuizPage = () => {
   const { quizId } = useParams()
@@ -55,15 +55,12 @@ const QuizPage = () => {
     handleNonInputValueChange(key, value)
 
   const {
-    data: response,
+    data: quiz,
     isLoading,
     isError
-  } = useQuery<Quiz, string>({
+  } = useQuery({
     queryKey: ['quiz', quizId],
-    queryFn: getQuiz,
-    options: {
-      initialData: defaultQuizResponse
-    }
+    queryFn: getQuiz
   })
 
   useEffect(() => {
@@ -72,14 +69,16 @@ const QuizPage = () => {
     }
   }, [isError, responseError])
 
-  if (isLoading) return <Loader pageLoad />
+  if (isLoading || !quiz) {
+    return <Loader pageLoad />
+  }
 
   const {
     settings: { pointValues, scoredResponses, correctAnswers, view },
     description,
     title,
     items
-  } = response
+  } = quiz
 
   const handleFinish = () => setIsFinished(true)
 
