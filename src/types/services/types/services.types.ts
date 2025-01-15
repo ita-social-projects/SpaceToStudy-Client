@@ -18,9 +18,12 @@ export type ServiceFunction<Response, Params = undefined> = (
   params: Params extends undefined ? undefined : Params
 ) => Promise<AxiosResponse<Response>>
 
-export type ServiceFunctionNew<Response, Params = undefined> = (
-  params: Params extends undefined ? undefined : Params
-) => Promise<Response>
+export type ServiceFunctionNew<
+  Response,
+  Params = undefined
+> = Params extends undefined
+  ? () => Promise<Response>
+  : (params: Params) => Promise<Response>
 
 export interface AxiosResponseError extends AxiosError<ErrorResponse> {
   config: InternalAxiosRequestConfig & { _isRetry: boolean }

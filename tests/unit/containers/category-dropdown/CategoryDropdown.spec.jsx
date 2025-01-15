@@ -1,7 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
-import { URLs } from '~/constants/request'
-import { baseService } from '~/services/base-service'
+import { renderWithProviders } from '~tests/test-utils'
 import useQuery from '~/hooks/use-query'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 

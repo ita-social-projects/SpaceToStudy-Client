@@ -10,25 +10,24 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import CircleIcon from '@mui/icons-material/Circle'
 
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useMenu from '~/hooks/use-menu'
 import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
 import AppMenuButton from '~/components/app-menu-button/AppMenuButton'
 import AppSelectButton from '~/components/app-select-button/AppSelectButton'
 
-import { defaultResponses } from '~/constants'
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/app-button-menu/AppButtonMenu.styles'
 import {
   ButtonVariantEnum,
   CategoryNameInterface,
-  ServiceFunction
+  ServiceFunctionNew
 } from '~/types'
 
 interface AppButtonMenuProps<T> extends Omit<MenuProps, 'open'> {
   title: string
-  service: ServiceFunction<T[]>
+  service: ServiceFunctionNew<T[]>
   selectedItems: string[]
   setSelectedItems: (value: string[]) => void
   position?: PopoverOrigin['horizontal']
@@ -65,9 +64,12 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
     setSelectedItems([])
   }
 
-  const { loading, response } = useAxios<T[]>({
-    service,
-    defaultResponse: defaultResponses.array
+  const { data: response, isLoading: loading } = useQuery({
+    queryKey: [title],
+    queryFn: () => service(),
+    options: {
+      initialData: []
+    }
   })
 
   const filteredItems = useMemo(() => {
