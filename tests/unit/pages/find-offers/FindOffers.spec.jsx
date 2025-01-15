@@ -49,7 +49,7 @@ describe('FindOffers component with data', () => {
   beforeEach(async () => {
     window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
     mockAxiosClient.onGet(new RegExp(URLs.offers.get)).reply(200, offersMock)
-    await waitFor(() => {
+    waitFor(() => {
       useFilterQuery.mockReturnValue(filterQueryMock)
       useBreakpoints.mockImplementation(() => desktopData)
       renderWithProviders(<FindOffers />, {
@@ -102,16 +102,15 @@ describe('FindOffers component without data', () => {
     isTablet: false
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient
       .onGet(new RegExp(URLs.offers.get))
       .reply(200, { items: [], count: 0 })
-    await waitFor(() => {
-      useFilterQuery.mockReturnValue(filterQueryMock)
-      useBreakpoints.mockImplementation(() => desktopData)
-      renderWithProviders(<FindOffers />, {
-        preloadedState
-      })
+
+    useFilterQuery.mockReturnValue(filterQueryMock)
+    useBreakpoints.mockImplementation(() => desktopData)
+    renderWithProviders(<FindOffers />, {
+      preloadedState
     })
   })
 
@@ -119,7 +118,7 @@ describe('FindOffers component without data', () => {
     vi.clearAllMocks()
   })
 
-  it('should render FindOffers component without data', () => {
+  it('should render FindOffers component without data', async () => {
     expect(
       screen.getByText('findOffers.offerRequestBlock.title.tutor')
     ).toBeInTheDocument()
@@ -127,7 +126,7 @@ describe('FindOffers component without data', () => {
       screen.getByText('findOffers.offerRequestBlock.description.tutor')
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/findOffers\.notFound\.description/i)
+      await screen.findByText('findOffers.notFound.description')
     ).toBeInTheDocument()
   })
 })
@@ -139,14 +138,12 @@ describe('FindOffers component with no scroll', () => {
     isTablet: false
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient.onGet(new RegExp(URLs.offers.get)).reply(200, offersMock)
-    await waitFor(() => {
-      useFilterQuery.mockReturnValue(filterQueryMock)
-      useBreakpoints.mockImplementation(() => mobileData)
-      renderWithProviders(<FindOffers />, {
-        preloadedState
-      })
+    useFilterQuery.mockReturnValue(filterQueryMock)
+    useBreakpoints.mockImplementation(() => mobileData)
+    renderWithProviders(<FindOffers />, {
+      preloadedState
     })
   })
 
@@ -155,7 +152,7 @@ describe('FindOffers component with no scroll', () => {
   })
 
   it('should render FindOffers component with data', async () => {
-    const existingName = screen.getByText('Anastasiia Mashchenko')
+    const existingName = await screen.findByText('Anastasiia Mashchenko')
     expect(existingName).toBeInTheDocument()
   })
 })

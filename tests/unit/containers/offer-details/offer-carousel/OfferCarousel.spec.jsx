@@ -87,7 +87,7 @@ describe('OfferCarousel without data', () => {
     vi.clearAllMocks()
   })
 
-  it('should not render OfferCarousel', async () => {
+  it('should not render OfferCarousel when no suggested offers', async () => {
     await waitFor(() => {
       const title = screen.queryByText('findOffers.otherOffers.title')
       expect(title).not.toBeInTheDocument()

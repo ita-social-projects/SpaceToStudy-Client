@@ -17,10 +17,12 @@ import { baseService } from './base-service'
 export const OfferService = {
   getOffers: async (params: GetOffersParams) => {
     const { categoryId, subjectId, ...restParams } = params
+
     let url = getFullUrl({
       pathname: URLs.offers.get,
       searchParameters: restParams
     })
+
     if (categoryId && subjectId) {
       url = getFullUrl({
         pathname: URLs.offers.getByCategoryAndSubjectId,
@@ -40,6 +42,7 @@ export const OfferService = {
         searchParameters: restParams
       })
     }
+
     return baseService.request<ItemsWithCount<Offer>>({
       method: 'GET',
       url

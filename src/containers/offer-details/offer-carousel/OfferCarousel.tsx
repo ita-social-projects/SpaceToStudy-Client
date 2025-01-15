@@ -8,13 +8,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import AppCard from '~/components/app-card/AppCard'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppCarousel from '~/components/app-carousel/AppCarousel'
-import {
-  Offer,
-  ButtonVariantEnum,
-  StatusEnum,
-  ErrorResponse,
-  ItemsWithCount
-} from '~/types'
+import { Offer, ButtonVariantEnum, StatusEnum, ErrorResponse } from '~/types'
 import { OfferService } from '~/services/offer-service'
 import { defaultResponse } from '~/pages/find-offers/FindOffers.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -53,7 +47,7 @@ const OfferCarousel = ({ offer }: OfferCarouselProps) => {
     })
   }, [offer])
 
-  const { data: response } = useQuery<ItemsWithCount<Offer>>({
+  const { data: response } = useQuery({
     queryKey: ['suggested-offers', offer],
     queryFn: getOffers,
     options: {
