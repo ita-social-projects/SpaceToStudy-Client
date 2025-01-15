@@ -19,6 +19,7 @@ export const URLs = {
   },
   users: {
     get: '/users',
+    getUserById: '/users/:userId',
     update: '/users',
     delete: '/users/delete',
     deactivate: '/users/deactivate',
