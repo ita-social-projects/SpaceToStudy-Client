@@ -145,10 +145,25 @@ export const ResourceService = {
   getResourcesCategoriesNames: (): Promise<
     AxiosResponse<CategoryNameInterface[]>
   > => axiosClient.get(URLs.resources.resourcesCategories.getNames),
+  getResourcesCategoriesName: () => {
+    return baseService.request<CategoryNameInterface[]>({
+      method: 'GET',
+      url: URLs.resources.resourcesCategories.getNames
+    })
+  },
   createResourceCategory: async (
     params?: CreateCategoriesParams
   ): Promise<AxiosResponse<Categories>> =>
     await axiosClient.post(URLs.resources.resourcesCategories.post, params),
+  createCategory: async (
+    params?: CreateCategoriesParams
+  ): Promise<Categories> => {
+    return await baseService.request<Categories>({
+      method: 'POST',
+      url: URLs.resources.resourcesCategories.post,
+      data: params || {}
+    })
+  },
   deleteResourceCategory: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.resourcesCategories.delete, id)
