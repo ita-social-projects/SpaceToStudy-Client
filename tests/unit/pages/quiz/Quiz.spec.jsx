@@ -1,109 +1,211 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { vi } from 'vitest'
+import { screen, fireEvent, act } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import Quiz from '~/pages/quiz/Quiz'
+import useQuery from '~/hooks/use-query'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
-vi.mock('~/hooks/use-query', () => ({
-  default: vi.fn(() => ({
-    data: {
-      _id: '6641388f36ebdb0432a3a2e5',
-      title: 'JS Quiz',
-      items: [
-        {
-          _id: '665e1f1a9946b3dbb292339f',
-          title: 'Functions?',
-          text: 'What is the difference between function expression and function declaration?',
-          answers: [{ isCorrect: true, text: 'Correct answer' }],
-          type: 'multipleChoice'
-        }
-      ],
-      author: '660a8c7da2f78d2ed869b2bf',
-      category: '665799d795ab9dbdd7ad40df',
-      settings: {
-        view: 'Stepper',
-        shuffle: false,
-        pointValues: true,
-        scoredResponses: true,
-        correctAnswers: true
-      },
-      createdAt: '2024-05-12T21:45:51.693Z',
-      updatedAt: '2024-06-07T07:05:33.052Z',
-      availability: { status: 'open', date: null },
-      description: 'Js'
-    },
-    isLoading: false,
-    isError: false
-  }))
-}))
+vi.mock('~/hooks/use-query')
 
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom')
-  return {
-    ...actual,
-    useParams: vi.fn(() => ({ quizId: '123' }))
-  }
+const mockQuiz = {
+  _id: '6641388f36ebdb0432a3a2e5',
+  title: 'JS Quiz',
+  items: [
+    {
+      _id: '665e1f1a9946b3dbb292339f',
+      title: 'Functions?',
+      text: 'What is the difference between function expression and function declaration?',
+      answers: [{ isCorrect: true, text: 'Correct answer' }],
+      type: 'multipleChoice'
+    }
+  ],
+  author: '660a8c7da2f78d2ed869b2bf',
+  category: '665799d795ab9dbdd7ad40df',
+  resourceType: ResourceType.Quiz,
+  settings: {
+    view: 'Stepper',
+    shuffle: false,
+    pointValues: true,
+    scoredResponses: true,
+    correctAnswers: true
+  },
+  createdAt: '2024-05-12T21:45:51.693Z',
+  updatedAt: '2024-06-07T07:05:33.052Z',
+  availability: {
+    status: 'open',
+    date: null
+  },
+  description: 'Js'
+}
+
+const mockQuizEmpty = {
+  _id: '1',
+  title: 'Empty',
+  description: '',
+  items: [],
+  author: { _id: '' },
+  category: null,
+  resourceType: ResourceType.Quiz,
+  isDuplicate: false,
+  settings: {
+    view: 'Scroll',
+    shuffle: false,
+    pointValues: false,
+    scoredResponses: false,
+    correctAnswers: false
+  },
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString()
+}
+
+let mockNavigate
+
+beforeEach(() => {
+  mockNavigate = vi.fn()
+  vi.mock('react-router-dom', async () => {
+    const originalModule = await vi.importActual('react-router-dom')
+    return {
+      ...originalModule,
+      useNavigate: () => mockNavigate
+    }
+  })
+
+  vi.clearAllMocks()
 })
 
-describe('Quiz Page', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(<Quiz />)
+afterEach(() => {
+  vi.resetModules()
+})
+
+describe('QuizPage with useQuery', () => {
+  it('should render loading state', () => {
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: true,
+      isError: false
     })
+
+    renderWithProviders(<Quiz />)
+
+    const loader = screen.getByTestId('loader')
+    expect(loader).toBeInTheDocument()
   })
 
-  afterEach(() => {
-    vi.clearAllMocks()
+  it('should handle error state', () => {
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false,
+      isError: true
+    })
+
+    renderWithProviders(<Quiz />)
+
+    expect(mockNavigate).toHaveBeenCalledWith('/error/404')
   })
 
-  it('should render Quiz page with title and description', async () => {
-    const title = await screen.findByText('JS Quiz')
-    const description = await screen.findByText('Js')
+  it('should render quiz page with data', () => {
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false,
+      isError: false
+    })
 
-    expect(title).toBeInTheDocument()
-    expect(description).toBeInTheDocument()
+    renderWithProviders(<Quiz />)
+
+    const quizTitle = screen.getByText('JS Quiz')
+    expect(quizTitle).toBeInTheDocument()
+
+    const questionText = screen.getByText(
+      'What is the difference between function expression and function declaration?'
+    )
+    expect(questionText).toBeInTheDocument()
   })
 
-  it('should toggle checkbox value', async () => {
+  it('should render empty state for empty data', () => {
+    useQuery.mockReturnValue({
+      data: mockQuizEmpty,
+      isLoading: false,
+      isError: false
+    })
+
+    renderWithProviders(<Quiz />)
+
+    const emptyTitle = screen.getByText('Empty')
+    expect(emptyTitle).toBeInTheDocument()
+  })
+
+  it('should update checkbox value', () => {
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false,
+      isError: false
+    })
+
+    renderWithProviders(<Quiz />)
+
     const checkbox = screen.getByRole('checkbox')
-
-    expect(checkbox).toBeInTheDocument()
     expect(checkbox).toHaveProperty('checked', false)
 
-    fireEvent.click(checkbox)
+    act(() => {
+      fireEvent.click(checkbox)
+    })
 
     expect(checkbox).toHaveProperty('checked', true)
   })
 
-  it('should display correct answers after finishing quiz', async () => {
+  it('should display correct answers after finishing quiz', () => {
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false,
+      isError: false
+    })
+
+    renderWithProviders(<Quiz />)
+
     const finishButton = screen.getByText('quiz.finish')
+    act(() => {
+      fireEvent.click(finishButton)
+    })
 
-    fireEvent.click(finishButton)
-
-    const correctAnswersLabel = await screen.findByText(
+    const correctAnswersLabel = screen.getByText(
       'myResourcesPage.quizzes.correctAnswers'
     )
-
     expect(correctAnswersLabel).toBeInTheDocument()
   })
 
-  it('should render questions correctly', async () => {
-    const questionText = await screen.findByText(
-      'What is the difference between function expression and function declaration?'
-    )
+  it('should render points and correctness when finished', () => {
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false,
+      isError: false
+    })
 
-    expect(questionText).toBeInTheDocument()
-  })
+    renderWithProviders(<Quiz />)
 
-  it('should display points and answers correctness after finishing quiz', async () => {
     const finishButton = screen.getByText('quiz.finish')
-
     fireEvent.click(finishButton)
 
-    const pointsLabel = await screen.findByText('quiz.points')
-    const answersCorrectnessLabel = await screen.findByText(
+    const pointsLabel = screen.getByText('quiz.points')
+    const answersCorrectnessLabel = screen.getByText(
       'myResourcesPage.quizzes.correctAnswers'
     )
 
     expect(pointsLabel).toBeInTheDocument()
     expect(answersCorrectnessLabel).toBeInTheDocument()
+  })
+
+  it('should render question text', () => {
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false,
+      isError: false
+    })
+
+    renderWithProviders(<Quiz />)
+
+    const questionText = screen.getByText(
+      'What is the difference between function expression and function declaration?'
+    )
+    expect(questionText).toBeInTheDocument()
   })
 })
