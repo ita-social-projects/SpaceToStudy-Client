@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('simplebar-react', () => {
   return {
@@ -21,15 +21,10 @@ vi.mock('react-i18next', () => ({
     }
   })
 }))
-const queryClient = new QueryClient()
 beforeEach(() => {
   const selectedItems = []
 
-  render(
-    <QueryClientProvider client={queryClient}>
-      <AppButtonMenu selectedItems={selectedItems} />
-    </QueryClientProvider>
-)
+  renderWithProviders(<AppButtonMenu selectedItems={selectedItems} />)
 })
 
 describe('AppButtonMenu', () => {

@@ -31,8 +31,7 @@ import {
   ItemsWithCount,
   GetResourcesCategoriesParams,
   ErrorResponse,
-  ResourcesTabsEnum,
-  CreateCategoriesParams
+  ResourcesTabsEnum
 } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -99,12 +98,6 @@ const CategoriesContainer = () => {
     [page, itemsPerPage, sort, searchTitle]
   )
 
-  const createCategory = useCallback(
-    (params?: CreateCategoriesParams) =>
-      ResourceService.createResourceCategory(params),
-    []
-  )
-
   const deleteCategory = useCallback(
     (id?: string) => ResourceService.deleteResourceCategory(id ?? ''),
     []
@@ -141,7 +134,8 @@ const CategoriesContainer = () => {
   )
 
   const { mutate: handleCreateCategory } = useMutation({
-    mutationFn: (params?: CreateCategoriesParams) => createCategory(params),
+    // mutationFn: (params?: CreateCategoriesParams) => createCategory(params),
+    mutationFn: ResourceService.createResourceCategory,
     onSuccess: async (response) => {
       await onCategoryCreate(response)
     },
@@ -149,13 +143,6 @@ const CategoriesContainer = () => {
       onResponseError(error)
     }
   })
-  const handleCreateCategoryPromise = async (params?: CreateCategoriesParams) =>
-    new Promise<void>((resolve, reject) => {
-      handleCreateCategory(params, {
-        onSuccess: () => resolve(),
-        onError: (error) => reject(error)
-      })
-    })
   const existingCategoriesNames = allCategoriesNames?.map((item) => item.name)
 
   const onAdd = () => {
@@ -163,7 +150,7 @@ const CategoriesContainer = () => {
       component: (
         <AddCategoriesModal
           closeModal={closeModal}
-          createCategories={handleCreateCategoryPromise}
+          createCategories={handleCreateCategory}
           existingCategoriesNames={existingCategoriesNames}
         />
       )
