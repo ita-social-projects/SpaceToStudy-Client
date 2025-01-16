@@ -94,4 +94,20 @@ describe('AddCourseTemplateModal test', () => {
 
     expect(closeModalMock).toHaveBeenCalled()
   })
+
+  it('should apply filters and update course list', async () => {
+    const searchInput = screen.getByPlaceholderText('common.search')
+    fireEvent.change(searchInput, { target: { value: '2' } })
+
+    const filteredCourse = await screen.findByText('2' + mockCourse.title)
+
+    expect(filteredCourse).toBeInTheDocument()
+  })
+
+  it('should handle cancel button click', () => {
+    const cancelBtn = screen.getByText('common.cancel')
+    fireEvent.click(cancelBtn)
+
+    expect(closeModalMock).toHaveBeenCalled()
+  })
 })
