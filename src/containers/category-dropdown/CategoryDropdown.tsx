@@ -86,8 +86,8 @@ const CategoryDropdown = ({
       })
     })
   const createCategory = useCallback(
-    async (params?: CreateCategoriesParams): Promise<Categories> =>
-      await ResourceService.createResourceCategory(params),
+    (params?: CreateCategoriesParams) =>
+      ResourceService.createResourceCategory(params),
     []
   )
 
