@@ -28,9 +28,7 @@ import { InputAdornment } from '@mui/material'
 interface EditAttachmentModalProps {
   closeModal: () => void
   attachment: Attachment
-  updateAttachment: (
-    params?: UpdateAttachmentParams | undefined
-  ) => Promise<void>
+  updateAttachment: (params: UpdateAttachmentParams) => void
 }
 
 const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
@@ -50,9 +48,9 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
   } = useForm<EditAttachmentForm>({
     initialValues: getInitialValues(attachment),
     validations,
-    onSubmit: async () => {
+    onSubmit: () => {
       setLoading(true)
-      await updateAttachment({
+      updateAttachment({
         id: attachment._id,
         fileName: data.fileName,
         description: data.description,

@@ -52,9 +52,10 @@ import { ResourceService } from '~/services/resource-service'
 import { createUrlPath } from '~/utils/helper-functions'
 import { useModalContext } from '~/context/modal-context'
 
-import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
 import useMenu from '~/hooks/use-menu'
 import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
+
 interface SectionProps extends CourseSectionHandlers {
   sectionData: CourseSection
   isCooperation?: boolean
@@ -158,21 +159,28 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
     })
   }
 
-  const handleEditAttachment = (params?: UpdateAttachmentParams) =>
-    ResourceService.updateAttachment(params)
+  const editAttachments = (
+    updateAttachmentParams: UpdateAttachmentParams
+  ): Promise<Attachment> => {
+    const { id, ...attachmentData } = updateAttachmentParams
+    return ResourceService.updateAttachmentQuery(attachmentData, id)
+  }
 
-  const { fetchData: updateData } = useAxios({
-    service: handleEditAttachment,
-    fetchOnMount: false,
-    onResponse: (attachment: Attachment) => {
+  const { mutate: mutateAttachment } = useMutation({
+    mutationFn: editAttachments,
+    onSuccess: (data: Attachment) => {
       resourceEventHandler?.({
         type: CourseResourceEventType.ResourceUpdated,
         sectionId: sectionData.id,
-        resourceId: attachment._id,
-        resource: attachment
+        resourceId: data._id,
+        resource: data
       })
     }
   })
+
+  const updateAttachment = (data: UpdateAttachmentParams): void => {
+    return mutateAttachment(data)
+  }
 
   const editResource = (resource: CourseResource) => {
     const resourceType = resource.resourceType
@@ -186,7 +194,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
             <EditAttachmentModal
               attachment={resource as Attachment}
               closeModal={closeModal}
-              updateAttachment={updateData}
+              updateAttachment={updateAttachment}
             />
           )
         })

@@ -125,7 +125,7 @@ export const ResourceService = {
     )
   },
   updateAttachmentQuery: (data: UpdateAttachmentData, id: string) => {
-    return baseService.request<void>({
+    return baseService.request<Attachment>({
       method: 'PATCH',
       url: getFullUrl({
         pathname: URLs.resources.attachments.patch,
