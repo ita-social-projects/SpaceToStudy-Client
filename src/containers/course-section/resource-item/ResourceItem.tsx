@@ -132,7 +132,8 @@ const ResourceItem: FC<ResourceItemProps> = ({
       }}
     >
       {availabilityIcon}
-      {formattedDate ?? status}
+      {formattedDate ??
+        t(`cooperationDetailsPage.resourceSelection.${status}`, status)}
     </Box>
   )
 
