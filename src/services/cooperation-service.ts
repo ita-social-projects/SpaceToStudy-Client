@@ -2,14 +2,13 @@ import { axiosClient } from '~/plugins/axiosClient'
 import { AxiosResponse } from 'axios'
 
 import { URLs } from '~/constants/request'
+import { createUrlPath } from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
 import {
   CreateCooperationsParams,
   GetCooperationsParams,
   UpdateCooperationsParams,
   CreateOrUpdateNoteParams,
-import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
-  Offer,
-  MyCooperationDetails,
   UpdateCooperationsSections,
   type Cooperation,
   type ItemsWithCount
