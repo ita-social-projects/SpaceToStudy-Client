@@ -15,7 +15,6 @@ import {
   Categories,
   CategoryNameInterface,
   ComponentEnum,
-  CreateCategoriesParams,
   ErrorResponse
 } from '~/types'
 import { styles } from '~/containers/category-dropdown/CategoryDropdown.styles'
@@ -77,19 +76,6 @@ const CategoryDropdown = ({
       )
     })
   }
-
-  const handleCreateCategoryPromise = async (params?: CreateCategoriesParams) =>
-    new Promise<void>((resolve, reject) => {
-      handleCreateCategory(params, {
-        onSuccess: () => resolve(),
-        onError: (error) => reject(error)
-      })
-    })
-  const createCategory = useCallback(
-    (params?: CreateCategoriesParams) =>
-      ResourceService.createResourceCategory(params),
-    []
-  )
 
   const onResponseCategory = useCallback(
     async (response: Categories | null) => {

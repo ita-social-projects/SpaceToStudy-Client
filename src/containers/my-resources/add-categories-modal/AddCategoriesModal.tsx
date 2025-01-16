@@ -21,7 +21,7 @@ import {
 
 interface AddCategoriesModalProps {
   closeModal: () => void
-  createCategories: (params?: CreateCategoriesParams) => void
+  createCategories: (params: CreateCategoriesParams) => void
   existingCategoriesNames: string[]
 }
 
