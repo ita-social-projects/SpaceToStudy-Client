@@ -1,12 +1,18 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 
 const handleConfirm = vi.fn()
 const closeModal = vi.fn()
 
-vi.mock('~/hooks/use-axios')
+vi.mock('~/hooks/use-query', async () => {
+  const actual = await vi.importActual('~/hooks/use-query')
+  return {
+    ...actual,
+    default: vi.fn()
+  }
+})
 
 vi.mock('~/context/modal-context', async () => {
   const actual = await vi.importActual('~/context/modal-context')
@@ -80,9 +86,9 @@ const fakeData = {
 
 describe('ChangeResourceConfirmModal component tests', () => {
   it('should render properly', async () => {
-    useAxios.mockImplementation(() => ({
-      loading: false,
-      response: fakeData
+    useQuery.mockImplementation(() => ({
+      isLoading: false,
+      data: fakeData
     }))
     renderWithProviders(<ChangeResourceConfirmModal {...props} />)
 
@@ -93,9 +99,9 @@ describe('ChangeResourceConfirmModal component tests', () => {
   })
 
   it('should render course list items with titles', async () => {
-    useAxios.mockImplementation(() => ({
-      loading: false,
-      response: fakeData
+    useQuery.mockImplementation(() => ({
+      isLoading: false,
+      data: fakeData
     }))
     renderWithProviders(<ChangeResourceConfirmModal {...props} />)
     const courseTitle1 = await screen.findByText('Course 1')
@@ -106,9 +112,9 @@ describe('ChangeResourceConfirmModal component tests', () => {
   })
 
   it('should render loader', async () => {
-    useAxios.mockImplementation(() => ({
-      loading: true,
-      response: fakeData
+    useQuery.mockImplementation(() => ({
+      isLoading: true,
+      data: fakeData
     }))
     renderWithProviders(<ChangeResourceConfirmModal {...props} />)
     const loader = await screen.findByTestId('loader')
@@ -117,9 +123,9 @@ describe('ChangeResourceConfirmModal component tests', () => {
   })
 
   it('should run onConfirm', async () => {
-    useAxios.mockImplementation(() => ({
-      loading: false,
-      response: fakeData
+    useQuery.mockImplementation(() => ({
+      isLoading: false,
+      data: fakeData
     }))
     renderWithProviders(
       <ChangeResourceConfirmModal
@@ -128,7 +134,15 @@ describe('ChangeResourceConfirmModal component tests', () => {
         title='title'
       />
     )
-    waitFor(() => expect(handleConfirm).toHaveBeenCalled())
-    waitFor(() => expect(closeModal).toHaveBeenCalled())
+
+    const confirmButton = await screen.findByText('changeConfirm.confirmButton')
+    expect(confirmButton).toBeInTheDocument()
+  
+    fireEvent.click(confirmButton)
+
+    await waitFor(() => {
+      expect(handleConfirm).toHaveBeenCalled()
+      expect(closeModal).toHaveBeenCalled()
+    })
   })
 })
