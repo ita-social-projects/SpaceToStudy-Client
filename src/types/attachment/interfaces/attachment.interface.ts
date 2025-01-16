@@ -20,6 +20,12 @@ export interface UpdateAttachmentParams {
   category: EditAttachmentForm['category']
 }
 
+export interface UpdateAttachmentData {
+  fileName?: string
+  description?: string
+  category?: string | null
+}
+
 export interface EditAttachmentForm {
   fileName: string
   category: string | null

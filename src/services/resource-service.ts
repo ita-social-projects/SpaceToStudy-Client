@@ -23,7 +23,8 @@ import {
   Quiz,
   UpdateQuizParams,
   ApiMethodEnum,
-  GetQuestion
+  GetQuestion,
+  UpdateAttachmentData
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -117,15 +118,27 @@ export const ResourceService = {
       })
     })
   },
-  updateAttachment: async (params?: UpdateAttachmentParams) =>
-    await axiosClient.patch(
+  updateAttachment: async (params?: UpdateAttachmentParams) => {
+    return await axiosClient.patch(
       createUrlPath(URLs.resources.attachments.patch, params?.id),
       params
-    ),
-  deleteAttachment: async (id: string): Promise<AxiosResponse> =>
-    await axiosClient.delete(
+    )
+  },
+  updateAttachmentQuery: (data: UpdateAttachmentData, id: string) => {
+    return baseService.request<void>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.resources.attachments.patch,
+        parameters: { id }
+      }),
+      data
+    })
+  },
+  deleteAttachment: async (id: string): Promise<AxiosResponse> => {
+    return await axiosClient.delete(
       createUrlPath(URLs.resources.attachments.delete, id)
-    ),
+    )
+  },
   createAttachments: (data?: FormData): Promise<AxiosResponse> => {
     return axiosClient.post(URLs.attachments.post, data, {
       headers: { 'Content-Type': 'multipart/form-data' }
