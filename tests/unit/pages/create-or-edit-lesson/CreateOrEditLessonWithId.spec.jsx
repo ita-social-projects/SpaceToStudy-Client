@@ -1,11 +1,11 @@
-import { waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import CreateOrEditLesson from '~/pages/create-or-edit-lesson/CreateOrEditLesson'
 import { ResourceService } from '~/services/resource-service'
 import { baseService } from '~/services/base-service'
-import { renderWithProviders } from '~tests/test-utils'
-
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 const mockParams = {
   id: 'id'
 }
@@ -25,25 +25,30 @@ vi.mock('react-router-dom', async () => ({
 
 describe('CreateOrEditLesson with id', () => {
   beforeAll(() => {
-    vi.spyOn(baseService, 'request').mockImplementation((config) => {
-      if (config.method === 'PATCH') {
-        return Promise.resolve()
-      }
-      if (config.method === 'GET') {
-        return Promise.resolve({ data: mockLesson })
-      }
-      return Promise.reject(new Error('Unexpected request'))
-    })
+    mockAxiosClient
+      .onGet(URLs.resources.resourcesCategories.getNames)
+      .reply(200, [])
+
+    mockAxiosClient
+      .onGet(URLs.resources.lessons.getById.replace(':id', mockParams.id))
+      .reply(200, mockLesson)
+
+    mockAxiosClient
+      .onPatch(URLs.resources.lessons.patch.replace(':id', mockParams.id))
+      .reply(204)
   })
 
   beforeEach(async () => {
     await renderWithProviders(<CreateOrEditLesson />)
   })
 
-  it('should call ResourceService.getLesson with the correct id when loading the lesson', async () => {
-    const getLessonSpy = vi.spyOn(ResourceService, 'getLesson')
-    await waitFor(() => renderWithProviders(<CreateOrEditLesson />))
+  it('should display the lesson title and description when the lesson is loaded', async () => {
+    const lessonTitle = await screen.findByDisplayValue(mockLesson.title)
+    const lessonDescription = await screen.findByDisplayValue(
+      mockLesson.description
+    )
 
-    expect(getLessonSpy).toHaveBeenCalledWith('id')
+    expect(lessonTitle).toBeInTheDocument()
+    expect(lessonDescription).toBeInTheDocument()
   })
 })
