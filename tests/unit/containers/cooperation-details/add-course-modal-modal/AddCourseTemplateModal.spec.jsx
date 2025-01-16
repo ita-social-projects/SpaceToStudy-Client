@@ -83,10 +83,8 @@ describe('AddCourseTemplateModal test', () => {
 
   it('should select course and click on add button', async () => {
     await waitFor(() => {
-      debug()
       const course = screen.getByText(1 + mockCourse.title)
       fireEvent.click(course)
-
     })
 
 
