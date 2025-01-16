@@ -12,6 +12,7 @@ import { styles } from './ActiveStudentsBlock.styles'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { defaultResponses } from '~/constants'
+import { ItemsWithCount, Cooperation } from '~/types'
 
 const ActiveStudentsBlock = () => {
   const { t } = useTranslation()
@@ -22,7 +23,7 @@ const ActiveStudentsBlock = () => {
     []
   )
 
-  const { isLoading, data, error } = useQuery({
+  const { isLoading, data, error } = useQuery<ItemsWithCount<Cooperation>>({
     queryKey: ['cooperations'],
     queryFn: getMyCooperations,
     options: {
