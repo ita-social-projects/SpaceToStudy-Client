@@ -29,7 +29,7 @@ export const userService = {
   },
 
   getUserByIdWithBaseService: (
-    userId: string,
+    id: string,
     userRole: UserRole,
     isEdit?: boolean
   ) => {
@@ -37,7 +37,7 @@ export const userService = {
       method: 'GET',
       url: getFullUrl({
         pathname: URLs.users.getUserById,
-        parameters: { userId },
+        parameters: { id },
         searchParameters: {
           userRole,
           isEdit: isEdit !== undefined ? isEdit.toString() : undefined

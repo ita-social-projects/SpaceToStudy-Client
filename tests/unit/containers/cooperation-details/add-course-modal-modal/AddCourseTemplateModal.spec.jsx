@@ -2,7 +2,6 @@ import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
-
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { mockCourse } from '~tests/unit/pages/my-courses/MyCourses.spec.constans'
@@ -25,13 +24,13 @@ const mockCoursesData = { count: 5, items: responseItemsMock }
 const inputTestValue = 'hello'
 
 describe('AddCourseTemplateModal test', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient.onGet(URLs.courses.get).reply(200, mockCoursesData)
+  beforeEach(() => {
+      mockAxiosClient.onGet(new RegExp(URLs.courses.get)).reply(200, mockCoursesData)
+      mockAxiosClient.onGet(new RegExp(URLs.users.getUserById.replace(':id', ''))).reply(200, undefined)
+
       renderWithProviders(
         <AddCourseTemplateModal closeModal={closeModalMock} />
       )
-    })
   })
 
   it('should render AddCourseTemplateModal component', () => {
@@ -57,7 +56,7 @@ describe('AddCourseTemplateModal test', () => {
     expect(searchInput.value).not.toBe(inputTestValue)
   })
 
-  it('should render not found and click on add new course button', () => {
+  it('should render not found and click on add new course button', async () => {
     const searchInput = screen.getByPlaceholderText('common.search')
 
     fireEvent.click(searchInput)
@@ -65,7 +64,7 @@ describe('AddCourseTemplateModal test', () => {
 
     expect(searchInput.value).toBe(inputTestValue)
 
-    const button = screen.getByText('myCoursesPage.buttonLabel +')
+    const button = await screen.findByText('myCoursesPage.buttonLabel +')
 
     waitFor(() => fireEvent.click(button))
 
@@ -82,12 +81,16 @@ describe('AddCourseTemplateModal test', () => {
     expect(clearBtn).toBeInTheDocument()
   })
 
-  it('should select course and click on add button', () => {
-    const course = screen.getByText(1 + mockCourse.title)
+  it('should select course and click on add button', async () => {
+    await waitFor(() => {
+      debug()
+      const course = screen.getByText(1 + mockCourse.title)
+      fireEvent.click(course)
 
-    fireEvent.click(course)
+    })
 
-    const addBtn = screen.getByText('common.add')
+
+    const addBtn = await screen.findByText('common.add')
 
     fireEvent.click(addBtn)
 
