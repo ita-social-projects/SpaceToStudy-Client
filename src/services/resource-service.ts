@@ -23,8 +23,7 @@ import {
   Quiz,
   UpdateQuizParams,
   ApiMethodEnum,
-  GetQuestion,
-  UpdateAttachmentData
+  GetQuestion
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -124,14 +123,15 @@ export const ResourceService = {
       params
     )
   },
-  updateAttachmentQuery: (data: UpdateAttachmentData, id: string) => {
+  updateAttachmentQuery: (data: UpdateAttachmentParams) => {
+    const { id, ...attachmentData } = data
     return baseService.request<Attachment>({
       method: 'PATCH',
       url: getFullUrl({
         pathname: URLs.resources.attachments.patch,
         parameters: { id }
       }),
-      data
+      data: attachmentData
     })
   },
   deleteAttachment: async (id: string): Promise<AxiosResponse> => {

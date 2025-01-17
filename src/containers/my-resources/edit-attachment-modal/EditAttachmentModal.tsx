@@ -28,13 +28,13 @@ import { InputAdornment } from '@mui/material'
 interface EditAttachmentModalProps {
   closeModal: () => void
   attachment: Attachment
-  updateAttachment: (params: UpdateAttachmentParams) => void
+  onAttachmentUpdate: (params: UpdateAttachmentParams) => void
 }
 
 const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
   closeModal,
   attachment,
-  updateAttachment
+  onAttachmentUpdate
 }) => {
   const { t } = useTranslation()
   const [loading, setLoading] = useState<boolean>(false)
@@ -50,7 +50,7 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
     validations,
     onSubmit: () => {
       setLoading(true)
-      updateAttachment({
+      onAttachmentUpdate({
         id: attachment._id,
         fileName: data.fileName,
         description: data.description,

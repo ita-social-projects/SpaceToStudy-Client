@@ -144,7 +144,7 @@ const AttachmentsContainer = () => {
           <EditAttachmentModal
             attachment={attachment as Attachment}
             closeModal={closeModal}
-            updateAttachment={() => {
+            onAttachmentUpdate={() => {
               void updateData()
             }}
           />

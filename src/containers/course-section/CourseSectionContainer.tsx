@@ -159,15 +159,8 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
     })
   }
 
-  const editAttachments = (
-    updateAttachmentParams: UpdateAttachmentParams
-  ): Promise<Attachment> => {
-    const { id, ...attachmentData } = updateAttachmentParams
-    return ResourceService.updateAttachmentQuery(attachmentData, id)
-  }
-
   const { mutate: mutateAttachment } = useMutation({
-    mutationFn: editAttachments,
+    mutationFn: ResourceService.updateAttachmentQuery,
     onSuccess: (data: Attachment) => {
       resourceEventHandler?.({
         type: CourseResourceEventType.ResourceUpdated,
@@ -178,9 +171,12 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
     }
   })
 
-  const updateAttachment = (data: UpdateAttachmentParams): void => {
-    return mutateAttachment(data)
-  }
+  const handleAttachmentUpdate = useCallback(
+    (data: UpdateAttachmentParams): void => {
+      return mutateAttachment(data)
+    },
+    [mutateAttachment]
+  )
 
   const editResource = (resource: CourseResource) => {
     const resourceType = resource.resourceType
@@ -194,7 +190,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
             <EditAttachmentModal
               attachment={resource as Attachment}
               closeModal={closeModal}
-              updateAttachment={updateAttachment}
+              onAttachmentUpdate={handleAttachmentUpdate}
             />
           )
         })
