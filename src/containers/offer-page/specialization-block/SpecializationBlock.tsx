@@ -7,7 +7,7 @@ import Box from '@mui/material/Box'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import { useAppSelector } from '~/hooks/use-redux'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
 import {

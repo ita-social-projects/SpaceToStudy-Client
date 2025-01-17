@@ -17,7 +17,7 @@ import {
 import { styles } from '~/containers/find-offer/offer-search-toolbar/OfferSearchToolbar.styles'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 
 interface OfferSearchToolbarProps {
   filters: FindOffersFilters

@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppChipList from '~/components/app-chips-list/AppChipList'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 

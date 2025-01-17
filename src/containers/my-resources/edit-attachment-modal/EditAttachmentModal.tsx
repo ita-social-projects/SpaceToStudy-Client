@@ -22,7 +22,7 @@ import {
   EditAttachmentForm,
   UpdateAttachmentParams
 } from '~/types'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 import { ResourceService } from '~/services/resource-service'
 import { InputAdornment } from '@mui/material'
 
