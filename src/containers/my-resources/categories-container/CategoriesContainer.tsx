@@ -112,13 +112,10 @@ const CategoriesContainer = () => {
     onResponseError
   })
 
-  const { data: allCategoriesNames, refetch: fetchAllCategoriesNames } =
+  const { data: allCategoriesNames = [], refetch: fetchAllCategoriesNames } =
     useQuery({
       queryKey: ['categoriesNames'],
-      queryFn: ResourceService.getResourcesCategoriesName,
-      options: {
-        initialData: []
-      }
+      queryFn: ResourceService.getResourcesCategoriesName
     })
 
   const onCategoryUpdate = useCallback(async () => {
@@ -135,12 +132,8 @@ const CategoriesContainer = () => {
 
   const { mutate: handleCreateCategory } = useMutation({
     mutationFn: ResourceService.createResourceCategory,
-    onSuccess: async (response) => {
-      await onCategoryCreate(response)
-    },
-    onError: (error: ErrorResponse) => {
-      onResponseError(error)
-    }
+    onSuccess: onCategoryCreate,
+    onError: onResponseError
   })
   const existingCategoriesNames = allCategoriesNames?.map((item) => item.name)
 

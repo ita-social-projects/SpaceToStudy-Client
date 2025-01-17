@@ -165,12 +165,12 @@ export const ResourceService = {
     })
   },
   createResourceCategory: async (
-    params?: CreateCategoriesParams
+    params: CreateCategoriesParams
   ): Promise<Categories> => {
     return await baseService.request<Categories>({
       method: 'POST',
       url: URLs.resources.resourcesCategories.post,
-      data: params || {}
+      data: params
     })
   },
   deleteResourceCategory: async (id: string): Promise<AxiosResponse> =>

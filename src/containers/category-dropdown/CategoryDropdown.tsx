@@ -56,14 +56,10 @@ const CategoryDropdown = ({
     [dispatch]
   )
 
-  const { data: allCategoriesNames, refetch: fetchAllCategoriesNames } =
-    useQuery({
-      queryKey: ['categoriesNames'],
-      queryFn: ResourceService.getResourcesCategoriesName,
-      options: {
-        initialData: []
-      }
-    })
+  const { data: allCategoriesNames = [] } = useQuery({
+    queryKey: ['categoriesNames'],
+    queryFn: ResourceService.getResourcesCategoriesName
+  })
 
   const onCreateCategory = () => {
     openModal({
@@ -78,7 +74,7 @@ const CategoryDropdown = ({
   }
 
   const onResponseCategory = useCallback(
-    async (response: Categories | null) => {
+    (response: Categories | null) => {
       const categoryName = response ? response.name : ''
 
       dispatch(
@@ -92,21 +88,17 @@ const CategoryDropdown = ({
           }
         })
       )
-
-      await fetchAllCategoriesNames()
     },
-    [dispatch, fetchAllCategoriesNames]
+    [dispatch]
   )
 
   const { mutate: handleCreateCategory } = useMutation({
+    queryKey: ['categoriesNames'],
     mutationFn: ResourceService.createResourceCategory,
-    onSuccess: async (response) => {
-      await onResponseCategory(response)
-    },
-    onError: (error: ErrorResponse) => {
-      handleResponseError(error)
-    }
+    onSuccess: onResponseCategory,
+    onError: handleResponseError
   })
+
   const optionsList = (
     props: HTMLAttributes<HTMLLIElement>,
     option: string,

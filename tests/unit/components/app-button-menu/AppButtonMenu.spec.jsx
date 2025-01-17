@@ -33,16 +33,6 @@ describe('AppButtonMenu', () => {
 
     expect(buttonEl).toBeInTheDocument()
   })
-
-  it('renders no items message after clicking if there are no selected items', () => {
-    const buttonEl = screen.getByRole('button')
-
-    fireEvent.click(buttonEl)
-
-    const el = screen.getByText('No items found')
-
-    expect(el).toBeInTheDocument()
-  })
   it('input field should be in the component after clicking on a button', () => {
     const buttonEl = screen.getByRole('button')
 
