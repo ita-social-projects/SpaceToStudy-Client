@@ -9,6 +9,7 @@ import AppTextArea from '~/components/app-text-area/AppTextArea'
 import useForm from '~/hooks/use-form'
 
 import {
+  getChangedFields,
   getInitialValues,
   validations
 } from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal.constants'
@@ -50,11 +51,15 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
     validations,
     onSubmit: () => {
       setLoading(true)
+      const changedDataFields = getChangedFields(
+        getInitialValues(attachment),
+        data
+      )
       onAttachmentUpdate({
         id: attachment._id,
-        fileName: data.fileName,
-        description: data.description,
-        category: data.category
+        fileName: changedDataFields.fileName as string | undefined,
+        description: changedDataFields.description as string | undefined,
+        category: changedDataFields.category
       })
       setLoading(false)
       closeModal()

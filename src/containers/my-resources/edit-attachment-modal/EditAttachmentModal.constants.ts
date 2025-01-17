@@ -15,6 +15,26 @@ export const getInitialValues = (
   }
 }
 
+export const getChangedFields = (
+  initialValues: EditAttachmentForm,
+  currentValues: EditAttachmentForm
+) => {
+  const changedFields: Partial<
+    Record<keyof EditAttachmentForm, string | null>
+  > = {}
+
+  Object.keys(initialValues).forEach((key) => {
+    const initialValue = initialValues[key as keyof EditAttachmentForm]
+    const currentValue = currentValues[key as keyof EditAttachmentForm]
+
+    if (initialValue !== currentValue) {
+      changedFields[key as keyof EditAttachmentForm] = currentValue
+    }
+  })
+
+  return changedFields
+}
+
 export const validations = {
   fileName: (value: string) =>
     emptyField({
