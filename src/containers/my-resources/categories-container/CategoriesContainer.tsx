@@ -134,7 +134,6 @@ const CategoriesContainer = () => {
   )
 
   const { mutate: handleCreateCategory } = useMutation({
-    // mutationFn: (params?: CreateCategoriesParams) => createCategory(params),
     mutationFn: ResourceService.createResourceCategory,
     onSuccess: async (response) => {
       await onCategoryCreate(response)
