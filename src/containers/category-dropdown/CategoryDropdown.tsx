@@ -6,6 +6,8 @@ import AddIcon from '@mui/icons-material/Add'
 
 import { useModalContext } from '~/context/modal-context'
 import { useAppDispatch } from '~/hooks/use-redux'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import { ResourceService } from '~/services/resource-service'
 import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
 import DropdownButton from '~/components/dropdown-add-btn/DropdownButton'
@@ -25,8 +27,6 @@ import {
 } from '~/containers/category-dropdown/CategoryDropdown.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import useQuery from '~/hooks/use-query'
-import useMutation from '~/hooks/use-mutation'
 
 interface CategoryDropdownInterface {
   category: string | null

@@ -13,6 +13,8 @@ import {
 } from '~/services/resource-service'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
+import useQuery from '~/hooks/use-query'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
@@ -39,8 +41,6 @@ import { styles } from '~/containers/my-resources/categories-container/Categorie
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import useMutation from '~/hooks/use-mutation'
-import useQuery from '~/hooks/use-query'
 
 const CategoriesContainer = () => {
   const { t } = useTranslation()

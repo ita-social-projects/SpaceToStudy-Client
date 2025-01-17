@@ -70,7 +70,9 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
   })
 
   const filteredItems = useMemo(() => {
-    if (!response) return []
+    if (!response) {
+      return []
+    }
     const noneItem = {
       _id: 'null',
       [valueField as string]: 'No category'
@@ -115,7 +117,7 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
     </Box>
   )
 
-  const itemsLoad = !response?.length && isLoading
+  const itemsLoad = !response || isLoading
   const chosenFiltersText = selectedNames.length
     ? selectedNames.join(', ')
     : t('cooperationsPage.tabs.all')
