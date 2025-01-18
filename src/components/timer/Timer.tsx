@@ -6,7 +6,7 @@ type TimerProps = {
   isTimeEnds: boolean
 }
 
-export const Timer = ({ label, isTimeEnds }: TimerProps) => {
+const Timer = ({ label, isTimeEnds }: TimerProps) => {
   return (
     <Chip
       color={isTimeEnds ? 'error' : 'success'}
@@ -42,3 +42,5 @@ export const Timer = ({ label, isTimeEnds }: TimerProps) => {
     />
   )
 }
+
+export default Timer
