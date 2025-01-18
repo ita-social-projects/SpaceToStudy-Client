@@ -1,8 +1,6 @@
 import Chip from '@mui/material/Chip/Chip'
 import TimerOutlined from '@mui/icons-material/TimerOutlined'
 
-import { theme } from '~/styles/app-theme/custom-mui.styles'
-
 type TimerProps = {
   label: string
   isTimeEnds: boolean
@@ -22,7 +20,6 @@ export const Timer = ({ label, isTimeEnds }: TimerProps) => {
       label={label}
       size='medium'
       sx={{
-        marginTop: theme.spacing(2),
         backgroundColor: isTimeEnds
           ? 'rgba(250, 238, 238, 1)'
           : 'rgba(226, 242, 220, 1)',
