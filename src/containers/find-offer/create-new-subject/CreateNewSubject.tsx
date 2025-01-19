@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
+import { AxiosResponse, AxiosRequestConfig } from 'axios'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -55,7 +55,26 @@ const CreateSubjectModal = () => {
     closeModal()
   }
 
-  const sendSubjectRequest = (): Promise<AxiosResponse> => null
+  const config: AxiosRequestConfig = {
+    url: 'https://api.example.com/subjects',
+    method: 'get',
+    headers: {
+      Authorization: 'Bearer your-token-here',
+      'Content-Type': 'application/json'
+    }
+  }
+
+  const sendSubjectRequest = (): Promise<AxiosResponse> => {
+    return new Promise((resolve) => {
+      resolve({
+        data: { message: 'Success' },
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config
+      } as AxiosResponse)
+    })
+  }
 
   const { loading, fetchData } = useAxios({
     service: sendSubjectRequest,
@@ -79,7 +98,7 @@ const CreateSubjectModal = () => {
       category: '',
       info: ''
     },
-    onSubmit: fetchData,
+    onSubmit: () => fetchData(),
     validations
   })
 
