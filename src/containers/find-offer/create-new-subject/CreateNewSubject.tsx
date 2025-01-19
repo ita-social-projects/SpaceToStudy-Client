@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse, AxiosRequestConfig } from 'axios'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -25,6 +24,7 @@ import {
 } from '~/types'
 import { snackbarVariants } from '~/constants'
 import { categoryService } from '~/services/category-service'
+import { subjectService } from '~/services/subject-service'
 import { validations } from '~/containers/find-offer/create-new-subject/CreateNewSubject.constants'
 import { styles } from '~/containers/find-offer/create-new-subject/CreateNewSubject.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -55,27 +55,8 @@ const CreateSubjectModal = () => {
     closeModal()
   }
 
-  const config: AxiosRequestConfig = {
-    url: 'https://api.example.com/subjects',
-    method: 'get',
-    headers: {
-      Authorization: 'Bearer your-token-here',
-      'Content-Type': 'application/json'
-    }
-  }
-
-  const sendSubjectRequest = (): Promise<AxiosResponse> => {
-    return Promise.resolve({
-      data: { message: 'Success' },
-      status: 200,
-      statusText: 'OK',
-      headers: {},
-      config
-    } as AxiosResponse)
-  }
-
   const { loading, fetchData } = useAxios({
-    service: sendSubjectRequest,
+    service: subjectService.sendSubjectRequest,
     fetchOnMount: false,
     defaultResponse: null,
     onResponse: handleResponse,
