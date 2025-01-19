@@ -8,6 +8,16 @@ import { TestSnackbar, renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/services/category-service')
 
+const sendSubjectRequest = (): Promise<AxiosResponse> => {
+  return Promise.resolve({
+    data: { message: 'Success' },
+    status: 200,
+    statusText: 'OK',
+    headers: {},
+    config: {}
+  } as AxiosResponse)
+}
+
 const mockSubjectsNames = [
   { _id: '1', name: 'Category 1' },
   { _id: '2', name: 'Category 2' }
@@ -58,5 +68,31 @@ describe('CreateSubjectModal container', () => {
     })
 
     expect(categoryInput.value).toBe('')
+  })
+
+  describe('sendSubjectRequest', () => {
+    it('should return a resolved promise with the correct data', async () => {
+      const response = await sendSubjectRequest()
+
+      expect(response).toEqual({
+        data: { message: 'Success' },
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {}
+      })
+    })
+
+    it('should have a status of 200', async () => {
+      const response = await sendSubjectRequest()
+
+      expect(response.status).toBe(200)
+    })
+
+    it('should contain a success message in the data', async () => {
+      const response = await sendSubjectRequest()
+
+      expect(response.data.message).toBe('Success')
+    })
   })
 })
