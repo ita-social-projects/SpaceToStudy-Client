@@ -65,15 +65,13 @@ const CreateSubjectModal = () => {
   }
 
   const sendSubjectRequest = (): Promise<AxiosResponse> => {
-    return new Promise((resolve) => {
-      resolve({
-        data: { message: 'Success' },
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config
-      } as AxiosResponse)
-    })
+    return Promise.resolve({
+      data: { message: 'Success' },
+      status: 200,
+      statusText: 'OK',
+      headers: {},
+      config
+    } as AxiosResponse)
   }
 
   const { loading, fetchData } = useAxios({
