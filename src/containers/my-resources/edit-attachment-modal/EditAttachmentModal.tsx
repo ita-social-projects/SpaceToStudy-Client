@@ -1,4 +1,4 @@
-import { FC, SyntheticEvent, useState } from 'react'
+import { FC, SyntheticEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -9,7 +9,7 @@ import AppTextArea from '~/components/app-text-area/AppTextArea'
 import useForm from '~/hooks/use-form'
 
 import {
-  getChangedFields,
+  getChangedAttachmentFields,
   getInitialValues,
   validations
 } from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal.constants'
@@ -39,6 +39,9 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const [loading, setLoading] = useState<boolean>(false)
+  const [changedAttachmentFields, setChangedAttachmentFields] = useState<
+    Partial<Record<keyof EditAttachmentForm, string | null>>
+  >({})
   const {
     data,
     errors,
@@ -51,16 +54,14 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
     validations,
     onSubmit: () => {
       setLoading(true)
-      const changedDataFields = getChangedFields(
-        getInitialValues(attachment),
-        data
-      )
+
       onAttachmentUpdate({
         id: attachment._id,
-        fileName: changedDataFields.fileName as string | undefined,
-        description: changedDataFields.description as string | undefined,
-        category: changedDataFields.category
+        fileName: changedAttachmentFields.fileName as string | undefined,
+        description: changedAttachmentFields.description as string | undefined,
+        category: changedAttachmentFields.category
       })
+
       setLoading(false)
       closeModal()
     }
@@ -72,6 +73,18 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
   ) => {
     handleNonInputValueChange('category', value?._id ?? null)
   }
+
+  const areAttachmentFieldsChanged =
+    Object.keys(changedAttachmentFields).length === 0
+
+  useEffect(() => {
+    const initialValues = getInitialValues(attachment)
+    const updatedAttachmentFields = getChangedAttachmentFields(
+      initialValues,
+      data
+    )
+    setChangedAttachmentFields(updatedAttachmentFields)
+  }, [attachment, data])
 
   return (
     <Box
@@ -140,7 +153,7 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
           {t('common.cancel')}
         </Button>
         <Button
-          disabled={!!errors.fileName}
+          disabled={Boolean(errors.fileName) || areAttachmentFieldsChanged}
           loading={loading}
           sx={styles.saveBtn}
           type={ButtonTypeEnum.Submit}

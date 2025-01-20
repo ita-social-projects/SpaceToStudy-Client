@@ -15,7 +15,7 @@ export const getInitialValues = (
   }
 }
 
-export const getChangedFields = (
+export const getChangedAttachmentFields = (
   initialValues: EditAttachmentForm,
   currentValues: EditAttachmentForm
 ) => {
