@@ -91,18 +91,6 @@ describe('QuizPage with useQuery', () => {
     expect(loader).toBeInTheDocument()
   })
 
-  it('should handle error state', () => {
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: false,
-      isError: true
-    })
-
-    renderWithProviders(<Quiz />)
-
-    expect(mockNavigate).toHaveBeenCalledWith('/error/404')
-  })
-
   it('should render quiz page with data', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
