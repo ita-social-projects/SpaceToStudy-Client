@@ -47,6 +47,7 @@ import {
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import { type ResponseError } from '~/exceptions'
+import useHandleErrorAlert from '~/hooks/use-handle-error-alert'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
@@ -154,7 +155,7 @@ const CreateOrEditLesson = () => {
   const { mutate: fetchAddLesson } = useMutation({
     mutationFn: addLesson,
     onSuccess: handleResponse,
-    onError: handleResponseError
+    onError: useHandleErrorAlert()
   })
 
   const getLesson = useCallback(() => {
@@ -181,7 +182,7 @@ const CreateOrEditLesson = () => {
   const { mutate: fetchEditedLesson } = useMutation({
     mutationFn: editLesson,
     onSuccess: handleResponse,
-    onError: handleResponseError
+    onError: useHandleErrorAlert()
   })
 
   useEffect(() => {
@@ -191,7 +192,7 @@ const CreateOrEditLesson = () => {
         handleNonInputValueChange(validKey, lesson[validKey])
       }
     }
-  }, [lesson, id])
+  }, [lesson, id, data, handleNonInputValueChange])
 
   useEffect(() => {
     if (error) {

@@ -52,6 +52,7 @@ import { ResourceService } from '~/services/resource-service'
 import { createUrlPath } from '~/utils/helper-functions'
 import { useModalContext } from '~/context/modal-context'
 
+import useHandleErrorAlert from '~/hooks/use-handle-error-alert'
 import useMutation from '~/hooks/use-mutation'
 import useMenu from '~/hooks/use-menu'
 import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
@@ -168,7 +169,8 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
         resourceId: data._id,
         resource: data
       })
-    }
+    },
+    onError: useHandleErrorAlert()
   })
 
   const handleAttachmentUpdate = useCallback(
