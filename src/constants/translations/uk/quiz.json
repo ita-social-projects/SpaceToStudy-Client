@@ -1,4 +1,9 @@
 {
   "finish": "Завершити",
-  "points": "Набрано балів:"
+  "points": "Набрано балів",
+  "duration": "Тривалість",
+  "attemptFinished": "Спроба завершена",
+  "questionsAnswered": "Відповідей на питання",
+  "save": "Зберегти",
+  "evaluate": "Оцінити"
 }
