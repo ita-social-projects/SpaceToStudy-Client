@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next'
 
-import { QuizViewEnum, QuizTimeLimit } from '~/types'
+import { QuizViewEnum, QuizTimeLimit, QuizAttempt } from '~/types'
 
 export const getQuizViewFields = (t: TFunction) => [
   {
@@ -33,5 +33,32 @@ export const getQuizTimeLimitFields = (t: TFunction) => [
   {
     value: QuizTimeLimit.Hour1,
     title: t('myResourcesPage.quizzes.types.Hour1')
+  }
+]
+
+export const getQuizAttemptFields = (t: TFunction) => [
+  {
+    value: QuizAttempt.NoLimit,
+    title: t('myResourcesPage.quizzes.types.NoLimit')
+  },
+  {
+    value: QuizAttempt.Attempt1,
+    title: t('myResourcesPage.quizzes.types.attempt1')
+  },
+  {
+    value: QuizAttempt.Attempt2,
+    title: t('myResourcesPage.quizzes.types.attempt2')
+  },
+  {
+    value: QuizAttempt.Attempt3,
+    title: t('myResourcesPage.quizzes.types.attempt3')
+  },
+  {
+    value: QuizAttempt.Attempt5,
+    title: t('myResourcesPage.quizzes.types.attempt5')
+  },
+  {
+    value: QuizAttempt.Attempt10,
+    title: t('myResourcesPage.quizzes.types.attempt10')
   }
 ]

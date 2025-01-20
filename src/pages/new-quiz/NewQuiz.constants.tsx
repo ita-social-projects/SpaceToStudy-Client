@@ -14,7 +14,8 @@ import {
   QuizSettings,
   QuizViewEnum,
   QuizTabsEnum,
-  QuizTimeLimit
+  QuizTimeLimit,
+  QuizAttempt
 } from '~/types'
 
 export interface QuizContentProps {
@@ -64,5 +65,6 @@ export const initialSettings = {
   scoredResponses: false,
   correctAnswers: false,
   shuffle: false,
-  timeLimit: QuizTimeLimit.NoLimit
+  timeLimit: QuizTimeLimit.NoLimit,
+  attemptLimit: QuizAttempt.NoLimit
 }

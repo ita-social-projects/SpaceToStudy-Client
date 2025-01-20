@@ -1,6 +1,7 @@
 import {
   QuizTimeLimit,
   QuizViewEnum,
+  QuizAttempt,
   ResourcesTypesEnum as ResourceType
 } from '~/types'
 
@@ -17,7 +18,8 @@ export const defaultResponse = {
     scoredResponses: false,
     correctAnswers: false,
     shuffle: false,
-    timeLimit: QuizTimeLimit.Minute15
+    timeLimit: QuizTimeLimit.Minute15,
+    attemptLimit: QuizAttempt.NoLimit
   },
   resourceType: ResourceType.Quiz,
   createdAt: '',

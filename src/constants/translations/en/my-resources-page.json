@@ -80,7 +80,12 @@
       "Minute15": "15 minutes",
       "Minute30": "30 minutes",
       "Minute45": "45 minutes",
-      "Hour1": "1 hour"
+      "Hour1": "1 hour",
+      "attempt1": "1 attempt",
+      "attempt2": "2 attempts",
+      "attempt3": "3 attempts",
+      "attempt5": "5 attempts",
+      "attempt10": "10 attempts"
     }
   },
   "questions": {

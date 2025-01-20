@@ -21,7 +21,8 @@ import { snackbarVariants } from '~/constants'
 import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
   getQuizViewFields,
-  getQuizTimeLimitFields
+  getQuizTimeLimitFields,
+  getQuizAttemptFields
 } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 import {
@@ -35,7 +36,8 @@ import {
   QuizTabsEnum,
   ComponentEnum,
   QuizSettings,
-  ResourcesTypesEnum
+  ResourcesTypesEnum,
+  QuizAttempt
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
@@ -138,6 +140,10 @@ const QuizSettingsContainer = ({
     handleNonInputValueChange('timeLimit', value)
   }
 
+  const onAttemptChange = (value: QuizAttempt) => {
+    handleNonInputValueChange('attemptLimit', value)
+  }
+
   const isDisabled = (!id && !title) || !questions.length
 
   const checked = data.view ? true : false
@@ -232,10 +238,10 @@ const QuizSettingsContainer = ({
           title={t('myResourcesPage.quizzes.attemptsLimits')}
         >
           <AppSelect
-            fields={getQuizTimeLimitFields(t)}
-            setValue={onTimeLimitChange}
+            fields={getQuizAttemptFields(t)}
+            setValue={onAttemptChange}
             sx={styles.select}
-            value={data.timeLimit}
+            value={data.attemptLimit}
           />
         </SettingItem>
       </Box>

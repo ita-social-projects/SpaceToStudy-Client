@@ -5,7 +5,8 @@ import {
   QuizViewEnum,
   ResourceBase,
   Category,
-  QuizTimeLimit
+  QuizTimeLimit,
+  QuizAttempt
 } from '~/types'
 
 export interface QuizSettings {
@@ -15,6 +16,7 @@ export interface QuizSettings {
   correctAnswers: boolean
   shuffle: boolean
   timeLimit: QuizTimeLimit
+  attemptLimit: QuizAttempt
 }
 
 export interface Quiz extends CommonEntityFields, ResourceBase {
