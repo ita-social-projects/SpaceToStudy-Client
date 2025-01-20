@@ -21,7 +21,6 @@ import useMutation from '~/hooks/use-mutation'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
 
-import { getErrorMessage } from '~/utils/error-with-message'
 import { createUrlPath } from '~/utils/helper-functions'
 import { snackbarVariants } from '~/constants'
 import {
@@ -45,8 +44,6 @@ import {
   type CategoryNameInterface
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
-import { type ResponseError } from '~/exceptions'
 import useHandleErrorAlert from '~/hooks/use-handle-error-alert'
 
 const CreateOrEditLesson = () => {
@@ -56,23 +53,7 @@ const CreateOrEditLesson = () => {
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const { id } = useParams()
-
-  const handleResponseError = useCallback(
-    (error: ResponseError) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: {
-            text: getErrorKey(error),
-            options: {
-              message: getErrorMessage(error.message)
-            }
-          }
-        })
-      )
-    },
-    [dispatch]
-  )
+  const handleErrorAlert = useHandleErrorAlert()
 
   const navigateToLessonTab = () => {
     navigate(
@@ -196,9 +177,9 @@ const CreateOrEditLesson = () => {
 
   useEffect(() => {
     if (error) {
-      handleResponseError(error)
+      handleErrorAlert(error)
     }
-  }, [error, handleResponseError])
+  }, [handleErrorAlert, error])
 
   const attachmentsList = data.attachments?.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>
