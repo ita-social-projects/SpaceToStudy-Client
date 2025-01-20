@@ -36,7 +36,7 @@ describe('EditAttachmentModal component', () => {
         <EditAttachmentModal
           attachment={attachmentMock}
           closeModal={closeModalMock}
-          updateAttachment={updateAttachment}
+          onAttachmentUpdate={updateAttachment}
         />
       )
     })
