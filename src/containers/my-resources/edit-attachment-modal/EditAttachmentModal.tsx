@@ -19,6 +19,7 @@ import {
   ButtonTypeEnum,
   CategoryNameInterface,
   ComponentEnum,
+  CooperationSliceAttachment,
   EditAttachmentForm,
   UpdateAttachmentParams
 } from '~/types'
@@ -28,7 +29,7 @@ import { InputAdornment } from '@mui/material'
 
 interface EditAttachmentModalProps {
   closeModal: () => void
-  attachment: Attachment
+  attachment: CooperationSliceAttachment | Attachment
   onAttachmentUpdate: (params: UpdateAttachmentParams) => void
 }
 

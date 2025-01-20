@@ -1,15 +1,24 @@
-import { Attachment, EditAttachmentForm } from '~/types'
+import type {
+  Attachment,
+  CooperationSliceAttachment,
+  EditAttachmentForm
+} from '~/types'
 import { parseFileName } from '~/utils/helper-functions'
 import { emptyField, textField } from '~/utils/validations/common'
 
 export const getInitialValues = (
-  attachment: Attachment
+  attachment: Attachment | CooperationSliceAttachment
 ): EditAttachmentForm => {
   const { fileExtension, fileName } = parseFileName(attachment.fileName)
 
+  const category =
+    typeof attachment.category === 'string'
+      ? attachment.category
+      : attachment.category?._id
+
   return {
     fileName: fileName ?? '',
-    category: attachment.category?._id ?? null,
+    category: category ?? null,
     description: attachment.description ?? '',
     fileExtension: fileExtension ?? ''
   }

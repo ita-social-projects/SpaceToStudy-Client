@@ -45,7 +45,8 @@ import {
   CourseResourceEventType,
   CourseSectionEventType,
   ResourceAvailability,
-  ResourcesTypesEnum
+  ResourcesTypesEnum,
+  CooperationSliceAttachment
 } from '~/types'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { ResourceService } from '~/services/resource-service'
@@ -190,7 +191,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
         openModal({
           component: (
             <EditAttachmentModal
-              attachment={resource as Attachment}
+              attachment={resource as CooperationSliceAttachment}
               closeModal={closeModal}
               onAttachmentUpdate={handleAttachmentUpdate}
             />

@@ -13,6 +13,11 @@ export interface Attachment extends CommonEntityFields, ResourceBase {
   size: number
 }
 
+export interface CooperationSliceAttachment
+  extends Omit<Attachment, 'category'> {
+  category: string | null
+}
+
 export interface UpdateAttachmentData {
   fileName?: string
   description?: string
