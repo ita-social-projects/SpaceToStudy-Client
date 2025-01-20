@@ -19,7 +19,10 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import { snackbarVariants } from '~/constants'
 import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
-import { getQuizViewFields, getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
+import {
+  getQuizViewFields,
+  getQuizTimeLimitFields
+} from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 import {
   ButtonTypeEnum,
@@ -132,12 +135,12 @@ const QuizSettingsContainer = ({
   }
 
   const onTimeLimitChange = (value: QuizTimeLimit) => {
-    handleNonInputValueChange('time', value)
+    handleNonInputValueChange('timeLimit', value)
   }
 
   const isDisabled = (!id && !title) || !questions.length
 
-  console.log('data', data)
+  const checked = data.view ? true : false
 
   return (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
@@ -201,7 +204,7 @@ const QuizSettingsContainer = ({
           title={t('myResourcesPage.quizzes.correctAnswers')}
         >
           <Switch
-            checked={data.view}
+            checked={checked}
             data-testid='correctAnswers-switch'
             onChange={handleInputChange('correctAnswers')}
           />
@@ -220,7 +223,7 @@ const QuizSettingsContainer = ({
             fields={getQuizTimeLimitFields(t)}
             setValue={onTimeLimitChange}
             sx={styles.select}
-            value={data.view}
+            value={data.timeLimit}
           />
         </SettingItem>
 
@@ -232,7 +235,7 @@ const QuizSettingsContainer = ({
             fields={getQuizTimeLimitFields(t)}
             setValue={onTimeLimitChange}
             sx={styles.select}
-            value={data.view}
+            value={data.timeLimit}
           />
         </SettingItem>
       </Box>
