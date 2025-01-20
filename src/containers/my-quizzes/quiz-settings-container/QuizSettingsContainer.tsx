@@ -19,11 +19,12 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import { snackbarVariants } from '~/constants'
 import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
-import { getQuizViewFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
+import { getQuizViewFields, getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 import {
   ButtonTypeEnum,
   QuizViewEnum,
+  QuizTimeLimit,
   UpdateQuizParams,
   ErrorResponse,
   CreateQuizParams,
@@ -130,7 +131,13 @@ const QuizSettingsContainer = ({
     handleNonInputValueChange('view', value)
   }
 
+  const onTimeLimitChange = (value: QuizTimeLimit) => {
+    handleNonInputValueChange('time', value)
+  }
+
   const isDisabled = (!id && !title) || !questions.length
+
+  console.log('data', data)
 
   return (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
@@ -189,18 +196,47 @@ const QuizSettingsContainer = ({
             onChange={handleInputChange('scoredResponses')}
           />
         </SettingItem>
-
         <SettingItem
           subtitle={t('myResourcesPage.quizzes.correctAnswersDesc')}
           title={t('myResourcesPage.quizzes.correctAnswers')}
         >
           <Switch
-            checked={data.correctAnswers}
+            checked={data.view}
             data-testid='correctAnswers-switch'
             onChange={handleInputChange('correctAnswers')}
           />
         </SettingItem>
       </Box>
+
+      <Box>
+        <Typography sx={styles.title}>
+          {t('myResourcesPage.quizzes.attemptsAndTimeLimits')}
+        </Typography>
+        <SettingItem
+          subtitle={t('myResourcesPage.quizzes.timeLimitDesc')}
+          title={t('myResourcesPage.quizzes.timeLimit')}
+        >
+          <AppSelect
+            fields={getQuizTimeLimitFields(t)}
+            setValue={onTimeLimitChange}
+            sx={styles.select}
+            value={data.view}
+          />
+        </SettingItem>
+
+        <SettingItem
+          subtitle={t('myResourcesPage.quizzes.attemptsLimitsDesc')}
+          title={t('myResourcesPage.quizzes.attemptsLimits')}
+        >
+          <AppSelect
+            fields={getQuizTimeLimitFields(t)}
+            setValue={onTimeLimitChange}
+            sx={styles.select}
+            value={data.view}
+          />
+        </SettingItem>
+      </Box>
+
       <Box sx={styles.buttonContainer}>
         <AppButton disabled={isDisabled} type={ButtonTypeEnum.Submit}>
           {t('common.apply')}

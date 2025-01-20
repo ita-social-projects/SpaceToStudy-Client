@@ -24,6 +24,14 @@ export enum QuizViewEnum {
   Scroll = 'Scroll'
 }
 
+export enum QuizTimeLimit {
+  NoLimit = 'No limit',
+  Minute15 = '15 minutes',
+  Minute30 = '30 minutes',
+  Minute45 = '45 minutes',
+  Hour1 = '1 hour',
+}
+
 export enum QuizTabsEnum {
   Edit = 'edit',
   Quizzes = 'quizzes',
