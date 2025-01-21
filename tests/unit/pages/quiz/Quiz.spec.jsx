@@ -81,8 +81,7 @@ describe('QuizPage with useQuery', () => {
   it('should render loading state', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: true,
-      isError: false
+      isLoading: true
     })
 
     renderWithProviders(<Quiz />)
@@ -94,8 +93,7 @@ describe('QuizPage with useQuery', () => {
   it('should render quiz page with data', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
     renderWithProviders(<Quiz />)
@@ -112,8 +110,7 @@ describe('QuizPage with useQuery', () => {
   it('should render empty state for empty data', () => {
     useQuery.mockReturnValue({
       data: mockQuizEmpty,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
     renderWithProviders(<Quiz />)
@@ -125,8 +122,7 @@ describe('QuizPage with useQuery', () => {
   it('should update checkbox value', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
     renderWithProviders(<Quiz />)
@@ -144,8 +140,7 @@ describe('QuizPage with useQuery', () => {
   it('should display correct answers after finishing quiz', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
     renderWithProviders(<Quiz />)
@@ -162,13 +157,16 @@ describe('QuizPage with useQuery', () => {
   })
 
   it('should render points and correctness when finished', () => {
+    const preloadedState = { appMain: { userRole: 'tutor' } }
+
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
-    renderWithProviders(<Quiz />)
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
 
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
@@ -185,8 +183,7 @@ describe('QuizPage with useQuery', () => {
   it('should render question text', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
     renderWithProviders(<Quiz />)
