@@ -12,5 +12,6 @@
   "BAD_RESET_TOKEN": "Час вийшов, спробуйте знову",
   "DOCUMENT_NOT_FOUND": "Не знайдено",
   "UNKNOWN_ERROR": "Щось пішло не так",
-  "VALIDATION_ERROR": "{{message}}"
+  "VALIDATION_ERROR": "{{message}}",
+  "FORBIDDEN": "У вас немає дозволу на доступ до цього ресурсу"
 }
