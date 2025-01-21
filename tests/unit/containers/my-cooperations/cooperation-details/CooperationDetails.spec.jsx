@@ -189,7 +189,7 @@ vi.mock(
 
 describe('CooperationDetails', () => {
   mockAxiosClient
-    .onGet(`${URLs.cooperations.get}/${cooperationID}`)
+    .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
     .reply(200, cooperationMock)
 
   beforeEach(async () => {
@@ -205,9 +205,9 @@ describe('CooperationDetails', () => {
     expect(notesButton).toBeInTheDocument()
   })
 
-  it('should show cooperation status and title', async () => {
-    const title = await screen.findByText(cooperationMock.title)
-    const statusChip = await screen.findByText(cooperationMock.status)
+  it('should show cooperation status and title', () => {
+    const title = screen.getByText(cooperationMock.title)
+    const statusChip = screen.getByText(cooperationMock.status)
 
     expect(title).toBeInTheDocument()
     expect(statusChip).toBeInTheDocument()

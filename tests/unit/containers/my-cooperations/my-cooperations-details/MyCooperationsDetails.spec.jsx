@@ -48,7 +48,9 @@ vi.mock('react-router-dom', async () => ({
 describe('MyCooperationsDetails component', () => {
   beforeEach(async () => {
     await waitFor(() => {
-      mockAxiosClient.onGet(URLs.cooperations.get).reply(200, mockedOffer)
+      mockAxiosClient
+        .onGet(URLs.cooperations.getById.replace(':id', ''))
+        .reply(200, mockedOffer)
 
       renderWithProviders(<MyCooperationsDetails />)
     })
