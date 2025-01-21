@@ -4,7 +4,6 @@ import { vi } from 'vitest'
 import CreateOrEditLesson from '~/pages/create-or-edit-lesson/CreateOrEditLesson'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-
 const mockParams = {
   id: 'id'
 }
@@ -37,8 +36,8 @@ describe('CreateOrEditLesson with id', () => {
       .reply(204)
   })
 
-  beforeEach(() => {
-    renderWithProviders(<CreateOrEditLesson />)
+  beforeEach(async () => {
+    await renderWithProviders(<CreateOrEditLesson />)
   })
 
   it('should display the lesson title and description when the lesson is loaded', async () => {
