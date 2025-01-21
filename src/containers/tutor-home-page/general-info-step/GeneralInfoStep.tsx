@@ -11,7 +11,7 @@ import LocationSelectionInputs from '~/components/location-selection-inputs/Loca
 import { validations } from '~/components/user-steps-wrapper/constants'
 import { styles } from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep.styles'
 import { useStepContext } from '~/context/step-context'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useForm from '~/hooks/use-form'
 import { useAppSelector } from '~/hooks/use-redux'
@@ -28,7 +28,6 @@ type UserName = { firstName: string; lastName: string }
 
 const GeneralInfoStep = ({
   btnsBox,
-  isUserFetched,
   setIsUserFetched
 }: GeneralInfoStepProps) => {
   const { t } = useTranslation()
@@ -56,7 +55,7 @@ const GeneralInfoStep = ({
   })
 
   const getUserById = useCallback(
-    () => userService.getUserById(userId, userRole as UserRole),
+    () => userService.getUserByIdWithBaseService(userId, userRole as UserRole),
     [userId, userRole]
   )
 
@@ -70,17 +69,19 @@ const GeneralInfoStep = ({
     [handleNonInputValueChange, setIsUserFetched]
   )
 
-  const { loading: userLoading, fetchData: fetchUser } = useAxios({
-    service: getUserById,
-    defaultResponse: { firstName: '', lastName: '' },
-    fetchOnMount: false,
-    onResponse: updateUserName
+  const { isLoading: userLoading, data: userResponse } = useQuery({
+    queryFn: getUserById,
+    queryKey: ['user', userId],
+    options: {
+      staleTime: Infinity
+    }
   })
 
   useEffect(() => {
-    !isUserFetched && void fetchUser()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    if (userResponse) {
+      updateUserName(userResponse)
+    }
+  }, [userResponse])
 
   useEffect(() => {
     handleGeneralInfo({ data, errors })
