@@ -3,7 +3,7 @@ import { screen, fireEvent, act } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import Quiz from '~/pages/quiz/Quiz'
 import useQuery from '~/hooks/use-query'
-import { ResourcesTypesEnum as ResourceType } from '~/types'
+import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
 
 vi.mock('~/hooks/use-query')
 
@@ -157,7 +157,7 @@ describe('QuizPage with useQuery', () => {
   })
 
   it('should render points and correctness when finished', () => {
-    const preloadedState = { appMain: { userRole: 'tutor' } }
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Tutor } }
 
     useQuery.mockReturnValue({
       data: mockQuiz,
@@ -192,5 +192,42 @@ describe('QuizPage with useQuery', () => {
       'What is the difference between function expression and function declaration?'
     )
     expect(questionText).toBeInTheDocument()
+  })
+
+  it('should render timer for the active quiz for student', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false
+    })
+
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+
+    const timer = screen.getByTestId('TimerOutlinedIcon')
+    expect(timer).toBeInTheDocument()
+  })
+
+  it('should render duration for the finished quiz for student', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false
+    })
+
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+
+    const finishButton = screen.getByText('quiz.finish')
+    fireEvent.click(finishButton)
+
+    const duration = screen.getByText(/quiz\.duration:/i)
+    expect(duration).toBeInTheDocument()
+
+    expect(duration).toBeInTheDocument()
   })
 })

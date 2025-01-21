@@ -13,7 +13,7 @@ type QuizInfoProps = {
 const QuizInfo = ({ title, firstColumn, secondColumn }: QuizInfoProps) => {
   return (
     <Box sx={styles.wrapper}>
-      <Typography sx={styles.title}>{title}:</Typography>
+      <Typography sx={styles.title}>{`${title}:`}</Typography>
       <Box sx={styles.infoWrapper}>
         <Typography sx={styles.info}>{firstColumn}</Typography>
         {secondColumn && (
