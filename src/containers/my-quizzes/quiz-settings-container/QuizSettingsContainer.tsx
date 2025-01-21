@@ -146,7 +146,7 @@ const QuizSettingsContainer = ({
 
   const isDisabled = (!id && !title) || !questions.length
 
-  const checked = data.view ? true : false
+  const checked = !!data.view
 
   return (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
@@ -227,6 +227,7 @@ const QuizSettingsContainer = ({
         >
           <AppSelect
             fields={getQuizTimeLimitFields(t)}
+            label={'Time limit'}
             setValue={onTimeLimitChange}
             sx={styles.select}
             value={data.timeLimit}
@@ -239,6 +240,7 @@ const QuizSettingsContainer = ({
         >
           <AppSelect
             fields={getQuizAttemptFields(t)}
+            label={'Attempts limit'}
             setValue={onAttemptChange}
             sx={styles.select}
             value={data.attemptLimit}

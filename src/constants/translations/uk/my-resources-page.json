@@ -58,6 +58,7 @@
     "savePreviousQuestion": "Збережіть попереднє питання, будь ласка",
     "addQuestion": "Додати питання",
     "settingsPointsAndAnswers": "Налаштування: Бали та відповіді",
+    "attemptsAndTimeLimits": "Спроби та обмеження часу",
     "searchInput": "Пошук тесту",
     "pointValues": "Значення балів",
     "pointValuesDesc": "Респонденти можуть бачити загальну кількість балів і бали, отримані за кожне запитання",
@@ -81,7 +82,12 @@
       "Minute15": "15 хвилин",
       "Minute30": "30 хвилин",
       "Minute45": "45 хвилин",
-      "Hour1": "1 година"
+      "Hour1": "1 година",
+      "attempt1": "1 спроба",
+      "attempt2": "2 спроби",
+      "attempt3": "3 спроби",
+      "attempt5": "5 спроб",
+      "attempt10": "10 спроб"
     }
   },
   "questions": {
