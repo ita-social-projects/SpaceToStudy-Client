@@ -15,7 +15,6 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
-import { useAppDispatch } from '~/hooks/use-redux'
 import useQuery from '~/hooks/use-query'
 import useMutation from '~/hooks/use-mutation'
 import useForm from '~/hooks/use-form'
@@ -43,17 +42,15 @@ import {
   ResourcesTabsEnum,
   type CategoryNameInterface
 } from '~/types'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import useHandleErrorAlert from '~/hooks/use-handle-error-alert'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
 
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const { id } = useParams()
-  const handleErrorAlert = useHandleErrorAlert()
+  const { handleErrorAlert, handleAlert } = useSnackbarAlert()
 
   const navigateToLessonTab = () => {
     navigate(
@@ -62,12 +59,11 @@ const CreateOrEditLesson = () => {
   }
 
   const handleResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: id ? 'lesson.successEditedLesson' : 'lesson.successAddedLesson'
-      })
-    )
+    handleAlert({
+      message: id ? 'lesson.successEditedLesson' : 'lesson.successAddedLesson',
+      severity: snackbarVariants.success
+    })
+
     navigateToLessonTab()
   }
 
@@ -136,7 +132,9 @@ const CreateOrEditLesson = () => {
   const { mutate: fetchAddLesson } = useMutation({
     mutationFn: addLesson,
     onSuccess: handleResponse,
-    onError: useHandleErrorAlert()
+    onError: (error) => {
+      handleErrorAlert(error)
+    }
   })
 
   const getLesson = useCallback(() => {
@@ -163,7 +161,9 @@ const CreateOrEditLesson = () => {
   const { mutate: fetchEditedLesson } = useMutation({
     mutationFn: editLesson,
     onSuccess: handleResponse,
-    onError: useHandleErrorAlert()
+    onError: (error) => {
+      handleErrorAlert(error)
+    }
   })
 
   useEffect(() => {

@@ -53,7 +53,7 @@ import { ResourceService } from '~/services/resource-service'
 import { createUrlPath } from '~/utils/helper-functions'
 import { useModalContext } from '~/context/modal-context'
 
-import useHandleErrorAlert from '~/hooks/use-handle-error-alert'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import useMutation from '~/hooks/use-mutation'
 import useMenu from '~/hooks/use-menu'
 import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
@@ -75,6 +75,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { openModal, closeModal } = useModalContext()
+  const { handleErrorAlert } = useSnackbarAlert()
 
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
@@ -171,7 +172,9 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
         resource: data
       })
     },
-    onError: useHandleErrorAlert()
+    onError: (error) => {
+      handleErrorAlert(error)
+    }
   })
 
   const handleAttachmentUpdate = useCallback(
