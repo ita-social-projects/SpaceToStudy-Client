@@ -75,29 +75,24 @@ const CooperationDetails = () => {
     }
   }, [defaultTab, isTabInSearchParams, setSearchParams])
 
-  const responseError = useCallback(
-    () => navigate(errorRoutes.notFound.path),
-    [navigate]
-  )
-
   const getCooperation = useCallback(
     () => cooperationService.getCooperationById(id),
     [id]
   )
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryFn: getCooperation,
-    queryKey: ['cooperation'],
+    queryKey: ['cooperation', id],
     options: {
       initialData: defaultResponse
     }
   })
 
   useEffect(() => {
-    if (isError && error) {
-      responseError()
+    if (isError) {
+      navigate(errorRoutes.notFound.path)
     }
-  }, [responseError, isError, error])
+  }, [isError, navigate])
 
   useEffect(() => {
     dispatch(setCooperationSections(data.sections))
