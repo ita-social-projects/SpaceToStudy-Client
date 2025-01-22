@@ -13,12 +13,9 @@ import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/A
 import DropdownButton from '~/components/dropdown-add-btn/DropdownButton'
 
 import { snackbarVariants } from '~/constants'
-import {
-  Categories,
-  CategoryNameInterface,
-  ComponentEnum,
-  ErrorResponse
-} from '~/types'
+import { Categories, CategoryNameInterface, ComponentEnum } from '~/types'
+import { getErrorKey } from '~/utils/get-error-key'
+import { ResponseError } from '~/exceptions'
 import { styles } from '~/containers/category-dropdown/CategoryDropdown.styles'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import {
@@ -26,7 +23,6 @@ import {
   isOptionEqualToValue
 } from '~/containers/category-dropdown/CategoryDropdown.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 interface CategoryDropdownInterface {
   category: string | null
@@ -45,7 +41,7 @@ const CategoryDropdown = ({
   const { openModal, closeModal } = useModalContext()
 
   const handleResponseError = useCallback(
-    (error?: ErrorResponse) => {
+    (error?: ResponseError) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
