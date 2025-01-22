@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -21,9 +22,11 @@ import styles from '~/pages/quiz/Quiz.styles'
 import { defaultResponses } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
-import { ComponentEnum, QuizViewEnum } from '~/types'
+import { ComponentEnum, QuizViewEnum, UserRoleEnum } from '~/types'
 
 const QuizPage = () => {
+  const { userRole } = useAppSelector((state) => state.appMain)
+
   const { quizId } = useParams()
   const { t } = useTranslation()
 
@@ -57,7 +60,7 @@ const QuizPage = () => {
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
-
+  console.log('quiz', quiz)
   const {
     settings: { pointValues, scoredResponses, correctAnswers, view },
     description,
@@ -99,24 +102,30 @@ const QuizPage = () => {
     />
   )
 
+  const isStudent = userRole === UserRoleEnum.Student
+
+  const finishButton = !isFinished && isStudent && (
+    <Box sx={styles.finishBlock.root}>
+      <AppButton onClick={handleFinish} sx={styles.finishBlock.button}>
+        {t('quiz.finish')}
+      </AppButton>
+    </Box>
+  )
+
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
       <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
         <QuizHeader
           description={description}
           isFinished={isFinished}
+          isGraded={showPoints}
           points={points || 0}
-          showPoints={showPoints}
           title={title}
           totalPoints={items.length}
         />
         <Divider sx={styles.divider} />
         {questionsBlock}
-        <Box sx={styles.finishBlock.root}>
-          <AppButton onClick={handleFinish} sx={styles.finishBlock.button}>
-            {t('quiz.finish')}
-          </AppButton>
-        </Box>
+        {finishButton}
       </Box>
     </PageWrapper>
   )

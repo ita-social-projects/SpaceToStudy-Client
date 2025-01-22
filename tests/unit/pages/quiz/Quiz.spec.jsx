@@ -138,12 +138,16 @@ describe('QuizPage with useQuery', () => {
   })
 
   it('should display correct answers after finishing quiz', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+
     useQuery.mockReturnValue({
       data: mockQuiz,
       isLoading: false
     })
 
-    renderWithProviders(<Quiz />)
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
 
     const finishButton = screen.getByText('quiz.finish')
     act(() => {
@@ -157,7 +161,7 @@ describe('QuizPage with useQuery', () => {
   })
 
   it('should render points and correctness when finished', () => {
-    const preloadedState = { appMain: { userRole: UserRoleEnum.Tutor } }
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
 
     useQuery.mockReturnValue({
       data: mockQuiz,
@@ -171,7 +175,13 @@ describe('QuizPage with useQuery', () => {
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
 
-    const pointsLabel = screen.getByText('quiz.points')
+    const pointsLabel = screen.getByText((content, element) => {
+      return (
+        element?.textContent?.includes('quiz.points') &&
+        element.tagName.toLowerCase() === 'p'
+      )
+    })
+
     const answersCorrectnessLabel = screen.getByText(
       'myResourcesPage.quizzes.correctAnswers'
     )
