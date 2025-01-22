@@ -175,7 +175,7 @@ describe('QuizPage with useQuery', () => {
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
 
-    const pointsLabel = screen.getByText((content, element) => {
+    const pointsLabel = screen.getByText((_, element) => {
       return (
         element?.textContent?.includes('quiz.points') &&
         element.tagName.toLowerCase() === 'p'
