@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
@@ -14,23 +14,36 @@ import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-qu
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
 import AppButton from '~/components/app-button/AppButton'
 
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useForm from '~/hooks/use-form'
 
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
 import styles from '~/pages/quiz/Quiz.styles'
 import { defaultResponses } from '~/constants'
+import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
+import { errorRoutes } from '~/router/constants/errorRoutes'
 
-import { ComponentEnum, QuizViewEnum, Quiz } from '~/types'
+import { ComponentEnum, QuizViewEnum } from '~/types'
 
 const QuizPage = () => {
   const { quizId } = useParams()
+  const navigate = useNavigate()
   const { t } = useTranslation()
 
   const [isFinished, setIsFinished] = useState(false)
 
-  const getQuiz = useCallback(() => ResourceService.getQuiz(quizId), [quizId])
+  const getQuiz = useCallback(() => {
+    if (quizId) {
+      return ResourceService.getQuizQuery(quizId)
+    }
+    return defaultQuizResponse
+  }, [quizId])
+
+  const responseError = useCallback(
+    () => navigate(errorRoutes.notFound.path),
+    [navigate]
+  )
 
   const { handleInputChange, handleNonInputValueChange, data } = useForm<
     Record<string, string | string[]>
@@ -41,18 +54,31 @@ const QuizPage = () => {
   const handleNonInputChange = (key: string) => (value: string | string[]) =>
     handleNonInputValueChange(key, value)
 
-  const { loading, response } = useAxios<Quiz, string>({
-    service: getQuiz
+  const {
+    data: quiz,
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: ['quiz', quizId],
+    queryFn: getQuiz
   })
 
-  if (loading) return <Loader pageLoad />
+  useEffect(() => {
+    if (isError) {
+      responseError()
+    }
+  }, [isError, responseError])
+
+  if (isLoading || !quiz) {
+    return <Loader pageLoad />
+  }
 
   const {
     settings: { pointValues, scoredResponses, correctAnswers, view },
     description,
     title,
     items
-  } = response
+  } = quiz
 
   const handleFinish = () => setIsFinished(true)
 

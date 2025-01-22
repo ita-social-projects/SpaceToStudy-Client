@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import { ResourceService } from '~/services/resource-service'
 import useForm from '~/hooks/use-form'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal.styles'

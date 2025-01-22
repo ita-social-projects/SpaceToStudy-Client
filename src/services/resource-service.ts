@@ -84,6 +84,15 @@ export const ResourceService = {
       })
     })
   },
+  getQuizQuery: async (id: string) => {
+    return baseService.request<Quiz>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.quizzes.getById,
+        parameters: { id }
+      })
+    })
+  },
   getQuiz: async (id?: string): Promise<AxiosResponse<Quiz>> =>
     await axiosClient.get(createUrlPath(URLs.quizzes.get, id)),
   addQuiz: async (data?: CreateQuizParams): Promise<AxiosResponse> =>

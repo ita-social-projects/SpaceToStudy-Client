@@ -7,7 +7,7 @@ import Divider from '@mui/material/Divider'
 
 import AsyncAutocomplete, {
   AsyncAutocompleteProps
-} from '~/components/async-autocomlete/AsyncAutocomplete'
+} from '~/components/async-autocomplete/AsyncAutocomplete'
 
 import { styles } from '~/containers/my-courses/course-toolbar/CourseToolbar.style'
 

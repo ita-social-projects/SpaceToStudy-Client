@@ -26,7 +26,7 @@ vi.mock('~/services/subject-service', () => ({
   }
 }))
 
-vi.mock('~/components/async-autocomlete/AsyncAutocomplete', () => ({
+vi.mock('~/components/async-autocomplete/AsyncAutocomplete', () => ({
   __esModule: true,
   default: ({ onChange, ...props }) => (
     <input

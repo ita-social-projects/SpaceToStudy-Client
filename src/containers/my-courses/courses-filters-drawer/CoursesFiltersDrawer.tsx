@@ -8,7 +8,7 @@ import Box from '@mui/material/Box'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import FilterInput from '~/components/filter-input/FilterInput'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer.styles'

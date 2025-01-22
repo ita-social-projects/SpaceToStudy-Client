@@ -34,3 +34,5 @@ const Chip = forwardRef<HTMLDivElement, ChipProps>((props, reference) => {
 Chip.displayName = 'Chip'
 
 export default Chip
+
+export { type ChipColor } from './types'

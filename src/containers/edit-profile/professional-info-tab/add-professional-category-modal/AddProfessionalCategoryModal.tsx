@@ -25,7 +25,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 import {
   professionalSubjectTemplate,
   userMainSubjectTemplate
