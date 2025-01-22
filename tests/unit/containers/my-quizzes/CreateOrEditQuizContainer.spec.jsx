@@ -5,6 +5,7 @@ import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-qu
 
 const setTitle = vi.fn()
 const setDescription = vi.fn()
+const category = 'mock-category'
 
 describe('CreateOrEditQuizContainer', () => {
   beforeEach(async () => {
@@ -66,5 +67,16 @@ describe('CreateOrEditQuizContainer', () => {
     const formTitle = screen.getByText('myResourcesPage.questions.add')
 
     expect(formTitle).toBeInTheDocument()
+  })
+})
+
+describe('CreateOrEditQuizContainer', () => {
+  beforeEach(() => {
+    renderWithProviders(<CreateOrEditQuizContainer category={category} />)
+  })
+
+  it('should save quiz with category', () => {
+    const saveBtn = screen.getByText('common.save')
+    fireEvent.click(saveBtn)
   })
 })
