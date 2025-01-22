@@ -14,25 +14,17 @@ const Timer = ({ label, isTimeEnds }: TimerProps) => {
       color={isTimeEnds ? 'error' : 'success'}
       icon={
         <TimerOutlined
-          sx={{
-            fill: isTimeEnds ? 'rgba(205, 54, 54, 1)' : 'rgba(44, 124, 50, 1)'
-          }}
+          sx={isTimeEnds ? styles.errorTimer : styles.successTimer}
         />
       }
       label={label}
       size='medium'
       sx={{
-        backgroundColor: isTimeEnds
-          ? 'rgba(250, 238, 238, 1)'
-          : 'rgba(226, 242, 220, 1)',
-        borderColor: isTimeEnds
-          ? 'rgba(205, 54, 54, 1)'
-          : 'rgba(87, 154, 64, 1)',
         ...styles.chip,
-        padding: '6px 8px',
+        ...(isTimeEnds ? styles.errorChip : styles.successChip),
         '& .MuiChip-label': {
-          color: isTimeEnds ? 'rgba(82, 22, 22, 1)' : 'rgba(44, 77, 32, 1)',
-          ...styles.label
+          ...styles.label,
+          ...(isTimeEnds ? styles.errorLabel : styles.successLabel)
         }
       }}
       variant='outlined'
