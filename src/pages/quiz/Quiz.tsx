@@ -60,7 +60,7 @@ const QuizPage = () => {
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
-  console.log('quiz', quiz)
+
   const {
     settings: { pointValues, scoredResponses, correctAnswers, view },
     description,
