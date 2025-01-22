@@ -26,10 +26,7 @@ interface GeneralInfoStepProps {
 
 type UserName = { firstName: string; lastName: string }
 
-const GeneralInfoStep = ({
-  btnsBox,
-  setIsUserFetched
-}: GeneralInfoStepProps) => {
+const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleGeneralInfo } = useStepContext()
@@ -63,10 +60,8 @@ const GeneralInfoStep = ({
     (user: UserName) => {
       handleNonInputValueChange('firstName', user.firstName)
       handleNonInputValueChange('lastName', user.lastName)
-
-      setIsUserFetched(true)
     },
-    [handleNonInputValueChange, setIsUserFetched]
+    [handleNonInputValueChange]
   )
 
   const { isLoading: userLoading, data: userResponse } = useQuery({
