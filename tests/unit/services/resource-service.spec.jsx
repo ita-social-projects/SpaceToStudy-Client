@@ -89,4 +89,5 @@ describe('resourseService tests', () => {
     expect(mockAxiosClient.history.post[0].url).toBe(URLs.resources.resourcesCategories.post)
     expect(mockAxiosClient.history.post[0].data).toBe(JSON.stringify(params))
     expect(response).toEqual(mockResponse)
+  })
 })
