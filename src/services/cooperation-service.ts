@@ -2,16 +2,14 @@ import { axiosClient } from '~/plugins/axiosClient'
 import { AxiosResponse } from 'axios'
 
 import { URLs } from '~/constants/request'
-import {
+import type {
   CreateCooperationsParams,
   GetCooperationsParams,
   UpdateCooperationsParams,
   CreateOrUpdateNoteParams,
-  Offer,
-  MyCooperationDetails,
   UpdateCooperationsSections,
-  type Cooperation,
-  type ItemsWithCount
+  Cooperation,
+  ItemsWithCount
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -35,15 +33,29 @@ export const cooperationService = {
     await axiosClient.post(URLs.cooperations.create, data),
   updateCooperation: async (
     data: UpdateCooperationsParams | UpdateCooperationsSections
-  ): Promise<AxiosResponse> =>
-    await axiosClient.patch(
-      createUrlPath(URLs.cooperations.update, data._id),
-      data
-    ),
-  getCooperationById: async (
-    id?: string
-  ): Promise<AxiosResponse<MyCooperationDetails<Offer>>> =>
-    await axiosClient.get(createUrlPath(URLs.cooperations.get, id))
+  ) => {
+    const url = getFullUrl({
+      pathname: URLs.cooperations.updateById,
+      parameters: {
+        id: data._id
+      }
+    })
+
+    return baseService.request<void>({
+      data,
+      method: 'PATCH',
+      url
+    })
+  },
+  getCooperationById: async (id: string) => {
+    return baseService.request<Cooperation>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.cooperations.getById,
+        parameters: { id }
+      })
+    })
+  }
 }
 
 export const CooperationNotesService = {
