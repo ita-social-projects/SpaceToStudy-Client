@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import useBreakpoints from '~/hooks/use-breakpoints'
 import TitleBlock from '~/components/title-block/TitleBlock'
 import Button from '~scss-components/button/Button'
 import InputField from '~scss-components/input-field/InputField'
@@ -20,7 +19,6 @@ const FindBlock = ({ translationKey }: FindBlockProps) => {
   const [inputValue, setInputValue] = useState('')
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { isMobile } = useBreakpoints()
   const encodedInputValue = encodeURIComponent(inputValue)
   const findOffers = `${authRoutes.findOffers.path}?search=${encodedInputValue}`
 

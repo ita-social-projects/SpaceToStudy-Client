@@ -19,8 +19,7 @@ import {
   AddDocuments,
   ComponentEnum,
   UploadFileEmitter,
-  InputEnum,
-  SizeEnum
+  InputEnum
 } from '~/types'
 
 interface FileUploaderProps {

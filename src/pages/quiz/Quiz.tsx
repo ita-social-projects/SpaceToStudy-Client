@@ -106,9 +106,9 @@ const QuizPage = () => {
 
   const finishButton = !isFinished && isStudent && (
     <Box sx={styles.finishBlock.root}>
-      <AppButton onClick={handleFinish} sx={styles.finishBlock.button}>
+      <Button onClick={handleFinish} sx={styles.finishBlock.button}>
         {t('quiz.finish')}
-      </AppButton>
+      </Button>
     </Box>
   )
 

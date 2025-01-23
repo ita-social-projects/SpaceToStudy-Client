@@ -350,7 +350,7 @@ describe('AddProfessionalCategoryModal when clearing categories and subjects', (
     professionalSubjects.forEach(async (subject) => {
       await waitFor(() => expect(subject).toHaveValue(''))
     })
-    expect(submitButton).toBeDisabled()
+    expect(submitButton.parentNode).toBeDisabled()
   })
   
   it('should disable "Save changes" button when category is cleared', async () => {
@@ -363,7 +363,7 @@ describe('AddProfessionalCategoryModal when clearing categories and subjects', (
     await act(() =>
       fireEvent.change(categoryAutocomplete, { target: { value: '' } })
     )
-    expect(submitButton).toBeDisabled()
+    expect(submitButton.parentNode).toBeDisabled()
   })
 
   it('should allow clearing the main study category field', async () => {

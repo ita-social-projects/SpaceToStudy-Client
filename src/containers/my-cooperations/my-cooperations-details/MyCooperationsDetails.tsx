@@ -22,7 +22,6 @@ import {
   MyCooperationDetails,
   Offer,
   ServiceFunction,
-  SizeEnum,
   StatusEnum,
   UpdateCooperationStatusParams,
   UserRoleEnum

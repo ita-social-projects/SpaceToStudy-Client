@@ -19,7 +19,7 @@ import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.style
 import { authRoutes } from '~/router/constants/authRoutes'
 import { snackbarVariants } from '~/constants'
 
-import { SizeEnum, UserRoleEnum, UserResponse } from '~/types'
+import { UserRoleEnum, UserResponse } from '~/types'
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'

@@ -36,7 +36,6 @@ import {
   CooperationTabsEnum,
   PositionEnum,
   Cooperation,
-  SizeEnum,
   StatusEnum
 } from '~/types'
 import {

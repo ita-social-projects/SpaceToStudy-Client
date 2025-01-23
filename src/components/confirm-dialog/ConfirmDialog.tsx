@@ -10,7 +10,6 @@ import Button from '~scss-components/button/Button'
 import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 
-import { ButtonVariantEnum } from '~/types'
 import { Box } from '@mui/material'
 
 interface ConfirmDialogProps {

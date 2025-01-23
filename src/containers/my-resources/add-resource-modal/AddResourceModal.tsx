@@ -16,11 +16,7 @@ import AddDocuments from '~/containers/add-documents/AddDocuments'
 import { styles } from '~/containers/my-resources/add-resource-modal/AddResourceModal.styles'
 import { ResourceService } from '~/services/resource-service'
 import { useModalContext } from '~/context/modal-context'
-import {
-  CategoryNameInterface,
-  ResourcesTabsEnum,
-  TableItem
-} from '~/types'
+import { CategoryNameInterface, ResourcesTabsEnum, TableItem } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 interface AddResourceModalProps<T>

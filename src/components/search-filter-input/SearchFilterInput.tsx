@@ -6,7 +6,6 @@ import Box from '@mui/material/Box'
 import Button from '~scss-components/button/Button'
 import InputField from '~scss-components/input-field/InputField'
 
-import { ButtonVariantEnum } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 import { styles } from '~/components/search-filter-input/SearchFilterInput.styles'
