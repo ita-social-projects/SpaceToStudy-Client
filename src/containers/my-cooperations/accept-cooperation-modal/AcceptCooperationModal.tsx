@@ -23,9 +23,9 @@ import {
   ButtonTypeEnum,
   ComponentEnum,
   type Cooperation,
-  ErrorResponse,
+  type ErrorResponse,
   StatusEnum,
-  UpdateCooperationsParams
+  type UpdateCooperationsParams
 } from '~/types'
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperation.styles'
