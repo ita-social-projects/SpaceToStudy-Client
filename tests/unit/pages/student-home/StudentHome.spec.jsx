@@ -2,7 +2,9 @@ import { screen } from '@testing-library/react'
 
 import StudentHome from '~/pages/student-home/StudentHome'
 
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
+import { beforeAll } from 'vitest'
 
 const userId = '63f5d0ebb'
 
@@ -13,7 +15,14 @@ const secondLoginState = {
   appMain: { isFirstLogin: false, userRole: 'student', userId }
 }
 
+const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
+
 describe('StudentsHome component', () => {
+  beforeAll( async () => {
+    mockAxiosClient
+            .onGet(new RegExp(URLs.users.getUserById.replace(':id', userId)))
+            .reply(200, userDataMock)
+  })
   it('should render modal when logging in for the first time', async () => {
     renderWithProviders(<StudentHome />, {
       preloadedState: firstLoginState
