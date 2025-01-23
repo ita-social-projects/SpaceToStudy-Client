@@ -26,7 +26,7 @@ import {
   sortTranslationKeys,
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
-import { defaultResponses, itemsLoadLimit } from '~/constants'
+import { itemsLoadLimit } from '~/constants'
 import { CardsViewEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 import TabFilterList from '~/components/tab-filter-list/TabFilterList'
@@ -76,11 +76,11 @@ const MyCooperations = () => {
     [filters, page, itemsPerPage, sort]
   )
 
-  const { isLoading, data, refetch } = useQuery({
+  const { isFetching, data } = useQuery({
     queryKey: ['cooperations', filters, sort, page],
     queryFn: getMyCooperations,
     options: {
-      initialData: defaultResponses.itemsWithCount
+      staleTime: Infinity
     }
   })
 
@@ -125,12 +125,11 @@ const MyCooperations = () => {
         view={itemsView}
         withoutSort={showTable}
       />
-      {isLoading ? (
+      {isFetching || !data ? (
         <Loader pageLoad size={50} />
       ) : (
         <>
           <CooperationContainer
-            getCooperations={refetch}
             items={data.items}
             showTable={showTable}
             sort={sortOptions}
