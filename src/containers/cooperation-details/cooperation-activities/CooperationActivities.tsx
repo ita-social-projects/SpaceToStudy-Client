@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useCallback } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -28,23 +28,21 @@ import { snackbarVariants } from '~/constants'
 import {
   ResourcesAvailabilityEnum,
   ButtonTypeEnum,
-  ErrorResponse,
-  UpdateCooperationsSections,
-  UpdateCooperationsParams,
   ResourceAvailabilityStatusEnum
 } from '~/types'
+import { type ResponseError } from '~/exceptions'
 
-import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { getErrorKey } from '~/utils/get-error-key'
 import { getErrorMessage } from '~/utils/error-with-message'
 
 interface CooperationActivitiesProps {
-  cooperationId?: string
-  setEditMode: Dispatch<SetStateAction<boolean>>
+  cooperationId: string
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CooperationActivities: FC<CooperationActivitiesProps> = ({
+const CooperationActivities: React.FC<CooperationActivitiesProps> = ({
   cooperationId,
   setEditMode
 }) => {
@@ -58,30 +56,19 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
     dispatch(setResourcesAvailability(status))
   }
 
-  const checkDate = () => {
-    return sections.some((section) =>
-      section.resources.some((res) => {
-        const availability = res?.availability
-        if (
-          availability?.status === ResourceAvailabilityStatusEnum.OpenFrom &&
-          availability.date === null
-        ) {
-          onResponseError(OpenFromError)
-          return true
-        }
-        return false
+  const checkIfOpenFromDateCorrect = useCallback(() => {
+    return sections.every((section) => {
+      return section.resources.every((resource) => {
+        const { availability } = resource
+
+        return (
+          !availability ||
+          availability.status !== ResourceAvailabilityStatusEnum.OpenFrom ||
+          availability.date !== null
+        )
       })
-    )
-  }
-
-  const onSaveCooperation = () => {
-    if (checkDate()) return
-
-    void updateCooperation({
-      _id: cooperationId,
-      sections
     })
-  }
+  }, [sections])
 
   const onUpdateResponse = useCallback(() => {
     dispatch(
@@ -94,36 +81,48 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
   }, [dispatch, setEditMode])
 
   const onResponseError = useCallback(
-    (error?: ErrorResponse) => {
-      const errorKey = getErrorKey(error)
+    (error: ResponseError) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: error
-            ? {
-                text: errorKey,
-                options: {
-                  message: getErrorMessage(error.message)
-                }
-              }
-            : errorKey
+          message: {
+            text: getErrorKey(error),
+            options: {
+              message: getErrorMessage(error.message)
+            }
+          }
         })
       )
     },
     [dispatch]
   )
 
-  const updateCooperationService = (
-    data: UpdateCooperationsParams | UpdateCooperationsSections
-  ) => cooperationService.updateCooperation(data)
-
-  const { fetchData: updateCooperation } = useAxios({
-    service: updateCooperationService,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse: onUpdateResponse,
-    onResponseError
+  const { mutate: updateCooperation } = useMutation({
+    mutationFn: cooperationService.updateCooperation,
+    onSuccess: onUpdateResponse,
+    onError: onResponseError
   })
+
+  const handleSaveCooperation = useCallback(() => {
+    const isOpenFromCorrect = checkIfOpenFromDateCorrect()
+
+    if (!isOpenFromCorrect) {
+      onResponseError(OpenFromError)
+
+      return
+    }
+
+    updateCooperation({
+      _id: cooperationId,
+      sections
+    })
+  }, [
+    checkIfOpenFromDateCorrect,
+    cooperationId,
+    onResponseError,
+    sections,
+    updateCooperation
+  ])
 
   const cooperationOption = cooperationTranslationKeys.map(
     ({ title, value }) => ({
@@ -174,7 +173,7 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
           {t('common.cancel')}
         </Button>
         <Button
-          onClick={onSaveCooperation}
+          onClick={handleSaveCooperation}
           size='lg'
           type={ButtonTypeEnum.Submit}
         >
