@@ -20,8 +20,6 @@ import { type UserGeneralInfo, type UserRole } from '~/types'
 
 interface GeneralInfoStepProps {
   btnsBox: ReactNode
-  isUserFetched: boolean
-  setIsUserFetched: (isUserFetched: boolean) => void
 }
 
 type UserName = { firstName: string; lastName: string }
