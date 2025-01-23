@@ -1,7 +1,7 @@
 import Chip from '@mui/material/Chip/Chip'
 import TimerOutlined from '@mui/icons-material/TimerOutlined'
 
-import styles from '~/components/timer/Timer.styles'
+import styles from '~/containers/quiz/timer/Timer.styles'
 
 type TimerProps = {
   label: string

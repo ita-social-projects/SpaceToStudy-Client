@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
 
-import styles from '~/components/points/Points.styles'
+import styles from '~/containers/quiz/points/Points.styles'
 
 type PointsProps = {
   points: number

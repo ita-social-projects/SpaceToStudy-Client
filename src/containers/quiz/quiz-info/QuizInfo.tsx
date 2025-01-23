@@ -4,9 +4,9 @@ import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import Button from '~/design-system/components/button/Button'
 
-import QuizInfoSection from '~/components/quiz-info-section/QuizInfoSection'
-import Timer from '~/components/timer/Timer'
-import Points from '~/components/points/Points'
+import QuizInfoSection from '~/containers/quiz/quiz-info-section/QuizInfoSection'
+import Timer from '~/containers/quiz/timer/Timer'
+import Points from '~/containers/quiz/points/Points'
 
 import styles from '~/containers/quiz/quiz-info/QuizInfo.styles'
 
