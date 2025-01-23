@@ -23,8 +23,8 @@ const preloadedState = {
 describe('AcceptCooperationModal component ', () => {
   beforeEach(() => {
     mockAxiosClient
-      .onPatch(`${URLs.cooperations.update}/${mockedCoop._id}`)
-      .reply(200, { data: null })
+      .onPatch(URLs.cooperations.updateById.replace(':id', mockedCoop._id))
+      .reply(200)
 
     mockAxiosClient
       .onPatch(`${URLs.offers.update}/${mockedCoop._id}`)

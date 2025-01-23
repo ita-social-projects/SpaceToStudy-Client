@@ -1,10 +1,10 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
 import MyCooperations from '~/pages/my-cooperations/MyCooperations'
 
-mockAxiosClient.onGet(URLs.cooperations.get).reply(200, {
+const MOCK_RESPONSE = {
   items: [
     {
       _id: 'id',
@@ -25,21 +25,35 @@ mockAxiosClient.onGet(URLs.cooperations.get).reply(200, {
     }
   ],
   count: 0
-})
+}
 
 describe('MyCooperations', () => {
-  beforeEach(async () => {
-    await waitFor(() => renderWithProviders(<MyCooperations />))
+  beforeAll(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.cooperations.get))
+      .reply(200, MOCK_RESPONSE)
   })
+
+  beforeEach(() => {
+    renderWithProviders(<MyCooperations />)
+  })
+
   it('should render title on page', async () => {
     const title = screen.getByText('cooperationsPage.title')
 
     expect(title).toBeInTheDocument()
   })
+
+  it('should render opposite user name on cooperation card', async () => {
+    const activeTab = screen.queryByText('Kathryn Murphy')
+
+    expect(activeTab).toBeInTheDocument()
+  })
+
   it('should change tab', () => {
     const activeTab = screen.getByText('cooperationsPage.tabs.active')
 
-    waitFor(() => fireEvent.click(activeTab))
+    fireEvent.click(activeTab)
 
     const coopCard = screen.queryAllByText('Beginner')
 
