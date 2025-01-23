@@ -5,14 +5,7 @@ import TodayIcon from '@mui/icons-material/Today'
 import EmptyActivities from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities'
 import MyCooperationsDetails from '../my-cooperations-details/MyCooperationsDetails'
 
-import {
-  Cooperation,
-  CooperationTabsEnum,
-  NeedActionTypeEnum,
-  ProficiencyLevelEnum,
-  StatusEnum,
-  UserRoleEnum
-} from '~/types'
+import { CooperationTabsEnum } from '~/types'
 
 export type MyCooperationsTabsData = {
   [key in CooperationTabsEnum]: {
@@ -35,59 +28,4 @@ export const tabsData: MyCooperationsTabsData = {
     title: 'cooperationsPage.tabs.details',
     content: <MyCooperationsDetails />
   }
-}
-
-export const defaultResponse: Cooperation = {
-  offer: {
-    title: '',
-    category: {
-      _id: '',
-      name: '',
-      appearance: {
-        icon: '',
-        color: ''
-      },
-      totalOffers: {
-        [UserRoleEnum.Student]: 0,
-        [UserRoleEnum.Tutor]: 0
-      },
-      createdAt: '',
-      updatedAt: ''
-    },
-    subject: {
-      _id: '',
-      name: ''
-    },
-    price: 0,
-    _id: ''
-  },
-  user: {
-    _id: '',
-    firstName: '',
-    lastName: '',
-    role: UserRoleEnum.Tutor
-  },
-  title: '',
-  price: 0,
-  proficiencyLevel: ProficiencyLevelEnum.Beginner,
-  status: StatusEnum.Active,
-  needAction: {
-    role: UserRoleEnum.Tutor,
-    type: NeedActionTypeEnum.Price,
-    messages: []
-  },
-  sections: [],
-  createdAt: '',
-  updatedAt: '',
-  _id: '',
-  initiator: {
-    firstName: '',
-    lastName: ''
-  },
-  initiatorRole: 'tutor',
-  receiver: {
-    firstName: '',
-    lastName: ''
-  },
-  receiverRole: 'student'
 }

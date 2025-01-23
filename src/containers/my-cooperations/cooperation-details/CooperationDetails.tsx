@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
 
 import Box from '@mui/material/Box'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
@@ -15,7 +14,8 @@ import Loader from '~/components/loader/Loader'
 import StatusChip from '~/components/status-chip/StatusChip'
 import Button from '~scss-components/button/Button'
 
-import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
+import useQuery from '~/hooks/use-query'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
@@ -24,7 +24,6 @@ import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/Coo
 import CooperationActivitiesView from '~/containers/cooperation-details/cooperation-activities-view/CooperationActivitiesView'
 import {
   tabsData,
-  defaultResponse,
   MyCooperationsTabsData
 } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constants'
 import { styles } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.styles'
@@ -32,12 +31,7 @@ import { styles } from '~/containers/my-cooperations/cooperation-details/Coopera
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { cooperationService } from '~/services/cooperation-service'
 
-import {
-  CooperationTabsEnum,
-  PositionEnum,
-  Cooperation,
-  StatusEnum
-} from '~/types'
+import { CooperationTabsEnum, PositionEnum, StatusEnum } from '~/types'
 import {
   cooperationsSelector,
   setCooperationSections,
@@ -50,7 +44,7 @@ const CooperationDetails = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { id } = useParams()
+  const { id = '' } = useParams()
   const { isDesktop } = useBreakpoints()
   const { isActivityCreated } = useAppSelector(cooperationsSelector)
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
@@ -75,26 +69,32 @@ const CooperationDetails = () => {
     }
   }, [defaultTab, isTabInSearchParams, setSearchParams])
 
-  const responseError = useCallback(
-    () => navigate(errorRoutes.notFound.path),
-    [navigate]
-  )
-
-  const getCooperation = useCallback((): Promise<AxiosResponse> => {
+  const getCooperation = useCallback(() => {
     return cooperationService.getCooperationById(id)
   }, [id])
 
-  const { loading, response } = useAxios<Cooperation, string>({
-    service: getCooperation,
-    defaultResponse,
-    onResponseError: responseError
+  const {
+    data: cooperation,
+    isLoading,
+    isError
+  } = useQuery({
+    queryFn: getCooperation,
+    queryKey: ['cooperation', id]
   })
 
   useEffect(() => {
-    dispatch(setCooperationSections(response.sections))
-    dispatch(setCooperationStatus(response.status))
-    setEditMode(Boolean(response?.sections?.length))
-  }, [response.sections, response.status, dispatch])
+    if (isError) {
+      navigate(errorRoutes.notFound.path)
+    }
+  }, [isError, navigate])
+
+  useEffect(() => {
+    if (cooperation) {
+      dispatch(setCooperationSections(cooperation.sections))
+      dispatch(setCooperationStatus(cooperation.status))
+      setEditMode(Boolean(cooperation.sections?.length))
+    }
+  }, [cooperation, dispatch])
 
   const handleEditMode = useCallback(() => {
     setEditMode((prev) => !prev)
@@ -106,15 +106,20 @@ const CooperationDetails = () => {
       _id: id,
       status: StatusEnum.Closed
     })
+  }, [id])
+
+  const handleCooperationStatusUpdateSuccess = useCallback(() => {
     setIsClosed(true)
     dispatch(setCooperationStatus(StatusEnum.Closed))
-  }, [id, dispatch])
+  }, [dispatch])
 
-  const handleCooperationCloseAccept = useCallback(() => {
-    void handleCooperationStatusUpdate()
-  }, [handleCooperationStatusUpdate])
+  const { mutate: handleCooperationClosingAccept } = useMutation({
+    mutationFn: handleCooperationStatusUpdate,
+    onSuccess: handleCooperationStatusUpdateSuccess,
+    queryKeys: [['cooperations'], ['cooperation', id]]
+  })
 
-  if (loading) {
+  if (isLoading || !cooperation) {
     return <Loader pageLoad />
   }
 
@@ -151,22 +156,22 @@ const CooperationDetails = () => {
   }
 
   const closeCooperationInitiator =
-    response.needAction.role === response.receiverRole
-      ? response.initiator
-      : response.receiver
+    cooperation.needAction.role === cooperation.receiverRole
+      ? cooperation.initiator
+      : cooperation.receiver
 
   const acceptClosingProcess = !isClosed && (
     <AcceptCooperationClosing
       isReasonSubmitted={false}
-      onAccept={handleCooperationCloseAccept}
+      onAccept={handleCooperationClosingAccept}
       onReasonSubmit={() => {}}
       user={closeCooperationInitiator.firstName}
     />
   )
 
   const isCooperationClosingRequestSend =
-    response.needAction.role === userRole &&
-    response.status === StatusEnum.RequestToClose
+    cooperation.needAction.role === userRole &&
+    cooperation.status === StatusEnum.RequestToClose
 
   const iconConditionals = isNotesOpen ? (
     <KeyboardDoubleArrowRightIcon />
@@ -181,7 +186,7 @@ const CooperationDetails = () => {
         <TitleWithDescription
           key={crypto.randomUUID()}
           style={styles.cooperationTitle}
-          title={response.title}
+          title={cooperation.title}
         />
       </Box>
       <Box sx={styles.tabsWrapper}>
