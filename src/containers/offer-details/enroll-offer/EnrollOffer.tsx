@@ -1,12 +1,10 @@
-import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 
-import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
 import useForm from '~/hooks/use-form'
 import { useModalContext } from '~/context/modal-context'
-import { useAppDispatch } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppCard from '~/components/app-card/AppCard'
@@ -23,9 +21,8 @@ import { minMaxPrice } from '~/utils/range-filter'
 
 import {
   ComponentEnum,
-  ErrorResponse,
-  Offer,
-  EnrollOfferForm,
+  type Offer,
+  type EnrollOfferForm,
   ButtonTypeEnum,
   TypographyVariantEnum
 } from '~/types'
@@ -33,21 +30,23 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import { textField } from '~/utils/validations/common'
 import { Typography } from '@mui/material'
+import { type ResponseError } from '~/exceptions'
 
 interface EnrollOfferProps {
   offer: Offer
   enrollOffer: () => Promise<void>
 }
 
-const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
+const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
   const { isLaptopAndAbove } = useBreakpoints()
   const { closeModal } = useModalContext()
+  const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
 
   const [minPrice, maxPrice] = minMaxPrice(offer.price, 0.25)
 
-  const handleResponseError = (error?: ErrorResponse) => {
+  const handleResponseError = (error: ResponseError) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
@@ -66,21 +65,11 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
     void enrollOffer()
   }
 
-  const postOffer = (): Promise<AxiosResponse> => {
-    return cooperationService.createCooperation({
-      ...data,
-      receiver: offer.author._id,
-      receiverRole: offer.authorRole,
-      offer: offer._id
-    })
-  }
-
-  const { loading, fetchData } = useAxios({
-    service: postOffer,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
+  const { isPending, mutate: createCooperation } = useMutation({
+    mutationFn: cooperationService.createCooperation,
+    queryKey: ['cooperations'],
+    onError: handleResponseError,
+    onSuccess: handleResponse
   })
 
   const validateAdditionalInfo = (additionalInfoValue: string) => {
@@ -110,7 +99,17 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
       title: offer.title
     },
     validations: validations,
-    onSubmit: fetchData
+    submitWithData: true,
+    onSubmit: (data) => {
+      if (data) {
+        createCooperation({
+          ...data,
+          receiver: offer.author._id,
+          receiverRole: offer.authorRole,
+          offer: offer._id
+        })
+      }
+    }
   })
 
   const levelOptions = offer.proficiencyLevel.map((level) => ({
@@ -124,11 +123,13 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
       handleNonInputValueChange(key, value)
     }
 
+  const isBookmarked = bookmarkedOffers.includes(offer._id)
+
   return (
     <Box sx={styles.root}>
       {isLaptopAndAbove && (
         <AppCard sx={styles.offerCard}>
-          <OfferCardSquare offer={offer} />
+          <OfferCardSquare isBookmarked={isBookmarked} offer={offer} />
         </AppCard>
       )}
       <Box
@@ -179,7 +180,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
           )}
         </Box>
         <Button
-          loading={loading}
+          loading={isPending}
           sx={styles.button}
           type={ButtonTypeEnum.Submit}
         >

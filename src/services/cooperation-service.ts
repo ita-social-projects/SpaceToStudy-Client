@@ -27,10 +27,13 @@ export const cooperationService = {
       url
     })
   },
-  createCooperation: async (
-    data: CreateCooperationsParams
-  ): Promise<AxiosResponse> =>
-    await axiosClient.post(URLs.cooperations.create, data),
+  createCooperation: (data: CreateCooperationsParams) => {
+    return baseService.request<void>({
+      method: 'POST',
+      url: URLs.cooperations.create,
+      data
+    })
+  },
   updateCooperation: async (
     data: UpdateCooperationsParams | UpdateCooperationsSections
   ) => {
