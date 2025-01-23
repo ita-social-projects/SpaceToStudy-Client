@@ -173,7 +173,8 @@ const CreateOrEditLesson = () => {
         handleNonInputValueChange(validKey, lesson[validKey])
       }
     }
-  }, [lesson, id, data, handleNonInputValueChange])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lesson, id])
 
   useEffect(() => {
     if (error) {
