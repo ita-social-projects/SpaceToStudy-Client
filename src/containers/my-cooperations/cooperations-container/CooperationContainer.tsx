@@ -1,6 +1,4 @@
 import Box from '@mui/material/Box'
-import { FC } from 'react'
-import { type QueryObserverResult } from '@tanstack/react-query'
 
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import AcceptCooperationModal from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperationModal'
@@ -15,23 +13,19 @@ import {
   removeColumnRules
 } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.constants'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
-import { Cooperation, type ItemsWithCount, SizeEnum, StatusEnum } from '~/types'
+import { type Cooperation, SizeEnum, StatusEnum } from '~/types'
 import { useNavigate } from 'react-router-dom'
 
 interface CooperationContainerProps {
   items: Cooperation[]
   showTable: boolean
   sort: SortHook
-  getCooperations: () => Promise<
-    QueryObserverResult<ItemsWithCount<Cooperation>>
-  >
 }
 
-const CooperationContainer: FC<CooperationContainerProps> = ({
+const CooperationContainer: React.FC<CooperationContainerProps> = ({
   items,
   sort,
-  showTable,
-  getCooperations
+  showTable
 }) => {
   const breakpoints = useBreakpoints()
   const { openModal } = useModalContext()
@@ -46,12 +40,7 @@ const CooperationContainer: FC<CooperationContainerProps> = ({
   const handleCardClick = (item: Cooperation) => {
     item.status === StatusEnum.Pending
       ? openModal({
-          component: (
-            <AcceptCooperationModal
-              cooperation={item}
-              getCooperations={getCooperations}
-            />
-          )
+          component: <AcceptCooperationModal cooperation={item} />
         })
       : (item.status === StatusEnum.Active ||
           item.status === StatusEnum.RequestToClose) &&
