@@ -82,7 +82,7 @@ describe('MyCooperationsDetails component', () => {
     const profileButton = screen.queryByText('cooperationDetailsPage.profile')
 
     expect(profileButton).toBeInTheDocument()
-    expect(profileButton.href).toContain(
+    expect(profileButton.parentElement.href).toContain(
       `/user/${mockedOffer.initiator._id}?role=${mockedOffer.initiator.role[0]}`
     )
   })
