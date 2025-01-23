@@ -56,9 +56,10 @@ export const URLs = {
   },
   cooperations: {
     get: '/cooperations',
-    getById: '/cooperations/id',
+    getById: '/cooperations/:id',
     create: '/cooperations',
     update: '/cooperations',
+    updateById: '/cooperations/:id',
     delete: '/cooperations'
   },
   notes: {
