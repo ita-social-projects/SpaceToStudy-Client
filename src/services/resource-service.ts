@@ -173,10 +173,10 @@ export const ResourceService = {
       url: URLs.resources.resourcesCategories.getNames
     })
   },
-  createResourceCategory: async (
+  createResourceCategory: (
     params: CreateCategoriesParams
   ): Promise<Categories> => {
-    return await baseService.request<Categories>({
+    return baseService.request<Categories>({
       method: 'POST',
       url: URLs.resources.resourcesCategories.post,
       data: params

@@ -41,7 +41,7 @@ const CategoryDropdown = ({
   const { openModal, closeModal } = useModalContext()
 
   const handleResponseError = useCallback(
-    (error?: ResponseError) => {
+    (error: ResponseError) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
