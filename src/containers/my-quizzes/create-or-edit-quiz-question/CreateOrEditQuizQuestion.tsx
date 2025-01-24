@@ -57,14 +57,16 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
 
   const onCreateResponse = (response: Question | null) => {
     response &&
-      setQuestions((prev) => [...prev, { ...response, type: data.type }])
+      // setQuestions((prev) => [...prev, { ...response, type: data.type }])
+      setQuestions((prev) => [...prev, response])
     onResponse()
   }
   const onUpdateResponse = (response: Question | null) => {
     response &&
       setQuestions((prev) =>
         prev.map((item) =>
-          item._id === response._id ? { ...response, type: data.type } : item
+          // item._id === response._id ? { ...response, type: data.type } : item
+          item._id === response._id ? response : item
         )
       )
     onResponse()
