@@ -36,8 +36,8 @@ describe('CreateOrEditLesson with id', () => {
       .reply(204)
   })
 
-  beforeEach(async () => {
-    await renderWithProviders(<CreateOrEditLesson />)
+  beforeEach( () => {
+    renderWithProviders(<CreateOrEditLesson />)
   })
 
   it('should display the lesson title and description when the lesson is loaded', async () => {
