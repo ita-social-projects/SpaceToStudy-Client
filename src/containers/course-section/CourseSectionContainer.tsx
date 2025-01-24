@@ -171,9 +171,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
         resource: data
       })
     },
-    onError: (error) => {
-      handleErrorAlert(error)
-    }
+    onError: handleErrorAlert
   })
 
   const editResource = (resource: CourseResource) => {

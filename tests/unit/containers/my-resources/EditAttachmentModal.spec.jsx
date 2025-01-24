@@ -35,8 +35,7 @@ const selectCategory = (autocomplete, categoryName) => {
 }
 
 describe('EditAttachmentModal component', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
+  beforeEach(() => {
       mockAxiosClient
         .onGet(URLs.resources.resourcesCategories.getNames)
         .reply(200, [categoriesNamesMock.WEB_DEVELOPMENT, categoriesNamesMock.MOTION_DESIGN])
@@ -48,7 +47,6 @@ describe('EditAttachmentModal component', () => {
           onAttachmentUpdate={updateAttachment}
         />
       )
-    })
   })
 
   afterEach(() => {
@@ -61,7 +59,7 @@ describe('EditAttachmentModal component', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('should render disabled save button by default', async () => {
+  it('should render disabled save button by default', () => {
     const saveBtn = screen.getByText('common.save')
 
     expect(saveBtn).toBeInTheDocument()
@@ -77,7 +75,7 @@ describe('EditAttachmentModal component', () => {
 
     expect(autocomplete).toBeInTheDocument()
 
-    waitFor(() => {
+    await waitFor(() => {
       selectCategory(autocomplete, categoriesNamesMock.MOTION_DESIGN.name)
     })
 
@@ -91,7 +89,7 @@ describe('EditAttachmentModal component', () => {
 
     expect(autocomplete).toBeInTheDocument()
 
-    waitFor(() => {
+    await waitFor(() => {
       selectCategory(autocomplete, categoriesNamesMock.MOTION_DESIGN.name)
     })
 
