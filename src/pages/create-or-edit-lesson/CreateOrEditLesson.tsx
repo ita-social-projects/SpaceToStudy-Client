@@ -132,9 +132,7 @@ const CreateOrEditLesson = () => {
   const { mutate: fetchAddLesson } = useMutation({
     mutationFn: addLesson,
     onSuccess: handleResponse,
-    onError: (error) => {
-      handleErrorAlert(error)
-    }
+    onError: handleErrorAlert
   })
 
   const getLesson = useCallback(() => {
@@ -161,9 +159,7 @@ const CreateOrEditLesson = () => {
   const { mutate: fetchEditedLesson } = useMutation({
     mutationFn: editLesson,
     onSuccess: handleResponse,
-    onError: (error) => {
-      handleErrorAlert(error)
-    }
+    onError: handleErrorAlert
   })
 
   useEffect(() => {
