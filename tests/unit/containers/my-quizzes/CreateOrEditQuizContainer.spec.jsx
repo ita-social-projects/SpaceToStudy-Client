@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { useParams } from 'react-router-dom'
 
 import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer'
 
@@ -9,7 +10,19 @@ const setDescription = vi.fn()
 const category = 'mock-category'
 const mockId = '676728f88a5ae7b4b41f5e89'
 
-describe('CreateOrEditQuizContainer', () => {
+vi.mock('react-router-dom', async () => {
+  const original = await vi.importActual('react-router-dom')
+  return {
+    ...original,
+    useParams: vi.fn()
+  }
+})
+
+describe('CreateOrEditQuizContainer without id', () => {
+  beforeAll(() => {
+    useParams.mockReturnValue({ id: undefined })
+  })
+
   beforeEach(async () => {
     await waitFor(() => {
       renderWithProviders(
@@ -78,13 +91,7 @@ describe('CreateOrEditQuizContainer', () => {
 
 describe('CreateOrEditQuizContainer with id', () => {
   beforeAll(() => {
-    vi.mock('react-router-dom', async () => {
-      const original = await vi.importActual('react-router-dom')
-      return {
-        ...original,
-        useParams: () => ({ id: mockId })
-      }
-    })
+    useParams.mockReturnValue({ id: mockId })
   })
 
   beforeEach(async () => {
@@ -110,7 +117,6 @@ describe('CreateOrEditQuizContainer with id', () => {
 
   afterAll(() => {
     vi.clearAllMocks()
-    vi.resetAllMocks()
   })
 
   it('should save quiz with category', async () => {
