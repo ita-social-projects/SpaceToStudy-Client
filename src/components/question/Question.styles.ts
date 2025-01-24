@@ -78,6 +78,12 @@ export const styles = {
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  singleAnswer: {
+    padding: '9px 0px 9px 0px'
+  },
+  singleAnswers: {
+    ml: '24px'
+  },
   moreIcon: {
     fontSize: '20px'
   },

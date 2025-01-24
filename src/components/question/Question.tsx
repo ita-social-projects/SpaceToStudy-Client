@@ -17,19 +17,23 @@ import IconTitleDescription from '~/components/icon-title-description/IconTitleD
 import AppChip from '~/components/app-chip/AppChip'
 import DragHandle from '~/components/drag-handle/DragHandle'
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
+import RadioButton from '~/design-system/components/radio-button/RadioButton'
 
 import {
   ColorEnum,
   Question as QuestionInterface,
+  QuestionTypesEnum,
   TableActionFunc
 } from '~/types'
 import { styles } from '~/components/question/Question.styles'
 import { spliceSx } from '~/utils/helper-functions'
+import { determineQuestionType } from '../question-editor/QuestionEditor.constants'
 
 interface QuestionProps {
   question: QuestionInterface
   setQuestions: Dispatch<SetStateAction<QuestionInterface[]>>
   setEditableItemId: Dispatch<SetStateAction<string>>
+  type?: QuestionTypesEnum
   sx?: SxProps
 }
 
@@ -37,11 +41,12 @@ const Question: FC<QuestionProps> = ({
   question,
   setQuestions,
   setEditableItemId,
+  type = QuestionTypesEnum.MultipleChoice,
   sx = {}
 }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
-
+  const { isMultipleChoice, isSingleChoice } = determineQuestionType(type)
   const onAction = async (actionFunc: TableActionFunc) => {
     closeMenu()
     await actionFunc(question._id)
@@ -83,10 +88,13 @@ const Question: FC<QuestionProps> = ({
   ))
 
   const answersList = question.answers.map((answer) => (
-    <Box key={answer.text} sx={styles.answer}>
+    <Box
+      key={answer.text}
+      sx={[styles.answer, isSingleChoice && styles.singleAnswer]}
+    >
       <FormControlLabel
         checked={answer.isCorrect}
-        control={<Checkbox />}
+        control={isMultipleChoice ? <Checkbox /> : <RadioButton label='' />}
         label={answer.text}
       />
       {answer.isCorrect && <CheckIcon sx={styles.checkIcon} />}
@@ -124,7 +132,9 @@ const Question: FC<QuestionProps> = ({
       <Divider sx={styles.divider} />
       <Box sx={styles.questionBody}>
         <Typography sx={styles.questionText}>{question.text}</Typography>
-        <Box sx={styles.answers}>{answersList}</Box>
+        <Box sx={[styles.answers, isSingleChoice && styles.singleAnswers]}>
+          {answersList}
+        </Box>
       </Box>
     </Box>
   )

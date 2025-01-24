@@ -56,14 +56,16 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   )
 
   const onCreateResponse = (response: Question | null) => {
-    response && setQuestions((prev) => [...prev, response])
+    response &&
+      setQuestions((prev) => [...prev, { ...response, type: data.type }])
     onResponse()
   }
-
   const onUpdateResponse = (response: Question | null) => {
     response &&
       setQuestions((prev) =>
-        prev.map((item) => (item._id === response._id ? response : item))
+        prev.map((item) =>
+          item._id === response._id ? { ...response, type: data.type } : item
+        )
       )
     onResponse()
   }
@@ -114,7 +116,6 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
 
   const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
     useForm<QuestionForm>({ initialValues: initialValues(question) })
-
   const onCloseCreation = () => {
     closeModal()
     onCancel()
