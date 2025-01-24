@@ -36,7 +36,7 @@ describe('CreateOrEditLesson with id', () => {
       .reply(204)
   })
 
-  beforeEach( () => {
+  beforeEach(() => {
     renderWithProviders(<CreateOrEditLesson />)
   })
 
