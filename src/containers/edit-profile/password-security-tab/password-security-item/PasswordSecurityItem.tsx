@@ -1,10 +1,8 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppCard from '~/components/app-card/AppCard'
-
-import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 import { styles } from '~/containers/edit-profile/password-security-tab/password-security-item/PasswordSecurityItem.styles'
 
@@ -13,7 +11,7 @@ interface PasswordSecurityItemProps {
   description: string
   buttonText: string
   onClick: () => void
-  buttonVariant: ButtonVariantEnum
+  buttonVariant: 'tonal' | 'tonal-error'
 }
 
 const PasswordSecurityItem = ({
@@ -29,14 +27,14 @@ const PasswordSecurityItem = ({
       <Typography sx={styles.description}>{description}</Typography>
     </Box>
 
-    <AppButton
+    <Button
       onClick={onClick}
-      size={SizeEnum.Medium}
+      size='md'
       sx={styles.appButton}
       variant={buttonVariant}
     >
       {buttonText}
-    </AppButton>
+    </Button>
   </AppCard>
 )
 

@@ -7,16 +7,11 @@ import { ResourceService } from '~/services/resource-service'
 import useForm from '~/hooks/use-form'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import { styles } from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal.styles'
 import { emptyField, textField } from '~/utils/validations/common'
-import {
-  ButtonVariantEnum,
-  CategoryNameInterface,
-  QuestionModalForm,
-  QuestionForm
-} from '~/types'
+import { CategoryNameInterface, QuestionModalForm, QuestionForm } from '~/types'
 
 interface CreateOrEditQuestionModalProps {
   initialData: QuestionForm
@@ -93,16 +88,16 @@ const CreateOrEditQuestionModal: FC<CreateOrEditQuestionModalProps> = ({
       </Box>
 
       <Box sx={styles.buttons}>
-        <AppButton onClick={onCancel} variant={ButtonVariantEnum.Tonal}>
+        <Button onClick={onCancel} variant='tonal'>
           {t('common.cancel')}
-        </AppButton>
-        <AppButton
+        </Button>
+        <Button
           disabled={!!errors.title || !data.title}
           onClick={() => onSave(data)}
           sx={styles.saveBtn}
         >
           {t('common.save')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { styles } from '~/pages/error/styles/InternalServerError.styles'
 import backGround500 from '~/assets/img/error-page/500.svg'
-import { ButtonVariantEnum } from '~/types'
 
 const InternalServerError = () => {
   const { t } = useTranslation()
@@ -24,14 +23,14 @@ const InternalServerError = () => {
           <Typography sx={styles.description} variant={'subtitle1'}>
             {t('errorPage.500.description')}
           </Typography>
-          <AppButton
+          <Button
             component={Link}
             sx={styles.homeBtn}
             to={guestRoutes.home.path}
-            variant={ButtonVariantEnum.Contained}
+            size='lg'
           >
             {t('button.toMain')}
-          </AppButton>
+          </Button>
         </Box>
         <Box
           alt='errorLogo'

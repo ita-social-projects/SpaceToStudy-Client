@@ -6,11 +6,11 @@ import Box from '@mui/material/Box'
 import useMenu from '~/hooks/use-menu'
 
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import NavigationIcon from '~/components/navigation-icon/NavigationIcon'
 import { useModalContext } from '~/context/modal-context'
 import { guestIcons } from '~/containers/navigation-icons/NavigationIcons.constants'
-import { SizeEnum } from '~/types'
+
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 import LanguageMenu from '~/containers/layout/language-menu/LanguageMenu'
 
@@ -55,13 +55,9 @@ const GuestIcons: FC<GuestIconsProps> = ({ setSidebarOpen }) => {
         anchorEl={languageMenuAnchorEl}
         onClose={closeLanguageMenu}
       />
-      <AppButton
-        onClick={openLoginDialog}
-        size={SizeEnum.Medium}
-        sx={styles.loginButton}
-      >
+      <Button onClick={openLoginDialog} size='md' sx={styles.loginButton}>
         {t('header.loginButton')}
-      </AppButton>
+      </Button>
     </Box>
   )
 }

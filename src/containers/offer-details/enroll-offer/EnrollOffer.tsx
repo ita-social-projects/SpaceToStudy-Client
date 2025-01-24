@@ -12,7 +12,7 @@ import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppCard from '~/components/app-card/AppCard'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppSelect from '~/components/app-select/AppSelect'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import SliderWithInput from '~/components/slider-with-input/SliderWithInput'
 
 import { cooperationService } from '~/services/cooperation-service'
@@ -178,13 +178,13 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
             </Typography>
           )}
         </Box>
-        <AppButton
+        <Button
           loading={loading}
           sx={styles.button}
           type={ButtonTypeEnum.Submit}
         >
           {t('button.createCooperation')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

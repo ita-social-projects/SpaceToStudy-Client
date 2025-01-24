@@ -12,7 +12,7 @@ import useAxios from '~/hooks/use-axios'
 import { cooperationService } from '~/services/cooperation-service'
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import Loader from '~/components/loader/Loader'
 import useConfirm from '~/hooks/use-confirm'
@@ -22,7 +22,6 @@ import {
   MyCooperationDetails,
   Offer,
   ServiceFunction,
-  SizeEnum,
   StatusEnum,
   UpdateCooperationStatusParams,
   UserRoleEnum
@@ -178,24 +177,24 @@ const MyCooperationsDetails = () => {
             </Typography>
           </Box>
           <Box sx={style.userButtons}>
-            <AppButton
+            <Button
               onClick={onClickOpenChat}
-              size={SizeEnum.Medium}
+              size='md'
+              startIcon={<MessageIcon />}
               sx={style.buttons}
-              variant={ButtonVariantEnum.Tonal}
+              variant='tonal'
             >
-              <MessageIcon />
               {t('common.labels.sendMessage')}
-            </AppButton>
-            <AppButton
+            </Button>
+            <Button
               onClick={onHandleClick}
-              size={SizeEnum.Medium}
+              size='md'
+              startIcon={<PersonIcon />}
               sx={style.buttons}
               variant={ButtonVariantEnum.Tonal}
             >
-              <PersonIcon />
               {t('cooperationDetailsPage.profile')}
-            </AppButton>
+            </Button>
           </Box>
         </Box>
         <Typography sx={style.titles}>

@@ -8,7 +8,6 @@ export const styles = {
   },
   button: {
     margin: '0 auto',
-    size: 'large',
     mt: '32px'
   },
   titleWithDescription: {

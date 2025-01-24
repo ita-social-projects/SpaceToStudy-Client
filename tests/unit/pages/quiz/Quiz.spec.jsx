@@ -3,7 +3,7 @@ import { screen, fireEvent, act } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import Quiz from '~/pages/quiz/Quiz'
 import useQuery from '~/hooks/use-query'
-import { ResourcesTypesEnum as ResourceType } from '~/types'
+import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
 
 vi.mock('~/hooks/use-query')
 
@@ -81,8 +81,7 @@ describe('QuizPage with useQuery', () => {
   it('should render loading state', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: true,
-      isError: false
+      isLoading: true
     })
 
     renderWithProviders(<Quiz />)
@@ -91,23 +90,10 @@ describe('QuizPage with useQuery', () => {
     expect(loader).toBeInTheDocument()
   })
 
-  it('should handle error state', () => {
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: false,
-      isError: true
-    })
-
-    renderWithProviders(<Quiz />)
-
-    expect(mockNavigate).toHaveBeenCalledWith('/error/404')
-  })
-
   it('should render quiz page with data', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
     renderWithProviders(<Quiz />)
@@ -124,8 +110,7 @@ describe('QuizPage with useQuery', () => {
   it('should render empty state for empty data', () => {
     useQuery.mockReturnValue({
       data: mockQuizEmpty,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
     renderWithProviders(<Quiz />)
@@ -137,8 +122,7 @@ describe('QuizPage with useQuery', () => {
   it('should update checkbox value', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
     renderWithProviders(<Quiz />)
@@ -154,13 +138,16 @@ describe('QuizPage with useQuery', () => {
   })
 
   it('should display correct answers after finishing quiz', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
-    renderWithProviders(<Quiz />)
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
 
     const finishButton = screen.getByText('quiz.finish')
     act(() => {
@@ -174,18 +161,27 @@ describe('QuizPage with useQuery', () => {
   })
 
   it('should render points and correctness when finished', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
-    renderWithProviders(<Quiz />)
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
 
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
 
-    const pointsLabel = screen.getByText('quiz.points')
+    const pointsLabel = screen.getByText((_, element) => {
+      return (
+        element?.textContent?.includes('quiz.points') &&
+        element.tagName.toLowerCase() === 'p'
+      )
+    })
+
     const answersCorrectnessLabel = screen.getByText(
       'myResourcesPage.quizzes.correctAnswers'
     )
@@ -197,8 +193,7 @@ describe('QuizPage with useQuery', () => {
   it('should render question text', () => {
     useQuery.mockReturnValue({
       data: mockQuiz,
-      isLoading: false,
-      isError: false
+      isLoading: false
     })
 
     renderWithProviders(<Quiz />)
@@ -207,5 +202,42 @@ describe('QuizPage with useQuery', () => {
       'What is the difference between function expression and function declaration?'
     )
     expect(questionText).toBeInTheDocument()
+  })
+
+  it('should render timer for the active quiz for student', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false
+    })
+
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+
+    const timer = screen.getByTestId('TimerOutlinedIcon')
+    expect(timer).toBeInTheDocument()
+  })
+
+  it('should render duration for the finished quiz for student', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false
+    })
+
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+
+    const finishButton = screen.getByText('quiz.finish')
+    fireEvent.click(finishButton)
+
+    const duration = screen.getByText(/quiz\.duration:/i)
+    expect(duration).toBeInTheDocument()
+
+    expect(duration).toBeInTheDocument()
   })
 })

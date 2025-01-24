@@ -11,7 +11,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import HashLink from '~/components/hash-link/HashLink'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/layout/sidebar/Sidebar'
@@ -30,7 +30,7 @@ import {
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
 
-import { ButtonVariantEnum, SizeEnum, UserRoleEnum } from '~/types'
+import { UserRoleEnum } from '~/types'
 
 const Navbar = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
@@ -110,15 +110,15 @@ const Navbar = () => {
 
   return (
     <Box sx={styles.header}>
-      <AppButton
+      <Button
         component={HashLink}
-        size={SizeEnum.Small}
+        size='sm'
         sx={styles.logoButton}
         to={homePath}
-        variant={ButtonVariantEnum.Text}
+        variant='text-secondary'
       >
         <Logo />
-      </AppButton>
+      </Button>
       {renderMenu(findOffersMenu, { autoFocus: false })}
       <List sx={styles.navList}>{navigationList}</List>
       <NavigationIcons setSidebarOpen={handleOpenSidebar} />

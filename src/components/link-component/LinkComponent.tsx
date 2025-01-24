@@ -3,9 +3,9 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
-import { ButtonVariantEnum, Link } from '~/types'
+import { Link } from '~/types'
 import { openInNewTab } from '~/components/file-component/FileComponent.constants'
 import { styles } from '~/components/link-component/LinkComponent.styles'
 
@@ -15,12 +15,12 @@ interface LinkComponentProps {
 
 const LinkComponent: FC<LinkComponentProps> = ({ link }) => {
   return (
-    <Box sx={styles.linkWrapper}>
-      <AppButton
-        onClick={() => openInNewTab(link)}
-        sx={styles.linkButton}
-        variant={ButtonVariantEnum.Text}
-      >
+    <Button
+      onClick={() => openInNewTab(link)}
+      sx={styles.linkButton}
+      variant='text-primary'
+    >
+      <Box sx={styles.linkWrapper}>
         <Box sx={styles.formatFrame}>
           <LinkOutlinedIcon sx={styles.linkIcon} />
         </Box>
@@ -28,8 +28,8 @@ const LinkComponent: FC<LinkComponentProps> = ({ link }) => {
           <Typography sx={styles.secondaryText}>{link.name}</Typography>
           <Typography sx={styles.link}>{link.url}</Typography>
         </Box>
-      </AppButton>
-    </Box>
+      </Box>
+    </Button>
   )
 }
 

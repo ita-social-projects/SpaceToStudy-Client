@@ -7,19 +7,14 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { SxProps } from '@mui/material/styles'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import QuizQuestion from '~/containers/quiz/quiz-question/Question'
 
 import { styles } from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestion.styles'
 import { getQuestionStatus } from '~/containers/quiz/quiz-question/Question.constants'
 import { spliceSx } from '~/utils/helper-functions'
 
-import {
-  Question,
-  ButtonVariantEnum,
-  SizeEnum,
-  UseFormEventHandler
-} from '~/types'
+import { Question, SizeEnum, UseFormEventHandler } from '~/types'
 
 interface SelectableQuestionQuizViewProps {
   questions: Question[]
@@ -89,24 +84,28 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
 
   const navigationArrows = !isSingleQuestion && (
     <Box sx={styles.buttons}>
-      <AppButton
+      <Button
         disabled={isFirstQuestion}
         onClick={onBack}
-        size={SizeEnum.Large}
-        variant={ButtonVariantEnum.Tonal}
+        size='lg'
+        startIcon={
+          <ArrowBackIcon fontSize={SizeEnum.Medium} sx={styles.backIcon} />
+        }
+        variant='tonal'
       >
-        <ArrowBackIcon fontSize={SizeEnum.Medium} sx={styles.backIcon} />
         {t('common.back')}
-      </AppButton>
-      <AppButton
+      </Button>
+      <Button
         disabled={isLastQuestion}
+        endIcon={
+          <ArrowForward fontSize={SizeEnum.Medium} sx={styles.nextIcon} />
+        }
         onClick={onNext}
-        size={SizeEnum.Large}
-        variant={ButtonVariantEnum.Tonal}
+        size='lg'
+        variant='tonal'
       >
         {t('common.next')}
-        <ArrowForward fontSize={SizeEnum.Medium} sx={styles.nextIcon} />
-      </AppButton>
+      </Button>
     </Box>
   )
 

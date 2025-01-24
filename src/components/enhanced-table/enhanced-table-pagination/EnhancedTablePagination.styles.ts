@@ -49,10 +49,5 @@ export const styles = {
         WebkitAppearance: 'none',
         margin: 0
       }
-  },
-  btn: {
-    borderColor: 'primary.100',
-    typography: 'body2',
-    color: 'basic.black'
   }
 }

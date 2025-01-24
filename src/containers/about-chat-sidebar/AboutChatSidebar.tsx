@@ -9,18 +9,12 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import SidebarContentBox from '~/components/sidebar-content-box/SidebarContentBox'
 import SidebarGroupedContent from '~/containers/chat/sidebar-grouped-content/SidebarGroupedContent'
 
-import {
-  SizeEnum,
-  ButtonVariantEnum,
-  Member,
-  Link,
-  SidebarContentEnum
-} from '~/types'
+import { Member, Link, SidebarContentEnum } from '~/types'
 import { createUrlPath, spliceSx } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/about-chat-sidebar/AboutChatSidebar.styles'
@@ -79,14 +73,9 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({ member, links }) => {
               <Typography
                 sx={styles.title}
               >{`${firstName} ${lastName}`}</Typography>
-              <AppButton
-                onClick={navigateToUserProfile}
-                size={SizeEnum.Medium}
-                sx={styles.secondaryText}
-                variant={ButtonVariantEnum.Tonal}
-              >
+              <Button onClick={navigateToUserProfile} size='md' variant='tonal'>
                 {t(`chatPage.sidebar.viewButton`)}
-              </AppButton>
+              </Button>
               <Typography sx={styles.userDescription}>
                 {professionalSummary || t(`chatPage.sidebar.noSummary`)}
               </Typography>

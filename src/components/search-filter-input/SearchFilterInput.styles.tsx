@@ -17,9 +17,5 @@ export const styles = {
     color: 'primary.300',
     top: '12px',
     left: '15px'
-  },
-  searchBtn: {
-    width: '105px',
-    ml: '10px'
   }
 }

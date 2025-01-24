@@ -318,7 +318,7 @@ describe('EditProfile', () => {
   })
 
   it('should disable the Update button if isChanged is false and isTabInvalid is false', () => {
-    const updateBtn = screen.getByText('editProfilePage.updateBtn')
+    const updateBtn = screen.getByText('editProfilePage.updateBtn').parentNode
 
     useAppSelector.mockImplementation((selector) =>
       selector({

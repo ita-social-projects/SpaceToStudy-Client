@@ -1,4 +1,9 @@
 {
   "finish": "Finish",
-  "points": "Total points:"
+  "points": "Total points",
+  "duration": "Duration",
+  "attemptFinished": "Attempt finished",
+  "questionsAnswered": "Questions answered",
+  "save": "Save",
+  "evaluate": "Evaluate"
 }

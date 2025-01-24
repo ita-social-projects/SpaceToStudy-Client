@@ -62,8 +62,7 @@ describe('CategoriesContainer test', () => {
 
   it('should open new category modal after button click', async () => {
     const addCategoryBtn = await screen.findByText(
-      'myResourcesPage.categories.addBtn',
-      { selector: 'button' }
+      'myResourcesPage.categories.addBtn'
     )
 
     waitFor(() => {

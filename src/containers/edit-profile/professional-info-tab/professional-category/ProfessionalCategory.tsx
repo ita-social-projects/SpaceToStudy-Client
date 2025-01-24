@@ -4,17 +4,17 @@ import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppChip from '~/components/app-chip/AppChip'
 import { getCategoryIcon } from '~/services/category-icon-service'
+
 import {
-  ButtonVariantEnum,
   ComponentEnum,
   PositionEnum,
   UserMainSubject,
-  OpenProfessionalCategoryModalHandler,
-  SizeEnum
+  OpenProfessionalCategoryModalHandler
 } from '~/types'
 import useConfirm from '~/hooks/use-confirm'
 import { styles } from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory.styles'
@@ -97,13 +97,9 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
     <Box sx={styles.root}>
       <Box sx={styles.toolbar.root}>
         <Box sx={styles.toolbar.buttonGroup}>
-          <AppButton
-            onClick={handleEditButtonClick}
-            size={SizeEnum.Medium}
-            variant={ButtonVariantEnum.Tonal}
-          >
+          <Button onClick={handleEditButtonClick} size='md' variant='tonal'>
             {t('editProfilePage.profile.professionalTab.editCategoryBtn')}
-          </AppButton>
+          </Button>
         </Box>
         <Tooltip
           arrow

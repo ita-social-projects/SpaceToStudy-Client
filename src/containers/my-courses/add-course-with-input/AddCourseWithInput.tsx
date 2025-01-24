@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 
 import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import InputField from '~scss-components/input-field/InputField'
 import CoursesFilterBar from '~/containers/find-course/courses-filter-bar/CoursesFilterBar'
 import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer'
@@ -89,14 +89,14 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
 
   return (
     <Box sx={styles.container}>
-      <AppButton
+      <Button
         component={Link}
+        endIcon={<AddIcon sx={styles.addIcon} />}
         sx={isMobile ? styles.addBtn : undefined}
         to={authRoutes.myCourses.newCourse.path}
       >
         {t('myCoursesPage.buttonLabel')}
-        <AddIcon sx={styles.addIcon} />
-      </AppButton>
+      </Button>
 
       {desktopView}
       {tabletView}

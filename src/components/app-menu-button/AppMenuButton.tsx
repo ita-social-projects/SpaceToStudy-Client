@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import ClearIcon from '@mui/icons-material/Clear'
-import AppButton from '~/components/app-button/AppButton'
 
 import InputField from '~scss-components/input-field/InputField'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
+import Button from '~scss-components/button/Button'
 
 import { styles } from '~/components/app-menu-button/AppMenuButton.styles'
-import { ButtonVariantEnum } from '~/types'
 
 interface AppMenuButtonProps {
   selectedItems: string[]
@@ -49,17 +48,16 @@ const AppMenuButton: FC<AppMenuButtonProps> = ({
           variant={InputFieldVariantEnum.Outlined}
         />
       </Box>
-      <AppButton
+      <Button
         disableRipple
         disabled={!selectedItems.length}
         onClick={onClearAll}
+        startIcon={<ClearIcon sx={styles.clearIcon} />}
         sx={styles.clearAll}
-        variant={ButtonVariantEnum.Text}
+        variant='text-secondary'
       >
-        <ClearIcon sx={styles.clearIcon} />
         {t('header.notifications.clearAll')}
-      </AppButton>
-
+      </Button>
       <Divider sx={styles.divider} />
       {children}
     </>

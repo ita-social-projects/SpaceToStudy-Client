@@ -15,11 +15,9 @@ import useConfirm from '~/hooks/use-confirm'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
-  ButtonVariantEnum,
-  SizeEnum,
   UpdateUserParams,
   UserProfileTabsEnum,
   UserRole,
@@ -232,16 +230,16 @@ const EditProfile = () => {
             {t('editProfilePage.description')}
           </Typography>
         </Box>
-        <AppButton
+        <Button
           component={Link}
           disabled={!isChanged || isTabInvalid || isPasswordSecurityTab}
           onClick={() => void handleUpdateUser()}
-          size={SizeEnum.Large}
+          size='md'
           sx={styles.updateBtn}
-          variant={ButtonVariantEnum.Tonal}
+          variant='tonal'
         >
           {t('editProfilePage.updateBtn')}
-        </AppButton>
+        </Button>
       </Box>
       <Divider sx={styles.line} />
       <Box sx={styles.mainContainer}>

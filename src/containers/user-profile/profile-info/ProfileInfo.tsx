@@ -8,7 +8,7 @@ import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 import AppIconButton from '~/components/app-icon-button/AppIconButton'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 
@@ -19,12 +19,7 @@ import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.style
 import { authRoutes } from '~/router/constants/authRoutes'
 import { snackbarVariants } from '~/constants'
 
-import {
-  SizeEnum,
-  UserRoleEnum,
-  ButtonVariantEnum,
-  UserResponse
-} from '~/types'
+import { UserRoleEnum, UserResponse } from '~/types'
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -134,27 +129,21 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
   ].filter((item): item is DoneItem => !!item)
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
-      <AppButton
+      <Button
         fullWidth
         onClick={navigateToUserOffers}
-        size={isLaptopAndAbove ? SizeEnum.ExtraLarge : SizeEnum.Medium}
-        variant={ButtonVariantEnum.ContainedLight}
+        size={isLaptopAndAbove ? 'lg' : 'md'}
       >
         {t(
           `userProfilePage.profileInfo.${
             myRole !== Student ? 'studentRequests' : 'tutorOffers'
           }`
         )}
-      </AppButton>
+      </Button>
 
-      <AppButton
-        disabled
-        fullWidth
-        size={isLaptopAndAbove ? SizeEnum.ExtraLarge : SizeEnum.Medium}
-        variant='contained'
-      >
+      <Button disabled fullWidth size={isLaptopAndAbove ? 'lg' : 'md'}>
         {t('userProfilePage.profileInfo.sendMessage')}
-      </AppButton>
+      </Button>
     </Box>
   )
 

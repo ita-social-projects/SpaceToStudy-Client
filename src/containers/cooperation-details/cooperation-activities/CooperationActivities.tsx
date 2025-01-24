@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
 import AppSelect from '~/components/app-select/AppSelect'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
 import {
   cooperationTranslationKeys,
@@ -27,8 +27,6 @@ import {
 import { snackbarVariants } from '~/constants'
 import {
   ResourcesAvailabilityEnum,
-  ButtonVariantEnum,
-  SizeEnum,
   ButtonTypeEnum,
   ErrorResponse,
   UpdateCooperationsSections,
@@ -167,21 +165,21 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
         <CooperationActivitiesList />
       </Box>
       <Box sx={styles.buttons}>
-        <AppButton
+        <Button
           component={Link}
-          size={SizeEnum.ExtraLarge}
+          size='lg'
           to={authRoutes.cooperationDetails.path}
-          variant={ButtonVariantEnum.Tonal}
+          variant='tonal'
         >
           {t('common.cancel')}
-        </AppButton>
-        <AppButton
+        </Button>
+        <Button
           onClick={onSaveCooperation}
-          size={SizeEnum.ExtraLarge}
+          size='lg'
           type={ButtonTypeEnum.Submit}
         >
           {t('common.save')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

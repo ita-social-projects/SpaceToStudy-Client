@@ -13,7 +13,7 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import Loader from '~/components/loader/Loader'
 import StatusChip from '~/components/status-chip/StatusChip'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -36,8 +36,6 @@ import {
   CooperationTabsEnum,
   PositionEnum,
   Cooperation,
-  SizeEnum,
-  ButtonVariantEnum,
   StatusEnum
 } from '~/types'
 import {
@@ -194,15 +192,15 @@ const CooperationDetails = () => {
           tabsData={tabsData}
         />
         <Box onClick={handleNotesClick} sx={styles.banner(isNotesOpen)}>
-          {iconConditionals}
-          <AppButton
+          <Button
             disableRipple
-            size={SizeEnum.Small}
+            size='sm'
+            startIcon={iconConditionals}
             sx={styles.notes(isNotesOpen)}
-            variant={ButtonVariantEnum.Base}
+            variant='text-secondary'
           >
             {t('cooperationsPage.details.notes')}
-          </AppButton>
+          </Button>
         </Box>
       </Box>
       {activeTab === CooperationTabsEnum.Activities &&

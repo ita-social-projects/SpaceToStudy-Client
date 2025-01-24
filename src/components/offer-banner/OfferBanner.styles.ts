@@ -36,21 +36,8 @@ export const styles = {
     display: 'flex',
     gap: '16px'
   },
-  button: {
-    p: '15px 30px',
-    width: 'auto',
-    lineHeight: '19px'
-  },
   bookmarkButton: {
-    color: 'primary.500',
-    p: '12px 30px',
     ml: '16px'
-  },
-  bookmarkButtonText: {
-    color: 'primary.500',
-    display: 'flex',
-    alignItems: 'center',
-    ml: '8px'
   },
   buttonsBlock: {
     display: 'flex'

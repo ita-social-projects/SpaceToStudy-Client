@@ -11,7 +11,7 @@ import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import SettingItem from '~/components/setting-item/SettingItem'
 import AppSelect from '~/components/app-select/AppSelect'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import { spliceSx } from '~/utils/helper-functions'
 import { getErrorMessage } from '~/utils/error-with-message'
@@ -202,9 +202,9 @@ const QuizSettingsContainer = ({
         </SettingItem>
       </Box>
       <Box sx={styles.buttonContainer}>
-        <AppButton disabled={isDisabled} type={ButtonTypeEnum.Submit}>
+        <Button disabled={isDisabled} type={ButtonTypeEnum.Submit}>
           {t('common.apply')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

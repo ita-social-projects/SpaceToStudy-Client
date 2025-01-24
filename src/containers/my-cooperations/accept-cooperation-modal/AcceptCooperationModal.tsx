@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import CooperationCard from '~/containers/my-cooperations/cooperation-card/CooperationCard'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import SliderWithInput from '~/components/slider-with-input/SliderWithInput'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import Loader from '~/components/loader/Loader'
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
@@ -22,7 +22,6 @@ import { OfferService } from '~/services/offer-service'
 
 import {
   ButtonTypeEnum,
-  ButtonVariantEnum,
   ComponentEnum,
   Cooperation,
   ErrorResponse,
@@ -163,16 +162,18 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
     ) : (
       <Box sx={styles.buttonRow}>
         {needAction && (
-          <AppButton onClick={onCooperationAccept} type={acceptButtonType}>
-            {t(acceptButtonText)}
-          </AppButton>
+          <>
+            <Button onClick={onCooperationAccept} type={acceptButtonType}>
+              {t(acceptButtonText)}
+            </Button>
+            <Button
+              onClick={() => void handleDeclineCooperation()}
+              variant='tonal'
+            >
+              {t('cooperationsPage.acceptModal.decline')}
+            </Button>
+          </>
         )}
-        <AppButton
-          onClick={() => void handleDeclineCooperation()}
-          variant={ButtonVariantEnum.Tonal}
-        >
-          {t('cooperationsPage.acceptModal.decline')}
-        </AppButton>
       </Box>
     )
 

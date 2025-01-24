@@ -14,7 +14,7 @@ import useConfirm from '~/hooks/use-confirm'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 import Loader from '~/components/loader/Loader'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
 import { snackbarVariants } from '~/constants'
@@ -23,11 +23,9 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
 import {
-  ButtonVariantEnum,
   ComponentEnum,
   ButtonTypeEnum,
   InputEnum,
-  SizeEnum,
   FormValues,
   ErrorResponse
 } from '~/types'
@@ -195,25 +193,24 @@ const ChangePasswordModal = () => {
             />
           </Box>
           <Box sx={styles.passwordButtonsContainer}>
-            <AppButton
+            <Button
               onClick={onDiscard}
-              size={SizeEnum.Large}
+              size='md'
               sx={styles.discardButton}
-              variant={ButtonVariantEnum.Tonal}
+              variant='tonal'
             >
               {t('common.cancel')}
-            </AppButton>
-            <AppButton
+            </Button>
+            <Button
               disabled={
                 !data.password || !data.confirmPassword || !data.currentPassword
               }
-              size={SizeEnum.Large}
+              size='md'
               sx={styles.saveButton}
               type={ButtonTypeEnum.Submit}
-              variant={ButtonVariantEnum.Contained}
             >
               {saveButtonContent}
-            </AppButton>
+            </Button>
           </Box>
         </Box>
       </Box>

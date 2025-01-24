@@ -10,7 +10,7 @@ import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AddResources from '~/containers/add-resources/AddResources'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import { useModalContext } from '~/context/modal-context'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -37,10 +37,8 @@ import { styles } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.styles'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
   ButtonTypeEnum,
-  ButtonVariantEnum,
   ComponentEnum,
   type LessonData,
-  SizeEnum,
   TextFieldVariantEnum,
   type Attachment,
   ResourcesTabsEnum,
@@ -251,25 +249,22 @@ const CreateOrEditLesson = () => {
           onCategoryChange={onCategoryChange}
         />
         <Divider sx={styles.divider} />
-        <AppButton
+        <Button
+          endIcon={<AddIcon sx={styles.addIcon} />}
           onClick={handleOpenAddAttachmentsModal}
           sx={styles.addAttachments}
         >
-          {t('lesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
-        </AppButton>
+          {t('lesson.labels.attachments')}
+        </Button>
         <FileEditor onEdit={handleEdit} value={data.content} />
         {attachmentsList}
         <Box sx={styles.buttons}>
-          <AppButton
-            onClick={navigateToLessonTab}
-            size={SizeEnum.XXL}
-            variant={ButtonVariantEnum.Tonal}
-          >
+          <Button onClick={navigateToLessonTab} size='md' variant='tonal'>
             {t('common.cancel')}
-          </AppButton>
-          <AppButton size={SizeEnum.XXL} type={ButtonTypeEnum.Submit}>
+          </Button>
+          <Button size='md' type={ButtonTypeEnum.Submit}>
             {t('common.save')}
-          </AppButton>
+          </Button>
         </Box>
       </Box>
     </PageWrapper>

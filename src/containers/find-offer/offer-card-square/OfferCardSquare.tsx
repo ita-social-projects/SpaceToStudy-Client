@@ -9,11 +9,11 @@ import Divider from '@mui/material/Divider'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
 
-import { ButtonActions, Offer, SizeEnum } from '~/types'
+import { ButtonActions, Offer } from '~/types'
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
 import SubjectLevelWithLabels from '~/components/subject-level-with-labels/SubjectLevelWithLabels'
 
@@ -44,19 +44,22 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
     proficiencyLevel
   } = offer
 
-  const buttons = buttonActions?.map(
-    (elem) =>
+  const buttons = buttonActions?.map((elem) => {
+    const variant = elem?.buttonProps?.variant === 'tonal' ? 'tonal' : 'primary'
+    return (
       elem && (
-        <AppButton
+        <Button
           {...elem.buttonProps}
           fullWidth
           key={elem.label}
-          size={SizeEnum.Medium}
+          size='md'
+          variant={variant}
         >
           {t(elem.label)}
-        </AppButton>
+        </Button>
       )
-  )
+    )
+  })
 
   return (
     <Box sx={styles.container}>

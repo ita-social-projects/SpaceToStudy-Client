@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 
 import { ResourceService } from '~/services/resource-service'
@@ -16,7 +16,6 @@ import {
   CategoryNameInterface,
   UpdateAttachmentParams,
   ButtonTypeEnum,
-  ButtonVariantEnum,
   ComponentEnum
 } from '~/types'
 
@@ -83,17 +82,17 @@ const AddAttachmentCategoryModal: FC<AddAttachmentCategoryModalProps> = ({
         />
       </Box>
       <Box sx={styles.buttons}>
-        <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
+        <Button onClick={closeModal} variant='tonal'>
           {t('common.cancel')}
-        </AppButton>
-        <AppButton
+        </Button>
+        <Button
           disabled={!!errors.fileName}
           loading={loading}
           sx={styles.saveBtn}
           type={ButtonTypeEnum.Submit}
         >
           {t('common.save')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

@@ -11,7 +11,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import Loader from '~/components/loader/Loader'
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
@@ -20,7 +20,6 @@ import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote.styles'
 import {
   TextFieldVariantEnum,
-  ButtonVariantEnum,
   SizeEnum,
   TypographyVariantEnum,
   CreateOrUpdateNoteParams,
@@ -136,23 +135,23 @@ const CreateOrEditNote = ({
           }
         />
         <Box sx={styles.btnContainer}>
-          <AppButton
+          <Button
             onClick={onCloseNote}
-            size={SizeEnum.Small}
+            size='sm'
             sx={styles.noteBtn}
-            variant={ButtonVariantEnum.Tonal}
+            variant='tonal'
           >
             {t('common.cancel')}
-          </AppButton>
-          <AppButton
+          </Button>
+          <Button
             disabled={!isDirty || !data.text}
             loading={onSubmitLoading}
-            size={SizeEnum.Small}
+            size='sm'
             sx={styles.noteBtn}
             type={ButtonTypeEnum.Submit}
           >
             {t('common.save')}
-          </AppButton>
+          </Button>
         </Box>
       </Box>
     </Box>

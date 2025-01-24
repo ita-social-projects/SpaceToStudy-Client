@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import useBreakpoints from '~/hooks/use-breakpoints'
 import TitleBlock from '~/components/title-block/TitleBlock'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import InputField from '~scss-components/input-field/InputField'
 
 import bag from '~/assets/img/student-home/bag.png'
@@ -20,7 +19,6 @@ const FindBlock = ({ translationKey }: FindBlockProps) => {
   const [inputValue, setInputValue] = useState('')
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { isMobile } = useBreakpoints()
   const encodedInputValue = encodeURIComponent(inputValue)
   const findOffers = `${authRoutes.findOffers.path}?search=${encodedInputValue}`
 
@@ -53,14 +51,9 @@ const FindBlock = ({ translationKey }: FindBlockProps) => {
         sx={styles.input}
         value={inputValue}
       />
-      <AppButton
-        component={Link}
-        fullWidth={isMobile}
-        sx={styles.button}
-        to={findOffers}
-      >
+      <Button component={Link} to={findOffers}>
         {t(`${translationKey}.button`)}
-      </AppButton>
+      </Button>
     </TitleBlock>
   )
 }

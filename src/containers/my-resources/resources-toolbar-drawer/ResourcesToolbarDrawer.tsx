@@ -8,19 +8,14 @@ import { SortHook } from '~/hooks/table/use-sort'
 import useForm from '~/hooks/use-form'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppSelect from '~/components/app-select/AppSelect'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import InputField from '~scss-components/input-field/InputField'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 
 import { sortTranslationKeys } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import { styles } from '~/containers/my-resources/resources-toolbar-drawer/ResourceToolbarDrawer.styles'
-import {
-  ButtonVariantEnum,
-  CategoryNameInterface,
-  ResourceToolbarForm,
-  SortEnum
-} from '~/types'
+import { CategoryNameInterface, ResourceToolbarForm, SortEnum } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 interface ResourcesToolBarDrawerProps {
@@ -109,18 +104,10 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
             value={data.sortBy}
           />
           <Box sx={styles.buttons}>
-            <AppButton
-              onClick={onClearFilters}
-              variant={ButtonVariantEnum.Tonal}
-            >
+            <Button onClick={onClearFilters} variant='tonal'>
               {t('button.clearFilters')}
-            </AppButton>
-            <AppButton
-              onClick={onApplyFilters}
-              variant={ButtonVariantEnum.Contained}
-            >
-              {t('button.applyFilters')}
-            </AppButton>
+            </Button>
+            <Button onClick={onApplyFilters}>{t('button.applyFilters')}</Button>
           </Box>
         </Box>
       </AppDrawer>

@@ -2,7 +2,7 @@ import { FC, ReactElement } from 'react'
 import { Box } from '@mui/material'
 
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import { styles } from '~/containers/guest-home-page/notification-modal/NotificationModal.styles'
 
 interface ConfirmEmailModal {
@@ -28,7 +28,7 @@ const NotificationModal: FC<ConfirmEmailModal> = ({
         style={styles.imgTitleDesc}
         title={title}
       />
-      <AppButton onClick={onClose}>{buttonTitle}</AppButton>
+      <Button onClick={onClose}>{buttonTitle}</Button>
     </Box>
   )
 }

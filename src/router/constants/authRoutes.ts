@@ -52,6 +52,10 @@ export const authRoutes = {
     route: 'my-cooperations/:id/quiz/:quizId'
   },
   accountMenu: {
+    admin: {
+      myProfile: { route: 'my-profile', path: '/my-profile' },
+      logout: { route: 'logout', path: '/logout' }
+    },
     student: {
       myProfile: { route: 'my-profile', path: '/my-profile' },
       bookmarks: { route: 'bookmarked-offers', path: '/bookmarked-offers' },

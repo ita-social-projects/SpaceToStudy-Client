@@ -17,7 +17,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import useMenu from '~/hooks/use-menu'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppSelect from '~/components/app-select/AppSelect'
 import {
   determineQuestionType,
@@ -29,8 +29,7 @@ import {
   QuestionForm,
   SizeEnum,
   TextFieldVariantEnum,
-  QuestionFormAnswer,
-  ButtonVariantEnum
+  QuestionFormAnswer
 } from '~/types'
 
 interface QuestionEditorProps {
@@ -251,22 +250,18 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
         <>
           <Divider sx={styles.buttonsDivider} />
           <Box sx={styles.buttons}>
-            <AppButton
-              onClick={onCancel}
-              size={SizeEnum.Medium}
-              variant={ButtonVariantEnum.Tonal}
-            >
+            <Button onClick={onCancel} size='md' variant='tonal'>
               {t('common.cancel')}
-            </AppButton>
-            <AppButton
+            </Button>
+            <Button
               disabled={!isButtonVisible}
               loading={loading}
               onClick={() => void onSave()}
-              size={SizeEnum.Medium}
+              size='md'
               sx={styles.saveButton}
             >
               {t('common.save')}
-            </AppButton>
+            </Button>
           </Box>
         </>
       )}

@@ -11,7 +11,7 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import Box from '@mui/material/Box'
 
 import Loader from '~/components/loader/Loader'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -19,7 +19,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { styles } from '~/containers/guest-home-page/reset-password/ResetPassword.styles'
 
-import { ButtonVariantEnum, SizeEnum, NewPassword } from '~/types'
+import { ButtonTypeEnum, NewPassword } from '~/types'
 import { confirmPassword, password } from '~/utils/validations/login'
 import { snackbarVariants } from '~/constants'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
@@ -44,14 +44,13 @@ const ResetPassword: FC<ResetPasswordProps> = ({ resetToken, openModal }) => {
           style={styles}
           title={t('login.successReset')}
         />
-        <AppButton
+        <Button
           onClick={() => openModal({ component: <LoginDialog /> })}
-          size={SizeEnum.Large}
+          size='lg'
           sx={styles.button}
-          variant={ButtonVariantEnum.Contained}
         >
           {t('button.goToLogin')}
-        </AppButton>
+        </Button>
       </Box>
     ),
     [openModal, t]
@@ -128,15 +127,14 @@ const ResetPassword: FC<ResetPasswordProps> = ({ resetToken, openModal }) => {
           type={showConfirmPassword ? 'text' : 'password'}
           value={data.confirmPassword}
         />
-        <AppButton
+        <Button
           disabled={loading}
           fullWidth
-          size={SizeEnum.Large}
-          type='submit'
-          variant={ButtonVariantEnum.Contained}
+          size='lg'
+          type={ButtonTypeEnum.Submit}
         >
           {loading ? <Loader size={20} /> : t('login.savePassword')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

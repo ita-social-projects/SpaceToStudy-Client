@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import AppButton from '~/components//app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppCard from '~/components/app-card/AppCard'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 
@@ -31,9 +31,9 @@ const InfoCard: FC<InfoCardProps> = ({
         style={styles.imgTitleDescription}
         title={title}
       />
-      <AppButton onClick={action} sx={styles.button}>
+      <Button onClick={action} sx={styles.button}>
         {actionLabel}
-      </AppButton>
+      </Button>
     </AppCard>
   )
 }
