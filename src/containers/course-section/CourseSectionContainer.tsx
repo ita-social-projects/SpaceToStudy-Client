@@ -41,7 +41,6 @@ import {
   ResourcesTypesEnum as ResourceType,
   CourseResource,
   CourseSectionHandlers,
-  UpdateAttachmentParams,
   CourseResourceEventType,
   CourseSectionEventType,
   ResourceAvailability,
@@ -177,13 +176,6 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
     }
   })
 
-  const handleAttachmentUpdate = useCallback(
-    (data: UpdateAttachmentParams): void => {
-      return mutateAttachment(data)
-    },
-    [mutateAttachment]
-  )
-
   const editResource = (resource: CourseResource) => {
     const resourceType = resource.resourceType
 
@@ -196,7 +188,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
             <EditAttachmentModal
               attachment={resource as CooperationSliceAttachment}
               closeModal={closeModal}
-              onAttachmentUpdate={handleAttachmentUpdate}
+              onAttachmentUpdate={mutateAttachment}
             />
           )
         })
