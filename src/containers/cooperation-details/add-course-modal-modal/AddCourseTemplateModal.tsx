@@ -72,14 +72,9 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
     }
   })
 
-  const getCourses = useCallback(
-    () => CourseService.getCoursesWithBaseService(),
-    []
-  )
-
   const { data: coursesData, isLoading: coursesLoading } = useQuery({
-    queryFn: getCourses,
-    queryKey: ['courses', userId],
+    queryFn: CourseService.getCoursesWithBaseService,
+    queryKey: ['courses'],
     options: {
       staleTime: Infinity
     }
@@ -134,7 +129,10 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   }
 
   const getItems = () => {
-    return (coursesData?.items || [])
+    if (!coursesData) {
+      return []
+    }
+    return coursesData.items
       .filter(
         (item) =>
           'title' in item &&

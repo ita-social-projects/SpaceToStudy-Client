@@ -40,7 +40,7 @@ export const userService = {
         parameters: { id },
         searchParameters: {
           userRole,
-          isEdit: isEdit !== undefined ? isEdit.toString() : undefined
+          isEdit: isEdit?.toString() ?? undefined
         }
       })
     })

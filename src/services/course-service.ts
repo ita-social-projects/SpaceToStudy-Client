@@ -26,12 +26,11 @@ export const CourseService = {
   getCourses: async (params?: GetCoursesParams): Promise<AxiosResponse> =>
     await axiosClient.get(URLs.courses.get, { params }),
 
-  getCoursesWithBaseService: (params?: GetCoursesParams) => {
+  getCoursesWithBaseService: () => {
     return baseService.request<ItemsWithCount<Course>>({
       method: 'GET',
       url: getFullUrl({
-        pathname: URLs.courses.get,
-        searchParameters: params
+        pathname: URLs.courses.get
       })
     })
   },
