@@ -5,5 +5,9 @@
   "attemptFinished": "Attempt finished",
   "questionsAnswered": "Questions answered",
   "save": "Save",
-  "evaluate": "Evaluate"
+  "evaluate": "Evaluate",
+  "areYouSure": "Are you sure you want to finish the quiz?",
+  "warning": "Once you finish the quiz, you won't be able to make any changes to your answers.",
+  "cancel": "Go Back",
+  "confirm": "Yes, Finish quiz"
 }

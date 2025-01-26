@@ -12,6 +12,7 @@ import QuizHeader from '~/containers/quiz/quiz-header/QuizHeader'
 import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestionQuizView'
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
 import Button from '~scss-components/button/Button'
+import FinishQuizModal from '~/containers/quiz/finish-quiz-modal/FinishQuizModal'
 
 import useQuery from '~/hooks/use-query'
 import useForm from '~/hooks/use-form'
@@ -31,6 +32,7 @@ const QuizPage = () => {
   const { t } = useTranslation()
 
   const [isFinished, setIsFinished] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const getQuiz = useCallback(() => {
     if (quizId) {
@@ -52,6 +54,14 @@ const QuizPage = () => {
     queryKey: ['quiz', quizId],
     queryFn: getQuiz
   })
+
+  const openModal = useCallback(() => {
+    setIsOpen(true)
+  }, [])
+
+  const handleCancel = useCallback(() => {
+    setIsOpen(false)
+  }, [])
 
   const handleFinish = useCallback(() => {
     setIsFinished(true)
@@ -106,7 +116,7 @@ const QuizPage = () => {
 
   const finishButton = !isFinished && isStudent && (
     <Box sx={styles.finishBlock.root}>
-      <Button onClick={handleFinish} sx={styles.finishBlock.button}>
+      <Button onClick={openModal} sx={styles.finishBlock.button}>
         {t('quiz.finish')}
       </Button>
     </Box>
@@ -127,6 +137,11 @@ const QuizPage = () => {
         {questionsBlock}
         {finishButton}
       </Box>
+      <FinishQuizModal
+        handleCancel={handleCancel}
+        handleFinish={handleFinish}
+        open={isOpen}
+      />
     </PageWrapper>
   )
 }
