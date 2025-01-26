@@ -20,7 +20,11 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     color: 'var(--s2s-blue-gray-800)',
-    lineHeight: '24px'
+    lineHeight: '24px',
+    textAlign: 'center',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column'
+    }
   },
   title: {
     p: 0,
@@ -31,13 +35,25 @@ const styles = {
     fontWeight: 400,
     color: 'var(--s2s-blue-gray-500)',
     maxWidth: '428px',
-    pt: 0
+    pt: 0,
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '100%',
+      textAlign: 'center'
+    }
   },
   actions: {
     display: 'flex',
     justifyContent: 'flex-end',
     gap: theme.spacing(1),
-    p: 0
+    p: 0,
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      gap: theme.spacing(2),
+      alignItems: 'stretch',
+      '& > :not(style) ~ :not(style)': {
+        marginLeft: 0
+      }
+    }
   }
 }
 
