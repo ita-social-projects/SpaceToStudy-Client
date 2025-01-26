@@ -98,7 +98,7 @@ const UngradedQuizInfo = () => {
       />
       <QuizInfoSection firstColumn='-' title={t('quiz.points')} />
       <Box sx={styles.buttonWrapper}>
-        <Button color='tonal' size='sm'>
+        <Button size='sm' variant='tonal'>
           {t('quiz.evaluate')}
         </Button>
       </Box>
