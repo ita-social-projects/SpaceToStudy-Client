@@ -20,6 +20,7 @@ import {
   CreateCategoriesParams,
   UpdateQuestionParams,
   CreateQuizParams,
+  CreateFinishedQuizParams,
   Quiz,
   UpdateQuizParams,
   ApiMethodEnum,
@@ -104,6 +105,13 @@ export const ResourceService = {
     ),
   deleteQuiz: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(createUrlPath(URLs.quizzes.delete, id)),
+  addFinishedQuiz: async (data: CreateFinishedQuizParams) => {
+    return baseService.request({
+      method: 'POST',
+      url: URLs.finishedQuizzes.add,
+      data
+    })
+  },
   getAttachments: async (
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>

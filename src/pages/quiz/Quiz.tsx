@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
@@ -29,6 +29,8 @@ const QuizPage = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const { quizId } = useParams()
+  const navigate = useNavigate()
+
   const { t } = useTranslation()
 
   const [isFinished, setIsFinished] = useState(false)
@@ -65,7 +67,8 @@ const QuizPage = () => {
 
   const handleFinish = useCallback(() => {
     setIsFinished(true)
-  }, [])
+    navigate(-1)
+  }, [navigate])
 
   if (isLoading || !quiz) {
     return <Loader pageLoad />
