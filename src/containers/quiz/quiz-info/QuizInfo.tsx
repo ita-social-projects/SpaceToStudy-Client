@@ -10,7 +10,12 @@ import Points from '~/containers/quiz/points/Points'
 
 import styles from '~/containers/quiz/quiz-info/QuizInfo.styles'
 
-const ActiveQuizInfo = () => {
+type QuizInfoProps = {
+  points?: number
+  totalPoints: number
+}
+
+const ActiveQuizInfo = ({ totalPoints }: QuizInfoProps) => {
   const { t } = useTranslation()
 
   return (
@@ -31,13 +36,13 @@ const ActiveQuizInfo = () => {
         <Typography sx={styles.subtitle1}>
           {t('quiz.questionsAnswered')}:
         </Typography>
-        <Typography sx={styles.subtitle2}>1/4</Typography>
+        <Typography sx={styles.subtitle2}>1/{totalPoints}</Typography>
       </Box>
     </Box>
   )
 }
 
-const FinishedQuizInfo = () => {
+const FinishedQuizInfo = ({ totalPoints }: QuizInfoProps) => {
   const { t } = useTranslation()
 
   return (
@@ -64,7 +69,10 @@ const FinishedQuizInfo = () => {
         sx={styles.divider}
         variant='middle'
       />
-      <QuizInfoSection firstColumn='2/4' title={t('quiz.points')} />
+      <QuizInfoSection
+        firstColumn={`2/${totalPoints}`}
+        title={t('quiz.points')}
+      />
     </Box>
   )
 }
@@ -106,18 +114,13 @@ const UngradedQuizInfo = () => {
   )
 }
 
-type GradedQuizInfoProps = {
-  points: number
-  totalPoints: number
-}
-
-const GradedQuizInfo = ({ points, totalPoints }: GradedQuizInfoProps) => {
+const GradedQuizInfo = ({ points, totalPoints }: QuizInfoProps) => {
   const { t } = useTranslation()
 
   return (
     <Box sx={styles.infoWrapper}>
       <Points
-        points={points}
+        points={points ?? 0}
         title={t('quiz.points')}
         totalPoints={totalPoints}
       />

@@ -42,8 +42,10 @@ const QuizHeader = ({
         style={styles.titleWithDescription}
         title={title}
       />
-      {!isFinished && isStudent && <ActiveQuizInfo />}
-      {isFinished && isStudent && <FinishedQuizInfo />}
+      {!isFinished && isStudent && <ActiveQuizInfo totalPoints={totalPoints} />}
+      {isFinished && isStudent && (
+        <FinishedQuizInfo totalPoints={totalPoints} />
+      )}
       {!isGraded && isTutor && <UngradedQuizInfo />}
       {isGraded && isTutor && (
         <GradedQuizInfo points={points} totalPoints={totalPoints} />

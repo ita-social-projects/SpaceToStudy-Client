@@ -112,6 +112,15 @@ export const ResourceService = {
       data
     })
   },
+  getQuizFinishedQuiz: async (id: string) => {
+    return baseService.request({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.finishedQuizzes.getById,
+        parameters: { id }
+      })
+    })
+  },
   getAttachments: async (
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>

@@ -4,13 +4,14 @@ type Answer = {
   isChosen: boolean
 }
 
-type Result = {
+export type Result = {
   question: string
   answers: Answer[]
 }
 
 export type CreateFinishedQuizParams = {
   quiz: string
+  cooperation: string
   grade: number
   results: Result[]
 }

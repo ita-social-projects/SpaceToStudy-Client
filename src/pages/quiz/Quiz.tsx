@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
@@ -15,6 +15,7 @@ import Button from '~scss-components/button/Button'
 import FinishQuizModal from '~/containers/quiz/finish-quiz-modal/FinishQuizModal'
 
 import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import useForm from '~/hooks/use-form'
 
 import { ResourceService } from '~/services/resource-service'
@@ -28,8 +29,7 @@ import { ComponentEnum, QuizViewEnum, UserRoleEnum } from '~/types'
 const QuizPage = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
-  const { quizId } = useParams()
-  const navigate = useNavigate()
+  const { id, quizId } = useParams()
 
   const { t } = useTranslation()
 
@@ -65,21 +65,43 @@ const QuizPage = () => {
     setIsOpen(false)
   }, [])
 
-  const handleFinish = useCallback(() => {
-    setIsFinished(true)
-    navigate(-1)
-  }, [navigate])
-
-  if (isLoading || !quiz) {
-    return <Loader pageLoad />
-  }
-
   const {
     settings: { pointValues, scoredResponses, correctAnswers, view },
     description,
     title,
     items
-  } = quiz
+  } = quiz || defaultQuizResponse
+
+  const addFinishedQuiz = useCallback(() => {
+    return ResourceService.addFinishedQuiz({
+      cooperation: id ?? '',
+      quiz: quizId ?? '',
+      grade: countPoints(quiz?.items ?? [], data),
+      results: items.map((item) => {
+        return {
+          question: item.text,
+          answers: item.answers.map((answer) => ({
+            text: answer.text,
+            isCorrect: answer.isCorrect,
+            isChosen: data[item._id] === answer.text
+          }))
+        }
+      })
+    })
+  }, [data, id, items, quiz?.items, quizId])
+
+  const { mutate } = useMutation({
+    mutationFn: addFinishedQuiz
+  })
+
+  const handleFinish = useCallback(() => {
+    mutate()
+    setIsFinished(true)
+  }, [mutate])
+
+  if (isLoading || !quiz) {
+    return <Loader pageLoad />
+  }
 
   const showPoints = pointValues && isFinished
   const showAnswersCorrectness = scoredResponses && isFinished
