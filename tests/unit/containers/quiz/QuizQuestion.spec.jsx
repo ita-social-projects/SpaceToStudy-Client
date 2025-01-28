@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import QuizQuestion from '~/containers/quiz/quiz-question/Question.tsx'
 
 const mockQuestion = {
@@ -37,5 +37,25 @@ describe('Quiz Question tests', () => {
 
     const element = screen.getByText('0/1')
     expect(element).toBeInTheDocument()
+  })
+  it('Should render correctness icon if shouldShowAnswersCorrectness is true', () => {
+    renderWithProps({ shouldShowAnswersCorrectness: true, value: 'Correct answer' })
+
+    const icon = screen.getAllByTestId('CheckIcon')[0]
+    expect(icon).toBeInTheDocument()
+  })
+  it('Should render open answer input field', () => {
+    const handleInputChangeMock = vi.fn((e) => e.target.value)
+    const openAnswerQuestion = { ...mockQuestion, type: 'openAnswer' }
+    renderWithProps({
+      question: openAnswerQuestion,
+      value: '',
+      handleInputChange: handleInputChangeMock,
+    })
+
+    const input = screen.getByRole('textbox')
+    expect(input).toBeInTheDocument()
+    fireEvent.change(input, { target: { value: 'Correct answer' } })
+    expect(handleInputChangeMock).toHaveBeenCalled()
   })
 })

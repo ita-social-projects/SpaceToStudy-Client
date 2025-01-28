@@ -26,6 +26,19 @@ const mockedQuestion = {
     name: 'Category name'
   }
 }
+const mockedOpenAnswerQuestion = {
+  title: 'Question title',
+  text: 'Question text',
+  answers: [
+    {id: 0, text: 'Answer 1', isCorrect: true },
+  ],
+  author: 'Question author',
+  type: 'openAnswer',
+  category: {
+    _id: 'mockedId',
+    name: 'Category name'
+  }
+}
 
 describe('CreateOrEditQuizQuestion component without question', () => {
   beforeEach(async () => {
@@ -113,6 +126,55 @@ describe('CreateOrEditQuizQuestion component without question', () => {
       'myResourcesPage.questions.successAddedQuestion'
     )
 
+    expect(snackbar).toBeInTheDocument()
+    expect(createQuestionSpy).toHaveBeenCalled()
+  })
+  it('should call onCreateQuestion with openAnswer data', async () => {
+    mockAxiosClient
+      .onPost(`${URLs.resources.questions.post}`)
+      .reply(200, { data: mockedOpenAnswerQuestion })
+    const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestion')
+    const modalSaveBtn = screen.getByText('common.save')
+    const modalInput = screen.getByRole('textbox')
+
+    fireEvent.change(modalInput, { target: { value: 'test' } })
+    fireEvent.click(modalSaveBtn)
+    const appSelect = screen.getByTestId('app-select')
+
+    fireEvent.click(appSelect)
+    fireEvent.change(appSelect, {
+      target: { value: 'openAnswer' }
+    })
+    const questionInput = screen.getByLabelText('questionPage.question')
+    fireEvent.change(questionInput, { target: { value: 'Question' } })
+
+    const addNewAnswerBtn = screen.getByTestId('addNewAnswerBtn')
+    fireEvent.click(addNewAnswerBtn)
+
+    const saveBtn = screen.getByText('common.save')
+    fireEvent.click(saveBtn)
+
+    await waitFor(() => {
+      expect(createQuestionSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          answers: expect.arrayContaining([
+            expect.objectContaining({
+              text: '',
+              isCorrect: true,
+              id: 0
+            })
+          ]),
+          category: null,
+          openAnswer: '',
+          text: 'Question',
+          title: 'test',
+          type: 'openAnswer' 
+        })
+      )
+    })
+    const snackbar = await screen.findByText(
+      'myResourcesPage.questions.successAddedQuestion'
+    )
     expect(snackbar).toBeInTheDocument()
     expect(createQuestionSpy).toHaveBeenCalled()
   })
