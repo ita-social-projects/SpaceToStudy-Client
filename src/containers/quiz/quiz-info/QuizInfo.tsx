@@ -9,13 +9,21 @@ import Timer from '~/containers/quiz/timer/Timer'
 import Points from '~/containers/quiz/points/Points'
 
 import styles from '~/containers/quiz/quiz-info/QuizInfo.styles'
+import {
+  formatDate,
+  formatTime,
+  formatTimeDifference
+} from '~/utils/helper-functions'
 
-type QuizInfoProps = {
-  points?: number
+type ActiveQuizInfoProps = {
+  questionsAnswered: number
   totalPoints: number
 }
 
-const ActiveQuizInfo = ({ totalPoints }: QuizInfoProps) => {
+const ActiveQuizInfo = ({
+  questionsAnswered,
+  totalPoints
+}: ActiveQuizInfoProps) => {
   const { t } = useTranslation()
 
   return (
@@ -36,20 +44,34 @@ const ActiveQuizInfo = ({ totalPoints }: QuizInfoProps) => {
         <Typography sx={styles.subtitle1}>
           {t('quiz.questionsAnswered')}:
         </Typography>
-        <Typography sx={styles.subtitle2}>1/{totalPoints}</Typography>
+        <Typography sx={styles.subtitle2}>
+          {questionsAnswered}/{totalPoints}
+        </Typography>
       </Box>
     </Box>
   )
 }
 
-const FinishedQuizInfo = ({ totalPoints }: QuizInfoProps) => {
+type FinishedQuizInfoProps = {
+  points: number
+  totalPoints: number
+  createdAt: string
+  updatedAt: string
+}
+
+const FinishedQuizInfo = ({
+  points,
+  totalPoints,
+  createdAt,
+  updatedAt
+}: FinishedQuizInfoProps) => {
   const { t } = useTranslation()
 
   return (
     <Box sx={styles.infoWrapper}>
       <QuizInfoSection
-        firstColumn='May 17, 2024'
-        secondColumn='14:15'
+        firstColumn={formatDate(updatedAt)}
+        secondColumn={formatTime(updatedAt)}
         title={t('quiz.attemptFinished')}
       />
       <Divider
@@ -59,8 +81,8 @@ const FinishedQuizInfo = ({ totalPoints }: QuizInfoProps) => {
         variant='middle'
       />
       <QuizInfoSection
-        firstColumn='13:50 - 14:10'
-        secondColumn='20 min'
+        firstColumn={`${formatTime(createdAt)} - ${formatTime(updatedAt)}`}
+        secondColumn={formatTimeDifference(updatedAt, createdAt)}
         title={t('quiz.duration')}
       />
       <Divider
@@ -70,7 +92,7 @@ const FinishedQuizInfo = ({ totalPoints }: QuizInfoProps) => {
         variant='middle'
       />
       <QuizInfoSection
-        firstColumn={`2/${totalPoints}`}
+        firstColumn={`${points}/${totalPoints}`}
         title={t('quiz.points')}
       />
     </Box>
@@ -114,7 +136,12 @@ const UngradedQuizInfo = () => {
   )
 }
 
-const GradedQuizInfo = ({ points, totalPoints }: QuizInfoProps) => {
+type GradedQuizInfoProps = {
+  points: number
+  totalPoints: number
+}
+
+const GradedQuizInfo = ({ points, totalPoints }: GradedQuizInfoProps) => {
   const { t } = useTranslation()
 
   return (

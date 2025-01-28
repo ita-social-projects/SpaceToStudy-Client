@@ -1,3 +1,5 @@
+import { type CommonEntityFields } from '~/types'
+
 type Answer = {
   text: string
   isCorrect: boolean
@@ -15,3 +17,5 @@ export type CreateFinishedQuizParams = {
   grade: number
   results: Result[]
 }
+
+export type FinishedQuiz = CreateFinishedQuizParams & CommonEntityFields

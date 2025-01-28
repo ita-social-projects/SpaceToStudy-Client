@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
@@ -24,12 +24,18 @@ import styles from '~/pages/quiz/Quiz.styles'
 import { defaultResponses } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
-import { ComponentEnum, QuizViewEnum, UserRoleEnum } from '~/types'
+import {
+  ComponentEnum,
+  QuestionTypesEnum,
+  QuizViewEnum,
+  UserRoleEnum
+} from '~/types'
 
 const QuizPage = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const { id, quizId } = useParams()
+  const navigate = useNavigate()
 
   const { t } = useTranslation()
 
@@ -61,43 +67,54 @@ const QuizPage = () => {
     setIsOpen(true)
   }, [])
 
-  const handleCancel = useCallback(() => {
-    setIsOpen(false)
-  }, [])
-
   const {
     settings: { pointValues, scoredResponses, correctAnswers, view },
     description,
     title,
-    items
+    items,
+    createdAt,
+    updatedAt
   } = quiz || defaultQuizResponse
+
+  const points = countPoints(
+    items.filter(({ type }) => type !== QuestionTypesEnum.OpenAnswer),
+    data
+  )
 
   const addFinishedQuiz = useCallback(() => {
     return ResourceService.addFinishedQuiz({
       cooperation: id ?? '',
       quiz: quizId ?? '',
-      grade: countPoints(quiz?.items ?? [], data),
-      results: items.map((item) => {
+      grade: Math.round((points / items.length) * 100),
+      results: items.map(({ text, answers, _id }) => {
         return {
-          question: item.text,
-          answers: item.answers.map((answer) => ({
-            text: answer.text,
-            isCorrect: answer.isCorrect,
-            isChosen: data[item._id] === answer.text
+          question: text,
+          answers: answers.map(({ text, isCorrect }) => ({
+            text,
+            isCorrect,
+            isChosen: data[_id] === text
           }))
         }
       })
     })
-  }, [data, id, items, quiz?.items, quizId])
+  }, [data, id, items, points, quizId])
 
-  const { mutate } = useMutation({
+  const { mutate, data: finishedQuiz } = useMutation({
     mutationFn: addFinishedQuiz
   })
 
+  const handleCancel = useCallback(() => {
+    setIsOpen(false)
+  }, [])
+
   const handleFinish = useCallback(() => {
     mutate()
+    setIsOpen(false)
     setIsFinished(true)
-  }, [mutate])
+    if (!scoredResponses) {
+      navigate(-1)
+    }
+  }, [mutate, navigate, scoredResponses])
 
   if (isLoading || !quiz) {
     return <Loader pageLoad />
@@ -106,8 +123,6 @@ const QuizPage = () => {
   const showPoints = pointValues && isFinished
   const showAnswersCorrectness = scoredResponses && isFinished
   const showCorrectAnswers = correctAnswers && isFinished
-
-  const points = showPoints && countPoints(items, data)
 
   const isStepper = view === QuizViewEnum.Stepper
 
@@ -147,16 +162,21 @@ const QuizPage = () => {
     </Box>
   )
 
+  const questionsAnswered = Object.keys(data).length
+
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
       <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
         <QuizHeader
+          createdAt={finishedQuiz?.createdAt ?? createdAt}
           description={description}
           isFinished={isFinished}
           isGraded={showPoints}
           points={points || 0}
+          questionsAnswered={questionsAnswered}
           title={title}
           totalPoints={items.length}
+          updatedAt={finishedQuiz?.updatedAt ?? updatedAt}
         />
         <Divider sx={styles.divider} />
         {questionsBlock}

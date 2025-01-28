@@ -24,7 +24,8 @@ import {
   Quiz,
   UpdateQuizParams,
   ApiMethodEnum,
-  GetQuestion
+  GetQuestion,
+  type FinishedQuiz
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -106,14 +107,14 @@ export const ResourceService = {
   deleteQuiz: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(createUrlPath(URLs.quizzes.delete, id)),
   addFinishedQuiz: async (data: CreateFinishedQuizParams) => {
-    return baseService.request({
+    return baseService.request<FinishedQuiz>({
       method: 'POST',
       url: URLs.finishedQuizzes.add,
       data
     })
   },
-  getQuizFinishedQuiz: async (id: string) => {
-    return baseService.request({
+  getFinishedQuiz: async (id: string) => {
+    return baseService.request<FinishedQuiz>({
       method: 'GET',
       url: getFullUrl({
         pathname: URLs.finishedQuizzes.getById,
