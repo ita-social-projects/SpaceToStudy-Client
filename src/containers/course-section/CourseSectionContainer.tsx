@@ -163,7 +163,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
 
   const { mutate: mutateAttachment } = useMutation({
     mutationFn: ResourceService.updateAttachmentQuery,
-    onSuccess: (data: Attachment) => {
+    onSuccess: (data) => {
       resourceEventHandler?.({
         type: CourseResourceEventType.ResourceUpdated,
         sectionId: sectionData.id,
