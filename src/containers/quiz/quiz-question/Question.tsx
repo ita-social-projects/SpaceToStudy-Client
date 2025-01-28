@@ -64,7 +64,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     shouldShowAnswersCorrectness &&
     (isCorrect ? <CheckIcon sx={iconStyles} /> : <CloseIcon sx={iconStyles} />)
 
-  const showCorrectAnswers = shouldShowCorrectAnswers && !isOpenAnswer
+  const showCorrectAnswers = shouldShowCorrectAnswers
 
   const correctAnswersList =
     showCorrectAnswers &&
@@ -135,7 +135,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
 
   const answersBlock = isOpenAnswer ? (
     <Answer
-      isCorrect
+      isCorrect={question.answers.some((answer) => answer.isCorrect)}
       isEditable={isEditable}
       label={question.text}
       onTextInputChange={handleInputChange}

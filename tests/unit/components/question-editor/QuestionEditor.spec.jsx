@@ -4,8 +4,10 @@ import { renderWithProviders } from '~tests/test-utils'
 
 const handleInputChange = vi.fn()
 const handleNonInputValueChange = vi.fn()
+const addNewOneAnswer = vi.fn()
 const onEditMock = vi.fn()
 const onSave = vi.fn()
+
 
 const props = {
   handleInputChange,
@@ -32,7 +34,7 @@ describe('QuestionEditor component with an open question type', () => {
   }
 
   beforeEach(() => {
-    renderWithProviders(<QuestionEditor {...openQuestionProps} />)
+    renderWithProviders(<QuestionEditor addNewOneAnswer={addNewOneAnswer} {...openQuestionProps} />)
   })
 
   afterEach(() => {
@@ -78,19 +80,18 @@ describe('QuestionEditor component with an open question type', () => {
     })
 
     const questionInput = screen.getByLabelText('questionPage.question')
-    const answerInput = screen.getByLabelText('questionPage.answer')
 
     fireEvent.change(questionInput, {
       target: { value: 'New question' }
     })
 
-    fireEvent.change(answerInput, {
-      target: { value: 'New answer' }
-    })
-
-    expect(handleInputChange).toHaveBeenCalled()
+    const addNewOneButton = screen.getByTestId('addNewAnswerBtn')
+    fireEvent.click(addNewOneButton)
+    
+    expect(handleNonInputValueChange).toHaveBeenCalledWith("answers", [
+      { id: 0, text: "", isCorrect: true, isEditing: true },
+    ])
   })
-
   it('should click on edit title and category', () => {
     const moreIcon = screen.getByTestId('MoreVertIcon')
 

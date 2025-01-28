@@ -10,10 +10,15 @@ export const isCorrectAnswer = (
 
   const isUnanswered =
     !userAnswer || (Array.isArray(userAnswer) && !userAnswer.length)
-
-  if (isOpenAnswer) return true
-
   if (isUnanswered) return false
+
+  if (isOpenAnswer) {
+    if (typeof userAnswer !== 'string') return false
+    const correctAnswer = question.answers.find((item) => {
+      return item.text.trim() === userAnswer.trim()
+    })
+    return Boolean(correctAnswer)
+  }
 
   if (isSingleChoice) {
     return question.answers.find((item) => item.isCorrect)?.text === userAnswer

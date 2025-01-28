@@ -10,10 +10,17 @@ export const countPoints = (
 
     const { isMultipleChoice, isSingleChoice, isOpenAnswer } =
       determineQuestionType(item.type)
-
-    if (isOpenAnswer) return true
-
     if (!userAnswer) return false
+
+    if (isOpenAnswer) {
+      const correctAnswer = item.answers.find((item) => {
+        return (
+          item.text.trim() ===
+          (!Array.isArray(userAnswer) ? userAnswer : userAnswer[0]).trim()
+        )
+      })
+      return Boolean(correctAnswer)
+    }
 
     if (isSingleChoice) {
       return item.answers.find((item) => item.isCorrect)?.text === userAnswer

@@ -66,6 +66,12 @@ export const styles = {
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  openAnswer: {
+    mt: '10px'
+  },
+  emptyAnswer: {
+    color: 'primary.300'
+  },
   iconWrapper: {
     display: 'flex',
     padding: '8px',

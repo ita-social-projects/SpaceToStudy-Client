@@ -28,7 +28,8 @@ export const styles = {
       borderRadius: 2,
       display: 'flex',
       alignItems: 'center',
-      bgcolor
+      bgcolor,
+      height: isOpenAnswer ? '48px' : undefined
     }
   },
   label: {

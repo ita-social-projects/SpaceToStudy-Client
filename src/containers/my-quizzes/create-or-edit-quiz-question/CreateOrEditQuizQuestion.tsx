@@ -112,9 +112,16 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
     onResponseError
   })
 
-  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
-    useForm<QuestionForm>({ initialValues: initialValues(question) })
-
+  const {
+    data,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleSubmit,
+    handleErrors,
+    errors
+  } = useForm<QuestionForm>({
+    initialValues: initialValues(question)
+  })
   const onCloseCreation = () => {
     closeModal()
     onCancel()
@@ -128,7 +135,23 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   }
 
   const onCreateQuestion = async () => {
-    await createQuestion(data)
+    if (data.openAnswer) {
+      const updatedData = {
+        ...data,
+        answers: [
+          ...data.answers,
+          {
+            text: data.openAnswer,
+            isCorrect: true,
+            id: data.answers.length
+          }
+        ],
+        openAnswer: ''
+      }
+      await createQuestion(updatedData)
+    } else {
+      await createQuestion(data)
+    }
   }
 
   const onUpdateQuestion = async () => {
@@ -156,6 +179,8 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
       <QuestionEditor
         data={data}
+        errors={errors}
+        handleErrors={handleErrors}
         handleInputChange={handleInputChange}
         handleNonInputValueChange={handleNonInputValueChange}
         isQuizQuestion

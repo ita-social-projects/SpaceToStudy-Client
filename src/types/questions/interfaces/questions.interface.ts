@@ -37,6 +37,7 @@ export interface UpdateQuestionParams {
 
 export interface QuestionFormAnswer extends Answer {
   id: number
+  isEditing?: boolean
 }
 
 export interface QuestionForm

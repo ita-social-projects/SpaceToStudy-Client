@@ -3,6 +3,7 @@ import ListIcon from '@mui/icons-material/List'
 import ShortTextIcon from '@mui/icons-material/ShortText'
 
 import { SizeEnum, QuestionTypesEnum } from '~/types'
+import { emptyField } from '~/utils/validations/common'
 
 export const sortQuestions = [
   {
@@ -27,4 +28,11 @@ export const determineQuestionType = (type: QuestionTypesEnum) => {
   const isOpenAnswer = type === sortQuestions[1].value
   const isSingleChoice = type === sortQuestions[2].value
   return { isMultipleChoice, isOpenAnswer, isSingleChoice }
+}
+
+export const validateOpenAnswer = (value: string) => {
+  if (value.length === 0) {
+    return emptyField({ value: value }) ?? ''
+  }
+  return ''
 }
