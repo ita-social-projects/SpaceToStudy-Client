@@ -35,7 +35,6 @@ import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 import { styles } from '~/pages/edit-profile/EditProfile.styles'
-import { hasPhotoChanges } from '~/utils/has-photo-changes'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -72,13 +71,6 @@ const EditProfile = () => {
   const isPasswordSecurityTab =
     activeTab === UserProfileTabsEnum.PasswordAndSecurity
 
-  const hasChanges = (
-    initialData: Partial<EditProfileState> | DataByRole<string>,
-    currentData: Partial<EditProfileState> | DataByRole<string>
-  ): boolean => {
-    return JSON.stringify(initialData) !== JSON.stringify(currentData)
-  }
-
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(
@@ -103,35 +95,31 @@ const EditProfile = () => {
 
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
     if (!initialEditProfileState || !profileState) return {}
-    const { videoLink: initialVideoLink } = initialEditProfileState
-    const { videoLink: currentVideoLink } = profileState
 
-    const { photo: initialPhoto, ...initialData } = initialEditProfileState
-    const { photo: currentPhoto, ...currentData } = profileState
+    type EditableFields = Omit<
+      EditProfileState,
+      'loading' | 'error' | 'tabValidityStatus'
+    >
 
-    const hasPhotoChanged = hasPhotoChanges(initialPhoto, currentPhoto)
+    const changes: Partial<EditableFields> = {}
 
-    const hasChanged = hasChanges(initialData, currentData) || hasPhotoChanged
+    ;(Object.keys(profileState) as Array<keyof EditableFields>).forEach(
+      <K extends keyof EditableFields>(key: K) => {
+        const initialValue = initialEditProfileState[key]
+        const currentValue = profileState[key]
 
-    if (hasChanged) {
-      const changes: Partial<EditProfileState> = {
-        ...currentData
+        if (
+          JSON.stringify(initialValue) !== JSON.stringify(currentValue) &&
+          currentValue !== '' &&
+          currentValue !== null
+        ) {
+          changes[key] = currentValue
+        }
       }
+    )
 
-      if (!hasChanges(initialVideoLink, currentVideoLink)) {
-        delete changes.videoLink
-      }
-
-      if (hasPhotoChanged) {
-        changes.photo = currentPhoto
-      }
-
-      return changes
-    } else {
-      return {}
-    }
+    return changes as Partial<EditProfileState>
   }, [profileState, initialEditProfileState])
-
   const isChanged = useMemo<boolean>(
     () => Object.keys(changedFields).length > 0,
     [changedFields]
@@ -167,7 +155,9 @@ const EditProfile = () => {
     } = changedFields
 
     const dataToUpdate: UpdateUserParams = rest
-
+    //console.log('data to update', dataToUpdate)
+    //console.log('about student', aboutStudent)'
+    console.log('changed fields', changedFields)
     if (city && country) dataToUpdate.address = { city, country }
 
     if (videoLink) {
@@ -194,22 +184,33 @@ const EditProfile = () => {
       dataToUpdate.photo = photo
     }
 
-    await dispatch(
-      updateUser({
-        userId,
-        params: dataToUpdate
-      })
-    )
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: 'editProfilePage.profile.successMessage'
-      })
-    )
-    setInitialEditProfileState(structuredClone(profileState))
+    try {
+      await dispatch(
+        updateUser({
+          userId,
+          params: dataToUpdate
+        })
+      ).unwrap()
 
-    if (hash) {
-      navigate(`${authRoutes.myProfile.path}#complete`)
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: 'editProfilePage.profile.successMessage'
+        })
+      )
+
+      setInitialEditProfileState(structuredClone(profileState))
+
+      if (hash) {
+        navigate(`${authRoutes.myProfile.path}#complete`)
+      }
+    } catch (error) {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: 'editProfilePage.profile.errorMessage'
+        })
+      )
     }
   }
 
