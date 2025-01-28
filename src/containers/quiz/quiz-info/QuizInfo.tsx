@@ -10,7 +10,7 @@ import Points from '~/containers/quiz/points/Points'
 
 import styles from '~/containers/quiz/quiz-info/QuizInfo.styles'
 import {
-  formatDate,
+  getFormattedDate,
   formatTime,
   formatTimeDifference
 } from '~/utils/helper-functions'
@@ -70,7 +70,7 @@ const FinishedQuizInfo = ({
   return (
     <Box sx={styles.infoWrapper}>
       <QuizInfoSection
-        firstColumn={formatDate(updatedAt)}
+        firstColumn={getFormattedDate({ date: updatedAt })}
         secondColumn={formatTime(updatedAt)}
         title={t('quiz.attemptFinished')}
       />
@@ -82,7 +82,7 @@ const FinishedQuizInfo = ({
       />
       <QuizInfoSection
         firstColumn={`${formatTime(createdAt)} - ${formatTime(updatedAt)}`}
-        secondColumn={formatTimeDifference(updatedAt, createdAt)}
+        secondColumn={`${formatTimeDifference(updatedAt, createdAt) + ' ' + t('quiz.min')}`}
         title={t('quiz.duration')}
       />
       <Divider
