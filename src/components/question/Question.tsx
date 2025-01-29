@@ -46,7 +46,8 @@ const Question: React.FC<QuestionProps> = ({
 }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
-  const { isMultipleChoice, isSingleChoice } = determineQuestionType(type)
+  const { isMultipleChoice, isSingleChoice, isOpenAnswer } =
+    determineQuestionType(type)
   const onAction = async (actionFunc: TableActionFunc) => {
     closeMenu()
     await actionFunc(question._id)
@@ -100,6 +101,12 @@ const Question: React.FC<QuestionProps> = ({
       {answer.isCorrect && <CheckIcon sx={styles.checkIcon} />}
     </Box>
   ))
+  const openAnswersList = question.answers.map((answer) => (
+    <Box key={answer.text} sx={spliceSx(styles.answer, styles.openAnswer)}>
+      <Typography>{answer.text}</Typography>
+      {answer.isCorrect && <CheckIcon sx={styles.checkIcon} />}
+    </Box>
+  ))
 
   return (
     <Box sx={spliceSx(styles.root, sx)}>
@@ -138,7 +145,8 @@ const Question: React.FC<QuestionProps> = ({
             isSingleChoice ? styles.singleAnswers : undefined
           )}
         >
-          {answersList}
+          {!isOpenAnswer && answersList}
+          {isOpenAnswer && openAnswersList}
         </Box>
       </Box>
     </Box>

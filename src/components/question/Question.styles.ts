@@ -78,6 +78,9 @@ export const styles = {
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  openAnswer: {
+    padding: '9px 0px 9px 0px'
+  },
   singleAnswer: {
     padding: '9px 0px 9px 0px'
   },
