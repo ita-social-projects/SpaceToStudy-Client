@@ -4,7 +4,7 @@ import { baseService } from '~/services/base-service'
 import { getFullUrl } from '~/utils/get-full-url'
 
 export const CoursesAndCooperationsService = {
-  getByResourceId: async (resourceId: string) => {
+  getByResourceId: (resourceId: string) => {
     const url = getFullUrl({
       pathname: URLs.coursesAndCooperations.getByResourceId,
       searchParameters: { resourceId }
