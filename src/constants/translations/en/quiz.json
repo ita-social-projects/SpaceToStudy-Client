@@ -5,5 +5,8 @@
   "attemptFinished": "Attempt finished",
   "questionsAnswered": "Questions answered",
   "save": "Save",
-  "evaluate": "Evaluate"
+  "evaluate": "Evaluate",
+  "timeLimitReminderTitle": "Quiz time limit reminder",
+  "timeLimitReminderDescription": "This quiz has a time limit of {{minutes}} minutes. Any questions left unanswered when the time runs out will be marked as incorrect. Please manage your time carefully to complete the quiz before the deadline.",
+  "start": "Start now"
 }
