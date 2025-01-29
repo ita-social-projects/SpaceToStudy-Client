@@ -10,14 +10,22 @@ import { styles } from '~/containers/questions-list/QuestionsList.styles'
 
 import useDroppable from '~/hooks/use-droppable'
 import useDndSensor from '~/hooks/use-dnd-sensor'
-import { Question as QuestionInterface } from '~/types'
+import { Question as QuestionInterface, CreateQuizParams } from '~/types'
 
 interface QuestionsListProps {
   items: QuestionInterface[]
   setItems: Dispatch<SetStateAction<QuestionInterface[]>>
+  handleNonInputValueChange: <K extends keyof CreateQuizParams>(
+    key: K,
+    value: CreateQuizParams[K]
+  ) => void
 }
 
-const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
+const QuestionsList: FC<QuestionsListProps> = ({
+  items,
+  setItems,
+  handleNonInputValueChange
+}) => {
   const [editableItemId, setEditableItemId] = useState<string>('')
   const { enabled } = useDroppable()
 
@@ -45,6 +53,7 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
         />
       ) : (
         <Question
+          handleNonInputValueChange={handleNonInputValueChange}
           question={item}
           setEditableItemId={setEditableItemId}
           setQuestions={setItems}

@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
@@ -7,8 +7,8 @@ import Switch from '~/design-system/components/switch/Switch'
 
 import { ResourceService } from '~/services/resource-service'
 import { useAppDispatch } from '~/hooks/use-redux'
-import useAxios from '~/hooks/use-axios'
-import useForm from '~/hooks/use-form'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import SettingItem from '~/components/setting-item/SettingItem'
 import AppSelect from '~/components/app-select/AppSelect'
 import Button from '~scss-components/button/Button'
@@ -29,25 +29,20 @@ import {
   ButtonTypeEnum,
   QuizViewEnum,
   QuizTimeLimit,
-  UpdateQuizParams,
   ErrorResponse,
-  CreateQuizParams,
-  Quiz,
   QuizTabsEnum,
   ComponentEnum,
-  QuizSettings,
-  ResourcesTypesEnum,
-  QuizAttempt
+  QuizAttempt,
+  QuizSettings
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 
 const QuizSettingsContainer = ({
-  title,
-  description,
-  questions,
-  category,
-  settings,
+  data,
+  handleNonInputValueChange,
+  handleSubmit,
+  setMutations,
   setActiveTab
 }: QuizContentProps) => {
   const { t } = useTranslation()
@@ -55,15 +50,30 @@ const QuizSettingsContainer = ({
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const editQuiz = useCallback(
-    (params?: UpdateQuizParams) => ResourceService.editQuiz(params),
-    []
-  )
+  const getQuiz = useCallback(() => {
+    if (id) {
+      return ResourceService.getQuizQuery(id)
+    }
+    return defaultResponse
+  }, [id])
 
-  const createQuizService = useCallback(
-    (data?: CreateQuizParams) => ResourceService.addQuiz(data),
-    []
-  )
+  const { data: quiz } = useQuery({
+    queryKey: ['quiz', id],
+    queryFn: getQuiz,
+    options: {
+      enabled: Boolean(id)
+    }
+  })
+
+  const editQuiz = useCallback(async () => {
+    if (id) {
+      await ResourceService.editQuizQuery(data, id)
+    }
+  }, [data, id])
+
+  const createQuizService = useCallback(() => {
+    return ResourceService.addQuizQuery(data)
+  }, [data])
 
   const onResponse = () => {
     dispatch(
@@ -98,55 +108,59 @@ const QuizSettingsContainer = ({
     )
   }
 
-  const { fetchData: updateQuiz } = useAxios<null, UpdateQuizParams>({
-    service: editQuiz,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse,
-    onResponseError
+  const { mutate: fetchAddQuiz } = useMutation({
+    mutationFn: createQuizService,
+    onSuccess: onResponse,
+    onError: onResponseError
   })
 
-  const { fetchData: createQuiz } = useAxios<Quiz, CreateQuizParams>({
-    service: createQuizService,
-    fetchOnMount: false,
-    defaultResponse: { ...defaultResponse, id: '' },
-    onResponse,
-    onResponseError
+  const { mutate: fetchEditedQuiz } = useMutation({
+    mutationFn: editQuiz,
+    onSuccess: onResponse,
+    onError: onResponseError
   })
 
-  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
-    useForm<QuizSettings>({
-      initialValues: { ...settings },
-      onSubmit: async () => {
-        id
-          ? await updateQuiz({ settings: data, id })
-          : await createQuiz({
-              title,
-              description,
-              items: questions,
-              category: { _id: '', name: category as string },
-              settings: data,
-              id: '',
-              resourceType: ResourcesTypesEnum.Quiz
-            })
-      }
-    })
+  const handleSettingsChange =
+    (key: keyof QuizSettings) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      handleNonInputValueChange('settings', {
+        ...data.settings,
+        [key]: event.target.checked
+      })
+    }
 
   const onViewTypeChange = (value: QuizViewEnum) => {
-    handleNonInputValueChange('view', value)
+    handleNonInputValueChange('settings', {
+      ...data.settings,
+      view: value
+    })
   }
 
   const onTimeLimitChange = (value: QuizTimeLimit) => {
-    handleNonInputValueChange('timeLimit', value)
+    handleNonInputValueChange('settings', {
+      ...data.settings,
+      timeLimit: value
+    })
   }
 
   const onAttemptChange = (value: QuizAttempt) => {
-    handleNonInputValueChange('attemptLimit', value)
+    handleNonInputValueChange('settings', {
+      ...data.settings,
+      attemptLimit: value
+    })
   }
 
-  const isDisabled = (!id && !title) || !questions.length
+  useEffect(() => {
+    if (quiz && id) {
+      handleNonInputValueChange('settings', quiz.settings)
+    }
+  }, [quiz, id])
 
-  const checked = !!data.view
+  useEffect(() => {
+    setMutations({ fetchEditedQuiz, fetchAddQuiz })
+  }, [setMutations, fetchEditedQuiz, fetchAddQuiz])
+
+  const isDisabled = (!id && !data.title) || !data.items.length
 
   return (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
@@ -163,7 +177,7 @@ const QuizSettingsContainer = ({
             fields={getQuizViewFields(t)}
             setValue={onViewTypeChange}
             sx={styles.select}
-            value={data.view}
+            value={data.settings.view}
           />
         </SettingItem>
 
@@ -172,9 +186,9 @@ const QuizSettingsContainer = ({
           title={t('myResourcesPage.quizzes.questionsShuffle')}
         >
           <Switch
-            checked={data.shuffle}
+            checked={data.settings.shuffle}
             data-testid='shuffle-switch'
-            onChange={handleInputChange('shuffle')}
+            onChange={handleSettingsChange('shuffle')}
           />
         </SettingItem>
       </Box>
@@ -189,9 +203,9 @@ const QuizSettingsContainer = ({
           title={t('myResourcesPage.quizzes.pointValues')}
         >
           <Switch
-            checked={data.pointValues}
+            checked={data.settings.pointValues}
             data-testid='pointValues-switch'
-            onChange={handleInputChange('pointValues')}
+            onChange={handleSettingsChange('pointValues')}
           />
         </SettingItem>
 
@@ -200,9 +214,9 @@ const QuizSettingsContainer = ({
           title={t('myResourcesPage.quizzes.scoredUnscoredResponses')}
         >
           <Switch
-            checked={data.scoredResponses}
+            checked={data.settings.scoredResponses}
             data-testid='responses-switch'
-            onChange={handleInputChange('scoredResponses')}
+            onChange={handleSettingsChange('scoredResponses')}
           />
         </SettingItem>
         <SettingItem
@@ -210,9 +224,9 @@ const QuizSettingsContainer = ({
           title={t('myResourcesPage.quizzes.correctAnswers')}
         >
           <Switch
-            checked={checked}
+            checked={data.settings.correctAnswers}
             data-testid='correctAnswers-switch'
-            onChange={handleInputChange('correctAnswers')}
+            onChange={handleSettingsChange('correctAnswers')}
           />
         </SettingItem>
       </Box>
@@ -230,7 +244,7 @@ const QuizSettingsContainer = ({
             label={'Time limit'}
             setValue={onTimeLimitChange}
             sx={styles.select}
-            value={data.timeLimit}
+            value={data.settings.timeLimit}
           />
         </SettingItem>
 
@@ -243,7 +257,7 @@ const QuizSettingsContainer = ({
             label={'Attempts limit'}
             setValue={onAttemptChange}
             sx={styles.select}
-            value={data.attemptLimit}
+            value={data.settings.attemptLimit}
           />
         </SettingItem>
       </Box>

@@ -21,6 +21,7 @@ import {
   UpdateQuestionParams,
   CreateQuizParams,
   Quiz,
+  QuizData,
   UpdateQuizParams,
   ApiMethodEnum,
   GetQuestion
@@ -97,11 +98,28 @@ export const ResourceService = {
     await axiosClient.get(createUrlPath(URLs.quizzes.get, id)),
   addQuiz: async (data?: CreateQuizParams): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.quizzes.add, data),
+  addQuizQuery: async (data: QuizData) => {
+    return baseService.request<Quiz & { category: string | null }>({
+      method: 'POST',
+      url: URLs.quizzes.add,
+      data
+    })
+  },
   editQuiz: async (params?: UpdateQuizParams) =>
     await axiosClient.patch(
       createUrlPath(URLs.quizzes.patch, params?.id),
       params
     ),
+  editQuizQuery: async (data: QuizData, id: string) => {
+    return baseService.request<void>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.quizzes.patch,
+        parameters: { id }
+      }),
+      data
+    })
+  },
   deleteQuiz: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(createUrlPath(URLs.quizzes.delete, id)),
   getAttachments: async (

@@ -21,7 +21,8 @@ import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import {
   ColorEnum,
   Question as QuestionInterface,
-  TableActionFunc
+  TableActionFunc,
+  CreateQuizParams
 } from '~/types'
 import { styles } from '~/components/question/Question.styles'
 import { spliceSx } from '~/utils/helper-functions'
@@ -30,6 +31,10 @@ interface QuestionProps {
   question: QuestionInterface
   setQuestions: Dispatch<SetStateAction<QuestionInterface[]>>
   setEditableItemId: Dispatch<SetStateAction<string>>
+  handleNonInputValueChange: <K extends keyof CreateQuizParams>(
+    key: K,
+    value: CreateQuizParams[K]
+  ) => void
   sx?: SxProps
 }
 
@@ -37,6 +42,7 @@ const Question: FC<QuestionProps> = ({
   question,
   setQuestions,
   setEditableItemId,
+  handleNonInputValueChange,
   sx = {}
 }) => {
   const { t } = useTranslation()
@@ -49,7 +55,10 @@ const Question: FC<QuestionProps> = ({
 
   const onDeleteQuestion = () => {
     setQuestions((prev) => {
-      return prev.filter((item) => item._id !== question._id)
+      const updatedQuestions = prev.filter((item) => item._id !== question._id)
+
+      handleNonInputValueChange?.('items', updatedQuestions)
+      return updatedQuestions
     })
   }
 

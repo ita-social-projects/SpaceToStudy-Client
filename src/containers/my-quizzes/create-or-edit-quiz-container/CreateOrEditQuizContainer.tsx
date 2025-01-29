@@ -1,7 +1,6 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
@@ -15,7 +14,8 @@ import QuestionsList from '~/containers/questions-list/QuestionsList'
 import { useModalContext } from '~/context/modal-context'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { ResourceService } from '~/services/resource-service'
-import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
+import useQuery from '~/hooks/use-query'
 import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -28,20 +28,17 @@ import {
   columns,
   removeColumnRules
 } from '~/containers/add-resources/AddQuestions.constants'
-import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
   ButtonTypeEnum,
   ErrorResponse,
-  CreateQuizParams,
+  ComponentEnum,
   Question,
-  Quiz,
   SizeEnum,
   TextFieldVariantEnum,
   ResourcesTabsEnum,
-  ResourcesTypesEnum as ResourceType,
-  UpdateQuizParams,
   CategoryNameInterface,
-  PositionEnum
+  PositionEnum,
+  QuizData
 } from '~/types'
 import { getErrorMessage } from '~/utils/error-with-message'
 import { createUrlPath } from '~/utils/helper-functions'
@@ -51,15 +48,11 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 
 const CreateOrEditQuizContainer = ({
-  title,
-  setTitle,
-  description,
-  setDescription,
-  questions,
-  setQuestions,
-  category,
-  setCategory,
-  setSettings
+  data,
+  handleInputChange,
+  handleNonInputValueChange,
+  handleSubmit,
+  setMutations
 }: QuizContentProps) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
@@ -67,12 +60,13 @@ const CreateOrEditQuizContainer = ({
   const navigate = useNavigate()
   const { id } = useParams()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
+  const [questions, setQuestions] = useState<Question[]>(data.items || [])
 
   const onCategoryChange = (
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    setCategory(value?._id ?? null)
+    handleNonInputValueChange('category', value?._id ?? null)
   }
 
   const navigateToQuizzesTab = () => {
@@ -111,61 +105,76 @@ const CreateOrEditQuizContainer = ({
     )
   }
 
-  const createQuizService = useCallback(
-    (data?: CreateQuizParams) => ResourceService.addQuiz(data),
-    []
-  )
+  const createQuizService = useCallback(() => {
+    return ResourceService.addQuizQuery(data)
+  }, [data])
 
-  const { fetchData: addNewQuiz } = useAxios<Quiz, CreateQuizParams>({
-    service: createQuizService,
-    fetchOnMount: false,
-    defaultResponse,
-    onResponse: handleResponse,
-    onResponseError
+  const { mutate: fetchAddQuiz } = useMutation({
+    mutationFn: createQuizService,
+    onSuccess: handleResponse,
+    onError: onResponseError
   })
 
-  const editQuizService = useCallback(
-    (params?: UpdateQuizParams) => ResourceService.editQuiz(params),
-    []
-  )
+  const editQuiz = useCallback(async () => {
+    if (id) {
+      await ResourceService.editQuizQuery(data, id)
+    }
+  }, [data, id])
 
-  const { fetchData: fetchEditedQuiz } = useAxios<null, UpdateQuizParams>({
-    service: editQuizService,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse: handleResponse,
-    onResponseError
+  const { mutate: fetchEditedQuiz } = useMutation({
+    mutationFn: editQuiz,
+    onSuccess: handleResponse,
+    onError: onResponseError
   })
 
-  const getQuiz = (id?: string): Promise<AxiosResponse> => {
-    return ResourceService.getQuiz(id)
-  }
+  const getQuiz = useCallback(() => {
+    if (id) {
+      return ResourceService.getQuizQuery(id)
+    }
+    return null
+  }, [id])
 
-  const handleGetQuizResponse = (quiz: Quiz) => {
-    setTitle(quiz.title)
-    setDescription(quiz.description)
-    setQuestions(quiz.items)
-    setCategory(quiz.category)
-    setSettings(quiz.settings)
-  }
-
-  const { loading: getQuizLoading, fetchData: fetchQuizData } = useAxios<
-    Quiz,
-    string
-  >({
-    service: getQuiz,
-    fetchOnMount: false,
-    defaultResponse,
-    onResponse: handleGetQuizResponse,
-    onResponseError
+  const {
+    data: quiz,
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: ['quiz', id],
+    queryFn: getQuiz,
+    options: {
+      enabled: Boolean(id)
+    }
   })
 
   useEffect(() => {
-    if (id) {
-      void fetchQuizData(id)
+    if (quiz && id) {
+      for (const key in quiz) {
+        const validKey = key as keyof QuizData
+        handleNonInputValueChange(validKey, quiz[validKey])
+      }
+      if (quiz.items) {
+        setQuestions(quiz.items)
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [quiz, id])
+
+  useEffect(() => {
+    if (isError) {
+      onResponseError()
+    }
+  }, [isError])
+
+  useEffect(() => {
+    setMutations({ fetchEditedQuiz, fetchAddQuiz })
+  }, [setMutations, fetchEditedQuiz, fetchAddQuiz])
+
+  const onOpenCreateQuestion = () => setIsCreationOpen(true)
+  const onCloseCreateQuestion = () => setIsCreationOpen(false)
+
+  const onAddQuestions = (attachments: Question[]) => {
+    setQuestions(attachments)
+    handleNonInputValueChange('items', attachments)
+  }
 
   const onOpenAddQuestionsModal = () => {
     openModal({
@@ -180,42 +189,6 @@ const CreateOrEditQuizContainer = ({
         />
       )
     })
-  }
-
-  const onAddQuestions = (attachments: Question[]) => {
-    setQuestions(attachments)
-  }
-
-  const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value)
-  }
-
-  const onDescriptionChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value)
-  }
-
-  const onOpenCreateQuestion = () => setIsCreationOpen(true)
-  const onCloseCreateQuestion = () => setIsCreationOpen(false)
-
-  const onSaveQuiz = () =>
-    id
-      ? void fetchEditedQuiz({
-          id,
-          title,
-          description,
-          items: questions,
-          category
-        })
-      : void addNewQuiz({
-          title,
-          description,
-          items: questions,
-          category,
-          resourceType: ResourceType.Quiz
-        })
-
-  if (getQuizLoading) {
-    return <Loader pageLoad />
   }
 
   const CreateQuestionButton = (
@@ -238,38 +211,52 @@ const CreateOrEditQuizContainer = ({
     </Tooltip>
   )
 
-  return (
+  return isLoading ? (
+    <Loader pageLoad />
+  ) : (
     <PageWrapper sx={styles.container}>
-      <Box sx={styles.root}>
+      <Box
+        component={ComponentEnum.Form}
+        onSubmit={handleSubmit}
+        sx={styles.root}
+      >
         <AppTextField
-          InputLabelProps={styles.titleLabel(!!title)}
+          InputLabelProps={styles.titleLabel(!!data.title)}
           InputProps={styles.titleInput}
           fullWidth
           inputProps={styles.input}
-          label={t('myResourcesPage.quizzes.defaultNewTitle')}
-          onChange={onTitleChange}
-          value={title}
+          label={data.title ? '' : t('myResourcesPage.quizzes.defaultNewTitle')}
+          onChange={handleInputChange('title')}
+          value={data.title}
           variant={TextFieldVariantEnum.Standard}
         />
         <AppTextField
-          InputLabelProps={styles.descriptionLabel(!!description)}
+          InputLabelProps={styles.descriptionLabel(!!data.description)}
           InputProps={styles.descriptionInput}
           fullWidth
           inputProps={styles.input}
-          label={t('myResourcesPage.quizzes.defaultNewDescription')}
+          label={
+            data.description
+              ? ''
+              : t('myResourcesPage.quizzes.defaultNewDescription')
+          }
           maxRows={3}
           multiline
-          onChange={onDescriptionChange}
-          value={description}
+          onChange={handleInputChange('description')}
+          value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
         <CategoryDropdown
-          category={category}
+          category={data.category}
           onCategoryChange={onCategoryChange}
         />
         <Divider sx={styles.divider} />
         {questions && (
-          <QuestionsList items={questions} setItems={setQuestions} />
+          <QuestionsList
+            handleNonInputValueChange={handleNonInputValueChange}
+            items={questions}
+            setItems={setQuestions}
+          />
         )}
         {isCreationOpen && (
           <CreateOrEditQuizQuestion
@@ -292,7 +279,7 @@ const CreateOrEditQuizContainer = ({
           <Button onClick={navigateToQuizzesTab} size='lg' variant='tonal'>
             {t('common.cancel')}
           </Button>
-          <Button onClick={onSaveQuiz} size='lg' type={ButtonTypeEnum.Submit}>
+          <Button size='lg' type={ButtonTypeEnum.Submit}>
             {t('common.save')}
           </Button>
         </Box>

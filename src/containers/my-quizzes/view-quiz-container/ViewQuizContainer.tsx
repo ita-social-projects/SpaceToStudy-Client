@@ -3,44 +3,37 @@ import Box from '@mui/material/Box'
 import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestionQuizView'
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import useForm from '~/hooks/use-form'
 
 import { styles } from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer.styles'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
-import { defaultResponses } from '~/constants'
 
-import { QuizViewEnum } from '~/types'
+import { QuizViewEnum, CreateQuizParams } from '~/types'
 
 const ViewQuizContainer = ({
-  questions,
-  title,
-  description,
-  settings
+  data,
+  handleInputChange,
+  handleNonInputValueChange
 }: QuizContentProps) => {
-  const { data, handleInputChange, handleNonInputValueChange } = useForm<
-    Record<string, string | string[]>
-  >({
-    initialValues: defaultResponses.object
-  })
-
-  const handleNonInputChange = (key: string) => (value: string | string[]) => {
-    handleNonInputValueChange(key, value)
-  }
+  const handleNonInputChange =
+    <K extends keyof CreateQuizParams>(key: K) =>
+    (value: CreateQuizParams[K]) => {
+      handleNonInputValueChange(key, value)
+    }
 
   const questionsView =
-    settings.view === QuizViewEnum.Stepper ? (
+    data.settings.view === QuizViewEnum.Stepper ? (
       <SelectableQuestionQuizView
         answers={data}
         handleInputChange={handleInputChange}
         handleNonInputValueChange={handleNonInputChange}
-        questions={questions}
+        questions={data.items}
       />
     ) : (
       <ScrollQuestionsQuizView
         answers={data}
         handleInputChange={handleInputChange}
         handleNonInputValueChange={handleNonInputChange}
-        questions={questions}
+        questions={data.items}
         sx={styles.questionWrapper}
       />
     )
@@ -48,9 +41,9 @@ const ViewQuizContainer = ({
   return (
     <Box>
       <TitleWithDescription
-        description={description}
+        description={data.description}
         style={styles.titleWithDescription}
-        title={title}
+        title={data.title}
       />
       {questionsView}
     </Box>

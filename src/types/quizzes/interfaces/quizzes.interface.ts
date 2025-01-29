@@ -4,7 +4,6 @@ import {
   Question,
   QuizViewEnum,
   ResourceBase,
-  Category,
   QuizTimeLimit,
   QuizAttempt
 } from '~/types'
@@ -23,7 +22,7 @@ export interface Quiz extends CommonEntityFields, ResourceBase {
   title: string
   items: Question[]
   author: Pick<UserResponse, '_id'>
-  category: Category | null
+  category: string | null
   settings: QuizSettings
 }
 
@@ -31,10 +30,18 @@ export type CreateQuizParams = Omit<
   Quiz,
   'author' | '_id' | 'createdAt' | 'updatedAt' | 'settings'
 > & {
-  settings?: QuizSettings
+  settings: QuizSettings
 }
 
 export interface UpdateQuizParams
   extends Partial<Omit<Quiz, 'author' | '_id' | 'createdAt' | 'updatedAt'>> {
   id: string
+}
+
+export type QuizData = {
+  title: string
+  description: string
+  category: string | null
+  items: Question[]
+  settings: QuizSettings
 }

@@ -15,21 +15,34 @@ import {
   QuizViewEnum,
   QuizTabsEnum,
   QuizTimeLimit,
-  QuizAttempt
+  QuizAttempt,
+  ResourcesTypesEnum
 } from '~/types'
 
 export interface QuizContentProps {
-  title: string
-  setTitle: Dispatch<SetStateAction<CreateQuizParams['title']>>
-  description: string
-  setDescription: Dispatch<SetStateAction<CreateQuizParams['description']>>
-  questions: Question[]
-  setQuestions: Dispatch<SetStateAction<Question[]>>
-  category: string | null
-  setCategory: Dispatch<SetStateAction<string | null>>
-  settings: QuizSettings
-  setSettings: Dispatch<SetStateAction<QuizSettings>>
+  data: {
+    id?: string
+    title: string
+    description: string
+    category: string | null
+    items: Question[]
+    resourceType: ResourcesTypesEnum
+    isDuplicate?: boolean
+    settings: QuizSettings
+  }
+  handleInputChange: (
+    key: keyof Omit<CreateQuizParams, 'id' | 'isDuplicate'>
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleNonInputValueChange: <K extends keyof CreateQuizParams>(
+    key: K,
+    value: CreateQuizParams[K]
+  ) => void
+  handleSubmit: () => void
   setActiveTab: Dispatch<SetStateAction<QuizTabsEnum>>
+  setMutations: (mutations: {
+    fetchEditedQuiz: () => void
+    fetchAddQuiz: () => void
+  }) => void
 }
 
 export type QuizTabsData = {
