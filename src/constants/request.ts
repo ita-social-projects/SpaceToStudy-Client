@@ -52,6 +52,7 @@ export const URLs = {
   },
   subjects: {
     get: '/subjects',
+    getByCategoryId: '/categories/:categoryId/subjects',
     getNames: '/subjects/names'
   },
   cooperations: {
