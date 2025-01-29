@@ -10,10 +10,12 @@ import { getFullUrl } from '~/utils/get-full-url'
 export const subjectService = {
   getSubjects: (params?: Pick<SubjectInterface, 'name' | 'category'>) => {
     const { category: { _id: categoryId } = {}, ...restParams } = params ?? {}
+
     let resultUrl = getFullUrl({
       pathname: URLs.subjects.get,
       searchParameters: restParams
     })
+
     if (categoryId) {
       resultUrl = getFullUrl({
         pathname: URLs.subjects.getByCategoryId,
@@ -21,6 +23,7 @@ export const subjectService = {
         searchParameters: restParams
       })
     }
+
     return baseService.request<ItemsWithCount<SubjectInterface>>({
       method: 'GET',
       url: resultUrl
