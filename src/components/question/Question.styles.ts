@@ -1,4 +1,5 @@
 import palette from '~/styles/app-theme/app.pallete'
+import { theme } from '~/styles/app-theme/custom-mui.styles'
 import { TypographyVariantEnum } from '~/types'
 
 const actionIconWrapper = {
@@ -79,13 +80,13 @@ export const styles = {
     alignItems: 'center'
   },
   openAnswer: {
-    padding: '9px 0px 9px 0px'
+    padding: theme.spacing(1, 0)
   },
   singleAnswer: {
     padding: '9px 0px 9px 0px'
   },
   singleAnswers: {
-    ml: '24px'
+    ml: theme.spacing(3)
   },
   moreIcon: {
     fontSize: '20px'

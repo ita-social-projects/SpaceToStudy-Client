@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem, SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -27,7 +26,7 @@ import {
 } from '~/types'
 import { styles } from '~/components/question/Question.styles'
 import { spliceSx } from '~/utils/helper-functions'
-import { determineQuestionType } from '../question-editor/QuestionEditor.constants'
+import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 
 interface QuestionProps {
   question: QuestionInterface
