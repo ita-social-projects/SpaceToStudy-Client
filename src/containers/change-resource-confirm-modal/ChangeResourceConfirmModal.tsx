@@ -34,7 +34,7 @@ const ChangeResourceConfirmModal = ({
         courses: [],
         cooperations: []
       },
-      enabled: !!resourceId
+      enabled: Boolean(resourceId)
     }
   })
 
@@ -44,7 +44,7 @@ const ChangeResourceConfirmModal = ({
     subTitle: 'course'
   }))
 
-  const cooperations = data?.cooperations.map((cooperation) => ({
+  const cooperations = data.cooperations.map((cooperation) => ({
     id: cooperation._id,
     title: cooperation.title,
     subTitle: 'cooperation'
