@@ -19,11 +19,9 @@ describe('QuestionComment', () => {
                 onCommentSubmit={mockSubmit} 
             />
         )
-    })
-
-    beforeEach(() => {
         mockSubmit.mockClear()
     })
+
     test('should render comment button', () => {
         const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
         expect(addCommentButton).toBeInTheDocument()
