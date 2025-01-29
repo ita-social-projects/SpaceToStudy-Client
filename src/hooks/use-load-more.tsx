@@ -42,7 +42,7 @@ const useLoadMore = <Data, Params>({
     setData([])
   }, [])
 
-  const { data: response, isLoading: loading } = useQuery({
+  const { data: response, isFetching: loading } = useQuery({
     queryFn: () => service({ ...params, limit, skip } as Params),
     queryKey: [`load-more`, params, limit, skip],
     options: {
