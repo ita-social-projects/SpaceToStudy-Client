@@ -1,7 +1,7 @@
 import { useAppSelector } from '~/hooks/use-redux'
 import Box from '@mui/material/Box'
 
-import { Question, UserRoleEnum } from '~/types'
+import { Question, QuizAttempt, QuizTimeLimit, UserRoleEnum } from '~/types'
 import {
   ActiveQuizInfo,
   FinishedQuizInfo,
@@ -22,6 +22,11 @@ type QuizHeaderProps = {
   isGraded: boolean
   isNotStarted: boolean
   quizItems: Question[]
+  settings: {
+    attemptLimit: QuizAttempt
+    timeLimit: QuizTimeLimit
+  }
+  handlePreview: (value: boolean) => void
 }
 
 const QuizHeader = ({
@@ -32,7 +37,9 @@ const QuizHeader = ({
   totalPoints,
   isGraded,
   isNotStarted,
-  quizItems
+  quizItems,
+  settings,
+  handlePreview
 }: QuizHeaderProps) => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
@@ -54,7 +61,12 @@ const QuizHeader = ({
         <GradedQuizInfo points={points} totalPoints={totalPoints} />
       )}
       {!isFinished && isStudent && isNotStarted && (
-        <StartViewQuizInfo questionsAmount={quizItems.length} />
+        <StartViewQuizInfo
+          attempts={settings.attemptLimit}
+          handleStartButton={handlePreview}
+          questionsAmount={quizItems.length}
+          timeLimit={settings.timeLimit}
+        />
       )}
     </Box>
   )

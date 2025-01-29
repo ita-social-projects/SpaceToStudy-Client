@@ -12,6 +12,7 @@ import QuizHeader from '~/containers/quiz/quiz-header/QuizHeader'
 import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestionQuizView'
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
 import Button from '~scss-components/button/Button'
+import QuizInfoSection from '~/containers/quiz/quiz-info-section/QuizInfoSection'
 
 import useQuery from '~/hooks/use-query'
 import useForm from '~/hooks/use-form'
@@ -58,15 +59,19 @@ const QuizPage = () => {
     setIsFinished(true)
   }, [])
 
-  // const handleStartQuiz = () => {
-  //   setShowPreview(false)
-  // }
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
 
   const {
-    settings: { pointValues, scoredResponses, correctAnswers, view },
+    settings: {
+      pointValues,
+      scoredResponses,
+      correctAnswers,
+      view,
+      attemptLimit,
+      timeLimit
+    },
     description,
     title,
     items
@@ -107,6 +112,7 @@ const QuizPage = () => {
   )
 
   const isStudent = userRole === UserRoleEnum.Student
+  const headerSettings = { attemptLimit, timeLimit }
 
   const finishButton = !isFinished && isStudent && (
     <Box sx={styles.finishBlock.root}>
@@ -116,31 +122,48 @@ const QuizPage = () => {
     </Box>
   )
 
+  const attemptsList = (
+    <Box sx={styles.attemptWrapper}>
+      <QuizInfoSection
+        firstColumn='May 17, 2024'
+        secondColumn='14:15'
+        title={t('quiz.attemptFinished')}
+      />
+      <Box>
+        <Button variant='tonal'>{t('quiz.reviewAttempt')}</Button>
+      </Box>
+    </Box>
+  )
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
       {showPreview ? (
         <Box>
           <QuizHeader
             description={description}
+            handlePreview={setShowPreview}
             isFinished={false}
             isGraded={false}
             isNotStarted={showPreview}
             points={0}
             quizItems={items}
+            settings={headerSettings}
             title={title}
             totalPoints={items.length}
           />
           <Divider sx={styles.divider} />
+          {attemptsList}
         </Box>
       ) : (
         <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
           <QuizHeader
             description={description}
+            handlePreview={setShowPreview}
             isFinished={isFinished}
             isGraded={showPoints}
             isNotStarted={showPreview}
             points={points || 0}
             quizItems={items}
+            settings={headerSettings}
             title={title}
             totalPoints={items.length}
           />

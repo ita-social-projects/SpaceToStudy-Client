@@ -12,6 +12,9 @@ import styles from '~/containers/quiz/quiz-info/QuizInfo.styles'
 
 import DividerComponent from '~/design-system/components/divider/Divider'
 import { spliceSx } from '~/utils/helper-functions'
+import { QuizAttempt, QuizTimeLimit } from '~/types'
+import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
+import { TFunction } from 'i18next'
 
 const ActiveQuizInfo = () => {
   const { t } = useTranslation()
@@ -133,15 +136,17 @@ const GradedQuizInfo = ({ points, totalPoints }: GradedQuizInfoProps) => {
 
 type StartViewQuizInfoProps = {
   questionsAmount: number
-  attempts?: number
-  timeLimit?: string
+  attempts: QuizAttempt
+  timeLimit: QuizTimeLimit
   isFirstAttempt?: boolean
+  handleStartButton: (value: boolean) => void
 }
 const StartViewQuizInfo = ({
   questionsAmount,
   attempts,
   timeLimit,
-  isFirstAttempt = true
+  isFirstAttempt = true,
+  handleStartButton
 }: StartViewQuizInfoProps) => {
   const { t } = useTranslation()
   const typographyStyle = (subType: number) => {
@@ -150,6 +155,57 @@ const StartViewQuizInfo = ({
       styles.subtitleSize
     )
   }
+  const getQuizTimeLimitTitle = (t: TFunction, timeLimit: QuizTimeLimit) => {
+    const timeOption = getQuizTimeLimitFields(t).find(
+      (option) => option.value === timeLimit
+    )
+    return timeOption ? timeOption.title : ''
+  }
+
+  const onStartAttempt = () => {
+    handleStartButton(false)
+  }
+  const isNoLimitAttempt = attempts === QuizAttempt.NoLimit
+  const isNoLimitTime = timeLimit === QuizTimeLimit.NoLimit
+
+  const attemptLimitOutput = !isNoLimitAttempt && (
+    <>
+      <Box sx={styles.dividerEllipse}>
+        <DividerComponent
+          caption=''
+          orientation='horizontal'
+          size='small'
+          textAlign='center'
+          thickness='md'
+          type='ellipse'
+          variant='middle'
+        />
+      </Box>
+      <Typography sx={typographyStyle(1)}>{t('quiz.attemptLimit')}:</Typography>
+      <Typography sx={typographyStyle(2)}>
+        1/{attempts.split(' ')[0]}
+      </Typography>
+    </>
+  )
+  const timeLimitOutput = !isNoLimitTime && (
+    <>
+      <Box sx={styles.dividerEllipse}>
+        <DividerComponent
+          caption=''
+          orientation='horizontal'
+          size='small'
+          textAlign='right'
+          thickness='md'
+          type='ellipse'
+          variant='inset'
+        />
+      </Box>
+      <Typography sx={typographyStyle(1)}>{t('quiz.timeLimit')}:</Typography>
+      <Typography sx={typographyStyle(2)}>
+        {getQuizTimeLimitTitle(t, timeLimit)}
+      </Typography>
+    </>
+  )
   return (
     <Box sx={styles.infoWrapper}>
       <Box sx={styles.quizSettings}>
@@ -157,40 +213,18 @@ const StartViewQuizInfo = ({
           {t('quiz.questionsAmount')}:
         </Typography>
         <Typography sx={typographyStyle(2)}>{questionsAmount}</Typography>
-        <Box sx={styles.dividerEllipse}>
-          <DividerComponent
-            caption=''
-            orientation='horizontal'
-            size='small'
-            textAlign='center'
-            thickness='md'
-            type='ellipse'
-            variant='middle'
-          />
-        </Box>
-        <Typography sx={typographyStyle(1)}>
-          {t('quiz.attemptLimit')}:
-        </Typography>
-        <Typography sx={typographyStyle(2)}>1/{attempts}</Typography>
-        <Box sx={styles.dividerEllipse}>
-          <DividerComponent
-            caption=''
-            orientation='horizontal'
-            size='small'
-            textAlign='right'
-            thickness='md'
-            type='ellipse'
-            variant='inset'
-          />
-        </Box>
-        <Typography sx={typographyStyle(1)}>{t('quiz.timeLimit')}:</Typography>
-        <Typography sx={typographyStyle(2)}>{timeLimit}</Typography>
+        {attemptLimitOutput}
+        {timeLimitOutput}
       </Box>
       <Box sx={styles.buttonWrapper}>
         {isFirstAttempt ? (
-          <Button size='sm'>{t('quiz.startQuiz')}</Button>
+          <Button onClick={onStartAttempt} size='sm'>
+            {t('quiz.startQuiz')}
+          </Button>
         ) : (
-          <Button size='sm'>{t('quiz.tryAgain')}</Button>
+          <Button onClick={onStartAttempt} size='sm'>
+            {t('quiz.tryAgain')}
+          </Button>
         )}
       </Box>
     </Box>
