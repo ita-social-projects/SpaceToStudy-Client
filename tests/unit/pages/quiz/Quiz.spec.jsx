@@ -154,6 +154,11 @@ describe('QuizPage with useQuery', () => {
       fireEvent.click(finishButton)
     })
 
+    const confirmButton = screen.getByText('quiz.confirm')
+    act(() => {
+      fireEvent.click(confirmButton)
+    })
+
     const correctAnswersLabel = screen.getByText(
       'myResourcesPage.quizzes.correctAnswers'
     )
@@ -174,6 +179,11 @@ describe('QuizPage with useQuery', () => {
 
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
+
+    const confirmButton = screen.getByText('quiz.confirm')
+    act(() => {
+      fireEvent.click(confirmButton)
+    })
 
     const pointsLabel = screen.getByText((_, element) => {
       return (
@@ -234,6 +244,11 @@ describe('QuizPage with useQuery', () => {
 
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
+
+    const confirmButton = screen.getByText('quiz.confirm')
+    act(() => {
+      fireEvent.click(confirmButton)
+    })
 
     const duration = screen.getByText(/quiz\.duration:/i)
     expect(duration).toBeInTheDocument()
