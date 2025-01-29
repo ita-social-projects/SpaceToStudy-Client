@@ -82,7 +82,7 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
             value={data.declineReason}
             variant={InputFieldVariantEnum.Outlined}
           ></InputField>
-          <Button color='tonal-error' onClick={handleReasonSubmit} size='sm'>
+          <Button onClick={handleReasonSubmit} size='sm' variant='tonal-error'>
             {t('cooperationDetailsPage.submitBtn')}
           </Button>
         </Box>
