@@ -123,7 +123,7 @@ const CategoriesContainer = () => {
   }, [fetchData, fetchAllCategoriesNames])
 
   const onCategoryCreate = useCallback(
-    async (response: Categories | null) => {
+    async (response: Categories) => {
       onResponse(response)
       await Promise.all([fetchData(), fetchAllCategoriesNames()])
     },

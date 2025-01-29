@@ -13,9 +13,13 @@ import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/A
 import DropdownButton from '~/components/dropdown-add-btn/DropdownButton'
 
 import { snackbarVariants } from '~/constants'
-import { Categories, CategoryNameInterface, ComponentEnum } from '~/types'
+import {
+  type Categories,
+  type CategoryNameInterface,
+  ComponentEnum
+} from '~/types'
 import { getErrorKey } from '~/utils/get-error-key'
-import { ResponseError } from '~/exceptions'
+import { type ResponseError } from '~/exceptions'
 import { styles } from '~/containers/category-dropdown/CategoryDropdown.styles'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import {
@@ -70,7 +74,7 @@ const CategoryDropdown = ({
   }
 
   const onResponseCategory = useCallback(
-    (response: Categories | null) => {
+    (response: Categories) => {
       const categoryName = response ? response.name : ''
 
       dispatch(

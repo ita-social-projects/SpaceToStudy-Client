@@ -173,9 +173,7 @@ export const ResourceService = {
       url: URLs.resources.resourcesCategories.getNames
     })
   },
-  createResourceCategory: (
-    params: CreateCategoriesParams
-  ): Promise<Categories> => {
+  createResourceCategory: (params: CreateCategoriesParams) => {
     return baseService.request<Categories>({
       method: 'POST',
       url: URLs.resources.resourcesCategories.post,

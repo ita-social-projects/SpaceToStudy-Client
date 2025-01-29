@@ -61,7 +61,7 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
   }
 
   const { data: response, isLoading } = useQuery({
-    queryKey: [title],
+    queryKey: ['app-button-menu', title],
     queryFn: service
   })
 
