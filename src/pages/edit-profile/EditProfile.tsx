@@ -18,8 +18,6 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Button from '~scss-components/button/Button'
 import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
-  ButtonVariantEnum,
-  SizeEnum,
   type UpdateUserParams,
   UserProfileTabsEnum,
   type UserRole,
