@@ -12,7 +12,7 @@ import useAxios from '~/hooks/use-axios'
 import TeachingBlock from '~/containers/offer-page/teaching-block/TeachingBlock'
 import SpecializationBlock from '~/containers/offer-page/specialization-block/SpecializationBlock'
 import FaqBlock from '~/containers/offer-page/faq-block/FaqBlock'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -23,13 +23,11 @@ import {
 } from '~/containers/offer-page/create-or-edit-offer/CreateOrEditOffer.constants'
 import {
   ButtonTypeEnum,
-  ButtonVariantEnum,
   ComponentEnum,
   CreateOrUpdateOfferData,
   Offer,
   OfferActionsEnum,
   ServiceFunction,
-  SizeEnum,
   StatusEnum,
   UserRoleEnum
 } from '~/types'
@@ -165,23 +163,23 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
         handleNonInputValueChange={handleNonInputValueChange}
       />
       <Box sx={styles.buttonBox}>
-        <AppButton
+        <Button
           loading={loading}
-          size={SizeEnum.ExtraLarge}
+          size='lg'
           sx={styles.submit}
           type={ButtonTypeEnum.Submit}
         >
           {t(`offerPage.${offerAction}.buttonTitles.${userRole}`)}
-        </AppButton>
+        </Button>
         {isMovableToDrafts && (
-          <AppButton
+          <Button
             onClick={changeStatus}
-            size={SizeEnum.ExtraLarge}
+            size='lg'
             type={ButtonTypeEnum.Submit}
-            variant={ButtonVariantEnum.Tonal}
+            variant='tonal'
           >
             {t('button.addToDrafts')}
-          </AppButton>
+          </Button>
         )}
       </Box>
     </Box>

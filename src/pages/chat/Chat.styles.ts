@@ -43,7 +43,7 @@ export const styles = {
       padding: '9px 16px 0'
     }
   }),
-  loader: { color: 'primary.700' },
+  loader: { color: 'primary.700', position: 'absolute', top: '250px' },
   chip: { backgroundColor: 'basic.white' },
   chipWrapper: {
     display: 'flex',

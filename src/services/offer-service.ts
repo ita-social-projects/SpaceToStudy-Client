@@ -1,7 +1,8 @@
 import { AxiosResponse } from 'axios'
 import { URLs } from '~/constants/request'
 import { axiosClient } from '~/plugins/axiosClient'
-import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
+import { createUrlPath } from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
 import {
   Offer,
   PriceRangeParams,
@@ -14,13 +15,40 @@ import {
 import { baseService } from './base-service'
 
 export const OfferService = {
-  getOffers: async (params?: GetOffersParams): Promise<AxiosResponse> => {
-    const category = createUrlPath(URLs.categories.get, params?.categoryId)
-    const subject = createUrlPath(URLs.subjects.get, params?.subjectId)
-    return await axiosClient.get(`${category}${subject}${URLs.offers.get}`, {
-      params
+  getOffers: async (params: GetOffersParams) => {
+    const { categoryId, subjectId, ...restParams } = params
+
+    let url = getFullUrl({
+      pathname: URLs.offers.get,
+      searchParameters: restParams
+    })
+
+    if (categoryId && subjectId) {
+      url = getFullUrl({
+        pathname: URLs.offers.getByCategoryAndSubjectId,
+        parameters: { categoryId, subjectId },
+        searchParameters: restParams
+      })
+    } else if (categoryId) {
+      url = getFullUrl({
+        pathname: URLs.offers.getByCategoryId,
+        parameters: { categoryId },
+        searchParameters: restParams
+      })
+    } else if (subjectId) {
+      url = getFullUrl({
+        pathname: URLs.offers.getBySubjectId,
+        parameters: { subjectId },
+        searchParameters: restParams
+      })
+    }
+
+    return baseService.request<ItemsWithCount<Offer>>({
+      method: 'GET',
+      url
     })
   },
+
   createOffer: async (data: CreateOrUpdateOfferData): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.offers.create, data),
 

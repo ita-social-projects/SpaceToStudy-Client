@@ -33,7 +33,7 @@ export const styles = {
     }
   },
   clearBtn: {
-    mr: '32px',
-    color: 'primary.300'
+    mr: '22px',
+    ml: '10px'
   }
 }

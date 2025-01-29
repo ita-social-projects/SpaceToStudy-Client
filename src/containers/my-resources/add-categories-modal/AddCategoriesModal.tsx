@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import useForm from '~/hooks/use-form'
 
 import {
@@ -12,12 +12,7 @@ import {
   validations
 } from '~/containers/my-resources/add-categories-modal/AddCategoriesModal.constants'
 import { styles } from '~/containers/my-resources/add-categories-modal/AddCategories.styles'
-import {
-  ButtonTypeEnum,
-  ButtonVariantEnum,
-  ComponentEnum,
-  CreateCategoriesParams
-} from '~/types'
+import { ButtonTypeEnum, ComponentEnum, CreateCategoriesParams } from '~/types'
 
 interface AddCategoriesModalProps {
   closeModal: () => void
@@ -69,17 +64,17 @@ const AddCategoriesModal: FC<AddCategoriesModalProps> = ({
       </Box>
 
       <Box sx={styles.buttons}>
-        <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
+        <Button onClick={closeModal} variant='tonal'>
           {t('common.cancel')}
-        </AppButton>
-        <AppButton
+        </Button>
+        <Button
           disabled={!!errors.name || !data.name}
           loading={loading}
           sx={styles.saveBtn}
           type={ButtonTypeEnum.Submit}
         >
           {t('common.create')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

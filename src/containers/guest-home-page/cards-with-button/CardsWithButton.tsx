@@ -6,17 +6,12 @@ import Transition, {
 
 import Box from '@mui/material/Box'
 import { useModalContext } from '~/context/modal-context'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import dots from '~/assets/img/guest-home-page/dots.svg'
 
-import {
-  AccordionWithImageItem,
-  PositionEnum,
-  SizeEnum,
-  UserRoleEnum
-} from '~/types'
+import { AccordionWithImageItem, PositionEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/containers/guest-home-page/cards-with-button/CardsWithButton.styles'
 
 interface CardsWithButtonProps {
@@ -71,13 +66,9 @@ const CardsWithButton: FC<CardsWithButtonProps> = ({
       <Transition in={isTutor} timeout={300}>
         {(state) => cards(state)}
       </Transition>
-      <AppButton
-        onClick={openDialog}
-        size={SizeEnum.ExtraLarge}
-        sx={styles.button}
-      >
+      <Button onClick={openDialog} size='lg' sx={styles.button}>
         {btnText}
-      </AppButton>
+      </Button>
     </>
   )
 }

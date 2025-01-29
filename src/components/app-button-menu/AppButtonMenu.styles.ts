@@ -3,15 +3,11 @@ import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   root: {
-    maxWidth: { xs: '200px', md: '300px' },
-    backgroundColor: 'primary.50',
-    display: 'flex',
-    alignItems: 'center',
-    px: '12px',
-    borderRadius: '100px'
+    overflow: 'hidden'
   },
-  text: { typography: TypographyVariantEnum.Subtitle1 },
+  text: { typography: TypographyVariantEnum.Subtitle1, mr: '10px' },
   chosenFilters: {
+    maxWidth: { xs: '50px', sm: '100px' },
     typography: TypographyVariantEnum.Subtitle1,
     fontWeight: 500,
     overflow: 'hidden',

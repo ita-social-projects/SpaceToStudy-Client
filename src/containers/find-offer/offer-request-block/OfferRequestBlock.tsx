@@ -2,7 +2,8 @@ import { useTranslation } from 'react-i18next'
 
 import TitleBlock from '~/components/title-block/TitleBlock'
 import icon from '~/assets/img/find-offer/subject_icon.png'
-import AppButton from '~/components/app-button/AppButton'
+
+import Button from '~scss-components/button/Button'
 import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -20,13 +21,9 @@ const OfferRequestBlock = () => {
 
   return (
     <TitleBlock img={icon} translationKey={translationKey}>
-      <AppButton
-        fullWidth={isMobile}
-        onClick={handleOpenDrawer}
-        sx={{ py: '14px' }}
-      >
+      <Button fullWidth={isMobile} onClick={handleOpenDrawer}>
         {t(`${translationKey}.button`)}
-      </AppButton>
+      </Button>
       <AppDrawer onClose={closeDrawer} open={isOpen}>
         <CreateOffer closeDrawer={closeDrawer} />
       </AppDrawer>

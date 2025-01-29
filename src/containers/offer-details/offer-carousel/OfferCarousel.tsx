@@ -5,17 +5,11 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import AppCard from '~/components/app-card/AppCard'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppCarousel from '~/components/app-carousel/AppCarousel'
-import {
-  GetOffersResponse,
-  Offer,
-  ButtonVariantEnum,
-  StatusEnum,
-  ErrorResponse
-} from '~/types'
+import { Offer, ButtonVariantEnum, StatusEnum, ErrorResponse } from '~/types'
 import { OfferService } from '~/services/offer-service'
 import { defaultResponse } from '~/pages/find-offers/FindOffers.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -41,23 +35,24 @@ const OfferCarousel = ({ offer }: OfferCarouselProps) => {
 
   const slidesToShow = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const getOffers = useCallback(
-    () =>
-      OfferService.getOffers({
-        authorRole: offer.authorRole,
-        subjectId: offer.subject._id,
-        proficiencyLevel: offer.proficiencyLevel,
-        languages: offer.languages,
-        excludedOfferId: offer._id,
-        status: StatusEnum.Active,
-        limit: 9
-      }),
-    [offer]
-  )
+  const getOffers = useCallback(() => {
+    return OfferService.getOffers({
+      authorRole: offer.authorRole,
+      subjectId: offer.subject._id,
+      proficiencyLevel: offer.proficiencyLevel,
+      languages: offer.languages,
+      excludedOfferId: offer._id,
+      status: StatusEnum.Active,
+      limit: 9
+    })
+  }, [offer])
 
-  const { response } = useAxios<GetOffersResponse>({
-    service: getOffers,
-    defaultResponse
+  const { data: response } = useQuery({
+    queryKey: ['suggested-offers', offer],
+    queryFn: getOffers,
+    options: {
+      initialData: defaultResponse
+    }
   })
 
   const dispatch = useAppDispatch()

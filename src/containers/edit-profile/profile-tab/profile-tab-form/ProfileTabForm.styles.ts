@@ -33,6 +33,7 @@ export const styles = {
   section: { display: 'flex', flexDirection: 'column', rowGap: '15px' },
   sectionsTitleWithDesc: { ...titleWithDescription },
   dividedInputs: { display: 'flex', columnGap: '10px' },
+  locationInput: { marginBottom: '25px' },
   professionalSummaryLabel: (text: string) => ({
     color: palette.primary[400],
     top: '-2px',

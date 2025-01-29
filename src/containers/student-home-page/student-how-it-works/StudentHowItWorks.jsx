@@ -3,15 +3,13 @@ import { Link } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { howItWorksCards } from '~/containers/student-home-page/student-how-it-works/HowItWorksCards'
 import { styles } from '~/containers/student-home-page/student-how-it-works/student-how-it-works.styles'
 
 import { authRoutes } from '~/router/constants/authRoutes'
-
-import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 const StudentHowItWorks = () => {
   const { t } = useTranslation()
@@ -47,14 +45,9 @@ const StudentHowItWorks = () => {
 
       <Box sx={styles.cardsContainer}>{cards}</Box>
 
-      <AppButton
-        component={Link}
-        size={SizeEnum.XXL}
-        to={path}
-        variant={ButtonVariantEnum.Contained}
-      >
+      <Button component={Link} size='lg' to={path}>
         {t('studentHomePage.findTutorBlock.button')}
-      </AppButton>
+      </Button>
     </Box>
   )
 }

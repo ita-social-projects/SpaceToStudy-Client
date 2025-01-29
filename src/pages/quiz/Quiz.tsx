@@ -1,36 +1,43 @@
-import { useCallback, useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
 import Divider from '@mui/material/Divider'
-import Typography from '@mui/material/Typography'
 
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import QuizHeader from '~/containers/quiz/quiz-header/QuizHeader'
 import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestionQuizView'
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useForm from '~/hooks/use-form'
 
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
 import styles from '~/pages/quiz/Quiz.styles'
 import { defaultResponses } from '~/constants'
+import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
-import { ComponentEnum, QuizViewEnum, Quiz } from '~/types'
+import { ComponentEnum, QuizViewEnum, UserRoleEnum } from '~/types'
 
 const QuizPage = () => {
+  const { userRole } = useAppSelector((state) => state.appMain)
+
   const { quizId } = useParams()
   const { t } = useTranslation()
 
   const [isFinished, setIsFinished] = useState(false)
 
-  const getQuiz = useCallback(() => ResourceService.getQuiz(quizId), [quizId])
+  const getQuiz = useCallback(() => {
+    if (quizId) {
+      return ResourceService.getQuizQuery(quizId)
+    }
+    return defaultQuizResponse
+  }, [quizId])
 
   const { handleInputChange, handleNonInputValueChange, data } = useForm<
     Record<string, string | string[]>
@@ -41,20 +48,25 @@ const QuizPage = () => {
   const handleNonInputChange = (key: string) => (value: string | string[]) =>
     handleNonInputValueChange(key, value)
 
-  const { loading, response } = useAxios<Quiz, string>({
-    service: getQuiz
+  const { data: quiz, isLoading } = useQuery({
+    queryKey: ['quiz', quizId],
+    queryFn: getQuiz
   })
 
-  if (loading) return <Loader pageLoad />
+  const handleFinish = useCallback(() => {
+    setIsFinished(true)
+  }, [])
+
+  if (isLoading || !quiz) {
+    return <Loader pageLoad />
+  }
 
   const {
     settings: { pointValues, scoredResponses, correctAnswers, view },
     description,
     title,
     items
-  } = response
-
-  const handleFinish = () => setIsFinished(true)
+  } = quiz
 
   const showPoints = pointValues && isFinished
   const showAnswersCorrectness = scoredResponses && isFinished
@@ -63,17 +75,6 @@ const QuizPage = () => {
   const points = showPoints && countPoints(items, data)
 
   const isStepper = view === QuizViewEnum.Stepper
-
-  const pointsBlock = showPoints && (
-    <Box sx={styles.points.root}>
-      <Typography sx={styles.points.title}>{t('quiz.points')}</Typography>
-      <Chip
-        label={`${points}/${items.length}`}
-        size='small'
-        sx={styles.points.chip}
-      />
-    </Box>
-  )
 
   const questionsBlock = isStepper ? (
     <SelectableQuestionQuizView
@@ -101,22 +102,30 @@ const QuizPage = () => {
     />
   )
 
+  const isStudent = userRole === UserRoleEnum.Student
+
+  const finishButton = !isFinished && isStudent && (
+    <Box sx={styles.finishBlock.root}>
+      <Button onClick={handleFinish} sx={styles.finishBlock.button}>
+        {t('quiz.finish')}
+      </Button>
+    </Box>
+  )
+
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
       <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
-        <TitleWithDescription
+        <QuizHeader
           description={description}
-          style={styles.titleWithDescription}
+          isFinished={isFinished}
+          isGraded={showPoints}
+          points={points || 0}
           title={title}
+          totalPoints={items.length}
         />
-        {pointsBlock}
         <Divider sx={styles.divider} />
         {questionsBlock}
-        <Box sx={styles.finishBlock.root}>
-          <AppButton onClick={handleFinish} sx={styles.finishBlock.button}>
-            {t('quiz.finish')}
-          </AppButton>
-        </Box>
+        {finishButton}
       </Box>
     </PageWrapper>
   )

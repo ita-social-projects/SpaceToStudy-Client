@@ -1,4 +1,4 @@
-import { screen, waitFor, fireEvent, render } from '@testing-library/react'
+import { screen, waitFor, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -328,7 +328,7 @@ describe('EditProfile', () => {
   })
 
   it('should disable the Update button if isChanged is false and isTabInvalid is false', () => {
-    const updateBtn = screen.getByText('editProfilePage.updateBtn')
+    const updateBtn = screen.getByText('editProfilePage.updateBtn').parentNode
 
     useAppSelector.mockImplementation((selector) =>
       selector({
@@ -463,7 +463,7 @@ describe('EditProfile', () => {
 
     const mockHandleInputChange = vi.fn()
 
-    render(
+    renderWithProviders(
       <ProfileTabForm
         t={mockT}
         data={mockData}
@@ -498,7 +498,7 @@ describe('EditProfile', () => {
 
     const mockHandleInputChange = vi.fn()
 
-    render(
+    renderWithProviders(
       <ProfileTabForm
         t={mockT}
         data={mockData}

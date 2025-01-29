@@ -4,14 +4,13 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
 import img from '~/assets/img/error-page/400.svg'
 import { styles } from '~/pages/error/styles/BadRequest.styles'
-import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 const BadRequest = () => {
   const { t } = useTranslation()
@@ -24,14 +23,13 @@ const BadRequest = () => {
           style={styles.titleWithDescription}
           title={t('errorPage.400.title')}
         />
-        <AppButton
+        <Button
           component={Link}
-          size={SizeEnum.ExtraLarge}
+          size='lg'
           to={guestRoutes.home.path}
-          variant={ButtonVariantEnum.Contained}
         >
           {t('button.toMain')}
-        </AppButton>
+        </Button>
       </Box>
       <Box alt='man' component='img' src={img} sx={styles.img} />
     </Container>

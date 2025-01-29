@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 
 import Loader from '~/components/loader/Loader'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import {
@@ -197,10 +197,9 @@ const CategoriesContainer = () => {
       <AddResourceWithInput
         btnText={t('myResourcesPage.categories.addBtn')}
         button={
-          <AppButton onClick={onAdd}>
+          <Button endIcon={<AddIcon sx={styles.addIcon} />} onClick={onAdd}>
             {t('myResourcesPage.categories.addBtn')}
-            <AddIcon sx={styles.addIcon} />
-          </AppButton>
+          </Button>
         }
         fetchData={fetchData}
         placeholder={'myResourcesPage.categories.searchInput'}

@@ -44,7 +44,11 @@ describe('GeneralInfoStep test', () => {
         .onGet(URLs.location.getCountries)
         .reply(200, countriesDataMock)
       mockAxiosClient
-        .onGet(`${URLs.location.getCities}/${countryCode}`)
+        .onGet(
+          new RegExp(
+            URLs.location.getCitiesByCountryName.replace(':countryName', '')
+          )
+        )
         .reply(200, citiesDataMock)
       renderWithProviders(
         <StepProvider

@@ -1,4 +1,4 @@
-import { useState, FC, useMemo, useCallback, FocusEvent } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { MenuItem } from '@mui/material'
@@ -8,7 +8,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import HeaderTextWithDropdown from '~/components/header-text-with-dropdown/HeaderTextWithDropdown'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
 import AddResources from '~/containers/add-resources/AddResources'
 import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
@@ -34,7 +34,6 @@ import { styles } from '~/containers/course-section/CourseSectionContainer.style
 import {
   TextFieldVariantEnum,
   SizeEnum,
-  ButtonVariantEnum,
   CourseSection,
   Lesson,
   Quiz,
@@ -63,7 +62,7 @@ interface SectionProps extends CourseSectionHandlers {
 
 type OpenModalFunction = () => void
 
-const CourseSectionContainer: FC<SectionProps> = ({
+const CourseSectionContainer: React.FC<SectionProps> = ({
   sectionData,
   handleSectionInputChange,
   resourceEventHandler,
@@ -77,7 +76,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
 
-  const handleDescriptionBlur = (event: FocusEvent<HTMLInputElement>) => {
+  const handleDescriptionBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     handleSectionInputChange(sectionData.id, 'description', event.target.value)
   }
 
@@ -255,7 +254,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
             isDuplicate: isDuplicate
           })
 
-          newResources.push(newLesson.data as Lesson)
+          newResources.push(newLesson)
         } else if (resource.resourceType === ResourcesTypesEnum.Quiz) {
           const quiz = resource as Quiz
           const newQuiz = await ResourceService.addQuiz({
@@ -403,18 +402,17 @@ const CourseSectionContainer: FC<SectionProps> = ({
             sortResources={handleResourcesSort}
             updateAvailability={handleResourceAvailabilityChange}
           />
-          <AppButton
+          <Button
             endIcon={<KeyboardArrowDownIcon fontSize={SizeEnum.Small} />}
             onClick={(event) => {
               setActiveMenu(menuTypes.resourcesMenu)
               openMenu(event)
             }}
-            size={SizeEnum.Large}
+            size='lg'
             startIcon={<AddIcon fontSize={SizeEnum.Small} />}
-            variant={ButtonVariantEnum.Contained}
           >
             {t('course.courseSection.addResourceBtn')}
-          </AppButton>
+          </Button>
           {activeMenu === menuTypes.resourcesMenu &&
             renderMenu(resourcesMenuItems)}
         </Box>

@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSharp'
 
 import Comment from '~/components/comment/Comment'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 
@@ -76,7 +76,7 @@ const ComentsBlock = ({
   )
 
   const showMoreButton = isExpandable && (
-    <AppButton
+    <Button
       disabled
       endIcon={!loading && <KeyboardArrowDownSharpIcon />}
       fullWidth={isMobile}
@@ -85,7 +85,7 @@ const ComentsBlock = ({
       sx={styles.button}
     >
       {t('userProfilePage.reviews.buttonTitle')}
-    </AppButton>
+    </Button>
   )
 
   return (

@@ -7,7 +7,7 @@ import TurnedIn from '@mui/icons-material/TurnedIn'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import { styles } from '~/components/offer-card/offer-actions/OfferActions.styles'
 import { ButtonActions } from '~/types'
@@ -29,14 +29,17 @@ const OfferActions: FC<OfferActionsProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const buttons = buttonActions.map(
-    (elem) =>
+  const buttons = buttonActions.map((elem) => {
+    const variant = elem?.buttonProps?.variant === 'tonal' ? 'tonal' : 'primary'
+
+    return (
       elem && (
-        <AppButton fullWidth key={elem.label} {...elem.buttonProps}>
+        <Button key={elem.label} variant={variant} {...elem?.buttonProps}>
           {t(elem.label)}
-        </AppButton>
+        </Button>
       )
-  )
+    )
+  })
 
   return (
     <Box>

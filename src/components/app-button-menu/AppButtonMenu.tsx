@@ -13,18 +13,14 @@ import CircleIcon from '@mui/icons-material/Circle'
 import useAxios from '~/hooks/use-axios'
 import useMenu from '~/hooks/use-menu'
 import Loader from '~/components/loader/Loader'
-import AppButton from '~/components/app-button/AppButton'
 import AppMenuButton from '~/components/app-menu-button/AppMenuButton'
 import AppSelectButton from '~/components/app-select-button/AppSelectButton'
+import Button from '~scss-components/button/Button'
 
 import { defaultResponses } from '~/constants'
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/app-button-menu/AppButtonMenu.styles'
-import {
-  ButtonVariantEnum,
-  CategoryNameInterface,
-  ServiceFunction
-} from '~/types'
+import { CategoryNameInterface, ServiceFunction } from '~/types'
 
 interface AppButtonMenuProps<T> extends Omit<MenuProps, 'open'> {
   title: string
@@ -146,16 +142,19 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
 
   return (
     <>
-      <AppButton
+      <Button
+        endIcon={
+          <KeyboardArrowDownIcon sx={styles.arrowIcon(Boolean(anchorEl))} />
+        }
         onClick={openMenu}
+        size='sm'
+        startIcon={<CircleIcon sx={styles.unorderedListIcon} />}
         sx={spliceSx(styles.root, customSx?.root)}
-        variant={ButtonVariantEnum.Tonal}
+        variant='tonal'
       >
-        <CircleIcon sx={styles.unorderedListIcon} />
         <Typography sx={styles.text}>{title}:</Typography>
         <Typography sx={styles.chosenFilters}>{chosenFiltersText}</Typography>
-        <KeyboardArrowDownIcon sx={styles.arrowIcon(Boolean(anchorEl))} />
-      </AppButton>
+      </Button>
       {menu}
     </>
   )

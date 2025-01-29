@@ -4,13 +4,13 @@ import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import { styles } from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal.styles'
 import { useModalContext } from '~/context/modal-context'
 import Loader from '~/components/loader/Loader'
 import useAxios from '~/hooks/use-axios'
 import { CoursesAndCooperationsService } from '~/services/course-cooperation-service'
-import { ButtonVariantEnum, CourseCooperationResponse, SizeEnum } from '~/types'
+import { ButtonTypeEnum, CourseCooperationResponse } from '~/types'
 
 interface ChangeResourceConfirmModalProps {
   resourceId?: string
@@ -113,23 +113,22 @@ const ChangeResourceConfirmModal = ({
         ))}
       </Box>
       <Box sx={styles.buttonsContainer}>
-        <AppButton
+        <Button
           onClick={closeModal}
-          size={SizeEnum.Large}
+          size='lg'
           sx={styles.button}
-          variant={ButtonVariantEnum.Tonal}
+          variant='tonal'
         >
           {t('changeConfirm.backButton')}
-        </AppButton>
-        <AppButton
+        </Button>
+        <Button
           onClick={handleConfirm}
-          size={SizeEnum.Large}
+          size='lg'
           sx={styles.button}
-          type='submit'
-          variant={ButtonVariantEnum.Contained}
+          type={ButtonTypeEnum.Submit}
         >
           {t('changeConfirm.confirmButton')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

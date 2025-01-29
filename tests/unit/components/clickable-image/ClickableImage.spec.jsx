@@ -29,8 +29,6 @@ describe('ClickableImage', () => {
 
     expect(imgElement).toBeInTheDocument()
     expect(buttonElement).toBeInTheDocument()
-
-    expect(buttonElement).toHaveClass(`MuiButton-${ButtonVariantEnum.Text}`)
   })
 
   it('calls the clickFunction when the button is clicked', () => {

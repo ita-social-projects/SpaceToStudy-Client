@@ -18,15 +18,6 @@ export const styles = {
       mb: '24px'
     }
   },
-  button: {
-    p: '10px 12px',
-    color: palette.basic.lightBlue,
-    backgroundColor: palette.basic.lightGray,
-    '&:hover': {
-      color: palette.basic.lightBlue,
-      backgroundColor: palette.basic.lightGray
-    }
-  },
   menuItem: {
     minWidth: '200px',
     p: '10px 12px',

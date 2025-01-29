@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next'
 
 import { InputBaseProps } from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import InputField from '~scss-components/input-field/InputField'
 
-import { ButtonVariantEnum } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 import { styles } from '~/components/search-filter-input/SearchFilterInput.styles'
@@ -63,13 +62,8 @@ const SearchFilterInput = ({
         value={search}
         variant={InputFieldVariantEnum.Small}
       />
-      <AppButton
-        onClick={onSearch}
-        sx={styles.searchBtn}
-        variant={ButtonVariantEnum.ContainedLight}
-      >
-        {t('common.search')}
-      </AppButton>
+
+      <Button onClick={onSearch}>{t('common.search')}</Button>
     </Box>
   )
 }

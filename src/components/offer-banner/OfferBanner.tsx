@@ -7,13 +7,12 @@ import TurnedInNot from '@mui/icons-material/TurnedInNot'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import AppCard from '~/components/app-card/AppCard'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
 import { ButtonActions, Offer } from '~/types'
 import { styles } from '~/components/offer-banner/OfferBanner.styles'
-import { Button } from '@mui/material'
 
 interface OfferBannerProps {
   offer: Offer
@@ -25,20 +24,22 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
   const { isLaptopAndAbove } = useBreakpoints()
   const { author, subject, category, proficiencyLevel, authorRole } = offer
 
-  const buttons = buttonActions.map(
-    (elem) =>
+  const buttons = buttonActions.map((elem) => {
+    const variant = elem?.buttonProps?.variant === 'tonal' ? 'tonal' : 'primary'
+    const { disabled, onClick } = elem?.buttonProps || {}
+    return (
       elem && (
-        <AppButton
-          fullWidth
+        <Button
+          disabled={disabled}
           key={elem.label}
-          sx={styles.button}
-          {...elem.buttonProps}
-          size={null}
+          onClick={onClick}
+          variant={variant}
         >
           {t(elem.label)}
-        </AppButton>
+        </Button>
       )
-  )
+    )
+  })
 
   return (
     <Box sx={styles.main}>
@@ -63,10 +64,13 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
         </Box>
         <Box sx={styles.buttonsBlock}>
           <Box sx={styles.buttons}>{buttons}</Box>
-          <Button data-testid='iconButton' sx={styles.bookmarkButton}>
-            <TurnedInNot />
+          <Button
+            data-testid='iconButton'
+            startIcon={<TurnedInNot />}
+            sx={styles.bookmarkButton}
+          >
             {isLaptopAndAbove && (
-              <Typography sx={styles.bookmarkButtonText}>
+              <Typography>
                 {t('offerDetailsPage.offerBanner.saveOfferButton')}
               </Typography>
             )}

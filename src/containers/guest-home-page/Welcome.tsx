@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import HashLink from '~/components/hash-link/HashLink'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
 import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
@@ -42,13 +42,13 @@ const Welcome = () => {
       <Typography sx={styles.subtitle}>
         {t('guestHomePage.welcomeBlock.description')}
       </Typography>
-      <AppButton
+      <Button
         component={HashLink}
-        sx={styles.getStartBtn}
+        size='md'
         to={guestRoutes.navBar.whatCanYouDo.path}
       >
         {t('guestHomePage.welcomeBlock.getStarted')}
-      </AppButton>
+      </Button>
     </Box>
   )
 }

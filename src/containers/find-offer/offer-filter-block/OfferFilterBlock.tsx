@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
 import AppSelect from '~/components/app-select/AppSelect'
 import OfferFilterList from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList'
@@ -101,12 +101,10 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
         updateFilterByKey={updateFilterByKey}
         updateFiltersInQuery={updateFiltersInQuery}
       />
-      <AppButton onClick={handleApplyFilters} sx={styles.applyButton}>
-        {t('button.applyFilters')}
-      </AppButton>
-      <AppButton onClick={resetFilters} variant='tonal'>
+      <Button onClick={handleApplyFilters}>{t('button.applyFilters')}</Button>
+      <Button onClick={resetFilters} variant='tonal'>
         {t('button.clearFilters')}
-      </AppButton>
+      </Button>
     </Stack>
   )
 }

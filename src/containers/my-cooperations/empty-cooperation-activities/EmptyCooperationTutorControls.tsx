@@ -10,9 +10,9 @@ import Crop75Icon from '@mui/icons-material/Crop75'
 import { useModalContext } from '~/context/modal-context'
 import useMenu from '~/hooks/use-menu'
 import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
-import { SizeEnum, ButtonVariantEnum } from '~/types'
+import { SizeEnum } from '~/types'
 import { styles } from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities.styles'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { setIsActivityCreated } from '~/redux/features/cooperationsSlice'
@@ -71,16 +71,15 @@ const EmptyCooperationTutorControls: FC = () => {
   const MenuDropdown = renderMenu(menu)
   return (
     <>
-      <AppButton
+      <Button
         endIcon={MenuIcon}
         onClick={handleMenuClick()}
-        size={SizeEnum.Large}
+        size='md'
         startIcon={StartIcon}
-        sx={styles.button}
-        variant={ButtonVariantEnum.Tonal}
+        variant='tonal'
       >
         {t('cooperationsPage.button.create')}
-      </AppButton>
+      </Button>
       {MenuDropdown}
     </>
   )

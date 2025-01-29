@@ -9,7 +9,8 @@ export const styles = {
     height: 'calc(100% - 48px)',
     '& .simplebar-track': {
       right: '-5px'
-    }
+    },
+    width: '500px'
   },
   contentWrapper: {
     display: 'flex',
@@ -55,8 +56,5 @@ export const styles = {
   },
   title: {
     typography: TypographyVariantEnum.H5
-  },
-  secondaryText: {
-    typography: TypographyVariantEnum.Subtitle2
   }
 }

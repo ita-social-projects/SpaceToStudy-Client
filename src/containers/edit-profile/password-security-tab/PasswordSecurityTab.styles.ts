@@ -24,7 +24,6 @@ export const styles = {
     gap: '10px',
     marginTop: '24px'
   },
-
   saveButton: {
     gridColumn: { sm: 'span 3', md: 'span 3', lg: 'span 3' },
     width: '193px'

@@ -4,7 +4,7 @@ export const URLs = {
   },
   location: {
     getCountries: '/location/countries',
-    getCities: 'location/cities'
+    getCitiesByCountryName: '/location/cities/:countryName'
   },
   auth: {
     login: '/auth/login',
@@ -30,7 +30,11 @@ export const URLs = {
   offers: {
     create: '/offers',
     update: '/offers',
-    get: '/offers'
+    get: '/categories/subjects/offers',
+    getByCategoryAndSubjectId:
+      '/categories/:categoryId/subjects/:subjectId/offers',
+    getByCategoryId: '/categories/:categoryId/subjects/offers',
+    getBySubjectId: '/categories/subjects/:subjectId/offers'
   },
   courses: {
     get: '/courses',
@@ -73,8 +77,9 @@ export const URLs = {
     lessons: {
       add: '/lessons',
       get: '/lessons',
+      getById: '/lessons/:id',
       delete: '/lessons',
-      patch: '/lessons'
+      patch: '/lessons/:id'
     },
     attachments: {
       get: '/attachments',
@@ -103,6 +108,7 @@ export const URLs = {
   },
   quizzes: {
     get: '/quizzes',
+    getById: '/quizzes/:id',
     add: '/quizzes',
     patch: '/quizzes',
     delete: '/quizzes'
@@ -110,4 +116,4 @@ export const URLs = {
   attachments: {
     post: '/attachments'
   }
-}
+} as const

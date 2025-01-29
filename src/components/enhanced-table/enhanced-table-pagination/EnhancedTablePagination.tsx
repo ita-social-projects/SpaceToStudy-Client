@@ -6,10 +6,10 @@ import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import { styles } from '~/components/enhanced-table/enhanced-table-pagination/EnhancedTablePagination.styles'
 
-import { ButtonVariantEnum, TablePaginationProps } from '~/types'
+import { TablePaginationProps } from '~/types'
 
 interface EnhancedTablePaginationProps {
   pagination: TablePaginationProps
@@ -78,13 +78,9 @@ const EnhancedTablePagination = ({
           type='number'
           value={pageInput}
         />
-        <AppButton
-          onClick={() => handlePageSubmit(pageCount)}
-          sx={styles.btn}
-          variant={ButtonVariantEnum.Contained}
-        >
+        <Button onClick={() => handlePageSubmit(pageCount)}>
           {t('table.go')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

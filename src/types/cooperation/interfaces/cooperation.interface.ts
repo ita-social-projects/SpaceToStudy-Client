@@ -11,6 +11,12 @@ import {
   CourseSection
 } from '~/types'
 
+export enum NeedActionTypeEnum {
+  WaitingForAnswer = 'waiting for answer',
+  WaitingForApproval = 'waiting for approval',
+  Price = 'price'
+}
+
 export interface Cooperation extends CommonEntityFields {
   offer: Pick<Offer, 'subject' | 'title' | 'category' | 'price' | '_id'>
   user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo' | '_id'> & {
@@ -22,7 +28,11 @@ export interface Cooperation extends CommonEntityFields {
   price: Offer['price']
   proficiencyLevel: ProficiencyLevelEnum
   status: StatusEnum
-  needAction: UserRoleEnum
+  needAction: {
+    role: UserRoleEnum
+    type: NeedActionTypeEnum
+    messages: string[]
+  }
   receiver: Pick<UserResponse, 'firstName' | 'lastName'>
   receiverRole: 'tutor' | 'student'
   sections: CourseSection[]

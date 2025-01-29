@@ -1,26 +1,24 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import EditIcon from '@mui/icons-material/Edit'
 import DOMPurify from 'dompurify'
 
-import Loader from '~/components/loader/Loader'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import { ResourceService } from '~/services/resource-service'
 import { defaultResponse } from '~/pages/lesson-details/LessonDetails.constants'
 import Accordions from '~/components/accordion/Accordions'
 import useAccordion from '~/hooks/use-accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
-import { Lesson, TypographyVariantEnum } from '~/types'
+import { TypographyVariantEnum } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { useAppSelector } from '~/hooks/use-redux'
 import { useModalContext } from '~/context/modal-context'
@@ -42,17 +40,27 @@ const LessonDetails = () => {
     [navigate]
   )
 
-  const getLesson = useCallback((): Promise<AxiosResponse> => {
-    return ResourceService.getLesson(lessonId)
+  const getLesson = useCallback(() => {
+    if (lessonId) {
+      return ResourceService.getLesson(lessonId)
+    }
+
+    return defaultResponse
   }, [lessonId])
 
-  const { loading, response } = useAxios<Lesson, string>({
-    service: getLesson,
-    defaultResponse,
-    onResponseError: responseError
+  const { isError, data } = useQuery({
+    queryKey: ['lesson', lessonId],
+    queryFn: getLesson,
+    options: {
+      initialData: defaultResponse
+    }
   })
 
-  if (loading) return <Loader pageLoad />
+  useEffect(() => {
+    if (isError) {
+      responseError()
+    }
+  }, [isError, responseError])
 
   const handleEditLesson = () => {
     openModal({
@@ -64,13 +72,13 @@ const LessonDetails = () => {
             )
           }
           resourceId={lessonId}
-          title={response.title}
+          title={data.title}
         />
       )
     })
   }
 
-  const attachmentsList = response.attachments.map((attachment) => (
+  const attachmentsList = data.attachments?.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachment}>
       <IconExtensionWithTitle
         size={attachment.size}
@@ -85,13 +93,13 @@ const LessonDetails = () => {
       content: (
         <Box
           dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(response.content)
+            __html: DOMPurify.sanitize(data.content)
           }}
           sx={styles.content}
         />
       )
     },
-    ...(response.attachments?.length
+    ...(data.attachments?.length
       ? [
           {
             title: 'lesson.attachments',
@@ -101,20 +109,24 @@ const LessonDetails = () => {
       : [])
   ]
 
-  const isEditable = userId === response.author
+  const isEditable = userId === data.author
 
   return (
     <PageWrapper>
       {isEditable && (
-        <AppButton onClick={handleEditLesson} sx={styles.button}>
-          {t('common.edit')} <EditIcon sx={styles.editIcon} />
-        </AppButton>
+        <Button
+          endIcon={<EditIcon sx={styles.editIcon} />}
+          onClick={handleEditLesson}
+          sx={styles.button}
+        >
+          {t('common.edit')}
+        </Button>
       )}
       <Box sx={styles.lessonWrapper}>
         <TitleWithDescription
-          description={response.description}
+          description={data.description}
           style={styles.titleWithDescription}
-          title={response.title}
+          title={data.title}
         />
         <Accordions
           activeIndex={expandedItems}

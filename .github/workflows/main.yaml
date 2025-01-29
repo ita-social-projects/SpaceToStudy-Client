@@ -61,9 +61,9 @@ jobs:
 
       - name: Upload artifact
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: coverage-artifacts
+          name: coverage-artifacts-${{ matrix.shardIndex }}
           path: coverage/
         
      # - name: Upload blob report to GitHub Actions Artifacts
@@ -84,10 +84,11 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: coverage-artifacts
           path: coverage
+          pattern: coverage-artifacts-*
+          merge-multiple: true
 
       - name: Run script to merge all the xml files
         run: | 

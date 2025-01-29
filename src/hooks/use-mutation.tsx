@@ -8,9 +8,23 @@ import {
 import { queryClient } from '~/plugins/queryClient'
 import { type ErrorResponse } from '~/types'
 
-type UseMutationProps<TData, TError, TVariables, TContext> = {
-  queryKey?: QueryKey
-} & UseMutationOptions<TData, TError, TVariables, TContext>
+type InvalidateKeysOptions =
+  | {
+      queryKey?: QueryKey
+      queryKeys?: never
+    }
+  | {
+      queryKey?: never
+      queryKeys?: QueryKey[]
+    }
+
+type UseMutationProps<TData, TError, TVariables, TContext> = UseMutationOptions<
+  TData,
+  TError,
+  TVariables,
+  TContext
+> &
+  InvalidateKeysOptions
 
 const useMutation = <
   TData = unknown,
@@ -19,6 +33,7 @@ const useMutation = <
   TContext = unknown
 >({
   queryKey,
+  queryKeys,
   ...mutationOptions
 }: UseMutationProps<TData, TError, TVariables, TContext>): UseMutationResult<
   TData,
@@ -34,6 +49,13 @@ const useMutation = <
       }
       if (queryKey) {
         await queryClient.invalidateQueries({ queryKey })
+      }
+      if (queryKeys) {
+        await Promise.all(
+          queryKeys.map((key) => {
+            return queryClient.invalidateQueries({ queryKey: key })
+          })
+        )
       }
     }
   })

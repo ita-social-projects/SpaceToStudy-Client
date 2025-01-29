@@ -48,7 +48,30 @@ describe('useMutation', () => {
     expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey })
   })
 
-  it('should not call invalidateQueries if queryKey is not provided', async () => {
+  it('should call invalidateQueries for each queryKey if queryKeys is provided', async () => {
+    const queryKeys = [['testKey1'], ['testKey2']]
+
+    const { result } = renderHook(
+      () =>
+        useMutation({
+          mutationFn,
+          queryKeys
+        }),
+      { wrapper: QueryProvider }
+    )
+
+    await act(() => result.current.mutateAsync())
+
+    expect(mutationFn).toHaveBeenCalled()
+    expect(invalidateQueriesSpy).toHaveBeenCalledWith({
+      queryKey: queryKeys[0]
+    })
+    expect(invalidateQueriesSpy).toHaveBeenCalledWith({
+      queryKey: queryKeys[1]
+    })
+  })
+
+  it('should not call invalidateQueries if queryKey or queryKeys are not provided', async () => {
     const { result } = renderHook(
       () =>
         useMutation({

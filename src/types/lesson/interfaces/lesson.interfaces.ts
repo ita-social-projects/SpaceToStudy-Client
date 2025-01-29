@@ -1,4 +1,4 @@
-import { Attachment } from '~/types'
+import type { Attachment } from '~/types'
 
 export interface LessonData {
   title: string

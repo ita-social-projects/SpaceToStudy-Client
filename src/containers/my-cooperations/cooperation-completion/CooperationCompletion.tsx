@@ -5,14 +5,12 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
 import SettingItem from '~/components/setting-item/SettingItem'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppSelect from '~/components/app-select/AppSelect'
 
 import { cooperationAccessValues } from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion.constants'
 import { styles } from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion.styles'
 import {
-  ButtonVariantEnum,
-  SizeEnum,
   CooperationMaterialsAccessEnum,
   UserRoleEnum,
   StatusEnum
@@ -46,16 +44,15 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
         )}
         title={t('cooperationsPage.cooperationDetails.closeCooperationTitle')}
       >
-        <AppButton
+        <Button
           data-testid='close-cooperation-btn'
           disabled={cooperationStatus !== StatusEnum.Active}
           onClick={onCloseCooperation}
-          size={SizeEnum.Medium}
-          sx={styles.closeBtn}
-          variant={ButtonVariantEnum.Text}
+          size='md'
+          variant='tonal-error'
         >
           {t('cooperationsPage.cooperationDetails.closeCooperationBtn')}
-        </AppButton>
+        </Button>
       </SettingItem>
       {userRole === UserRoleEnum.Tutor && (
         <SettingItem

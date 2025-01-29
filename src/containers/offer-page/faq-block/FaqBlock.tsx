@@ -7,17 +7,12 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 import { useDebounce } from '~/hooks/use-debounce'
-import {
-  ButtonVariantEnum,
-  CreateOfferBlockProps,
-  CreateOrUpdateOfferData,
-  Faq
-} from '~/types'
+import { CreateOfferBlockProps, CreateOrUpdateOfferData, Faq } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 
 const FaqBlock = <T extends CreateOrUpdateOfferData>({
@@ -89,13 +84,9 @@ const FaqBlock = <T extends CreateOrUpdateOfferData>({
         </Typography>
         {questionsAnswers}
         <Typography sx={styles.faqError}>{maxFaqError}</Typography>
-        <AppButton
-          onClick={addMoreQuestion}
-          sx={styles.faqButton}
-          variant={ButtonVariantEnum.Tonal}
-        >
+        <Button onClick={addMoreQuestion} sx={styles.faqButton} variant='tonal'>
           {t('button.addQuestion')}
-        </AppButton>
+        </Button>
       </Box>
     </OrderedListItem>
   )

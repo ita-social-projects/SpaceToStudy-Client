@@ -25,15 +25,15 @@ import {
   ApiMethodEnum,
   GetQuestion
 } from '~/types'
-import { createUrlPath, getFullUrl } from '~/utils/helper-functions'
-import { baseService } from './base-service'
+import { createUrlPath } from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
+import { baseService } from '~/services/base-service'
 
 export const ResourceService = {
   getUsersLessons: async (
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Lesson>>> =>
     await axiosClient.get(URLs.resources.lessons.get, { params }),
-
   getUsersLessonsQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Lesson>>({
       method: 'GET',
@@ -43,28 +43,53 @@ export const ResourceService = {
       })
     })
   },
-  getLesson: async (id?: string): Promise<AxiosResponse<Lesson>> =>
-    await axiosClient.get(createUrlPath(URLs.resources.lessons.get, id)),
+  getLesson: async (id: string) => {
+    return baseService.request<Lesson & { category: string | null }>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.resources.lessons.getById,
+        parameters: { id }
+      })
+    })
+  },
   deleteLesson: async (id: string): Promise<AxiosResponse<Lesson>> =>
     await axiosClient.delete(createUrlPath(URLs.resources.lessons.delete, id)),
-  addLesson: async (data: LessonData): Promise<AxiosResponse> =>
-    await axiosClient.post(URLs.resources.lessons.add, data),
-  editLesson: async (data: LessonData, id?: string): Promise<AxiosResponse> =>
-    await axiosClient.patch(
-      createUrlPath(URLs.resources.lessons.patch, id),
+  addLesson: async (data: LessonData) => {
+    return baseService.request<Lesson & { category: string | null }>({
+      method: 'POST',
+      url: URLs.resources.lessons.add,
       data
-    ),
+    })
+  },
+  editLesson: async (data: LessonData, id: string) => {
+    return baseService.request<void>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.resources.lessons.patch,
+        parameters: { id }
+      }),
+      data
+    })
+  },
   getQuizzes: async (
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> =>
     await axiosClient.get(URLs.quizzes.get, { params }),
-
   getQuizzesQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Quiz>>({
       method: 'GET',
       url: getFullUrl({
         pathname: URLs.quizzes.get,
         searchParameters: params
+      })
+    })
+  },
+  getQuizQuery: async (id: string) => {
+    return baseService.request<Quiz>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.quizzes.getById,
+        parameters: { id }
       })
     })
   },
@@ -83,7 +108,6 @@ export const ResourceService = {
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>
     await axiosClient.get(URLs.resources.attachments.get, { params }),
-
   getAttachmentsQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Attachment>>({
       method: 'GET',
@@ -112,7 +136,6 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
     return axiosClient.get(URLs.resources.questions.get, { params })
   },
-
   getQuestionsQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Question>>({
       method: 'GET',

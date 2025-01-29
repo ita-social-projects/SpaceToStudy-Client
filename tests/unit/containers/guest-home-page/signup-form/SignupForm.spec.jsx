@@ -88,7 +88,7 @@ describe('Signup form test', () => {
 
   it('should enable signup button', async () => {
     const checkbox = screen.getByRole('checkbox')
-    const button = screen.getByText('common.labels.signup')
+    const button = screen.getByText('common.labels.signup').parentNode
 
     expect(button).toBeDisabled()
 

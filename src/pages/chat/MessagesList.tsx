@@ -13,6 +13,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 import { selectIsTyping } from '~/redux/selectors/socket-selectors'
 import { Member, MessageInterface } from '~/types'
 import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
+import Loader from '~/components/loader/Loader'
 
 interface MessagesListProps {
   messages: MessageInterface[]
@@ -24,6 +25,7 @@ interface MessagesListProps {
   infiniteLoadCallback: (scrollTop: number, scrollHeight: number) => void
   chatId: string
   userToSpeak: Member
+  skip: number
 }
 
 const MessagesList = ({
@@ -34,6 +36,7 @@ const MessagesList = ({
   infiniteLoadCallback,
   scrollTop,
   scrollHeight,
+  skip,
   chatId,
   userToSpeak
 }: MessagesListProps) => {
@@ -69,6 +72,10 @@ const MessagesList = ({
     },
     [isMessagesLoading, infiniteLoadCallback]
   )
+
+  if (isMessagesLoading && !skip) {
+    return <Loader size={100} sx={styles.loader} />
+  }
 
   if (messages.length === 0) {
     return (

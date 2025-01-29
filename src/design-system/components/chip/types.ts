@@ -80,5 +80,6 @@ export {
   type ChipProps,
   type FilterChipProps,
   type InputChipProps,
-  type StateChipProps
+  type StateChipProps,
+  type ChipColor
 }

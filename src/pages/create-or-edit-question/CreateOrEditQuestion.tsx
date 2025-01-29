@@ -7,7 +7,7 @@ import Divider from '@mui/material/Divider'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import QuestionEditor from '~/components/question-editor/QuestionEditor'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import Loader from '~/components/loader/Loader'
@@ -27,7 +27,6 @@ import {
 import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 import {
   ButtonTypeEnum,
-  ButtonVariantEnum,
   CategoryNameInterface,
   ComponentEnum,
   CreateOrEditQuestionForm,
@@ -153,19 +152,16 @@ const CreateOrEditQuestion = () => {
 
   const buttons = (
     <Box sx={styles.buttons}>
-      <AppButton
-        onClick={navigateToQuestionsTab}
-        variant={ButtonVariantEnum.Tonal}
-      >
+      <Button onClick={navigateToQuestionsTab} variant='tonal'>
         {t('common.cancel')}
-      </AppButton>
-      <AppButton
+      </Button>
+      <Button
         disabled={!isButtonsVisible}
         loading={createQuestionLoading || editQuestionLoading}
         type={ButtonTypeEnum.Submit}
       >
         {t('common.save')}
-      </AppButton>
+      </Button>
     </Box>
   )
 

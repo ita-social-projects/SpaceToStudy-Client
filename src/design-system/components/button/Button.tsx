@@ -11,7 +11,7 @@ import '~scss-components/button/Button.scss'
 
 const sizes = ['xs', 'sm', 'md', 'lg'] as const
 
-const colors = [
+const variants = [
   'primary',
   'tonal',
   'text-primary',
@@ -23,7 +23,7 @@ const colors = [
 type BaseButtonProps = {
   loading?: boolean
   size?: (typeof sizes)[number]
-  color?: (typeof colors)[number]
+  variant?: (typeof variants)[number]
   startIcon?: ReactNode
   endIcon?: ReactNode
   to?: string
@@ -38,7 +38,7 @@ const Button = forwardRef(
   (
     {
       size = 'md',
-      color = 'primary',
+      variant = 'primary',
       className,
       disabled,
       loading,
@@ -67,7 +67,7 @@ const Button = forwardRef(
         className={cn(
           's2s-btn',
           `s2s-btn-${size}`,
-          `s2s-btn-${color}`,
+          `s2s-btn-${variant}`,
           isDisabled && 's2s-btn-disabled',
           className
         )}

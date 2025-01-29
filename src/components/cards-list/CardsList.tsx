@@ -1,11 +1,10 @@
 import { FC, ReactElement } from 'react'
 import Box from '@mui/material/Box'
 
-import AppButton from '~/components/app-button/AppButton'
 import Loader from '~/components/loader/Loader'
+import Button from '~scss-components/button/Button'
 
 import { styles } from '~/components/cards-list/CardsList.styles'
-import { SizeEnum, ButtonVariantEnum } from '~/types'
 
 interface CardsListProps {
   btnText: string
@@ -33,15 +32,15 @@ const CardsList: FC<CardsListProps> = ({
       )}
 
       {isExpandable && (
-        <AppButton
+        <Button
           loading={loading}
           onClick={onClick}
-          size={SizeEnum.ExtraLarge}
+          size='md'
           sx={styles.btn}
-          variant={ButtonVariantEnum.Tonal}
+          variant='tonal'
         >
           {btnText}
-        </AppButton>
+        </Button>
       )}
     </Box>
   )

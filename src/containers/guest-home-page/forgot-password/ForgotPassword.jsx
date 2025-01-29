@@ -10,7 +10,7 @@ import { useModalContext } from '~/context/modal-context'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import NotificationModal from '~/containers/guest-home-page/notification-modal/NotificationModal'
@@ -22,7 +22,7 @@ import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import { ButtonVariantEnum, SizeEnum } from '~/types'
+import { ButtonTypeEnum } from '~/types'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
@@ -104,19 +104,19 @@ const ForgotPassword = () => {
           type='email'
           value={data.email}
         />
-        <AppButton loading={loading} sx={styles.sentPassword} type='submit'>
+        <Button loading={loading} sx={styles.sentPassword} type={ButtonTypeEnum.Submit}>
           {t('login.sendPassword')}
-        </AppButton>
+        </Button>
       </Box>
 
-      <AppButton
+      <Button
         onClick={backToLogin}
-        size={SizeEnum.Large}
+        size='md'
         sx={styles.backButton}
-        variant={ButtonVariantEnum.Text}
+        variant='text-secondary'
       >
         {t('login.backToLogin')}
-      </AppButton>
+      </Button>
     </Box>
   )
 }

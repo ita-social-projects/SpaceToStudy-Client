@@ -25,16 +25,11 @@ import {
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'
 
-import {
-  SizeEnum,
-  ButtonVariantEnum,
-  VisibilityEnum,
-  TextFieldVariantEnum
-} from '~/types'
+import { SizeEnum, VisibilityEnum, TextFieldVariantEnum } from '~/types'
 
 interface SearchAutocompleteProps
   extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
@@ -125,14 +120,9 @@ const SearchAutocomplete = ({
         <ClearIcon fontSize={SizeEnum.Small} />
       </IconButton>
 
-      <AppButton
-        onClick={onSearch}
-        size={isMobile ? SizeEnum.Small : SizeEnum.Large}
-        sx={styles.searchBtn}
-        variant={ButtonVariantEnum.ContainedLight}
-      >
+      <Button onClick={onSearch} size={isMobile ? 'sm' : 'lg'}>
         {isMobile ? <SearchIcon /> : t('common.search')}
-      </AppButton>
+      </Button>
     </Box>
   )
 }

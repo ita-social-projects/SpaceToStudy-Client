@@ -24,9 +24,6 @@ export const styles = {
     typography: TypographyVariantEnum.Subtitle2,
     textAlign: 'center'
   },
-  button: {
-    color: 'primary.600'
-  },
   text: {
     typography: TypographyVariantEnum.Subtitle2
   }

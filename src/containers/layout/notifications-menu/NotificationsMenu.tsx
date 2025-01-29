@@ -9,8 +9,8 @@ import { MenuProps } from '@mui/material'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppMenu from '~/components/app-menu/AppMenu'
-import AppButton from '~/components/app-button/AppButton'
-import { ButtonVariantEnum, Notification, SizeEnum } from '~/types'
+import Button from '~scss-components/button/Button'
+import { Notification, SizeEnum } from '~/types'
 import { styles } from '~/containers/layout/notifications-menu/NotificationsMenu.styles'
 import { liksByType } from '~/containers/layout/notifications-menu/NotificationsMenu.constants'
 
@@ -52,14 +52,9 @@ const NotificationsMenu: FC<NotificationsMenuProps> = ({
         </IconButton>
       </Typography>
     )),
-    <AppButton
-      fullWidth
-      key={null}
-      onClick={onClear}
-      variant={ButtonVariantEnum.Text}
-    >
+    <Button fullWidth key={null} onClick={onClear} variant='text-secondary'>
       {t('header.notifications.clearAll')}
-    </AppButton>
+    </Button>
   ]
 
   const emptyNotifications = (

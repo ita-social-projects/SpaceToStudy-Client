@@ -17,6 +17,10 @@ export const mockedCoop = {
   price: 1800,
   proficiencyLevel: 'Beginner',
   status: 'pending',
-  needAction: 'tutor',
+  needAction: {
+    role: 'tutor',
+    type: 'price',
+    messages: []
+  },
   createdAt: '2023-05-13T13:44:25.716Z'
 }

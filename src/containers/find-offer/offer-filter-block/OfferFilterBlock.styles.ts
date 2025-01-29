@@ -18,12 +18,5 @@ export const styles = {
   },
   content: {
     variant: 'body2'
-  },
-  applyButton: {
-    backgroundColor: 'primary.500',
-    boxShadow: 'none',
-    '&:hover': {
-      boxShadow: 'none'
-    }
   }
 }

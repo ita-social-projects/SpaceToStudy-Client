@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import InputAdornment from '@mui/material/InputAdornment'
-import AppButton from '~/components/app-button/AppButton'
+
+import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
@@ -140,13 +141,9 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
               validationData={validationData}
               variant={ButtonVariantEnum.ContainedLight}
             />
-            <AppButton
-              onClick={handleRemovePhoto}
-              size={SizeEnum.Large}
-              variant={ButtonVariantEnum.Tonal}
-            >
+            <Button onClick={handleRemovePhoto} size='md' variant='tonal'>
               {t('common.remove')}
-            </AppButton>
+            </Button>
           </Box>
         </Box>
       </Box>
@@ -188,9 +185,10 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
           title={t('editProfilePage.profile.generalTab.locationTitle')}
         />
         <Box sx={styles.dividedInputs}>
-          <LocationSelectionInputs<EditProfileForm>
+          <LocationSelectionInputs
             data={data}
             onDataChange={handleNonInputValueChange}
+            sx={styles.locationInput}
           />
         </Box>
       </Box>

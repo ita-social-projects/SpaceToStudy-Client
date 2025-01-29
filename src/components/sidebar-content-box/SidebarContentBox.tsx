@@ -3,19 +3,12 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import LinkComponent from '~/components/link-component/LinkComponent'
 
 import { maxElemToShow } from '~/components/sidebar-content-box/SidebarContentBox.constants'
 import { spliceSx } from '~/utils/helper-functions'
-import {
-  SizeEnum,
-  ButtonVariantEnum,
-  Link,
-  File,
-  Media,
-  SidebarContentEnum
-} from '~/types'
+import { Link, File, Media, SidebarContentEnum } from '~/types'
 import { styles } from '~/components/sidebar-content-box/SidebarContentBox.styles'
 
 interface SidebarContentBoxProps {
@@ -58,14 +51,14 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
           </Typography>
         </Box>
         {isMoreContent && (
-          <AppButton
+          <Button
             onClick={() => onClick(name)}
-            size={SizeEnum.Small}
-            sx={spliceSx(styles.button, styles.text)}
-            variant={ButtonVariantEnum.Text}
+            size='xs'
+            sx={styles.text}
+            variant='text-secondary'
           >
             {t(`chatPage.sidebar.seeAll`)}
-          </AppButton>
+          </Button>
         )}
       </Box>
       {limitedContent}
