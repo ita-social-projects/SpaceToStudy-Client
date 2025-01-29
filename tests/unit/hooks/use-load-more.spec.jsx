@@ -32,7 +32,7 @@ describe('useLoadMore custom hook', () => {
     const { result } = renderHook(() => useLoadMore({ ...props }), {
       wrapper: QueryProvider
     })
-    console.log(result.current)
+
     expect(result.current.loading).toBe(true)
 
     waitFor(() => {
