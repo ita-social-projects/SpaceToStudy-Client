@@ -5,5 +5,13 @@
   "attemptFinished": "Спроба завершена",
   "questionsAnswered": "Відповідей на питання",
   "save": "Зберегти",
-  "evaluate": "Оцінити"
+  "evaluate": "Оцінити",
+  "startQuiz": "Почати тест",
+  "tryAgain": "Нова спроба",
+  "reviewAttempt": "Огляд спроби",
+  "attemptLimit": "Кількість спроб",
+  "timeLimit": "Обмеження часу",
+  "reachedAttemptLimit": "Кількість спроб вичерпано.",
+  "noUsedAttempts": "Спроб ще не було",
+  "questionsAmount": "Кількість питань"
 }

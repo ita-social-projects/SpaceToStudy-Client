@@ -31,6 +31,7 @@ const QuizPage = () => {
   const { t } = useTranslation()
 
   const [isFinished, setIsFinished] = useState(false)
+  const [showPreview, setShowPreview] = useState(true)
 
   const getQuiz = useCallback(() => {
     if (quizId) {
@@ -57,6 +58,9 @@ const QuizPage = () => {
     setIsFinished(true)
   }, [])
 
+  // const handleStartQuiz = () => {
+  //   setShowPreview(false)
+  // }
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
@@ -114,19 +118,37 @@ const QuizPage = () => {
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
-      <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
-        <QuizHeader
-          description={description}
-          isFinished={isFinished}
-          isGraded={showPoints}
-          points={points || 0}
-          title={title}
-          totalPoints={items.length}
-        />
-        <Divider sx={styles.divider} />
-        {questionsBlock}
-        {finishButton}
-      </Box>
+      {showPreview ? (
+        <Box>
+          <QuizHeader
+            description={description}
+            isFinished={false}
+            isGraded={false}
+            isNotStarted={showPreview}
+            points={0}
+            quizItems={items}
+            title={title}
+            totalPoints={items.length}
+          />
+          <Divider sx={styles.divider} />
+        </Box>
+      ) : (
+        <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
+          <QuizHeader
+            description={description}
+            isFinished={isFinished}
+            isGraded={showPoints}
+            isNotStarted={showPreview}
+            points={points || 0}
+            quizItems={items}
+            title={title}
+            totalPoints={items.length}
+          />
+          <Divider sx={styles.divider} />
+          {questionsBlock}
+          {finishButton}
+        </Box>
+      )}
     </PageWrapper>
   )
 }

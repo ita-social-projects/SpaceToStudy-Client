@@ -9,6 +9,13 @@ const styles = {
     gap: '48px',
     marginTop: theme.spacing(2)
   },
+  infoWrapperNew: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: '10px',
+    marginTop: theme.spacing(2)
+  },
   divider: {
     borderWidth: '1px',
     height: '32px',
@@ -25,12 +32,27 @@ const styles = {
     alignItems: 'center',
     gap: '12px'
   },
+  quizSettings: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    width: '50%',
+    justifyContent: 'flex-start',
+    flexFrow: 1
+  },
+  dividerEllipse: {
+    width: '8px',
+    m: '0px 4px 0px 4px'
+  },
   subtitle1: {
     typography: TypographyVariantEnum.Subtitle1
   },
   subtitle2: {
     typography: TypographyVariantEnum.Subtitle2,
     color: 'primary.800'
+  },
+  subtitleSize: {
+    fontSize: '14px'
   },
   buttonWrapper: {
     marginLeft: 'auto',

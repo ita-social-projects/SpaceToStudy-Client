@@ -1,12 +1,13 @@
 import { useAppSelector } from '~/hooks/use-redux'
 import Box from '@mui/material/Box'
 
-import { UserRoleEnum } from '~/types'
+import { Question, UserRoleEnum } from '~/types'
 import {
   ActiveQuizInfo,
   FinishedQuizInfo,
   UngradedQuizInfo,
-  GradedQuizInfo
+  GradedQuizInfo,
+  StartViewQuizInfo
 } from '~/containers/quiz/quiz-info/QuizInfo'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
@@ -19,6 +20,8 @@ type QuizHeaderProps = {
   points: number
   totalPoints: number
   isGraded: boolean
+  isNotStarted: boolean
+  quizItems: Question[]
 }
 
 const QuizHeader = ({
@@ -27,7 +30,9 @@ const QuizHeader = ({
   description,
   points,
   totalPoints,
-  isGraded
+  isGraded,
+  isNotStarted,
+  quizItems
 }: QuizHeaderProps) => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
@@ -42,11 +47,14 @@ const QuizHeader = ({
         style={styles.titleWithDescription}
         title={title}
       />
-      {!isFinished && isStudent && <ActiveQuizInfo />}
+      {!isFinished && isStudent && !isNotStarted && <ActiveQuizInfo />}
       {isFinished && isStudent && <FinishedQuizInfo />}
       {!isGraded && isTutor && <UngradedQuizInfo />}
       {isGraded && isTutor && (
         <GradedQuizInfo points={points} totalPoints={totalPoints} />
+      )}
+      {!isFinished && isStudent && isNotStarted && (
+        <StartViewQuizInfo questionsAmount={quizItems.length} />
       )}
     </Box>
   )

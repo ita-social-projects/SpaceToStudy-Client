@@ -5,5 +5,13 @@
   "attemptFinished": "Attempt finished",
   "questionsAnswered": "Questions answered",
   "save": "Save",
-  "evaluate": "Evaluate"
+  "evaluate": "Evaluate",
+  "startQuiz": "Start Quiz",
+  "tryAgain": "Try again",
+  "reviewAttempt": "Review attempt",
+  "attemptLimit": "Attempts limits",
+  "timeLimit": "Time limit",
+  "reachedAttemptLimit": "Attempt limit reached.",
+  "noUsedAttempts": "No attempts have been made yet",
+  "questionsAmount": "Questions amount"
 }

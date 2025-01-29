@@ -10,6 +10,9 @@ import Points from '~/containers/quiz/points/Points'
 
 import styles from '~/containers/quiz/quiz-info/QuizInfo.styles'
 
+import DividerComponent from '~/design-system/components/divider/Divider'
+import { spliceSx } from '~/utils/helper-functions'
+
 const ActiveQuizInfo = () => {
   const { t } = useTranslation()
 
@@ -128,4 +131,76 @@ const GradedQuizInfo = ({ points, totalPoints }: GradedQuizInfoProps) => {
   )
 }
 
-export { ActiveQuizInfo, FinishedQuizInfo, UngradedQuizInfo, GradedQuizInfo }
+type StartViewQuizInfoProps = {
+  questionsAmount: number
+  attempts?: number
+  timeLimit?: string
+  isFirstAttempt?: boolean
+}
+const StartViewQuizInfo = ({
+  questionsAmount,
+  attempts,
+  timeLimit,
+  isFirstAttempt = true
+}: StartViewQuizInfoProps) => {
+  const { t } = useTranslation()
+  const typographyStyle = (subType: number) => {
+    return spliceSx(
+      styles[`subtitle${subType}` as keyof typeof styles],
+      styles.subtitleSize
+    )
+  }
+  return (
+    <Box sx={styles.infoWrapper}>
+      <Box sx={styles.quizSettings}>
+        <Typography sx={typographyStyle(1)}>
+          {t('quiz.questionsAmount')}:
+        </Typography>
+        <Typography sx={typographyStyle(2)}>{questionsAmount}</Typography>
+        <Box sx={styles.dividerEllipse}>
+          <DividerComponent
+            caption=''
+            orientation='horizontal'
+            size='small'
+            textAlign='center'
+            thickness='md'
+            type='ellipse'
+            variant='middle'
+          />
+        </Box>
+        <Typography sx={typographyStyle(1)}>
+          {t('quiz.attemptLimit')}:
+        </Typography>
+        <Typography sx={typographyStyle(2)}>1/{attempts}</Typography>
+        <Box sx={styles.dividerEllipse}>
+          <DividerComponent
+            caption=''
+            orientation='horizontal'
+            size='small'
+            textAlign='right'
+            thickness='md'
+            type='ellipse'
+            variant='inset'
+          />
+        </Box>
+        <Typography sx={typographyStyle(1)}>{t('quiz.timeLimit')}:</Typography>
+        <Typography sx={typographyStyle(2)}>{timeLimit}</Typography>
+      </Box>
+      <Box sx={styles.buttonWrapper}>
+        {isFirstAttempt ? (
+          <Button size='sm'>{t('quiz.startQuiz')}</Button>
+        ) : (
+          <Button size='sm'>{t('quiz.tryAgain')}</Button>
+        )}
+      </Box>
+    </Box>
+  )
+}
+
+export {
+  ActiveQuizInfo,
+  FinishedQuizInfo,
+  UngradedQuizInfo,
+  GradedQuizInfo,
+  StartViewQuizInfo
+}
