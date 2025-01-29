@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem, SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -31,13 +31,13 @@ import { determineQuestionType } from '../question-editor/QuestionEditor.constan
 
 interface QuestionProps {
   question: QuestionInterface
-  setQuestions: Dispatch<SetStateAction<QuestionInterface[]>>
-  setEditableItemId: Dispatch<SetStateAction<string>>
+  setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>
+  setEditableItemId: React.Dispatch<React.SetStateAction<string>>
   type?: QuestionTypesEnum
   sx?: SxProps
 }
 
-const Question: FC<QuestionProps> = ({
+const Question: React.FC<QuestionProps> = ({
   question,
   setQuestions,
   setEditableItemId,
@@ -132,7 +132,12 @@ const Question: FC<QuestionProps> = ({
       <Divider sx={styles.divider} />
       <Box sx={styles.questionBody}>
         <Typography sx={styles.questionText}>{question.text}</Typography>
-        <Box sx={[styles.answers, isSingleChoice && styles.singleAnswers]}>
+        <Box
+          sx={spliceSx(
+            styles.answers,
+            isSingleChoice ? styles.singleAnswers : undefined
+          )}
+        >
           {answersList}
         </Box>
       </Box>
