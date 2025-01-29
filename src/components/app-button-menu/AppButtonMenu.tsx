@@ -19,7 +19,7 @@ import Button from '~scss-components/button/Button'
 
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/app-button-menu/AppButtonMenu.styles'
-import { CategoryNameInterface, ServiceFunctionNew } from '~/types'
+import { CategoryNameInterface, type ServiceFunctionNew } from '~/types'
 
 interface AppButtonMenuProps<T> extends Omit<MenuProps, 'open'> {
   title: string
