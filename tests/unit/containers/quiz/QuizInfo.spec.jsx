@@ -44,7 +44,6 @@ describe('StartViewQuizInfo', () => {
   const mockHandleStartButton = vi.fn()
 
   it('should render quiz info correctly', () => {
-    console.log(QuizAttempt)
     render(
       <StartViewQuizInfo
         questionsAmount={10}

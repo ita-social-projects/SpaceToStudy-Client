@@ -4,7 +4,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import Quiz from '~/pages/quiz/Quiz'
 import useQuery from '~/hooks/use-query'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
-
+import { QuizAttempt, QuizTimeLimit } from '~/types'
 vi.mock('~/hooks/use-query')
 
 const mockQuiz = {
@@ -27,7 +27,9 @@ const mockQuiz = {
     shuffle: false,
     pointValues: true,
     scoredResponses: true,
-    correctAnswers: true
+    correctAnswers: true,
+    attemptLimit: '2 attempts',
+    timeLimit: '15 minutes'
   },
   createdAt: '2024-05-12T21:45:51.693Z',
   updatedAt: '2024-06-07T07:05:33.052Z',
@@ -52,7 +54,9 @@ const mockQuizEmpty = {
     shuffle: false,
     pointValues: false,
     scoredResponses: false,
-    correctAnswers: false
+    correctAnswers: false,
+    attemptLimit: '2 attempts',
+    timeLimit: '15 minutes'
   },
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString()
@@ -89,24 +93,68 @@ describe('QuizPage with useQuery', () => {
     const loader = screen.getByTestId('loader')
     expect(loader).toBeInTheDocument()
   })
+  it('should render quiz preview page with data', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
 
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false
+    })
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+  
+    const quizTitle = screen.getByText('JS Quiz')
+    expect(quizTitle).toBeInTheDocument()
+
+    const startQuizButton = screen.getByText('quiz.startQuiz')
+    expect(startQuizButton).toBeInTheDocument()
+
+  })
   it('should render quiz page with data', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
     useQuery.mockReturnValue({
       data: mockQuiz,
       isLoading: false
     })
 
-    renderWithProviders(<Quiz />)
-
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+  
     const quizTitle = screen.getByText('JS Quiz')
     expect(quizTitle).toBeInTheDocument()
+
+    const startQuizButton = screen.getByText('quiz.startQuiz')
+    fireEvent.click(startQuizButton)
 
     const questionText = screen.getByText(
       'What is the difference between function expression and function declaration?'
     )
     expect(questionText).toBeInTheDocument()
   })
+it('should render quiz page with data', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+    useQuery.mockReturnValue({
+      data: mockQuiz,
+      isLoading: false
+    })
 
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+  
+    const quizTitle = screen.getByText('JS Quiz')
+    expect(quizTitle).toBeInTheDocument()
+
+    const startQuizButton = screen.getByText('quiz.startQuiz')
+    fireEvent.click(startQuizButton)
+
+    const questionText = screen.getByText(
+      'What is the difference between function expression and function declaration?'
+    )
+    expect(questionText).toBeInTheDocument()
+  })
   it('should render empty state for empty data', () => {
     useQuery.mockReturnValue({
       data: mockQuizEmpty,
@@ -125,7 +173,12 @@ describe('QuizPage with useQuery', () => {
       isLoading: false
     })
 
-    renderWithProviders(<Quiz />)
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+    const startQuizButton = screen.getByText('quiz.startQuiz')
+    fireEvent.click(startQuizButton)
 
     const checkbox = screen.getByRole('checkbox')
     expect(checkbox).toHaveProperty('checked', false)
@@ -148,7 +201,8 @@ describe('QuizPage with useQuery', () => {
     renderWithProviders(<Quiz />, {
       preloadedState
     })
-
+    const startQuizButton = screen.getByText('quiz.startQuiz')
+    fireEvent.click(startQuizButton)
     const finishButton = screen.getByText('quiz.finish')
     act(() => {
       fireEvent.click(finishButton)
@@ -172,6 +226,9 @@ describe('QuizPage with useQuery', () => {
       preloadedState
     })
 
+    const startQuizButton = screen.getByText('quiz.startQuiz')
+    fireEvent.click(startQuizButton)
+
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
 
@@ -191,12 +248,18 @@ describe('QuizPage with useQuery', () => {
   })
 
   it('should render question text', () => {
+    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+
     useQuery.mockReturnValue({
       data: mockQuiz,
       isLoading: false
     })
 
-    renderWithProviders(<Quiz />)
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+    const startQuizButton = screen.getByText('quiz.startQuiz')
+    fireEvent.click(startQuizButton)
 
     const questionText = screen.getByText(
       'What is the difference between function expression and function declaration?'
@@ -215,6 +278,8 @@ describe('QuizPage with useQuery', () => {
     renderWithProviders(<Quiz />, {
       preloadedState
     })
+    const startQuizButton = screen.getByText('quiz.startQuiz')
+    fireEvent.click(startQuizButton)
 
     const timer = screen.getByTestId('TimerOutlinedIcon')
     expect(timer).toBeInTheDocument()
@@ -231,6 +296,8 @@ describe('QuizPage with useQuery', () => {
     renderWithProviders(<Quiz />, {
       preloadedState
     })
+    const startQuizButton = screen.getByText('quiz.startQuiz')
+    fireEvent.click(startQuizButton)
 
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
