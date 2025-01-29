@@ -72,4 +72,16 @@ describe('Question', () => {
 
     expect(setQuestionsMock).toHaveBeenCalled()
   })
+  it('should check correct answer checkbox', () => {
+    const correctAnswer = mockedQuestion.answers.find((a) => a.isCorrect)
+    const checkbox = screen.getByLabelText(correctAnswer.text)
+
+    expect(checkbox).toBeChecked()
+  })
+  it('should not check incorrect answer checkbox', () => {
+    const incorrectAnswer = mockedQuestion.answers.find((a) => !a.isCorrect)
+    const checkbox = screen.getByLabelText(incorrectAnswer.text)
+
+    expect(checkbox).not.toBeChecked()
+  })
 })
