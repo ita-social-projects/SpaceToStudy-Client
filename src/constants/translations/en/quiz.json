@@ -5,5 +5,9 @@
   "attemptFinished": "Attempt finished",
   "questionsAnswered": "Questions answered",
   "save": "Save",
-  "evaluate": "Evaluate"
+  "evaluate": "Evaluate",
+  "addComment": "Add a Comment",
+  "comment": "Comment",
+  "writeComment": "Write a comment...",
+  "submitComment": "Submit comment"
 }

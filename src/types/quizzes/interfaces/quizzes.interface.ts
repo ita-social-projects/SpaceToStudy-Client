@@ -18,7 +18,7 @@ export interface QuizSettings {
 export interface Quiz extends CommonEntityFields, ResourceBase {
   title: string
   items: Question[]
-  author: Pick<UserResponse, '_id'>
+  author: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
   category: Category | null
   settings: QuizSettings
 }
