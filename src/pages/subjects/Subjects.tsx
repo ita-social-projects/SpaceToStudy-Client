@@ -78,9 +78,9 @@ const Subjects = () => {
   }
 
   const getSubjects = useCallback(
-    (data?: Pick<SubjectInterface, 'name'>) =>
-      subjectService.getSubjects(data, categoryId),
-    [categoryId]
+    (data?: Pick<SubjectInterface, 'name' | 'category'>) =>
+      subjectService.getSubjects(data),
+    []
   )
 
   const {
@@ -89,10 +89,16 @@ const Subjects = () => {
     resetData,
     loadMore,
     isExpandable
-  } = useLoadMore<SubjectInterface, Pick<SubjectInterface, 'name'>>({
+  } = useLoadMore<
+    SubjectInterface,
+    Pick<SubjectInterface, 'name' | 'category'>
+  >({
     service: getSubjects,
     limit: cardsLimit,
-    params
+    params: {
+      ...params,
+      category: { _id: categoryId, appearance: { icon: '', color: '' } }
+    }
   })
 
   const oppositeRole = getOpositeRole(userRole)
