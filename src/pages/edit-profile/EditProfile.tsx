@@ -101,25 +101,30 @@ const EditProfile = () => {
       'loading' | 'error' | 'tabValidityStatus'
     >
 
-    const changes: Partial<EditableFields> = {}
+    type NullableFields = {
+      [K in keyof EditableFields]: EditableFields[K] | null
+    }
+
+    const changes: Partial<NullableFields> = {}
 
     ;(Object.keys(profileState) as Array<keyof EditableFields>).forEach(
       <K extends keyof EditableFields>(key: K) => {
         const initialValue = initialEditProfileState[key]
         const currentValue = profileState[key]
 
-        if (
-          JSON.stringify(initialValue) !== JSON.stringify(currentValue) &&
-          currentValue !== '' &&
-          currentValue !== null
-        ) {
-          changes[key] = currentValue
+        if (JSON.stringify(initialValue) !== JSON.stringify(currentValue)) {
+          if (!currentValue) {
+            changes[key] = changes[key] || null
+          } else {
+            changes[key] = currentValue
+          }
         }
       }
     )
 
     return changes as Partial<EditProfileState>
-  }, [profileState, initialEditProfileState])
+  }, [profileState])
+
   const isChanged = useMemo<boolean>(
     () => Object.keys(changedFields).length > 0,
     [changedFields]
@@ -155,9 +160,7 @@ const EditProfile = () => {
     } = changedFields
 
     const dataToUpdate: UpdateUserParams = rest
-    //console.log('data to update', dataToUpdate)
-    //console.log('about student', aboutStudent)'
-    console.log('changed fields', changedFields)
+
     if (city && country) dataToUpdate.address = { city, country }
 
     if (videoLink) {
@@ -184,33 +187,23 @@ const EditProfile = () => {
       dataToUpdate.photo = photo
     }
 
-    try {
-      await dispatch(
-        updateUser({
-          userId,
-          params: dataToUpdate
-        })
-      ).unwrap()
+    await dispatch(
+      updateUser({
+        userId,
+        params: dataToUpdate
+      })
+    )
 
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.success,
-          message: 'editProfilePage.profile.successMessage'
-        })
-      )
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    )
+    setInitialEditProfileState(structuredClone(profileState))
 
-      setInitialEditProfileState(structuredClone(profileState))
-
-      if (hash) {
-        navigate(`${authRoutes.myProfile.path}#complete`)
-      }
-    } catch (error) {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: 'editProfilePage.profile.errorMessage'
-        })
-      )
+    if (hash) {
+      navigate(`${authRoutes.myProfile.path}#complete`)
     }
   }
 
