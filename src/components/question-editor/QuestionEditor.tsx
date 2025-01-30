@@ -121,29 +121,17 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
 
   const addNewOneAnswer = (event: MouseEvent<HTMLInputElement>) => {
     event.preventDefault()
-    if (!isEmptyAnswer) {
-      if (isOpenAnswer) {
-        handleNonInputValueChange('answers', [
-          ...data.answers,
-          {
-            id: data.answers.length,
-            text: '',
-            isCorrect: true,
-            isEditing: true
-          }
-        ])
-      } else {
-        const addAnswer = [
-          ...data.answers,
-          {
-            id: data.answers.length,
-            text: '',
-            isCorrect: false
-          }
-        ]
-        handleNonInputValueChange('answers', addAnswer)
+    if (isEmptyAnswer) return
+
+    handleNonInputValueChange('answers', [
+      ...data.answers,
+      {
+        id: data.answers.length,
+        text: '',
+        isCorrect: isOpenAnswer,
+        isEditing: isOpenAnswer || undefined
       }
-    }
+    ])
   }
 
   const deleteRadioButton = (id: number) => {
@@ -224,11 +212,13 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
 
   const handleBlur = (index: number) => {
     const updatedAnswers = [...answers]
-    if (updatedAnswers[index].text.trim() === '') {
-      handleErrors('answers', validateOpenAnswer(updatedAnswers[index].text))
-    } else {
+    const { text } = updatedAnswers[index]
+
+    if (text.trim()) {
       updatedAnswers[index].isEditing = false
       handleNonInputValueChange('answers', updatedAnswers)
+    } else {
+      handleErrors('answers', validateOpenAnswer(text))
     }
   }
   const isButtonVisible = text
