@@ -92,9 +92,10 @@ const useSteps = ({ steps }: UseSteps) => {
         country: country ?? '',
         city: city ?? ''
       },
-      professionalSummary: professionalSummary,
-      mainSubjects: stepData.subjects,
-      nativeLanguage: stepData.language ?? null
+      professionalSummary: professionalSummary
+        ? professionalSummary
+        : undefined,
+      nativeLanguage: stepData.language ?? undefined
     }
 
     if (!hasErrors) {
