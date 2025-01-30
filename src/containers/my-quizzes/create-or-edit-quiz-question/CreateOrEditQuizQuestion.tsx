@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  FC,
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction
-} from 'react'
+import React from 'react'
 import Box from '@mui/material/Box'
 
 import { useModalContext } from '~/context/modal-context'
@@ -32,25 +25,25 @@ import { getErrorKey } from '~/utils/get-error-key'
 
 interface CreateOrEditQuizQuestionProps {
   question?: Question
-  setQuestions: Dispatch<SetStateAction<Question[]>>
+  setQuestions: React.Dispatch<React.SetStateAction<Question[]>>
   onCancel: () => void
 }
 
-const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
+const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
   question,
   setQuestions,
   onCancel
 }) => {
   const dispatch = useAppDispatch()
-  const [isNewQuestion, setIsNewQuestion] = useState<boolean>(!!question)
+  const [isNewQuestion, setIsNewQuestion] = React.useState<boolean>(!!question)
   const { openModal, closeModal } = useModalContext()
 
-  const createQuestionService = useCallback(
+  const createQuestionService = React.useCallback(
     (data?: QuestionForm) => ResourceService.createQuestion(data),
     []
   )
 
-  const updateQuestionService = useCallback(
+  const updateQuestionService = React.useCallback(
     (params?: UpdateQuestionParams) => ResourceService.updateQuestion(params),
     []
   )
@@ -165,7 +158,7 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
     })
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     !question && onOpenCreateQuestionModal()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
