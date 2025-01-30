@@ -247,4 +247,18 @@ describe('CreateOrEditQuizQuestion component with a question', () => {
 
     expect(snackbar).toBeInTheDocument()
   })
+  it('should clear answers when changing type to openAnswer', () => {
+    const appSelect = screen.getByTestId('app-select')
+  
+    fireEvent.change(appSelect, { target: { value: 'openAnswer' } })
+  
+    expect(screen.queryByText('Answer 1')).not.toBeInTheDocument()
+  })
+  it('should close modal on cancel button click', () => {
+    const cancelBtn = screen.getByText('common.cancel')
+  
+    fireEvent.click(cancelBtn)
+  
+    expect(onCancel).toHaveBeenCalled()
+  })  
 })
