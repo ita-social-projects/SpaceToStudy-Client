@@ -92,7 +92,7 @@ const useSteps = ({ steps }: UseSteps) => {
         country: country ?? '',
         city: city ?? ''
       },
-      professionalSummary: professionalSummary
+      professionalSummary: professionalSummary?.length
         ? professionalSummary
         : undefined,
       mainSubjects: stepData.subjects,
