@@ -127,30 +127,24 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
     closeModal()
   }
 
-  const onCreateQuestion = React.useCallback(async () => {
+  const onCreateQuestion = async () => {
     const updatedData = data.openAnswer
       ? {
           ...data,
           answers: [
             ...data.answers,
-            {
-              text: data.openAnswer,
-              isCorrect: true,
-              id: data.answers.length
-            }
+            { text: data.openAnswer, isCorrect: true, id: data.answers.length }
           ],
           openAnswer: ''
         }
       : data
 
     await createQuestion(updatedData)
-  }, [data, createQuestion])
+  }
 
-  const onUpdateQuestion = React.useCallback(async () => {
-    if (question) {
-      await updateQuestion({ ...data, id: question._id })
-    }
-  }, [question, data, updateQuestion])
+  const onUpdateQuestion = async () => {
+    question && (await updateQuestion({ ...data, id: question._id }))
+  }
 
   const onOpenCreateQuestionModal = () => {
     openModal({

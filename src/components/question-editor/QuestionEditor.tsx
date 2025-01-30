@@ -212,13 +212,11 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
 
   const handleBlur = (index: number) => {
     const updatedAnswers = [...answers]
-    const { text } = updatedAnswers[index]
-
-    if (text.trim()) {
+    if (updatedAnswers[index].text.trim() === '') {
+      handleErrors('answers', validateOpenAnswer(updatedAnswers[index].text))
+    } else {
       updatedAnswers[index].isEditing = false
       handleNonInputValueChange('answers', updatedAnswers)
-    } else {
-      handleErrors('answers', validateOpenAnswer(text))
     }
   }
   const isButtonVisible = text
