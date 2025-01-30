@@ -13,11 +13,9 @@ export const isCorrectAnswer = (
   if (isUnanswered) return false
 
   if (isOpenAnswer) {
-    if (typeof userAnswer !== 'string') return false
-    const correctAnswer = question.answers.find((item) => {
-      return item.text.trim() === userAnswer.trim()
-    })
-    return Boolean(correctAnswer)
+    return question.answers.some(
+      (answer) => answer.text.trim() === String(userAnswer).trim()
+    )
   }
 
   if (isSingleChoice) {

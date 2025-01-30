@@ -13,13 +13,9 @@ export const countPoints = (
     if (!userAnswer) return false
 
     if (isOpenAnswer) {
-      const correctAnswer = item.answers.find((item) => {
-        return (
-          item.text.trim() ===
-          (!Array.isArray(userAnswer) ? userAnswer : userAnswer[0]).trim()
-        )
-      })
-      return Boolean(correctAnswer)
+      return item.answers.some(
+        (answer) => answer.text.trim() === String(userAnswer).trim()
+      )
     }
 
     if (isSingleChoice) {

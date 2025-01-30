@@ -135,23 +135,18 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   }
 
   const onCreateQuestion = async () => {
-    if (data.openAnswer) {
-      const updatedData = {
-        ...data,
-        answers: [
-          ...data.answers,
-          {
-            text: data.openAnswer,
-            isCorrect: true,
-            id: data.answers.length
-          }
-        ],
-        openAnswer: ''
-      }
-      await createQuestion(updatedData)
-    } else {
-      await createQuestion(data)
-    }
+    const updatedData = data.openAnswer
+      ? {
+          ...data,
+          answers: [
+            ...data.answers,
+            { text: data.openAnswer, isCorrect: true, id: data.answers.length }
+          ],
+          openAnswer: ''
+        }
+      : data
+
+    await createQuestion(updatedData)
   }
 
   const onUpdateQuestion = async () => {
