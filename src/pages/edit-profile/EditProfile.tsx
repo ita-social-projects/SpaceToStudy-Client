@@ -75,7 +75,6 @@ const EditProfile = () => {
   const { loading, tabValidityStatus, ...profileState } = useAppSelector(
     (state) => state.editProfile
   )
-  console.log(profileState)
 
   const { userId, userRole } = useAppSelector((state) => state.appMain) as {
     userId: string
