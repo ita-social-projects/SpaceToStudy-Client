@@ -1,16 +1,9 @@
-import { createSlice, PayloadAction, Draft } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { sliceNames } from '~/redux/redux.constants'
 import { RootState } from '~/redux/store'
-import { TOptions } from 'i18next/typescript/options'
+import { SnackbarMessage } from '~/types'
 
 import { type AlertColor } from '~/design-system/components/alert/Alert'
-
-interface ExtendedSnackbarMessage {
-  text: string
-  options: Draft<TOptions>
-}
-
-type SnackbarMessage = string | ExtendedSnackbarMessage
 
 interface SnackbarState {
   isOpened: boolean

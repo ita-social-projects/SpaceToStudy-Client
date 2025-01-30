@@ -13,6 +13,8 @@ import {
 } from '~/services/resource-service'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
+import useQuery from '~/hooks/use-query'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
@@ -31,9 +33,7 @@ import {
   ItemsWithCount,
   GetResourcesCategoriesParams,
   ErrorResponse,
-  ResourcesTabsEnum,
-  CreateCategoriesParams,
-  CategoryNameInterface
+  ResourcesTabsEnum
 } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -98,12 +98,6 @@ const CategoriesContainer = () => {
     [page, itemsPerPage, sort, searchTitle]
   )
 
-  const createCategory = useCallback(
-    (params?: CreateCategoriesParams) =>
-      ResourceService.createResourceCategory(params),
-    []
-  )
-
   const deleteCategory = useCallback(
     (id?: string) => ResourceService.deleteResourceCategory(id ?? ''),
     []
@@ -118,12 +112,10 @@ const CategoriesContainer = () => {
     onResponseError
   })
 
-  const { response: allCategoriesNames, fetchData: fetchAllCategoriesNames } =
-    useAxios<CategoryNameInterface[]>({
-      service: ResourceService.getResourcesCategoriesNames,
-      defaultResponse: [],
-      onResponseError,
-      fetchOnMount: true
+  const { data: allCategoriesNames = [], refetch: fetchAllCategoriesNames } =
+    useQuery({
+      queryKey: ['categoriesNames'],
+      queryFn: ResourceService.getResourcesCategoriesName
     })
 
   const onCategoryUpdate = useCallback(async () => {
@@ -131,21 +123,18 @@ const CategoriesContainer = () => {
   }, [fetchData, fetchAllCategoriesNames])
 
   const onCategoryCreate = useCallback(
-    async (response: Categories | null) => {
+    async (response: Categories) => {
       onResponse(response)
       await Promise.all([fetchData(), fetchAllCategoriesNames()])
     },
     [fetchData, fetchAllCategoriesNames, onResponse]
   )
 
-  const { fetchData: handleCreateCategory } = useAxios({
-    service: createCategory,
-    defaultResponse: null,
-    fetchOnMount: false,
-    onResponseError,
-    onResponse: onCategoryCreate
+  const { mutate: handleCreateCategory } = useMutation({
+    mutationFn: ResourceService.createResourceCategory,
+    onSuccess: onCategoryCreate,
+    onError: onResponseError
   })
-
   const existingCategoriesNames = allCategoriesNames?.map((item) => item.name)
 
   const onAdd = () => {

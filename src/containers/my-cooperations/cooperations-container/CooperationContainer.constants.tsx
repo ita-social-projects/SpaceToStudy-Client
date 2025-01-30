@@ -63,7 +63,7 @@ export const columns: TableColumn<Cooperation>[] = [
     label: 'cooperationsPage.tableHeaders.status',
     calculatedCellValue: ({ user, needAction, status }: Cooperation) => {
       const cooperationStatus =
-        user.role !== needAction && status === StatusEnum.Pending
+        user.role !== needAction?.role && status === StatusEnum.Pending
           ? StatusEnum.NeedAction
           : status
       return <StatusChip status={cooperationStatus} />

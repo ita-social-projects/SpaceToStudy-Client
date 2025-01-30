@@ -151,7 +151,7 @@ const CooperationDetails = () => {
   }
 
   const closeCooperationInitiator =
-    response.needAction === response.receiverRole
+    response.needAction.role === response.receiverRole
       ? response.initiator
       : response.receiver
 
@@ -165,7 +165,7 @@ const CooperationDetails = () => {
   )
 
   const isCooperationClosingRequestSend =
-    response.needAction === userRole &&
+    response.needAction.role === userRole &&
     response.status === StatusEnum.RequestToClose
 
   const iconConditionals = isNotesOpen ? (
