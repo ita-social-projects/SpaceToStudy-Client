@@ -7,6 +7,8 @@ import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-qu
 
 const setTitle = vi.fn()
 const setDescription = vi.fn()
+const setQuestions = vi.fn()
+const setCategory = vi.fn()
 const category = 'mock-category'
 const mockId = '676728f88a5ae7b4b41f5e89'
 
@@ -21,7 +23,8 @@ vi.mock('react-router-dom', async () => {
 const renderComponent = (props = {}) => {
   const defaultProps = {
     setDescription,
-    setTitle
+    setTitle,
+    setQuestions
   }
 
   renderWithProviders(
@@ -114,15 +117,16 @@ describe('CreateOrEditQuizContainer with id', () => {
         _id: mockId,
         title: 'Mock title',
         description: 'Mock description',
-        category
+        category,
+        items: []
       })
   })
 
-  afterAll(() => {
+  afterEach(() => {
     vi.clearAllMocks()
   })
 
-  it('should save quiz with category', async () => {
+  it('should save quiz with category and questions', async () => {
     await waitFor(() => renderComponent({ category, questions: [] }))
 
     const saveBtn = screen.getByText('common.save')
@@ -132,11 +136,17 @@ describe('CreateOrEditQuizContainer with id', () => {
   })
 
   it('should save quiz without category', async () => {
-    await waitFor(() => renderComponent({ questions: [] }))
+    await waitFor(() => renderComponent())
 
     const saveBtn = screen.getByText('common.save')
     fireEvent.click(saveBtn)
 
     expect(setTitle).toHaveBeenCalled()
+  })
+
+  it('should call setCategory', async () => {
+    await waitFor(() => renderComponent({ setCategory }))
+
+    expect(setCategory).toHaveBeenCalled()
   })
 })
