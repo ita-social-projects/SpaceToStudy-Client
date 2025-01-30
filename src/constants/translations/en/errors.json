@@ -12,5 +12,6 @@
   "BAD_RESET_TOKEN": "Your time is up please try again",
   "DOCUMENT_NOT_FOUND": "Not found",
   "UNKNOWN_ERROR": "Something went wrong",
-  "VALIDATION_ERROR": "{{message}}"
+  "VALIDATION_ERROR": "{{message}}",
+  "FORBIDDEN": "You don't have permission to access this resource"
 }

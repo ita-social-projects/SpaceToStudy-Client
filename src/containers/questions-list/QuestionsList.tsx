@@ -48,6 +48,7 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
           question={item}
           setEditableItemId={setEditableItemId}
           setQuestions={setItems}
+          type={item.type}
         />
       )
 

@@ -29,7 +29,7 @@ const CooperationClosureDeclinedBanner: React.FC<
   return (
     <CooperationActionBanner
       actionButtons={
-        <Button color='tonal-error' onClick={handleResendRequest} size='xs'>
+        <Button onClick={handleResendRequest} size='xs' variant='tonal-error'>
           {t('cooperationDetailsPage.resendRequestBtn')}
         </Button>
       }

@@ -19,11 +19,16 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import { snackbarVariants } from '~/constants'
 import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
-import { getQuizViewFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
+import {
+  getQuizViewFields,
+  getQuizTimeLimitFields,
+  getQuizAttemptFields
+} from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 import {
   ButtonTypeEnum,
   QuizViewEnum,
+  QuizTimeLimit,
   UpdateQuizParams,
   ErrorResponse,
   CreateQuizParams,
@@ -31,7 +36,8 @@ import {
   QuizTabsEnum,
   ComponentEnum,
   QuizSettings,
-  ResourcesTypesEnum
+  ResourcesTypesEnum,
+  QuizAttempt
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
@@ -130,7 +136,17 @@ const QuizSettingsContainer = ({
     handleNonInputValueChange('view', value)
   }
 
+  const onTimeLimitChange = (value: QuizTimeLimit) => {
+    handleNonInputValueChange('timeLimit', value)
+  }
+
+  const onAttemptChange = (value: QuizAttempt) => {
+    handleNonInputValueChange('attemptLimit', value)
+  }
+
   const isDisabled = (!id && !title) || !questions.length
+
+  const checked = !!data.view
 
   return (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
@@ -189,18 +205,49 @@ const QuizSettingsContainer = ({
             onChange={handleInputChange('scoredResponses')}
           />
         </SettingItem>
-
         <SettingItem
           subtitle={t('myResourcesPage.quizzes.correctAnswersDesc')}
           title={t('myResourcesPage.quizzes.correctAnswers')}
         >
           <Switch
-            checked={data.correctAnswers}
+            checked={checked}
             data-testid='correctAnswers-switch'
             onChange={handleInputChange('correctAnswers')}
           />
         </SettingItem>
       </Box>
+
+      <Box>
+        <Typography sx={styles.title}>
+          {t('myResourcesPage.quizzes.attemptsAndTimeLimits')}
+        </Typography>
+        <SettingItem
+          subtitle={t('myResourcesPage.quizzes.timeLimitDesc')}
+          title={t('myResourcesPage.quizzes.timeLimit')}
+        >
+          <AppSelect
+            fields={getQuizTimeLimitFields(t)}
+            label={'Time limit'}
+            setValue={onTimeLimitChange}
+            sx={styles.select}
+            value={data.timeLimit}
+          />
+        </SettingItem>
+
+        <SettingItem
+          subtitle={t('myResourcesPage.quizzes.attemptsLimitsDesc')}
+          title={t('myResourcesPage.quizzes.attemptsLimits')}
+        >
+          <AppSelect
+            fields={getQuizAttemptFields(t)}
+            label={'Attempts limit'}
+            setValue={onAttemptChange}
+            sx={styles.select}
+            value={data.attemptLimit}
+          />
+        </SettingItem>
+      </Box>
+
       <Box sx={styles.buttonContainer}>
         <Button disabled={isDisabled} type={ButtonTypeEnum.Submit}>
           {t('common.apply')}

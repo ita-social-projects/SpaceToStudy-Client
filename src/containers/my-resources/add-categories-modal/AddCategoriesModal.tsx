@@ -16,7 +16,7 @@ import { ButtonTypeEnum, ComponentEnum, CreateCategoriesParams } from '~/types'
 
 interface AddCategoriesModalProps {
   closeModal: () => void
-  createCategories: (params?: CreateCategoriesParams) => Promise<void>
+  createCategories: (params: CreateCategoriesParams) => void
   existingCategoriesNames: string[]
 }
 
@@ -32,9 +32,9 @@ const AddCategoriesModal: FC<AddCategoriesModalProps> = ({
     useForm<CreateCategoriesParams>({
       initialValues: initialValues,
       validations: validations(existingCategoriesNames),
-      onSubmit: async () => {
+      onSubmit: () => {
         setLoading(true)
-        await createCategories({ name: data.name.trim() })
+        createCategories({ name: data.name.trim() })
         setLoading(false)
         closeModal()
       }

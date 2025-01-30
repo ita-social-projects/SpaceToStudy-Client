@@ -8,6 +8,7 @@ import MyCooperationsDetails from '../my-cooperations-details/MyCooperationsDeta
 import {
   Cooperation,
   CooperationTabsEnum,
+  NeedActionTypeEnum,
   ProficiencyLevelEnum,
   StatusEnum,
   UserRoleEnum
@@ -70,9 +71,23 @@ export const defaultResponse: Cooperation = {
   price: 0,
   proficiencyLevel: ProficiencyLevelEnum.Beginner,
   status: StatusEnum.Active,
-  needAction: UserRoleEnum.Tutor,
+  needAction: {
+    role: UserRoleEnum.Tutor,
+    type: NeedActionTypeEnum.Price,
+    messages: []
+  },
   sections: [],
   createdAt: '',
   updatedAt: '',
-  _id: ''
+  _id: '',
+  initiator: {
+    firstName: '',
+    lastName: ''
+  },
+  initiatorRole: 'tutor',
+  receiver: {
+    firstName: '',
+    lastName: ''
+  },
+  receiverRole: 'student'
 }

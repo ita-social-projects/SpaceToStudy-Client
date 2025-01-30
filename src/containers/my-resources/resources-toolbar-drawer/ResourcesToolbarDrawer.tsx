@@ -53,7 +53,7 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
     handleNonInputValueChange('sortBy', value)
 
   const onApplyFilters = () => {
-    setCategories(data.categories)
+    setCategories(data.categories ?? [])
     setSearch(data.name)
     onRequestSort(data.sortBy)
     closeDrawer()
@@ -79,8 +79,8 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
           <FiltersToggle handleToggle={onToggle} />
           <AppButtonMenu<CategoryNameInterface>
             customSx={styles.filter}
-            selectedItems={data.categories}
-            service={ResourceService.getResourcesCategoriesNames}
+            selectedItems={data.categories ?? []}
+            service={ResourceService.getResourcesCategoriesName}
             setSelectedItems={onCategoryChange}
             showNoneProperty
             slotProps={{ paper: styles.filterPaper(isMobile) }}

@@ -61,4 +61,64 @@ describe('resourseService tests', () => {
     )
     expect(result).toEqual(mockQuizData)
   })
+  
+  it('should get resource categories names', async () => {
+    const mockResponse = [
+      { _id: '1', name: 'Category 1' },
+      { _id: '2', name: 'Category 2' }
+    ]
+
+    mockAxiosClient
+      .onGet(URLs.resources.resourcesCategories.getNames)
+      .reply(200, mockResponse)
+
+    const response = await ResourceService.getResourcesCategoriesName()
+
+    expect(mockAxiosClient.history.get[0].url).toBe(URLs.resources.resourcesCategories.getNames)
+    expect(response).toEqual(mockResponse)
+  })
+
+  it('should create a resource category', async () => {
+    const mockResponse = { _id: '3', name: 'New Category' }
+    const params = { name: 'New Category' }
+
+    mockAxiosClient
+      .onPost(URLs.resources.resourcesCategories.post)
+      .reply(200, mockResponse)
+
+    const response = await ResourceService.createResourceCategory(params)
+
+    expect(mockAxiosClient.history.post[0].url).toBe(URLs.resources.resourcesCategories.post)
+    expect(mockAxiosClient.history.post[0].data).toBe(JSON.stringify(params))
+    expect(response).toEqual(mockResponse)
+  })
+
+   it('should edit an attachment', async () => {
+     const attachmentId = '6255bc080a75adf9223df444'
+     const attachment = {
+       description: 'Modified description',
+       category: '8655bc080a75adf9223df444'
+     }
+     const mockAttachmentResponse = {
+       ...attachment,
+       _id: attachmentId,
+       link: '1722535882408-test.pdf',
+       size: 15069,
+       resourceType: 'Attachment'
+     }
+
+     mockAxiosClient.onPatch().reply((config) => {
+       expect(config.url).toBe(`/attachments/${attachmentId}`)
+
+       return [200, mockAttachmentResponse]
+     })
+
+     const updatedAttachmentResponse =
+       await ResourceService.updateAttachmentQuery({
+         ...attachment,
+         id: attachmentId
+       })
+
+     expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
+   })
 })

@@ -4,21 +4,22 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 
-import useAxios from '~/hooks/use-axios'
 import { useModalContext } from '~/context/modal-context'
 import { useAppDispatch } from '~/hooks/use-redux'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import { ResourceService } from '~/services/resource-service'
 import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
 import DropdownButton from '~/components/dropdown-add-btn/DropdownButton'
 
 import { snackbarVariants } from '~/constants'
 import {
-  Categories,
-  CategoryNameInterface,
-  ComponentEnum,
-  CreateCategoriesParams,
-  ErrorResponse
+  type Categories,
+  type CategoryNameInterface,
+  ComponentEnum
 } from '~/types'
+import { getErrorKey } from '~/utils/get-error-key'
+import { type ResponseError } from '~/exceptions'
 import { styles } from '~/containers/category-dropdown/CategoryDropdown.styles'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import {
@@ -26,7 +27,6 @@ import {
   isOptionEqualToValue
 } from '~/containers/category-dropdown/CategoryDropdown.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 interface CategoryDropdownInterface {
   category: string | null
@@ -44,21 +44,22 @@ const CategoryDropdown = ({
   const dispatch = useAppDispatch()
   const { openModal, closeModal } = useModalContext()
 
-  const handleResponseError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
+  const handleResponseError = useCallback(
+    (error: ResponseError) => {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: getErrorKey(error)
+        })
+      )
+    },
+    [dispatch]
+  )
 
-  const { response: allCategoriesNames, fetchData: fetchAllCategoriesNames } =
-    useAxios<CategoryNameInterface[]>({
-      service: ResourceService.getResourcesCategoriesNames,
-      defaultResponse: [],
-      fetchOnMount: true
-    })
+  const { data: allCategoriesNames = [] } = useQuery({
+    queryKey: ['categoriesNames'],
+    queryFn: ResourceService.getResourcesCategoriesName
+  })
 
   const onCreateCategory = () => {
     openModal({
@@ -72,14 +73,8 @@ const CategoryDropdown = ({
     })
   }
 
-  const createCategory = useCallback(
-    (params?: CreateCategoriesParams) =>
-      ResourceService.createResourceCategory(params),
-    []
-  )
-
   const onResponseCategory = useCallback(
-    async (response: Categories | null) => {
+    (response: Categories) => {
       const categoryName = response ? response.name : ''
 
       dispatch(
@@ -93,18 +88,15 @@ const CategoryDropdown = ({
           }
         })
       )
-
-      await fetchAllCategoriesNames()
     },
-    [dispatch, fetchAllCategoriesNames]
+    [dispatch]
   )
 
-  const { fetchData: handleCreateCategory } = useAxios({
-    service: createCategory,
-    defaultResponse: null,
-    fetchOnMount: false,
-    onResponse: onResponseCategory,
-    onResponseError: handleResponseError
+  const { mutate: handleCreateCategory } = useMutation({
+    queryKey: ['categoriesNames'],
+    mutationFn: ResourceService.createResourceCategory,
+    onSuccess: onResponseCategory,
+    onError: handleResponseError
   })
 
   const optionsList = (

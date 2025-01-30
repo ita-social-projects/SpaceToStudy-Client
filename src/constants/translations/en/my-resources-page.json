@@ -56,6 +56,7 @@
     "savePreviousQuestion": "Please save the previous question",
     "addQuestion": "Add question",
     "settingsPointsAndAnswers": "Settings: Points and answers",
+    "attemptsAndTimeLimits": "Attempts and time limits",
     "searchInput": "Search a quiz",
     "pointValues": "Point values",
     "pointValuesDesc": "Respondents can see total points and points received for each question",
@@ -68,9 +69,23 @@
     "questionsShuffleDesc": "Questions will be shuffled with every attempt",
     "quizView": "Quiz view",
     "quizViewDesc": "Change between scroll or stepper quiz views and select the more suitable one.",
+    "timeLimit": "Time Limit",
+    "timeLimitDesc": "Set a specific time limit for completing the quiz.",
+    "attemptsLimits": "Attempts Limit",
+    "attemptsLimitsDesc": "Define the maximum number of attempts allowed for the quiz.",
     "types": {
       "scroll": "Scroll",
-      "stepper": "Stepper"
+      "stepper": "Stepper",
+      "noLimit": "No limit",
+      "minute15": "15 minutes",
+      "minute30": "30 minutes",
+      "minute45": "45 minutes",
+      "hour1": "1 hour",
+      "attempt1": "1 attempt",
+      "attempt2": "2 attempts",
+      "attempt3": "3 attempts",
+      "attempt5": "5 attempts",
+      "attempt10": "10 attempts"
     }
   },
   "questions": {
