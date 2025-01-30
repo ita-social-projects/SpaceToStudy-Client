@@ -1,3 +1,4 @@
+import { theme } from '~/styles/app-theme/custom-mui.styles'
 import { commonShadow } from '~/styles/app-theme/custom-shadows'
 
 const divider = {
@@ -67,7 +68,7 @@ export const styles = {
     alignItems: 'center'
   },
   openAnswer: {
-    mt: '10px'
+    mt: theme.spacing(1)
   },
   emptyAnswer: {
     color: 'primary.300'
