@@ -95,6 +95,7 @@ const useSteps = ({ steps }: UseSteps) => {
       professionalSummary: professionalSummary
         ? professionalSummary
         : undefined,
+      mainSubjects: stepData.subjects,
       nativeLanguage: stepData.language ?? undefined
     }
 
