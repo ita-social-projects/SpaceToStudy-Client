@@ -98,8 +98,9 @@ describe('QuizSettingsContainer', () => {
   })
 
   it('should change view and click on apply', () => {
-    const select = screen.getByTestId('app-select')
+    const selects = screen.getAllByTestId('app-select')
 
+    const select = selects[0]
     expect(select.value).toBe('Scroll')
 
     fireEvent.change(select, { target: { value: 'Stepper' } })

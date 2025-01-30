@@ -1,4 +1,9 @@
-import { QuizViewEnum, ResourcesTypesEnum as ResourceType } from '~/types'
+import {
+  QuizTimeLimit,
+  QuizViewEnum,
+  QuizAttempt,
+  ResourcesTypesEnum as ResourceType
+} from '~/types'
 
 export const defaultResponse = {
   _id: '',
@@ -12,7 +17,9 @@ export const defaultResponse = {
     pointValues: false,
     scoredResponses: false,
     correctAnswers: false,
-    shuffle: false
+    shuffle: false,
+    timeLimit: QuizTimeLimit.Minute15,
+    attemptLimit: QuizAttempt.NoLimit
   },
   resourceType: ResourceType.Quiz,
   createdAt: '',

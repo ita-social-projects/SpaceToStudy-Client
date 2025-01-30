@@ -33,7 +33,7 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
     <CooperationActionBanner
       actionButtons={
         <>
-          <Button color='tonal-error' onClick={onAccept} size='xs'>
+          <Button onClick={onAccept} size='xs' variant='tonal-error'>
             {t('cooperationDetailsPage.acceptBtn')}
           </Button>
           <Button

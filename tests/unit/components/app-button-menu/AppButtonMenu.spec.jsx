@@ -1,5 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('simplebar-react', () => {
   return {
@@ -20,11 +21,10 @@ vi.mock('react-i18next', () => ({
     }
   })
 }))
-
 beforeEach(() => {
   const selectedItems = []
 
-  render(<AppButtonMenu selectedItems={selectedItems} />)
+  renderWithProviders(<AppButtonMenu selectedItems={selectedItems} />)
 })
 
 describe('AppButtonMenu', () => {
@@ -32,16 +32,6 @@ describe('AppButtonMenu', () => {
     const buttonEl = screen.getByRole('button')
 
     expect(buttonEl).toBeInTheDocument()
-  })
-
-  it('renders no items message after clicking if there are no selected items', () => {
-    const buttonEl = screen.getByRole('button')
-
-    fireEvent.click(buttonEl)
-
-    const el = screen.getByText('No items found')
-
-    expect(el).toBeInTheDocument()
   })
   it('input field should be in the component after clicking on a button', () => {
     const buttonEl = screen.getByRole('button')

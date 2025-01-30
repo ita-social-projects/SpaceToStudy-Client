@@ -15,13 +15,11 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
-import { useAppDispatch } from '~/hooks/use-redux'
 import useQuery from '~/hooks/use-query'
 import useMutation from '~/hooks/use-mutation'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
 
-import { getErrorMessage } from '~/utils/error-with-message'
 import { createUrlPath } from '~/utils/helper-functions'
 import { snackbarVariants } from '~/constants'
 import {
@@ -44,34 +42,15 @@ import {
   ResourcesTabsEnum,
   type CategoryNameInterface
 } from '~/types'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
-import { type ResponseError } from '~/exceptions'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
 
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const { id } = useParams()
-
-  const handleResponseError = useCallback(
-    (error: ResponseError) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: {
-            text: getErrorKey(error),
-            options: {
-              message: getErrorMessage(error.message)
-            }
-          }
-        })
-      )
-    },
-    [dispatch]
-  )
+  const { handleErrorAlert, handleAlert } = useSnackbarAlert()
 
   const navigateToLessonTab = () => {
     navigate(
@@ -80,12 +59,11 @@ const CreateOrEditLesson = () => {
   }
 
   const handleResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: id ? 'lesson.successEditedLesson' : 'lesson.successAddedLesson'
-      })
-    )
+    handleAlert({
+      message: id ? 'lesson.successEditedLesson' : 'lesson.successAddedLesson',
+      severity: snackbarVariants.success
+    })
+
     navigateToLessonTab()
   }
 
@@ -154,7 +132,7 @@ const CreateOrEditLesson = () => {
   const { mutate: fetchAddLesson } = useMutation({
     mutationFn: addLesson,
     onSuccess: handleResponse,
-    onError: handleResponseError
+    onError: handleErrorAlert
   })
 
   const getLesson = useCallback(() => {
@@ -181,7 +159,7 @@ const CreateOrEditLesson = () => {
   const { mutate: fetchEditedLesson } = useMutation({
     mutationFn: editLesson,
     onSuccess: handleResponse,
-    onError: handleResponseError
+    onError: handleErrorAlert
   })
 
   useEffect(() => {
@@ -191,13 +169,14 @@ const CreateOrEditLesson = () => {
         handleNonInputValueChange(validKey, lesson[validKey])
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lesson, id])
 
   useEffect(() => {
     if (error) {
-      handleResponseError(error)
+      handleErrorAlert(error)
     }
-  }, [error, handleResponseError])
+  }, [handleErrorAlert, error])
 
   const attachmentsList = data.attachments?.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>

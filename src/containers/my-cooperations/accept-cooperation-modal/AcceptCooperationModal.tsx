@@ -53,7 +53,7 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
   const dispatch = useAppDispatch()
   const [minPrice, maxPrice] = minMaxPrice(cooperation.offer.price, 0.25)
 
-  const needAction = cooperation.user.role !== cooperation.needAction
+  const needAction = cooperation.user.role !== cooperation.needAction.role
 
   const handleUpdateCooperation = (
     params?: UpdateCooperationsParams

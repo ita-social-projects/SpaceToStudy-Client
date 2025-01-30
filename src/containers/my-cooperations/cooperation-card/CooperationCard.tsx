@@ -38,7 +38,7 @@ const CooperationCard: FC<CooperationCardProps> = ({
   } = cooperation
 
   const cooperationStatus =
-    user.role !== needAction && status === StatusEnum.Pending
+    user.role !== needAction.role && status === StatusEnum.Pending
       ? StatusEnum.NeedAction
       : status
 

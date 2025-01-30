@@ -29,7 +29,8 @@ import {
   ErrorResponse,
   UpdateAttachmentParams,
   ResourcesTabsEnum,
-  ButtonVariantEnum
+  ButtonVariantEnum,
+  CooperationSliceAttachment
 } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
@@ -142,9 +143,11 @@ const AttachmentsContainer = () => {
       openModal({
         component: (
           <EditAttachmentModal
-            attachment={attachment as Attachment}
+            attachment={attachment as CooperationSliceAttachment}
             closeModal={closeModal}
-            updateAttachment={updateData}
+            onAttachmentUpdate={() => {
+              void updateData()
+            }}
           />
         )
       })

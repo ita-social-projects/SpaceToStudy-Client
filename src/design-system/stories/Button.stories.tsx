@@ -91,19 +91,19 @@ export const All: Story = {
       <Button {...args} color='primary'>
         Primary
       </Button>
-      <Button {...args} color='tonal'>
+      <Button {...args} variant='tonal'>
         Tonal
       </Button>
-      <Button {...args} color='text-primary'>
+      <Button {...args} variant='text-primary'>
         Text Primary
       </Button>
-      <Button {...args} color='text-secondary'>
+      <Button {...args} variant='text-secondary'>
         Text Secondary
       </Button>
-      <Button {...args} color='tonal-success'>
+      <Button {...args} variant='tonal-success'>
         Tonal Success
       </Button>
-      <Button {...args} color='tonal-error'>
+      <Button {...args} variant='tonal-error'>
         Tonal Error
       </Button>
     </div>
@@ -136,7 +136,7 @@ export const Primary: Story = {
 export const Tonal: Story = {
   args: {
     children: 'Tonal',
-    color: 'tonal'
+    variant: 'tonal'
   },
   parameters: {
     docs: {
@@ -151,7 +151,7 @@ export const Tonal: Story = {
 export const TextPrimary: Story = {
   args: {
     children: 'Text Primary',
-    color: 'text-primary'
+    variant: 'text-primary'
   },
   parameters: {
     docs: {
@@ -166,7 +166,7 @@ export const TextPrimary: Story = {
 export const TextSecondary: Story = {
   args: {
     children: 'Text Secondary',
-    color: 'text-secondary'
+    variant: 'text-secondary'
   },
   parameters: {
     docs: {
@@ -181,7 +181,7 @@ export const TextSecondary: Story = {
 export const TonalError: Story = {
   args: {
     children: 'Tonal Error',
-    color: 'tonal-error'
+    variant: 'tonal-error'
   },
   parameters: {
     docs: {
@@ -196,7 +196,7 @@ export const TonalError: Story = {
 export const TonalSuccess: Story = {
   args: {
     children: 'Tonal Success',
-    color: 'tonal-success'
+    variant: 'tonal-success'
   },
   parameters: {
     docs: {

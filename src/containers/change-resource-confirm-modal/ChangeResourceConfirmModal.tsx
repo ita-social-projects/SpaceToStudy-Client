@@ -8,7 +8,7 @@ import Button from '~scss-components/button/Button'
 import { styles } from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal.styles'
 import { useModalContext } from '~/context/modal-context'
 import Loader from '~/components/loader/Loader'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import { CoursesAndCooperationsService } from '~/services/course-cooperation-service'
 import { ButtonTypeEnum, CourseCooperationResponse } from '~/types'
 
@@ -26,27 +26,25 @@ const ChangeResourceConfirmModal = ({
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
 
-  const getCoursesAndCooperationsByResourceId = useCallback(
-    () => CoursesAndCooperationsService.getByResourceId(resourceId),
-    [resourceId]
-  )
-
-  const { response, loading } = useAxios({
-    service: getCoursesAndCooperationsByResourceId,
-    defaultResponse: {
-      courses: [],
-      cooperations: []
-    } as CourseCooperationResponse,
-    fetchOnMount: true
+  const { data, isLoading } = useQuery<CourseCooperationResponse>({
+    queryKey: ['getCoursesAndCooperationsByResourceId', resourceId],
+    queryFn: () => CoursesAndCooperationsService.getByResourceId(resourceId),
+    options: {
+      initialData: {
+        courses: [],
+        cooperations: []
+      },
+      enabled: Boolean(resourceId)
+    }
   })
 
-  const courses = response.courses.map((course) => ({
+  const courses = data.courses.map((course) => ({
     id: course._id,
     title: course.title,
     subTitle: 'course'
   }))
 
-  const cooperations = response?.cooperations.map((cooperation) => ({
+  const cooperations = data.cooperations.map((cooperation) => ({
     id: cooperation._id,
     title: cooperation.title,
     subTitle: 'cooperation'
@@ -63,12 +61,12 @@ const ChangeResourceConfirmModal = ({
   }, [closeModal, onConfirm])
 
   useEffect(() => {
-    if (!loading && !affectedItems.length) {
+    if (!isLoading && !affectedItems.length) {
       handleConfirm()
     }
-  }, [affectedItems, handleConfirm, loading])
+  }, [affectedItems, handleConfirm, isLoading])
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Box sx={styles.root}>
         <Loader />
@@ -76,7 +74,7 @@ const ChangeResourceConfirmModal = ({
     )
   }
 
-  if (!loading && !affectedItems?.length) {
+  if (!isLoading && !affectedItems?.length) {
     return null
   }
 
