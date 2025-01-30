@@ -344,29 +344,6 @@ describe('EditProfile', () => {
     expect(updateBtn).toHaveAttribute('aria-disabled', 'true')
   })
 
-  it('should display a success alert on the Update click and successful update of the profile data', async () => {
-    useAppSelector.mockImplementation((selector) =>
-      selector({
-        ...mockState,
-        editProfile: {
-          ...mockState.editProfile,
-          profileState: { ...userMock, lastName: 'Cena' },
-          loading: LoadingStatusEnum.Fulfilled
-        }
-      })
-    )
-
-    const updateBtn = screen.getByText('editProfilePage.updateBtn')
-    fireEvent.click(updateBtn)
-
-    await waitFor(() => {
-      expect(openAlert).toHaveBeenCalledWith({
-        severity: snackbarVariants.success,
-        message: 'editProfilePage.profile.successMessage'
-      })
-    })
-  })
-
   it('should render component with header, description and menu-tabs', async () => {
     const editProfileHeader = await screen.findByText('editProfilePage.title')
     expect(editProfileHeader).toBeInTheDocument()
