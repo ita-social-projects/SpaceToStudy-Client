@@ -1,3 +1,4 @@
+import { theme } from '~/styles/app-theme/custom-mui.styles'
 import { TypographyVariantEnum } from '~/types'
 
 const styles = {
@@ -5,7 +6,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     boxSizing: 'border-box',
-    padding: 0,
+    padding: theme.spacing(0),
     width: '100%'
   },
   commentIcon: {
@@ -14,8 +15,8 @@ const styles = {
   title: {
     color: 'primary.300',
     typography: TypographyVariantEnum.H6,
-    fontSize: '16px',
-    marginBottom: '10px'
+    fontSize: theme.spacing(2),
+    marginBottom: theme.spacing(1)
   },
   inputWrapper: {
     width: '100%',
@@ -27,8 +28,7 @@ const styles = {
     width: '100%',
     '& .MuiOutlinedInput-root': {
       borderRadius: '8px',
-      paddingLeft: '65px',
-      paddingRight: '45px',
+      padding: theme.spacing(2, 7),
       boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
       '& fieldset': {
         borderColor: 'transparent'
@@ -50,13 +50,13 @@ const styles = {
   avatarIcon: {
     position: 'absolute',
     top: '50%',
-    left: '10px',
+    left: theme.spacing(1),
     transform: 'translateY(-50%)',
     zIndex: 1
   },
   sendIcon: (isSent: boolean) => ({
     position: 'absolute',
-    right: '10px',
+    right: theme.spacing(1),
     top: '50%',
     transform: 'translateY(-50%)',
     cursor: 'pointer',
