@@ -44,9 +44,7 @@ describe('subjectService getSubjects function tests', () => {
 
     mockAxiosClient
       .onGet(
-        new RegExp(
-          URLs.subjects.getByCategoryId.replace(':id', mockCategoryId)
-        )
+        new RegExp(URLs.subjects.getByCategoryId.replace(':id', mockCategoryId))
       )
       .reply(200, mockSubjectsByCategoryId)
 
@@ -58,7 +56,7 @@ describe('subjectService getSubjects function tests', () => {
     expect(result).toEqual(mockSubjectsByCategoryId)
     expect(getFullUrlSpy).toHaveBeenCalledWith({
       pathname: URLs.subjects.getByCategoryId,
-      parameters: { categoryId: mockCategoryId },
+      parameters: { id: mockCategoryId },
       searchParameters: mockParams
     })
   })
