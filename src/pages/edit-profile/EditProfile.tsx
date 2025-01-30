@@ -24,7 +24,10 @@ import {
   type DataByRole,
   type UserRoleEnum,
   type SubjectCategory,
-  type StudentOrTutor
+  type StudentOrTutor,
+  type AboutStudentData,
+  type ProfessionalBlock,
+  type NotificationSettings
 } from '~/types'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 import {
@@ -72,6 +75,7 @@ const EditProfile = () => {
   const { loading, tabValidityStatus, ...profileState } = useAppSelector(
     (state) => state.editProfile
   )
+  console.log(profileState)
 
   const { userId, userRole } = useAppSelector((state) => state.appMain) as {
     userId: string
@@ -93,8 +97,18 @@ const EditProfile = () => {
     activeTab === UserProfileTabsEnum.PasswordAndSecurity
 
   const hasChanges = (
-    initialData: Partial<EditProfileState> | DataByRole<string>,
-    currentData: Partial<EditProfileState> | DataByRole<string>
+    initialData:
+      | Partial<EditProfileState>
+      | DataByRole<string>
+      | ProfessionalBlock
+      | AboutStudentData
+      | NotificationSettings,
+    currentData:
+      | Partial<EditProfileState>
+      | DataByRole<string>
+      | ProfessionalBlock
+      | AboutStudentData
+      | NotificationSettings
   ): boolean => {
     return JSON.stringify(initialData) !== JSON.stringify(currentData)
   }
@@ -122,9 +136,23 @@ const EditProfile = () => {
   }, [loading, profileState, initialEditProfileState])
 
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
-    if (!initialEditProfileState || !profileState) return {}
-    const { videoLink: initialVideoLink } = initialEditProfileState
-    const { videoLink: currentVideoLink } = profileState
+    if (!initialEditProfileState || !profileState) {
+      return {}
+    }
+
+    const {
+      videoLink: initialVideoLink,
+      notificationSettings: initialNotificationSettings,
+      professionalBlock: initialProfessionalBlock,
+      aboutStudent: initialAboutStudent
+    } = initialEditProfileState
+
+    const {
+      videoLink: currentVideoLink,
+      notificationSettings: currentNotificationSettings,
+      professionalBlock: currentProfessionalBlock,
+      aboutStudent: currentAboutStudent
+    } = profileState
 
     const { photo: initialPhoto, ...initialData } = initialEditProfileState
     const { photo: currentPhoto, ...currentData } = profileState
@@ -140,6 +168,20 @@ const EditProfile = () => {
 
       if (!hasChanges(initialVideoLink, currentVideoLink)) {
         delete changes.videoLink
+      }
+
+      if (
+        !hasChanges(initialNotificationSettings, currentNotificationSettings)
+      ) {
+        delete changes.notificationSettings
+      }
+
+      if (!hasChanges(initialProfessionalBlock, currentProfessionalBlock)) {
+        delete changes.professionalBlock
+      }
+
+      if (!hasChanges(initialAboutStudent, currentAboutStudent)) {
+        delete changes.aboutStudent
       }
 
       if (hasPhotoChanged) {
@@ -176,42 +218,49 @@ const EditProfile = () => {
 
   const handleUpdateUser = async () => {
     const { country, city } = profileState
-    const {
-      videoLink,
-      notificationSettings,
-      professionalBlock,
-      aboutStudent,
-      categories,
-      photo,
-      ...rest
-    } = changedFields
+    const { videoLink, aboutStudent, categories, photo } = changedFields
 
-    const dataToUpdate: UpdateUserParams = rest
+    const dataToUpdate: UpdateUserParams = {}
 
-    if (city && country) dataToUpdate.address = { city, country }
-
-    if (videoLink) {
-      const updatedVideolink = videoLink[userRole]
-
-      dataToUpdate.videoLink = updatedVideolink
+    if (
+      (city !== initialEditProfileState?.city ||
+        country !== initialEditProfileState?.country) &&
+      ('city' in changedFields || 'country' in changedFields)
+    ) {
+      if (city && country) {
+        dataToUpdate.address = { city, country }
+      }
     }
 
-    if (notificationSettings)
+    if (videoLink && userRole in videoLink) {
+      dataToUpdate.videoLink = videoLink[userRole]
+    }
+
+    if ('notificationSettings' in changedFields) {
       dataToUpdate.notificationSettings = profileState.notificationSettings
+    }
 
-    if (professionalBlock)
+    if ('professionalBlock' in changedFields) {
       dataToUpdate.professionalBlock = profileState.professionalBlock
+    }
 
-    if (aboutStudent) {
+    if ('aboutStudent' in changedFields) {
       dataToUpdate.aboutStudent = aboutStudent
     }
 
-    if (categories?.[userRole]) {
+    if (categories?.[userRole] && 'categories' in changedFields) {
       dataToUpdate.mainSubjects = mapMainSubjects(categories, userRole)
     }
 
-    if (typeof photo === 'object' || photo === '') {
+    if (
+      'photo' in changedFields &&
+      (typeof photo === 'object' || photo === '')
+    ) {
       dataToUpdate.photo = photo
+    }
+
+    if (Object.keys(dataToUpdate).length === 0) {
+      return
     }
 
     await dispatch(
@@ -220,12 +269,14 @@ const EditProfile = () => {
         params: dataToUpdate
       })
     )
+
     dispatch(
       openAlert({
         severity: snackbarVariants.success,
         message: 'editProfilePage.profile.successMessage'
       })
     )
+
     setInitialEditProfileState(structuredClone(profileState))
 
     if (hash) {
