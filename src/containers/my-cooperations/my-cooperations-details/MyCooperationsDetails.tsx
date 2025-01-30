@@ -1,14 +1,14 @@
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import DoneIcon from '@mui/icons-material/Done'
 import PersonIcon from '@mui/icons-material/Person'
 import MessageIcon from '@mui/icons-material/Message'
-
-import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
+import useQuery from '~/hooks/use-query'
 import { cooperationService } from '~/services/cooperation-service'
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
@@ -16,31 +16,20 @@ import Button from '~scss-components/button/Button'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import Loader from '~/components/loader/Loader'
 import useConfirm from '~/hooks/use-confirm'
-
-import {
-  ButtonVariantEnum,
-  MyCooperationDetails,
-  Offer,
-  ServiceFunction,
-  StatusEnum,
-  UpdateCooperationStatusParams,
-  UserRoleEnum
-} from '~/types'
+import { ButtonVariantEnum, StatusEnum, UserRoleEnum } from '~/types'
 import { style } from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.styles'
-import { createUrlPath } from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useChatContext } from '~/context/chat-context'
 import CooperationCompletion from '../cooperation-completion/CooperationCompletion'
 import { getCategoryIcon } from '~/services/category-icon-service'
 import { getValidatedHexColor } from '~/utils/get-validated-hex-color'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
-import { AxiosResponse } from 'axios'
 import { setCooperationStatus } from '~/redux/features/cooperationsSlice'
 
 const MyCooperationsDetails = () => {
   const { t } = useTranslation()
   const { id = '' } = useParams()
-  const navigate = useNavigate()
   const { setChatInfo } = useChatContext()
   const userId = useAppSelector((state) => state.appMain.userId)
   const userRole = useAppSelector((state) => state.appMain.userRole)
@@ -48,74 +37,64 @@ const MyCooperationsDetails = () => {
   const { checkConfirmation } = useConfirm()
   const dispatch = useAppDispatch()
 
-  const getDetails: ServiceFunction<
-    MyCooperationDetails<Offer> | null,
-    undefined
-  > = useCallback(() => cooperationService.getCooperationById(id), [id])
+  const getCooperationDetails = useCallback(() => {
+    return cooperationService.getCooperationById(id)
+  }, [id])
 
-  const {
-    response: detailsResponse,
-    loading: detailsLoading,
-    fetchData
-  } = useAxios<MyCooperationDetails<Offer> | null>({
-    service: getDetails,
-    defaultResponse: null
+  const { data: cooperationDetails, isLoading: detailsLoading } = useQuery({
+    queryFn: getCooperationDetails,
+    queryKey: ['cooperation-details', id],
+    options: {
+      staleTime: Infinity
+    }
   })
 
-  const handleCooperationStatusChange = (
-    params: UpdateCooperationStatusParams
-  ): Promise<AxiosResponse> =>
-    cooperationService.updateCooperation({
-      _id: id,
-      ...params
+  const { mutate: updateCooperationDetails } = useMutation({
+    mutationFn: cooperationService.updateCooperation,
+    queryKeys: [['cooperations'], ['cooperation-details', id]]
+  })
+
+  const handleCooperationStatusUpdate = useCallback(async () => {
+    const isConfirmed = await checkConfirmation({
+      title: t('titles.confirmCooperationClosing'),
+      message: t('cooperationsPage.closeCooperationModal.message'),
+      check: true
     })
 
-  const onResponse = () => {
-    void fetchStatusData()
-  }
+    if (isConfirmed) {
+      updateCooperationDetails({ _id: id, status: StatusEnum.RequestToClose })
+      dispatch(setCooperationStatus(StatusEnum.RequestToClose))
+    }
+  }, [checkConfirmation, dispatch, id, t, updateCooperationDetails])
 
-  const { fetchData: fetchStatusData } = useAxios({
-    service: handleCooperationStatusChange,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse
-  })
+  const handleCloseCooperation = useCallback(() => {
+    void handleCooperationStatusUpdate()
+  }, [handleCooperationStatusUpdate])
 
-  const updateInfo = useCallback(() => {
-    void fetchData
-  }, [fetchData])
-
-  if (detailsLoading || !detailsResponse) {
+  if (detailsLoading || !cooperationDetails) {
     return <Loader pageLoad />
   }
 
   const displayedUser =
-    detailsResponse.initiator._id === userId
-      ? detailsResponse.receiver
-      : detailsResponse.initiator
-  const isTutor = displayedUser.role[0] === UserRoleEnum.Tutor
+    cooperationDetails.initiator._id === userId
+      ? cooperationDetails.receiver
+      : cooperationDetails.initiator
 
-  const { offer, price } = detailsResponse
+  const [displayedUserRole] = displayedUser.role
+
+  const { offer, price } = cooperationDetails
 
   const CategoryIcon = getCategoryIcon(offer.category.appearance.icon)
   const categoryColor = getValidatedHexColor(offer.category.appearance.color)
 
-  const onHandleClick = () => {
-    navigate(
-      createUrlPath(authRoutes.userProfile.path, displayedUser._id, {
-        role: displayedUser.role
-      })
-    )
-  }
-
   const onClickOpenChat = () =>
     setChatInfo({
       author: displayedUser,
-      authorRole: displayedUser.role[0] as
+      authorRole: displayedUserRole as
         | UserRoleEnum.Student
         | UserRoleEnum.Tutor,
       chatId: offer.chatId,
-      updateInfo: updateInfo
+      updateInfo: () => {}
     })
 
   const languages = offer.languages?.map((item: string) => (
@@ -127,23 +106,12 @@ const MyCooperationsDetails = () => {
 
   const avatarSrc =
     displayedUser.photo &&
-    createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, displayedUser.photo)
-
-  const handleCooperationStatusUpdate = async () => {
-    const confirmed = await checkConfirmation({
-      title: t('titles.confirmCooperationClosing'),
-      message: t('cooperationsPage.closeCooperationModal.message'),
-      check: true
+    getFullUrl({
+      pathname: import.meta.env.VITE_APP_IMG_USER_URL as `${string}/:fileName`,
+      parameters: {
+        fileName: displayedUser.photo
+      }
     })
-    if (confirmed) {
-      await fetchStatusData({ status: StatusEnum.RequestToClose })
-      dispatch(setCooperationStatus(StatusEnum.RequestToClose))
-    }
-  }
-
-  const onCooperationStatusUpdate = () => {
-    void handleCooperationStatusUpdate()
-  }
 
   return (
     <Box>
@@ -157,7 +125,7 @@ const MyCooperationsDetails = () => {
         <Typography sx={style.title}>{offer.title}</Typography>
         <Typography sx={style.titles}>
           {t(
-            isTutor
+            displayedUserRole === UserRoleEnum.Tutor
               ? 'cooperationDetailsPage.tutor'
               : 'cooperationDetailsPage.student'
           )}
@@ -187,10 +155,19 @@ const MyCooperationsDetails = () => {
               {t('common.labels.sendMessage')}
             </Button>
             <Button
-              onClick={onHandleClick}
+              component={Link}
               size='md'
               startIcon={<PersonIcon />}
               sx={style.buttons}
+              to={getFullUrl({
+                pathname: authRoutes.userProfile.route,
+                parameters: {
+                  id: displayedUser._id
+                },
+                searchParameters: {
+                  role: displayedUserRole
+                }
+              })}
               variant={ButtonVariantEnum.Tonal}
             >
               {t('cooperationDetailsPage.profile')}
@@ -232,7 +209,7 @@ const MyCooperationsDetails = () => {
       </Box>
       <CooperationCompletion
         cooperationStatus={cooperationStatus}
-        onCloseCooperation={onCooperationStatusUpdate}
+        onCloseCooperation={handleCloseCooperation}
         userRole={userRole}
       />
     </Box>

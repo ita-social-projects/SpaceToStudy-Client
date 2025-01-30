@@ -1,14 +1,18 @@
-import { AxiosResponse } from 'axios'
-import { URLs } from '~/constants/request'
-import { axiosClient } from '~/plugins/axiosClient'
 import { CourseCooperationResponse } from '~/types'
-import { createUrlPath } from '~/utils/helper-functions'
+import { URLs } from '~/constants/request'
+import { baseService } from '~/services/base-service'
+import { getFullUrl } from '~/utils/get-full-url'
 
 export const CoursesAndCooperationsService = {
-  getByResourceId: async (
-    resourceId: string
-  ): Promise<AxiosResponse<CourseCooperationResponse>> =>
-    await axiosClient.get(
-      createUrlPath(URLs.coursesAndCooperations.getByResourceId, resourceId)
-    )
+  getByResourceId: (resourceId: string) => {
+    const url = getFullUrl({
+      pathname: URLs.coursesAndCooperations.getByResourceId,
+      searchParameters: { resourceId }
+    })
+
+    return baseService.request<CourseCooperationResponse>({
+      url,
+      method: 'GET'
+    })
+  }
 }

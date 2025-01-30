@@ -12,18 +12,15 @@ vi.mock('~/services/cooperation-service', () => ({
 }))
 
 describe('EnrollOffer', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <EnrollOffer enrollOffer={vi.fn()} offer={mockOffer} />
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(<EnrollOffer enrollOffer={vi.fn()} offer={mockOffer} />)
   })
 
   it('should display EnrollOffer form', () => {
     const title = screen.getByText('offerDetailsPage.enrollOffer.title')
     expect(title).toBeInTheDocument()
   })
+
   it('should change proficiencyLevel', () => {
     const newLevel = 'Intermediate'
     const levelSelect = screen.getAllByTestId('app-select')[0]
@@ -35,7 +32,7 @@ describe('EnrollOffer', () => {
     expect(levelSelect.value).toBe(newLevel)
   })
 
-  it('should display error message', () => {
+  it('should display error message', async () => {
     const newAdditionalInfo = 'Some text'
     const additionalInfoInput = screen.getByLabelText(
       'offerDetailsPage.enrollOffer.labels.info'
@@ -46,7 +43,7 @@ describe('EnrollOffer', () => {
     expect(additionalInfoInput.value).toBe(newAdditionalInfo)
 
     const button = screen.getByText('button.createCooperation')
-    waitFor(() => fireEvent.click(button))
+    await waitFor(() => fireEvent.click(button))
 
     const errorMessage = screen.getByText(
       'offerDetailsPage.errors.additionalInfo'
@@ -54,10 +51,10 @@ describe('EnrollOffer', () => {
     expect(errorMessage).toBeInTheDocument()
   })
 
-  it('should send form', () => {
+  it('should send form', async () => {
     const button = screen.getByText('button.createCooperation')
 
-    waitFor(() => fireEvent.click(button))
+    await waitFor(() => fireEvent.click(button))
 
     expect(mockFetchData).toBeCalledTimes(1)
   })

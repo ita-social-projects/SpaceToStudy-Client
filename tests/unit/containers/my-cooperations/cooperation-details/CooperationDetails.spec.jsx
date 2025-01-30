@@ -76,42 +76,39 @@ vi.mock(
 
 describe('CooperationDetails', () => {
   mockAxiosClient
-    .onGet(`${URLs.cooperations.get}/${cooperationID}`)
+    .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
     .reply(200, cooperationMock)
 
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(<CooperationDetails />, { preloadedState: mockState })
-    })
+  beforeEach(() => {
+    renderWithProviders(<CooperationDetails />, { preloadedState: mockState })
   })
 
   it('should render details page', async () => {
     const notesButton = await screen.findByText(
       'cooperationsPage.details.notes'
     )
+
     expect(notesButton).toBeInTheDocument()
   })
 
-  it('should show cooperation status and title', async () => {
-    const title = await screen.findByText(cooperationMock.title)
-    const statusChip = await screen.findByText(cooperationMock.status)
+  it('should show cooperation status and title', () => {
+    const title = screen.getByText(cooperationMock.title)
+    const statusChip = screen.getByText(cooperationMock.status)
 
     expect(title).toBeInTheDocument()
     expect(statusChip).toBeInTheDocument()
   })
 
-  it('should render the component with tabs', async () => {
-    const tab1 = await screen.findByText('cooperationsPage.tabs.activities')
+  it('should render the component with tabs', () => {
+    const tab1 = screen.getByText('cooperationsPage.tabs.activities')
 
     expect(tab1).toBeInTheDocument()
 
-    const tab2 = await screen.findByText('cooperationsPage.tabs.details')
+    const tab2 = screen.getByText('cooperationsPage.tabs.details')
 
     fireEvent.click(tab2)
 
-    await waitFor(() => {
-      expect(tab2).toBeInTheDocument()
-    })
+    expect(tab2).toBeInTheDocument()
   })
 
   it('should toggle notes block', async () => {
@@ -121,16 +118,14 @@ describe('CooperationDetails', () => {
 
     fireEvent.click(notes)
 
-    let cooperationNotes = await screen.findByText(/cooperation notes/i)
-    await waitFor(() => {
-      expect(cooperationNotes).toBeInTheDocument()
-    })
+    let cooperationNotes = screen.queryByText('Cooperation Notes')
+
+    expect(cooperationNotes).toBeInTheDocument()
 
     fireEvent.click(notes)
 
-    await waitFor(() => {
-      cooperationNotes = screen.queryByText(/cooperation notes/i)
-      expect(cooperationNotes).not.toBeInTheDocument()
-    })
+    cooperationNotes = screen.queryByText('Cooperation Notes')
+
+    expect(cooperationNotes).not.toBeInTheDocument()
   })
 })

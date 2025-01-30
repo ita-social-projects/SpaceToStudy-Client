@@ -1,6 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
-import { beforeEach, describe } from 'vitest'
+import { beforeEach, describe, expect } from 'vitest'
 
 import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
 import { URLs } from '~/constants/request'
@@ -8,10 +8,10 @@ import { URLs } from '~/constants/request'
 const closeModalMock = vi.fn()
 const updateAttachment = vi.fn()
 
-const categoriesNamesMock = [
-  { _id: '650c27618a9fbf234b8bb4cf', name: 'New category in resources!' },
-  { _id: '650c27618a9fbf234b8bb4cd', name: 'Category 1' }
-]
+const categoriesNamesMock = {
+  WEB_DEVELOPMENT :{ _id: '650c27618a9fbf234b8bb4cf', name: 'Web development' },
+  MOTION_DESIGN :{ _id: '650c27618a9fbf234b8bb4cd', name: 'Motion design' }
+}
 
 const attachmentMock = {
   _id: '651eb01561e2ac6d2995b76c',
@@ -22,24 +22,31 @@ const attachmentMock = {
   createdAt: '2023-10-05T12:46:13.081Z',
   updatedAt: '2023-10-05T16:22:35.063Z',
   description: 'dsdsdsds',
-  category: categoriesNamesMock[0]
+  category: categoriesNamesMock.WEB_DEVELOPMENT.name
+}
+
+const selectCategory = (autocomplete, categoryName) => {
+  fireEvent.click(autocomplete)
+  fireEvent.change(autocomplete, {
+    target: { value: categoryName }
+  })
+  fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+  fireEvent.keyDown(autocomplete, { key: 'Enter' })
 }
 
 describe('EditAttachmentModal component', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
+  beforeEach(() => {
       mockAxiosClient
         .onGet(URLs.resources.resourcesCategories.getNames)
-        .reply(200, categoriesNamesMock)
+        .reply(200, [categoriesNamesMock.WEB_DEVELOPMENT, categoriesNamesMock.MOTION_DESIGN])
 
       renderWithProviders(
         <EditAttachmentModal
           attachment={attachmentMock}
           closeModal={closeModalMock}
-          updateAttachment={updateAttachment}
+          onAttachmentUpdate={updateAttachment}
         />
       )
-    })
   })
 
   afterEach(() => {
@@ -52,14 +59,27 @@ describe('EditAttachmentModal component', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('should render save button and click on it', () => {
+  it('should render disabled save button by default', () => {
     const saveBtn = screen.getByText('common.save')
 
     expect(saveBtn).toBeInTheDocument()
 
-    waitFor(() => {
-      fireEvent.click(saveBtn)
+    fireEvent.click(saveBtn)
+
+    expect(updateAttachment).not.toHaveBeenCalled()
+  })
+
+  it('should call updateAttachment when save button is clicked after changing attachment data', async () => {
+    const saveBtn = screen.getByText('common.save')
+    const autocomplete = await screen.findByRole('combobox')
+
+    expect(autocomplete).toBeInTheDocument()
+
+    await waitFor(() => {
+      selectCategory(autocomplete, categoriesNamesMock.MOTION_DESIGN.name)
     })
+
+    fireEvent.click(saveBtn)
 
     expect(updateAttachment).toHaveBeenCalled()
   })
@@ -69,15 +89,10 @@ describe('EditAttachmentModal component', () => {
 
     expect(autocomplete).toBeInTheDocument()
 
-    waitFor(() => {
-      fireEvent.click(autocomplete)
-      fireEvent.change(autocomplete, {
-        target: { value: categoriesNamesMock[1].name }
-      })
-      fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-      fireEvent.keyDown(autocomplete, { key: 'Enter' })
+    await waitFor(() => {
+      selectCategory(autocomplete, categoriesNamesMock.MOTION_DESIGN.name)
     })
 
-    expect(autocomplete.value).toBe(categoriesNamesMock[1].name)
+    expect(autocomplete.value).toBe(categoriesNamesMock.MOTION_DESIGN.name)
   })
 })

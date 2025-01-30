@@ -14,11 +14,10 @@ import openIcon from '~/assets/img/cooperation-details/resource-availability/ope
 
 import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
 
-let mockUpdateCooperation
 const mockSetEditMode = vi.fn()
 const mockDispatch = vi.fn()
 
-const mockedSections = [
+const mockedInvalidSections = [
   {
     resources: [
       {
@@ -48,16 +47,6 @@ vi.mock('~/services/cooperation-service', async () => {
     cooperationService: {
       updateCooperation: mockUpdateCooperation
     }
-  }
-})
-
-vi.mock('~/hooks/use-axios', async () => {
-  const actual = await vi.importActual('~/hooks/use-axios')
-  return {
-    ...actual,
-    useAxios: vi.fn(() => ({
-      fetchData: vi.fn()
-    }))
   }
 })
 
@@ -145,13 +134,7 @@ describe('CooperationActivities', () => {
       '~/services/cooperation-service'
     )
 
-    const mockError = {
-      response: {
-        data: {
-          message: 'An error occurred'
-        }
-      }
-    }
+    const mockError = { message: 'Unknown error' }
 
     cooperationService.updateCooperation.mockRejectedValueOnce(mockError)
 
@@ -201,10 +184,10 @@ describe('CooperationActivities', () => {
   })
 })
 
-describe('CooperationActivities - checkDate function', () => {
+describe('CooperationActivities - checkIfOpenFromDateCorrect function', () => {
   beforeEach(() => {
     useAppSelector.mockReturnValue({
-      sections: mockedSections,
+      sections: mockedInvalidSections,
       resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
     })
 
@@ -217,7 +200,7 @@ describe('CooperationActivities - checkDate function', () => {
     )
   })
 
-  it('should return true and call onResponseError when a resource has OpenFrom status with no date', async () => {
+  it('should return false and call onResponseError when a resource has OpenFrom status with no date', async () => {
     const saveButton = screen.getByText('common.save')
     fireEvent.click(saveButton)
 

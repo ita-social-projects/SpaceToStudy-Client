@@ -39,19 +39,14 @@ vi.mock('~/context/chat-context', () => ({
   useChatContext: () => mockChatContext
 }))
 
-const mockNavigate = vi.fn()
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
-  useNavigate: () => mockNavigate
-}))
 
 describe('MyCooperationsDetails component', () => {
   beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient.onGet(URLs.cooperations.get).reply(200, mockedOffer)
+    mockAxiosClient
+      .onGet(URLs.cooperations.getById.replace(':id', ''))
+      .reply(200, mockedOffer)
 
-      renderWithProviders(<MyCooperationsDetails />)
-    })
+    renderWithProviders(<MyCooperationsDetails />)
   })
 
   it('should render title', async () => {
@@ -77,22 +72,18 @@ describe('MyCooperationsDetails component', () => {
     fireEvent.click(sendMessageButton)
 
     const chatWindow = await screen.findByTestId('MessageIcon')
+
     await waitFor(() => {
       expect(chatWindow).toBeInTheDocument()
     })
   })
 
-  it('should open profile after clicking on profile-button', async () => {
-    const profileButton = await screen.findByRole('button', {
-      name: 'cooperationDetailsPage.profile'
-    })
+  it('should render link to user profile with correct url', async () => {
+    const profileButton = screen.queryByText('cooperationDetailsPage.profile')
 
     expect(profileButton).toBeInTheDocument()
-
-    fireEvent.click(profileButton)
-
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalled()
-    })
+    expect(profileButton.parentElement.href).toContain(
+      `/user/${mockedOffer.initiator._id}?role=${mockedOffer.initiator.role[0]}`
+    )
   })
 })

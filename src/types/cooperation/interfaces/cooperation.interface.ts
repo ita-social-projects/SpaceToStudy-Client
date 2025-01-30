@@ -1,14 +1,12 @@
 import {
-  CommonEntityFields,
-  ProficiencyLevelEnum,
-  StatusEnum,
-  EnrollOfferForm,
-  Offer,
-  UserResponse,
+  type CommonEntityFields,
+  type ProficiencyLevelEnum,
+  type StatusEnum,
+  type EnrollOfferForm,
+  type Offer,
+  type UserResponse,
   UserRoleEnum,
-  SubjectInterface,
-  CategoryInterface,
-  CourseSection
+  type CourseSection
 } from '~/types'
 
 export enum NeedActionTypeEnum {
@@ -18,58 +16,41 @@ export enum NeedActionTypeEnum {
 }
 
 export interface Cooperation extends CommonEntityFields {
-  offer: Pick<Offer, 'subject' | 'title' | 'category' | 'price' | '_id'>
-  user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo' | '_id'> & {
-    role: UserRoleEnum
-  }
-  initiator: Pick<UserResponse, 'firstName' | 'lastName'>
-  initiatorRole: 'tutor' | 'student'
-  title: Offer['title']
-  price: Offer['price']
-  proficiencyLevel: ProficiencyLevelEnum
-  status: StatusEnum
-  needAction: {
-    role: UserRoleEnum
-    type: NeedActionTypeEnum
-    messages: string[]
-  }
-  receiver: Pick<UserResponse, 'firstName' | 'lastName'>
-  receiverRole: 'tutor' | 'student'
-  sections: CourseSection[]
-}
-
-export interface MyCooperationDetails<TOffer extends Offer> {
   offer: Pick<
-    TOffer,
+    Offer,
     | 'subject'
     | 'title'
     | 'category'
     | 'price'
     | '_id'
+    | 'chatId'
+    | 'languages'
     | 'author'
     | 'proficiencyLevel'
     | 'description'
-    | 'languages'
-    | 'chatId'
   >
-  price: number
-  title: string
-  description: string
-  receiver: UserResponse
-  receiverRole: UserRoleEnum
-  languages: string[]
-  chatId: string
-  author: UserResponse
-  subject: Pick<SubjectInterface, 'name'>
-  category: CategoryInterface
-  proficiencyLevel: ProficiencyLevelEnum
+  user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo' | '_id'> & {
+    role: UserRoleEnum.Tutor | UserRoleEnum.Student
+  }
   initiator: UserResponse
-  initiatorRole: UserRoleEnum
+  initiatorRole: UserRoleEnum.Tutor | UserRoleEnum.Student
+  title: Offer['title']
+  price: Offer['price']
+  proficiencyLevel: ProficiencyLevelEnum
+  chatId: string
   status: StatusEnum
+  needAction: {
+    role: UserRoleEnum.Tutor | UserRoleEnum.Student
+    type: NeedActionTypeEnum
+    messages: string[]
+  }
+  receiver: UserResponse
+  receiverRole: UserRoleEnum.Tutor | UserRoleEnum.Student
+  sections: CourseSection[]
 }
 
 export interface CreateCooperationsParams extends EnrollOfferForm {
   offer: string
   receiver: string
-  receiverRole: UserRoleEnum
+  receiverRole: UserRoleEnum.Tutor | UserRoleEnum.Student
 }

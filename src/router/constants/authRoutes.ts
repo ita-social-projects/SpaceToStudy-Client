@@ -2,7 +2,7 @@ export const authRoutes = {
   categories: { route: 'categories', path: '/categories' },
   subjects: { route: 'categories/subjects', path: '/categories/subjects' },
   chat: { route: 'chat', path: '/chat' },
-  userProfile: { route: 'user/:id', path: '/user' },
+  userProfile: { route: '/user/:id', path: '/user' },
   myProfile: { route: 'my-profile', path: '/my-profile' },
   myCooperations: { route: 'my-cooperations', path: '/my-cooperations' },
   myOffers: { route: 'my-offers', path: '/my-offers' },
@@ -96,4 +96,4 @@ export const authRoutes = {
       path: '/my-courses/new-course'
     }
   }
-}
+} as const

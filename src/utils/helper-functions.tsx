@@ -1,5 +1,6 @@
 import { SxProps, Theme } from '@mui/material'
 import i18next from 'i18next'
+import { differenceInMinutes, format } from 'date-fns'
 import {
   Breakpoints,
   ConvertedSize,
@@ -315,3 +316,11 @@ export const parseFileName = (
 
 export const getInitials = (firstName: string, lastName: string) =>
   firstName && lastName ? `${firstName[0]}${lastName[0]}`.toUpperCase() : ''
+
+export const formatTime = (date: string) => {
+  return format(new Date(date), 'HH:mm')
+}
+
+export const formatTimeDifference = (startDate: string, endDate: string) => {
+  return differenceInMinutes(new Date(endDate), new Date(startDate))
+}

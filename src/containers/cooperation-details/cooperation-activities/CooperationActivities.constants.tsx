@@ -1,3 +1,4 @@
+import { ResponseError } from '~/exceptions'
 import { ResourcesAvailabilityEnum } from '~/types'
 
 export const cooperationTranslationKeys = [
@@ -11,9 +12,9 @@ export const cooperationTranslationKeys = [
   }
 ]
 
-export const OpenFromError = {
+export const OpenFromError = new ResponseError({
   status: 409,
   code: 'VALIDATION_ERROR',
   message:
     'Cooperation validation failed: OpenFrom:OpenFrom should be with date.'
-}
+})

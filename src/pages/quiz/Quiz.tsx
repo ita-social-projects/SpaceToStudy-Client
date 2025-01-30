@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
@@ -12,9 +12,11 @@ import QuizHeader from '~/containers/quiz/quiz-header/QuizHeader'
 import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestionQuizView'
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
 import Button from '~scss-components/button/Button'
+import FinishQuizModal from '~/containers/quiz/finish-quiz-modal/FinishQuizModal'
 import QuizInfoSection from '~/containers/quiz/quiz-info-section/QuizInfoSection'
 
 import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import useForm from '~/hooks/use-form'
 
 import { ResourceService } from '~/services/resource-service'
@@ -23,15 +25,23 @@ import styles from '~/pages/quiz/Quiz.styles'
 import { defaultResponses } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
-import { ComponentEnum, QuizViewEnum, UserRoleEnum } from '~/types'
+import {
+  ComponentEnum,
+  QuestionTypesEnum,
+  QuizViewEnum,
+  UserRoleEnum
+} from '~/types'
 
 const QuizPage = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
-  const { quizId } = useParams()
+  const { id, quizId } = useParams()
+  const navigate = useNavigate()
+
   const { t } = useTranslation()
 
   const [isFinished, setIsFinished] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const [showPreview, setShowPreview] = useState(true)
 
   const getQuiz = useCallback(() => {
@@ -55,13 +65,9 @@ const QuizPage = () => {
     queryFn: getQuiz
   })
 
-  const handleFinish = useCallback(() => {
-    setIsFinished(true)
+  const openModal = useCallback(() => {
+    setIsOpen(true)
   }, [])
-
-  if (isLoading || !quiz) {
-    return <Loader pageLoad />
-  }
 
   const {
     settings: {
@@ -74,14 +80,58 @@ const QuizPage = () => {
     },
     description,
     title,
-    items
-  } = quiz
+    items,
+    createdAt,
+    updatedAt
+  } = quiz || defaultQuizResponse
+
+  const points = countPoints(
+    items.filter(({ type }) => type !== QuestionTypesEnum.OpenAnswer),
+    data
+  )
+
+  const addFinishedQuiz = useCallback(() => {
+    return ResourceService.addFinishedQuiz({
+      cooperation: id ?? '',
+      quiz: quizId ?? '',
+      grade: Math.round((points / items.length) * 100),
+      results: items.map(({ text, answers, _id }) => {
+        return {
+          question: text,
+          answers: answers.map(({ text, isCorrect }) => ({
+            text,
+            isCorrect,
+            isChosen: data[_id] === text
+          }))
+        }
+      })
+    })
+  }, [data, id, items, points, quizId])
+
+  const { mutate, data: finishedQuiz } = useMutation({
+    mutationFn: addFinishedQuiz
+  })
+
+  const handleCancel = useCallback(() => {
+    setIsOpen(false)
+  }, [])
+
+  const handleFinish = useCallback(() => {
+    mutate()
+    setIsOpen(false)
+    setIsFinished(true)
+    if (!scoredResponses) {
+      navigate(-1)
+    }
+  }, [mutate, navigate, scoredResponses])
+
+  if (isLoading || !quiz) {
+    return <Loader pageLoad />
+  }
 
   const showPoints = pointValues && isFinished
   const showAnswersCorrectness = scoredResponses && isFinished
   const showCorrectAnswers = correctAnswers && isFinished
-
-  const points = showPoints && countPoints(items, data)
 
   const isStepper = view === QuizViewEnum.Stepper
 
@@ -116,12 +166,13 @@ const QuizPage = () => {
 
   const finishButton = !isFinished && isStudent && (
     <Box sx={styles.finishBlock.root}>
-      <Button onClick={handleFinish} sx={styles.finishBlock.button}>
+      <Button onClick={openModal} sx={styles.finishBlock.button}>
         {t('quiz.finish')}
       </Button>
     </Box>
   )
 
+  const questionsAnswered = Object.keys(data).length
   const attemptsList = (
     <Box sx={styles.attemptWrapper}>
       <QuizInfoSection
@@ -154,22 +205,28 @@ const QuizPage = () => {
           {attemptsList}
         </Box>
       ) : (
-        <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
-          <QuizHeader
-            description={description}
-            handlePreview={setShowPreview}
-            isFinished={isFinished}
-            isGraded={showPoints}
-            isNotStarted={showPreview}
-            points={points || 0}
-            quizItems={items}
-            settings={headerSettings}
-            title={title}
-            totalPoints={items.length}
+        <Box>
+          <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
+            <QuizHeader
+              createdAt={finishedQuiz?.createdAt ?? createdAt}
+              description={description}
+              isFinished={isFinished}
+              isGraded={showPoints}
+              points={points || 0}
+              questionsAnswered={questionsAnswered}
+              title={title}
+              totalPoints={items.length}
+              updatedAt={finishedQuiz?.updatedAt ?? updatedAt}
+            />
+            <Divider sx={styles.divider} />
+            {questionsBlock}
+            {finishButton}
+          </Box>
+          <FinishQuizModal
+            handleCancel={handleCancel}
+            handleFinish={handleFinish}
+            open={isOpen}
           />
-          <Divider sx={styles.divider} />
-          {questionsBlock}
-          {finishButton}
         </Box>
       )}
     </PageWrapper>

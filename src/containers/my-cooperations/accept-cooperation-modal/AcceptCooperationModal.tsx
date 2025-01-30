@@ -1,7 +1,5 @@
-import { FC, useCallback } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
-import { type QueryObserverResult } from '@tanstack/react-query'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -13,6 +11,7 @@ import Button from '~scss-components/button/Button'
 import Loader from '~/components/loader/Loader'
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
 import { useModalContext } from '~/context/modal-context'
@@ -23,11 +22,10 @@ import { OfferService } from '~/services/offer-service'
 import {
   ButtonTypeEnum,
   ComponentEnum,
-  Cooperation,
-  ErrorResponse,
-  type ItemsWithCount,
+  type Cooperation,
+  type ErrorResponse,
   StatusEnum,
-  UpdateCooperationsParams
+  type UpdateCooperationsParams
 } from '~/types'
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperation.styles'
@@ -37,14 +35,10 @@ import { getErrorKey } from '~/utils/get-error-key'
 
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
-  getCooperations: () => Promise<
-    QueryObserverResult<ItemsWithCount<Cooperation>>
-  >
 }
 
-const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
-  cooperation,
-  getCooperations
+const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
+  cooperation
 }) => {
   const { t } = useTranslation()
   const { isDesktop } = useBreakpoints()
@@ -55,13 +49,15 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
 
   const needAction = cooperation.user.role !== cooperation.needAction.role
 
-  const handleUpdateCooperation = (
-    params?: UpdateCooperationsParams
-  ): Promise<AxiosResponse> =>
-    cooperationService.updateCooperation({
-      _id: cooperation._id,
-      ...params
-    })
+  const handleUpdateCooperation = useCallback(
+    (params: Omit<UpdateCooperationsParams, '_id'>) => {
+      return cooperationService.updateCooperation({
+        _id: cooperation._id,
+        ...params
+      })
+    },
+    [cooperation._id]
+  )
 
   const updateOffer = useCallback(
     () =>
@@ -77,7 +73,6 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
       })
     )
     closeModal()
-    void getCooperations()
   }
 
   const onResponseError = (error?: ErrorResponse) => {
@@ -89,13 +84,13 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
     )
   }
 
-  const { loading, fetchData } = useAxios({
-    service: handleUpdateCooperation,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse,
-    onResponseError
-  })
+  const { isPending: isUpdateCooperationPending, mutate: updateCooperation } =
+    useMutation({
+      mutationFn: handleUpdateCooperation,
+      queryKey: ['cooperations'],
+      onSuccess: onResponse,
+      onError: onResponseError
+    })
 
   const { loading: updateLoading, fetchData: fetchUpdateOffer } = useAxios({
     service: updateOffer,
@@ -104,7 +99,7 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
     onResponseError
   })
 
-  const handleAcceptCooperation = async () => {
+  const handleAcceptCooperation = useCallback(async () => {
     const confirmed = await checkConfirmation({
       message: t('cooperationsPage.acceptModal.confirm.accept', {
         price: cooperation.price
@@ -112,35 +107,50 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
       title: 'titles.confirmTitle',
       check: true
     })
-    if (confirmed) return fetchData({ status: StatusEnum.Active })
-  }
 
-  const handleDeclineCooperation = async () => {
+    if (confirmed) {
+      updateCooperation({ status: StatusEnum.Active })
+    }
+  }, [checkConfirmation, cooperation.price, t, updateCooperation])
+
+  const handleDeclineCooperation = useCallback(async () => {
     const confirmed = await checkConfirmation({
       message: t('cooperationsPage.acceptModal.confirm.decline'),
       title: 'titles.confirmTitle',
       check: true
     })
+
     if (confirmed) {
       await fetchUpdateOffer()
-      return fetchData({ status: StatusEnum.Closed })
+      updateCooperation({ status: StatusEnum.Closed })
     }
-  }
+  }, [checkConfirmation, fetchUpdateOffer, t, updateCooperation])
 
-  const handleResendCooperation = async (): Promise<void> => {
-    const confirmed = await checkConfirmation({
-      message: t('cooperationsPage.acceptModal.confirm.resend', {
-        price: data.price
-      }),
-      title: 'titles.confirmTitle',
-      check: true
-    })
-    if (confirmed) return fetchData({ price: data.price })
-  }
+  const handleResendCooperation = useCallback(
+    async (data?: Record<'price', number>) => {
+      if (!data) {
+        return
+      }
 
-  const { data, isDirty, handleNonInputValueChange, handleSubmit } = useForm({
+      const confirmed = await checkConfirmation({
+        message: t('cooperationsPage.acceptModal.confirm.resend', {
+          price: data.price
+        }),
+        title: 'titles.confirmTitle',
+        check: true
+      })
+
+      if (confirmed) {
+        updateCooperation({ price: data.price })
+      }
+    },
+    [checkConfirmation, t, updateCooperation]
+  )
+
+  const { isDirty, handleNonInputValueChange, handleSubmit } = useForm({
     initialValues: { price: cooperation.price },
-    onSubmit: handleResendCooperation
+    onSubmit: handleResendCooperation,
+    submitWithData: true
   })
 
   const handlePriceChange = (value: number) => {
@@ -157,7 +167,7 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
     : ButtonTypeEnum.Button
 
   const buttons =
-    loading || updateLoading ? (
+    isUpdateCooperationPending || updateLoading ? (
       <Loader size={50} />
     ) : (
       <Box sx={styles.buttonRow}>

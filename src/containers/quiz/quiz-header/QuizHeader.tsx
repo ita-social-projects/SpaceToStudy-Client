@@ -20,6 +20,9 @@ type QuizHeaderProps = {
   points: number
   totalPoints: number
   isGraded: boolean
+  questionsAnswered: number
+  createdAt: string
+  updatedAt: string
   isNotStarted: boolean
   quizItems: Question[]
   settings: {
@@ -36,6 +39,9 @@ const QuizHeader = ({
   points,
   totalPoints,
   isGraded,
+  questionsAnswered,
+  createdAt,
+  updatedAt,
   isNotStarted,
   quizItems,
   settings,
@@ -54,8 +60,20 @@ const QuizHeader = ({
         style={styles.titleWithDescription}
         title={title}
       />
-      {!isFinished && isStudent && !isNotStarted && <ActiveQuizInfo />}
-      {isFinished && isStudent && <FinishedQuizInfo />}
+      {!isFinished && isStudent && !isNotStarted && (
+        <ActiveQuizInfo
+          questionsAnswered={questionsAnswered}
+          totalPoints={totalPoints}
+        />
+      )}
+      {isFinished && isStudent && (
+        <FinishedQuizInfo
+          createdAt={createdAt}
+          points={points}
+          totalPoints={totalPoints}
+          updatedAt={updatedAt}
+        />
+      )}
       {!isGraded && isTutor && <UngradedQuizInfo />}
       {isGraded && isTutor && (
         <GradedQuizInfo points={points} totalPoints={totalPoints} />

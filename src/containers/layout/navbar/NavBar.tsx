@@ -57,8 +57,11 @@ const Navbar = () => {
   }, [userRole])
 
   const accountItems = useMemo(() => {
-    if (userRole === UserRoleEnum.Student || userRole === UserRoleEnum.Tutor)
-      return Object.values(authRoutes.accountMenu[userRole])
+    if (userRole === UserRoleEnum.Student) {
+      return Object.values(authRoutes.accountMenu.student)
+    } else if (userRole === UserRoleEnum.Tutor) {
+      return Object.values(authRoutes.accountMenu.tutor)
+    }
     return []
   }, [userRole])
 

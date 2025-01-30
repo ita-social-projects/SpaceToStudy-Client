@@ -20,10 +20,12 @@ import {
   CreateCategoriesParams,
   UpdateQuestionParams,
   CreateQuizParams,
+  CreateFinishedQuizParams,
   Quiz,
   UpdateQuizParams,
   ApiMethodEnum,
-  GetQuestion
+  GetQuestion,
+  type FinishedQuiz
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -104,6 +106,22 @@ export const ResourceService = {
     ),
   deleteQuiz: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(createUrlPath(URLs.quizzes.delete, id)),
+  addFinishedQuiz: async (data: CreateFinishedQuizParams) => {
+    return baseService.request<FinishedQuiz>({
+      method: 'POST',
+      url: URLs.finishedQuizzes.add,
+      data
+    })
+  },
+  getFinishedQuiz: async (id: string) => {
+    return baseService.request<FinishedQuiz>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.finishedQuizzes.getById,
+        parameters: { id }
+      })
+    })
+  },
   getAttachments: async (
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>
@@ -117,15 +135,29 @@ export const ResourceService = {
       })
     })
   },
-  updateAttachment: async (params?: UpdateAttachmentParams) =>
-    await axiosClient.patch(
+  updateAttachment: async (params?: UpdateAttachmentParams) => {
+    return await axiosClient.patch(
       createUrlPath(URLs.resources.attachments.patch, params?.id),
       params
-    ),
-  deleteAttachment: async (id: string): Promise<AxiosResponse> =>
-    await axiosClient.delete(
+    )
+  },
+  updateAttachmentQuery: (data: UpdateAttachmentParams) => {
+    const { id, ...attachmentData } = data
+
+    return baseService.request<Attachment>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.resources.attachments.patch,
+        parameters: { id }
+      }),
+      data: attachmentData
+    })
+  },
+  deleteAttachment: async (id: string): Promise<AxiosResponse> => {
+    return await axiosClient.delete(
       createUrlPath(URLs.resources.attachments.delete, id)
-    ),
+    )
+  },
   createAttachments: (data?: FormData): Promise<AxiosResponse> => {
     return axiosClient.post(URLs.attachments.post, data, {
       headers: { 'Content-Type': 'multipart/form-data' }
@@ -167,10 +199,19 @@ export const ResourceService = {
   getResourcesCategoriesNames: (): Promise<
     AxiosResponse<CategoryNameInterface[]>
   > => axiosClient.get(URLs.resources.resourcesCategories.getNames),
-  createResourceCategory: async (
-    params?: CreateCategoriesParams
-  ): Promise<AxiosResponse<Categories>> =>
-    await axiosClient.post(URLs.resources.resourcesCategories.post, params),
+  getResourcesCategoriesName: () => {
+    return baseService.request<CategoryNameInterface[]>({
+      method: 'GET',
+      url: URLs.resources.resourcesCategories.getNames
+    })
+  },
+  createResourceCategory: (params: CreateCategoriesParams) => {
+    return baseService.request<Categories>({
+      method: 'POST',
+      url: URLs.resources.resourcesCategories.post,
+      data: params
+    })
+  },
   deleteResourceCategory: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.resourcesCategories.delete, id)

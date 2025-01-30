@@ -208,6 +208,11 @@ it('should render quiz page with data', () => {
       fireEvent.click(finishButton)
     })
 
+    const confirmButton = screen.getByText('quiz.confirm')
+    act(() => {
+      fireEvent.click(confirmButton)
+    })
+
     const correctAnswersLabel = screen.getByText(
       'myResourcesPage.quizzes.correctAnswers'
     )
@@ -231,6 +236,11 @@ it('should render quiz page with data', () => {
 
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
+
+    const confirmButton = screen.getByText('quiz.confirm')
+    act(() => {
+      fireEvent.click(confirmButton)
+    })
 
     const pointsLabel = screen.getByText((_, element) => {
       return (
@@ -301,6 +311,11 @@ it('should render quiz page with data', () => {
 
     const finishButton = screen.getByText('quiz.finish')
     fireEvent.click(finishButton)
+
+    const confirmButton = screen.getByText('quiz.confirm')
+    act(() => {
+      fireEvent.click(confirmButton)
+    })
 
     const duration = screen.getByText(/quiz\.duration:/i)
     expect(duration).toBeInTheDocument()

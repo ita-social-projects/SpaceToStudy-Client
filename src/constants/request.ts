@@ -52,13 +52,15 @@ export const URLs = {
   },
   subjects: {
     get: '/subjects',
+    getByCategoryId: '/categories/:id/subjects',
     getNames: '/subjects/names'
   },
   cooperations: {
     get: '/cooperations',
-    getById: '/cooperations/id',
+    getById: '/cooperations/:id',
     create: '/cooperations',
     update: '/cooperations',
+    updateById: '/cooperations/:id',
     delete: '/cooperations'
   },
   notes: {
@@ -83,7 +85,7 @@ export const URLs = {
     },
     attachments: {
       get: '/attachments',
-      patch: '/attachments',
+      patch: '/attachments/:id',
       delete: '/attachments'
     },
     questions: {
@@ -112,6 +114,11 @@ export const URLs = {
     add: '/quizzes',
     patch: '/quizzes',
     delete: '/quizzes'
+  },
+  finishedQuizzes: {
+    add: '/finished-quizzes',
+    get: '/finished-quizzes',
+    getById: '/finished-quizzes/:id'
   },
   attachments: {
     post: '/attachments'

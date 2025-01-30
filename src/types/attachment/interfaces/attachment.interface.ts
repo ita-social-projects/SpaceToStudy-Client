@@ -13,11 +13,19 @@ export interface Attachment extends CommonEntityFields, ResourceBase {
   size: number
 }
 
-export interface UpdateAttachmentParams {
-  fileName?: Attachment['fileName']
-  id: Attachment['author']['_id']
-  description?: Attachment['description']
-  category: EditAttachmentForm['category']
+export interface CooperationSliceAttachment
+  extends Omit<Attachment, 'category'> {
+  category: string | null
+}
+
+export interface UpdateAttachmentData {
+  fileName?: string
+  description?: string
+  category?: string | null
+}
+
+export interface UpdateAttachmentParams extends UpdateAttachmentData {
+  id: string
 }
 
 export interface EditAttachmentForm {

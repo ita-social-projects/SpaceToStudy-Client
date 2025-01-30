@@ -84,7 +84,7 @@ const AddResourceModal = <T extends TableItem>({
         />
         <AppButtonMenu<CategoryNameInterface>
           selectedItems={selectedItems}
-          service={ResourceService.getResourcesCategoriesNames}
+          service={ResourceService.getResourcesCategoriesName}
           setSelectedItems={setSelectedItems}
           showNoneProperty
           title={t('myResourcesPage.categories.category')}
