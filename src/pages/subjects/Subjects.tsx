@@ -78,7 +78,7 @@ const Subjects = () => {
   }
 
   const getSubjects = useCallback(
-    (data: Pick<SubjectInterface, 'name' | 'category'>) =>
+    (data: Pick<SubjectInterface, 'name'> & Record<'categoryId', string>) =>
       subjectService.getSubjects(data),
     []
   )
@@ -91,13 +91,13 @@ const Subjects = () => {
     isExpandable
   } = useLoadMore<
     SubjectInterface,
-    Pick<SubjectInterface, 'name' | 'category'>
+    Pick<SubjectInterface, 'name'> & Record<'categoryId', string>
   >({
     service: getSubjects,
     limit: cardsLimit,
     params: {
       ...params,
-      category: { _id: categoryId, appearance: { icon: '', color: '' } }
+      categoryId
     }
   })
 

@@ -50,7 +50,7 @@ describe('subjectService getSubjects function tests', () => {
 
     const result = await subjectService.getSubjects({
       ...mockParams,
-      category: { _id: mockCategoryId, appearance: { icon: '', color: '' } }
+      categoryId: mockCategoryId
     })
 
     expect(result).toEqual(mockSubjectsByCategoryId)
