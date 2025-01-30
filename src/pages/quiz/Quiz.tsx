@@ -190,6 +190,7 @@ const QuizPage = () => {
       {showPreview ? (
         <Box>
           <QuizHeader
+            createdAt={finishedQuiz?.createdAt ?? createdAt}
             description={description}
             handlePreview={setShowPreview}
             isFinished={false}
@@ -200,6 +201,7 @@ const QuizPage = () => {
             settings={headerSettings}
             title={title}
             totalPoints={items.length}
+            updatedAt={finishedQuiz?.updatedAt ?? updatedAt}
           />
           <Divider sx={styles.divider} />
           {attemptsList}
@@ -210,10 +212,13 @@ const QuizPage = () => {
             <QuizHeader
               createdAt={finishedQuiz?.createdAt ?? createdAt}
               description={description}
+              handlePreview={setShowPreview}
               isFinished={isFinished}
               isGraded={showPoints}
+              isNotStarted={showPreview}
               points={points || 0}
               questionsAnswered={questionsAnswered}
+              settings={headerSettings}
               title={title}
               totalPoints={items.length}
               updatedAt={finishedQuiz?.updatedAt ?? updatedAt}

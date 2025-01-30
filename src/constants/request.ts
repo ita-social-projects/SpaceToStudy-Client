@@ -118,7 +118,8 @@ export const URLs = {
   finishedQuizzes: {
     add: '/finished-quizzes',
     get: '/finished-quizzes',
-    getById: '/finished-quizzes/:id'
+    getById: '/finished-quizzes/:id',
+    getByQuizId: '/finished-quizzes/by-quiz-id/:cooperationId/:quizId'
   },
   attachments: {
     post: '/attachments'

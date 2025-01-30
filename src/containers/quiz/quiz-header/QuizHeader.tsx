@@ -12,6 +12,10 @@ import {
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import styles from '~/containers/quiz/quiz-header/QuizHeader.styles'
+import { useQuery } from '@tanstack/react-query'
+import { ResourceService } from '~/services/resource-service'
+import { useParams } from 'react-router-dom'
+import React from 'react'
 
 type QuizHeaderProps = {
   isFinished: boolean
@@ -48,10 +52,21 @@ const QuizHeader = ({
   handlePreview
 }: QuizHeaderProps) => {
   const { userRole } = useAppSelector((state) => state.appMain)
-
   const isStudent = userRole === UserRoleEnum.Student
 
   const isTutor = userRole === UserRoleEnum.Tutor
+  const { id, quizId } = useParams()
+
+  const getQuizzes = React.useCallback(() => {
+    if (quizId && id) {
+      return ResourceService.getFinishedQuizzesByQuizId(id, quizId)
+    }
+  }, [id, quizId])
+
+  const { data: finishedQuizzes } = useQuery({
+    queryKey: ['quizzes', id, quizId],
+    queryFn: getQuizzes
+  })
 
   return (
     <Box sx={styles.wrapper}>
@@ -84,6 +99,7 @@ const QuizHeader = ({
           handleStartButton={handlePreview}
           questionsAmount={quizItems.length}
           timeLimit={settings.timeLimit}
+          usedAttempts={finishedQuizzes ?? []}
         />
       )}
     </Box>

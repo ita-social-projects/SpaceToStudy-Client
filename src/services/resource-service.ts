@@ -25,7 +25,8 @@ import {
   UpdateQuizParams,
   ApiMethodEnum,
   GetQuestion,
-  type FinishedQuiz
+  type FinishedQuiz,
+  FinishedAttempts
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -119,6 +120,15 @@ export const ResourceService = {
       url: getFullUrl({
         pathname: URLs.finishedQuizzes.getById,
         parameters: { id }
+      })
+    })
+  },
+  getFinishedQuizzesByQuizId: async (cooperationId: string, quizId: string) => {
+    return baseService.request<FinishedAttempts>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.finishedQuizzes.getByQuizId,
+        parameters: { cooperationId, quizId }
       })
     })
   },

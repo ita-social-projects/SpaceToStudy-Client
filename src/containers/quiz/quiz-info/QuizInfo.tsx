@@ -17,9 +17,11 @@ import {
 
 import DividerComponent from '~/design-system/components/divider/Divider'
 import { spliceSx } from '~/utils/helper-functions'
-import { QuizAttempt, QuizTimeLimit } from '~/types'
+import { FinishedAttempts, QuizAttempt, QuizTimeLimit } from '~/types'
 import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { TFunction } from 'i18next'
+import TimeLimitReminder from '~/containers/quiz/time-limit-reminder/TimeLimitReminder'
+import React from 'react'
 
 type ActiveQuizInfoProps = {
   questionsAnswered: number
@@ -168,17 +170,18 @@ type StartViewQuizInfoProps = {
   questionsAmount: number
   attempts: QuizAttempt
   timeLimit: QuizTimeLimit
-  isFirstAttempt?: boolean
+  usedAttempts: FinishedAttempts
   handleStartButton: (value: boolean) => void
 }
 const StartViewQuizInfo = ({
   questionsAmount,
   attempts,
   timeLimit,
-  isFirstAttempt = true,
+  usedAttempts,
   handleStartButton
 }: StartViewQuizInfoProps) => {
   const { t } = useTranslation()
+  const [isOpen, setIsOpen] = React.useState(false)
   const typographyStyle = (subType: number) => {
     return spliceSx(
       styles[`subtitle${subType}` as keyof typeof styles],
@@ -193,7 +196,11 @@ const StartViewQuizInfo = ({
   }
 
   const onStartAttempt = () => {
-    handleStartButton(false)
+    if (!isNoLimitTime) {
+      setIsOpen(true)
+      return
+    }
+    handleStartButton(true)
   }
   const isNoLimitAttempt = attempts === QuizAttempt.NoLimit
   const isNoLimitTime = timeLimit === QuizTimeLimit.NoLimit
@@ -213,7 +220,7 @@ const StartViewQuizInfo = ({
       </Box>
       <Typography sx={typographyStyle(1)}>{t('quiz.attemptLimit')}:</Typography>
       <Typography sx={typographyStyle(2)}>
-        1/{attempts.split(' ')[0]}
+        {usedAttempts.length}/{attempts.split(' ')[0]}
       </Typography>
     </>
   )
@@ -237,27 +244,44 @@ const StartViewQuizInfo = ({
     </>
   )
   return (
-    <Box sx={styles.infoWrapper}>
-      <Box sx={styles.quizSettings}>
-        <Typography sx={typographyStyle(1)}>
-          {t('quiz.questionsAmount')}:
-        </Typography>
-        <Typography sx={typographyStyle(2)}>{questionsAmount}</Typography>
-        {attemptLimitOutput}
-        {timeLimitOutput}
+    <>
+      {isOpen && (
+        <TimeLimitReminder
+          handleClose={() => {
+            setIsOpen(false)
+            handleStartButton(true)
+          }}
+          handleStart={() => {
+            handleStartButton(false)
+            setIsOpen(false)
+          }}
+          minutes={+timeLimit.split('')[0]}
+          open={isOpen}
+        />
+      )}
+
+      <Box sx={styles.infoWrapper}>
+        <Box sx={styles.quizSettings}>
+          <Typography sx={typographyStyle(1)}>
+            {t('quiz.questionsAmount')}:
+          </Typography>
+          <Typography sx={typographyStyle(2)}>{questionsAmount}</Typography>
+          {attemptLimitOutput}
+          {timeLimitOutput}
+        </Box>
+        <Box sx={styles.buttonWrapper}>
+          {usedAttempts.length === 0 ? (
+            <Button onClick={onStartAttempt} size='sm'>
+              {t('quiz.startQuiz')}
+            </Button>
+          ) : (
+            <Button onClick={onStartAttempt} size='sm'>
+              {t('quiz.tryAgain')}
+            </Button>
+          )}
+        </Box>
       </Box>
-      <Box sx={styles.buttonWrapper}>
-        {isFirstAttempt ? (
-          <Button onClick={onStartAttempt} size='sm'>
-            {t('quiz.startQuiz')}
-          </Button>
-        ) : (
-          <Button onClick={onStartAttempt} size='sm'>
-            {t('quiz.tryAgain')}
-          </Button>
-        )}
-      </Box>
-    </Box>
+    </>
   )
 }
 
