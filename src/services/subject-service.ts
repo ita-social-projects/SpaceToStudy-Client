@@ -8,18 +8,18 @@ import { baseService } from '~/services/base-service'
 import { getFullUrl } from '~/utils/get-full-url'
 
 export const subjectService = {
-  getSubjects: (params?: Pick<SubjectInterface, 'name' | 'category'>) => {
-    const { category: { _id: categoryId } = {}, ...restParams } = params ?? {}
+  getSubjects: (params: Pick<SubjectInterface, 'name' | 'category'>) => {
+    const { category, ...restParams } = params
 
     let resultUrl = getFullUrl({
       pathname: URLs.subjects.get,
       searchParameters: restParams
     })
 
-    if (categoryId) {
+    if (category?._id) {
       resultUrl = getFullUrl({
         pathname: URLs.subjects.getByCategoryId,
-        parameters: { categoryId },
+        parameters: { id: category._id },
         searchParameters: restParams
       })
     }

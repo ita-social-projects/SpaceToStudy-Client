@@ -45,7 +45,7 @@ describe('subjectService getSubjects function tests', () => {
     mockAxiosClient
       .onGet(
         new RegExp(
-          URLs.subjects.getByCategoryId.replace(':categoryId', mockCategoryId)
+          URLs.subjects.getByCategoryId.replace(':id', mockCategoryId)
         )
       )
       .reply(200, mockSubjectsByCategoryId)

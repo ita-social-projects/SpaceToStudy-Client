@@ -78,7 +78,7 @@ const Subjects = () => {
   }
 
   const getSubjects = useCallback(
-    (data?: Pick<SubjectInterface, 'name' | 'category'>) =>
+    (data: Pick<SubjectInterface, 'name' | 'category'>) =>
       subjectService.getSubjects(data),
     []
   )
