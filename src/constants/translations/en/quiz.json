@@ -17,5 +17,8 @@
   "addComment": "Add a Comment",
   "comment": "Comment",
   "writeComment": "Write a comment...",
-  "submitComment": "Submit comment"
+  "submitComment": "Submit comment",
+  "timeIsUpTitle": "Time's Up",
+  "timeIsUpDescription": "The time limit for this quiz has expired. Any unanswered questions have been marked as incorrect. Your results will be calculated based on your submitted answers.",
+  "viewResults": "View results"
 }
