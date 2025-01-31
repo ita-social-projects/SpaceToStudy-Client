@@ -1,4 +1,5 @@
 import { theme } from '~/styles/app-theme/custom-mui.styles'
+import { TypographyVariantEnum } from '~/types'
 
 const styles = {
   quizzesWrapper: {
@@ -38,7 +39,16 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(5)
+  },
+  attemptTypographyWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  typography: {
+    typography: TypographyVariantEnum.Subtitle1,
+    color: 'primary.500'
   }
 }
 

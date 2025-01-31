@@ -21,7 +21,8 @@ import { FinishedAttempts, QuizAttempt, QuizTimeLimit } from '~/types'
 import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { TFunction } from 'i18next'
 import TimeLimitReminder from '~/containers/quiz/time-limit-reminder/TimeLimitReminder'
-import React from 'react'
+import { useState } from 'react'
+import { Alert } from '@mui/material'
 
 type ActiveQuizInfoProps = {
   questionsAnswered: number
@@ -181,7 +182,8 @@ const StartViewQuizInfo = ({
   handleStartButton
 }: StartViewQuizInfoProps) => {
   const { t } = useTranslation()
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+
   const typographyStyle = (subType: number) => {
     return spliceSx(
       styles[`subtitle${subType}` as keyof typeof styles],
@@ -200,7 +202,7 @@ const StartViewQuizInfo = ({
       setIsOpen(true)
       return
     }
-    handleStartButton(true)
+    handleStartButton(false)
   }
   const isNoLimitAttempt = attempts === QuizAttempt.NoLimit
   const isNoLimitTime = timeLimit === QuizTimeLimit.NoLimit
@@ -243,23 +245,29 @@ const StartViewQuizInfo = ({
       </Typography>
     </>
   )
+  const maxAttempts = parseInt(attempts.split(' ')[0], 10) || 0
+  const isHaveAttempts = isNoLimitAttempt || usedAttempts.length < maxAttempts
+
+  const noAttemptsAlert = !isHaveAttempts && (
+    <Alert severity='info'>{t('quiz.reachedAttemptLimit')}</Alert>
+  )
+
+  const handleTimeLimitModal = (isOpen: boolean, isStart: boolean) => {
+    setIsOpen(isOpen)
+    handleStartButton(isStart)
+  }
   return (
     <>
-      {isOpen && (
-        <TimeLimitReminder
-          handleClose={() => {
-            setIsOpen(false)
-            handleStartButton(true)
-          }}
-          handleStart={() => {
-            handleStartButton(false)
-            setIsOpen(false)
-          }}
-          minutes={+timeLimit.split('')[0]}
-          open={isOpen}
-        />
-      )}
-
+      <TimeLimitReminder
+        handleClose={() => {
+          handleTimeLimitModal(false, true)
+        }}
+        handleStart={() => {
+          handleTimeLimitModal(false, false)
+        }}
+        minutes={+timeLimit.split(' ')[0]}
+        open={isOpen}
+      />
       <Box sx={styles.infoWrapper}>
         <Box sx={styles.quizSettings}>
           <Typography sx={typographyStyle(1)}>
@@ -270,17 +278,14 @@ const StartViewQuizInfo = ({
           {timeLimitOutput}
         </Box>
         <Box sx={styles.buttonWrapper}>
-          {usedAttempts.length === 0 ? (
-            <Button onClick={onStartAttempt} size='sm'>
-              {t('quiz.startQuiz')}
-            </Button>
-          ) : (
-            <Button onClick={onStartAttempt} size='sm'>
-              {t('quiz.tryAgain')}
-            </Button>
-          )}
+          <Button disabled={!isHaveAttempts} onClick={onStartAttempt} size='sm'>
+            {usedAttempts.length === 0
+              ? t('quiz.startQuiz')
+              : t('quiz.tryAgain')}
+          </Button>
         </Box>
       </Box>
+      {noAttemptsAlert}
     </>
   )
 }

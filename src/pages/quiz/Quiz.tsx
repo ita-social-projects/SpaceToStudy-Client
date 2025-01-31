@@ -31,6 +31,8 @@ import {
   QuizViewEnum,
   UserRoleEnum
 } from '~/types'
+import { formatTime, getFormattedDate } from '~/utils/helper-functions'
+import { Typography } from '@mui/material'
 
 const QuizPage = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
@@ -89,6 +91,16 @@ const QuizPage = () => {
     items.filter(({ type }) => type !== QuestionTypesEnum.OpenAnswer),
     data
   )
+  const getQuizzes = useCallback(() => {
+    if (quizId && id) {
+      return ResourceService.getFinishedQuizzesByQuizId(id, quizId)
+    }
+  }, [id, quizId])
+
+  const { data: finishedQuizzes } = useQuery({
+    queryKey: ['quizzes', id, quizId],
+    queryFn: getQuizzes
+  })
 
   const addFinishedQuiz = useCallback(() => {
     return ResourceService.addFinishedQuiz({
@@ -173,18 +185,29 @@ const QuizPage = () => {
   )
 
   const questionsAnswered = Object.keys(data).length
-  const attemptsList = (
-    <Box sx={styles.attemptWrapper}>
-      <QuizInfoSection
-        firstColumn='May 17, 2024'
-        secondColumn='14:15'
-        title={t('quiz.attemptFinished')}
-      />
-      <Box>
-        <Button variant='tonal'>{t('quiz.reviewAttempt')}</Button>
+  const attemptsList =
+    finishedQuizzes?.length !== 0 ? (
+      finishedQuizzes?.map((item) => {
+        return (
+          <Box key={item._id} sx={styles.attemptWrapper}>
+            <QuizInfoSection
+              firstColumn={getFormattedDate({ date: item.updatedAt })}
+              secondColumn={formatTime(item.updatedAt)}
+              title={t('quiz.attemptFinished')}
+            />
+            <Box>
+              <Button variant='tonal'>{t('quiz.reviewAttempt')}</Button>
+            </Box>
+          </Box>
+        )
+      })
+    ) : (
+      <Box sx={styles.attemptTypographyWrapper}>
+        <Typography sx={styles.typography}>
+          {t('quiz.noUsedAttempts')}
+        </Typography>
       </Box>
-    </Box>
-  )
+    )
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
       {showPreview ? (
@@ -197,6 +220,7 @@ const QuizPage = () => {
             isGraded={false}
             isNotStarted={showPreview}
             points={0}
+            questionsAnswered={questionsAnswered}
             quizItems={items}
             settings={headerSettings}
             title={title}
@@ -218,6 +242,7 @@ const QuizPage = () => {
               isNotStarted={showPreview}
               points={points || 0}
               questionsAnswered={questionsAnswered}
+              quizItems={items}
               settings={headerSettings}
               title={title}
               totalPoints={items.length}

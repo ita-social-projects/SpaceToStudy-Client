@@ -12,7 +12,8 @@ const styles = {
       flexDirection: 'column',
       alignItems: 'flex-start',
       gap: theme.spacing(2)
-    }
+    },
+    marginBottom: theme.spacing(2)
   },
   infoWrapperNew: {
     display: 'flex',
