@@ -1,4 +1,3 @@
-import React from 'react'
 import Box from '@mui/material/Box'
 
 import { useModalContext } from '~/context/modal-context'
@@ -22,6 +21,7 @@ import { initialValues } from '~/containers/my-quizzes/create-or-edit-quiz-quest
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import { useCallback, useEffect, useState } from 'react'
 
 interface CreateOrEditQuizQuestionProps {
   question?: Question
@@ -35,15 +35,15 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
   onCancel
 }) => {
   const dispatch = useAppDispatch()
-  const [isNewQuestion, setIsNewQuestion] = React.useState<boolean>(!!question)
+  const [isNewQuestion, setIsNewQuestion] = useState<boolean>(!!question)
   const { openModal, closeModal } = useModalContext()
 
-  const createQuestionService = React.useCallback(
+  const createQuestionService = useCallback(
     (data?: QuestionForm) => ResourceService.createQuestion(data),
     []
   )
 
-  const updateQuestionService = React.useCallback(
+  const updateQuestionService = useCallback(
     (params?: UpdateQuestionParams) => ResourceService.updateQuestion(params),
     []
   )
@@ -158,7 +158,7 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
     })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     !question && onOpenCreateQuestionModal()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [question])

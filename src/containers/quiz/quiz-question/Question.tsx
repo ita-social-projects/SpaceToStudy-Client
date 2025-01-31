@@ -64,10 +64,8 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     shouldShowAnswersCorrectness &&
     (isCorrect ? <CheckIcon sx={iconStyles} /> : <CloseIcon sx={iconStyles} />)
 
-  const showCorrectAnswers = shouldShowCorrectAnswers
-
   const correctAnswersList =
-    showCorrectAnswers &&
+    shouldShowCorrectAnswers &&
     question.answers
       .filter((item) => item.isCorrect)
       .map((item) => (
@@ -83,7 +81,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
         />
       ))
 
-  const correctAnswers = showCorrectAnswers && (
+  const correctAnswers = shouldShowCorrectAnswers && (
     <Box sx={styles.correctAnswers.root}>
       <Typography sx={styles.correctAnswers.title}>
         {t('myResourcesPage.quizzes.correctAnswers')}
@@ -135,8 +133,8 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
 
   const answersBlock = isOpenAnswer ? (
     <Answer
-      isCorrect={isCorrect}
-      isEditable={isEditable}
+      isCorrect
+      isEditable
       label={question.text}
       onTextInputChange={handleInputChange}
       shouldShowCorrectness={shouldShowAnswersCorrectness}

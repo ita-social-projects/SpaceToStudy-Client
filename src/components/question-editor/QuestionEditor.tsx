@@ -129,7 +129,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
         id: data.answers.length,
         text: '',
         isCorrect: isOpenAnswer,
-        isEditing: isOpenAnswer || undefined
+        isEditing: isOpenAnswer
       }
     ])
   }
@@ -219,7 +219,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
       handleNonInputValueChange('answers', updatedAnswers)
     }
   }
-  const isButtonVisible = text
+  const isButtonVisible = Boolean(text)
 
   return (
     <Box sx={styles.editorBlock}>
