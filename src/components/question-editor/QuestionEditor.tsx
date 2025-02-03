@@ -269,7 +269,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
         }
       >
         {isOpenAnswer ? (
-          <Typography color={isEmptyAnswer ? 'primary.300' : ''}>
+          <Typography color={isEmptyAnswer ? 'primary.300' : undefined}>
             {t('questionPage.addNewOne')}
           </Typography>
         ) : (

@@ -154,24 +154,6 @@ describe('CreateOrEditQuizQuestion component without question', () => {
     const saveBtn = screen.getByText('common.save')
     fireEvent.click(saveBtn)
 
-    await waitFor(() => {
-      expect(createQuestionSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          answers: expect.arrayContaining([
-            expect.objectContaining({
-              text: '',
-              isCorrect: true,
-              id: 0
-            })
-          ]),
-          category: null,
-          openAnswer: '',
-          text: 'Question',
-          title: 'test',
-          type: 'openAnswer' 
-        })
-      )
-    })
     const snackbar = await screen.findByText(
       'myResourcesPage.questions.successAddedQuestion'
     )

@@ -133,8 +133,8 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
 
   const answersBlock = isOpenAnswer ? (
     <Answer
-      isCorrect
-      isEditable
+      isCorrect={isCorrect}
+      isEditable={isEditable}
       label={question.text}
       onTextInputChange={handleInputChange}
       shouldShowCorrectness={shouldShowAnswersCorrectness}

@@ -21,7 +21,7 @@ import { initialValues } from '~/containers/my-quizzes/create-or-edit-quiz-quest
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface CreateOrEditQuizQuestionProps {
   question?: Question
@@ -115,17 +115,20 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
   } = useForm<QuestionForm>({
     initialValues: initialValues(question)
   })
-  const onCloseCreation = () => {
+  const onCloseCreation = useCallback(() => {
     closeModal()
     onCancel()
-  }
+  }, [closeModal, onCancel])
 
-  const onOpenCreation = ({ title, category }: QuestionModalForm) => {
-    handleNonInputValueChange('title', title)
-    handleNonInputValueChange('category', category)
-    setIsNewQuestion(true)
-    closeModal()
-  }
+  const onOpenCreation = useCallback(
+    ({ title, category }: QuestionModalForm) => {
+      handleNonInputValueChange('title', title)
+      handleNonInputValueChange('category', category)
+      setIsNewQuestion(true)
+      closeModal()
+    },
+    [closeModal, handleNonInputValueChange, setIsNewQuestion]
+  )
 
   const onCreateQuestion = async () => {
     const updatedData = data.openAnswer
@@ -146,7 +149,7 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
     question && (await updateQuestion({ ...data, id: question._id }))
   }
 
-  const onOpenCreateQuestionModal = () => {
+  const onOpenCreateQuestionModal = useCallback(() => {
     openModal({
       component: (
         <CreateOrEditQuestionModal
@@ -156,11 +159,12 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
       ),
       customCloseModal: onCancel
     })
-  }
+  }, [openModal, onCloseCreation, onOpenCreation, data, onCancel])
+
+  const onOpenCreateQuestionModalRef = useRef(onOpenCreateQuestionModal)
 
   useEffect(() => {
-    !question && onOpenCreateQuestionModal()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    !question && onOpenCreateQuestionModalRef.current()
   }, [question])
 
   return isNewQuestion ? (
