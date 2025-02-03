@@ -12,7 +12,7 @@ import Button from '~/design-system/components/button/Button'
 
 import styles from '~/containers/quiz/quiz-dialog/QuizDialog.styles'
 
-type QuizDialogProps = {
+export type QuizDialogProps = {
   open: boolean
   icon: React.ReactNode
   title: string

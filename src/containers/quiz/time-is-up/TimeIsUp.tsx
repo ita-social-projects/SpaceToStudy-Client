@@ -1,13 +1,13 @@
 import TimerOutlined from '@mui/icons-material/TimerOutlined'
 
-import QuizDialog from '~/containers/quiz/quiz-dialog/QuizDialog'
+import QuizDialog, {
+  type QuizDialogProps
+} from '~/containers/quiz/quiz-dialog/QuizDialog'
 
 import styles from '~/containers/quiz/time-is-up/TimeIsUp.styles'
 
-type TimeLimitReminderProps = {
-  open: boolean
+type TimeLimitReminderProps = Pick<QuizDialogProps, 'open' | 'onClose'> & {
   onStart: () => void
-  onClose: () => void
 }
 
 const TimeIsUp = ({ open, onStart, onClose }: TimeLimitReminderProps) => {

@@ -1,9 +1,10 @@
 import ErrorOutlineRounded from '@mui/icons-material/ErrorOutlineRounded'
 
-import QuizDialog from '~/containers/quiz/quiz-dialog/QuizDialog'
+import QuizDialog, {
+  type QuizDialogProps
+} from '~/containers/quiz/quiz-dialog/QuizDialog'
 
-type FinishQuizModalProps = {
-  open: boolean
+type FinishQuizModalProps = Pick<QuizDialogProps, 'open'> & {
   onCancel: () => void
   onFinish: () => void
 }
