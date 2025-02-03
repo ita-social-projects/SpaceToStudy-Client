@@ -11,8 +11,8 @@ describe('TimeLimitReminder', () => {
     renderWithProviders(
       <TimeLimitReminder
         open={true}
-        handleStart={handleStart}
-        handleClose={handleClose}
+        onStart={handleStart}
+        onClose={handleClose}
       />
     )
 
@@ -23,8 +23,8 @@ describe('TimeLimitReminder', () => {
     renderWithProviders(
       <TimeLimitReminder
         open={true}
-        handleStart={handleStart}
-        handleClose={handleClose}
+        onStart={handleStart}
+        onClose={handleClose}
       />
     )
 
@@ -34,12 +34,12 @@ describe('TimeLimitReminder', () => {
     expect(handleStart).toHaveBeenCalledTimes(1)
   })
 
-  it('should call handleClose when Close button is clicked', () => {
+  it('should call handleClose when close button is clicked', () => {
     renderWithProviders(
       <TimeLimitReminder
         open={true}
-        handleStart={handleStart}
-        handleClose={handleClose}
+        onStart={handleStart}
+        onClose={handleClose}
       />
     )
 

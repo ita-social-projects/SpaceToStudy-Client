@@ -9,38 +9,26 @@ describe('TimeIsUp', () => {
 
   it('should render the dialog when open is true', () => {
     renderWithProviders(
-      <TimeIsUp
-        open={true}
-        handleStart={handleStart}
-        handleClose={handleClose}
-      />
+      <TimeIsUp open={true} onStart={handleStart} onClose={handleClose} />
     )
 
-    expect(screen.getByText('quiz.timeLimitReminderTitle')).toBeInTheDocument()
+    expect(screen.getByText('quiz.timeIsUpTitle')).toBeInTheDocument()
   })
 
-  it('should call handleStart when start button is clicked', () => {
+  it('should call onStart when start button is clicked', () => {
     renderWithProviders(
-      <TimeIsUp
-        open={true}
-        handleStart={handleStart}
-        handleClose={handleClose}
-      />
+      <TimeIsUp open={true} onStart={handleStart} onClose={handleClose} />
     )
 
-    const startButton = screen.getByText('quiz.start')
+    const startButton = screen.getByText('quiz.viewResults')
     fireEvent.click(startButton)
 
     expect(handleStart).toHaveBeenCalledTimes(1)
   })
 
-  it('should call handleClose when close button is clicked', () => {
+  it('should call onClose when close button is clicked', () => {
     renderWithProviders(
-      <TimeIsUp
-        open={true}
-        handleStart={handleStart}
-        handleClose={handleClose}
-      />
+      <TimeIsUp open={true} onStart={handleStart} onClose={handleClose} />
     )
 
     const closeButton = screen.getByTestId('CloseRoundedIcon')
