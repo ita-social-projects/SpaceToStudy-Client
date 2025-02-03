@@ -6,11 +6,11 @@ import QuizDialog, {
 
 import styles from '~/containers/quiz/time-is-up/TimeIsUp.styles'
 
-type TimeLimitReminderProps = Pick<QuizDialogProps, 'open' | 'onClose'> & {
+type TimeIsUpProps = Pick<QuizDialogProps, 'open' | 'onClose'> & {
   onStart: () => void
 }
 
-const TimeIsUp = ({ open, onStart, onClose }: TimeLimitReminderProps) => {
+const TimeIsUp = ({ open, onStart, onClose }: TimeIsUpProps) => {
   return (
     <QuizDialog
       actionText='quiz.viewResults'
