@@ -5,9 +5,10 @@ import QuizDialog, {
   type QuizDialogProps
 } from '~/containers/quiz/quiz-dialog/QuizDialog'
 
-type TimeLimitReminderProps = Pick<QuizDialogProps, 'open' | 'onClose'> & {
+type TimeLimitReminderProps = Pick<QuizDialogProps, 'open'> & {
   timeLimit: string
   onStart: () => void
+  onClose: () => void
 }
 
 const TimeLimitReminder = ({

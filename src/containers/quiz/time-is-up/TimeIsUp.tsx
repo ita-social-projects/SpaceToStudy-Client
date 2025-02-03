@@ -6,8 +6,9 @@ import QuizDialog, {
 
 import styles from '~/containers/quiz/time-is-up/TimeIsUp.styles'
 
-type TimeIsUpProps = Pick<QuizDialogProps, 'open' | 'onClose'> & {
+type TimeIsUpProps = Pick<QuizDialogProps, 'open'> & {
   onStart: () => void
+  onClose: () => void
 }
 
 const TimeIsUp = ({ open, onStart, onClose }: TimeIsUpProps) => {
