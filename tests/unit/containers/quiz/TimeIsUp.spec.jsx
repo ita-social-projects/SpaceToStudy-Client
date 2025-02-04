@@ -9,7 +9,7 @@ describe('TimeIsUp', () => {
 
   it('should render the dialog when open is true', () => {
     renderWithProviders(
-      <TimeIsUp open={true} onStart={handleStart} onClose={handleClose} />
+      <TimeIsUp open onStart={handleStart} onClose={handleClose} />
     )
 
     expect(screen.getByText('quiz.timeIsUpTitle')).toBeInTheDocument()
@@ -17,7 +17,7 @@ describe('TimeIsUp', () => {
 
   it('should call onStart when start button is clicked', () => {
     renderWithProviders(
-      <TimeIsUp open={true} onStart={handleStart} onClose={handleClose} />
+      <TimeIsUp open onStart={handleStart} onClose={handleClose} />
     )
 
     const startButton = screen.getByText('quiz.viewResults')
@@ -28,7 +28,7 @@ describe('TimeIsUp', () => {
 
   it('should call onClose when close button is clicked', () => {
     renderWithProviders(
-      <TimeIsUp open={true} onStart={handleStart} onClose={handleClose} />
+      <TimeIsUp open onStart={handleStart} onClose={handleClose} />
     )
 
     const closeButton = screen.getByTestId('CloseRoundedIcon')
