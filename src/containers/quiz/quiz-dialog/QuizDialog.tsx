@@ -61,9 +61,7 @@ const QuizDialog: React.FC<QuizDialogProps> = ({
             {secondaryActionText && t(secondaryActionText)}
           </Button>
         )}
-        <Button autoFocus onClick={onAction}>
-          {t(actionText)}
-        </Button>
+        <Button onClick={onAction}>{t(actionText)}</Button>
       </DialogActions>
     </Dialog>
   )
