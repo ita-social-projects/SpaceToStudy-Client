@@ -38,6 +38,15 @@ export const CourseService = {
       })
     })
   },
+  getCoursesWithFilters: (params: GetCoursesParams) => {
+    return baseService.request<ItemsWithCount<Course>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.courses.get,
+        searchParameters: params
+      })
+    })
+  },
   addCourse: async (data?: CourseForm): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.courses.create, data),
   getCourse: async (id?: string): Promise<AxiosResponse<Course>> =>
