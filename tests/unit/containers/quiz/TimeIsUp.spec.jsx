@@ -7,19 +7,17 @@ describe('TimeIsUp', () => {
   const handleStart = vi.fn()
   const handleClose = vi.fn()
 
-  it('should render the dialog when open is true', () => {
+  beforeEach(() => {
     renderWithProviders(
       <TimeIsUp open onStart={handleStart} onClose={handleClose} />
     )
+  })
 
+  it('should render the dialog when open is true', () => {
     expect(screen.getByText('quiz.timeIsUpTitle')).toBeInTheDocument()
   })
 
   it('should call onStart when start button is clicked', () => {
-    renderWithProviders(
-      <TimeIsUp open onStart={handleStart} onClose={handleClose} />
-    )
-
     const startButton = screen.getByText('quiz.viewResults')
     fireEvent.click(startButton)
 
@@ -27,10 +25,6 @@ describe('TimeIsUp', () => {
   })
 
   it('should call onClose when close button is clicked', () => {
-    renderWithProviders(
-      <TimeIsUp open onStart={handleStart} onClose={handleClose} />
-    )
-
     const closeButton = screen.getByTestId('CloseRoundedIcon')
     fireEvent.click(closeButton)
 

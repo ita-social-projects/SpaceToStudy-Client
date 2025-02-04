@@ -47,7 +47,7 @@ const QuizDialog: React.FC<QuizDialogProps> = ({
           <DialogTitle sx={styles.title}>{t(title)}</DialogTitle>
         </Box>
         <DialogContent sx={styles.description}>
-          {t(description, { ...descriptionParams })}
+          {t(description, descriptionParams)}
         </DialogContent>
       </Box>
       <DialogActions sx={styles.actions}>
