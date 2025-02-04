@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded'
 
-import QuizDialog, {
-  type QuizDialogProps
-} from '~/containers/quiz/quiz-dialog/QuizDialog'
+import QuizDialog from '~/containers/quiz/quiz-dialog/QuizDialog'
 
-type TimeLimitReminderProps = Pick<QuizDialogProps, 'open'> & {
+type TimeLimitReminderProps = {
+  open: boolean
   timeLimit: string
   onStart: () => void
   onClose: () => void
