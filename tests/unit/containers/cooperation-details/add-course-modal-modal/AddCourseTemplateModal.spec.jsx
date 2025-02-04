@@ -66,7 +66,7 @@ describe('AddCourseTemplateModal test', () => {
 
     const button = await screen.findByText('myCoursesPage.buttonLabel +')
 
-    waitFor(() => fireEvent.click(button))
+    await waitFor(() => fireEvent.click(button))
 
     expect(closeModalMock).toHaveBeenCalled()
   })

@@ -1,7 +1,12 @@
 import { AxiosResponse } from 'axios'
 import { URLs } from '~/constants/request'
 import { axiosClient } from '~/plugins/axiosClient'
-import { Course, CourseForm, GetCoursesParams, ItemsWithCount } from '~/types'
+import type {
+  Course,
+  CourseForm,
+  GetCoursesParams,
+  ItemsWithCount
+} from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
 import { baseService } from './base-service'
@@ -25,7 +30,6 @@ export interface ResourceData {
 export const CourseService = {
   getCourses: async (params?: GetCoursesParams): Promise<AxiosResponse> =>
     await axiosClient.get(URLs.courses.get, { params }),
-
   getCoursesWithBaseService: () => {
     return baseService.request<ItemsWithCount<Course>>({
       method: 'GET',
@@ -34,7 +38,6 @@ export const CourseService = {
       })
     })
   },
-
   addCourse: async (data?: CourseForm): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.courses.create, data),
   getCourse: async (id?: string): Promise<AxiosResponse<Course>> =>
