@@ -216,58 +216,55 @@ const EditProfile = () => {
   const navigate = useNavigate()
 
   const handleUpdateUser = async () => {
-    const { country, city } = profileState
+    const { country, city, notificationSettings, professionalBlock } =
+      profileState
     const { videoLink, aboutStudent, categories, photo } = changedFields
-
     const dataToUpdate: UpdateUserParams = {}
 
+    const addressChanged = 'city' in changedFields || 'country' in changedFields
+    const hasValidAddress = city && country
     if (
+      addressChanged &&
       (city !== initialEditProfileState?.city ||
         country !== initialEditProfileState?.country) &&
-      ('city' in changedFields || 'country' in changedFields)
+      hasValidAddress
     ) {
-      if (city && country) {
-        dataToUpdate.address = { city, country }
-      }
+      dataToUpdate.address = { city, country }
     }
 
-    if (videoLink && userRole in videoLink) {
+    if (videoLink?.[userRole]) {
       dataToUpdate.videoLink = videoLink[userRole]
     }
 
-    if ('notificationSettings' in changedFields) {
-      dataToUpdate.notificationSettings = profileState.notificationSettings
-    }
+    Object.assign(dataToUpdate, {
+      notificationSettings:
+        'notificationSettings' in changedFields
+          ? notificationSettings
+          : undefined,
+      professionalBlock:
+        'professionalBlock' in changedFields ? professionalBlock : undefined,
+      aboutStudent: 'aboutStudent' in changedFields ? aboutStudent : undefined,
+      mainSubjects:
+        categories?.[userRole] && 'categories' in changedFields
+          ? mapMainSubjects(categories, userRole)
+          : undefined,
+      photo:
+        'photo' in changedFields && (typeof photo === 'object' || photo === '')
+          ? photo
+          : undefined
+    })
 
-    if ('professionalBlock' in changedFields) {
-      dataToUpdate.professionalBlock = profileState.professionalBlock
-    }
-
-    if ('aboutStudent' in changedFields) {
-      dataToUpdate.aboutStudent = aboutStudent
-    }
-
-    if (categories?.[userRole] && 'categories' in changedFields) {
-      dataToUpdate.mainSubjects = mapMainSubjects(categories, userRole)
-    }
-
-    if (
-      'photo' in changedFields &&
-      (typeof photo === 'object' || photo === '')
-    ) {
-      dataToUpdate.photo = photo
-    }
+    Object.keys(dataToUpdate).forEach(
+      (key) =>
+        (dataToUpdate as Record<string, unknown>)[key] === undefined &&
+        delete (dataToUpdate as Record<string, unknown>)[key]
+    )
 
     if (Object.keys(dataToUpdate).length === 0) {
       return
     }
 
-    await dispatch(
-      updateUser({
-        userId,
-        params: dataToUpdate
-      })
-    )
+    await dispatch(updateUser({ userId, params: dataToUpdate }))
 
     dispatch(
       openAlert({
