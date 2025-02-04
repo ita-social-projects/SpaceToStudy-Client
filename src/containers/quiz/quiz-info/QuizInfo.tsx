@@ -184,6 +184,14 @@ const StartViewQuizInfo = ({
   const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
 
+  const limits = {
+    isNoLimitAttempt: attempts === QuizAttempt.NoLimit,
+    isNoLimitTime: timeLimit === QuizTimeLimit.NoLimit,
+    maxAttempts: parseInt(attempts, 10) || 0
+  }
+  const isHaveAttempts =
+    limits.isNoLimitAttempt || usedAttempts.length < limits.maxAttempts
+
   const typographyStyle = (subType: number) => {
     return spliceSx(
       styles[`subtitle${subType}` as keyof typeof styles],
@@ -198,16 +206,10 @@ const StartViewQuizInfo = ({
   }
 
   const onStartAttempt = () => {
-    if (!isNoLimitTime) {
-      setIsOpen(true)
-      return
-    }
-    handleStartButton(false)
+    limits.isNoLimitTime ? handleStartButton(false) : setIsOpen(true)
   }
-  const isNoLimitAttempt = attempts === QuizAttempt.NoLimit
-  const isNoLimitTime = timeLimit === QuizTimeLimit.NoLimit
 
-  const attemptLimitOutput = !isNoLimitAttempt && (
+  const attemptLimitOutput = !limits.isNoLimitAttempt && (
     <>
       <Box sx={styles.dividerEllipse}>
         <DividerComponent
@@ -226,7 +228,7 @@ const StartViewQuizInfo = ({
       </Typography>
     </>
   )
-  const timeLimitOutput = !isNoLimitTime && (
+  const timeLimitOutput = !limits.isNoLimitTime && (
     <>
       <Box sx={styles.dividerEllipse}>
         <DividerComponent
@@ -245,8 +247,6 @@ const StartViewQuizInfo = ({
       </Typography>
     </>
   )
-  const maxAttempts = parseInt(attempts.split(' ')[0], 10) || 0
-  const isHaveAttempts = isNoLimitAttempt || usedAttempts.length < maxAttempts
 
   const noAttemptsAlert = !isHaveAttempts && (
     <Alert severity='info'>{t('quiz.reachedAttemptLimit')}</Alert>

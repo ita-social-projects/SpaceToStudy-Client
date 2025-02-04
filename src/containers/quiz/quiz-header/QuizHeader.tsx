@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ResourceService } from '~/services/resource-service'
 import { useParams } from 'react-router-dom'
 import React from 'react'
+import Loader from '~/components/loader/Loader'
 
 type QuizHeaderProps = {
   isFinished: boolean
@@ -63,11 +64,13 @@ const QuizHeader = ({
     }
   }, [id, quizId])
 
-  const { data: finishedQuizzes } = useQuery({
+  const { data: finishedQuizzes, isLoading } = useQuery({
     queryKey: ['quizzes', id, quizId],
     queryFn: getQuizzes
   })
-
+  if (isLoading) {
+    return <Loader pageLoad size={50} />
+  }
   return (
     <Box sx={styles.wrapper}>
       <TitleWithDescription

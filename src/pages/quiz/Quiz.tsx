@@ -97,11 +97,13 @@ const QuizPage = () => {
     }
   }, [id, quizId])
 
-  const { data: finishedQuizzes } = useQuery({
+  const { data: finishedAttempts } = useQuery({
     queryKey: ['quizzes', id, quizId],
     queryFn: getQuizzes
   })
-
+  const finishedQuizzes = Array.isArray(finishedAttempts)
+    ? finishedAttempts
+    : []
   const addFinishedQuiz = useCallback(() => {
     return ResourceService.addFinishedQuiz({
       cooperation: id ?? '',
@@ -186,8 +188,8 @@ const QuizPage = () => {
 
   const questionsAnswered = Object.keys(data).length
   const attemptsList =
-    finishedQuizzes?.length !== 0 ? (
-      finishedQuizzes?.map((item) => {
+    finishedQuizzes.length !== 0 ? (
+      finishedQuizzes.map((item) => {
         return (
           <Box key={item._id} sx={styles.attemptWrapper}>
             <QuizInfoSection
