@@ -20,9 +20,10 @@ import DividerComponent from '~/design-system/components/divider/Divider'
 import { FinishedAttempts, QuizAttempt, QuizTimeLimit } from '~/types'
 import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { TFunction } from 'i18next'
-import TimeLimitReminder from '~/containers/quiz/time-limit-reminder/TimeLimitReminder'
 import { useState } from 'react'
 import { Alert } from '@mui/material'
+import QuizDialog from '~/containers/quiz/quiz-dialog/QuizDialog'
+import { AccessTimeRounded } from '@mui/icons-material'
 
 type ActiveQuizInfoProps = {
   questionsAnswered: number
@@ -258,15 +259,19 @@ const StartViewQuizInfo = ({
   }
   return (
     <>
-      <TimeLimitReminder
-        handleClose={() => {
-          handleTimeLimitModal(false, true)
-        }}
-        handleStart={() => {
+      <QuizDialog
+        actionText='quiz.start'
+        description='quiz.timeLimitReminderDescription'
+        descriptionParams={{ timeLimit: timeLimit.split(' ')[0] }}
+        icon={<AccessTimeRounded />}
+        onAction={() => {
           handleTimeLimitModal(false, false)
         }}
-        minutes={+timeLimit.split(' ')[0]}
+        onClose={() => {
+          handleTimeLimitModal(false, true)
+        }}
         open={isOpen}
+        title='quiz.timeLimitReminderTitle'
       />
       <Box sx={styles.infoWrapper}>
         <Box sx={styles.quizSettings}>
