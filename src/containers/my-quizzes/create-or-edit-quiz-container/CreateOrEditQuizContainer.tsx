@@ -145,7 +145,7 @@ const CreateOrEditQuizContainer = ({
     setTitle(quiz.title)
     setDescription(quiz.description)
     setQuestions(quiz.items)
-    setCategory(quiz.category)
+    setCategory(typeof quiz.category === 'string' ? quiz.category : null)
     setSettings(quiz.settings)
   }
 
@@ -204,13 +204,13 @@ const CreateOrEditQuizContainer = ({
           title,
           description,
           items: questions,
-          category
+          category: category ? { _id: category, name: '' } : null
         })
       : void addNewQuiz({
           title,
           description,
           items: questions,
-          category,
+          category: category ? { _id: category, name: '' } : null,
           resourceType: ResourceType.Quiz
         })
 

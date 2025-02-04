@@ -8,7 +8,7 @@ type TimerProps = {
   isTimeEnds: boolean
 }
 
-const Timer = ({ label, isTimeEnds }: TimerProps) => {
+const Timer: React.FC<TimerProps> = ({ label, isTimeEnds }) => {
   return (
     <Chip
       color={isTimeEnds ? 'error' : 'success'}

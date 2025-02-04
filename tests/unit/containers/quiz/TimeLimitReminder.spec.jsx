@@ -9,11 +9,7 @@ describe('TimeLimitReminder', () => {
 
   it('should render the dialog when open is true', () => {
     renderWithProviders(
-      <TimeLimitReminder
-        open={true}
-        handleStart={handleStart}
-        handleClose={handleClose}
-      />
+      <TimeLimitReminder open onStart={handleStart} onClose={handleClose} />
     )
 
     expect(screen.getByText('quiz.timeLimitReminderTitle')).toBeInTheDocument()
@@ -21,11 +17,7 @@ describe('TimeLimitReminder', () => {
 
   it('should call handleStart when start button is clicked', () => {
     renderWithProviders(
-      <TimeLimitReminder
-        open={true}
-        handleStart={handleStart}
-        handleClose={handleClose}
-      />
+      <TimeLimitReminder open onStart={handleStart} onClose={handleClose} />
     )
 
     const startButton = screen.getByText('quiz.start')
@@ -34,13 +26,9 @@ describe('TimeLimitReminder', () => {
     expect(handleStart).toHaveBeenCalledTimes(1)
   })
 
-  it('should call handleClose when Close button is clicked', () => {
+  it('should call handleClose when close button is clicked', () => {
     renderWithProviders(
-      <TimeLimitReminder
-        open={true}
-        handleStart={handleStart}
-        handleClose={handleClose}
-      />
+      <TimeLimitReminder open onStart={handleStart} onClose={handleClose} />
     )
 
     const closeButton = screen.getByTestId('CloseRoundedIcon')

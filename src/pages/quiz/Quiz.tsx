@@ -255,8 +255,8 @@ const QuizPage = () => {
             {finishButton}
           </Box>
           <FinishQuizModal
-            handleCancel={handleCancel}
-            handleFinish={handleFinish}
+            onCancel={handleCancel}
+            onFinish={handleFinish}
             open={isOpen}
           />
         </Box>
