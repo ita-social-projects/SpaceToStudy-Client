@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
@@ -24,10 +24,8 @@ import {
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
 import {
   ItemsWithCount,
-  GetResourcesParams,
   Attachment,
   ErrorResponse,
-  UpdateAttachmentParams,
   ResourcesTabsEnum,
   ButtonVariantEnum,
   CooperationSliceAttachment
@@ -38,6 +36,8 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
+import useMutation from '~/hooks/use-mutation'
+import useQuery from '~/hooks/use-query'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -67,7 +67,7 @@ const AttachmentsContainer = () => {
 
   const getAttachments = useCallback(
     () =>
-      ResourceService.getAttachments({
+      ResourceService.getAttachmentsQuery({
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
@@ -82,33 +82,27 @@ const AttachmentsContainer = () => {
     []
   )
 
-  const updateAttachment = useCallback(
-    (params?: UpdateAttachmentParams) =>
-      ResourceService.updateAttachment(params),
-    []
-  )
-
   const {
-    response,
-    loading,
-    fetchData: fetchAttachments
-  } = useAxios<ItemsWithCount<Attachment>, GetResourcesParams>({
-    service: getAttachments,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError
+    data: response,
+    isLoading: loading,
+    refetch: refetchAttachments,
+    error: fetchAttachmentsError
+  } = useQuery<ItemsWithCount<Attachment>>({
+    queryKey: ['attachments'],
+    queryFn: getAttachments,
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
   })
 
-  const onAttachmentUpdate = useCallback(
-    () => void fetchAttachments(),
-    [fetchAttachments]
-  )
+  const fetchAttachments = async (): Promise<void> => {
+    await refetchAttachments()
+  }
 
-  const { fetchData: updateData } = useAxios({
-    service: updateAttachment,
-    defaultResponse: null,
-    onResponseError,
-    onResponse: onAttachmentUpdate,
-    fetchOnMount: false
+  const { mutate: mutateAttachment } = useMutation({
+    mutationFn: ResourceService.updateAttachmentQuery,
+    onError: onResponseError,
+    queryKey: ['attachments']
   })
 
   const createAttachments = useCallback(
@@ -124,6 +118,8 @@ const AttachmentsContainer = () => {
       })
     )
   }
+
+  // TODO: useMutation
   const { fetchData: fetchCreateAttachment } = useAxios({
     service: createAttachments,
     fetchOnMount: false,
@@ -145,9 +141,7 @@ const AttachmentsContainer = () => {
           <EditAttachmentModal
             attachment={attachment as CooperationSliceAttachment}
             closeModal={closeModal}
-            onAttachmentUpdate={() => {
-              void updateData()
-            }}
+            onAttachmentUpdate={mutateAttachment}
           />
         )
       })
@@ -171,7 +165,7 @@ const AttachmentsContainer = () => {
         <AddAttachmentCategoryModal
           attachment={attachment as Attachment}
           closeModal={closeModal}
-          updateAttachmentCategory={updateData}
+          updateAttachmentCategory={mutateAttachment}
         />
       )
     })
@@ -185,7 +179,10 @@ const AttachmentsContainer = () => {
 
   const props = {
     columns: columnsToShow,
-    data: { response, getData: fetchAttachments },
+    data: {
+      response: response ?? defaultResponses.itemsWithCount,
+      getData: fetchAttachments
+    },
     services: { deleteService: deleteAttachment },
     itemsPerPage,
     actions: { onEdit },
@@ -216,6 +213,12 @@ const AttachmentsContainer = () => {
       sortOptions={sortOptions}
     />
   )
+
+  useEffect(() => {
+    if (fetchAttachmentsError) {
+      onResponseError(fetchAttachmentsError as ErrorResponse)
+    }
+  }, [fetchAttachmentsError, onResponseError])
 
   return (
     <Box>

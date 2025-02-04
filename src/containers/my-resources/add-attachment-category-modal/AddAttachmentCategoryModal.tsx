@@ -22,9 +22,7 @@ import {
 interface AddAttachmentCategoryModalProps {
   closeModal: () => void
   attachment: Attachment
-  updateAttachmentCategory: (
-    params?: UpdateAttachmentParams | undefined
-  ) => Promise<void>
+  updateAttachmentCategory: (params: UpdateAttachmentParams) => void
 }
 
 const AddAttachmentCategoryModal: FC<AddAttachmentCategoryModalProps> = ({
@@ -39,9 +37,9 @@ const AddAttachmentCategoryModal: FC<AddAttachmentCategoryModalProps> = ({
   const { data, errors, handleNonInputValueChange, handleBlur, handleSubmit } =
     useForm<UpdateAttachmentParams>({
       initialValues: getInitialValues(attachment),
-      onSubmit: async () => {
+      onSubmit: () => {
         setLoading(true)
-        await updateAttachmentCategory(data)
+        updateAttachmentCategory(data)
         setLoading(false)
         closeModal()
       }

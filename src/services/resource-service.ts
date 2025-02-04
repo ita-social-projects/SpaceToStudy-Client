@@ -155,12 +155,6 @@ export const ResourceService = {
       })
     })
   },
-  updateAttachment: async (params?: UpdateAttachmentParams) => {
-    return await axiosClient.patch(
-      createUrlPath(URLs.resources.attachments.patch, params?.id),
-      params
-    )
-  },
   updateAttachmentQuery: (data: UpdateAttachmentParams) => {
     const { id, ...attachmentData } = data
 
