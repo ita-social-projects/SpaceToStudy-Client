@@ -106,24 +106,21 @@ const EditProfile = () => {
     }
 
     const changes: Partial<NullableFields> = {}
-
     ;(Object.keys(profileState) as Array<keyof EditableFields>).forEach(
       <K extends keyof EditableFields>(key: K) => {
         const initialValue = initialEditProfileState[key]
         const currentValue = profileState[key]
 
-        if (JSON.stringify(initialValue) !== JSON.stringify(currentValue)) {
-          if (!currentValue) {
-            changes[key] = changes[key] || null
-          } else {
-            changes[key] = currentValue
-          }
+        if (
+          (currentValue || initialValue) &&
+          JSON.stringify(initialValue) !== JSON.stringify(currentValue)
+        ) {
+          changes[key] = currentValue || null
         }
       }
     )
-
     return changes as Partial<EditProfileState>
-  }, [profileState])
+  }, [profileState, initialEditProfileState])
 
   const isChanged = useMemo<boolean>(
     () => Object.keys(changedFields).length > 0,
