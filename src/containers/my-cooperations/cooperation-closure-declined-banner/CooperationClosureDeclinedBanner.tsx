@@ -11,7 +11,7 @@ import CooperationActionInput from '../cooperation-action-input/CooperationActio
 
 export interface CooperationClosureDeclinedBannerProps {
   isAnswerSubmitted: boolean
-  message: string
+  message?: string
   onSend: (answer: string) => void
   user: string
 }

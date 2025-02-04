@@ -8,6 +8,7 @@ import type {
   UpdateCooperationsParams,
   CreateOrUpdateNoteParams,
   UpdateCooperationsSections,
+  UpdateCooperationsNeedActionMessages,
   Cooperation,
   ItemsWithCount
 } from '~/types'
@@ -35,7 +36,10 @@ export const cooperationService = {
     })
   },
   updateCooperation: async (
-    data: UpdateCooperationsParams | UpdateCooperationsSections
+    data:
+      | UpdateCooperationsParams
+      | UpdateCooperationsSections
+      | UpdateCooperationsNeedActionMessages
   ) => {
     const url = getFullUrl({
       pathname: URLs.cooperations.updateById,

@@ -14,6 +14,7 @@ import { spliceSx } from '~/utils/helper-functions'
 
 import { Cooperation, StatusEnum } from '~/types'
 import { styles } from '~/containers/my-cooperations/cooperation-card/CooperationCard.styles'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface CooperationCardProps {
   cooperation: Cooperation
@@ -27,21 +28,18 @@ const CooperationCard: FC<CooperationCardProps> = ({
   sx
 }) => {
   const { t } = useTranslation()
-  const {
-    user,
-    offer,
-    updatedAt,
-    proficiencyLevel,
-    price,
-    status,
-    needAction
-  } = cooperation
+  const { user, offer, updatedAt, proficiencyLevel, price } = cooperation
+
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const cooperationStatus =
-    user.role !== needAction.role && status === StatusEnum.Pending
-      ? StatusEnum.NeedAction
-      : status
+    cooperation.status === StatusEnum.RequestToClose
+      ? cooperation.needAction.role === userRole
+        ? StatusEnum.NeedAction
+        : StatusEnum.RequestToClose
+      : cooperation.status
 
+  console.log(cooperationStatus)
   return (
     <AppCard onClick={onClick} sx={spliceSx(styles.root, sx)}>
       <Box sx={styles.userInfo}>

@@ -24,8 +24,7 @@ import { useChatContext } from '~/context/chat-context'
 import CooperationCompletion from '../cooperation-completion/CooperationCompletion'
 import { getCategoryIcon } from '~/services/category-icon-service'
 import { getValidatedHexColor } from '~/utils/get-validated-hex-color'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
-import { setCooperationStatus } from '~/redux/features/cooperationsSlice'
+import { useAppSelector } from '~/hooks/use-redux'
 
 const MyCooperationsDetails = () => {
   const { t } = useTranslation()
@@ -33,9 +32,7 @@ const MyCooperationsDetails = () => {
   const { setChatInfo } = useChatContext()
   const userId = useAppSelector((state) => state.appMain.userId)
   const userRole = useAppSelector((state) => state.appMain.userRole)
-  const cooperationStatus = useAppSelector((state) => state.cooperations.status)
   const { checkConfirmation } = useConfirm()
-  const dispatch = useAppDispatch()
 
   const getCooperationDetails = useCallback(() => {
     return cooperationService.getCooperationById(id)
@@ -51,7 +48,11 @@ const MyCooperationsDetails = () => {
 
   const { mutate: updateCooperationDetails } = useMutation({
     mutationFn: cooperationService.updateCooperation,
-    queryKeys: [['cooperations'], ['cooperation-details', id]]
+    queryKeys: [
+      ['cooperations'],
+      ['cooperation', id],
+      ['cooperation-details', id]
+    ]
   })
 
   const handleCooperationStatusUpdate = useCallback(async () => {
@@ -63,9 +64,8 @@ const MyCooperationsDetails = () => {
 
     if (isConfirmed) {
       updateCooperationDetails({ _id: id, status: StatusEnum.RequestToClose })
-      dispatch(setCooperationStatus(StatusEnum.RequestToClose))
     }
-  }, [checkConfirmation, dispatch, id, t, updateCooperationDetails])
+  }, [checkConfirmation, id, t, updateCooperationDetails])
 
   const handleCloseCooperation = useCallback(() => {
     void handleCooperationStatusUpdate()
@@ -208,7 +208,7 @@ const MyCooperationsDetails = () => {
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
       <CooperationCompletion
-        cooperationStatus={cooperationStatus}
+        cooperationStatus={cooperationDetails.status}
         onCloseCooperation={handleCloseCooperation}
         userRole={userRole}
       />

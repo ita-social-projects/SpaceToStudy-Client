@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ErrorOutlineRounded } from '@mui/icons-material'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import CooperationActionBanner from '~/containers/my-cooperations/cooperation-action-banner/CooperationActionBanner'
@@ -14,13 +14,15 @@ interface AcceptCooperationClosureProps {
   isReasonSubmitted: boolean
   onAccept: () => void
   onReasonSubmit: (reason: string) => void
+  message?: string
 }
 
 const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
   user,
   isReasonSubmitted,
   onAccept,
-  onReasonSubmit
+  onReasonSubmit,
+  message
 }) => {
   const { t } = useTranslation()
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
@@ -55,6 +57,16 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
             {t('cooperationDetailsPage.accessDuration')}
           </Typography>
           {t('cooperationDetailsPage.closingMessage2')}
+          {message && (
+            <Box sx={styles.response}>
+              <Typography component='span' sx={styles.boldText}>
+                {t('cooperationDetailsPage.answer')}
+                {user}:
+              </Typography>
+              <br />
+              <Typography sx={styles.secondaryText}>{message}</Typography>
+            </Box>
+          )}
         </>
       }
       icon={<ErrorOutlineRounded />}

@@ -13,3 +13,6 @@ export type UpdateCooperationsSections = Partial<
 export type UpdateCooperationStatusParams = Partial<
   Pick<Cooperation, 'status' | '_id'>
 >
+export type UpdateCooperationsNeedActionMessages = {
+  newMessage: string
+} & Pick<Cooperation, '_id'>
