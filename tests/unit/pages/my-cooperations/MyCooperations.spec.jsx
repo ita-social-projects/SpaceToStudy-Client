@@ -21,7 +21,12 @@ const MOCK_RESPONSE = {
       },
       price: 1800,
       proficiencyLevel: 'Beginner',
-      status: 'pending'
+      status: 'pending',
+      needAction: {
+        role: 'student',
+        type: 'price',
+        messages: []
+      }
     }
   ],
   count: 0
