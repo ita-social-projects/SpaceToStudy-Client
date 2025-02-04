@@ -11,7 +11,7 @@ type TimeIsUpProps = Pick<QuizDialogProps, 'open'> & {
   onClose: () => void
 }
 
-const TimeIsUp = ({ open, onStart, onClose }: TimeIsUpProps) => {
+const TimeIsUp: React.FC<TimeIsUpProps> = ({ open, onStart, onClose }) => {
   return (
     <QuizDialog
       actionText='quiz.viewResults'

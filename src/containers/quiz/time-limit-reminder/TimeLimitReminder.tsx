@@ -11,12 +11,12 @@ type TimeLimitReminderProps = Pick<QuizDialogProps, 'open'> & {
   onClose: () => void
 }
 
-const TimeLimitReminder = ({
+const TimeLimitReminder: React.FC<TimeLimitReminderProps> = ({
   open,
   timeLimit,
   onStart,
   onClose
-}: TimeLimitReminderProps) => {
+}) => {
   const { t } = useTranslation()
 
   const translatedTimeLimit = t(timeLimit)

@@ -25,7 +25,7 @@ export type QuizDialogProps = {
   onClose?: () => void
 }
 
-const QuizDialog = ({
+const QuizDialog: React.FC<QuizDialogProps> = ({
   open,
   icon,
   title,
@@ -36,7 +36,7 @@ const QuizDialog = ({
   onAction,
   onSecondaryAction,
   onClose
-}: QuizDialogProps) => {
+}) => {
   const { t } = useTranslation()
 
   return (

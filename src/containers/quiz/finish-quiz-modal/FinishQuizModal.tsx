@@ -9,11 +9,11 @@ type FinishQuizModalProps = Pick<QuizDialogProps, 'open'> & {
   onFinish: () => void
 }
 
-const FinishQuizModal = ({
+const FinishQuizModal: React.FC<FinishQuizModalProps> = ({
   open,
   onCancel,
   onFinish
-}: FinishQuizModalProps) => {
+}) => {
   return (
     <QuizDialog
       actionText='quiz.confirm'
