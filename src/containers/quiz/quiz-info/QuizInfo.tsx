@@ -12,11 +12,11 @@ import styles from '~/containers/quiz/quiz-info/QuizInfo.styles'
 import {
   getFormattedDate,
   formatTime,
-  formatTimeDifference
+  formatTimeDifference,
+  spliceSx
 } from '~/utils/helper-functions'
 
 import DividerComponent from '~/design-system/components/divider/Divider'
-import { spliceSx } from '~/utils/helper-functions'
 import { FinishedAttempts, QuizAttempt, QuizTimeLimit } from '~/types'
 import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { TFunction } from 'i18next'
