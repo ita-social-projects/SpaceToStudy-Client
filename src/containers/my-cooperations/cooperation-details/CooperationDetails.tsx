@@ -43,7 +43,7 @@ import {
   setIsActivityCreated
 } from '~/redux/features/cooperationsSlice'
 import AcceptCooperationClosing from '~/containers/my-cooperations/accept-cooperation-close/AcceptCooperationClosing'
-import CooperationClosureDeclinedBanner from '../cooperation-closure-declined-banner/CooperationClosureDeclinedBanner'
+import CooperationClosureDeclinedBanner from '~/containers/my-cooperations/cooperation-closure-declined-banner/CooperationClosureDeclinedBanner'
 
 const CooperationDetails = () => {
   const dispatch = useAppDispatch()
@@ -185,17 +185,21 @@ const CooperationDetails = () => {
       ? cooperation.initiator
       : cooperation.receiver
 
+  const roleBasedStatus =
+    cooperation.needAction.role === userRole
+      ? StatusEnum.NeedAction
+      : StatusEnum.RequestToClose
+
   const cooperationStatusChip =
     cooperation.status === StatusEnum.RequestToClose
-      ? cooperation.needAction.role === userRole
-        ? StatusEnum.NeedAction
-        : StatusEnum.RequestToClose
+      ? roleBasedStatus
       : cooperation.status
 
   const getCooperationClosingModal = () => {
     if (cooperation.status !== StatusEnum.RequestToClose) {
       return null
     }
+
     if (cooperation.needAction.type === NeedActionTypeEnum.WaitingForApproval) {
       return cooperation.needAction.role === userRole ? (
         <AcceptCooperationClosing
@@ -216,6 +220,7 @@ const CooperationDetails = () => {
         )
       )
     }
+
     if (cooperation.needAction.type === NeedActionTypeEnum.WaitingForAnswer) {
       return cooperation.needAction.role === userRole ? (
         <CooperationClosureDeclinedBanner

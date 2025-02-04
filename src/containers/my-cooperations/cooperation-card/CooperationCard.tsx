@@ -32,14 +32,16 @@ const CooperationCard: FC<CooperationCardProps> = ({
 
   const { userRole } = useAppSelector((state) => state.appMain)
 
+  const roleBasedStatus =
+    cooperation.needAction.role === userRole
+      ? StatusEnum.NeedAction
+      : StatusEnum.RequestToClose
+
   const cooperationStatus =
     cooperation.status === StatusEnum.RequestToClose
-      ? cooperation.needAction.role === userRole
-        ? StatusEnum.NeedAction
-        : StatusEnum.RequestToClose
+      ? roleBasedStatus
       : cooperation.status
 
-  console.log(cooperationStatus)
   return (
     <AppCard onClick={onClick} sx={spliceSx(styles.root, sx)}>
       <Box sx={styles.userInfo}>

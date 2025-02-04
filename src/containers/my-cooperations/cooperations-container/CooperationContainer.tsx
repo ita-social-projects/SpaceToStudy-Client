@@ -67,13 +67,15 @@ const CooperationContainer: React.FC<CooperationContainerProps> = ({
       columns={columnsToShow}
       data={{
         items: items.map((item) => {
+          const roleBasedStatus =
+            item.needAction.role === userRole
+              ? StatusEnum.NeedAction
+              : StatusEnum.RequestToClose
           return {
             ...item,
             status:
               item.status === StatusEnum.RequestToClose
-                ? item.needAction.role === userRole
-                  ? StatusEnum.NeedAction
-                  : StatusEnum.RequestToClose
+                ? roleBasedStatus
                 : item.status
           }
         })

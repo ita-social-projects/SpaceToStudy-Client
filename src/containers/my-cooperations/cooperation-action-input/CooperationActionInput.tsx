@@ -93,9 +93,15 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
   return (
     isReasonSubmitted &&
     !hasErrors && (
-      <Typography sx={styles.textGray}>
-        {t('cooperationDetailsPage.submitMessage')}
-      </Typography>
+      <Box>
+        <Typography sx={styles.textGray}>
+          {t('cooperationDetailsPage.submitMessage')}
+        </Typography>
+        <Typography sx={styles.textGray}>
+          {t('cooperationDetailsPage.submittedReason')}
+          {data.declineReason}
+        </Typography>
+      </Box>
     )
   )
 }

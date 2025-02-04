@@ -101,7 +101,6 @@ export enum StatusEnum {
   NeedAction = 'need action',
   RequestToClose = 'request to close'
 }
-
 export enum PositionEnum {
   Left = 'left',
   Right = 'right',
