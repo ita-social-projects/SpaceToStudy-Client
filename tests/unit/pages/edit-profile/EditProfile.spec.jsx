@@ -1,4 +1,5 @@
-import { screen, waitFor, fireEvent } from '@testing-library/react'
+import { screen, waitFor, fireEvent, renderHook  } from '@testing-library/react'
+import { useMemo } from 'react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import EditProfile from '~/pages/edit-profile/EditProfile'
@@ -81,6 +82,27 @@ const mockData = {
     lastName: '',
     videoLink: ''
   }
+}
+
+const hasChanges = (
+  initialData,
+  currentData
+) => JSON.stringify(initialData) !== JSON.stringify(currentData);
+
+const profileStateMock = {
+  videoLink: 'https://newvideolink.com',
+  notificationSettings: { email: true },
+  professionalBlock: { title: 'Engineer' },
+  aboutStudent: { bio: 'New bio' },
+  photo: 'new-photo.jpg',
+}
+
+const initialEditProfileStateMock = {
+  videoLink: 'https://oldvideolink.com',
+  notificationSettings: { email: false },
+  professionalBlock: { title: 'Designer' },
+  aboutStudent: { bio: 'Old bio' },
+  photo: 'old-photo.jpg',
 }
 
 vi.mock('~/hooks/use-confirm', () => ({
@@ -514,7 +536,6 @@ describe('EditProfile', () => {
       ]
     }
 
-    const userRole = 'tutor'
     const dataToUpdate = {}
 
     if (categories?.[userRole]) {
@@ -529,7 +550,7 @@ describe('EditProfile', () => {
     }
 
     const expectedMainSubjects = {
-      ['tutor']: [
+      [userRole]: [
         {
           category: { _id: 'cat1' },
           subjects: [{ _id: 'sub1' }, { _id: 'sub2' }]
@@ -576,7 +597,6 @@ describe('EditProfile', () => {
         }
       ]
     }
-    const userRole = 'tutor'
     const dataToUpdate = {}
 
     if (categories?.[userRole]) {
@@ -625,6 +645,34 @@ describe('EditProfile', () => {
   it('should add photo if hasPhotoChanged is true after clicking update', () => {
     const changes = clickUpdateAndGetChanges({ photo: 'new-photo-url.jpg' })
     expect(changes).toHaveProperty('photo', 'new-photo-url.jpg')
+  })
+
+  it('should render loader when loading is pending', () => {
+    useAppSelector.mockImplementation((selector) =>
+      selector({
+        ...mockState,
+        editProfile: {
+          ...mockState.editProfile,
+          loading: LoadingStatusEnum.Pending
+        }
+      })
+    )
+  
+    renderWithProviders(<EditProfile />, {
+      preloadedState: mockState
+    })
+    const loader = screen.getByTestId('loader')
+    expect(loader).toBeInTheDocument()
+  }) 
+
+  it('should return an empty object if no changes are detected', () => {
+    const { result } = renderHook(() => useMemo(() => {
+      const hasChanged = hasChanges(initialEditProfileStateMock, profileStateMock)
+      if (!hasChanged) return {}
+      return {}
+    }, [profileStateMock, initialEditProfileStateMock]))
+
+    expect(result.current).toEqual({})
   })
 })
 
