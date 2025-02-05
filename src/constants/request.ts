@@ -112,7 +112,7 @@ export const URLs = {
     get: '/quizzes',
     getById: '/quizzes/:id',
     add: '/quizzes',
-    patch: '/quizzes',
+    patch: '/quizzes/:id',
     delete: '/quizzes'
   },
   finishedQuizzes: {

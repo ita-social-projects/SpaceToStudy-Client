@@ -99,11 +99,30 @@ export const ResourceService = {
     await axiosClient.get(createUrlPath(URLs.quizzes.get, id)),
   addQuiz: async (data?: CreateQuizParams): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.quizzes.add, data),
+  addQuizQuery: async (data: CreateQuizParams) => {
+    return baseService.request<Quiz>({
+      method: 'POST',
+      url: URLs.quizzes.add,
+      data
+    })
+  },
   editQuiz: async (params?: UpdateQuizParams) =>
     await axiosClient.patch(
       createUrlPath(URLs.quizzes.patch, params?.id),
       params
     ),
+  editQuizQuery: async (data: UpdateQuizParams) => {
+    const { id, ...quizData } = data
+
+    return baseService.request<void>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.quizzes.patch,
+        parameters: { id }
+      }),
+      data: quizData
+    })
+  },
   deleteQuiz: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(createUrlPath(URLs.quizzes.delete, id)),
   addFinishedQuiz: async (data: CreateFinishedQuizParams) => {
