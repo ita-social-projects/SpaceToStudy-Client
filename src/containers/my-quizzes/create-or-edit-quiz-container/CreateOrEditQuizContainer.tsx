@@ -98,7 +98,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
     onError: handleErrorAlert
   })
 
-  const editQuiz = useCallback(
+  const editQuizService = useCallback(
     async (data: UpdateQuizParams) => {
       if (id) {
         await ResourceService.editQuizQuery(data)
@@ -108,7 +108,8 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   )
 
   const { mutate: fetchEditedQuiz } = useMutation({
-    mutationFn: editQuiz,
+    queryKey: ['quiz', id],
+    mutationFn: editQuizService,
     onSuccess: handleResponse,
     onError: handleErrorAlert
   })
@@ -188,14 +189,14 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
 
   const onSaveQuiz = () =>
     id
-      ? void fetchEditedQuiz({
+      ? fetchEditedQuiz({
           id,
           title,
           description,
           items: questions,
           category: category ? { _id: category, name: '' } : null
         })
-      : void fetchAddQuiz({
+      : fetchAddQuiz({
           title,
           description,
           items: questions,
