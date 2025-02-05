@@ -65,7 +65,7 @@ const AttachmentsContainer = () => {
 
   const getAttachments = useCallback(
     () =>
-      ResourceService.getAttachmentsQuery({
+      ResourceService.getAttachments({
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
@@ -97,8 +97,8 @@ const AttachmentsContainer = () => {
     await refetchAttachments()
   }
 
-  const { mutate: mutateAttachment } = useMutation({
-    mutationFn: ResourceService.updateAttachmentQuery,
+  const { mutate: updateAttachment } = useMutation({
+    mutationFn: ResourceService.updateAttachment,
     onError: onResponseError,
     queryKey: ['attachments']
   })
@@ -112,8 +112,8 @@ const AttachmentsContainer = () => {
     )
   }
 
-  const { mutate: mutateCreateAttachment } = useMutation({
-    mutationFn: ResourceService.createAttachments,
+  const { mutate: createAttachment } = useMutation({
+    mutationFn: ResourceService.createAttachment,
     onError: onCreateAttachmentsError,
     queryKey: ['attachments']
   })
@@ -127,7 +127,7 @@ const AttachmentsContainer = () => {
           <EditAttachmentModal
             attachment={attachment as CooperationSliceAttachment}
             closeModal={closeModal}
-            onAttachmentUpdate={mutateAttachment}
+            onAttachmentUpdate={updateAttachment}
           />
         )
       })
@@ -151,7 +151,7 @@ const AttachmentsContainer = () => {
         <AddAttachmentCategoryModal
           attachment={attachment as Attachment}
           closeModal={closeModal}
-          updateAttachmentCategory={mutateAttachment}
+          updateAttachmentCategory={updateAttachment}
         />
       )
     })
@@ -183,7 +183,7 @@ const AttachmentsContainer = () => {
       button={
         <AddDocuments
           buttonText={t('myResourcesPage.attachments.addBtn')}
-          fetchData={mutateCreateAttachment}
+          fetchData={createAttachment}
           formData={formData}
           icon={<AddIcon sx={styles.addAttachmentIcon} />}
           removePreviousFiles

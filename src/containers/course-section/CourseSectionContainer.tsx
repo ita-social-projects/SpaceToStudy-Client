@@ -162,7 +162,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
   }
 
   const { mutate: mutateAttachment } = useMutation({
-    mutationFn: ResourceService.updateAttachmentQuery,
+    mutationFn: ResourceService.updateAttachment,
     onSuccess: (data) => {
       resourceEventHandler?.({
         type: CourseResourceEventType.ResourceUpdated,
@@ -325,7 +325,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
           columns={attachmentColumns}
           onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeAttachmentColumnRules}
-          requestService={ResourceService.getAttachmentsQuery}
+          requestService={ResourceService.getAttachments}
           resourceTab={resourcesData.attachments.resourceTab}
           resources={attachments}
           showCheckboxWithTooltip
