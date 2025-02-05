@@ -25,19 +25,12 @@ const mockState1 = {
   appMain: { userId: userId, userRole: 'student' }
 }
 
-const cooperationMock = {
+const cooperationData = {
   _id: '123456789',
   price: 100,
   proficiencyLevel: 'Beginner',
   status: 'request to close',
-  needAction: {
-    role: 'tutor',
-    type: 'waiting for approval',
-    messages: []
-  },
   title: 'Cooperation title',
-  initiator: { _id: userId, role: ['tutor'] },
-  receiver: { _id: '123123', role: ['student'] },
   offer: {
     title: 'Title',
     description: 'Description',
@@ -70,47 +63,47 @@ const cooperationMock = {
 }
 
 const cooperationMock1 = {
-  _id: '123456789',
-  price: 100,
-  proficiencyLevel: 'Beginner',
-  status: 'request to close',
+  ...cooperationData,
+  needAction: {
+    role: 'tutor',
+    type: 'waiting for approval',
+    messages: []
+  },
+  initiator: { _id: userId, role: ['tutor'] },
+  receiver: { _id: '123123', role: ['student'] }
+}
+
+const cooperationMock2 = {
+  ...cooperationData,
   needAction: {
     role: 'student',
     type: 'waiting for answer',
     messages: ['reason1']
   },
-  title: 'Cooperation title',
   initiator: { _id: userId, role: ['student'] },
-  receiver: { _id: '123123', role: ['tutor'] },
-  offer: {
-    title: 'Title',
-    description: 'Description',
-    languages: ['Ukrainian', 'English'],
-    author: {
-      firstName: 'Michael',
-      lastName: 'Scarn',
-      photo: '1701182621626.jpg',
-      professionalSummary: 'Agent'
-    },
-    subject: {
-      name: 'Algebra'
-    },
-    category: {
-      name: 'Mathematics',
-      appearance: {
-        color: '#1234'
-      }
-    },
-    proficiencyLevel: ['INTERMEDIATE']
+  receiver: { _id: '123123', role: ['tutor'] }
+}
+
+const cooperationMock3 = {
+  ...cooperationData,
+  needAction: {
+    role: 'student',
+    type: 'waiting for approval',
+    messages: ['message1']
   },
-  user: {
-    _id: '123456',
-    firstName: 'Name',
-    lastName: 'Surname',
-    role: 'tutor'
+  initiator: { _id: userId, role: ['tutor'] },
+  receiver: { _id: '123123', role: ['student'] }
+}
+
+const cooperationMock4 = {
+  ...cooperationData,
+  needAction: {
+    role: 'tutor',
+    type: 'waiting for answer',
+    messages: ['reason1']
   },
-  createdAt: '2024-01-12T11:28:34.397Z',
-  updatedAt: '2024-01-12T11:28:34.397Z'
+  initiator: { _id: userId, role: ['student'] },
+  receiver: { _id: '123123', role: ['tutor'] }
 }
 
 vi.mock(
@@ -126,7 +119,7 @@ describe('CooperationDetails', () => {
   beforeAll(() => {
     mockAxiosClient
       .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
-      .reply(200, cooperationMock)
+      .reply(200, cooperationMock1)
   })
 
   beforeEach(() => {
@@ -134,7 +127,7 @@ describe('CooperationDetails', () => {
   })
 
   afterAll(() => {
-    mockAxiosClient.reset();
+    mockAxiosClient.reset()
   })
 
   it('should render details page', async () => {
@@ -146,7 +139,7 @@ describe('CooperationDetails', () => {
   })
 
   it('should show cooperation status and title', () => {
-    const title = screen.getByText(cooperationMock.title)
+    const title = screen.getByText(cooperationMock1.title)
     const statusChip = screen.getByText('need action')
 
     expect(title).toBeInTheDocument()
@@ -183,10 +176,7 @@ describe('CooperationDetails', () => {
     expect(cooperationNotes).not.toBeInTheDocument()
   })
 
-  it('should render cooperation closing modal', () => {
-    const tab1 = screen.getByText('cooperationsPage.tabs.activities')
-    fireEvent.click(tab1)
-
+  it('should render AcceptCooperationClosing modal when needAction type is "waiting for approval" and role equals users role', () => {
     const cooperationClosingModal = screen.getByText(
       'titles.acceptCooperationClosing'
     )
@@ -194,22 +184,66 @@ describe('CooperationDetails', () => {
   })
 })
 
-describe('cooperation closing process modals', () => {
+describe('CooperationClosureDeclinedBanner without answer being submitted', () => {
   beforeAll(() => {
-    mockAxiosClient.reset();
+    mockAxiosClient.reset()
     mockAxiosClient
       .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
-      .reply(200, cooperationMock1)
+      .reply(200, cooperationMock2)
   })
 
   beforeEach(() => {
     renderWithProviders(<CooperationDetails />, { preloadedState: mockState1 })
   })
 
-  it('should render cooperation closing modal with message', async () => {
+  it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for answer" and role equals users role', async () => {
     await waitFor(() => {
       const cooperationClosingModal = screen.getByText(
         'titles.cooperationClosureDeclined'
+      )
+      expect(cooperationClosingModal).toBeInTheDocument()
+    })
+  })
+})
+
+describe('CooperationClosureDeclinedBanner with submitted answer', () => {
+  beforeAll(() => {
+    mockAxiosClient.reset()
+    mockAxiosClient
+      .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
+      .reply(200, cooperationMock3)
+  })
+
+  beforeEach(() => {
+    renderWithProviders(<CooperationDetails />, { preloadedState: mockState })
+  })
+
+  it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for approval" and role is not the same as users role', async () => {
+    await waitFor(() => {
+      const cooperationClosingModal = screen.getByText(
+        'titles.cooperationClosureDeclined'
+      )
+      expect(cooperationClosingModal).toBeInTheDocument()
+    })
+  })
+})
+
+describe('AcceptCooperationClosing modal with submitted answer', () => {
+  beforeAll(() => {
+    mockAxiosClient.reset()
+    mockAxiosClient
+      .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
+      .reply(200, cooperationMock4)
+  })
+
+  beforeEach(() => {
+    renderWithProviders(<CooperationDetails />, { preloadedState: mockState1 })
+  })
+
+  it('should render AcceptCooperationClosing modal when needAction type is "waiting for answer" and role is not the same as users role', async () => {
+    await waitFor(() => {
+      const cooperationClosingModal = screen.getByText(
+        'titles.acceptCooperationClosing'
       )
       expect(cooperationClosingModal).toBeInTheDocument()
     })
