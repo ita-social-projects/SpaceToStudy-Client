@@ -13,7 +13,7 @@ import { spliceSx } from '~/utils/helper-functions'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface AddDocumentsProps {
-  fetchData: (formData: FormData) => void
+  onCreateDocument: (formData: FormData) => void
   formData: FormData
   buttonText: string
   sx?: {
@@ -25,7 +25,7 @@ interface AddDocumentsProps {
 }
 
 const AddDocuments: FC<AddDocumentsProps> = ({
-  fetchData,
+  onCreateDocument,
   formData,
   buttonText,
   sx = {},
@@ -56,7 +56,7 @@ const AddDocuments: FC<AddDocumentsProps> = ({
       formData.append('files', file)
     }
 
-    !error && void fetchData(formData)
+    !error && onCreateDocument(formData)
     removePreviousFiles && setDocuments([])
   }
 

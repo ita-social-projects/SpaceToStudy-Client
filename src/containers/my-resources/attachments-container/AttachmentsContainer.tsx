@@ -183,9 +183,9 @@ const AttachmentsContainer = () => {
       button={
         <AddDocuments
           buttonText={t('myResourcesPage.attachments.addBtn')}
-          fetchData={createAttachment}
           formData={formData}
           icon={<AddIcon sx={styles.addAttachmentIcon} />}
+          onCreateDocument={createAttachment}
           removePreviousFiles
           sx={styles.addAttachmentBtn}
         />

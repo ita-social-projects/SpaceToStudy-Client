@@ -136,8 +136,10 @@ const AddResourceModal = <T extends TableItem>({
       {uploadItem && (
         <AddDocuments
           buttonText={t('common.uploadNewFile')}
-          fetchData={uploadItem}
           formData={formData}
+          onCreateDocument={(data: FormData) => {
+            void uploadItem(data)
+          }}
         />
       )}
     </Box>
