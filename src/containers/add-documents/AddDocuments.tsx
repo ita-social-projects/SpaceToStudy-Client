@@ -8,15 +8,14 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import { validationData } from '~/containers/add-documents/AddDocuments.constants'
 import { styles } from '~/containers/add-documents/AddDocuments.styles'
 import { snackbarVariants } from '~/constants'
-import { ButtonVariantEnum, UploadFileEmitter } from '~/types'
+import type { UploadFileEmitter } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface AddDocumentsProps {
-  fetchData: (formData: FormData) => Promise<void>
+  fetchData: (formData: FormData) => void
   formData: FormData
   buttonText: string
-  variant?: ButtonVariantEnum
   sx?: {
     root?: SxProps
     button?: SxProps
@@ -29,7 +28,6 @@ const AddDocuments: FC<AddDocumentsProps> = ({
   fetchData,
   formData,
   buttonText,
-  variant,
   sx = {},
   icon,
   removePreviousFiles = false
@@ -75,7 +73,6 @@ const AddDocuments: FC<AddDocumentsProps> = ({
           button: spliceSx(styles.fileUpload.button, sx?.button)
         }}
         validationData={validationData}
-        variant={variant}
       />
     </Box>
   )

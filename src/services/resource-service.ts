@@ -172,9 +172,11 @@ export const ResourceService = {
       createUrlPath(URLs.resources.attachments.delete, id)
     )
   },
-  createAttachments: (data?: FormData): Promise<AxiosResponse> => {
-    return axiosClient.post(URLs.attachments.post, data, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+  createAttachments: (data: FormData) => {
+    return baseService.request<Attachment>({
+      method: 'POST',
+      url: URLs.resources.attachments.post,
+      data: data
     })
   },
   getQuestions: (

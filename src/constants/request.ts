@@ -87,7 +87,8 @@ export const URLs = {
     attachments: {
       get: '/attachments',
       patch: '/attachments/:id',
-      delete: '/attachments'
+      delete: '/attachments',
+      post: '/attachments'
     },
     questions: {
       get: '/questions',

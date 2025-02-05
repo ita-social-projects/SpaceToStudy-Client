@@ -11,7 +11,6 @@ import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyRes
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
 import AddDocuments from '~/containers/add-documents/AddDocuments'
 
@@ -23,12 +22,11 @@ import {
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
 import {
-  ItemsWithCount,
-  Attachment,
-  ErrorResponse,
-  ResourcesTabsEnum,
-  ButtonVariantEnum,
-  CooperationSliceAttachment
+  type ItemsWithCount,
+  type Attachment,
+  type ErrorResponse,
+  type CooperationSliceAttachment,
+  ResourcesTabsEnum
 } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
@@ -105,11 +103,6 @@ const AttachmentsContainer = () => {
     queryKey: ['attachments']
   })
 
-  const createAttachments = useCallback(
-    (data?: FormData) => ResourceService.createAttachments(data),
-    []
-  )
-
   const onCreateAttachmentsError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
@@ -119,18 +112,11 @@ const AttachmentsContainer = () => {
     )
   }
 
-  // TODO: useMutation
-  const { fetchData: fetchCreateAttachment } = useAxios({
-    service: createAttachments,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError: onCreateAttachmentsError
+  const { mutate: mutateCreateAttachment } = useMutation({
+    mutationFn: ResourceService.createAttachments,
+    onError: onCreateAttachmentsError,
+    queryKey: ['attachments']
   })
-
-  const uploadFile = async (data: FormData) => {
-    await fetchCreateAttachment(data)
-    await fetchAttachments()
-  }
 
   const onEdit = (id: string) => {
     const attachment = response.items.find((item) => item._id === id)
@@ -197,12 +183,11 @@ const AttachmentsContainer = () => {
       button={
         <AddDocuments
           buttonText={t('myResourcesPage.attachments.addBtn')}
-          fetchData={uploadFile}
+          fetchData={mutateCreateAttachment}
           formData={formData}
           icon={<AddIcon sx={styles.addAttachmentIcon} />}
           removePreviousFiles
           sx={styles.addAttachmentBtn}
-          variant={ButtonVariantEnum.Contained}
         />
       }
       fetchData={fetchAttachments}
