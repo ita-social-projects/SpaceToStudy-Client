@@ -14,11 +14,12 @@ export interface CooperationClosureDeclinedBannerProps {
   message?: string
   onSend: (answer: string) => void
   user: string
+  submittedReason?: string
 }
 
 const CooperationClosureDeclinedBanner: React.FC<
   CooperationClosureDeclinedBannerProps
-> = ({ isAnswerSubmitted, message, onSend, user }) => {
+> = ({ isAnswerSubmitted, message, onSend, user, submittedReason }) => {
   const { t } = useTranslation()
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
 
@@ -57,6 +58,7 @@ const CooperationClosureDeclinedBanner: React.FC<
         isReasonSubmitted={isAnswerSubmitted}
         onReasonSubmit={onSend}
         setIsInputShown={setIsInputShown}
+        submittedReason={submittedReason}
       />
     </CooperationActionBanner>
   )

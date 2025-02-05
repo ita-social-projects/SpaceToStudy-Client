@@ -15,6 +15,7 @@ interface AcceptCooperationClosureProps {
   onAccept: () => void
   onReasonSubmit: (reason: string) => void
   message?: string
+  submittedReason?: string
 }
 
 const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
@@ -22,7 +23,8 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
   isReasonSubmitted,
   onAccept,
   onReasonSubmit,
-  message
+  message,
+  submittedReason
 }) => {
   const { t } = useTranslation()
   const [isInputShown, setIsInputShown] = useState<boolean>(false)
@@ -81,6 +83,7 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
         isReasonSubmitted={isReasonSubmitted}
         onReasonSubmit={onReasonSubmit}
         setIsInputShown={setIsInputShown}
+        submittedReason={submittedReason}
       />
     </CooperationActionBanner>
   )

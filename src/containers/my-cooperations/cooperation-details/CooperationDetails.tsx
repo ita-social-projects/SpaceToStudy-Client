@@ -215,6 +215,7 @@ const CooperationDetails = () => {
             isAnswerSubmitted
             message={cooperation.needAction.messages.at(-2)}
             onSend={handleAnswerSubmit}
+            submittedReason={cooperation.needAction.messages.at(-1)}
             user={closeCooperationReceiver.firstName}
           />
         )
@@ -239,6 +240,7 @@ const CooperationDetails = () => {
           message={cooperation.needAction.messages.at(-2)}
           onAccept={handleCooperationClosingAccept}
           onReasonSubmit={handleReasonSubmit}
+          submittedReason={cooperation.needAction.messages.at(-1)}
           user={closeCooperationReceiver.firstName}
         />
       )
