@@ -9,6 +9,8 @@ import { useAppSelector } from '~/hooks/use-redux'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { mapMainSubjects } from '~/pages/edit-profile/EditProfile'
 import { UserRoleEnum } from '~/types'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
 
 const userId = '63f5d0ebb'
 const userRole = 'tutor'
@@ -91,18 +93,38 @@ const hasChanges = (
 
 const profileStateMock = {
   videoLink: 'https://newvideolink.com',
-  notificationSettings: { email: true },
-  professionalBlock: { title: 'Engineer' },
+  notificationSettings: { 
+    isOfferStatusNotification: false,
+    isChatNotification: false,
+    isSimilarOffersNotification: false,
+    isEmailNotification: false
+   },
+  professionalBlock: { 
+    education: 'Computer Science',
+    workExperience: 'Experience',
+    scientificActivities: 'Activities',
+    awards: 'Awards'
+   },
   aboutStudent: { bio: 'New bio' },
-  photo: 'new-photo.jpg',
+  photo: 'new-photo.jpg'
 }
 
 const initialEditProfileStateMock = {
   videoLink: 'https://oldvideolink.com',
-  notificationSettings: { email: false },
-  professionalBlock: { title: 'Designer' },
+  notificationSettings: { 
+    isOfferStatusNotification: true,
+    isChatNotification: false,
+    isSimilarOffersNotification: false,
+    isEmailNotification: true
+   },
+  professionalBlock: { 
+    education: 'Education',
+    workExperience: 'Experience',
+    scientificActivities: 'Activities',
+    awards: 'Awards'
+   },
   aboutStudent: { bio: 'Old bio' },
-  photo: 'old-photo.jpg',
+  photo: 'old-photo.jpg'
 }
 
 vi.mock('~/hooks/use-confirm', () => ({
@@ -188,6 +210,14 @@ vi.mock('AppTextField', () => ({
   )
 }))
 
+vi.mock('~/redux/features/snackbarSlice', async () => {
+  const actual = await vi.importActual('~/redux/features/snackbarSlice')
+  return {
+    ...actual,
+    openAlert: vi.fn()
+  }
+})
+
 describe('EditProfile', () => {
   const getLatestChanges = vi.fn()
 
@@ -239,9 +269,8 @@ describe('EditProfile', () => {
   it('should not include notificationSettings in dataToUpdate if notificationSettings is null', () => {
     const notificationSettings = null
     const profileState = { notificationSettings }
-    const rest = {}
 
-    const dataToUpdate = { ...rest }
+    const dataToUpdate = {}
     if (notificationSettings) {
       dataToUpdate.notificationSettings = profileState.notificationSettings
     }
@@ -252,9 +281,8 @@ describe('EditProfile', () => {
   it('should not include professionalBlock in dataToUpdate if professionalBlock is null', () => {
     const professionalBlock = null
     const profileState = { professionalBlock }
-    const rest = {}
 
-    const dataToUpdate = { ...rest }
+    const dataToUpdate = {}
     if (professionalBlock) {
       dataToUpdate.professionalBlock = profileState.professionalBlock
     }
@@ -265,19 +293,18 @@ describe('EditProfile', () => {
   it('should include photo in dataToUpdate if profileState.photo is an object', () => {
     const photo = { src: 'photo.jpg', name: 'Profile Photo' }
     const profileState = { photo }
-    const rest = {}
 
-    const dataToUpdate = { ...rest }
+    const dataToUpdate = {}
     if (typeof profileState.photo === 'object') {
       dataToUpdate.photo = profileState.photo
     }
 
     expect(dataToUpdate).toHaveProperty('photo', profileState.photo)
   })
+
   it('should include videoLink in dataToUpdate if videoLink is an object with a property that matches the userRole', () => {
     const videoLink = { [userRole]: 'http://video1234556443.com/video' }
-    const rest = {}
-    const dataToUpdate = { ...rest }
+    const dataToUpdate = {}
     if (videoLink) {
       dataToUpdate.videoLink =
         typeof videoLink === 'string' ? videoLink : videoLink[userRole]
@@ -297,9 +324,8 @@ describe('EditProfile', () => {
   it('should not include photo in dataToUpdate if profileState.photo is a filled string', () => {
     const photo = 'stringInsteadOfObject'
     const profileState = { photo }
-    const rest = {}
 
-    const dataToUpdate = { ...rest }
+    const dataToUpdate = {}
     if (typeof profileState.photo === 'object' || profileState.photo === '') {
       dataToUpdate.photo = profileState.photo
     }
@@ -310,9 +336,8 @@ describe('EditProfile', () => {
   it('should include photo in dataToUpdate if profileState.photo is empty string', () => {
     const photo = ''
     const profileState = { photo }
-    const rest = {}
 
-    const dataToUpdate = { ...rest }
+    const dataToUpdate = {}
     if (typeof profileState.photo === 'object' || profileState.photo === '') {
       dataToUpdate.photo = profileState.photo
     }
@@ -332,6 +357,30 @@ describe('EditProfile', () => {
     }
 
     expect(dataToUpdate).toHaveProperty('videoLink', videoLink[userRole])
+  })
+
+  it('should include an empty string for videoLink in dataToUpdate if videoLink is an empty string', () => {
+    const videoLink = ''
+
+    const dataToUpdate = {}
+    if (videoLink !== undefined && videoLink !== null) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).toHaveProperty('videoLink', '')
+  })
+
+  it('should not include videoLink in dataToUpdate if videoLink is undefined', () => {
+    const videoLink = undefined
+
+    const dataToUpdate = {}
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('videoLink')
   })
 
   it('should render the Update button', () => {
@@ -428,32 +477,6 @@ describe('EditProfile', () => {
       const securityContent = screen.getByText('Password&SecurityMock')
       expect(securityContent).toBeInTheDocument()
     })
-  })
-
-  it('should not include videoLink in dataToUpdate if videoLink is undefined', () => {
-    const videoLink = undefined
-    const rest = {}
-
-    const dataToUpdate = { ...rest }
-    if (videoLink) {
-      dataToUpdate.videoLink =
-        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
-    }
-
-    expect(dataToUpdate).not.toHaveProperty('videoLink')
-  })
-
-  it('should include an empty string for videoLink in dataToUpdate if videoLink is an empty string', () => {
-    const videoLink = ''
-    const rest = {}
-
-    const dataToUpdate = { ...rest }
-    if (videoLink !== undefined && videoLink !== null) {
-      dataToUpdate.videoLink =
-        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
-    }
-
-    expect(dataToUpdate).toHaveProperty('videoLink', '')
   })
 
   it('should replace the existing text in the "First name" field with test data and Update button becomes anable and active', () => {
@@ -673,6 +696,59 @@ describe('EditProfile', () => {
     }, [profileStateMock, initialEditProfileStateMock]))
 
     expect(result.current).toEqual({})
+  })
+
+  it('should dispatch openAlert with success message when user updates profile', async () => {
+    const updateBtn = screen.getByText('editProfilePage.updateBtn')
+    fireEvent.click(updateBtn)
+
+    waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: 'editProfilePage.profile.successMessage'
+        })
+      )
+    })
+  })
+
+  it('updates notificationSettings when changed', () => {
+    const changedFields = { notificationSettings: true }
+    const dataToUpdate = {}
+
+    Object.assign(dataToUpdate, {
+      notificationSettings: changedFields.notificationSettings
+        ? profileStateMock.notificationSettings
+        : undefined
+    })
+
+    expect(dataToUpdate.notificationSettings).toEqual(profileStateMock.notificationSettings)
+  })
+
+  it('updates professionalBlock when changed', () => {
+    const changedFields = { professionalBlock: true }
+    const dataToUpdate = {}
+
+    Object.assign(dataToUpdate, {
+      professionalBlock: changedFields.professionalBlock
+        ? profileStateMock.professionalBlock
+        : undefined
+    })
+
+    expect(dataToUpdate.professionalBlock).toEqual(profileStateMock.professionalBlock)
+  })
+
+  it('does not update fields that are not changed', () => {
+    const changedFields = {}
+    const dataToUpdate = {}
+
+    Object.assign(dataToUpdate, {
+      professionalBlock: changedFields.professionalBlock
+        ? profileStateMock.professionalBlock
+        : undefined
+    })
+
+    expect(dataToUpdate).toEqual({})
   })
 })
 
