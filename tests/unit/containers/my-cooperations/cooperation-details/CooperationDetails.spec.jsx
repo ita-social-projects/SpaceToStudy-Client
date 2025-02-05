@@ -21,19 +21,67 @@ const mockState = {
   appMain: { userId: userId, userRole: 'tutor' }
 }
 
+const mockState1 = {
+  appMain: { userId: userId, userRole: 'student' }
+}
+
 const cooperationMock = {
   _id: '123456789',
   price: 100,
   proficiencyLevel: 'Beginner',
-  status: 'active',
+  status: 'request to close',
   needAction: {
     role: 'tutor',
-    type: 'price',
+    type: 'waiting for approval',
     messages: []
   },
   title: 'Cooperation title',
   initiator: { _id: userId, role: ['tutor'] },
   receiver: { _id: '123123', role: ['student'] },
+  offer: {
+    title: 'Title',
+    description: 'Description',
+    languages: ['Ukrainian', 'English'],
+    author: {
+      firstName: 'Michael',
+      lastName: 'Scarn',
+      photo: '1701182621626.jpg',
+      professionalSummary: 'Agent'
+    },
+    subject: {
+      name: 'Algebra'
+    },
+    category: {
+      name: 'Mathematics',
+      appearance: {
+        color: '#1234'
+      }
+    },
+    proficiencyLevel: ['INTERMEDIATE']
+  },
+  user: {
+    _id: '123456',
+    firstName: 'Name',
+    lastName: 'Surname',
+    role: 'tutor'
+  },
+  createdAt: '2024-01-12T11:28:34.397Z',
+  updatedAt: '2024-01-12T11:28:34.397Z'
+}
+
+const cooperationMock1 = {
+  _id: '123456789',
+  price: 100,
+  proficiencyLevel: 'Beginner',
+  status: 'request to close',
+  needAction: {
+    role: 'student',
+    type: 'waiting for answer',
+    messages: ['reason1']
+  },
+  title: 'Cooperation title',
+  initiator: { _id: userId, role: ['student'] },
+  receiver: { _id: '123123', role: ['tutor'] },
   offer: {
     title: 'Title',
     description: 'Description',
@@ -75,12 +123,18 @@ vi.mock(
 )
 
 describe('CooperationDetails', () => {
-  mockAxiosClient
-    .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
-    .reply(200, cooperationMock)
+  beforeAll(() => {
+    mockAxiosClient
+      .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
+      .reply(200, cooperationMock)
+  })
 
   beforeEach(() => {
     renderWithProviders(<CooperationDetails />, { preloadedState: mockState })
+  })
+
+  afterAll(() => {
+    mockAxiosClient.reset();
   })
 
   it('should render details page', async () => {
@@ -93,7 +147,7 @@ describe('CooperationDetails', () => {
 
   it('should show cooperation status and title', () => {
     const title = screen.getByText(cooperationMock.title)
-    const statusChip = screen.getByText(cooperationMock.status)
+    const statusChip = screen.getByText('need action')
 
     expect(title).toBeInTheDocument()
     expect(statusChip).toBeInTheDocument()
@@ -127,5 +181,37 @@ describe('CooperationDetails', () => {
     cooperationNotes = screen.queryByText('Cooperation Notes')
 
     expect(cooperationNotes).not.toBeInTheDocument()
+  })
+
+  it('should render cooperation closing modal', () => {
+    const tab1 = screen.getByText('cooperationsPage.tabs.activities')
+    fireEvent.click(tab1)
+
+    const cooperationClosingModal = screen.getByText(
+      'titles.acceptCooperationClosing'
+    )
+    expect(cooperationClosingModal).toBeInTheDocument()
+  })
+})
+
+describe('cooperation closing process modals', () => {
+  beforeAll(() => {
+    mockAxiosClient.reset();
+    mockAxiosClient
+      .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
+      .reply(200, cooperationMock1)
+  })
+
+  beforeEach(() => {
+    renderWithProviders(<CooperationDetails />, { preloadedState: mockState1 })
+  })
+
+  it('should render cooperation closing modal with message', async () => {
+    await waitFor(() => {
+      const cooperationClosingModal = screen.getByText(
+        'titles.cooperationClosureDeclined'
+      )
+      expect(cooperationClosingModal).toBeInTheDocument()
+    })
   })
 })
