@@ -88,8 +88,7 @@ const ProfileTab: FC = () => {
 
   useEffect(() => {
     trigger()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [trigger])
 
   useEffect(() => {
     void dispatch(updateValidityStatus({ tab: 'profileTab', value: isValid }))

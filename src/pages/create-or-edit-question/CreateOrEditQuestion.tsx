@@ -176,8 +176,7 @@ const CreateOrEditQuestion = () => {
     if (question) {
       handleDataChange<GetQuestion>(question)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [question])
+  }, [question, handleDataChange])
 
   if (getQuestionLoading) {
     return <Loader pageLoad />

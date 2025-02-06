@@ -111,7 +111,8 @@ const CreateOrEditLesson = () => {
     errors,
     handleInputChange,
     handleNonInputValueChange,
-    handleSubmit
+    handleSubmit,
+    handleDataChange
   } = useForm<LessonData>({
     initialValues,
     validations,
@@ -164,13 +165,9 @@ const CreateOrEditLesson = () => {
 
   useEffect(() => {
     if (lesson && id) {
-      for (const key in data) {
-        const validKey = key as keyof LessonData
-        handleNonInputValueChange(validKey, lesson[validKey])
-      }
+      handleDataChange(lesson)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lesson, id])
+  }, [lesson, id, handleDataChange])
 
   useEffect(() => {
     if (error) {
