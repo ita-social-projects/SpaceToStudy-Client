@@ -135,7 +135,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   const {
     data: quiz,
     isLoading,
-    isError
+    error
   } = useQuery({
     queryKey: ['quiz', id],
     queryFn: getQuiz,
@@ -146,10 +146,10 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   })
 
   useEffect(() => {
-    if (isError) {
-      handleErrorAlert
+    if (error) {
+      handleErrorAlert(error)
     }
-  }, [handleErrorAlert, isError])
+  }, [handleErrorAlert, error])
 
   useEffect(() => {
     if (quiz) {
