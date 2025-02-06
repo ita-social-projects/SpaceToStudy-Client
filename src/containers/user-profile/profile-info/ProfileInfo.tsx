@@ -19,9 +19,7 @@ import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.style
 import { authRoutes } from '~/router/constants/authRoutes'
 import { defaultResponses, snackbarVariants } from '~/constants'
 
-import { UserRoleEnum, UserResponse,
-  SizeEnum,
-  ChatResponse } from '~/types'
+import { UserRoleEnum, UserResponse, ChatResponse } from '~/types'
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -176,8 +174,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
         disabled={isChatsLoading}
         fullWidth
         onClick={onSendMessageClick}
-        size={isLaptopAndAbove ? SizeEnum.ExtraLarge : SizeEnum.Medium}
-        variant='contained'
+        size={isLaptopAndAbove ? 'lg' : 'md'}
       >
         {t('userProfilePage.profileInfo.sendMessage')}
       </Button>
