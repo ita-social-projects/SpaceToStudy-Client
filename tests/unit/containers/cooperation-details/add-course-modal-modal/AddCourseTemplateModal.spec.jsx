@@ -110,4 +110,21 @@ describe('AddCourseTemplateModal test', () => {
 
     expect(closeModalMock).toHaveBeenCalled()
   })
+
+  it('should show "No results found" if search value does not match any course', async () => {
+    const searchInput = screen.getByPlaceholderText('common.search')
+
+    fireEvent.change(searchInput, { target: { value: 'nonexistent' } })
+
+    waitFor(() => {
+      const noResults = screen.getByText('myCoursesPage.notFound.largeDescription')
+      expect(noResults).toBeInTheDocument()
+    })
+  })
+  it('should disable "Add" button when no course is selected', async () => {
+    const addBtn = await screen.findByRole('button', { name: 'common.add' });
+    expect(addBtn).toBeDisabled()
+
+  })
+
 })
