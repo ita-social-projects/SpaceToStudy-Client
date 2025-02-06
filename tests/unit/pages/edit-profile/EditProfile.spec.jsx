@@ -128,7 +128,7 @@ const initialEditProfileStateMock = {
 }
 
 vi.mock('~/hooks/use-confirm', () => ({
-  default: () => ({ checkConfirmation: () => true })
+  default: () => ({ checkConfirmation: vi.fn().mockReturnValue(true) })
 }))
 
 vi.mock('~/redux/features/editProfileSlice', async () => {
@@ -210,14 +210,6 @@ vi.mock('AppTextField', () => ({
   )
 }))
 
-vi.mock('~/redux/features/snackbarSlice', async () => {
-  const actual = await vi.importActual('~/redux/features/snackbarSlice')
-  return {
-    ...actual,
-    openAlert: vi.fn()
-  }
-})
-
 describe('EditProfile', () => {
   const getLatestChanges = vi.fn()
 
@@ -235,8 +227,8 @@ describe('EditProfile', () => {
       .onGet(`${URLs.users.get}/${userId}?role=${userRole}&isEdit=true`)
       .reply(200, userMock)
 
-    renderWithProviders(<EditProfile />, {
-      preloadedState: mockState
+    await waitFor(() => {
+      renderWithProviders(<EditProfile />, { preloadedState: mockState })
     })
   })
 
@@ -247,9 +239,8 @@ describe('EditProfile', () => {
   it('should not include address in dataToUpdate if city or country is missing', () => {
     const city = ''
     const country = 'USA'
-    const rest = {}
 
-    const dataToUpdate = { ...rest }
+    const dataToUpdate = {}
     if (city && country) dataToUpdate.address = { city, country }
 
     expect(dataToUpdate).not.toHaveProperty('address')
@@ -258,9 +249,8 @@ describe('EditProfile', () => {
   it('should include address in dataToUpdate if city and country are provided', () => {
     const city = 'New York'
     const country = 'USA'
-    const rest = {}
+    const dataToUpdate = {}
 
-    const dataToUpdate = { ...rest }
     if (city && country) dataToUpdate.address = { city, country }
 
     expect(dataToUpdate).toHaveProperty('address', { city, country })
@@ -302,25 +292,6 @@ describe('EditProfile', () => {
     expect(dataToUpdate).toHaveProperty('photo', profileState.photo)
   })
 
-  it('should include videoLink in dataToUpdate if videoLink is an object with a property that matches the userRole', () => {
-    const videoLink = { [userRole]: 'http://video1234556443.com/video' }
-    const dataToUpdate = {}
-    if (videoLink) {
-      dataToUpdate.videoLink =
-        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
-    }
-    expect(dataToUpdate).toHaveProperty('videoLink', videoLink[userRole])
-  })
-
-  it('should include address in dataToUpdate if city and country are both truthy', () => {
-    const city = 'New York'
-    const country = 'USA'
-    const rest = {}
-    const dataToUpdate = { ...rest }
-    if (city && country) dataToUpdate.address = { city, country }
-    expect(dataToUpdate).toHaveProperty('address', { city, country })
-  })
-
   it('should not include photo in dataToUpdate if profileState.photo is a filled string', () => {
     const photo = 'stringInsteadOfObject'
     const profileState = { photo }
@@ -345,30 +316,38 @@ describe('EditProfile', () => {
     expect(dataToUpdate).toHaveProperty('photo')
   })
 
-  it('should include string videoLink from userRole in dataToUpdate if videoLink do exist', () => {
-    const videoLink = { tutor: 'http://video1111111.com/video' }
-    const rest = {}
-
-    const dataToUpdate = { ...rest }
-    if (videoLink) {
-      const updatedVideolink = videoLink[userRole]
-
-      dataToUpdate.videoLink = updatedVideolink
+  
+  it('should include videoLink in dataToUpdate if videoLink exists for the current userRole', () => {
+    const videoLink = { [userRole]: 'http://example.com/video' }
+    const dataToUpdate = {}
+  
+    if (videoLink?.[userRole]) {
+      dataToUpdate.videoLink = videoLink[userRole]
     }
-
+  
     expect(dataToUpdate).toHaveProperty('videoLink', videoLink[userRole])
   })
 
-  it('should include an empty string for videoLink in dataToUpdate if videoLink is an empty string', () => {
-    const videoLink = ''
-
+  it('should not include videoLink in dataToUpdate if videoLink does not exist for the current userRole', () => {
+    const videoLink = { student: 'http://example.com/video' }
     const dataToUpdate = {}
-    if (videoLink !== undefined && videoLink !== null) {
-      dataToUpdate.videoLink =
-        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+  
+    if (videoLink?.[userRole]) {
+      dataToUpdate.videoLink = videoLink[userRole]
     }
+  
+    expect(dataToUpdate).not.toHaveProperty('videoLink')
+  })
 
-    expect(dataToUpdate).toHaveProperty('videoLink', '')
+  it('should not include videoLink in dataToUpdate if videoLink is an empty string for the current userRole', () => {
+    const videoLink = { [userRole]: '' }
+    const dataToUpdate = {}
+  
+    if (videoLink?.[userRole]) {
+      dataToUpdate.videoLink = videoLink[userRole]
+    }
+  
+    expect(dataToUpdate).not.toHaveProperty('videoLink')
   })
 
   it('should not include videoLink in dataToUpdate if videoLink is undefined', () => {
@@ -382,6 +361,17 @@ describe('EditProfile', () => {
 
     expect(dataToUpdate).not.toHaveProperty('videoLink')
   })
+
+  it('should not include videoLink in dataToUpdate if videoLink is undefined or null', () => {
+    const videoLink = null
+    const dataToUpdate = {}
+  
+    if (videoLink?.[userRole]) {
+      dataToUpdate.videoLink = videoLink[userRole]
+    }
+  
+    expect(dataToUpdate).not.toHaveProperty('videoLink')
+  });
 
   it('should render the Update button', () => {
     const updateBtn = screen.getByText('editProfilePage.updateBtn')
@@ -673,9 +663,9 @@ describe('EditProfile', () => {
     expect(result.current).toEqual({})
   })
 
-  it('should dispatch openAlert with success message when user updates profile', async () => {
+  it('should dispatch openAlert with success message when user updates profile', async () => {   
     const updateBtn = screen.getByText('editProfilePage.updateBtn')
-    fireEvent.click(updateBtn)
+    await waitFor(() => fireEvent.click(updateBtn))
 
     await waitFor(() => {
       expect(mockDispatch).toHaveBeenCalledWith(
