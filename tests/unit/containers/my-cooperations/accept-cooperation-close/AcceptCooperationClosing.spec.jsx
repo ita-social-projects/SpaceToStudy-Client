@@ -18,7 +18,7 @@ describe('AcceptCooperationClosing', () => {
         user='John Doe'
         onAccept={mockOnAccept}
         onDecline={mockOnDecline}
-        message={'You forgot to add a quiz'}
+        message='You forgot to add a quiz'
       />
     )
   })

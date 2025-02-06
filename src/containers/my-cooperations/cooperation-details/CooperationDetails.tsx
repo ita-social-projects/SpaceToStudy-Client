@@ -190,12 +190,15 @@ const CooperationDetails = () => {
       ? StatusEnum.NeedAction
       : StatusEnum.RequestToClose
 
-  const cooperationStatusChip =
+  const cooperationStatus =
     cooperation.status === StatusEnum.RequestToClose
       ? roleBasedStatus
       : cooperation.status
 
   const getCooperationClosingModal = () => {
+    const lastMessage = cooperation.needAction.messages.at(-1)
+    const secondLastMessage = cooperation.needAction.messages.at(-2)
+
     if (cooperation.status !== StatusEnum.RequestToClose) {
       return null
     }
@@ -204,7 +207,7 @@ const CooperationDetails = () => {
       return cooperation.needAction.role === userRole ? (
         <AcceptCooperationClosing
           isReasonSubmitted={false}
-          message={cooperation.needAction.messages.at(-1)}
+          message={lastMessage}
           onAccept={handleCooperationClosingAccept}
           onReasonSubmit={handleReasonSubmit}
           user={closeCooperationInitiator.firstName}
@@ -213,9 +216,9 @@ const CooperationDetails = () => {
         cooperation.needAction.messages.length !== 0 && (
           <CooperationClosureDeclinedBanner
             isAnswerSubmitted
-            message={cooperation.needAction.messages.at(-2)}
+            message={secondLastMessage}
             onSend={handleAnswerSubmit}
-            submittedReason={cooperation.needAction.messages.at(-1)}
+            submittedReason={lastMessage}
             user={closeCooperationReceiver.firstName}
           />
         )
@@ -226,21 +229,17 @@ const CooperationDetails = () => {
       return cooperation.needAction.role === userRole ? (
         <CooperationClosureDeclinedBanner
           isAnswerSubmitted={false}
-          message={
-            cooperation.needAction.messages[
-              cooperation.needAction.messages.length - 1
-            ]
-          }
+          message={lastMessage}
           onSend={handleAnswerSubmit}
           user={closeCooperationInitiator.firstName}
         />
       ) : (
         <AcceptCooperationClosing
           isReasonSubmitted
-          message={cooperation.needAction.messages.at(-2)}
+          message={secondLastMessage}
           onAccept={handleCooperationClosingAccept}
           onReasonSubmit={handleReasonSubmit}
-          submittedReason={cooperation.needAction.messages.at(-1)}
+          submittedReason={lastMessage}
           user={closeCooperationReceiver.firstName}
         />
       )
@@ -258,7 +257,7 @@ const CooperationDetails = () => {
   return (
     <PageWrapper>
       <Box sx={styles.header}>
-        <StatusChip status={cooperationStatusChip} />
+        <StatusChip status={cooperationStatus} />
         <TitleWithDescription
           key={crypto.randomUUID()}
           style={styles.cooperationTitle}
