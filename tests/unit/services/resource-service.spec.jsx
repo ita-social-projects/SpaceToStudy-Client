@@ -61,6 +61,69 @@ describe('resourseService tests', () => {
     )
     expect(result).toEqual(mockQuizData)
   })
+
+  it('should edit a quiz', async () => {
+    const quizId = '6255bc080a75adf9223df444'
+    const quizData = {
+      title: 'Updated Quiz Title',
+      description: 'Updated description',
+      items: [],
+      category: '12345',
+      settings: {
+        view: 'Stepper',
+        shuffle: false,
+        pointValues: true,
+        scoredResponses: true,
+        correctAnswers: true
+      }
+    }
+  
+    mockAxiosClient
+      .onPatch(new RegExp(URLs.quizzes.patch.replace(':id', quizId)))
+      .reply(200)
+  
+    await ResourceService.editQuizQuery({ id: quizId, ...quizData })
+  
+    expect(mockAxiosClient.history.patch[0].url).toBe(
+      URLs.quizzes.patch.replace(':id', quizId)
+    )
+  
+    expect(mockAxiosClient.history.patch[0].data).toEqual(JSON.stringify(quizData))
+  })
+
+  it('should create a new quiz', async () => {
+    const newQuizData = {
+      title: 'New Quiz',
+      description: 'Description for new quiz',
+      items: [],
+      category: '12345',
+      resourceType: 'Quiz',
+      settings: {
+        view: 'Linear',
+        shuffle: true,
+        pointValues: false,
+        scoredResponses: false,
+        correctAnswers: false
+      }
+    }
+  
+    const mockResponse = {
+      ...newQuizData,
+      _id: 'new-quiz-id',
+      createdAt: '2025-01-01T00:00:00.000Z',
+      updatedAt: '2025-01-01T00:00:00.000Z'
+    }
+  
+    mockAxiosClient.onPost(URLs.quizzes.add).reply(200, mockResponse)
+  
+    const createdQuiz = await ResourceService.addQuizQuery(newQuizData)
+  
+    expect(mockAxiosClient.history.post[0].url).toBe(URLs.quizzes.add)
+  
+    expect(mockAxiosClient.history.post[0].data).toEqual(JSON.stringify(newQuizData))
+  
+    expect(createdQuiz).toEqual(mockResponse)
+  })
   
   it('should get resource categories names', async () => {
     const mockResponse = [

@@ -6,19 +6,17 @@ import Typography from '@mui/material/Typography'
 import Switch from '~/design-system/components/switch/Switch'
 
 import { ResourceService } from '~/services/resource-service'
-import { useAppDispatch } from '~/hooks/use-redux'
-import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import SettingItem from '~/components/setting-item/SettingItem'
 import AppSelect from '~/components/app-select/AppSelect'
 import Button from '~scss-components/button/Button'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
+import useMutation from '~/hooks/use-mutation'
 
 import { spliceSx } from '~/utils/helper-functions'
-import { getErrorMessage } from '~/utils/error-with-message'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import { snackbarVariants } from '~/constants'
-import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
   getQuizViewFields,
   getQuizTimeLimitFields,
@@ -30,17 +28,13 @@ import {
   QuizViewEnum,
   QuizTimeLimit,
   UpdateQuizParams,
-  ErrorResponse,
   CreateQuizParams,
-  Quiz,
   QuizTabsEnum,
   ComponentEnum,
   QuizSettings,
   ResourcesTypesEnum,
   QuizAttempt
 } from '~/types'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 const QuizSettingsContainer = ({
   title,
@@ -53,74 +47,55 @@ const QuizSettingsContainer = ({
   const { t } = useTranslation()
   const { id } = useParams()
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const { handleErrorAlert, handleAlert } = useSnackbarAlert()
 
-  const editQuiz = useCallback(
-    (params?: UpdateQuizParams) => ResourceService.editQuiz(params),
-    []
+  const editQuizService = useCallback(
+    async (data: UpdateQuizParams) => {
+      if (id) {
+        await ResourceService.editQuizQuery(data)
+      }
+    },
+    [id]
   )
 
   const createQuizService = useCallback(
-    (data?: CreateQuizParams) => ResourceService.addQuiz(data),
+    (data: CreateQuizParams) => ResourceService.addQuizQuery(data),
     []
   )
 
-  const onResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: id
-          ? 'myResourcesPage.quizzes.successEditedQuiz'
-          : 'myResourcesPage.quizzes.successAddedQuiz'
-      })
-    )
+  const handleResponse = () => {
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: id
+        ? 'myResourcesPage.quizzes.successEditedQuiz'
+        : 'myResourcesPage.quizzes.successAddedQuiz'
+    })
 
     id
       ? setActiveTab(QuizTabsEnum.Edit)
       : navigate(authRoutes.myResources.root.path)
   }
 
-  const onResponseError = (error?: ErrorResponse) => {
-    const errorKey = getErrorKey(error)
-
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: error
-          ? {
-              text: errorKey,
-              options: {
-                message: getErrorMessage(error.message)
-              }
-            }
-          : errorKey
-      })
-    )
-  }
-
-  const { fetchData: updateQuiz } = useAxios<null, UpdateQuizParams>({
-    service: editQuiz,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse,
-    onResponseError
+  const { mutate: fetchAddQuiz } = useMutation({
+    mutationFn: createQuizService,
+    onSuccess: handleResponse,
+    onError: handleErrorAlert
   })
 
-  const { fetchData: createQuiz } = useAxios<Quiz, CreateQuizParams>({
-    service: createQuizService,
-    fetchOnMount: false,
-    defaultResponse: { ...defaultResponse, id: '' },
-    onResponse,
-    onResponseError
+  const { mutate: fetchEditedQuiz } = useMutation({
+    queryKey: ['quiz', id],
+    mutationFn: editQuizService,
+    onSuccess: handleResponse,
+    onError: handleErrorAlert
   })
 
   const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
     useForm<QuizSettings>({
       initialValues: { ...settings },
-      onSubmit: async () => {
+      onSubmit: () => {
         id
-          ? await updateQuiz({ settings: data, id })
-          : await createQuiz({
+          ? fetchEditedQuiz({ settings: data, id })
+          : fetchAddQuiz({
               title,
               description,
               items: questions,
