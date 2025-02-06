@@ -12,7 +12,7 @@ import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-qui
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import QuestionsList from '~/containers/questions-list/QuestionsList'
 import { useModalContext } from '~/context/modal-context'
-import { useAppDispatch } from '~/hooks/use-redux'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import { ResourceService } from '~/services/resource-service'
 import useQuery from '~/hooks/use-query'
 import useMutation from '~/hooks/use-mutation'
@@ -31,7 +31,6 @@ import {
 import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
   ButtonTypeEnum,
-  ErrorResponse,
   CreateQuizParams,
   Question,
   Quiz,
@@ -43,12 +42,9 @@ import {
   CategoryNameInterface,
   PositionEnum
 } from '~/types'
-import { getErrorMessage } from '~/utils/error-with-message'
 import { createUrlPath } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   title,
@@ -62,10 +58,10 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   setSettings
 }) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const { id } = useParams()
+  const { handleErrorAlert, handleAlert } = useSnackbarAlert()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
 
   const onCategoryChange = (
@@ -82,33 +78,13 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   }
 
   const handleResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: id
-          ? 'myResourcesPage.quizzes.successEditedQuiz'
-          : 'myResourcesPage.quizzes.successAddedQuiz'
-      })
-    )
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: id
+        ? 'myResourcesPage.quizzes.successEditedQuiz'
+        : 'myResourcesPage.quizzes.successAddedQuiz'
+    })
     navigateToQuizzesTab()
-  }
-
-  const onResponseError = (error?: ErrorResponse) => {
-    const errorKey = getErrorKey(error)
-
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: error
-          ? {
-              text: errorKey,
-              options: {
-                message: getErrorMessage(error.message)
-              }
-            }
-          : errorKey
-      })
-    )
   }
 
   const createQuizService = useCallback(
@@ -119,7 +95,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   const { mutate: fetchAddQuiz } = useMutation({
     mutationFn: createQuizService,
     onSuccess: handleResponse,
-    onError: onResponseError
+    onError: handleErrorAlert
   })
 
   const editQuizService = useCallback(
@@ -135,7 +111,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
     queryKey: ['quiz', id],
     mutationFn: editQuizService,
     onSuccess: handleResponse,
-    onError: onResponseError
+    onError: handleErrorAlert
   })
 
   const getQuiz = useCallback(() => {
@@ -156,7 +132,11 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
     [setTitle, setDescription, setQuestions, setCategory, setSettings]
   )
 
-  const { data: quiz, isLoading } = useQuery({
+  const {
+    data: quiz,
+    isLoading,
+    error
+  } = useQuery({
     queryKey: ['quiz', id],
     queryFn: getQuiz,
     options: {
@@ -164,6 +144,12 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
       staleTime: Infinity
     }
   })
+
+  useEffect(() => {
+    if (error) {
+      handleErrorAlert(error)
+    }
+  }, [handleErrorAlert, error])
 
   useEffect(() => {
     if (quiz) {
@@ -218,7 +204,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
           resourceType: ResourceType.Quiz
         })
 
-  if (isLoading || !quiz) {
+  if (isLoading && !quiz) {
     return <Loader pageLoad />
   }
 
