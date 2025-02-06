@@ -715,6 +715,31 @@ describe('EditProfile', () => {
 
     expect(dataToUpdate).toEqual({})
   })
+
+  it('should delete videoLink if unchanged after clicking update', () => {
+    const changes = clickUpdateAndGetChanges({})
+    expect(changes).not.toHaveProperty('videoLink')
+  })
+
+  it('should delete notificationSettings if unchanged after clicking update', () => {
+    const changes = clickUpdateAndGetChanges({})
+    expect(changes).not.toHaveProperty('notificationSettings')
+  })
+
+  it('should delete professionalBlock if unchanged after clicking update', () => {
+    const changes = clickUpdateAndGetChanges({})
+    expect(changes).not.toHaveProperty('professionalBlock')
+  })
+
+  it('should delete aboutStudent if unchanged after clicking update', () => {
+    const changes = clickUpdateAndGetChanges({})
+    expect(changes).not.toHaveProperty('aboutStudent')
+  })
+
+  it('should add photo if hasPhotoChanged is true after clicking update', () => {
+    const changes = clickUpdateAndGetChanges({ photo: 'new-photo-url.jpg' })
+    expect(changes).toHaveProperty('photo', 'new-photo-url.jpg')
+  })
 })
 
 describe('mapMainSubjects', () => {
