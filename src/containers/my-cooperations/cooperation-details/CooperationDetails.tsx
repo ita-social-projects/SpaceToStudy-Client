@@ -196,12 +196,12 @@ const CooperationDetails = () => {
       : cooperation.status
 
   const getCooperationClosingModal = () => {
-    const lastMessage = cooperation.needAction.messages.at(-1)
-    const secondLastMessage = cooperation.needAction.messages.at(-2)
-
     if (cooperation.status !== StatusEnum.RequestToClose) {
       return null
     }
+
+    const lastMessage = cooperation.needAction.messages.at(-1)
+    const secondLastMessage = cooperation.needAction.messages.at(-2)
 
     if (cooperation.needAction.type === NeedActionTypeEnum.WaitingForApproval) {
       return cooperation.needAction.role === userRole ? (

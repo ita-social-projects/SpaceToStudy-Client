@@ -71,6 +71,7 @@ const CooperationContainer: React.FC<CooperationContainerProps> = ({
             item.needAction.role === userRole
               ? StatusEnum.NeedAction
               : StatusEnum.RequestToClose
+
           return {
             ...item,
             status:
