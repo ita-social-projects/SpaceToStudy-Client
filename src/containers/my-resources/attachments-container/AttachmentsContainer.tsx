@@ -60,7 +60,6 @@ const AttachmentsContainer = () => {
     [itemsPerPage, page, sort, searchFileName, selectedItems]
   )
 
-  // useMutation hook
   const deleteAttachment = useCallback(
     (id?: string) => ResourceService.deleteAttachment(id ?? ''),
     []
@@ -149,7 +148,7 @@ const AttachmentsContainer = () => {
   const props = {
     columns: columnsToShow,
     data: {
-      response: loadedAttachments ?? defaultResponses.itemsWithCount,
+      response: loadedAttachments,
       getData: handleRefetchAttachments
     },
     services: { deleteService: deleteAttachment },
