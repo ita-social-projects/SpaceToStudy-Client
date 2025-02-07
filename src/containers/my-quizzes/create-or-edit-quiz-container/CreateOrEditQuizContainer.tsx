@@ -204,7 +204,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
           resourceType: ResourceType.Quiz
         })
 
-  if (isLoading || !quiz) {
+  if (isLoading) {
     return <Loader pageLoad />
   }
 
