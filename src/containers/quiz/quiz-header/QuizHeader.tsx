@@ -1,7 +1,12 @@
 import { useAppSelector } from '~/hooks/use-redux'
 import Box from '@mui/material/Box'
 
-import { Question, QuizAttempt, QuizTimeLimit, UserRoleEnum } from '~/types'
+import {
+  type Question,
+  type QuizAttempt,
+  type QuizTimeLimit,
+  UserRoleEnum
+} from '~/types'
 import {
   ActiveQuizInfo,
   FinishedQuizInfo,
@@ -15,7 +20,7 @@ import styles from '~/containers/quiz/quiz-header/QuizHeader.styles'
 import { useQuery } from '@tanstack/react-query'
 import { ResourceService } from '~/services/resource-service'
 import { useParams } from 'react-router-dom'
-import React from 'react'
+import { useCallback } from 'react'
 import Loader from '~/components/loader/Loader'
 
 type QuizHeaderProps = {
@@ -37,7 +42,7 @@ type QuizHeaderProps = {
   handlePreview: (value: boolean) => void
 }
 
-const QuizHeader = ({
+const QuizHeader: React.FC<QuizHeaderProps> = ({
   isFinished,
   title,
   description,
@@ -56,19 +61,19 @@ const QuizHeader = ({
   const isStudent = userRole === UserRoleEnum.Student
 
   const isTutor = userRole === UserRoleEnum.Tutor
-  const { id, quizId } = useParams()
+  const { id: cooperationId, quizId } = useParams()
 
-  const getQuizzes = React.useCallback(() => {
-    if (quizId && id) {
-      return ResourceService.getFinishedQuizzesByQuizId(id, quizId)
+  const getQuizzes = useCallback(() => {
+    if (cooperationId && quizId) {
+      return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
     }
-  }, [id, quizId])
+  }, [cooperationId, quizId])
 
-  const { data: finishedQuizzes, isLoading } = useQuery({
-    queryKey: ['quizzes', id, quizId],
+  const { data: finishedQuizzes = [], isLoading } = useQuery({
+    queryKey: ['quizzes', cooperationId, quizId],
     queryFn: getQuizzes
   })
-  if (isLoading) {
+  if (isLoading || !finishedQuizzes) {
     return <Loader pageLoad size={50} />
   }
   return (
@@ -102,7 +107,7 @@ const QuizHeader = ({
           handleStartButton={handlePreview}
           questionsAmount={quizItems.length}
           timeLimit={settings.timeLimit}
-          usedAttempts={finishedQuizzes ?? []}
+          usedAttempts={finishedQuizzes}
         />
       )}
     </Box>

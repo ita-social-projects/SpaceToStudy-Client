@@ -19,7 +19,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: '10px',
+    gap: theme.spacing(1.25),
     marginTop: theme.spacing(2)
   },
   divider: {
@@ -43,19 +43,19 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: '12px'
+    gap: theme.spacing(1.5)
   },
   quizSettings: {
     display: 'flex',
     alignItems: 'center',
-    gap: '8px',
+    gap: theme.spacing(1),
     width: '50%',
     justifyContent: 'flex-start',
     flexFrow: 1
   },
   dividerEllipse: {
     width: '8px',
-    m: '0px 4px 0px 4px'
+    m: theme.spacing(0, 0.5)
   },
   subtitle1: {
     typography: TypographyVariantEnum.Subtitle1

@@ -37,7 +37,7 @@ import { Typography } from '@mui/material'
 const QuizPage = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
-  const { id, quizId } = useParams()
+  const { id: cooperationId = '', quizId = '' } = useParams()
   const navigate = useNavigate()
 
   const { t } = useTranslation()
@@ -47,10 +47,7 @@ const QuizPage = () => {
   const [showPreview, setShowPreview] = useState(true)
 
   const getQuiz = useCallback(() => {
-    if (quizId) {
-      return ResourceService.getQuizQuery(quizId)
-    }
-    return defaultQuizResponse
+    return ResourceService.getQuizQuery(quizId)
   }, [quizId])
 
   const { handleInputChange, handleNonInputValueChange, data } = useForm<
@@ -85,28 +82,30 @@ const QuizPage = () => {
     items,
     createdAt,
     updatedAt
-  } = quiz || defaultQuizResponse
+  } = quiz ?? defaultQuizResponse
 
   const points = countPoints(
     items.filter(({ type }) => type !== QuestionTypesEnum.OpenAnswer),
     data
   )
   const getQuizzes = useCallback(() => {
-    if (quizId && id) {
-      return ResourceService.getFinishedQuizzesByQuizId(id, quizId)
+    if (cooperationId && quizId) {
+      return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
     }
-  }, [id, quizId])
+  }, [cooperationId, quizId])
 
-  const { data: finishedAttempts } = useQuery({
-    queryKey: ['quizzes', id, quizId],
+  const { data: finishedAttempts = [] } = useQuery({
+    queryKey: ['quizzes', cooperationId, quizId],
     queryFn: getQuizzes
   })
+
   const finishedQuizzes = Array.isArray(finishedAttempts)
     ? finishedAttempts
     : []
+
   const addFinishedQuiz = useCallback(() => {
     return ResourceService.addFinishedQuiz({
-      cooperation: id ?? '',
+      cooperation: cooperationId ?? '',
       quiz: quizId ?? '',
       grade: Math.round((points / items.length) * 100),
       results: items.map(({ text, answers, _id }) => {
@@ -120,7 +119,7 @@ const QuizPage = () => {
         }
       })
     })
-  }, [data, id, items, points, quizId])
+  }, [data, cooperationId, items, points, quizId])
 
   const { mutate, data: finishedQuiz } = useMutation({
     mutationFn: addFinishedQuiz
@@ -139,7 +138,7 @@ const QuizPage = () => {
     }
   }, [mutate, navigate, scoredResponses])
 
-  if (isLoading || !quiz) {
+  if (isLoading || !quiz || !finishedQuizzes) {
     return <Loader pageLoad />
   }
 
@@ -242,7 +241,7 @@ const QuizPage = () => {
               isFinished={isFinished}
               isGraded={showPoints}
               isNotStarted={showPreview}
-              points={points || 0}
+              points={points ?? 0}
               questionsAnswered={questionsAnswered}
               quizItems={items}
               settings={headerSettings}

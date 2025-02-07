@@ -1,4 +1,4 @@
-import { FinishedQuiz } from './../../finished-quizzes/types/finishedQuizzes.types'
+import { FinishedQuiz } from '~/types/finished-quizzes/types/finishedQuizzes.types'
 import {
   CommonEntityFields,
   UserResponse,

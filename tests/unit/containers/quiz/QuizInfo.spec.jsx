@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
+import { renderWithProviders } from '~tests/test-utils'
 import {
   UngradedQuizInfo,
   GradedQuizInfo,
@@ -62,9 +63,12 @@ const finishedQuizzes = [
 ]
 
 describe('UngradedQuizInfo', () => {
-  it('should render ungraded quiz info with a proper content', () => {
-    render(<UngradedQuizInfo />)
+  beforeEach(() => {
+    renderWithProviders(<UngradedQuizInfo />)
+  })
 
+  it('should render ungraded quiz info with a proper content', () => {
+    
     const attemptFinished = screen.getByText((_, element) => {
       return (
         element?.textContent?.includes('quiz.attemptFinished') &&
@@ -87,26 +91,29 @@ describe('UngradedQuizInfo', () => {
 })
 
 describe('GradedQuizInfo', () => {
+  beforeEach(() => {
+    renderWithProviders(<GradedQuizInfo />)
+  })
+
   it('should render graded quiz info with a proper content', () => {
-    render(<GradedQuizInfo />)
 
     expect(screen.getByText('quiz.points')).toBeInTheDocument()
     expect(screen.getByText('quiz.save')).toBeInTheDocument()
   })
 })
+
 describe('StartViewQuizInfo', () => {
   const mockHandleStartButton = vi.fn()
+  const defaultProps = {
+    questionsAmount: 3,
+    attempts: QuizAttempt.Attempt2,
+    timeLimit: QuizTimeLimit.Minute30,
+    handleStartButton: mockHandleStartButton,
+    usedAttempts: []
+  }
 
   it('should render quiz info correctly', () => {
-    render(
-      <StartViewQuizInfo
-        questionsAmount={3}
-        attempts={QuizAttempt.Attempt2}
-        timeLimit={QuizTimeLimit.Minute30}
-        handleStartButton={mockHandleStartButton}
-        usedAttempts={[]}
-      />
-    )
+    renderWithProviders(<StartViewQuizInfo {...defaultProps} />)
 
     expect(screen.getByText('quiz.questionsAmount:')).toBeInTheDocument()
     expect(screen.getByText('3')).toBeInTheDocument()
@@ -118,31 +125,21 @@ describe('StartViewQuizInfo', () => {
   })
 
   it('should call handleStartButton on start button click', () => {
-    render(
-      <StartViewQuizInfo
-        questionsAmount={3}
-        attempts={QuizAttempt.Attempt1}
-        timeLimit={QuizTimeLimit.NoLimit}
-        handleStartButton={mockHandleStartButton}
-        usedAttempts={[]}
-      />
-    )
+    renderWithProviders(<StartViewQuizInfo {...defaultProps}
+      attempts={QuizAttempt.Attempt1}
+      timeLimit={QuizTimeLimit.NoLimit}/>)
 
     const button = screen.getByText('quiz.startQuiz')
     fireEvent.click(button)
+
     expect(mockHandleStartButton).toHaveBeenCalledWith(false)
   })
 
   it('should render try again button if not first attempt', () => {
-    render(
-      <StartViewQuizInfo
-        questionsAmount={3}
-        attempts={QuizAttempt.Attempt3}
-        timeLimit={QuizTimeLimit.NoLimit}
-        handleStartButton={mockHandleStartButton}
-        usedAttempts={finishedQuizzes}
-      />
-    )
+    renderWithProviders(<StartViewQuizInfo {...defaultProps}
+      attempts={QuizAttempt.Attempt3}
+      timeLimit={QuizTimeLimit.NoLimit}
+      usedAttempts={finishedQuizzes}/>)
 
     expect(screen.getByText('quiz.tryAgain')).toBeInTheDocument()
   })

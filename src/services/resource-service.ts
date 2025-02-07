@@ -26,7 +26,7 @@ import {
   ApiMethodEnum,
   GetQuestion,
   type FinishedQuiz,
-  FinishedAttempts
+  type FinishedAttempts
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -123,7 +123,7 @@ export const ResourceService = {
       })
     })
   },
-  getFinishedQuizzesByQuizId: async (cooperationId: string, quizId: string) => {
+  getFinishedQuizzesByQuizId: (cooperationId: string, quizId: string) => {
     return baseService.request<FinishedAttempts>({
       method: 'GET',
       url: getFullUrl({
