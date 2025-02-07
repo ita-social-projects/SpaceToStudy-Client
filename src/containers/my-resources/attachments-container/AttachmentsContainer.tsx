@@ -70,10 +70,10 @@ const AttachmentsContainer = () => {
   )
 
   const {
-    data: response,
-    isLoading: loading,
+    data: loadedAttachments,
+    isLoading: isLoadingAttachments,
     refetch: refetchAttachments,
-    error: fetchAttachmentsError
+    error: attachmentsLoadError
   } = useQuery<ItemsWithCount<Attachment>>({
     queryKey: [
       'attachments',
@@ -114,7 +114,7 @@ const AttachmentsContainer = () => {
   })
 
   const onEdit = (id: string) => {
-    const attachment = response.items.find((item) => item._id === id)
+    const attachment = loadedAttachments.items.find((item) => item._id === id)
 
     const handleConfirm = () =>
       openModal({
@@ -139,7 +139,7 @@ const AttachmentsContainer = () => {
   }
 
   const onAddCategory = (id: string) => {
-    const attachment = response.items.find((item) => item._id === id)
+    const attachment = loadedAttachments.items.find((item) => item._id === id)
 
     openModal({
       component: (
@@ -161,7 +161,7 @@ const AttachmentsContainer = () => {
   const props = {
     columns: columnsToShow,
     data: {
-      response: response ?? defaultResponses.itemsWithCount,
+      response: loadedAttachments ?? defaultResponses.itemsWithCount,
       getData: fetchAttachments
     },
     services: { deleteService: deleteAttachment },
@@ -195,15 +195,15 @@ const AttachmentsContainer = () => {
   )
 
   useEffect(() => {
-    if (fetchAttachmentsError) {
-      handleErrorAlert(fetchAttachmentsError as ErrorResponse)
+    if (attachmentsLoadError) {
+      handleErrorAlert(attachmentsLoadError as ErrorResponse)
     }
-  }, [fetchAttachmentsError, handleErrorAlert])
+  }, [attachmentsLoadError, handleErrorAlert])
 
   return (
     <Box>
       {addAttachmentBlock}
-      {loading ? (
+      {isLoadingAttachments ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Attachment> {...props} />
