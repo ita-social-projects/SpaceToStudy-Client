@@ -25,7 +25,6 @@ import {
   type ItemsWithCount,
   type Attachment,
   type ErrorResponse,
-  type CooperationSliceAttachment,
   ResourcesTabsEnum
 } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
@@ -36,6 +35,7 @@ import { getErrorKey } from '~/utils/get-error-key'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import useMutation from '~/hooks/use-mutation'
 import useQuery from '~/hooks/use-query'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -47,21 +47,10 @@ const AttachmentsContainer = () => {
   const searchFileName = useRef<string>('')
   const [selectedItems, setSelectedItems] = useState<string[]>([])
   const formData = new FormData()
+  const { handleErrorAlert } = useSnackbarAlert()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-
-  const onResponseError = useCallback(
-    (error?: ErrorResponse) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: getErrorKey(error)
-        })
-      )
-    },
-    [dispatch]
-  )
 
   const getAttachments = useCallback(
     () =>
@@ -99,7 +88,7 @@ const AttachmentsContainer = () => {
 
   const { mutate: updateAttachment } = useMutation({
     mutationFn: ResourceService.updateAttachment,
-    onError: onResponseError,
+    onError: handleErrorAlert,
     queryKey: ['attachments']
   })
 
@@ -125,7 +114,7 @@ const AttachmentsContainer = () => {
       openModal({
         component: (
           <EditAttachmentModal
-            attachment={attachment as CooperationSliceAttachment}
+            attachment={attachment as Attachment}
             closeModal={closeModal}
             onAttachmentUpdate={updateAttachment}
           />
@@ -151,7 +140,7 @@ const AttachmentsContainer = () => {
         <AddAttachmentCategoryModal
           attachment={attachment as Attachment}
           closeModal={closeModal}
-          updateAttachmentCategory={updateAttachment}
+          onAttachmentUpdate={updateAttachment}
         />
       )
     })
@@ -201,9 +190,9 @@ const AttachmentsContainer = () => {
 
   useEffect(() => {
     if (fetchAttachmentsError) {
-      onResponseError(fetchAttachmentsError as ErrorResponse)
+      handleErrorAlert(fetchAttachmentsError as ErrorResponse)
     }
-  }, [fetchAttachmentsError, onResponseError])
+  }, [fetchAttachmentsError, handleErrorAlert])
 
   return (
     <Box>

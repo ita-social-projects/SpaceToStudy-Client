@@ -22,13 +22,13 @@ import {
 interface AddAttachmentCategoryModalProps {
   closeModal: () => void
   attachment: Attachment
-  updateAttachmentCategory: (params: UpdateAttachmentParams) => void
+  onAttachmentUpdate: (params: UpdateAttachmentParams) => void
 }
 
 const AddAttachmentCategoryModal: FC<AddAttachmentCategoryModalProps> = ({
   closeModal,
   attachment,
-  updateAttachmentCategory
+  onAttachmentUpdate
 }) => {
   const { t } = useTranslation()
 
@@ -39,7 +39,10 @@ const AddAttachmentCategoryModal: FC<AddAttachmentCategoryModalProps> = ({
       initialValues: getInitialValues(attachment),
       onSubmit: () => {
         setLoading(true)
-        updateAttachmentCategory(data)
+        onAttachmentUpdate({
+          id: attachment._id,
+          category: data.category
+        })
         setLoading(false)
         closeModal()
       }
@@ -84,7 +87,7 @@ const AddAttachmentCategoryModal: FC<AddAttachmentCategoryModalProps> = ({
           {t('common.cancel')}
         </Button>
         <Button
-          disabled={!!errors.fileName}
+          disabled={Boolean(errors.fileName) || !data.category}
           loading={loading}
           sx={styles.saveBtn}
           type={ButtonTypeEnum.Submit}
