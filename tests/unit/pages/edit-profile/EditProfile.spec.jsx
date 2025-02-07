@@ -89,7 +89,7 @@ const mockData = {
 const hasChanges = (
   initialData,
   currentData
-) => JSON.stringify(initialData) !== JSON.stringify(currentData);
+) => JSON.stringify(initialData) !== JSON.stringify(currentData)
 
 const profileStateMock = {
   videoLink: 'https://newvideolink.com',
@@ -371,7 +371,7 @@ describe('EditProfile', () => {
     }
   
     expect(dataToUpdate).not.toHaveProperty('videoLink')
-  });
+  })
 
   it('should render the Update button', () => {
     const updateBtn = screen.getByText('editProfilePage.updateBtn')
@@ -740,6 +740,50 @@ describe('EditProfile', () => {
     const changes = clickUpdateAndGetChanges({ photo: 'new-photo-url.jpg' })
     expect(changes).toHaveProperty('photo', 'new-photo-url.jpg')
   })
+
+  it('returns false for identical objects', () => {
+    const obj = { name: 'John', age: 30 }
+    expect(hasChanges(obj, obj)).toBe(false)
+  })
+
+  it('returns true for different objects', () => {
+    const initialData = { name: 'John', age: 30 }
+    const currentData = { name: 'John', age: 31 }
+    expect(hasChanges(initialData, currentData)).toBe(true)
+  })
+
+  it('returns false for deeply equal objects', () => {
+    const initialData = { name: 'John', details: { age: 30 } }
+    const currentData = { name: 'John', details: { age: 30 } }
+    expect(hasChanges(initialData, currentData)).toBe(false)
+  })
+
+  it('detects changed fields correctly', () => {
+    const initialData = { name: 'Alice', videoLink: 'https://oldvideolink.com', photo: 'old.jpg' }
+    const currentData = { name: 'Alice', videoLink: 'https://newvideolink.com', photo: 'new.jpg' }
+    const hasPhotoChanged = initialData.photo !== currentData.photo
+    const hasChanged = hasChanges(initialData, currentData) || hasPhotoChanged
+
+    expect(hasChanged).toBe(true)
+  })
+
+  it('removes unchanged fields', () => {
+    const initialData = { videoLink: 'https://oldvideolink.com', notificationSettings: true, aboutStudent: 'Old' }
+    const currentData = { videoLink: 'https://oldvideolink.com', notificationSettings: false, aboutStudent: 'New' }
+    
+    const changes = { ...currentData }
+    if (!hasChanges(initialData.videoLink, currentData.videoLink)) {
+      delete changes.videoLink
+    }
+    if (!hasChanges(initialData.notificationSettings, currentData.notificationSettings)) {
+      delete changes.notificationSettings
+    }
+    if (!hasChanges(initialData.aboutStudent, currentData.aboutStudent)) {
+      delete changes.aboutStudent
+    }
+
+    expect(changes).toEqual({ notificationSettings: false, aboutStudent: 'New' })
+  })
 })
 
 describe('mapMainSubjects', () => {
@@ -761,13 +805,25 @@ describe('mapMainSubjects', () => {
     ]
   }
 
-  it('should return the mapped mainSubjects for a valid userRole', () => {
+  it('should return the mapped mainSubjects for a valid Tutor userRole', () => {
     const result = mapMainSubjects(mockCategories, UserRoleEnum.Tutor)
     expect(result).toEqual({
       [UserRoleEnum.Tutor]: [
         {
           category: { _id: 'cat1' },
           subjects: [{ _id: 'sub1' }, { _id: 'sub2' }]
+        }
+      ]
+    })
+  })
+
+  it('should return the mapped mainSubjects for a valid Student userRole', () => {
+    const result = mapMainSubjects(mockCategories, UserRoleEnum.Student)
+    expect(result).toEqual({
+      [UserRoleEnum.Student]: [
+        {
+          category: { _id: 'cat2' },
+          subjects: [{ _id: 'sub3' }]
         }
       ]
     })
