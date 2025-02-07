@@ -48,6 +48,7 @@ const FilterBarMenu = forwardRef<HTMLDivElement, FilterBarMenuProps>(
     const { isLaptopAndAbove, isMobile } = useBreakpoints()
 
     const { t } = useTranslation()
+    const isStudent = filters.authorRole === UserRoleEnum.Student
 
     const translatedSwitcherOptions = {
       left: {
@@ -77,7 +78,8 @@ const FilterBarMenu = forwardRef<HTMLDivElement, FilterBarMenuProps>(
         />
         {isLaptopAndAbove ? (
           <AppContentSwitcher
-            active={filters.authorRole === UserRoleEnum.Student}
+            active={isStudent}
+            checked={isStudent}
             data-testid='switch'
             onChange={onToggleTutorOffers}
             switchOptions={translatedSwitcherOptions}
