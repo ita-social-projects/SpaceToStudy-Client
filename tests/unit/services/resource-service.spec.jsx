@@ -156,32 +156,32 @@ describe('resourseService tests', () => {
     expect(response).toEqual(mockResponse)
   })
 
-   it('should edit an attachment', async () => {
-     const attachmentId = '6255bc080a75adf9223df444'
-     const attachment = {
-       description: 'Modified description',
-       category: '8655bc080a75adf9223df444'
-     }
-     const mockAttachmentResponse = {
-       ...attachment,
-       _id: attachmentId,
-       link: '1722535882408-test.pdf',
-       size: 15069,
-       resourceType: 'Attachment'
-     }
+  it('should edit an attachment', async () => {
+    const attachmentId = '6255bc080a75adf9223df444'
+    const attachment = {
+      description: 'Modified description',
+      category: '8655bc080a75adf9223df444'
+    }
+    const mockAttachmentResponse = {
+      ...attachment,
+      _id: attachmentId,
+      link: '1722535882408-test.pdf',
+      size: 15069,
+      resourceType: 'Attachment'
+    }
 
-     mockAxiosClient.onPatch().reply((config) => {
-       expect(config.url).toBe(`/attachments/${attachmentId}`)
+    mockAxiosClient.onPatch().reply((config) => {
+      expect(config.url).toBe(`/attachments/${attachmentId}`)
 
-       return [200, mockAttachmentResponse]
-     })
+      return [200, mockAttachmentResponse]
+    })
 
-     const updatedAttachmentResponse = await ResourceService.updateAttachment({
-       ...attachment,
-       id: attachmentId
-     })
-
-     expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
+    const updatedAttachmentResponse = await ResourceService.updateAttachment({
+      ...attachment,
+      id: attachmentId
+    })
+    
+    expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
    })
 
   it('should create a new question', async () => {
@@ -221,5 +221,52 @@ describe('resourseService tests', () => {
     )
 
     expect(createdQuestion).toEqual(mockResponse)
+    expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
+  })
+
+  it('should get attachements' , async () => {
+
+    const mockResponse = [
+      {
+        _id: '6255bc080a75adf9223df444',
+        link: '1722535882408-test.jpg',
+        resourceType: 'Attachment',
+        description: 'Attachment description',
+        category: '8655bc080a75adf9223df444'
+      }
+    ]
+
+    mockAxiosClient.onGet().reply((config) => {
+      expect(config.url).toBe('/attachments')
+
+      return [200, mockResponse]
+    })
+
+    const response = await ResourceService.getAttachments()
+
+    expect(response).toEqual(mockResponse)
+  })
+
+  it('should create an attachment', async () => {
+    const attachment = {
+      link: '1722535882408-test.jpg',
+      description: 'Attachment description',
+      category: '8655bc080a75adf9223df444'
+    }
+    const mockAttachmentResponse = {
+      ...attachment,
+      _id: '6255bc080a75adf9223df444',
+      resourceType: 'Attachment'
+    }
+
+    mockAxiosClient.onPost().reply((config) => {
+      expect(config.url).toBe('/attachments')
+
+      return [200, mockAttachmentResponse]
+    })
+
+    const response = await ResourceService.createAttachment(attachment)
+
+    expect(response).toEqual(mockAttachmentResponse)
   })
 })
