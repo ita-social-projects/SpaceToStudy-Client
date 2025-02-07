@@ -82,7 +82,7 @@ describe('resourseService tests', () => {
       .onPatch(new RegExp(URLs.quizzes.patch.replace(':id', quizId)))
       .reply(200)
   
-    await ResourceService.editQuizQuery({ id: quizId, ...quizData })
+    await ResourceService.editQuiz({ id: quizId, ...quizData })
   
     expect(mockAxiosClient.history.patch[0].url).toBe(
       URLs.quizzes.patch.replace(':id', quizId)
@@ -116,7 +116,7 @@ describe('resourseService tests', () => {
   
     mockAxiosClient.onPost(URLs.quizzes.add).reply(200, mockResponse)
   
-    const createdQuiz = await ResourceService.addQuizQuery(newQuizData)
+    const createdQuiz = await ResourceService.addQuiz(newQuizData)
   
     expect(mockAxiosClient.history.post[0].url).toBe(URLs.quizzes.add)
   

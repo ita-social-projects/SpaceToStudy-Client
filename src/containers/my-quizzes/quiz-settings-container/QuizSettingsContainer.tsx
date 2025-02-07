@@ -24,16 +24,16 @@ import {
 } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 import {
+  type QuizViewEnum,
+  type QuizTimeLimit,
+  type UpdateQuizParams,
+  type CreateQuizParams,
+  type QuizAttempt,
   ButtonTypeEnum,
-  QuizViewEnum,
-  QuizTimeLimit,
-  UpdateQuizParams,
-  CreateQuizParams,
   QuizTabsEnum,
   ComponentEnum,
   QuizSettings,
-  ResourcesTypesEnum,
-  QuizAttempt
+  ResourcesTypesEnum
 } from '~/types'
 
 const QuizSettingsContainer = ({
@@ -52,14 +52,14 @@ const QuizSettingsContainer = ({
   const editQuizService = useCallback(
     async (data: UpdateQuizParams) => {
       if (id) {
-        await ResourceService.editQuizQuery(data)
+        await ResourceService.editQuiz(data)
       }
     },
     [id]
   )
 
   const createQuizService = useCallback(
-    (data: CreateQuizParams) => ResourceService.addQuizQuery(data),
+    (data: CreateQuizParams) => ResourceService.addQuiz(data),
     []
   )
 

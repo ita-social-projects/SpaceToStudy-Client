@@ -30,16 +30,16 @@ import {
 } from '~/containers/add-resources/AddQuestions.constants'
 import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
+  type CreateQuizParams,
+  type Question,
+  type Quiz,
+  type UpdateQuizParams,
+  type CategoryNameInterface,
   ButtonTypeEnum,
-  CreateQuizParams,
-  Question,
-  Quiz,
   SizeEnum,
   TextFieldVariantEnum,
   ResourcesTabsEnum,
   ResourcesTypesEnum as ResourceType,
-  UpdateQuizParams,
-  CategoryNameInterface,
   PositionEnum
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
@@ -88,7 +88,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   }
 
   const createQuizService = useCallback(
-    (data: CreateQuizParams) => ResourceService.addQuizQuery(data),
+    (data: CreateQuizParams) => ResourceService.addQuiz(data),
     []
   )
 
@@ -101,7 +101,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   const editQuizService = useCallback(
     async (data: UpdateQuizParams) => {
       if (id) {
-        await ResourceService.editQuizQuery(data)
+        await ResourceService.editQuiz(data)
       }
     },
     [id]
