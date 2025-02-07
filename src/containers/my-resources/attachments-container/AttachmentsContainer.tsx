@@ -14,7 +14,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
 import AddDocuments from '~/containers/add-documents/AddDocuments'
 
-import { defaultResponses, snackbarVariants } from '~/constants'
+import { defaultResponses } from '~/constants'
 import {
   columns,
   initialSort,
@@ -29,9 +29,6 @@ import {
 } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
-import { useAppDispatch } from '~/hooks/use-redux'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import useMutation from '~/hooks/use-mutation'
 import useQuery from '~/hooks/use-query'
@@ -39,7 +36,6 @@ import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const { openModal, closeModal } = useModalContext()
   const breakpoints = useBreakpoints()
   const { page, handleChangePage } = usePagination()
@@ -64,6 +60,7 @@ const AttachmentsContainer = () => {
     [itemsPerPage, page, sort, searchFileName, selectedItems]
   )
 
+  // useMutation hook
   const deleteAttachment = useCallback(
     (id?: string) => ResourceService.deleteAttachment(id ?? ''),
     []
@@ -88,28 +85,19 @@ const AttachmentsContainer = () => {
     }
   })
 
-  const fetchAttachments = async (): Promise<void> => {
+  const handleRefetchAttachments = async (): Promise<void> => {
     await refetchAttachments()
   }
 
-  const { mutate: updateAttachment } = useMutation({
+  const { mutate: handleUpdateAttachment } = useMutation({
     mutationFn: ResourceService.updateAttachment,
     onError: handleErrorAlert,
     queryKey: ['attachments']
   })
 
-  const onCreateAttachmentsError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
-
-  const { mutate: createAttachment } = useMutation({
+  const { mutate: handleCreateAttachment } = useMutation({
     mutationFn: ResourceService.createAttachment,
-    onError: onCreateAttachmentsError,
+    onError: handleErrorAlert,
     queryKey: ['attachments']
   })
 
@@ -122,7 +110,7 @@ const AttachmentsContainer = () => {
           <EditAttachmentModal
             attachment={attachment as Attachment}
             closeModal={closeModal}
-            onAttachmentUpdate={updateAttachment}
+            onAttachmentUpdate={handleUpdateAttachment}
           />
         )
       })
@@ -146,7 +134,7 @@ const AttachmentsContainer = () => {
         <AddAttachmentCategoryModal
           attachment={attachment as Attachment}
           closeModal={closeModal}
-          onAttachmentUpdate={updateAttachment}
+          onAttachmentUpdate={handleUpdateAttachment}
         />
       )
     })
@@ -162,7 +150,7 @@ const AttachmentsContainer = () => {
     columns: columnsToShow,
     data: {
       response: loadedAttachments ?? defaultResponses.itemsWithCount,
-      getData: fetchAttachments
+      getData: handleRefetchAttachments
     },
     services: { deleteService: deleteAttachment },
     itemsPerPage,
@@ -180,12 +168,12 @@ const AttachmentsContainer = () => {
           buttonText={t('myResourcesPage.attachments.addBtn')}
           formData={formData}
           icon={<AddIcon sx={styles.addAttachmentIcon} />}
-          onCreateDocument={createAttachment}
+          onCreateDocument={handleCreateAttachment}
           removePreviousFiles
           sx={styles.addAttachmentBtn}
         />
       }
-      fetchData={fetchAttachments}
+      fetchData={handleRefetchAttachments}
       placeholder={'myResourcesPage.attachments.searchInput'}
       searchRef={searchFileName}
       selectedItems={selectedItems}
