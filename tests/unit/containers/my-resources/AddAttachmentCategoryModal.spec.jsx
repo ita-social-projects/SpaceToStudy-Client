@@ -25,6 +25,15 @@ const attachmentMock = {
   category: null
 }
 
+const changeCategory = (autocomplete, categoryName) => {
+  fireEvent.click(autocomplete)
+  fireEvent.change(autocomplete, {
+    target: { value: categoryName }
+  })
+  fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+  fireEvent.keyDown(autocomplete, { key: 'Enter' })
+}
+
 describe('AddAttachmentCategoryModal component', () => {
   mockAxiosClient
     .onGet(URLs.resources.resourcesCategories.getNames)
@@ -50,7 +59,7 @@ describe('AddAttachmentCategoryModal component', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('should render save button and click on it', () => {
+  it('should render save button and click on it if category was changed', async () => {
     const saveBtn = screen.getByText('common.save')
 
     expect(saveBtn).toBeInTheDocument()
@@ -60,16 +69,20 @@ describe('AddAttachmentCategoryModal component', () => {
     expect(updateAttachmentCategory).toHaveBeenCalled()
   })
 
+  it('should render disabled save button by default', () => {
+    const saveBtn = screen.getByText('common.save')
+
+    expect(saveBtn).toBeInTheDocument()
+
+    fireEvent.click(saveBtn)
+
+    expect(updateAttachmentCategory).not.toHaveBeenCalled()
+  })
+
   it('should change category', () => {
     const categoryDropbox = screen.getByRole('combobox')
 
-    fireEvent.click(categoryDropbox)
-    fireEvent.change(categoryDropbox, {
-      target: { value: categoriesNamesMock[1].name }
-    })
-    fireEvent.keyDown(categoryDropbox, { key: 'ArrowDown' })
-    fireEvent.keyDown(categoryDropbox, { key: 'Enter' })
-
+    changeCategory(categoryDropbox, categoriesNamesMock[1].name)
     expect(categoryDropbox.value).toBe(categoriesNamesMock[1].name)
   })
 })
