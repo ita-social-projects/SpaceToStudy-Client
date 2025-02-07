@@ -176,11 +176,10 @@ describe('resourseService tests', () => {
        return [200, mockAttachmentResponse]
      })
 
-     const updatedAttachmentResponse =
-       await ResourceService.updateAttachmentQuery({
-         ...attachment,
-         id: attachmentId
-       })
+     const updatedAttachmentResponse = await ResourceService.updateAttachment({
+       ...attachment,
+       id: attachmentId
+     })
 
      expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
    })
