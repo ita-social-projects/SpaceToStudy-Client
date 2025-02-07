@@ -15,7 +15,7 @@ const useTimer = (initialTime: number) => {
     }
   }, [])
 
-  return formatTime(String(time))
+  return formatTime(time)
 }
 
 export default useTimer

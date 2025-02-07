@@ -317,8 +317,8 @@ export const parseFileName = (
 export const getInitials = (firstName: string, lastName: string) =>
   firstName && lastName ? `${firstName[0]}${lastName[0]}`.toUpperCase() : ''
 
-export const formatTime = (date: string) => {
-  return format(new Date(date), 'HH:mm')
+export const formatTime = (date: Date | string | number) => {
+  return format(typeof date !== 'string' ? date : new Date(date), 'HH:mm')
 }
 
 export const formatTimeDifference = (startDate: string, endDate: string) => {
