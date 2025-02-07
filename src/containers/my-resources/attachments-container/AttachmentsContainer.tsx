@@ -75,7 +75,13 @@ const AttachmentsContainer = () => {
     refetch: refetchAttachments,
     error: fetchAttachmentsError
   } = useQuery<ItemsWithCount<Attachment>>({
-    queryKey: ['attachments'],
+    queryKey: [
+      'attachments',
+      page,
+      sort,
+      searchFileName.current,
+      selectedItems
+    ],
     queryFn: getAttachments,
     options: {
       initialData: defaultResponses.itemsWithCount
