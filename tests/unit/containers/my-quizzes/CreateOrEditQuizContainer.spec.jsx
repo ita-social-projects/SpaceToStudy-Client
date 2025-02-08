@@ -140,17 +140,13 @@ describe('CreateOrEditQuizContainer with id', () => {
   })
 
   it('should call ResourceService.getQuizQuery with the correct id when loading the quiz', async () => {
-    await waitFor(() => {
-      renderComponent()
-    })
+    renderComponent()
 
     expect(getQuizSpy).toHaveBeenCalledWith(mockId)
   })
 
   it('should call set functions when saving the quiz', async () => {
-    await waitFor(() => {
-      renderComponent()
-    })
+    renderComponent()
 
     const saveBtn = screen.getByText('common.save')
     fireEvent.click(saveBtn)

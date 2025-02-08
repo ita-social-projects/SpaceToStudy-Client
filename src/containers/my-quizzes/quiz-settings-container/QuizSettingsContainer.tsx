@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
@@ -26,8 +25,6 @@ import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSett
 import {
   type QuizViewEnum,
   type QuizTimeLimit,
-  type UpdateQuizParams,
-  type CreateQuizParams,
   type QuizAttempt,
   ButtonTypeEnum,
   QuizTabsEnum,
@@ -45,23 +42,9 @@ const QuizSettingsContainer = ({
   setActiveTab
 }: QuizContentProps) => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const { id = '' } = useParams()
   const navigate = useNavigate()
   const { handleErrorAlert, handleAlert } = useSnackbarAlert()
-
-  const editQuizService = useCallback(
-    async (data: UpdateQuizParams) => {
-      if (id) {
-        await ResourceService.editQuiz(data)
-      }
-    },
-    [id]
-  )
-
-  const createQuizService = useCallback(
-    (data: CreateQuizParams) => ResourceService.addQuiz(data),
-    []
-  )
 
   const handleResponse = () => {
     handleAlert({
@@ -76,15 +59,15 @@ const QuizSettingsContainer = ({
       : navigate(authRoutes.myResources.root.path)
   }
 
-  const { mutate: fetchAddQuiz } = useMutation({
-    mutationFn: createQuizService,
+  const { mutate: createQuiz } = useMutation({
+    mutationFn: ResourceService.addQuiz,
     onSuccess: handleResponse,
     onError: handleErrorAlert
   })
 
-  const { mutate: fetchEditedQuiz } = useMutation({
+  const { mutate: editQuiz } = useMutation({
     queryKey: ['quiz', id],
-    mutationFn: editQuizService,
+    mutationFn: ResourceService.editQuiz,
     onSuccess: handleResponse,
     onError: handleErrorAlert
   })
@@ -94,8 +77,8 @@ const QuizSettingsContainer = ({
       initialValues: { ...settings },
       onSubmit: () => {
         id
-          ? fetchEditedQuiz({ settings: data, id })
-          : fetchAddQuiz({
+          ? editQuiz({ settings: data, id })
+          : createQuiz({
               title,
               description,
               items: questions,

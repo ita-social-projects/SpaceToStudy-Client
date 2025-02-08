@@ -28,12 +28,9 @@ import {
   columns,
   removeColumnRules
 } from '~/containers/add-resources/AddQuestions.constants'
-import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
-  type CreateQuizParams,
   type Question,
   type Quiz,
-  type UpdateQuizParams,
   type CategoryNameInterface,
   ButtonTypeEnum,
   SizeEnum,
@@ -60,7 +57,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   const { t } = useTranslation()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
-  const { id } = useParams()
+  const { id = '' } = useParams()
   const { handleErrorAlert, handleAlert } = useSnackbarAlert()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
 
@@ -87,38 +84,21 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
     navigateToQuizzesTab()
   }
 
-  const createQuizService = useCallback(
-    (data: CreateQuizParams) => ResourceService.addQuiz(data),
-    []
-  )
-
-  const { mutate: fetchAddQuiz } = useMutation({
-    mutationFn: createQuizService,
+  const { mutate: createQuiz } = useMutation({
+    mutationFn: ResourceService.addQuiz,
     onSuccess: handleResponse,
     onError: handleErrorAlert
   })
 
-  const editQuizService = useCallback(
-    async (data: UpdateQuizParams) => {
-      if (id) {
-        await ResourceService.editQuiz(data)
-      }
-    },
-    [id]
-  )
-
-  const { mutate: fetchEditedQuiz } = useMutation({
+  const { mutate: editQuiz } = useMutation({
     queryKey: ['quiz', id],
-    mutationFn: editQuizService,
+    mutationFn: ResourceService.editQuiz,
     onSuccess: handleResponse,
     onError: handleErrorAlert
   })
 
   const getQuiz = useCallback(() => {
-    if (id) {
-      return ResourceService.getQuizQuery(id)
-    }
-    return defaultResponse
+    return ResourceService.getQuizQuery(id)
   }, [id])
 
   const handleGetQuizResponse = useCallback(
@@ -189,14 +169,14 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
 
   const onSaveQuiz = () =>
     id
-      ? fetchEditedQuiz({
+      ? editQuiz({
           id,
           title,
           description,
           items: questions,
           category: category ? { _id: category, name: '' } : null
         })
-      : fetchAddQuiz({
+      : createQuiz({
           title,
           description,
           items: questions,
@@ -232,7 +212,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
     <PageWrapper sx={styles.container}>
       <Box sx={styles.root}>
         <AppTextField
-          InputLabelProps={styles.titleLabel(!!title)}
+          InputLabelProps={styles.titleLabel(Boolean(title))}
           InputProps={styles.titleInput}
           fullWidth
           inputProps={styles.input}
@@ -242,7 +222,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
           variant={TextFieldVariantEnum.Standard}
         />
         <AppTextField
-          InputLabelProps={styles.descriptionLabel(!!description)}
+          InputLabelProps={styles.descriptionLabel(Boolean(description))}
           InputProps={styles.descriptionInput}
           fullWidth
           inputProps={styles.input}
