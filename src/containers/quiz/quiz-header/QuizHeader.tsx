@@ -17,11 +17,6 @@ import {
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import styles from '~/containers/quiz/quiz-header/QuizHeader.styles'
-import { useQuery } from '@tanstack/react-query'
-import { ResourceService } from '~/services/resource-service'
-import { useParams } from 'react-router-dom'
-import { useCallback } from 'react'
-import Loader from '~/components/loader/Loader'
 
 type QuizHeaderProps = {
   isFinished: boolean
@@ -35,6 +30,7 @@ type QuizHeaderProps = {
   updatedAt: string
   isNotStarted: boolean
   quizItems: Question[]
+  usedAttempts: number
   settings: {
     attemptLimit: QuizAttempt
     timeLimit: QuizTimeLimit
@@ -55,27 +51,14 @@ const QuizHeader: React.FC<QuizHeaderProps> = ({
   isNotStarted,
   quizItems,
   settings,
+  usedAttempts,
   handlePreview
 }: QuizHeaderProps) => {
   const { userRole } = useAppSelector((state) => state.appMain)
   const isStudent = userRole === UserRoleEnum.Student
 
   const isTutor = userRole === UserRoleEnum.Tutor
-  const { id: cooperationId, quizId } = useParams()
 
-  const getQuizzes = useCallback(() => {
-    if (cooperationId && quizId) {
-      return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
-    }
-  }, [cooperationId, quizId])
-
-  const { data: finishedQuizzes = [], isLoading } = useQuery({
-    queryKey: ['quizzes', cooperationId, quizId],
-    queryFn: getQuizzes
-  })
-  if (isLoading || !finishedQuizzes) {
-    return <Loader pageLoad size={50} />
-  }
   return (
     <Box sx={styles.wrapper}>
       <TitleWithDescription
@@ -107,7 +90,7 @@ const QuizHeader: React.FC<QuizHeaderProps> = ({
           handleStartButton={handlePreview}
           questionsAmount={quizItems.length}
           timeLimit={settings.timeLimit}
-          usedAttempts={finishedQuizzes}
+          usedAttempts={usedAttempts}
         />
       )}
     </Box>

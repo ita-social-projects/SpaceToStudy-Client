@@ -227,6 +227,7 @@ const QuizPage = () => {
             title={title}
             totalPoints={items.length}
             updatedAt={finishedQuiz?.updatedAt ?? updatedAt}
+            usedAttempts={finishedAttempts.length}
           />
           <Divider sx={styles.divider} />
           {attemptsList}
@@ -248,6 +249,7 @@ const QuizPage = () => {
               title={title}
               totalPoints={items.length}
               updatedAt={finishedQuiz?.updatedAt ?? updatedAt}
+              usedAttempts={finishedAttempts.length}
             />
             <Divider sx={styles.divider} />
             {questionsBlock}

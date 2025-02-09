@@ -20,7 +20,7 @@ import {
   spliceSx
 } from '~/utils/helper-functions'
 
-import { type FinishedAttempts, QuizAttempt, QuizTimeLimit } from '~/types'
+import { QuizAttempt, QuizTimeLimit } from '~/types'
 import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { TFunction } from 'i18next'
 import { useState } from 'react'
@@ -172,7 +172,7 @@ type StartViewQuizInfoProps = {
   questionsAmount: number
   attempts: QuizAttempt
   timeLimit: QuizTimeLimit
-  usedAttempts: FinishedAttempts
+  usedAttempts: number
   handleStartButton: (value: boolean) => void
 }
 const StartViewQuizInfo = ({
@@ -185,7 +185,6 @@ const StartViewQuizInfo = ({
   const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
 
-  const usedAttemptsCount = usedAttempts.length
   const totalAttempts = attempts.split(' ')[0]
   const timeLimitNumber = timeLimit.split(' ')[0]
 
@@ -196,7 +195,7 @@ const StartViewQuizInfo = ({
   }
 
   const hasAttempts =
-    limits.isNoLimitAttempt || usedAttemptsCount < limits.maxAttempts
+    limits.isNoLimitAttempt || usedAttempts < limits.maxAttempts
 
   const typographyStyle = (subType: number) => {
     return spliceSx(
@@ -231,7 +230,7 @@ const StartViewQuizInfo = ({
       </Box>
       <Typography sx={typographyStyle(1)}>{t('quiz.attemptLimit')}:</Typography>
       <Typography sx={typographyStyle(2)}>
-        {usedAttemptsCount}/{totalAttempts}
+        {usedAttempts}/{totalAttempts}
       </Typography>
     </>
   )
@@ -296,9 +295,7 @@ const StartViewQuizInfo = ({
             onClick={handleStartAttempt}
             size='sm'
           >
-            {usedAttempts.length === 0
-              ? t('quiz.startQuiz')
-              : t('quiz.tryAgain')}
+            {usedAttempts === 0 ? t('quiz.startQuiz') : t('quiz.tryAgain')}
           </Button>
         </Box>
       </Box>
