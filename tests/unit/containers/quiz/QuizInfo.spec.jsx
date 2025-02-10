@@ -9,59 +9,6 @@ import {
 
 import { QuizAttempt, QuizTimeLimit } from '~/types'
 
-const finishedQuizzes = [
-  {
-    _id: '679bd116efb62d7f24ff6f1e',
-    quiz: '678a859631dbe90b2a3ff5a1',
-    grade: 43,
-    results: [
-      {
-        question: 'What is UI and UX meaning?',
-        answers: [{ text: 'User Interface and User Experience' }, { text: 'Universal Index and User Exchange' }]
-      },
-      {
-        question: 'What is UX?',
-        answers: [{ text: 'User Experience' }, { text: 'User Exchange' }, { text: 'Universal Experiment' }]
-      },
-      {
-        question: 'Which of the following are key principles of effective UI/UX design?',
-        answers: [
-          { text: 'Consistency' },
-          { text: 'Accessibility' },
-          { text: 'Simplicity' },
-          { text: 'Complexity' },
-          { text: 'Fast loading speed' }
-        ]
-      }
-    ]
-  },
-  {
-    _id: '679bd116efb62d7f24ff6f1e',
-    quiz: '678a859631dbe90b2a3ff5a1',
-    grade: 50,
-    results: [
-      {
-        question: 'What is UI and UX meaning?',
-        answers: [{ text: 'User Interface and User Experience' }, { text: 'Universal Index and User Exchange' }]
-      },
-      {
-        question: 'What is UX?',
-        answers: [{ text: 'User Experience' }, { text: 'User Exchange' }, { text: 'Universal Experiment' }]
-      },
-      {
-        question: 'Which of the following are key principles of effective UI/UX design?',
-        answers: [
-          { text: 'Consistency' },
-          { text: 'Accessibility' },
-          { text: 'Simplicity' },
-          { text: 'Complexity' },
-          { text: 'Fast loading speed' }
-        ]
-      }
-    ]
-  }
-]
-
 describe('UngradedQuizInfo', () => {
   beforeEach(() => {
     renderWithProviders(<UngradedQuizInfo />)
@@ -109,7 +56,7 @@ describe('StartViewQuizInfo', () => {
     attempts: QuizAttempt.Attempt2,
     timeLimit: QuizTimeLimit.Minute30,
     handleStartButton: mockHandleStartButton,
-    usedAttempts: []
+    usedAttempts: 0
   }
 
   it('should render quiz info correctly', () => {
@@ -139,7 +86,7 @@ describe('StartViewQuizInfo', () => {
     renderWithProviders(<StartViewQuizInfo {...defaultProps}
       attempts={QuizAttempt.Attempt3}
       timeLimit={QuizTimeLimit.NoLimit}
-      usedAttempts={finishedQuizzes}/>)
+      usedAttempts={2}/>)
 
     expect(screen.getByText('quiz.tryAgain')).toBeInTheDocument()
   })
