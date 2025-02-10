@@ -30,7 +30,11 @@ const mockedOpenAnswerQuestion = {
   title: 'Question title',
   text: 'Question text',
   answers: [
-    {id: 0, text: 'Answer 1', isCorrect: true },
+    {
+      id: 0,
+      text: 'Answer 1',
+      isCorrect: true 
+    }
   ],
   author: 'Question author',
   type: 'openAnswer',
@@ -98,7 +102,7 @@ describe('CreateOrEditQuizQuestion component without question', () => {
 
   it('should save a new question in the database', async () => {
     mockAxiosClient
-      .onPost(`${URLs.resources.questions.post}`)
+      .onPost(URLs.resources.questions.post)
       .reply(200, { data: mockedQuestion })
     const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestion')
     const modalSaveBtn = screen.getByText('common.save')
@@ -131,7 +135,7 @@ describe('CreateOrEditQuizQuestion component without question', () => {
   })
   it('should call onCreateQuestion with openAnswer data', async () => {
     mockAxiosClient
-      .onPost(`${URLs.resources.questions.post}`)
+      .onPost(URLs.resources.questions.post)
       .reply(200, { data: mockedOpenAnswerQuestion })
     const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestion')
     const modalSaveBtn = screen.getByText('common.save')

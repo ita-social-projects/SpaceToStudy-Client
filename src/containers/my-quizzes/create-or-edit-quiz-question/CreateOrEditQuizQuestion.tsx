@@ -21,7 +21,7 @@ import { initialValues } from '~/containers/my-quizzes/create-or-edit-quiz-quest
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 interface CreateOrEditQuizQuestionProps {
   question?: Question
@@ -161,11 +161,10 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
     })
   }, [openModal, onCloseCreation, onOpenCreation, data, onCancel])
 
-  const onOpenCreateQuestionModalRef = useRef(onOpenCreateQuestionModal)
-
   useEffect(() => {
-    !question && onOpenCreateQuestionModalRef.current()
-  }, [question])
+    !question && onOpenCreateQuestionModal()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return isNewQuestion ? (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>

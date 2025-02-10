@@ -89,7 +89,12 @@ describe('QuestionEditor component with an open question type', () => {
     fireEvent.click(addNewOneButton)
     
     expect(handleNonInputValueChange).toHaveBeenCalledWith("answers", [
-      { id: 0, text: "", isCorrect: true, isEditing: true },
+      { 
+        id: 0,
+        text: '',
+        isCorrect: true,
+        isEditing: true
+      }
     ])
   })
   it('should click on edit title and category', () => {

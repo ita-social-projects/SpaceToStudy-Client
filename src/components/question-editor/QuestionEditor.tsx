@@ -121,7 +121,9 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
 
   const addNewOneAnswer = (event: MouseEvent<HTMLInputElement>) => {
     event.preventDefault()
-    if (isEmptyAnswer) return
+    if (isEmptyAnswer) {
+      return
+    }
 
     handleNonInputValueChange('answers', [
       ...data.answers,
