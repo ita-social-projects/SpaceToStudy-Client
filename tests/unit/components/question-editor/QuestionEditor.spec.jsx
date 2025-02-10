@@ -88,7 +88,7 @@ describe('QuestionEditor component with an open question type', () => {
     const addNewOneButton = screen.getByTestId('addNewAnswerBtn')
     fireEvent.click(addNewOneButton)
     
-    expect(handleNonInputValueChange).toHaveBeenCalledWith("answers", [
+    expect(handleNonInputValueChange).toHaveBeenCalledWith('answers', [
       { 
         id: 0,
         text: '',
