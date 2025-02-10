@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { type ReactNode, useCallback, useEffect } from 'react'
+import { type ReactNode, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import img from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
@@ -54,14 +54,6 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
     [userId, userRole]
   )
 
-  const updateUserName = useCallback(
-    (user: UserName) => {
-      handleNonInputValueChange('firstName', user.firstName)
-      handleNonInputValueChange('lastName', user.lastName)
-    },
-    [handleNonInputValueChange]
-  )
-
   const { isLoading: userLoading, data: userResponse } = useQuery({
     queryFn: getUserById,
     queryKey: ['user', userId],
@@ -70,9 +62,19 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
     }
   })
 
+  const updateUserNameRef = useRef<(user: UserName) => void>()
+
   useEffect(() => {
-    if (userResponse) {
-      updateUserName(userResponse)
+    updateUserNameRef.current = (user: UserName) => {
+      handleNonInputValueChange('firstName', user.firstName)
+      handleNonInputValueChange('lastName', user.lastName)
+    }
+  }, [handleNonInputValueChange])
+
+  useEffect(() => {
+    if (userResponse && updateUserNameRef.current) {
+      console.count('updateUserNameRef')
+      updateUserNameRef.current(userResponse)
     }
   }, [userResponse])
 
