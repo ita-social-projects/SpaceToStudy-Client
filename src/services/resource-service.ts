@@ -7,7 +7,7 @@ import { URLs } from '~/constants/request'
 import {
   Attachment,
   GetResourcesParams,
-  GetResourcesCategoriesParams,
+  type GetResourcesCategoriesParams,
   ItemsWithCount,
   LessonData,
   Lesson,
@@ -191,10 +191,14 @@ export const ResourceService = {
     await axiosClient.delete(
       createUrlPath(URLs.resources.questions.delete, id)
     ),
-  getResourcesCategories: (
-    params?: GetResourcesCategoriesParams
-  ): Promise<AxiosResponse<ItemsWithCount<Categories>>> => {
-    return axiosClient.get(URLs.resources.resourcesCategories.get, { params })
+  getResourcesCategories: (params?: GetResourcesCategoriesParams) => {
+    return baseService.request<ItemsWithCount<Categories>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.resources.resourcesCategories.get,
+        searchParameters: params
+      })
+    })
   },
   getResourcesCategoriesNames: (): Promise<
     AxiosResponse<CategoryNameInterface[]>

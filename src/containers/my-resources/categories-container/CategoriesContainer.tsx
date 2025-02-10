@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -12,9 +12,9 @@ import {
   useUpdateResourceCategoryMutation
 } from '~/services/resource-service'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
-import useAxios from '~/hooks/use-axios'
 import useMutation from '~/hooks/use-mutation'
 import useQuery from '~/hooks/use-query'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
@@ -28,13 +28,7 @@ import {
   removeColumnRules,
   validation
 } from '~/containers/my-resources/categories-container/CategoriesContainer.constansts'
-import {
-  Categories,
-  ItemsWithCount,
-  GetResourcesCategoriesParams,
-  ErrorResponse,
-  ResourcesTabsEnum
-} from '~/types'
+import { Categories, ErrorResponse, ResourcesTabsEnum } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-resources/categories-container/CategoriesContainer.style'
@@ -52,6 +46,7 @@ const CategoriesContainer = () => {
   const dispatch = useAppDispatch()
   const [selectedItemId, setSelectedItemId] = useState<string>('')
   const [updateResourceCategory] = useUpdateResourceCategoryMutation()
+  const { handleErrorAlert } = useSnackbarAlert()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -103,14 +98,28 @@ const CategoriesContainer = () => {
     []
   )
 
-  const { response, loading, fetchData } = useAxios<
-    ItemsWithCount<Categories>,
-    GetResourcesCategoriesParams
-  >({
-    service: getCategories,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError
+  const {
+    error,
+    data,
+    isLoading,
+    refetch: fetchData
+  } = useQuery({
+    queryFn: getCategories,
+    queryKey: ['categories'],
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
   })
+
+  const updateInfo = useCallback(async () => {
+    await fetchData()
+  }, [fetchData])
+
+  useEffect(() => {
+    if (error) {
+      handleErrorAlert(error)
+    }
+  }, [handleErrorAlert, error])
 
   const { data: allCategoriesNames = [], refetch: fetchAllCategoriesNames } =
     useQuery({
@@ -172,7 +181,7 @@ const CategoriesContainer = () => {
   const props = {
     actions: { onEdit },
     columns: columnsToShow,
-    data: { response, getData: onCategoryUpdate },
+    data: { response: data, getData: onCategoryUpdate },
     services: { deleteService: deleteCategory },
     pagination: { page, onChange: handleChangePage },
     sort: sortOptions,
@@ -190,11 +199,11 @@ const CategoriesContainer = () => {
             {t('myResourcesPage.categories.addBtn')}
           </Button>
         }
-        fetchData={fetchData}
+        fetchData={updateInfo}
         placeholder={'myResourcesPage.categories.searchInput'}
         searchRef={searchTitle}
       />
-      {loading ? (
+      {isLoading && data ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Categories> {...props} />

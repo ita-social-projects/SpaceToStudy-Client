@@ -36,7 +36,7 @@ export interface UpdateResourceCategory {
   id: Categories['_id']
 }
 
-export interface GetResourcesCategoriesParams extends Partial<RequestParams> {
+export type GetResourcesCategoriesParams = Partial<RequestParams> & {
   name?: string
 }
 
