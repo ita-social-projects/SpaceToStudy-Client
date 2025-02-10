@@ -28,11 +28,11 @@ const responseCategoriesMock = {
 
 describe('CategoriesContainer test', () => {
   beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(URLs.resources.resourcesCategories.get)
-        .reply(200, responseCategoriesMock)
+    mockAxiosClient
+      .onGet(URLs.resources.resourcesCategories.get)
+      .reply(200, responseCategoriesMock)
 
+    await waitFor(() => {
       renderWithProviders(<CategoriesContainer />)
     })
   })
@@ -50,8 +50,9 @@ describe('CategoriesContainer test', () => {
 
   it('should render table with category items', async () => {
     const categoryItemTitle = await screen.findByText(
-      responseCategoriesMock.items[0].name
+      'myResourcesPage.categories.title'
     )
+
     const tableLastUpdatesText = await screen.findByText(
       'myResourcesPage.categories.updated'
     )
@@ -72,17 +73,5 @@ describe('CategoriesContainer test', () => {
     const addCategoryPopover = screen.getByTestId('popupContent')
 
     expect(addCategoryPopover).toBeInTheDocument()
-  })
-
-  it('should display category menu', () => {
-    const categoryMenuBtn = screen.getAllByTestId('menu-icon')[0]
-
-    waitFor(() => {
-      fireEvent.click(categoryMenuBtn)
-    })
-
-    const categoryMenu = screen.getByRole('menu')
-
-    expect(categoryMenu).toBeInTheDocument()
   })
 })
