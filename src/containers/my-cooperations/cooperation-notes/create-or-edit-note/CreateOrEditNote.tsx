@@ -1,22 +1,19 @@
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import CheckBox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import LockIcon from '@mui/icons-material/Lock'
-
+import useQuery from '~/hooks/use-query'
 import { useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
-import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service'
 import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import Loader from '~/components/loader/Loader'
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 
-import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote.styles'
 import {
   TextFieldVariantEnum,
@@ -47,19 +44,22 @@ const CreateOrEditNote = ({
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
-  const getUserData: () => Promise<AxiosResponse<UserResponse>> = useCallback(
-    () => userService.getUserById(userId, userRole as UserRole),
+  const getUserData: () => Promise<UserResponse> = useCallback(
+    () => userService.getUserByIdWithBaseService(userId, userRole as UserRole),
     [userId, userRole]
   )
 
-  const {
-    loading,
-    response: { photo, firstName, lastName }
-  } = useAxios<UserResponse>({
-    service: getUserData,
-    fetchOnMount: true,
-    defaultResponse: defaultResponses.object as UserResponse
+  const { isLoading: loading, data: userResponse } = useQuery({
+    queryFn: getUserData,
+    queryKey: ['user', userId],
+    options: {
+      staleTime: Infinity
+    }
   })
+
+  const firstName = userResponse?.firstName
+  const lastName = userResponse?.lastName
+  const photo = userResponse?.photo
 
   const {
     data,
@@ -83,21 +83,22 @@ const CreateOrEditNote = ({
   const isNameValid = Boolean(firstName && lastName)
   const userName = isNameValid && `${firstName} ${lastName}`
 
-  const userInfo = loading ? (
-    <Loader size={20} />
-  ) : (
-    <>
-      <AvatarIcon
-        firstName={firstName}
-        lastName={lastName}
-        photo={userPhoto}
-        sx={styles.accountIcon}
-      />
-      <Typography variant={TypographyVariantEnum.Subtitle2}>
-        {userName}
-      </Typography>
-    </>
-  )
+  const userInfo =
+    loading || !firstName || !lastName ? (
+      <Loader size={20} />
+    ) : (
+      <>
+        <AvatarIcon
+          firstName={firstName}
+          lastName={lastName}
+          photo={userPhoto}
+          sx={styles.accountIcon}
+        />
+        <Typography variant={TypographyVariantEnum.Subtitle2}>
+          {userName}
+        </Typography>
+      </>
+    )
 
   return (
     <Box
