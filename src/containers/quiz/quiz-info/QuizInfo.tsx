@@ -291,6 +291,7 @@ const StartViewQuizInfo = ({
         </Box>
         <Box sx={styles.buttonWrapper}>
           <Button
+            data-testid='startButton'
             disabled={!hasAttempts}
             onClick={handleStartAttempt}
             size='sm'

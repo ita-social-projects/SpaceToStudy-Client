@@ -99,10 +99,6 @@ const QuizPage = () => {
     queryFn: getQuizzes
   })
 
-  const finishedQuizzes = Array.isArray(finishedAttempts)
-    ? finishedAttempts
-    : []
-
   const addFinishedQuiz = useCallback(() => {
     return ResourceService.addFinishedQuiz({
       cooperation: cooperationId ?? '',
@@ -138,7 +134,7 @@ const QuizPage = () => {
     }
   }, [mutate, navigate, scoredResponses])
 
-  if (isLoading || !quiz || !finishedQuizzes) {
+  if (isLoading || !quiz || !finishedAttempts) {
     return <Loader pageLoad />
   }
 
@@ -187,8 +183,8 @@ const QuizPage = () => {
 
   const questionsAnswered = Object.keys(data).length
   const attemptsList =
-    finishedQuizzes.length !== 0 ? (
-      finishedQuizzes.map((item) => {
+    Array.isArray(finishedAttempts) && finishedAttempts.length !== 0 ? (
+      finishedAttempts.map((item) => {
         return (
           <Box key={item._id} sx={styles.attemptWrapper}>
             <QuizInfoSection
