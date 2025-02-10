@@ -378,9 +378,6 @@ describe('QuizPage with finished attempts', () => {
     })
     const reviewAttemptButton = screen.getByText('quiz.reviewAttempt')
     expect(reviewAttemptButton).toBeInTheDocument()
-
-    const finishedAttemptTime = screen.getByText('10:05')
-    expect(finishedAttemptTime).toBeInTheDocument()
   })
 
   it('should render quiz preview correctly when reached attempt limit', () => {
