@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/material'
 import i18next from 'i18next'
-import { differenceInMinutes, format } from 'date-fns'
+import { differenceInMinutes, format, intervalToDuration } from 'date-fns'
 import {
   Breakpoints,
   ConvertedSize,
@@ -323,4 +323,9 @@ export const formatTime = (date: Date | string | number) => {
 
 export const formatTimeDifference = (startDate: string, endDate: string) => {
   return differenceInMinutes(new Date(endDate), new Date(startDate))
+}
+
+export const formatDuration = (ms: number) => {
+  const duration = intervalToDuration({ start: 0, end: ms })
+  return `${String(duration.hours).padStart(2, '0')}:${String(duration.minutes).padStart(2, '0')}:${String(duration.seconds).padStart(2, '0')}`
 }

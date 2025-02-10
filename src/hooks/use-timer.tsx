@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { formatTime } from '~/utils/helper-functions'
+import { formatDuration } from '~/utils/helper-functions'
 
 const useTimer = (initialTime: number) => {
   const [time, setTime] = useState(initialTime)
@@ -15,7 +15,7 @@ const useTimer = (initialTime: number) => {
     }
   }, [])
 
-  return formatTime(time)
+  return formatDuration(time)
 }
 
 export default useTimer
