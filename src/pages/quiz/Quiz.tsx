@@ -89,20 +89,18 @@ const QuizPage = () => {
     data
   )
   const getQuizzes = useCallback(() => {
-    if (cooperationId && quizId) {
-      return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
-    }
+    return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
   }, [cooperationId, quizId])
 
   const { data: finishedAttempts = [] } = useQuery({
-    queryKey: ['quizzes', cooperationId, quizId],
+    queryKey: ['finished-quizzes', cooperationId, quizId],
     queryFn: getQuizzes
   })
 
   const addFinishedQuiz = useCallback(() => {
     return ResourceService.addFinishedQuiz({
-      cooperation: cooperationId ?? '',
-      quiz: quizId ?? '',
+      cooperation: cooperationId,
+      quiz: quizId,
       grade: Math.round((points / items.length) * 100),
       results: items.map(({ text, answers, _id }) => {
         return {

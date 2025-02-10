@@ -348,7 +348,7 @@ describe('QuizPage with finished attempts', () => {
       if (queryKey[0] === 'quiz' && preloadedState.appMain.userRole === UserRoleEnum.Student) {
         return { data: mockQuiz, isLoading: false }
       }
-      if (queryKey[0] === 'quizzes' && preloadedState.appMain.userRole === UserRoleEnum.Student) {
+      if (queryKey[0] === 'finished-quizzes' && preloadedState.appMain.userRole === UserRoleEnum.Student) {
         return {data: mockAttemptsData, isLoading: false}
       }
       return {data: [], isLoading: false}
