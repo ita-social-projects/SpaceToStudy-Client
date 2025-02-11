@@ -18,7 +18,8 @@ import {
   Attachment,
   GroupedByDateItems,
   Question,
-  Categories
+  Categories,
+  type QuizTimeLimit
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -328,4 +329,14 @@ export const formatTimeDifference = (startDate: string, endDate: string) => {
 export const formatDuration = (ms: number) => {
   const duration = intervalToDuration({ start: 0, end: ms })
   return `${String(duration.hours).padStart(2, '0')}:${String(duration.minutes).padStart(2, '0')}:${String(duration.seconds).padStart(2, '0')}`
+}
+
+export const getTime = (timeLimit: QuizTimeLimit) => {
+  const parsedTimeLimit = parseInt(timeLimit)
+
+  if (isNaN(parsedTimeLimit)) {
+    return -1
+  }
+
+  return parsedTimeLimit === 1 ? 60 * 60 * 1000 : parsedTimeLimit * 60 * 1000
 }
