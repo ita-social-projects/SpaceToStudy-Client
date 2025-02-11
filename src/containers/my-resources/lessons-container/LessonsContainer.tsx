@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
@@ -8,7 +8,7 @@ import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyRes
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import usePagination from '~/hooks/table/use-pagination'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
@@ -21,7 +21,6 @@ import {
 } from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
 import {
   ItemsWithCount,
-  GetResourcesParams,
   Lesson,
   ErrorResponse,
   ResourcesTabsEnum
@@ -55,46 +54,47 @@ const LessonsContainer = () => {
     removeColumnRules
   )
 
-  const onResponseError = useCallback(
-    (error?: ErrorResponse) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: getErrorKey(error)
-        })
-      )
-    },
-    [dispatch]
-  )
-
-  const getMyLessons = useCallback(
-    () =>
-      ResourceService.getUsersLessons({
-        limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-        sort,
-        title: searchTitle.current,
-        categories: selectedItems
-      }),
-    [page, itemsPerPage, sort, searchTitle, selectedItems]
-  )
+  const getMyLessons = useCallback(async (): Promise<
+    ItemsWithCount<Lesson>
+  > => {
+    const response = await ResourceService.getUsersLessons({
+      limit: itemsPerPage,
+      skip: (page - 1) * itemsPerPage,
+      sort,
+      title: searchTitle.current,
+      categories: selectedItems
+    })
+    return response.data
+  }, [page, itemsPerPage, sort, searchTitle, selectedItems])
 
   const deleteLesson = useCallback(
     (id?: string) => ResourceService.deleteLesson(id ?? ''),
     []
   )
 
-  const { response, loading, fetchData } = useAxios<
-    ItemsWithCount<Lesson>,
-    GetResourcesParams
-  >({
-    service: getMyLessons,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError
+  const {
+    data: response,
+    isLoading,
+    isError,
+    error,
+    refetch: fetchData
+  } = useQuery({
+    queryKey: [
+      'lessons',
+      page,
+      itemsPerPage,
+      sort,
+      searchTitle.current,
+      selectedItems
+    ],
+    queryFn: getMyLessons,
+    options: {
+      initialData: defaultResponses.itemsWithCount
+    }
   })
 
   const onEdit = (id: string) => {
-    const resource = response.items.find((item) => item._id === id)
+    const resource = response?.items.find((item) => item._id === id)
     openModal({
       component: (
         <ChangeResourceConfirmModal
@@ -108,9 +108,24 @@ const LessonsContainer = () => {
     })
   }
 
+  const handleFetchData = useCallback(async () => {
+    await fetchData()
+  }, [fetchData])
+
+  useEffect(() => {
+    if (isError && error) {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: getErrorKey(error as ErrorResponse)
+        })
+      )
+    }
+  }, [isError, error, dispatch])
+
   const props = {
     columns: columnsToShow,
-    data: { response, getData: fetchData },
+    data: { response, getData: handleFetchData },
     services: { deleteService: deleteLesson },
     itemsPerPage,
     actions: { onEdit },
@@ -123,7 +138,7 @@ const LessonsContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText={'myResourcesPage.lessons.addBtn'}
-        fetchData={fetchData}
+        fetchData={handleFetchData}
         link={authRoutes.myResources.newLesson.path}
         placeholder={'myResourcesPage.lessons.searchInput'}
         searchRef={searchTitle}
@@ -131,7 +146,7 @@ const LessonsContainer = () => {
         setItems={setSelectedItems}
         sortOptions={sortOptions}
       />
-      {loading ? (
+      {isLoading ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Lesson> {...props} />
