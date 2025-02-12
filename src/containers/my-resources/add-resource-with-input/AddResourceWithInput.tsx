@@ -1,7 +1,6 @@
 import {
   useState,
   ChangeEvent,
-  FC,
   MutableRefObject,
   ReactElement,
   Dispatch,
@@ -23,12 +22,17 @@ import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
-import { CategoryNameInterface, PositionEnum } from '~/types'
+import {
+  QueryRefetch,
+  CategoryNameInterface,
+  PositionEnum,
+  ItemsWithCount
+} from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
-interface AddResourceWithInputProps {
+interface AddResourceWithInputProps<T> {
   btnText?: string
-  fetchData: () => Promise<void>
+  fetchData: (() => Promise<void>) | QueryRefetch<ItemsWithCount<T>>
   link?: string
   searchRef: MutableRefObject<string>
   button?: ReactElement
@@ -38,7 +42,7 @@ interface AddResourceWithInputProps {
   placeholder: string
 }
 
-const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
+const AddResourceWithInput = <T,>({
   btnText,
   fetchData,
   link,
@@ -48,7 +52,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   setItems,
   sortOptions,
   placeholder
-}) => {
+}: AddResourceWithInputProps<T>) => {
   const { t } = useTranslation()
   const { isMobile, isTablet } = useBreakpoints()
   const [searchInput, setSearchInput] = useState<string>('')

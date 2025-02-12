@@ -196,7 +196,7 @@ const AttachmentsContainer = () => {
   }
 
   const addAttachmentBlock = (
-    <AddResourceWithInput
+    <AddResourceWithInput<Attachment>
       button={
         <AddDocuments
           buttonText={t('myResourcesPage.attachments.addBtn')}

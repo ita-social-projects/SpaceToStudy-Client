@@ -16,7 +16,7 @@ export interface ErrorResponse {
 
 export type ServiceFunction<Response, Params = undefined> = (
   params: Params extends undefined ? undefined : Params
-) => Promise<AxiosResponse<Response>>
+) => Promise<AxiosResponse<Response> | void>
 
 export type ServiceFunctionNew<
   Response,

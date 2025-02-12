@@ -47,7 +47,7 @@ const QuizPage = () => {
   const [showPreview, setShowPreview] = useState(true)
 
   const getQuiz = useCallback(() => {
-    return ResourceService.getQuizQuery(quizId)
+    return ResourceService.getQuiz(quizId)
   }, [quizId])
 
   const { handleInputChange, handleNonInputValueChange, data } = useForm<

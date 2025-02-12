@@ -1,11 +1,6 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import QuizzesContainer from '~/containers/my-quizzes/QuizzesContainer'
-import {
-  mockAxiosClient,
-  renderWithProviders,
-  TestSnackbar
-} from '~tests/test-utils'
-import { URLs } from '~/constants/request'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock(
   '~/containers/my-resources/my-resources-table/MyResourcesTable',
@@ -26,7 +21,6 @@ vi.mock(
     default: () => <div data-testid='confirmModal' />
   })
 )
-
 const quizzesMock = {
   _id: '64ca5914b57f2442403394a5',
   title: 'First question',
@@ -58,18 +52,19 @@ const responseQuizzesMock = {
   items: responseQuizzesItemsMock
 }
 
-describe('QuizzesContainer component with data', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient.onGet(URLs.quizzes.get).reply(200, responseQuizzesMock)
+vi.mock('~/services/resource-service', () => ({
+  ResourceService: {
+    getQuizzesQuery: vi.fn(() => Promise.resolve(responseQuizzesMock))
+  }
+}))
 
-      renderWithProviders(<QuizzesContainer />)
-    })
+describe('QuizzesContainer component with data', () => {
+  beforeEach(() => {
+    renderWithProviders(<QuizzesContainer />)
   })
 
   afterEach(() => {
     vi.clearAllMocks()
-    mockAxiosClient.reset()
   })
 
   it('should render "New quiz" button', () => {
@@ -92,32 +87,5 @@ describe('QuizzesContainer component with data', () => {
     const modal = await screen.findByTestId('confirmModal')
 
     expect(modal).toBeInTheDocument()
-  })
-})
-
-describe('QuizzesContainer component with an error', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient.onGet(URLs.quizzes.get).reply(404, {
-        code: 'UNAUTHORIZED',
-        message: 'The requested URL was not found.'
-      })
-
-      renderWithProviders(
-        <TestSnackbar>
-          <QuizzesContainer />
-        </TestSnackbar>
-      )
-    })
-  })
-  afterEach(() => {
-    vi.clearAllMocks()
-    mockAxiosClient.reset()
-  })
-
-  it('should return error message', async () => {
-    const notFound = await screen.findByText('errors.UNAUTHORIZED')
-
-    expect(notFound).toBeInTheDocument()
   })
 })

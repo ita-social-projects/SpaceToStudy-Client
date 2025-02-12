@@ -33,7 +33,7 @@ interface MyResourcesTableInterface<T>
     onEdit: (id: string) => void
     onDuplicate?: (id: string) => void
   }
-  services: { deleteService: (id?: string) => Promise<AxiosResponse> }
+  services: { deleteService: (id?: string) => Promise<AxiosResponse | void> }
   pagination: PaginationProps
 }
 
