@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import useAxios from '~/hooks/use-axios'
-import UserProfile from '~/pages/user-profile/UserProfile.jsx'
+import UserProfile from '~/pages/user-profile/UserProfile.tsx'
 import { renderWithProviders } from '~tests/test-utils'
 
 const route = '/tutor/my-profile'
@@ -99,10 +99,10 @@ describe('UserProfile', () => {
     expect(loader).toBeInTheDocument()
   })
 
-  it('should find rendering name', () => {
+  it('should find rendering name', async () => {
     renderWithMockData()
 
-    const name = screen.getByText(`${mockData.firstName} ${mockData.lastName}`)
+    const name = await screen.findByText(`${mockData.firstName} ${mockData.lastName}`)
     expect(name).toBeInTheDocument()
   })
 

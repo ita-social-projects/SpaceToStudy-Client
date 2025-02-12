@@ -1,6 +1,6 @@
 //мені потрібно переписати цей компонент на tsx
 
-import { useCallback, useEffect } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import {
   useParams,
@@ -23,25 +23,21 @@ import AboutStudentBlock from '~/containers/user-profile/about-user-block/AboutS
 import VideoPresentation from '~/containers/user-profile/video-presentation/VideoPresentation'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 
-import { UserRoleEnum } from '~/types'
-import { defaultResponses } from '~/constants'
+import { DataByRole, UserRoleEnum } from '~/types'
 
-import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service'
 import videoImgProfile from '~/assets/img/user-profile-page/presentationVideoImg.png'
 
 import { responseMock } from '~/pages/user-profile/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { scrollToHash } from '~/utils/hash-scroll'
-import useQuery from "~/hooks/use-query";
+import useQuery from '~/hooks/use-query'
 
-
-
-const UserProfile = () => {
+const UserProfile: FC = () => {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
-  const paramsRole = searchParams.get('role')
+  const paramsRole = searchParams.get('role') as UserRoleEnum
   const { user } = responseMock
   const { reviews } = user.reviewStats || {}
 
@@ -58,12 +54,9 @@ const UserProfile = () => {
   const isMyProfile = useMatch(authRoutes.myProfile.path)
 
   const getUserData = useCallback(
-      () => userService.getUserByIdWithBaseService(preferredId, preferredRole),
-      [preferredId, preferredRole]
+    () => userService.getUserByIdWithBaseService(preferredId, preferredRole),
+    [preferredId, preferredRole]
   )
-
-
-
 
   const { isLoading: loading, data: response } = useQuery({
     queryFn: getUserData,
@@ -73,8 +66,6 @@ const UserProfile = () => {
     }
   })
 
-
-
   if (loading) {
     return <Loader pageLoad size={70} />
   }
@@ -83,19 +74,14 @@ const UserProfile = () => {
 
   const shouldShowPresentation =
     (isTutor && isMyProfile) ||
-    (!isTutor && response.videoLink?.student) ||
-    (!isMyProfile && response.videoLink?.tutor)
-  const VideoPresentationComponent = (
-    <VideoPresentation
-      video={response?.videoLink?.[preferredRole]}
-      videoMock={videoImgProfile}
-      videoPreview={loading || !response?.videoLink?.[preferredRole]}
-    />
-  )
+    (!isTutor && response?.videoLink?.student) ||
+    (!isMyProfile && response?.videoLink?.tutor)
 
-  return (
+  return loading || !response ? (
+    <Loader size={70} />
+  ) : (
     <PageWrapper>
-      <ProfileInfo myRole={userRole} userData={response} />
+      {userRole && <ProfileInfo myRole={userRole} userData={response} />}
       {isMyProfile && (
         <CompleteProfileBlock
           data={response}
@@ -107,19 +93,30 @@ const UserProfile = () => {
           }
         />
       )}
-      {response.professionalBlock && (
-        <AboutTutorBlock data={response.professionalBlock} />
+      {response?.professionalBlock && (
+        <AboutTutorBlock data={response?.professionalBlock} />
       )}
-      {response.aboutStudent && (
-        <AboutStudentBlock data={response.aboutStudent} />
+      {response?.aboutStudent && (
+        <AboutStudentBlock data={response?.aboutStudent} />
       )}
-      {shouldShowPresentation && VideoPresentationComponent}
+      {shouldShowPresentation && (
+        <VideoPresentation
+          video={
+            response?.videoLink?.[preferredRole as keyof DataByRole<string>]
+          }
+          videoMock={videoImgProfile}
+          videoPreview={
+            !response?.videoLink?.[preferredRole as keyof DataByRole<string>]
+          }
+        />
+      )}
       <CommentsWithRatingBlock
         averageRating={user.reviewStats.averageRating}
         reviewsCount={reviews}
         totalReviews={user.reviewStats.totalReviews}
         userRole={preferredRole}
       />
+      )
     </PageWrapper>
   )
 }
