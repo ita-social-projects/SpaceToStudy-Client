@@ -170,11 +170,9 @@ describe('resourseService tests', () => {
       resourceType: 'Attachment'
     }
 
-    mockAxiosClient.onPatch().reply((config) => {
-      expect(config.url).toBe(`/attachments/${attachmentId}`)
-
-      return [200, mockAttachmentResponse]
-    })
+    mockAxiosClient
+      .onPatch(RegExp(URLs.resources.attachments.patch.replace(':id', attachmentId)))
+      .reply(200, mockAttachmentResponse)  
 
     const updatedAttachmentResponse = await ResourceService.updateAttachment({
       ...attachment,
@@ -236,11 +234,7 @@ describe('resourseService tests', () => {
       }
     ]
 
-    mockAxiosClient.onGet().reply((config) => {
-      expect(config.url).toBe('/attachments')
-
-      return [200, mockResponse]
-    })
+    mockAxiosClient.onGet(URLs.resources.attachments.get).reply(200, mockResponse)  
 
     const response = await ResourceService.getAttachments()
 
@@ -259,11 +253,9 @@ describe('resourseService tests', () => {
       resourceType: 'Attachment'
     }
 
-    mockAxiosClient.onPost().reply((config) => {
-      expect(config.url).toBe('/attachments')
-
-      return [200, mockAttachmentResponse]
-    })
+    mockAxiosClient
+      .onPost(URLs.resources.attachments.post)
+      .reply(200, mockAttachmentResponse)
 
     const response = await ResourceService.createAttachment(attachment)
 
