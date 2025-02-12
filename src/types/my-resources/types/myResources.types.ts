@@ -1,8 +1,5 @@
-import { ItemsWithCount, GetResourcesParams } from '~/types'
+import { ItemsWithCount } from '~/types'
 
 export type ResourcesTableData<T> = {
   response: ItemsWithCount<T>
-  getData: (
-    params?: GetResourcesParams
-  ) => Promise<void> | void | Promise<ItemsWithCount<T>>
 }

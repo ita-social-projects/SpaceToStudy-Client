@@ -38,6 +38,8 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
+import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -49,6 +51,7 @@ const AttachmentsContainer = () => {
   const searchFileName = useRef<string>('')
   const [selectedItems, setSelectedItems] = useState<string[]>([])
   const formData = new FormData()
+  const { handleSuccessAlert, handleErrorAlert } = useSnackbarAlert()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -77,10 +80,15 @@ const AttachmentsContainer = () => {
     [itemsPerPage, page, sort, searchFileName, selectedItems]
   )
 
-  const deleteAttachment = useCallback(
-    (id?: string) => ResourceService.deleteAttachment(id ?? ''),
-    []
-  )
+  const { mutate: handleDeleteAttachment } = useMutation({
+    mutationFn: ResourceService.deleteAttachmentQuery,
+    onError: handleErrorAlert,
+    onSuccess: () => {
+      handleSuccessAlert(`myResourcesPage.attachments.successDeletion`)
+      void fetchAttachments() // TODO: remove and replace with queryKey, when 3110 issue will be merged
+    }
+    // queryKey: ['attachments']
+  })
 
   const updateAttachment = useCallback(
     (params?: UpdateAttachmentParams) =>
@@ -185,10 +193,11 @@ const AttachmentsContainer = () => {
 
   const props = {
     columns: columnsToShow,
-    data: { response, getData: fetchAttachments },
-    services: { deleteService: deleteAttachment },
+    data: {
+      response
+    },
     itemsPerPage,
-    actions: { onEdit },
+    actions: { onEdit, onDelete: handleDeleteAttachment },
     resource: ResourcesTabsEnum.Attachments,
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage },

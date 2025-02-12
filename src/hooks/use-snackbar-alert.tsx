@@ -46,7 +46,18 @@ const useSnackbarAlert = () => {
     },
     [handleAlert]
   )
-  return { handleAlert, handleErrorAlert }
+
+  const handleSuccessAlert = useCallback(
+    (message: string) => {
+      handleAlert({
+        message,
+        severity: snackbarVariants.success
+      })
+    },
+    [handleAlert]
+  )
+
+  return { handleAlert, handleErrorAlert, handleSuccessAlert }
 }
 
 export default useSnackbarAlert

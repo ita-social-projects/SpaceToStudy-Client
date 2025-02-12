@@ -173,14 +173,23 @@ export const ResourceService = {
       data: attachmentData
     })
   },
-  deleteAttachment: async (id: string): Promise<AxiosResponse> => {
-    return await axiosClient.delete(
-      createUrlPath(URLs.resources.attachments.delete, id)
-    )
-  },
   createAttachments: (data?: FormData): Promise<AxiosResponse> => {
     return axiosClient.post(URLs.attachments.post, data, {
       headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  },
+  deleteAttachment: async (id: string): Promise<AxiosResponse> => {
+    return await axiosClient.delete(
+      createUrlPath(URLs.resources.attachments.deleteOld, id)
+    )
+  },
+  deleteAttachmentQuery: (id: string) => {
+    return baseService.request<void>({
+      method: 'DELETE',
+      url: getFullUrl({
+        pathname: URLs.resources.attachments.delete,
+        parameters: { id }
+      })
     })
   },
   getQuestions: (
