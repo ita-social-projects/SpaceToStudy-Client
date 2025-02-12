@@ -81,7 +81,8 @@ export const URLs = {
       add: '/lessons',
       get: '/lessons',
       getById: '/lessons/:id',
-      delete: '/lessons',
+      deleteOld: '/lessons',
+      delete: '/lessons/:id',
       patch: '/lessons/:id'
     },
     attachments: {

@@ -36,6 +36,8 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import { useModalContext } from '~/context/modal-context'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
+import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const LessonsContainer = () => {
   const dispatch = useAppDispatch()
@@ -46,6 +48,7 @@ const LessonsContainer = () => {
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
   const [selectedItems, setSelectedItems] = useState<string[]>([])
+  const { handleErrorAlert, handleSuccessAlert } = useSnackbarAlert()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -79,10 +82,15 @@ const LessonsContainer = () => {
     [page, itemsPerPage, sort, searchTitle, selectedItems]
   )
 
-  const deleteLesson = useCallback(
-    (id?: string) => ResourceService.deleteLesson(id ?? ''),
-    []
-  )
+  const { mutate: handleDeleteLesson } = useMutation({
+    mutationFn: ResourceService.deleteLessonQuery,
+    onError: handleErrorAlert,
+    onSuccess: () => {
+      handleSuccessAlert(`myResourcesPage.lessons.successDeletion`)
+      void fetchData() // TODO: remove and replace with queryKey, when 3182 issue will be merged
+    }
+    // queryKey: ['lessons']
+  })
 
   const { response, loading, fetchData } = useAxios<
     ItemsWithCount<Lesson>,
@@ -110,11 +118,10 @@ const LessonsContainer = () => {
 
   const props = {
     columns: columnsToShow,
-    data: { response, getData: fetchData },
-    services: { deleteService: deleteLesson },
+    resourceItems: response,
     itemsPerPage,
-    actions: { onEdit },
-    resource: ResourcesTabsEnum.Lessons,
+    actions: { onEdit, onDelete: handleDeleteLesson },
+    resourceType: ResourcesTabsEnum.Lessons,
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage }
   }

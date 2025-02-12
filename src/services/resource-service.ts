@@ -56,7 +56,18 @@ export const ResourceService = {
     })
   },
   deleteLesson: async (id: string): Promise<AxiosResponse<Lesson>> =>
-    await axiosClient.delete(createUrlPath(URLs.resources.lessons.delete, id)),
+    await axiosClient.delete(
+      createUrlPath(URLs.resources.lessons.deleteOld, id)
+    ),
+  deleteLessonQuery: (id: string) => {
+    return baseService.request<void>({
+      method: 'DELETE',
+      url: getFullUrl({
+        pathname: URLs.resources.lessons.delete,
+        parameters: { id }
+      })
+    })
+  },
   addLesson: async (data: LessonData) => {
     return baseService.request<Lesson & { category: string | null }>({
       method: 'POST',
