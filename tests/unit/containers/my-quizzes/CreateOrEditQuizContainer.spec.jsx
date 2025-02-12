@@ -117,7 +117,7 @@ describe('CreateOrEditQuizContainer with id', () => {
   beforeEach(() => {
     useParams.mockReturnValue({ id: mockId })
 
-    getQuizSpy = vi.spyOn(ResourceService, 'getQuizQuery').mockResolvedValue({
+    getQuizSpy = vi.spyOn(ResourceService, 'getQuiz').mockResolvedValue({
       data: {
         _id: mockId,
         title: 'Mock title',
