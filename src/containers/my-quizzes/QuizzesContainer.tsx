@@ -77,7 +77,7 @@ const QuizzesContainer = () => {
     error,
     refetch
   } = useQuery({
-    queryKey: ['quizzes', itemsPerPage, sort, searchTitle, page, selectedItems],
+    queryKey: ['quizzes', itemsPerPage, sort, page, selectedItems],
     queryFn: getQuizzes,
     options: {
       staleTime: Infinity
