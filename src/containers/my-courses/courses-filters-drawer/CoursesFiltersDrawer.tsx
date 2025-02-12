@@ -101,6 +101,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         <AsyncAutocomplete
           labelField='name'
           onChange={onCategoryChange}
+          queryLabel='categories'
           service={categoryService.getCategoriesNames}
           textFieldProps={{
             label: t('myCoursesPage.coursesFilter.categoryLabel')
@@ -130,6 +131,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
           disabled={!filters.category}
           labelField='name'
           onChange={onSubjectChange}
+          queryLabel='subjects'
           service={getSubjectsNames}
           textFieldProps={{
             label: t('myCoursesPage.coursesFilter.subjectLabel')

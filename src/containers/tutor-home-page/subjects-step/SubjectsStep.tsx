@@ -123,6 +123,7 @@ const SubjectsStep = ({ btnsBox }: SubjectsStepProps) => {
             fetchOnFocus
             labelField='name'
             onChange={onChangeCategory}
+            queryLabel='categories'
             service={categoryService.getCategoriesNames}
             sx={{ mb: '20px' }}
             textFieldProps={{
@@ -138,6 +139,7 @@ const SubjectsStep = ({ btnsBox }: SubjectsStepProps) => {
             fetchOnFocus
             labelField='name'
             onChange={onChangeSubject}
+            queryLabel='subjects'
             service={getSubjectsNames}
             sx={{ mb: '20px' }}
             textFieldProps={{

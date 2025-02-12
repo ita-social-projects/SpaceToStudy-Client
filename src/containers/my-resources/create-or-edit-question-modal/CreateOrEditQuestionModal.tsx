@@ -81,6 +81,7 @@ const CreateOrEditQuestionModal: FC<CreateOrEditQuestionModalProps> = ({
           labelField='name'
           onBlur={handleBlur('category')}
           onChange={onCategoryChange}
+          queryLabel='resources-categories'
           service={ResourceService.getResourcesCategoriesNames}
           value={data.category}
           valueField='_id'

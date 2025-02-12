@@ -151,6 +151,7 @@ const Subjects = () => {
       axiosProps={{ onResponse: onResponseCategory }}
       labelField='displayName'
       onChange={onCategoryChange}
+      queryLabel='categories'
       service={fetchTranslatedCategories}
       sx={styles.categoryInput}
       textFieldProps={{
