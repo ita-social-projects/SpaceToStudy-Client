@@ -116,7 +116,7 @@ const QuizzesContainer = () => {
 
   return (
     <Box>
-      <AddResourceWithInput<Quiz>
+      <AddResourceWithInput
         btnText={'myResourcesPage.quizzes.addBtn'}
         fetchData={refetch}
         link={authRoutes.myResources.newQuiz.path}
