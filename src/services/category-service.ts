@@ -1,6 +1,3 @@
-import { axiosClient } from '~/plugins/axiosClient'
-import { AxiosResponse } from 'axios'
-
 import { URLs } from '~/constants/request'
 import {
   CategoryInterface,
@@ -23,7 +20,12 @@ export const categoryService = {
       url: resultUrl
     })
   },
-  getCategoriesNames: (): Promise<AxiosResponse<CategoryNameInterface[]>> => {
-    return axiosClient.get(URLs.categories.getNames)
+  getCategoriesNames: () => {
+    return baseService.request<CategoryNameInterface[]>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.categories.getNames
+      })
+    })
   }
 }

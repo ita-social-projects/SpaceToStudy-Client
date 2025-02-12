@@ -241,10 +241,7 @@ export const ResourceService = {
       })
     })
   },
-  getResourcesCategoriesNames: (): Promise<
-    AxiosResponse<CategoryNameInterface[]>
-  > => axiosClient.get(URLs.resources.resourcesCategories.getNames),
-  getResourcesCategoriesName: () => {
+  getResourcesCategoriesNames: () => {
     return baseService.request<CategoryNameInterface[]>({
       method: 'GET',
       url: URLs.resources.resourcesCategories.getNames
