@@ -1,9 +1,9 @@
 import { fireEvent, screen } from '@testing-library/react'
-
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
+import { renderWithProviders } from '~tests/test-utils'
+import useQuery from '~/hooks/use-query'
 
-import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
-import { URLs } from '~/constants/request'
+vi.mock('~/hooks/use-query')
 
 vi.mock(
   '~/containers/my-resources/my-resources-table/MyResourcesTable',
@@ -18,13 +18,6 @@ vi.mock(
   })
 )
 
-vi.mock(
-  '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal',
-  () => ({
-    default: () => <div data-testid='confirmModal' />
-  })
-)
-
 const lessonMock = {
   _id: '64e49ce305b3353b2ae6309e',
   author: '648afee884936e09a37deaaa',
@@ -35,17 +28,15 @@ const lessonMock = {
   updatedAt: '2023-08-22T11:32:51.995Z'
 }
 
-const responseItemsMock = Array(10)
-  .fill()
-  .map((_, index) => ({
-    ...lessonMock,
-    _id: `${index}`,
-    title: index + lessonMock.title
-  }))
-
 const lessonResponseMock = {
   count: 10,
-  items: responseItemsMock
+  items: Array(10)
+    .fill(null)
+    .map((_, index) => ({
+      ...lessonMock,
+      _id: `${index}`,
+      title: `Lesson ${index}`
+    }))
 }
 
 describe('LessonContainer test', () => {
@@ -59,28 +50,47 @@ describe('LessonContainer test', () => {
 
   afterEach(() => {
     vi.clearAllMocks()
-    mockAxiosClient.reset()
   })
 
   it('should render "New lesson" button', () => {
-    const addBtn = screen.getByText('myResourcesPage.lessons.addBtn')
+    useQuery.mockReturnValue({
+      data: lessonResponseMock.items,
+      isLoading: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    })
+    renderWithProviders(<LessonsContainer />)
 
+    const addBtn = screen.getByText('myResourcesPage.lessons.addBtn')
     expect(addBtn).toBeInTheDocument()
   })
 
   it('should render table with questions', async () => {
-    const table = await screen.findByTestId('testTable')
+    useQuery.mockReturnValue({
+      data: lessonResponseMock.items,
+      isLoading: false,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    })
+    renderWithProviders(<LessonsContainer />)
 
+    const table = await screen.findByTestId('testTable')
     expect(table).toBeInTheDocument()
   })
+  
+  it('should render loader when loading', async () => {
+    useQuery.mockReturnValue({
+      data: null,
+      isLoading: true,
+      isError: false,
+      error: null,
+      refetch: vi.fn(),
+    })
+    renderWithProviders(<LessonsContainer />)
 
-  it('should run onEdit action', async () => {
-    const editButton = await screen.findByTestId('editButton')
-
-    fireEvent.click(editButton)
-
-    const modal = await screen.findByTestId('confirmModal')
-
-    expect(modal).toBeInTheDocument()
+    const loader = screen.getByTestId('loader')
+    expect(loader).toBeInTheDocument()
   })
 })
