@@ -126,7 +126,7 @@ const QuizzesContainer = () => {
         setItems={setSelectedItems}
         sortOptions={sortOptions}
       />
-      {isLoading ? (
+      {isLoading || !quizzes ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Quiz> {...props} />
