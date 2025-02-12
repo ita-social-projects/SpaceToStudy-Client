@@ -2,6 +2,7 @@ import { useCallback, useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import Box from '@mui/material/Box'
+import { AxiosResponse } from 'axios'
 
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
@@ -62,9 +63,10 @@ const QuizzesContainer = () => {
   )
 
   const deleteQuiz = useCallback(
-    async (id?: string) => {
-      await ResourceService.deleteQuiz(id ?? '')
+    async (id?: string): Promise<AxiosResponse<unknown>> => {
+      const response = await ResourceService.deleteQuiz(id ?? '')
       await queryClient.invalidateQueries({ queryKey: ['quizzes'] })
+      return response
     },
     [queryClient]
   )
