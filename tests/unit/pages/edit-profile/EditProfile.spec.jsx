@@ -665,7 +665,20 @@ describe('EditProfile', () => {
 
   it('should dispatch openAlert with success message when user updates profile', async () => {   
     const updateBtn = screen.getByText('editProfilePage.updateBtn')
-    await waitFor(() => fireEvent.click(updateBtn))
+
+    useAppSelector.mockImplementation((selector) =>
+      selector({
+        ...mockState,
+        editProfile: {
+          ...mockState.editProfile,
+          profileState: { ...userMock, firstName: 'John' },
+          loading: LoadingStatusEnum.Fulfilled
+        }
+      })
+    )
+
+    expect(updateBtn).toBeInTheDocument
+    fireEvent.click(updateBtn)
 
     await waitFor(() => {
       expect(mockDispatch).toHaveBeenCalledWith(
