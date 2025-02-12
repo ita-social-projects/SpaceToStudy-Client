@@ -85,6 +85,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   }
 
   const { mutate: createQuiz } = useMutation({
+    queryKey: ['quizzes'],
     mutationFn: ResourceService.addQuiz,
     onSuccess: handleResponse,
     onError: handleErrorAlert
@@ -98,7 +99,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   })
 
   const getQuiz = useCallback(() => {
-    return ResourceService.getQuizQuery(id)
+    return ResourceService.getQuiz(id)
   }, [id])
 
   const handleGetQuizResponse = useCallback(
