@@ -28,6 +28,8 @@ import { type Quiz, ResourcesTabsEnum } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
 import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
+import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const QuizzesContainer = () => {
   const navigate = useNavigate()
@@ -39,6 +41,7 @@ const QuizzesContainer = () => {
   const breakpoints = useBreakpoints()
   const [selectedItems, setSelectedItems] = useState<string[]>([])
   const { openModal } = useModalContext()
+  const { handleSuccessAlert, handleErrorAlert } = useSnackbarAlert()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -58,14 +61,15 @@ const QuizzesContainer = () => {
     })
   }, [itemsPerPage, sort, searchTitle, page, selectedItems])
 
-  const deleteQuiz = useCallback(
-    async (id?: string): Promise<AxiosResponse<unknown>> => {
-      const response = await ResourceService.deleteQuiz(id ?? '')
-      await queryClient.invalidateQueries({ queryKey: ['quizzes'] })
-      return response
-    },
-    [queryClient]
-  )
+  const { mutate: handleDeleteQuiz } = useMutation({
+    mutationFn: ResourceService.deleteQuizQuery,
+    onError: handleErrorAlert,
+    onSuccess: () => {
+      handleSuccessAlert(`myResourcesPage.quizzes.successDeletion`)
+      void queryClient.invalidateQueries({ queryKey: ['quizzes'] }) // TODO: remove and replace with queryKey, when <N> issue will be merged
+    }
+    // queryKey: ['quizzes']
+  })
 
   const {
     data: quizzes,
@@ -112,14 +116,10 @@ const QuizzesContainer = () => {
 
   const props = {
     columns: columnsToShow,
-    data: {
-      response: quizzes ?? defaultResponses.itemsWithCount,
-      getData: getQuizzes
-    },
-    services: { deleteService: deleteQuiz },
+    resourceItems: quizzes ?? defaultResponses.itemsWithCount,
     itemsPerPage,
-    actions: { onEdit },
-    resource: ResourcesTabsEnum.Quizzes,
+    actions: { onEdit, onDelete: handleDeleteQuiz },
+    resourceType: ResourcesTabsEnum.Quizzes,
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage }
   }

@@ -127,7 +127,16 @@ export const ResourceService = {
     })
   },
   deleteQuiz: async (id: string): Promise<AxiosResponse> =>
-    await axiosClient.delete(createUrlPath(URLs.quizzes.delete, id)),
+    await axiosClient.delete(createUrlPath(URLs.quizzes.deleteOld, id)),
+  deleteQuizQuery: (id: string) => {
+    return baseService.request<void>({
+      method: 'DELETE',
+      url: getFullUrl({
+        pathname: URLs.quizzes.delete,
+        parameters: { id }
+      })
+    })
+  },
   addFinishedQuiz: async (data: CreateFinishedQuizParams) => {
     return baseService.request<FinishedQuiz>({
       method: 'POST',
