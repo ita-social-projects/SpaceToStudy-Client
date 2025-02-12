@@ -193,12 +193,10 @@ const AttachmentsContainer = () => {
 
   const props = {
     columns: columnsToShow,
-    data: {
-      response
-    },
+    resourceItems: response,
     itemsPerPage,
     actions: { onEdit, onDelete: handleDeleteAttachment },
-    resource: ResourcesTabsEnum.Attachments,
+    resourceType: ResourcesTabsEnum.Attachments,
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage },
     sx: styles.table

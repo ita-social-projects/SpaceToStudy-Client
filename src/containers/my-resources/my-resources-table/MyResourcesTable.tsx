@@ -9,9 +9,9 @@ import EnhancedTable, {
 } from '~/components/enhanced-table/EnhancedTable'
 
 import {
-  TableItem,
-  ResourcesTableData,
-  TableRowAction,
+  type TableItem,
+  type TableRowAction,
+  type ItemsWithCount,
   ResourcesTabsEnum
 } from '~/types'
 import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
@@ -19,9 +19,9 @@ import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-mod
 
 interface MyResourcesTableInterface<T>
   extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
-  resource: ResourcesTabsEnum
+  resourceType: ResourcesTabsEnum
   itemsPerPage: number
-  data: ResourcesTableData<T>
+  resourceItems: ItemsWithCount<T>
   actions: {
     onEdit: (id: string) => void
     onDuplicate?: (id: string) => void
@@ -31,9 +31,9 @@ interface MyResourcesTableInterface<T>
 }
 
 const MyResourcesTable = <T extends TableItem>({
-  resource,
+  resourceType,
   itemsPerPage,
-  data,
+  resourceItems,
   actions,
   pagination,
   ...props
@@ -43,24 +43,22 @@ const MyResourcesTable = <T extends TableItem>({
   const { openModal } = useModalContext()
 
   const { page, onChange } = pagination
-  const { response } = data
   const { onEdit, onDuplicate, onDelete } = actions
 
   const handleDelete = (id: string, isConfirmed: boolean) => {
-    console.log('id', id)
     if (isConfirmed) {
       onDelete(id)
     }
   }
 
   const handleConfirmDelete = (id: string) => {
-    const currentResource = response.items.find((item) => item._id === id)
+    const currentResource = resourceItems.items.find((item) => item._id === id)
 
     const handleConfirm = () => {
       openDialog({
         message: 'myResourcesPage.confirmDeletionMessage',
         sendConfirm: (isConfirmed: boolean) => handleDelete(id, isConfirmed),
-        title: `myResourcesPage.${resource}.confirmDeletionTitle`
+        title: `myResourcesPage.${resourceType}.confirmDeletionTitle`
       })
     }
 
@@ -78,7 +76,7 @@ const MyResourcesTable = <T extends TableItem>({
   const rowActions: TableRowAction[] = [
     {
       label:
-        resource === ResourcesTabsEnum.Categories
+        resourceType === ResourcesTabsEnum.Categories
           ? t('common.rename')
           : t('common.edit'),
       func: onEdit
@@ -96,8 +94,8 @@ const MyResourcesTable = <T extends TableItem>({
   return (
     <>
       <EnhancedTable<T>
-        data={{ items: response.items }}
-        emptyTableKey={`myResourcesPage.${resource}.emptyItems`}
+        data={{ items: resourceItems.items }}
+        emptyTableKey={`myResourcesPage.${resourceType}.emptyItems`}
         rowActions={rowActions}
         sx={roundedBorderTable}
         {...props}
@@ -105,7 +103,7 @@ const MyResourcesTable = <T extends TableItem>({
       <AppPagination
         onChange={onChange}
         page={page}
-        pageCount={Math.ceil(response.count / itemsPerPage)}
+        pageCount={Math.ceil(resourceItems.count / itemsPerPage)}
       />
     </>
   )
