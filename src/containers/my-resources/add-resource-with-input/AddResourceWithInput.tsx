@@ -22,17 +22,12 @@ import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
-import {
-  type QueryRefetch,
-  type CategoryNameInterface,
-  PositionEnum,
-  type ItemsWithCount
-} from '~/types'
+import { type CategoryNameInterface, PositionEnum } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
-interface AddResourceWithInputProps<T> {
+interface AddResourceWithInputProps {
   btnText?: string
-  fetchData: (() => Promise<void>) | QueryRefetch<ItemsWithCount<T>>
+  fetchData: (() => Promise<void>) | (() => void)
   link?: string
   searchRef: MutableRefObject<string>
   button?: ReactElement
@@ -42,7 +37,7 @@ interface AddResourceWithInputProps<T> {
   placeholder: string
 }
 
-const AddResourceWithInput = <T,>({
+const AddResourceWithInput: React.FC<AddResourceWithInputProps> = ({
   btnText,
   fetchData,
   link,
@@ -52,7 +47,7 @@ const AddResourceWithInput = <T,>({
   setItems,
   sortOptions,
   placeholder
-}: AddResourceWithInputProps<T>) => {
+}) => {
   const { t } = useTranslation()
   const { isMobile, isTablet } = useBreakpoints()
   const [searchInput, setSearchInput] = useState<string>('')
