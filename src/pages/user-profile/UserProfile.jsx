@@ -1,3 +1,5 @@
+//мені потрібно переписати цей компонент на tsx
+
 import { useCallback, useEffect } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import {
@@ -31,6 +33,9 @@ import videoImgProfile from '~/assets/img/user-profile-page/presentationVideoImg
 import { responseMock } from '~/pages/user-profile/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { scrollToHash } from '~/utils/hash-scroll'
+import useQuery from "~/hooks/use-query";
+
+
 
 const UserProfile = () => {
   const { id } = useParams()
@@ -53,15 +58,22 @@ const UserProfile = () => {
   const isMyProfile = useMatch(authRoutes.myProfile.path)
 
   const getUserData = useCallback(
-    () => userService.getUserById(preferredId, preferredRole),
-    [preferredId, preferredRole]
+      () => userService.getUserByIdWithBaseService(preferredId, preferredRole),
+      [preferredId, preferredRole]
   )
 
-  const { loading, response } = useAxios({
-    service: getUserData,
-    fetchOnMount: true,
-    defaultResponse: defaultResponses.array
+
+
+
+  const { isLoading: loading, data: response } = useQuery({
+    queryFn: getUserData,
+    queryKey: ['user', preferredId, preferredRole],
+    options: {
+      staleTime: Infinity
+    }
   })
+
+
 
   if (loading) {
     return <Loader pageLoad size={70} />
