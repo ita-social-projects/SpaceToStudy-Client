@@ -23,10 +23,10 @@ import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
 import {
-  QueryRefetch,
-  CategoryNameInterface,
+  type QueryRefetch,
+  type CategoryNameInterface,
   PositionEnum,
-  ItemsWithCount
+  type ItemsWithCount
 } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 

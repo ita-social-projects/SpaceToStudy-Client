@@ -37,7 +37,7 @@ const QuizzesContainer = () => {
   const { handleErrorAlert } = useSnackbarAlert()
   const queryClient = useQueryClient()
   const sortOptions = useSort({ initialSort })
-  const searchTitle = useRef<string>('')
+  const searchTitle = useRef('')
   const breakpoints = useBreakpoints()
   const [selectedItems, setSelectedItems] = useState<string[]>([])
   const { openModal } = useModalContext()
