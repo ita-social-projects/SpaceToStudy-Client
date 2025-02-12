@@ -5,13 +5,10 @@ import useQuery from '~/hooks/use-query'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import { snackbarVariants } from '~/constants'
-import { useAppDispatch } from '~/hooks/use-redux'
-/*import { useModalContext } from '~/context/modal-context'
-import { useNavigate } from 'react-router-dom'
 
+const mockDispatch = vi.fn()
+const mockOpenModal = vi.fn()
 
-vi.mock('~/context/modal-context')
-vi.mock('react-router-dom')*/
 vi.mock('~/hooks/use-query')
 
 vi.mock('~/utils/get-error-key', () => ({
@@ -31,8 +28,6 @@ vi.mock(
   })
 )
 
-const mockDispatch = vi.fn()
-
 vi.mock('~/redux/features/snackbarSlice', async () => {
   const actual = await vi.importActual('~/redux/features/snackbarSlice')
   return {
@@ -49,15 +44,13 @@ vi.mock('~/hooks/use-redux', async () => {
   }
 })
 
-vi.mock('~/hooks/use-redux', async () => {
-  const actual = await vi.importActual('~/hooks/use-redux')
+vi.mock('~/context/modal-context', async () => {
+  const actual = await vi.importActual('~/context/modal-context')
   return {
     ...actual,
-    useAppDispatch: () => mockDispatch,
-    useAppSelector: vi.fn(() => ({
-      sections: [],
-      resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
-    }))
+    useModalContext: () => ({
+      openModal: mockOpenModal
+    })
   }
 })
 
@@ -125,7 +118,6 @@ describe('LessonContainer test', () => {
   afterEach(() => {
     vi.clearAllMocks()
   })
-  
 
   it('should render "New lesson" button', () => {
     useQuery.mockReturnValue({
@@ -169,23 +161,9 @@ describe('LessonContainer test', () => {
     expect(loader).toBeInTheDocument()
   })
 
-  /*it('should show error message on fetch error', async () => {
+  it('should call onEdit and open modal when edit button is clicked', async () => {
     useQuery.mockReturnValue({
       data: null,
-      isLoading: false,
-      isError: true,
-      error: { message: 'Error' },
-      refetch: vi.fn(),
-    })
-    renderWithProviders(<LessonsContainer />)
-
-    const errorMessage = await screen.findByText('Error')
-    expect(errorMessage).toBeInTheDocument()
-  })*/
-
-  /*it('should call onEdit and open modal when edit button is clicked', async () => {
-    useQuery.mockReturnValue({
-      data: lessonResponseMock,
       isLoading: false,
       isError: false,
       error: null,
@@ -193,9 +171,39 @@ describe('LessonContainer test', () => {
     })
     renderWithProviders(<LessonsContainer />)
 
-    const editButton = await screen.getByTestId('editButton')
+    const editButton = await screen.findByTestId('editButton')
+    expect(editButton).toBeInTheDocument
     fireEvent.click(editButton)
 
     expect(mockOpenModal).toHaveBeenCalled()
-  })*/
+  })
+})
+
+describe('LessonContainer - error', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockDispatch.mockReset()
+  })
+
+  it('should dispatch openAlert with error message when there is an error', () => {
+    const mockError = { message: 'Test error' }
+
+    useQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      isError: true,
+      error: mockError,
+      refetch: vi.fn()
+    })
+
+    renderWithProviders(<LessonsContainer />)
+
+    expect(getErrorKey).toHaveBeenCalledWith(mockError)
+    expect(mockDispatch).toHaveBeenCalledWith(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: 'mockedErrorMessage'
+      })
+    )
+  })
 })
