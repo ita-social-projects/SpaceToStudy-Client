@@ -142,7 +142,7 @@ export const ResourceService = {
       })
     })
   },
-  getAttachments: (params?: GetResourcesParams) => {
+  getAttachments: (params: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Attachment>>({
       method: 'GET',
       url: getFullUrl({
@@ -172,7 +172,7 @@ export const ResourceService = {
     return baseService.request<Attachment>({
       method: 'POST',
       url: URLs.resources.attachments.post,
-      data: data
+      data
     })
   },
   getQuestions: (
