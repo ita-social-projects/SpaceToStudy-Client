@@ -18,7 +18,6 @@ const FileEditor: FC<FileEditorProps> = ({ onEdit, value }) => {
   return (
     <Editor
       apiKey={import.meta.env.VITE_APP_TINY_MCE_API_KEY}
-      data-testid='editor'
       init={initOptions}
       onEditorChange={onEdit}
       value={value}
