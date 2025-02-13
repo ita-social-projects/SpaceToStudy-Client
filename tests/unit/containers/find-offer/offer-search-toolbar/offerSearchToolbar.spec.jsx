@@ -1,9 +1,10 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { vi } from 'vitest'
 import OfferSearchToolbar from '~/containers/find-offer/offer-search-toolbar/OfferSearchToolbar'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { beforeEach } from 'vitest'
 import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-breakpoints')
 const filterActions = {
@@ -22,7 +23,7 @@ describe('OfferSearchToolbar', () => {
   const testValue = 'Music'
 
   beforeEach(() => {
-    render(
+    renderWithProviders(
       <OfferSearchToolbar
         filterActions={filterActions}
         filters={filters}

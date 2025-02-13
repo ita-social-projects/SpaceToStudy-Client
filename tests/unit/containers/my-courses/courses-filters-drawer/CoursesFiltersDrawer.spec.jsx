@@ -39,7 +39,7 @@ const mockSubjects = [{ _id: '1', name: 'Algebra' }]
 const setup = async (filters) => {
   mockAxiosClient.onGet(URLs.categories.getNames).reply(200, mockCategories)
   mockAxiosClient
-    .onGet(`${URLs.categories.get}/1${URLs.subjects.getNames}`)
+    .onGet(new RegExp(URLs.subjects.getNamesByCategoryId.replace(':id', '1')))
     .reply(200, mockSubjects)
 
   renderWithProviders(
@@ -108,16 +108,11 @@ describe('CoursesFiltersDrawer', () => {
   })
 
   describe('with category filter', () => {
-    beforeEach(() => {
-      setup(filterWithCategory)
+    beforeEach(async () => {
+      await setup(filterWithCategory)
     })
 
     it('calls updateFiltersInQuery when subject is changed', async () => {
-      const categoryAutoComplete = screen.getByLabelText(
-        'myCoursesPage.coursesFilter.categoryLabel'
-      )
-      await selectOption(categoryAutoComplete, mockCategories[0].name)
-
       const subjectAutoComplete = screen.getByLabelText(
         'myCoursesPage.coursesFilter.subjectLabel'
       )
