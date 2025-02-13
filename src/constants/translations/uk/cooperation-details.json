@@ -45,5 +45,6 @@
   "submittedReason": "Надіслана причина: ",
   "cooperationCloseDeclinedMessage": "<userWrapper>{{user}}</userWrapper> відмовив(-ла) у закритті співпраці з наступної причини:",
   "resendRequestBtn": "Надіслати повторно",
-  "answer": "Відповідь від "
+  "answer": "Відповідь від ",
+  "markAsProcessedBtn": "Позначити як опрацьоване"
 }

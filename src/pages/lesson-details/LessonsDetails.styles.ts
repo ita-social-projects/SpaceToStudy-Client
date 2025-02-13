@@ -83,5 +83,8 @@ export const styles = {
         color: 'primary.700'
       }
     }
+  },
+  bottomButton: {
+    marginTop: '20px'
   }
 }

@@ -5,6 +5,7 @@ import { ResourceService } from '~/services/resource-service'
 import LessonDetails from '~/pages/lesson-details/LessonDetails'
 import { vi } from 'vitest'
 
+const id = '64kf41f7806a06c65338c509'
 const lessonId = '64ef41f7806a06c65338c433'
 const mockNavigate = vi.fn()
 
@@ -16,6 +17,7 @@ vi.mock('react-router-dom', async () => {
     ...actual,
     useNavigate: () => mockNavigate,
     useParams: () => ({
+      id,
       lessonId
     })
   }
@@ -32,6 +34,11 @@ const userId = '6477007a6fa4d05e1a800ce5'
 const mockState = {
   appMain: { userId: userId, userRole: 'tutor' }
 }
+
+const mockStudentState = {
+  appMain: { userId: userId, userRole: 'student' }
+}
+
 const lessonMock = {
   _id: lessonId,
   author: '6477007a6fa4d05e1a800ce5',
@@ -60,11 +67,49 @@ const lessonMock = {
   ]
 }
 
+const cooperationMock = {
+  sections: [
+    { resources: [{ resource: lessonMock, completionStatus: 'completed' }] }
+  ]
+}
+
+vi.mock('~/services/cooperation-service', () => ({
+  cooperationService: {
+    getCooperationById: () => cooperationMock
+  }
+}))
+
 ResourceService.getLesson.mockResolvedValue(lessonMock)
 
 describe('LessonDetails', () => {
   beforeEach(() => {
     renderWithProviders(<LessonDetails />, { preloadedState: mockState })
+  })
+
+  it('should render mark button when userRole is student', async () => {
+    renderWithProviders(<LessonDetails />, {
+      preloadedState: mockStudentState
+    })
+
+    const markBtn = screen.getByText(
+      'cooperationDetailsPage.markAsProcessedBtn'
+    )
+
+    fireEvent.click(markBtn)
+    expect(markBtn).toBeInTheDocument()
+  })
+
+  it('mark button should be disabled after click', async () => {
+    renderWithProviders(<LessonDetails />, {
+      preloadedState: mockStudentState
+    })
+
+    const markBtn = screen.getByText(
+      'cooperationDetailsPage.markAsProcessedBtn'
+    )
+
+    fireEvent.click(markBtn)
+    expect(markBtn.parentNode).toBeDisabled()
   })
 
   it('should render page with title and description fields', async () => {

@@ -10,7 +10,8 @@ import type {
   UpdateCooperationsSections,
   UpdateCooperationsNeedActionMessages,
   Cooperation,
-  ItemsWithCount
+  ItemsWithCount,
+  UpdateResourceCompletionStatusParams
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -60,6 +61,18 @@ export const cooperationService = {
       url: getFullUrl({
         pathname: URLs.cooperations.getById,
         parameters: { id }
+      })
+    })
+  },
+  updateResourceCompletionStatus: async (
+    data: UpdateResourceCompletionStatusParams
+  ) => {
+    return baseService.request<void>({
+      data,
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.cooperations.updateStatusById,
+        parameters: { id: data.id, resourceId: data.resourceId }
       })
     })
   }
