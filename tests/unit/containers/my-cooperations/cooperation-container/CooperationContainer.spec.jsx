@@ -1,8 +1,8 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import CooperationContainer from '~/containers/my-cooperations/cooperations-container/CooperationContainer'
 import { mockedCoop } from '~tests/unit/containers/my-cooperations/MyCooperations.spec.constants'
-import { vi } from 'vitest'
+import { afterEach, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import { StatusEnum } from '~/types'
 
@@ -42,6 +42,10 @@ vi.mock('~/context/modal-context', async () => {
 })
 
 describe('CooperationContainer component ', () => {
+  afterEach(() => {
+    navigateMock.mockClear()
+  })
+
   it('should render card in container', () => {
     renderWithProviders(
       <CooperationContainer
@@ -67,11 +71,9 @@ describe('CooperationContainer component ', () => {
     )
 
     const card = screen.getByText(activeCoop.offer.subject.name)
-    userEvent.click(card)
+    await userEvent.click(card)
 
-    await waitFor(() => {
-      expect(navigateMock).toHaveBeenCalledWith(`./${activeCoop._id}`)
-    })
+    expect(navigateMock).toHaveBeenCalledWith(`./${activeCoop._id}`)
   })
 
   it('navigates to cooperation detail for Active status', async () => {
@@ -85,11 +87,9 @@ describe('CooperationContainer component ', () => {
     )
 
     const card = screen.getByText(activeCoop.offer.subject.name)
-    userEvent.click(card)
+    await userEvent.click(card)
 
-    await waitFor(() => {
-      expect(navigateMock).toHaveBeenCalledWith(`./${activeCoop._id}`)
-    })
+    expect(navigateMock).toHaveBeenCalledWith(`./${activeCoop._id}`)
   })
 
   it('opens modal for Pending status', async () => {
@@ -104,10 +104,8 @@ describe('CooperationContainer component ', () => {
     )
 
     const card = screen.getByText(pendingCoop.offer.subject.name)
-    userEvent.click(card)
+    await userEvent.click(card)
 
-    await waitFor(() => {
-      expect(mockOpenModal).toHaveBeenCalled()
-    })
+    expect(mockOpenModal).toHaveBeenCalled()
   })
 })

@@ -1,9 +1,9 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect } from 'vitest'
 
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
-import { renderWithProviders, waitForTimeout } from '~tests/test-utils'
+import { renderWithProviders } from '~tests/test-utils'
 import { SortEnum } from '~/types'
 
 const fetchDataMock = vi.fn()
@@ -25,15 +25,13 @@ const props = {
 }
 
 describe('AddResourceWithInput test', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(<AddResourceWithInput {...props} />, {
-        initialEntries: route
-      })
+  beforeEach(() => {
+    renderWithProviders(<AddResourceWithInput {...props} />, {
+      initialEntries: route
     })
   })
 
-  it('should render search with button', async () => {
+  it('should render search with button', () => {
     const addBtn = screen.getByText('myResourcesPage.quizzes.newQuizBtn')
     const searchInput = screen.getByPlaceholderText('common.search')
 
@@ -46,7 +44,7 @@ describe('AddResourceWithInput test', () => {
 
     const searchInput = screen.getByPlaceholderText('common.search')
 
-    await waitForTimeout(() => user.type(searchInput, text))
+    await user.type(searchInput, text)
 
     expect(searchInput.value).toBe(text)
 

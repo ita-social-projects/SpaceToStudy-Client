@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer'
 
@@ -41,17 +41,15 @@ const setup = async (filters) => {
     .onGet(`${URLs.categories.get}/1${URLs.subjects.getNames}`)
     .reply(200, mockSubjects)
 
-  await waitFor(() => {
-    renderWithProviders(
-      <CoursesFiltersDrawer
-        additionalParams={{}}
-        filterActions={filterActions}
-        filters={filters}
-        isOpen
-        onClose={mockOnClose}
-      />
-    )
-  })
+  renderWithProviders(
+    <CoursesFiltersDrawer
+      additionalParams={{}}
+      filterActions={filterActions}
+      filters={filters}
+      isOpen
+      onClose={mockOnClose}
+    />
+  )
 }
 
 beforeEach(() => {
@@ -90,9 +88,8 @@ describe('CoursesFiltersDrawer', () => {
     it('calls updateFiltersInQuery when search input is changed', () => {
       const input = screen.getByPlaceholderText('common.search')
       fireEvent.change(input, { target: { value: 'test input' } })
-      waitFor(() => {
-        expect(mockUpdateFiltersInQuery).toHaveBeenCalled()
-      })
+
+      expect(mockUpdateFiltersInQuery).toHaveBeenCalled()
     })
 
     it('calls resetFilters when clear filters button is clicked', () => {

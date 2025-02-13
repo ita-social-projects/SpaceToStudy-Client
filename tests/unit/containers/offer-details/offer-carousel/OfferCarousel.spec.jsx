@@ -94,7 +94,7 @@ describe('OfferCarousel without data', () => {
     })
   })
 
-  it('should not render OfferCardSquare when no offers', async () => {
+  it('should not render OfferCardSquare when no offers', () => {
     const offerCard = screen.queryByTestId('OfferContainer')
     expect(offerCard).not.toBeInTheDocument()
   })

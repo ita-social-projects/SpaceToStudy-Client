@@ -100,9 +100,7 @@ describe('ChatMenu Component', () => {
       'chatPage.chatMenu.clearHistory'
     )
 
-    waitFor(() => {
-      fireEvent.click(clearHistoryButton)
-    })
+    fireEvent.click(clearHistoryButton)
 
     const confirmFunction = mockOpenDialog.mock.calls[0][0].sendConfirm
     await confirmFunction(true)
@@ -113,7 +111,7 @@ describe('ChatMenu Component', () => {
       sendConfirm: expect.any(Function),
       title: 'chatPage.chatMenu.clearHistoryTitle'
     })
-    waitFor(() => expect(updateMessages).toHaveBeenCalled())
+    await waitFor(() => expect(updateMessages).toHaveBeenCalled())
   })
 
   it('handles Delete button click (mark as deleted)', async () => {
@@ -129,7 +127,7 @@ describe('ChatMenu Component', () => {
       sendConfirm: expect.any(Function),
       title: 'chatPage.chatMenu.markingAsDeletedTitle'
     })
-    waitFor(() => expect(updateChats).toHaveBeenCalled())
+    expect(updateChats).toHaveBeenCalled()
   })
 
   it('handles Delete button click (fully deleting)', async () => {
@@ -146,6 +144,6 @@ describe('ChatMenu Component', () => {
       sendConfirm: expect.any(Function),
       title: 'chatPage.chatMenu.fullDeleteTitle'
     })
-    waitFor(() => expect(updateChats).toHaveBeenCalled())
+    expect(updateChats).toHaveBeenCalled()
   })
 })

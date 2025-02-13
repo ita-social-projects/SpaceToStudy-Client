@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import { vi } from 'vitest'
@@ -58,18 +58,16 @@ describe('Login form test', () => {
     expect(button).toBeInTheDocument()
   })
 
-  it('should show visibility icon', async () => {
+  it('should show visibility icon', () => {
     const visibilityOffIcon = screen.getByTestId('VisibilityOffIcon')
     fireEvent.click(visibilityOffIcon)
     const visibilityIcon = screen.getByTestId('VisibilityIcon')
 
-    await waitFor(() => {
-      expect(visibilityIcon).toBeInTheDocument()
-      expect(visibilityOffIcon).not.toBeInTheDocument()
-    })
+    expect(visibilityIcon).toBeInTheDocument()
+    expect(visibilityOffIcon).not.toBeInTheDocument()
   })
 
-  it('should submit', async () => {
+  it('should submit', () => {
     handleSubmit.mockImplementation((event) => {
       event.preventDefault()
     })
@@ -79,12 +77,12 @@ describe('Login form test', () => {
     expect(handleSubmit).toHaveBeenCalled()
   })
 
-  it('should click forgot password text and open forgot password container', async () => {
+  it('should click forgot password text and open forgot password container', () => {
     const text = screen.getByText('login.forgotPassword')
     fireEvent.click(text)
     const backBtn = screen.queryByText('login.backToLogin')
 
-    await waitFor(() => expect(backBtn).toBeInTheDocument())
+    expect(backBtn).toBeInTheDocument()
   })
 })
 

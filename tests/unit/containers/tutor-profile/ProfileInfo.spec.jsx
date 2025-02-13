@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor, act } from '@testing-library/react'
+import { screen, fireEvent, act } from '@testing-library/react'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 
 import { useMatch } from 'react-router-dom'
@@ -136,9 +136,7 @@ describe('ProfileInfo component tests', () => {
       )
       fireEvent.click(tutorOffersBtn)
 
-      waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalled()
-      })
+      expect(mockNavigate).toHaveBeenCalled()
     })
   })
 
@@ -204,7 +202,7 @@ describe('onSendMessageClick tests', () => {
     vi.resetAllMocks()
   })
 
-  it('should set chat info for an existing chat', async () => {
+  it('should set chat info for an existing chat', () => {
     useAxios.mockImplementation(() => ({
       default: vi.fn(),
       response: chatResponse,
@@ -220,19 +218,17 @@ describe('onSendMessageClick tests', () => {
     )
     fireEvent.click(sendMessageBtn)
 
-    await waitFor(() => {
-      expect(mockSetChatInfo).toHaveBeenCalledWith({
-        author: userData,
-        authorRole: 'tutor',
-        chatId: 'chat456',
-        updateInfo: expect.any(Function)
-      })
+    expect(mockSetChatInfo).toHaveBeenCalledWith({
+      author: userData,
+      authorRole: 'tutor',
+      chatId: 'chat456',
+      updateInfo: expect.any(Function)
     })
 
     expect(mockFetchData).not.toHaveBeenCalled()
   })
 
-  it('should trigger fetchData when no existing chat is found', async () => {
+  it('should trigger fetchData when no existing chat is found', () => {
     useAxios.mockImplementation(() => ({
       default: vi.fn(),
       response: [],
@@ -248,13 +244,11 @@ describe('onSendMessageClick tests', () => {
     )
     fireEvent.click(sendMessageBtn)
 
-    await waitFor(() => {
-      expect(mockSetChatInfo).toHaveBeenCalledWith({
-        author: userData,
-        authorRole: 'tutor',
-        chatId: '',
-        updateInfo: expect.any(Function)
-      })
+    expect(mockSetChatInfo).toHaveBeenCalledWith({
+      author: userData,
+      authorRole: 'tutor',
+      chatId: '',
+      updateInfo: expect.any(Function)
     })
 
     expect(mockFetchData).toHaveBeenCalled()

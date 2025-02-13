@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor, act } from '@testing-library/react'
+import { screen, fireEvent, act } from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
 
 import reducer from '~/redux/reducer'
@@ -130,43 +130,47 @@ vi.mock('~/containers/course-sections-list/CourseSectionsList', () => ({
 }))
 
 describe('CreateCourse with params id', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockUseParams.mockReset()
     mockUseParams.mockReturnValue({ id: mockCourseResponseData._id })
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(`${URLs.courses.get}/${mockCourseResponseData._id}`)
-        .reply(200, () => {
-          updateFormData(mockCourseResponseData)
-          return mockCourseResponseData
-        })
-      mockAxiosClient
-        .onPost(URLs.courses.create, mockNewCourseData)
-        .reply(200, () => {
-          updateFormData(mockNewCourseData)
-          return mockNewCourseData
-        })
-      mockAxiosClient
-        .onPatch(
-          `${URLs.courses.patch}/${mockCourseResponseData._id}`,
-          mockUpdatedCourseData
-        )
-        .reply(200, () => {
-          updateFormData(mockUpdatedCourseData)
-          return mockUpdatedCourseData
-        })
-      mockAxiosClient
-        .onDelete(`${URLs.courses.delete}/${mockCourseResponseData._id}`)
-        .reply(200, null)
-      mockAxiosClient
-        .onGet(URLs.categories.getNames)
-        .reply(200, mockCategoriesNames)
-      mockAxiosClient
-        .onGet(`${URLs.categories.get}/1${URLs.subjects.getNames}`)
-        .reply(200, mockSubjectsNames)
 
-      renderWithProviders(<CreateCourse />, { store })
-    })
+    mockAxiosClient
+      .onGet(`${URLs.courses.get}/${mockCourseResponseData._id}`)
+      .reply(200, () => {
+        updateFormData(mockCourseResponseData)
+        return mockCourseResponseData
+      })
+
+    mockAxiosClient
+      .onPost(URLs.courses.create, mockNewCourseData)
+      .reply(200, () => {
+        updateFormData(mockNewCourseData)
+        return mockNewCourseData
+      })
+
+    mockAxiosClient
+      .onPatch(
+        `${URLs.courses.patch}/${mockCourseResponseData._id}`,
+        mockUpdatedCourseData
+      )
+      .reply(200, () => {
+        updateFormData(mockUpdatedCourseData)
+        return mockUpdatedCourseData
+      })
+
+    mockAxiosClient
+      .onDelete(`${URLs.courses.delete}/${mockCourseResponseData._id}`)
+      .reply(200, null)
+
+    mockAxiosClient
+      .onGet(URLs.categories.getNames)
+      .reply(200, mockCategoriesNames)
+
+    mockAxiosClient
+      .onGet(`${URLs.categories.get}/1${URLs.subjects.getNames}`)
+      .reply(200, mockSubjectsNames)
+
+    renderWithProviders(<CreateCourse />, { store })
   })
 
   afterEach(() => {
@@ -177,40 +181,40 @@ describe('CreateCourse with params id', () => {
   })
 
   it('should render "Cancel", "Save" and "Add Section" buttons', async () => {
-    await waitFor(() => {
-      expect(screen.getByText('common.cancel')).toBeInTheDocument()
-      expect(screen.getByText('common.save')).toBeInTheDocument()
-      expect(screen.getByText('course.addSectionBtn')).toBeInTheDocument()
-    })
+    const cancelButton = await screen.findByText('common.cancel')
+    const saveButton = await screen.findByText('common.save')
+    const addSectionButton = await screen.findByText('course.addSectionBtn')
+
+    expect(cancelButton).toBeInTheDocument()
+    expect(saveButton).toBeInTheDocument()
+    expect(addSectionButton).toBeInTheDocument()
   })
 
   it('should choose the category from options list', async () => {
-    await waitFor(() => {
-      const autocomplete = screen.getAllByRole('combobox')[0]
+    const [autocomplete] = await screen.findAllByRole('combobox')
 
-      expect(autocomplete).toBeInTheDocument()
+    expect(autocomplete).toBeInTheDocument()
 
-      fireEvent.click(autocomplete)
-      fireEvent.focus(autocomplete)
+    fireEvent.click(autocomplete)
+    fireEvent.focus(autocomplete)
 
-      fireEvent.change(autocomplete, {
-        target: { value: mockCategoriesNames[1].name }
-      })
-
-      fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-      fireEvent.keyDown(autocomplete, { key: 'Enter' })
-
-      expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
-
-      fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-      fireEvent.keyDown(autocomplete, { key: 'Enter' })
-
-      expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
+    fireEvent.change(autocomplete, {
+      target: { value: mockCategoriesNames[1].name }
     })
+
+    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+    fireEvent.keyDown(autocomplete, { key: 'Enter' })
+
+    expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
+
+    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+    fireEvent.keyDown(autocomplete, { key: 'Enter' })
+
+    expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
   })
 
   it('should choose the subject from options list', async () => {
-    const autocomplete = screen.getAllByRole('combobox')[1]
+    const [autocomplete] = await screen.findAllByRole('combobox')
 
     expect(autocomplete).toBeInTheDocument()
 
@@ -224,13 +228,11 @@ describe('CreateCourse with params id', () => {
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
 
-    await waitFor(() => {
-      expect(autocomplete.value).toBe(mockSubjectsNames[1].name)
-    })
+    expect(autocomplete.value).toBe(mockSubjectsNames[1].name)
   })
 
   it('should display error for category', async () => {
-    const categoryAutocomplete = screen.getAllByRole('combobox')[0]
+    const [categoryAutocomplete] = await screen.findAllByRole('combobox')
 
     fireEvent.click(categoryAutocomplete)
     fireEvent.blur(categoryAutocomplete)
@@ -238,17 +240,15 @@ describe('CreateCourse with params id', () => {
     const saveButton = screen.getByText('common.save')
     fireEvent.click(saveButton)
 
-    await waitFor(() => {
-      const errorMessage = screen.getByText('Please select a category')
-      expect(errorMessage).toBeInTheDocument()
-    })
+    const errorMessage = screen.getByText('Please select a category')
+    expect(errorMessage).toBeInTheDocument()
   })
 
   it('should display error for subject', async () => {
-    const subjectAutocomplete = screen.getAllByRole('combobox')[1]
+    const subjectAutocomplete = await screen.findAllByRole('combobox')
 
-    fireEvent.click(subjectAutocomplete)
-    fireEvent.blur(subjectAutocomplete)
+    fireEvent.click(subjectAutocomplete[1])
+    fireEvent.blur(subjectAutocomplete[1])
 
     const errorMessage = screen.getByText('Please select a subject')
 
@@ -256,7 +256,7 @@ describe('CreateCourse with params id', () => {
   })
 
   it('should render the proficiency levels in option list', async () => {
-    const select = screen.getByLabelText(/level/i)
+    const select = await screen.findByLabelText(/level/i)
     expect(select).toBeInTheDocument()
 
     const proficiencyCheckbox = screen.getByDisplayValue(
@@ -266,38 +266,38 @@ describe('CreateCourse with params id', () => {
   })
 
   it('should add a new section when the "Add Section" button is clicked', async () => {
-    const addSectionButton = screen.getByText('course.addSectionBtn')
+    const addSectionButton = await screen.findByText('course.addSectionBtn')
     fireEvent.click(addSectionButton)
 
-    await waitFor(() => {
-      expect(mockHandleNonInputValueChange).toHaveBeenCalledWith(
-        'sections',
-        expect.arrayContaining([
-          expect.objectContaining({
-            title: '',
-            description: '',
-            id: expect.any(String),
-            resources: []
-          })
-        ])
-      )
-    })
+    expect(mockHandleNonInputValueChange).toHaveBeenCalledWith(
+      'sections',
+      expect.arrayContaining([
+        expect.objectContaining({
+          title: '',
+          description: '',
+          id: expect.any(String),
+          resources: []
+        })
+      ])
+    )
   })
 
   it('should call handleInputChange when "Course title" input is changed', async () => {
-    const inputField = screen.getByDisplayValue(mockCourseResponseData.title)
+    const inputField = await screen.findByDisplayValue(
+      mockCourseResponseData.title
+    )
     expect(inputField).toBeInTheDocument()
 
     fireEvent.change(inputField, { target: { value: 'New course title' } })
     fireEvent.blur(inputField)
 
-    await waitFor(() => {
-      expect(mockHandleInputChange).toHaveBeenCalledWith('title')
-    })
+    expect(mockHandleInputChange).toHaveBeenCalledWith('title')
   })
 
   it('should call handleInputChange when "Course description" input is changed', async () => {
-    const inputField = screen.getByText(mockCourseResponseData.description)
+    const inputField = await screen.findByText(
+      mockCourseResponseData.description
+    )
     expect(inputField).toBeInTheDocument()
 
     fireEvent.change(inputField, {
@@ -305,15 +305,13 @@ describe('CreateCourse with params id', () => {
     })
     fireEvent.blur(inputField)
 
-    await waitFor(() => {
-      expect(mockHandleInputChange).toHaveBeenCalledWith('description')
-    })
+    expect(mockHandleInputChange).toHaveBeenCalledWith('description')
   })
 
   it('should update course with mockUpdatedCourseData and submit', async () => {
     updateFormData(mockUpdatedCourseData)
 
-    const saveButton = screen.getByText('common.save')
+    const saveButton = await screen.findByText('common.save')
     fireEvent.click(saveButton)
     await mockOnSubmit()
 
@@ -321,30 +319,26 @@ describe('CreateCourse with params id', () => {
     expect(mockAxiosClient.history.patch[0].url).toBe(
       `${URLs.courses.patch}/${mockCourseResponseData._id}`
     )
-    await waitFor(() => {
-      const textAreas = screen.getAllByRole('textbox')
-      expect(textAreas[0].value).toBe(mockUpdatedCourseData.title)
-      expect(textAreas[1].value).toBe(mockUpdatedCourseData.description)
-    })
 
-    await waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledWith(
-        openAlert({
-          severity: snackbarVariants.success,
-          message: 'myCoursesPage.newCourse.successEditedCourse'
-        })
-      )
-    })
+    const textAreas = screen.getAllByRole('textbox')
+    expect(textAreas[0].value).toBe(mockUpdatedCourseData.title)
+    expect(textAreas[1].value).toBe(mockUpdatedCourseData.description)
+
+    expect(mockDispatch).toHaveBeenCalledWith(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'myCoursesPage.newCourse.successEditedCourse'
+      })
+    )
   })
 })
 
 describe('CreateCourse without params id', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockUseParams.mockReset()
     mockUseParams.mockReturnValue({ id: null })
-    await waitFor(() => {
-      renderWithProviders(<CreateCourse />, { store })
-    })
+
+    renderWithProviders(<CreateCourse />, { store })
   })
 
   afterEach(() => {
@@ -357,37 +351,33 @@ describe('CreateCourse without params id', () => {
   it('should handle saving a new course when id is null', async () => {
     updateFormData(mockNewCourseData)
 
-    const saveButton = screen.getByText('common.save')
+    const saveButton = await screen.findByText('common.save')
     fireEvent.click(saveButton)
     await mockOnSubmit()
 
     expect(mockAxiosClient.history.post.length).toBe(1)
     expect(mockAxiosClient.history.post[0].url).toBe(URLs.courses.create)
-    await waitFor(() => {
-      const textAreas = screen.getAllByRole('textbox')
-      expect(textAreas[0].value).toBe(mockNewCourseData.title)
-      expect(textAreas[1].value).toBe(mockNewCourseData.description)
-    })
 
-    await waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledWith(
-        openAlert({
-          severity: snackbarVariants.success,
-          message: 'myCoursesPage.newCourse.successCreatedCourse'
-        })
-      )
-    })
+    const textAreas = screen.getAllByRole('textbox')
+    expect(textAreas[0].value).toBe(mockNewCourseData.title)
+    expect(textAreas[1].value).toBe(mockNewCourseData.description)
+
+    expect(mockDispatch).toHaveBeenCalledWith(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'myCoursesPage.newCourse.successCreatedCourse'
+      })
+    )
   })
 })
 
 describe('Testing CreateCourse Event Handlers', () => {
   const mockSectionId = mockNewCourseData.sections[0].id
-  beforeEach(async () => {
+  beforeEach(() => {
     mockUseParams.mockReset()
     mockUseParams.mockReturnValue({ id: mockNewCourseData._id })
-    await waitFor(() => {
-      renderWithProviders(<CreateCourse />, { store })
-    })
+
+    renderWithProviders(<CreateCourse />, { store })
   })
 
   afterEach(() => {
@@ -398,7 +388,9 @@ describe('Testing CreateCourse Event Handlers', () => {
   })
 
   it('should handle adding a new resource to a section [CourseResourceEventType.AddSectionResources] when isDuplicate=false', async () => {
-    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+    const courseSectionList = await screen.findByTestId(
+      'mock-CourseSectionsList'
+    )
 
     fireEvent.change(courseSectionList, {
       target: {
@@ -414,28 +406,28 @@ describe('Testing CreateCourse Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
-      expect(mockHandleNonInputValueChange).toHaveBeenCalledWith('sections', [
-        {
-          _id: mockNewCourseData.sections[0]._id,
-          id: mockSectionId,
-          description: mockNewCourseData.sections[0].description,
-          resources: [
-            ...mockNewCourseData.sections[0].resources,
-            {
-              resource: { ...mockNewSectionResource, id: expect.any(String) },
-              resourceType: mockNewSectionResource.resourceType
-            }
-          ],
-          title: mockNewCourseData.sections[0].title
-        }
-      ])
-    })
+    expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
+    expect(mockHandleNonInputValueChange).toHaveBeenCalledWith('sections', [
+      {
+        _id: mockNewCourseData.sections[0]._id,
+        id: mockSectionId,
+        description: mockNewCourseData.sections[0].description,
+        resources: [
+          ...mockNewCourseData.sections[0].resources,
+          {
+            resource: { ...mockNewSectionResource, id: expect.any(String) },
+            resourceType: mockNewSectionResource.resourceType
+          }
+        ],
+        title: mockNewCourseData.sections[0].title
+      }
+    ])
   })
 
   it('should handle adding a new resource to a section [CourseResourceEventType.AddSectionResources] when isDuplicate=true', async () => {
-    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+    const courseSectionList = await screen.findByTestId(
+      'mock-CourseSectionsList'
+    )
 
     fireEvent.change(courseSectionList, {
       target: {
@@ -451,39 +443,38 @@ describe('Testing CreateCourse Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
-      expect(mockHandleNonInputValueChange).toHaveBeenCalledWith('sections', [
-        expect.objectContaining({
-          id: mockCourseResponseData.sections[0].id,
-          title: mockCourseResponseData.sections[0].title,
-          resources: expect.arrayContaining([
-            expect.objectContaining({
-              resource: expect.objectContaining({
-                _id: mockCourseResponseData.sections[0].resources[0].resource
-                  ._id,
-                title:
-                  mockCourseResponseData.sections[0].resources[0].resource.title
-              }),
-              resourceType:
-                mockCourseResponseData.sections[0].resources[0].resourceType
+    expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
+    expect(mockHandleNonInputValueChange).toHaveBeenCalledWith('sections', [
+      expect.objectContaining({
+        id: mockCourseResponseData.sections[0].id,
+        title: mockCourseResponseData.sections[0].title,
+        resources: expect.arrayContaining([
+          expect.objectContaining({
+            resource: expect.objectContaining({
+              _id: mockCourseResponseData.sections[0].resources[0].resource._id,
+              title:
+                mockCourseResponseData.sections[0].resources[0].resource.title
             }),
-            expect.objectContaining({
-              resource: expect.objectContaining({
-                _id: expect.any(String),
-                title: mockNewSectionResource.title,
-                isDuplicate: true
-              }),
-              resourceType: mockNewSectionResource.resourceType
-            })
-          ])
-        })
-      ])
-    })
+            resourceType:
+              mockCourseResponseData.sections[0].resources[0].resourceType
+          }),
+          expect.objectContaining({
+            resource: expect.objectContaining({
+              _id: expect.any(String),
+              title: mockNewSectionResource.title,
+              isDuplicate: true
+            }),
+            resourceType: mockNewSectionResource.resourceType
+          })
+        ])
+      })
+    ])
   })
 
   it('should handle resource update event [CourseResourceEventType.ResourceUpdated]', async () => {
-    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+    const courseSectionList = await screen.findByTestId(
+      'mock-CourseSectionsList'
+    )
 
     fireEvent.change(courseSectionList, {
       target: {
@@ -499,13 +490,13 @@ describe('Testing CreateCourse Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
-    })
+    expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
   })
 
   it('should handle resource order change even [CourseResourceEventType.ResourcesOrderChange]', async () => {
-    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+    const courseSectionList = await screen.findByTestId(
+      'mock-CourseSectionsList'
+    )
 
     fireEvent.change(courseSectionList, {
       target: {
@@ -520,13 +511,13 @@ describe('Testing CreateCourse Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
-    })
+    expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
   })
 
   it('should handle resource removal event [CourseResourceEventType.ResourceRemoved]', async () => {
-    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+    const courseSectionList = await screen.findByTestId(
+      'mock-CourseSectionsList'
+    )
 
     fireEvent.change(courseSectionList, {
       target: {
@@ -541,13 +532,13 @@ describe('Testing CreateCourse Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
-    })
+    expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
   })
 
   it('should handle section addition event [CourseSectionEventType.SectionAdded]', async () => {
-    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+    const courseSectionList = await screen.findByTestId(
+      'mock-CourseSectionsList'
+    )
 
     fireEvent.change(courseSectionList, {
       target: {
@@ -560,13 +551,13 @@ describe('Testing CreateCourse Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
-    })
+    expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
   })
 
   it('should handle section order change event [CourseSectionEventType.SectionsOrderChange]', async () => {
-    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+    const courseSectionList = await screen.findByTestId(
+      'mock-CourseSectionsList'
+    )
 
     fireEvent.change(courseSectionList, {
       target: {
@@ -584,13 +575,13 @@ describe('Testing CreateCourse Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
-    })
+    expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
   })
 
   it('should handle section removal event [CourseSectionEventType.SectionRemoved]', async () => {
-    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+    const courseSectionList = await screen.findByTestId(
+      'mock-CourseSectionsList'
+    )
 
     fireEvent.change(courseSectionList, {
       target: {
@@ -604,8 +595,6 @@ describe('Testing CreateCourse Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
-    })
+    expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
   })
 })

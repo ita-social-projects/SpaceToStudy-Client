@@ -1,5 +1,5 @@
 import { expect, vi } from 'vitest'
-import { screen, fireEvent, waitFor, renderHook } from '@testing-library/react'
+import { screen, fireEvent, renderHook } from '@testing-library/react'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { renderWithProviders } from '~tests/test-utils'
 import { student } from '~/constants'
@@ -132,9 +132,7 @@ describe('Signup dialog test', () => {
 
     fireEvent.click(button)
 
-    await waitFor(() => {
-      expect(signUp).toHaveBeenCalledTimes(1)
-    })
+    expect(signUp).toHaveBeenCalledTimes(1)
   })
 
   it('isDesktop', () => {

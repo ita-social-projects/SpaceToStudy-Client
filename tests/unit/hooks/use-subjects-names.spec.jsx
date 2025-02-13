@@ -26,7 +26,7 @@ describe('useSubjectsNames', () => {
 
     expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.loading).toBe(false)
       expect(result.current.response).toEqual(mockSubjectsNames)
     })
@@ -43,7 +43,7 @@ describe('useSubjectsNames', () => {
 
     expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.loading).toBe(false)
       expect(result.current.error).toEqual(mockError)
     })

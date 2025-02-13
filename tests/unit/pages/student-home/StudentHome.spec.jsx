@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import StudentHome from '~/pages/student-home/StudentHome'
 
@@ -19,11 +19,9 @@ describe('StudentsHome component', () => {
       preloadedState: firstLoginState
     })
 
-    await waitFor(() =>
-      expect(
-        screen.getByText(/becomeTutor.generalInfo.title/i)
-      ).toBeInTheDocument()
-    )
+    const title = await screen.findByText(/becomeTutor.generalInfo.title/i)
+
+    expect(title).toBeInTheDocument()
   })
 
   it('should not render modal when logging in for the second time', () => {
@@ -34,9 +32,7 @@ describe('StudentsHome component', () => {
     const firstStepTitle = screen.queryByText(/becomeTutor.generalInfo.title/i)
     const studentHomePage = screen.getByTestId('studentHome')
 
-    waitFor(() => {
-      expect(firstStepTitle).not.toBeInTheDocument()
-      expect(studentHomePage).toBeInTheDocument()
-    })
+    expect(firstStepTitle).not.toBeInTheDocument()
+    expect(studentHomePage).toBeInTheDocument()
   })
 })

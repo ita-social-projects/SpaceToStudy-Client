@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { beforeEach } from 'vitest'
 
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
@@ -23,21 +23,19 @@ const open = true
 useBreakpoints.mockImplementation(() => ({ isMobile: true }))
 
 describe('OfferFilterBlock', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <OfferFilterBlock
-          activeFilterCount={activeFilterCount}
-          additionalParams={additionalParams}
-          closeFilters={closeFilters}
-          filterActions={filterActions}
-          filters={defaultFilters('student')}
-          onToggleTutorOffers={onToggleTutorOffers}
-          open={open}
-          price={price}
-        />
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <OfferFilterBlock
+        activeFilterCount={activeFilterCount}
+        additionalParams={additionalParams}
+        closeFilters={closeFilters}
+        filterActions={filterActions}
+        filters={defaultFilters('student')}
+        onToggleTutorOffers={onToggleTutorOffers}
+        open={open}
+        price={price}
+      />
+    )
   })
   it('renders the component with the correct filters', () => {
     expect(screen.getByText(activeFilterCount)).toBeInTheDocument()

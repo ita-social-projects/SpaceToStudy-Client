@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { screen, fireEvent, waitFor, render } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import {
   renderWithProviders,
   mockAxiosClient,
@@ -70,9 +70,7 @@ describe('ChangePasswordModal', () => {
       target: { value: '12345qwertY' }
     })
 
-    await waitFor(() => {
-      fireEvent.click(saveButton)
-    })
+    fireEvent.click(saveButton)
 
     const confirmButton = screen.getByText('common.yes')
     fireEvent.click(confirmButton)
@@ -88,7 +86,7 @@ describe('ChangePasswordModal', () => {
     })
   })
 
-  it('should not save data after negative response', async () => {
+  it('should not save data after negative response', () => {
     mockAxiosClient
       .onPatch(`${URLs.auth.changePassword}/${userDataMock._id}`)
       .reply(400, {
@@ -118,9 +116,7 @@ describe('ChangePasswordModal', () => {
       target: { value: '12345qwertY' }
     })
 
-    await waitFor(() => {
-      fireEvent.click(saveButton)
-    })
+    fireEvent.click(saveButton)
 
     expect(handleSubmit).not.toHaveBeenCalled()
   })
@@ -164,10 +160,9 @@ describe('ChangePasswordModal', () => {
 
     const visibilityIcons = screen.getAllByTestId('VisibilityIcon')
     const visibilityIcon = visibilityIcons[0]
-    await waitFor(() => {
-      expect(visibilityIcon).toBeInTheDocument()
-      expect(visibilityOffIcon).not.toBeInTheDocument()
-    })
+
+    expect(visibilityIcon).toBeInTheDocument()
+    expect(visibilityOffIcon).not.toBeInTheDocument()
   })
 
   it('resets form when discard button is clicked', () => {
@@ -226,17 +221,18 @@ describe('ChangePasswordModal', () => {
     fireEvent.change(screen.getByLabelText(/retypePassword/i), {
       target: { value: '12345qwertY' },
     })
-    await waitFor(() => {
-      fireEvent.click(saveButton)
-    })
-  
+
+    fireEvent.click(saveButton)
+
     const confirmButton = await screen.findByText(/common.yes/i)
+
+    fireEvent.click(confirmButton)
+
     await waitFor(() => {
-      fireEvent.click(confirmButton)
+      expect(
+        screen.getByText(/common.errorMessages.incorrectCurrentPassword/i)
+      ).toBeInTheDocument()
     })
-    await waitFor(() => {
-      expect(screen.getByText(/common.errorMessages.incorrectCurrentPassword/i)).toBeInTheDocument()
-      expect(currentPasswordInput).toHaveValue('')
-    })
-  })  
+    expect(currentPasswordInput).toHaveValue('')
+  })
 })

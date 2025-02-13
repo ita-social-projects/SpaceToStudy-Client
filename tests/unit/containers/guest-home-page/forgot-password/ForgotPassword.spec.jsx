@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import {
   renderWithProviders,
@@ -21,7 +21,7 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
 }))
 
 describe('ForgotPassword test', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     renderWithProviders(
       <TestSnackbar>
         <ForgotPassword />
@@ -44,12 +44,12 @@ describe('ForgotPassword test', () => {
     expect(error).toBeInTheDocument()
   })
 
-  it('should click back to login and open login dialog', async () => {
+  it('should click back to login and open login dialog', () => {
     const backBtn = screen.getByText('login.backToLogin')
     fireEvent.click(backBtn)
     const img = screen.queryByAltText(/login/i)
 
-    await waitFor(() => expect(img).toBeInTheDocument())
+    expect(img).toBeInTheDocument()
   })
 
   it('should submit form and open info popup', async () => {
@@ -62,7 +62,7 @@ describe('ForgotPassword test', () => {
     fireEvent.click(button)
     const resetPasswordTitle = await screen.findByText('login.passwordReset')
 
-    await waitFor(() => expect(resetPasswordTitle).toBeInTheDocument())
+    expect(resetPasswordTitle).toBeInTheDocument()
   })
 
   it('should show error snackbar', async () => {
@@ -77,6 +77,6 @@ describe('ForgotPassword test', () => {
     fireEvent.click(button)
     const error = await screen.findByText('errors.EMAIL_NOT_FOUND')
 
-    await waitFor(() => expect(error).toBeInTheDocument())
+    expect(error).toBeInTheDocument()
   })
 })

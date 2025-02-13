@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { ResourcesTypesEnum as ResourceType } from '~/types'
 import {
@@ -51,13 +51,11 @@ describe('CreateOrEditLesson component test', () => {
       .reply(200, [mockedCategory])
   })
 
-  beforeEach(async () => {
-    await waitFor(() =>
-      renderWithProviders(
-        <TestSnackbar>
-          <CreateOrEditLesson />
-        </TestSnackbar>
-      )
+  beforeEach(() => {
+    renderWithProviders(
+      <TestSnackbar>
+        <CreateOrEditLesson />
+      </TestSnackbar>
     )
   })
 
@@ -76,7 +74,7 @@ describe('CreateOrEditLesson component test', () => {
 
     expect(addedAttachment).toBeInTheDocument()
 
-    waitFor(() => fireEvent.click(addedAttachment))
+    fireEvent.click(addedAttachment)
 
     const title = screen.getByText('myResourcesPage.attachments.add')
 

@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
@@ -25,12 +25,14 @@ const inputTestValue = 'hello'
 
 describe('AddCourseTemplateModal test', () => {
   beforeEach(() => {
-      mockAxiosClient.onGet(new RegExp(URLs.courses.get)).reply(200, mockCoursesData)
-      mockAxiosClient.onGet(new RegExp(URLs.users.getUserById.replace(':id', ''))).reply(200, undefined)
+    mockAxiosClient
+      .onGet(new RegExp(URLs.courses.get))
+      .reply(200, mockCoursesData)
+    mockAxiosClient
+      .onGet(new RegExp(URLs.users.getUserById.replace(':id', '')))
+      .reply(200, null)
 
-      renderWithProviders(
-        <AddCourseTemplateModal closeModal={closeModalMock} />
-      )
+    renderWithProviders(<AddCourseTemplateModal closeModal={closeModalMock} />)
   })
 
   it('should render AddCourseTemplateModal component', () => {
@@ -51,7 +53,7 @@ describe('AddCourseTemplateModal test', () => {
 
     const button = screen.getByTestId('clearIcon')
 
-    waitFor(() => fireEvent.click(button))
+    fireEvent.click(button)
 
     expect(searchInput.value).not.toBe(inputTestValue)
   })
@@ -66,7 +68,7 @@ describe('AddCourseTemplateModal test', () => {
 
     const button = await screen.findByText('myCoursesPage.buttonLabel +')
 
-    await waitFor(() => fireEvent.click(button))
+    fireEvent.click(button)
 
     expect(closeModalMock).toHaveBeenCalled()
   })
@@ -82,11 +84,8 @@ describe('AddCourseTemplateModal test', () => {
   })
 
   it('should select course and click on add button', async () => {
-    await waitFor(() => {
-      const course = screen.getByText(1 + mockCourse.title)
-      fireEvent.click(course)
-    })
-
+    const course = await screen.findByText(`1${mockCourse.title}`)
+    fireEvent.click(course)
 
     const addBtn = await screen.findByText('common.add')
 
@@ -116,15 +115,13 @@ describe('AddCourseTemplateModal test', () => {
 
     fireEvent.change(searchInput, { target: { value: 'nonexistent' } })
 
-    waitFor(() => {
-      const noResults = screen.getByText('myCoursesPage.notFound.largeDescription')
-      expect(noResults).toBeInTheDocument()
-    })
+    const noResults = await screen.findByText(
+      'myCoursesPage.notFound.largeDescription'
+    )
+    expect(noResults).toBeInTheDocument()
   })
   it('should disable "Add" button when no course is selected', async () => {
-    const addBtn = await screen.findByRole('button', { name: 'common.add' });
+    const addBtn = await screen.findByRole('button', { name: 'common.add' })
     expect(addBtn).toBeDisabled()
-
   })
-
 })

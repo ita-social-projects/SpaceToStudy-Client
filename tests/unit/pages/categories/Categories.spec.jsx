@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { renderWithProviders } from '~tests/test-utils'
 import Categories from '~/pages/categories/Categories'
@@ -122,10 +122,8 @@ describe('Categories page with empty data', () => {
     expect(newNotFound).toBeInTheDocument()
   })
 
-  it('should render offer count descriptions for categories', async () => {
-    await waitFor(() => {
-      const noOffers = screen.queryByText(/offers/)
-      expect(noOffers).not.toBeInTheDocument()
-    })
+  it('should render offer count descriptions for categories', () => {
+    const noOffers = screen.queryByText(/offers/)
+    expect(noOffers).not.toBeInTheDocument()
   })
 })

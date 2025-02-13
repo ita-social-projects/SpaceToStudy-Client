@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
@@ -44,20 +44,16 @@ describe('AppAutoComplete test', () => {
     fireEvent.focus(countryField)
     fireEvent.click(countryField)
 
-    await waitFor(() => {
-      expect(countryField).toHaveFocus()
-    })
-    
-    await waitFor(() => {
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
-    })
+    expect(countryField).toHaveFocus()
+
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
 
     const optionsInDropdown = screen.getAllByRole('option')
     const countryNames = optionsInDropdown.map(option => option.textContent?.trim())
     const sortedCountryNames = [...countryNames].sort()
     expect(countryNames).toEqual(sortedCountryNames)
   })
-  it('Should show filtered results based on user input', async () => {
+  it('Should show filtered results based on user input', () => {
     const countryField = screen.getByRole('combobox')
     fireEvent.mouseDown(countryField)
     fireEvent.focus(countryField)
@@ -65,10 +61,8 @@ describe('AppAutoComplete test', () => {
 
     fireEvent.change(countryField, { target: { value: 'Ukr' } })
 
-    await waitFor(() => {
-      const optionsInDropdown = screen.getAllByRole('option')
-      expect(optionsInDropdown[0]).toHaveTextContent('Ukraine')
-    })
+    const optionsInDropdown = screen.getAllByRole('option')
+    expect(optionsInDropdown[0]).toHaveTextContent('Ukraine')
   })
   it('Should show filtered results based on user input. Case insensitive', async () => {
     const countryField = screen.getByRole('combobox')
@@ -78,12 +72,10 @@ describe('AppAutoComplete test', () => {
 
     fireEvent.change(countryField, { target: { value: 'germ' } })
 
-    await waitFor(() => {
-      const optionsInDropdown = screen.getAllByRole('option')
-      expect(optionsInDropdown[0]).toHaveTextContent('Germany')
-    })
+    const optionsInDropdown = screen.getAllByRole('option')
+    expect(optionsInDropdown[0]).toHaveTextContent('Germany')
   })
-  it('Should clear the Country field when Backspace key is pressed and show dropdown list is displayed with countries in alphabetic order', async () => {
+  it('Should clear the Country field when Backspace key is pressed and show dropdown list is displayed with countries in alphabetic order', () => {
     const countryField = screen.getByRole('combobox')
     fireEvent.mouseDown(countryField)
     fireEvent.focus(countryField)
@@ -92,13 +84,10 @@ describe('AppAutoComplete test', () => {
     fireEvent.change(countryField, { target: { value: 'Ukraine' } })
     fireEvent.change(countryField, { target: { value: '' } })
 
-    await waitFor(() => {
-      expect(countryField).toHaveValue('')
-      expect(countryField).toHaveFocus()
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
-    })
+    expect(countryField).toHaveValue('')
+    expect(countryField).toHaveFocus()
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
 
-    
     const optionsInDropdown = screen.getAllByRole('option')
     const countryNames = optionsInDropdown.map(option => option.textContent?.trim())
     const sortedCountryNames = [...countryNames].sort()
@@ -120,13 +109,11 @@ describe('AppAutoComplete test', () => {
       />
     )
   })
-  it('Should render Autocomplete and open dropdown when clicking on City field', async () => {
+  it('Should render Autocomplete and open dropdown when clicking on City field', () => {
     const autocomplete = screen.getByLabelText(/common.labels.city/i)
     fireEvent.mouseDown(autocomplete)
 
-    await waitFor(() => {
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
-    })
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
 
     const option = screen.getByText('Verhovyna')
     fireEvent.click(option)
@@ -139,13 +126,9 @@ describe('AppAutoComplete test', () => {
     fireEvent.focus(cityField)
     fireEvent.click(cityField)
 
-    await waitFor(() => {
-      expect(cityField).toHaveFocus()
-    })
-    
-    await waitFor(() => {
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
-    })
+    expect(cityField).toHaveFocus()
+
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
 
     const optionsInDropdown = screen.getAllByRole('option')
     
@@ -161,10 +144,8 @@ describe('AppAutoComplete test', () => {
 
     fireEvent.change(cityField, { target: { value: 'Verhovy' } })
 
-    await waitFor(() => {
-      const optionsInDropdown = screen.getAllByRole('option')
-      expect(optionsInDropdown[0]).toHaveTextContent('Verhovyna')
-    })
+    const optionsInDropdown = screen.getAllByRole('option')
+    expect(optionsInDropdown[0]).toHaveTextContent('Verhovyna')
   })
   it('Should clear the City field when Backspace key is pressed', async () => {
     const cityField = screen.getByRole('combobox')
@@ -175,11 +156,9 @@ describe('AppAutoComplete test', () => {
     fireEvent.change(cityField, { target: { value: 'Verhovyna' } })
     fireEvent.change(cityField, { target: { value: '' } })
 
-    await waitFor(() => {
-      expect(cityField).toHaveValue('')
-      expect(cityField).toHaveFocus()
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
-    })
+    expect(cityField).toHaveValue('')
+    expect(cityField).toHaveFocus()
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
 
     const optionsInDropdown = screen.getAllByRole('option')
     const cityNames = optionsInDropdown.map(option => option.textContent?.trim())
@@ -192,10 +171,8 @@ describe('AppAutoComplete test', () => {
 
     fireEvent.change(cityField, { target: { value: 'Frankivsk' } })
 
-    await waitFor(() => {
-      const optionsInDropdown = screen.getAllByRole('option')
-      expect(optionsInDropdown[0]).toHaveTextContent('Frankivsk')
-      expect(optionsInDropdown[0]).not.toHaveTextContent('Verhovyna')
-    })
+    const optionsInDropdown = screen.getAllByRole('option')
+    expect(optionsInDropdown[0]).toHaveTextContent('Frankivsk')
+    expect(optionsInDropdown[0]).not.toHaveTextContent('Verhovyna')
   })
 })

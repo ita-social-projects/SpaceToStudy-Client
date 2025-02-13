@@ -1,6 +1,5 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, cleanup } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-
 import { useParams } from 'react-router-dom'
 import { ResourceService } from '~/services/resource-service'
 
@@ -42,13 +41,15 @@ describe('CreateOrEditQuizContainer without id', () => {
     useParams.mockReturnValue({ id: undefined })
   })
 
+  beforeEach(() => {
+    renderComponent()
+  })
+
   afterAll(() => {
     vi.clearAllMocks()
   })
 
-  it('should change title and description inputs', async () => {
-    await waitFor(() => renderComponent())
-
+  it('should change title and description inputs', () => {
     const titleInput = screen.getByLabelText(
       'myResourcesPage.quizzes.defaultNewTitle'
     )
@@ -65,9 +66,7 @@ describe('CreateOrEditQuizContainer without id', () => {
     expect(descriptionInput.value).toBe('quiz description')
   })
 
-  it('should click on save button and save quiz without category', async () => {
-    await waitFor(() => renderComponent())
-
+  it('should click on save button and save quiz without category', () => {
     const saveBtn = screen.getByText('common.save')
 
     fireEvent.click(saveBtn)
@@ -76,36 +75,33 @@ describe('CreateOrEditQuizContainer without id', () => {
     expect(setDescription).toHaveBeenCalled()
   })
 
-  it('should click on save button and save quiz with category', async () => {
-    await waitFor(() => renderComponent({ category }))
+  it('should click on save button and save quiz with category', () => {
+    cleanup()
+    renderComponent({ category })
 
     const saveBtn = screen.getByText('common.save')
 
     fireEvent.click(saveBtn)
   })
 
-  it('should render create new question form', async () => {
-    await waitFor(() => renderComponent())
-
+  it('should render create new question form', () => {
     const btnAddQuestion = screen.getByText(
       'myResourcesPage.quizzes.createNewQuestion'
     )
 
-    waitFor(() => fireEvent.click(btnAddQuestion))
+    fireEvent.click(btnAddQuestion)
 
     const formTitle = screen.getByText(/title:/i)
 
     expect(formTitle).toBeInTheDocument()
   })
 
-  it('should render add questions form', async () => {
-    await waitFor(() => renderComponent())
-
+  it('should render add questions form', () => {
     const btnAddNewQuestion = screen.getByText(
       'myResourcesPage.quizzes.addQuestion'
     )
 
-    waitFor(() => fireEvent.click(btnAddNewQuestion))
+    fireEvent.click(btnAddNewQuestion)
 
     const formTitle = screen.getByText('myResourcesPage.questions.add')
 
@@ -148,7 +144,7 @@ describe('CreateOrEditQuizContainer with id', () => {
   it('should call set functions when saving the quiz', async () => {
     renderComponent()
 
-    const saveBtn = screen.getByText('common.save')
+    const saveBtn = await screen.findByText('common.save')
     fireEvent.click(saveBtn)
 
     expect(setTitle).toHaveBeenCalled()

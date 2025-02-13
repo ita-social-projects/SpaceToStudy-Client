@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { StepProvider } from '~/context/step-context'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
@@ -22,14 +22,12 @@ const childrenArrMock = [
 ]
 
 describe('StepWrapper test', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <StepProvider initialValues={initialValues} stepLabels={stepsMock}>
-          <StepWrapper steps={stepsMock}>{childrenArrMock}</StepWrapper>
-        </StepProvider>
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <StepProvider initialValues={initialValues} stepLabels={stepsMock}>
+        <StepWrapper steps={stepsMock}>{childrenArrMock}</StepWrapper>
+      </StepProvider>
+    )
   })
 
   it('should render second children after click on tab', () => {
@@ -45,19 +43,19 @@ describe('StepWrapper test', () => {
   it('should render finish button', () => {
     let nextBtn = screen.getByText(/Next/i)
 
-    waitFor(() => fireEvent.click(nextBtn))
+    fireEvent.click(nextBtn)
 
     nextBtn = screen.getByText(/Next/i)
 
-    waitFor(() => fireEvent.click(nextBtn))
+    fireEvent.click(nextBtn)
 
     nextBtn = screen.getByText(/Next/i)
 
-    waitFor(() => fireEvent.click(nextBtn))
+    fireEvent.click(nextBtn)
 
     const finishBtn = screen.getByText(/Finish/i)
 
-    waitFor(() => fireEvent.click(finishBtn))
+    fireEvent.click(finishBtn)
 
     expect(vi.fn()).not.toHaveBeenCalled()
   })

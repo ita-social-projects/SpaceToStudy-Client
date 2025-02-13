@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { expect, vi } from 'vitest'
 
 import CategoriesContainer from '~/containers/my-resources/categories-container/CategoriesContainer'
@@ -27,14 +27,12 @@ const responseCategoriesMock = {
 }
 
 describe('CategoriesContainer test', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(URLs.resources.resourcesCategories.get)
-        .reply(200, responseCategoriesMock)
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(URLs.resources.resourcesCategories.get)
+      .reply(200, responseCategoriesMock)
 
-      renderWithProviders(<CategoriesContainer />)
-    })
+    renderWithProviders(<CategoriesContainer />)
   })
 
   afterEach(() => {
@@ -65,21 +63,17 @@ describe('CategoriesContainer test', () => {
       'myResourcesPage.categories.addBtn'
     )
 
-    waitFor(() => {
-      fireEvent.click(addCategoryBtn)
-    })
+    fireEvent.click(addCategoryBtn)
 
     const addCategoryPopover = screen.getByTestId('popupContent')
 
     expect(addCategoryPopover).toBeInTheDocument()
   })
 
-  it('should display category menu', () => {
-    const categoryMenuBtn = screen.getAllByTestId('menu-icon')[0]
+  it('should display category menu', async () => {
+    const [categoryMenuBtn] = await screen.findAllByTestId('menu-icon')
 
-    waitFor(() => {
-      fireEvent.click(categoryMenuBtn)
-    })
+    fireEvent.click(categoryMenuBtn)
 
     const categoryMenu = screen.getByRole('menu')
 

@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { TestSnackbar } from '~tests/test-utils'
@@ -37,7 +37,7 @@ vi.mock('~/hooks/use-redux', async () => {
 })
 
 describe('snackbar with extended', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     vi.mocked(useAppSelector).mockReturnValue({
       isOpened: true,
       message: 'Test message; Additional info',

@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import CookieConsentBanner from '~/containers/cookie-consent-banner/CookieConsentBanner'
 import { renderWithProviders } from '~tests/test-utils'
@@ -52,8 +52,7 @@ describe('CookieConsentBanner', () => {
     expect(acceptButton).toBeInTheDocument()
 
     fireEvent.click(acceptButton)
-    await waitFor(() => {
-      expect(acceptButton).not.toBeInTheDocument()
-    })
+
+    expect(acceptButton).not.toBeInTheDocument()
   })
 })

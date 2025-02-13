@@ -56,24 +56,22 @@ const mockState = {
 }
 
 describe('OfferDetails on desktop', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      useBreakpoints.mockImplementation(() => desktopData)
+  beforeEach(() => {
+    useBreakpoints.mockImplementation(() => desktopData)
 
-      renderWithProviders(<OfferDetails />, {
-        preloadedState: mockState
-      })
-
-      mockAxiosClient
-        .onGet(`${URLs.offers.get}/${mockOffer._id}`)
-        .reply(200, mockOffer)
-      mockAxiosClient
-        .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-        .reply(200, null)
-      mockAxiosClient
-        .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-        .reply(200, { offers: [], count: 0 })
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: mockState
     })
+
+    mockAxiosClient
+      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
+      .reply(200, mockOffer)
+    mockAxiosClient
+      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
+      .reply(200, null)
+    mockAxiosClient
+      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
+      .reply(200, { offers: [], count: 0 })
   })
 
   it('should display the offer details correctly', async () => {
@@ -98,20 +96,17 @@ describe('OfferDetails on desktop', () => {
 
     const draft = await screen.findByText('common.labels.moveToDraft')
 
-    waitFor(() => {
-      fireEvent.click(draft)
-    })
+    fireEvent.click(draft)
+
     const active = await screen.findByText('common.labels.makeActive')
 
     expect(active).toBeInTheDocument()
   })
 
   it('should open modal window on close offer', async () => {
-    const closeOffer = screen.getByText('common.labels.closeOffer')
+    const closeOffer = await screen.findByText('common.labels.closeOffer')
 
-    waitFor(() => {
-      fireEvent.click(closeOffer)
-    })
+    fireEvent.click(closeOffer)
 
     const confirmationText = await screen.findByText(
       'offerDetailsPage.closeOffer'
@@ -121,9 +116,7 @@ describe('OfferDetails on desktop', () => {
 
     const yesButton = await screen.findByText('common.yes')
 
-    waitFor(() => {
-      fireEvent.click(yesButton)
-    })
+    fireEvent.click(yesButton)
 
     await waitFor(() => expect(confirmationText).not.toBeInTheDocument())
   })
@@ -153,9 +146,7 @@ describe('Offer details with student role', () => {
   it('should open modal window with enroll offer', async () => {
     const enrollOffer = await screen.findByText('common.labels.enrollOffer')
 
-    waitFor(() => {
-      fireEvent.click(enrollOffer)
-    })
+    fireEvent.click(enrollOffer)
 
     const modalTitle = screen.getByText('offerDetailsPage.enrollOffer.title')
 
@@ -248,11 +239,9 @@ describe('OfferDetails on mobile', () => {
     isTablet: false
   }
   beforeEach(() => {
-    waitFor(() => {
-      useBreakpoints.mockImplementation(() => mobileData)
-      renderWithProviders(<OfferDetails />, {
-        preloadedState: mockState
-      })
+    useBreakpoints.mockImplementation(() => mobileData)
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: mockState
     })
   })
 
@@ -273,21 +262,17 @@ describe('OfferDetails on mobile', () => {
 
 describe('Offer details with student role', () => {
   beforeEach(() => {
-    waitFor(() => {
-      renderWithProviders(<OfferDetails />, {
-        preloadedState: {
-          appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
-        }
-      })
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: {
+        appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
+      }
     })
   })
 
   it('should render enroll offer button for students', async () => {
     const enrollOffer = await screen.findByText('common.labels.enrollOffer')
 
-    waitFor(() => {
-      fireEvent.click(enrollOffer)
-    })
+    fireEvent.click(enrollOffer)
 
     expect(
       screen.getByText('offerDetailsPage.enrollOffer.title')

@@ -1,14 +1,12 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { queryByAttribute, render } from '@testing-library/react'
 import FileEditor from '~/components/file-editor/FileEditor.tsx'
 
 describe('Test file editor', () => {
-  render(<FileEditor />)
+  it('should render file editor', () => {
+    const { container } = render(<FileEditor />)
 
-  it('should render file editor', async () => {
-    const editorElement = screen.queryAllByTestId('editor')
+    const editorElement = queryByAttribute('id', container, /tiny-react/)
 
-    waitFor(() => {
-      expect(editorElement).toBeInTheDocument()
-    })
+    expect(editorElement).toBeInTheDocument()
   })
 })

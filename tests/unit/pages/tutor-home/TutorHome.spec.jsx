@@ -34,6 +34,6 @@ describe('TutorHome component', () => {
 
     const titleToFind = screen.queryByText(/becomeTutor.generalInfo.title/i)
 
-    waitFor(() => expect(titleToFind).not.toBeInTheDocument())
+    expect(titleToFind).not.toBeInTheDocument()
   })
 })

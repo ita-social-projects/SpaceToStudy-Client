@@ -68,15 +68,15 @@ describe('ProfileTabForm', () => {
       'editProfilePage.profile.generalTab.uploadTitle'
     )
 
-    await waitFor(() =>
-      fireEvent.change(uploadPhotoBtn, { target: { files: [file] } })
-    )
+    fireEvent.change(uploadPhotoBtn, { target: { files: [file] } })
 
     const photo = { src: imageSrc, name: imageSrc }
-    expect(handleNonInputValueChange).toHaveBeenCalledWith('photo', photo)
+    await waitFor(() => {
+      expect(handleNonInputValueChange).toHaveBeenCalledWith('photo', photo)
+    })
   })
 
-  it('should display an error message when adding an invalid photo', async () => {
+  it('should display an error message when adding an invalid photo', () => {
     const file = new File(['photo'], 'photo.jpeg', { type: 'image/jpeg' })
     Object.defineProperty(file, 'size', { value: 55_000_000 })
 
@@ -84,9 +84,7 @@ describe('ProfileTabForm', () => {
       'editProfilePage.profile.generalTab.uploadTitle'
     )
 
-    await waitFor(() =>
-      fireEvent.change(uploadPhotoBtn, { target: { files: [file] } })
-    )
+    fireEvent.change(uploadPhotoBtn, { target: { files: [file] } })
 
     const error = screen.queryByText('becomeTutor.photo.fileSizeError')
     expect(error).toBeInTheDocument()
@@ -101,9 +99,7 @@ describe('ProfileTabForm', () => {
       'editProfilePage.profile.generalTab.uploadTitle'
     )
 
-    await waitFor(() =>
-      fireEvent.change(uploadPhotoBtn, { target: { files: [file] } })
-    )
+    fireEvent.change(uploadPhotoBtn, { target: { files: [file] } })
 
     const resizeError = await screen.findByText('becomeTutor.photo.resizeImage')
     expect(resizeError).toBeInTheDocument()

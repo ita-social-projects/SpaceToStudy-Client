@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { ResourceService } from '~/services/resource-service'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
@@ -27,9 +27,9 @@ const props = {
 
 vi.mock('~/services/resource-service')
 
-ResourceService.getResourcesCategoriesNames.mockResolvedValue({
-  data: mockCategories
-})
+ResourceService.getResourcesCategoriesName.mockResolvedValue(
+  mockCategories
+)
 
 describe('ResourcesToolBarDrawer test', () => {
   beforeEach(() => {
@@ -45,7 +45,7 @@ describe('ResourcesToolBarDrawer test', () => {
   it('should click on filter toggle an render search input', () => {
     const filterToggle = screen.getByTestId('toggle-button')
 
-    waitFor(() => fireEvent.click(filterToggle))
+    fireEvent.click(filterToggle)
 
     const searchInput = screen.getByPlaceholderText('common.search')
 
@@ -55,7 +55,7 @@ describe('ResourcesToolBarDrawer test', () => {
   it('should change and clear search input value', () => {
     const filterToggle = screen.getByTestId('toggle-button')
 
-    waitFor(() => fireEvent.click(filterToggle))
+    fireEvent.click(filterToggle)
 
     const searchInput = screen.getByPlaceholderText('common.search')
 
@@ -66,7 +66,7 @@ describe('ResourcesToolBarDrawer test', () => {
 
     const button = screen.getByTestId('clearIcon')
 
-    waitFor(() => fireEvent.click(button))
+    fireEvent.click(button)
 
     expect(searchInput.value).not.toBe(testValue)
   })
@@ -74,7 +74,7 @@ describe('ResourcesToolBarDrawer test', () => {
   it('should change sort option', () => {
     const filterToggle = screen.getByTestId('toggle-button')
 
-    waitFor(() => fireEvent.click(filterToggle))
+    fireEvent.click(filterToggle)
 
     const select = screen.getByTestId('app-select')
 
@@ -91,11 +91,11 @@ describe('ResourcesToolBarDrawer test', () => {
   it('should clear all filters', () => {
     const filterToggle = screen.getByTestId('toggle-button')
 
-    waitFor(() => fireEvent.click(filterToggle))
+    fireEvent.click(filterToggle)
 
     const button = screen.getByText('button.clearFilters')
 
-    waitFor(() => fireEvent.click(button))
+    fireEvent.click(button)
 
     expect(setSearch).toHaveBeenCalled()
   })
@@ -103,11 +103,11 @@ describe('ResourcesToolBarDrawer test', () => {
   it('should apply all filters', () => {
     const filterToggle = screen.getByTestId('toggle-button')
 
-    waitFor(() => fireEvent.click(filterToggle))
+    fireEvent.click(filterToggle)
 
     const button = screen.getByText('button.applyFilters')
 
-    waitFor(() => fireEvent.click(button))
+    fireEvent.click(button)
 
     expect(setSearch).toHaveBeenCalled()
   })

@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 
@@ -49,13 +49,12 @@ const lessonResponseMock = {
 }
 
 describe('LessonContainer test', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(URLs.resources.lessons.get)
-        .reply(200, lessonResponseMock)
-      renderWithProviders(<LessonsContainer />)
-    })
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(URLs.resources.lessons.get)
+      .reply(200, lessonResponseMock)
+
+    renderWithProviders(<LessonsContainer />)
   })
 
   afterEach(() => {

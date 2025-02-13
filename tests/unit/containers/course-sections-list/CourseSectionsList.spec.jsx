@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
@@ -134,18 +134,16 @@ vi.mock('~/hooks/use-menu', async (importOriginal) => {
 })
 
 describe('CourseSectionsList tests', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <CourseSectionsList
-          handleSectionInputChange={mockedHandleSectionChange}
-          isCooperation
-          items={mockedCourseSectionData}
-          resourceEventHandler={mockedResourceEventHandler}
-          sectionEventHandler={mockedSectionEventHandler}
-        />
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <CourseSectionsList
+        handleSectionInputChange={mockedHandleSectionChange}
+        isCooperation
+        items={mockedCourseSectionData}
+        resourceEventHandler={mockedResourceEventHandler}
+        sectionEventHandler={mockedSectionEventHandler}
+      />
+    )
   })
 
   afterEach(() => {
@@ -163,10 +161,10 @@ describe('CourseSectionsList tests', () => {
 
   it('should delete module from the list', () => {
     const menuButton = screen.getAllByTestId('MoreVertIcon')[0]
-    waitFor(() => fireEvent.click(menuButton))
+    fireEvent.click(menuButton)
     const deleteMenuButton = screen.getByTestId('DeleteOutlineIcon')
     expect(deleteMenuButton).toBeInTheDocument()
-    waitFor(() => fireEvent.click(deleteMenuButton))
+    fireEvent.click(deleteMenuButton)
     expect(mockedSectionEventHandler).toHaveBeenCalledWith({
       sectionId: '1',
       type: 'sectionRemoved'
@@ -177,7 +175,7 @@ describe('CourseSectionsList tests', () => {
     const itemIndex = 1
     const addActivityButton = screen.getAllByTestId('Add activity')[itemIndex]
     expect(addActivityButton).toBeInTheDocument()
-    waitFor(() => fireEvent.click(addActivityButton))
+    fireEvent.click(addActivityButton)
     const addModuleButton = screen.getAllByTestId('Crop75Icon')[itemIndex]
     expect(addModuleButton).toBeInTheDocument()
     const addCourseTemplateButton = screen.getAllByTestId(
@@ -189,11 +187,11 @@ describe('CourseSectionsList tests', () => {
   it('should open "AddCourseTemplateModal" when "Course template" is clicked in the "Add activity" menu', () => {
     const itemIndex = 2
     const addActivityButton = screen.getAllByTestId('Add activity')[itemIndex]
-    waitFor(() => fireEvent.click(addActivityButton))
+    fireEvent.click(addActivityButton)
     const addCourseTemplateButton = screen.getAllByTestId(
       'ViewComfyOutlinedIcon'
     )[itemIndex]
-    waitFor(() => fireEvent.click(addCourseTemplateButton))
+    fireEvent.click(addCourseTemplateButton)
     expect(openModalMock).toHaveBeenCalled()
     expect(openModalMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -205,9 +203,9 @@ describe('CourseSectionsList tests', () => {
   it('should call event handler with proper type when "Module" is clicked in the "Add activity" menu', () => {
     const itemIndex = 1
     const addActivityButton = screen.getAllByTestId('Add activity')[itemIndex]
-    waitFor(() => fireEvent.click(addActivityButton))
+    fireEvent.click(addActivityButton)
     const addModuleButton = screen.getAllByTestId('Crop75Icon')[itemIndex]
-    waitFor(() => fireEvent.click(addModuleButton))
+    fireEvent.click(addModuleButton)
     expect(mockedSectionEventHandler).toHaveBeenCalledWith({
       index: 1,
       type: 'sectionAdded'
@@ -216,18 +214,16 @@ describe('CourseSectionsList tests', () => {
 })
 
 describe('CourseSectionsList test when prop items is empty', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <CourseSectionsList
-          handleSectionInputChange={mockedHandleSectionChange}
-          isCooperation
-          items={[]}
-          resourceEventHandler={mockedResourceEventHandler}
-          sectionEventHandler={mockedSectionEventHandler}
-        />
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <CourseSectionsList
+        handleSectionInputChange={mockedHandleSectionChange}
+        isCooperation
+        items={[]}
+        resourceEventHandler={mockedResourceEventHandler}
+        sectionEventHandler={mockedSectionEventHandler}
+      />
+    )
   })
 
   it('should render clearCooperationMenu when items is empty', () => {

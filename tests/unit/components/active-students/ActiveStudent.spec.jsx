@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 
 import { renderWithProviders } from '~tests/test-utils'
 import ActiveStudent from '~/components/active-students/ActiveStudent'
@@ -17,10 +17,6 @@ describe('ActiveStudent', () => {
     const studentCard = screen.getByTestId('studentCard')
     fireEvent.click(studentCard)
 
-    waitFor(() =>
-      expect(navigateMock).toHaveBeenCalledWith(
-        '/my-cooperations/cooperationId'
-      )
-    )
+    expect(navigateMock).toHaveBeenCalledWith('/my-cooperations/cooperationId')
   })
 })

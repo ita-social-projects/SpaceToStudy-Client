@@ -35,7 +35,7 @@ describe('useLoadMore custom hook', () => {
 
     expect(result.current.loading).toBe(true)
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.loading).toBe(false)
       expect(result.current.data).toEqual(
         mockResponseData.slice(0, mockParams.limit)
@@ -47,7 +47,7 @@ describe('useLoadMore custom hook', () => {
       wrapper: QueryProvider
     })
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.data).toEqual(
         mockResponseData.slice(0, mockParams.limit)
       )
@@ -60,7 +60,7 @@ describe('useLoadMore custom hook', () => {
 
     expect(result.current.loading).toBe(true)
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.data).toEqual(mockResponseData)
     })
   })
@@ -70,7 +70,7 @@ describe('useLoadMore custom hook', () => {
       wrapper: QueryProvider
     })
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.data).toEqual(
         mockResponseData.slice(0, mockParams.limit)
       )

@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
 import {
   profileItemsTutor,
@@ -69,9 +69,7 @@ describe('getUsersOffers should return correct response', () => {
       }
     )
 
-    await waitFor(() => {
-      expect(OfferService.getUsersOffers).toHaveBeenCalled()
-    })
+    expect(OfferService.getUsersOffers).toHaveBeenCalled()
   })
 })
 

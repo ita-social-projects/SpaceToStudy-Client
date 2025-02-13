@@ -82,9 +82,7 @@ describe('EnhancedTableRow component', () => {
 
     fireEvent.click(menuItem)
 
-    await waitFor(() =>
-      expect(rowActions[0].func).toHaveBeenCalledWith(mockItem._id)
-    )
+    expect(rowActions[0].func).toHaveBeenCalledWith(mockItem._id)
   })
 
   it('should close menu when "escape" is pressed', async () => {
@@ -94,7 +92,7 @@ describe('EnhancedTableRow component', () => {
 
     const menuItem = screen.queryByText('Delete')
 
-    await waitFor(() => expect(menuItem).toBeInTheDocument())
+    expect(menuItem).toBeInTheDocument()
 
     fireEvent.keyDown(menuItem, {
       key: 'Escape',

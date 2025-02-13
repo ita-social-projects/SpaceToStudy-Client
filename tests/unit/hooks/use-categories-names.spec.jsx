@@ -27,9 +27,9 @@ describe('useCategoriesNames', () => {
     expect(result.current.loading).toBe(true)
     expect(result.current.response).toEqual([])
 
-    waitFor(() => {
-      expect(categoryService.getCategoriesNames).toHaveBeenCalled()
-
+    expect(categoryService.getCategoriesNames).toHaveBeenCalled()
+    
+    await waitFor(() => {
       expect(result.current.loading).toBe(false)
       expect(result.current.response).toEqual(mockCategoriesNames)
     })
@@ -45,9 +45,9 @@ describe('useCategoriesNames', () => {
     expect(result.current.loading).toBe(true)
     expect(result.current.response).toEqual([])
 
-    waitFor(() => {
-      expect(categoryService.getCategoriesNames).toHaveBeenCalled()
-
+    expect(categoryService.getCategoriesNames).toHaveBeenCalled()
+    
+    await waitFor(() => {
       expect(result.current.loading).toBe(false)
       expect(result.current.error).toBe(mockError)
     })

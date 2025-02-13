@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
@@ -46,7 +46,7 @@ describe('test AppContentSwitcher component', () => {
       />
     )
 
-    waitFor(() => getByRole('checkbox').click())
+    getByRole('checkbox').click()
 
     expect(onChangeMock).toHaveBeenCalled()
   })
@@ -61,17 +61,13 @@ describe('test AppContentSwitcher component', () => {
       />
     )
 
-    waitFor(() => {
-      fireEvent.mouseOver(screen.getByText('Left Text'))
-    })
+    fireEvent.mouseOver(screen.getByText('Left Text'))
 
     const lTooltip = await screen.findByText('Left Tooltip')
 
     expect(lTooltip).toBeInTheDocument()
 
-    waitFor(() => {
-      fireEvent.mouseOver(screen.getByText('Right Text'))
-    })
+    fireEvent.mouseOver(screen.getByText('Right Text'))
 
     const rTooltip = await screen.findByText('Right Tooltip')
 
