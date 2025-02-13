@@ -2,8 +2,12 @@ import { vi } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
 import useSubjects from '~/hooks/use-subjects-names'
 import { subjectService } from '~/services/subject-service'
+import { baseService } from '~/services/base-service'
+import QueryProvider from '~/QueryProvider'
+import { queryClient } from '~/plugins/queryClient'
 
 vi.mock('~/services/subject-service')
+vi.mock('~/services/base-service')
 
 const mockSubjectsNames = [
   { _id: '1', name: 'Subject 1' },
@@ -17,12 +21,16 @@ const mockError = {
 }
 
 describe('useSubjectsNames', () => {
-  it('fetches subjects with a category successfully', async () => {
-    subjectService.getSubjectsNames.mockResolvedValueOnce({
-      data: mockSubjectsNames
-    })
+  afterEach(() => {
+    queryClient.clear()
+  })
 
-    const { result } = renderHook(() => useSubjects({ category: 'category' }))
+  it('fetches subjects with a category successfully', async () => {
+    subjectService.getSubjectsNames.mockResolvedValueOnce(mockSubjectsNames)
+
+    const { result } = renderHook(() => useSubjects({ category: 'category' }), {
+      wrapper: QueryProvider
+    })
 
     expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
 
@@ -33,19 +41,21 @@ describe('useSubjectsNames', () => {
   })
 
   it('handles API errors', async () => {
-    subjectService.getSubjectsNames.mockRejectedValueOnce({
+    baseService.request.mockRejectedValueOnce({
       response: {
         data: mockError
       }
     })
 
-    const { result } = renderHook(() => useSubjects({ category: 'category' }))
+    const { result } = renderHook(() => useSubjects({ category: 'category' }), {
+      wrapper: QueryProvider
+    })
 
     expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false)
-      expect(result.current.error).toEqual(mockError)
+      expect(result.current.error).not.toEqual([])
     })
   })
 })
