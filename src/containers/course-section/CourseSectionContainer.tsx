@@ -159,22 +159,19 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
           return ResourceService.deleteAttachment(resourceId)
         }
       }
-    },
-    onSuccess: (_data, variables) => {
-      const { resource } = variables
-
-      resourceEventHandler?.({
-        type: CourseResourceEventType.ResourceRemoved,
-        sectionId: sectionData.id,
-        resourceId: resource.id!
-      })
     }
   })
 
   const deleteResource = (resource: CourseResource) => {
-    if (resource.isDuplicate && resource._id) {
+    if (resource.isDuplicate) {
       handleDeleteResource({ resourceId: resource._id, resource })
     }
+
+    resourceEventHandler?.({
+      type: CourseResourceEventType.ResourceRemoved,
+      sectionId: sectionData.id,
+      resourceId: resource.id!
+    })
   }
 
   const { mutate: mutateAttachment } = useMutation({
