@@ -103,7 +103,8 @@ export const URLs = {
       getNames: '/resources-categories/names',
       patch: '/resources-categories',
       post: '/resources-categories',
-      delete: 'resources-categories'
+      deleteOld: 'resources-categories',
+      delete: 'resources-categories/:id'
     }
   },
   messages: {

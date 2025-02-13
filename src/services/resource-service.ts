@@ -270,8 +270,17 @@ export const ResourceService = {
   },
   deleteResourceCategory: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
-      createUrlPath(URLs.resources.resourcesCategories.delete, id)
-    )
+      createUrlPath(URLs.resources.resourcesCategories.deleteOld, id)
+    ),
+  deleteResourceCategoryQuery: (id: string) => {
+    return baseService.request<void>({
+      method: 'DELETE',
+      url: getFullUrl({
+        pathname: URLs.resources.resourcesCategories.delete,
+        parameters: { id }
+      })
+    })
+  }
 }
 
 export const resourceService = appApi.injectEndpoints({

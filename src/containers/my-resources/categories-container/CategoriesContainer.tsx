@@ -41,6 +41,7 @@ import { styles } from '~/containers/my-resources/categories-container/Categorie
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const CategoriesContainer = () => {
   const { t } = useTranslation()
@@ -52,6 +53,7 @@ const CategoriesContainer = () => {
   const dispatch = useAppDispatch()
   const [selectedItemId, setSelectedItemId] = useState<string>('')
   const [updateResourceCategory] = useUpdateResourceCategoryMutation()
+  const { handleSuccessAlert, handleErrorAlert } = useSnackbarAlert()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -98,10 +100,15 @@ const CategoriesContainer = () => {
     [page, itemsPerPage, sort, searchTitle]
   )
 
-  const deleteCategory = useCallback(
-    (id?: string) => ResourceService.deleteResourceCategory(id ?? ''),
-    []
-  )
+  const { mutate: handleDeleteCategory } = useMutation({
+    mutationFn: ResourceService.deleteResourceCategoryQuery,
+    onError: handleErrorAlert,
+    onSuccess: () => {
+      handleSuccessAlert(`myResourcesPage.categories.successDeletion`)
+      void fetchData() // TODO: remove and replace with queryKey, when 3185 issue will be merged
+    }
+    // queryKey: ['resource-categories']
+  })
 
   const { response, loading, fetchData } = useAxios<
     ItemsWithCount<Categories>,
@@ -170,14 +177,13 @@ const CategoriesContainer = () => {
   )
 
   const props = {
-    actions: { onEdit },
+    actions: { onEdit, onDelete: handleDeleteCategory },
     columns: columnsToShow,
-    data: { response, getData: onCategoryUpdate },
-    services: { deleteService: deleteCategory },
+    resourceItems: response,
     pagination: { page, onChange: handleChangePage },
     sort: sortOptions,
     itemsPerPage,
-    resource: ResourcesTabsEnum.Categories,
+    resourceType: ResourcesTabsEnum.Categories,
     sx: styles.table
   }
 

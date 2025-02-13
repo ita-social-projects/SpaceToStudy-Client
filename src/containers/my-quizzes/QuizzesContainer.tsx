@@ -66,7 +66,7 @@ const QuizzesContainer = () => {
     onError: handleErrorAlert,
     onSuccess: () => {
       handleSuccessAlert(`myResourcesPage.quizzes.successDeletion`)
-      void queryClient.invalidateQueries({ queryKey: ['quizzes'] }) // TODO: remove and replace with queryKey, when <N> issue will be merged
+      void queryClient.invalidateQueries({ queryKey: ['quizzes'] }) // TODO: remove and replace with queryKey, when 3183 issue will be merged
     }
     // queryKey: ['quizzes']
   })
