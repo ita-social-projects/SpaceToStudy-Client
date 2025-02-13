@@ -58,7 +58,7 @@ const CategoryDropdown = ({
 
   const { data: allCategoriesNames = [] } = useQuery({
     queryKey: ['categoriesNames'],
-    queryFn: ResourceService.getResourcesCategoriesName
+    queryFn: ResourceService.getResourcesCategoriesNames
   })
 
   const onCreateCategory = () => {

@@ -85,7 +85,7 @@ const AddResourceWithInput: React.FC<AddResourceWithInputProps> = ({
           }}
           position={PositionEnum.Right}
           selectedItems={selectedItems}
-          service={ResourceService.getResourcesCategoriesName}
+          service={ResourceService.getResourcesCategoriesNames}
           setSelectedItems={setItems}
           showNoneProperty
           title={t('myResourcesPage.categories.category')}

@@ -80,7 +80,7 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
           <AppButtonMenu<CategoryNameInterface>
             customSx={styles.filter}
             selectedItems={data.categories ?? []}
-            service={ResourceService.getResourcesCategoriesName}
+            service={ResourceService.getResourcesCategoriesNames}
             setSelectedItems={onCategoryChange}
             showNoneProperty
             slotProps={{ paper: styles.filterPaper(isMobile) }}

@@ -106,7 +106,7 @@ const CategoriesContainer = () => {
 
   const { data: allCategoriesNames = [] } = useQuery({
     queryKey: ['categoriesNames'],
-    queryFn: ResourceService.getResourcesCategoriesName
+    queryFn: ResourceService.getResourcesCategoriesNames
   })
 
   const { mutate: handleCreateCategory } = useMutation({
