@@ -175,7 +175,6 @@ export const authRouter = (
       handle={{ crumb: [myCooperations, cooperationDetails, cooperationQuiz] }}
       path={authRoutes.cooperationQuiz.route}
     />
-    {/* working area */}
     <Route
       element={<QuizPreview />}
       handle={{
@@ -188,7 +187,6 @@ export const authRouter = (
       }}
       path={authRoutes.cooperationQuizPreview.route}
     />
-    {/* working area */}
     <Route
       element={<CreateOrEditQuestion />}
       handle={{ crumb: [myResources, newQuestion] }}
