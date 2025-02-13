@@ -20,7 +20,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
 import { useModalContext } from '~/context/modal-context'
 
-import { defaultResponses, snackbarVariants } from '~/constants'
+import { defaultResponses } from '~/constants'
 import {
   initialSort,
   itemsLoadLimit,
@@ -28,13 +28,10 @@ import {
   removeColumnRules,
   validation
 } from '~/containers/my-resources/categories-container/CategoriesContainer.constansts'
-import { Categories, ErrorResponse, ResourcesTabsEnum } from '~/types'
+import { type Categories, ResourcesTabsEnum } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-resources/categories-container/CategoriesContainer.style'
-import { useAppDispatch } from '~/hooks/use-redux'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 const CategoriesContainer = () => {
   const { t } = useTranslation()
@@ -43,44 +40,12 @@ const CategoriesContainer = () => {
   const breakpoints = useBreakpoints()
   const { page, handleChangePage } = usePagination()
   const { openModal, closeModal } = useModalContext()
-  const dispatch = useAppDispatch()
   const [selectedItemId, setSelectedItemId] = useState<string>('')
   const [updateResourceCategory] = useUpdateResourceCategoryMutation()
   const { handleErrorAlert } = useSnackbarAlert()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-
-  const onResponseError = useCallback(
-    (error?: ErrorResponse) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: getErrorKey(error)
-        })
-      )
-    },
-    [dispatch]
-  )
-
-  const onResponse = useCallback(
-    (response: Categories | null) => {
-      const categoryName = response ? response.name : ''
-
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.success,
-          message: {
-            text: 'myResourcesPage.categories.successCreation',
-            options: {
-              category: categoryName
-            }
-          }
-        })
-      )
-    },
-    [dispatch]
-  )
 
   const getCategories = useCallback(
     () =>
@@ -131,19 +96,12 @@ const CategoriesContainer = () => {
     await Promise.all([fetchData(), fetchAllCategoriesNames()])
   }, [fetchData, fetchAllCategoriesNames])
 
-  const onCategoryCreate = useCallback(
-    async (response: Categories) => {
-      onResponse(response)
-      await Promise.all([fetchData(), fetchAllCategoriesNames()])
-    },
-    [fetchData, fetchAllCategoriesNames, onResponse]
-  )
-
   const { mutate: handleCreateCategory } = useMutation({
     mutationFn: ResourceService.createResourceCategory,
-    onSuccess: onCategoryCreate,
-    onError: onResponseError
+    onError: handleErrorAlert,
+    queryKey: ['categories']
   })
+
   const existingCategoriesNames = allCategoriesNames?.map((item) => item.name)
 
   const onAdd = () => {

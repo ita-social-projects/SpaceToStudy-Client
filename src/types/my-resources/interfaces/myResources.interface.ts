@@ -37,7 +37,7 @@ export interface UpdateResourceCategory {
 }
 
 export type GetResourcesCategoriesParams = Partial<RequestParams> & {
-  name?: string
+  name: string
 }
 
 export interface ResourceToolbarForm extends Pick<RequestParams, 'categories'> {

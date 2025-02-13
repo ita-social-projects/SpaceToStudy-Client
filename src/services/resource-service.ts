@@ -191,7 +191,7 @@ export const ResourceService = {
     await axiosClient.delete(
       createUrlPath(URLs.resources.questions.delete, id)
     ),
-  getResourcesCategories: (params?: GetResourcesCategoriesParams) => {
+  getResourcesCategories: (params: GetResourcesCategoriesParams) => {
     return baseService.request<ItemsWithCount<Categories>>({
       method: 'GET',
       url: getFullUrl({
