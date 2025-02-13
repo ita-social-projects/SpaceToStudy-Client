@@ -16,6 +16,7 @@ import FinishQuizModal from '~/containers/quiz/finish-quiz-modal/FinishQuizModal
 import useQuery from '~/hooks/use-query'
 import useMutation from '~/hooks/use-mutation'
 import useForm from '~/hooks/use-form'
+import useQuizQuery from '~/hooks/query-hooks/use-quiz-query'
 
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
@@ -37,10 +38,6 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
 
   const [isOpen, setIsOpen] = useState(false)
 
-  const getQuiz = useCallback(() => {
-    return ResourceService.getQuizQuery(quizId)
-  }, [quizId])
-
   const { handleInputChange, handleNonInputValueChange, data } = useForm<
     Record<string, string | string[]>
   >({
@@ -50,10 +47,7 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
   const handleNonInputChange = (key: string) => (value: string | string[]) =>
     handleNonInputValueChange(key, value)
 
-  const { data: quiz, isLoading } = useQuery({
-    queryKey: ['quiz', quizId],
-    queryFn: getQuiz
-  })
+  const { quiz, isLoading } = useQuizQuery(quizId)
 
   const openModal = useCallback(() => {
     setIsOpen(true)
@@ -193,10 +187,6 @@ const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
     return ResourceService.getFinishedQuiz(finishedQuizId)
   }, [finishedQuizId])
 
-  const getQuiz = useCallback(() => {
-    return ResourceService.getQuizQuery(quizId)
-  }, [quizId])
-
   const { handleInputChange, handleNonInputValueChange } = useForm<
     Record<string, string | string[]>
   >({
@@ -211,10 +201,7 @@ const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
     queryFn: getFinishedQuiz
   })
 
-  const { data: quiz, isLoading: isQuizLoading } = useQuery({
-    queryKey: ['quiz', quizId],
-    queryFn: getQuiz
-  })
+  const { quiz, isLoading: isQuizLoading } = useQuizQuery(quizId)
 
   const {
     settings: { pointValues, scoredResponses, correctAnswers, view },
@@ -297,10 +284,6 @@ const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
 const TutorQuiz = () => {
   const { quizId = '' } = useParams()
 
-  const getQuiz = useCallback(() => {
-    return ResourceService.getQuizQuery(quizId)
-  }, [quizId])
-
   const { handleInputChange, handleNonInputValueChange, data } = useForm<
     Record<string, string | string[]>
   >({
@@ -310,10 +293,7 @@ const TutorQuiz = () => {
   const handleNonInputChange = (key: string) => (value: string | string[]) =>
     handleNonInputValueChange(key, value)
 
-  const { data: quiz, isLoading } = useQuery({
-    queryKey: ['quiz', quizId],
-    queryFn: getQuiz
-  })
+  const { quiz, isLoading } = useQuizQuery(quizId)
 
   const {
     settings: { view },
