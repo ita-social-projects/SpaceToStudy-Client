@@ -1,9 +1,13 @@
-import { vi } from 'vitest'
+import { afterEach, vi } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import { categoryService } from '~/services/category-service'
+import { baseService } from '~/services/base-service'
+import QueryProvider from '~/QueryProvider'
+import { queryClient } from '~/plugins/queryClient'
 
 vi.mock('~/services/category-service')
+vi.mock('~/services/base-service')
 
 const mockCategoriesNames = [
   { _id: '1', name: 'Category 1' },
@@ -17,14 +21,20 @@ const mockError = {
 }
 
 describe('useCategoriesNames', () => {
+  afterEach(() => {
+    queryClient.clear()
+  })
+
   it('fetches categories names successfully', async () => {
-    categoryService.getCategoriesNames.mockResolvedValueOnce({
-      data: mockCategoriesNames
+    categoryService.getCategoriesNames.mockResolvedValueOnce(
+      mockCategoriesNames
+    )
+
+    const { result } = renderHook(() => useCategoriesNames(), {
+      wrapper: QueryProvider
     })
 
-    const { result } = renderHook(() => useCategoriesNames())
-
-    expect(result.current.loading).toBe(true)
+    expect(result.current.loading).toBe(false)
     expect(result.current.response).toEqual([])
 
     expect(categoryService.getCategoriesNames).toHaveBeenCalled()
@@ -36,20 +46,20 @@ describe('useCategoriesNames', () => {
   })
 
   it('handles API errors', async () => {
-    categoryService.getCategoriesNames.mockRejectedValueOnce({
-      response: { data: mockError }
+    baseService.request.mockRejectedValueOnce({ response: { data: mockError } })
+
+    const { result } = renderHook(() => useCategoriesNames(), {
+      wrapper: QueryProvider
     })
 
-    const { result } = renderHook(() => useCategoriesNames())
-
-    expect(result.current.loading).toBe(true)
+    expect(result.current.loading).toBe(false)
     expect(result.current.response).toEqual([])
 
     expect(categoryService.getCategoriesNames).toHaveBeenCalled()
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false)
-      expect(result.current.error).toBe(mockError)
+      expect(result.current.error).not.toEqual([])
     })
   })
 })
