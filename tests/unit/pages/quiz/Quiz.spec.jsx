@@ -69,7 +69,8 @@ const mockFinishedAttempts = [
     grade: 85,
     results: [
       {
-        question: 'What is the difference between function expression and function declaration?',
+        question:
+          'What is the difference between function expression and function declaration?',
         answers: [{ text: 'Correct answer', isCorrect: true, isChosen: true }]
       }
     ]
@@ -83,7 +84,8 @@ const mockMaxAttempts = [
     grade: 85,
     results: [
       {
-        question: 'What is the difference between function expression and function declaration?',
+        question:
+          'What is the difference between function expression and function declaration?',
         answers: [{ text: 'Correct answer', isCorrect: true, isChosen: true }]
       }
     ]
@@ -94,7 +96,8 @@ const mockMaxAttempts = [
     grade: 90,
     results: [
       {
-        question: 'What is the difference between function expression and function declaration?',
+        question:
+          'What is the difference between function expression and function declaration?',
         answers: [{ text: 'Correct answer', isCorrect: true, isChosen: true }]
       }
     ]
@@ -106,7 +109,6 @@ let preloadedState
 let mockAttemptsData = mockFinishedAttempts
 
 describe('QuizPage with no used attempts', () => {
-
   beforeEach(() => {
     preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
     mockNavigate = vi.fn()
@@ -121,12 +123,14 @@ describe('QuizPage with no used attempts', () => {
     vi.clearAllMocks()
 
     useQuery.mockImplementation(({ queryKey }) => {
-      if (queryKey[0] === 'quiz' && preloadedState.appMain.userRole === UserRoleEnum.Student) {
+      if (
+        queryKey[0] === 'quiz' &&
+        preloadedState.appMain.userRole === UserRoleEnum.Student
+      ) {
         return { data: mockQuiz, isLoading: false }
       }
-      return {data: [], isLoading: false}
+      return { data: [], isLoading: false }
     })
-    
   })
 
   afterEach(() => {
@@ -149,30 +153,28 @@ describe('QuizPage with no used attempts', () => {
     renderWithProviders(<Quiz />, {
       preloadedState
     })
-  
+
     const quizTitle = await screen.findByText('JS Quiz')
     expect(quizTitle).toBeInTheDocument()
 
     const startQuizButton = screen.getByText('quiz.startQuiz')
     expect(startQuizButton).toBeInTheDocument()
-
   })
 
   it('should render quiz page with data only for Student', async () => {
-  
     renderWithProviders(<Quiz />, {
       preloadedState
     })
-  
+
     const quizTitle = await screen.findByText('JS Quiz')
     expect(quizTitle).toBeInTheDocument()
 
     const startQuizButton = screen.getByText('quiz.startQuiz')
     fireEvent.click(startQuizButton)
-  
+
     const startQuizModal = screen.getByText('quiz.start')
     fireEvent.click(startQuizModal)
-  
+
     const questionText = screen.getByText(
       'What is the difference between function expression and function declaration?'
     )
@@ -212,7 +214,6 @@ describe('QuizPage with no used attempts', () => {
   })
 
   it('should display correct answers after finishing quiz', async () => {
-
     renderWithProviders(<Quiz />, {
       preloadedState
     })
@@ -272,7 +273,6 @@ describe('QuizPage with no used attempts', () => {
   })
 
   it('should render question text', async () => {
-
     renderWithProviders(<Quiz />, {
       preloadedState
     })
@@ -289,7 +289,6 @@ describe('QuizPage with no used attempts', () => {
   })
 
   it('should render timer for the active quiz for student', async () => {
-
     renderWithProviders(<Quiz />, {
       preloadedState
     })
@@ -304,7 +303,6 @@ describe('QuizPage with no used attempts', () => {
   })
 
   it('should render duration for the finished quiz for student', async () => {
-
     renderWithProviders(<Quiz />, {
       preloadedState
     })
@@ -330,7 +328,6 @@ describe('QuizPage with no used attempts', () => {
 })
 
 describe('QuizPage with finished attempts', () => {
-
   beforeEach(() => {
     preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
     mockNavigate = vi.fn()
@@ -345,15 +342,20 @@ describe('QuizPage with finished attempts', () => {
     vi.clearAllMocks()
 
     useQuery.mockImplementation(({ queryKey }) => {
-      if (queryKey[0] === 'quiz' && preloadedState.appMain.userRole === UserRoleEnum.Student) {
+      if (
+        queryKey[0] === 'quiz' &&
+        preloadedState.appMain.userRole === UserRoleEnum.Student
+      ) {
         return { data: mockQuiz, isLoading: false }
       }
-      if (queryKey[0] === 'finished-quizzes' && preloadedState.appMain.userRole === UserRoleEnum.Student) {
-        return {data: mockAttemptsData, isLoading: false}
+      if (
+        queryKey[0] === 'finished-quizzes' &&
+        preloadedState.appMain.userRole === UserRoleEnum.Student
+      ) {
+        return { data: mockAttemptsData, isLoading: false }
       }
-      return {data: [], isLoading: false}
+      return { data: [], isLoading: false }
     })
-    
   })
 
   afterEach(() => {
@@ -364,7 +366,7 @@ describe('QuizPage with finished attempts', () => {
     renderWithProviders(<Quiz />, {
       preloadedState
     })
-  
+
     const quizTitle = await screen.findByText('JS Quiz')
     expect(quizTitle).toBeInTheDocument()
 
