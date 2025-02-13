@@ -14,7 +14,7 @@ import { styles } from '~/containers/quiz/selectable-question-quiz-view/Selectab
 import { getQuestionStatus } from '~/containers/quiz/quiz-question/Question.constants'
 import { spliceSx } from '~/utils/helper-functions'
 
-import { Question, Result, SizeEnum, UseFormEventHandler } from '~/types'
+import { Question, SizeEnum, UseFormEventHandler } from '~/types'
 
 interface SelectableQuestionQuizViewProps {
   questions: Question[]
@@ -23,7 +23,7 @@ interface SelectableQuestionQuizViewProps {
     ChangeEvent<HTMLInputElement>
   >
   handleNonInputValueChange: (key: string) => (value: string | string[]) => void
-  answers: Record<string, string | string[]> | Result[]
+  answers: Record<string, string | string[]>
   isEditable?: boolean
   shouldShowCorrectAnswers?: boolean
   shouldShowPoints?: boolean

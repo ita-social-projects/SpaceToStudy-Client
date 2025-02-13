@@ -47,8 +47,6 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
     initialValues: defaultResponses.object
   })
 
-  console.log(data)
-
   const handleNonInputChange = (key: string) => (value: string | string[]) =>
     handleNonInputValueChange(key, value)
 
@@ -62,7 +60,7 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
   }, [])
 
   const {
-    settings: { pointValues, scoredResponses, correctAnswers, view },
+    settings: { scoredResponses, view },
     description,
     title,
     items,
@@ -84,12 +82,10 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
         return {
           question: text,
           answers: answers.map(({ text, isCorrect }) => {
-            const isChosen = data[_id] == text
-
             return {
               text,
               isCorrect,
-              isChosen
+              isChosen: data[_id] === text
             }
           })
         }
@@ -201,7 +197,7 @@ const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
     return ResourceService.getQuizQuery(quizId)
   }, [quizId])
 
-  const { handleInputChange, handleNonInputValueChange, data } = useForm<
+  const { handleInputChange, handleNonInputValueChange } = useForm<
     Record<string, string | string[]>
   >({
     initialValues: defaultResponses.object
@@ -233,9 +229,27 @@ const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
 
   const isStepper = view === QuizViewEnum.Stepper
 
+  const mapResults = () => {
+    const result: Record<string, string | string[]> = {}
+    finishedQuiz.results.forEach(({ question, answers }) => {
+      const id = quiz?.items.find(({ text }) => text === question)?._id
+      if (id) {
+        result[id] = answers
+          .filter((answer) => answer.isChosen)
+          .map(({ text, isChosen }) => {
+            if (isChosen) {
+              return text
+            }
+          }) as string[]
+      }
+    })
+
+    return result
+  }
+
   const questionsBlock = isStepper ? (
     <SelectableQuestionQuizView
-      answers={finishedQuiz.results}
+      answers={mapResults()}
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       isEditable={false}
@@ -247,7 +261,7 @@ const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
     />
   ) : (
     <ScrollQuestionsQuizView
-      answers={finishedQuiz.results}
+      answers={mapResults()}
       data-testid='scroll-questions-quiz-view'
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
