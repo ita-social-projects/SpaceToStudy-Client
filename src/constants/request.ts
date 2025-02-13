@@ -94,7 +94,7 @@ export const URLs = {
     },
     questions: {
       get: '/questions',
-      delete: '/questions',
+      delete: '/questions/:id',
       post: '/questions',
       patch: '/questions'
     },

@@ -243,10 +243,15 @@ export const ResourceService = {
       createUrlPath(URLs.resources.questions.patch, params?.id),
       params
     ),
-  deleteQuestion: async (id: string): Promise<AxiosResponse> =>
-    await axiosClient.delete(
-      createUrlPath(URLs.resources.questions.delete, id)
-    ),
+  deleteQuestion: (id: string) => {
+    return baseService.request<void>({
+      method: 'DELETE',
+      url: getFullUrl({
+        pathname: URLs.resources.questions.delete,
+        parameters: { id }
+      })
+    })
+  },
   getResourcesCategories: (
     params?: GetResourcesCategoriesParams
   ): Promise<AxiosResponse<ItemsWithCount<Categories>>> => {
