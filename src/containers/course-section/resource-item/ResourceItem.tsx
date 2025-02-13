@@ -63,7 +63,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   const routeMap = {
     [ResourceType.Lesson]: 'lesson-details/',
-    [ResourceType.Quiz]: 'quiz/'
+    [ResourceType.Quiz]: 'preview/'
   }
 
   const handleDeleteResource = useCallback(() => {

@@ -126,6 +126,11 @@ export const cooperationQuiz = {
   path: authRoutes.cooperationQuiz.route
 }
 
+export const cooperationQuizPreview = {
+  name: 'breadCrumbs.quizPreview',
+  path: authRoutes.cooperationQuizPreview.route
+}
+
 export const bookmarkedOffers = {
   name: 'breadCrumbs.bookmarks',
   path: authRoutes.bookmarkedOffers.route

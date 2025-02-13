@@ -109,49 +109,12 @@ const FinishedQuizInfo = ({
   )
 }
 
-const UngradedQuizInfo = () => {
-  const { t } = useTranslation()
-
-  return (
-    <Box sx={styles.infoWrapper}>
-      <QuizInfoSection
-        firstColumn='May 17, 2024'
-        secondColumn='14:15'
-        title={t('quiz.attemptFinished')}
-      />
-      <Divider
-        flexItem
-        orientation='vertical'
-        sx={styles.divider}
-        variant='middle'
-      />
-      <QuizInfoSection
-        firstColumn='13:50 - 14:15'
-        secondColumn='25 min'
-        title={t('quiz.duration')}
-      />
-      <Divider
-        flexItem
-        orientation='vertical'
-        sx={styles.divider}
-        variant='middle'
-      />
-      <QuizInfoSection firstColumn='-' title={t('quiz.points')} />
-      <Box sx={styles.buttonWrapper}>
-        <Button size='sm' variant='tonal'>
-          {t('quiz.evaluate')}
-        </Button>
-      </Box>
-    </Box>
-  )
-}
-
-type GradedQuizInfoProps = {
+type TutorQuizInfoProps = {
   points: number
   totalPoints: number
 }
 
-const GradedQuizInfo = ({ points, totalPoints }: GradedQuizInfoProps) => {
+const TutorQuizInfo = ({ points, totalPoints }: TutorQuizInfoProps) => {
   const { t } = useTranslation()
 
   return (
@@ -173,7 +136,7 @@ type StartViewQuizInfoProps = {
   attempts: QuizAttempt
   timeLimit: QuizTimeLimit
   usedAttempts: number
-  handleStartButton: (value: boolean) => void
+  handleStartButton: () => void
 }
 const StartViewQuizInfo = ({
   questionsAmount,
@@ -212,7 +175,7 @@ const StartViewQuizInfo = ({
   }
 
   const handleStartAttempt = () => {
-    limits.isNoLimitTime ? handleStartButton(false) : setIsOpen(true)
+    limits.isNoLimitTime ? handleStartButton() : setIsOpen(true)
   }
 
   const attemptLimitOutput = !limits.isNoLimitAttempt && (
@@ -259,9 +222,9 @@ const StartViewQuizInfo = ({
     <Alert severity='info'>{t('quiz.reachedAttemptLimit')}</Alert>
   )
 
-  const handleTimeLimitModal = (isOpen: boolean, isStart: boolean) => {
+  const handleTimeLimitModal = (isOpen: boolean) => {
     setIsOpen(isOpen)
-    handleStartButton(isStart)
+    handleStartButton()
   }
 
   return (
@@ -272,10 +235,10 @@ const StartViewQuizInfo = ({
         descriptionParams={{ timeLimit: timeLimitNumber }}
         icon={<AccessTimeRounded />}
         onAction={() => {
-          handleTimeLimitModal(false, false)
+          handleTimeLimitModal(false)
         }}
         onClose={() => {
-          handleTimeLimitModal(false, true)
+          handleTimeLimitModal(false)
         }}
         open={isOpen}
         title='quiz.timeLimitReminderTitle'
@@ -305,10 +268,4 @@ const StartViewQuizInfo = ({
   )
 }
 
-export {
-  ActiveQuizInfo,
-  FinishedQuizInfo,
-  UngradedQuizInfo,
-  GradedQuizInfo,
-  StartViewQuizInfo
-}
+export { ActiveQuizInfo, FinishedQuizInfo, TutorQuizInfo, StartViewQuizInfo }

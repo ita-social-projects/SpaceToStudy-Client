@@ -7,7 +7,7 @@ import QuizQuestion from '~/containers/quiz/quiz-question/Question'
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView.styles'
 
-import { Question, UseFormEventHandler } from '~/types'
+import { Question, Result, UseFormEventHandler } from '~/types'
 
 export interface QuizViewProps {
   questions: Question[]
@@ -16,7 +16,7 @@ export interface QuizViewProps {
     ChangeEvent<HTMLInputElement>
   >
   handleNonInputValueChange: (key: string) => (value: string | string[]) => void
-  answers: Record<string, string | string[]>
+  answers: Question[]
   isEditable?: boolean
   shouldShowCorrectAnswers?: boolean
   shouldShowPoints?: boolean
@@ -36,6 +36,12 @@ const ScrollQuestionsQuizView: FC<QuizViewProps> = ({
   ...props
 }) => {
   const questionList = questions.map((question, index) => {
+    // const answersList = answers.map((question, index) => {
+      // console.log('question132', question)
+    // })
+
+    console.log(question)
+
     return (
       <QuizQuestion
         handleInputChange={handleInputChange(question._id)}

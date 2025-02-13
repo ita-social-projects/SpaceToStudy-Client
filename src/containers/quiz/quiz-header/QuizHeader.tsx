@@ -1,64 +1,35 @@
-import { useAppSelector } from '~/hooks/use-redux'
 import Box from '@mui/material/Box'
 
 import {
-  type Question,
-  type QuizAttempt,
-  type QuizTimeLimit,
-  UserRoleEnum
-} from '~/types'
-import {
   ActiveQuizInfo,
   FinishedQuizInfo,
-  UngradedQuizInfo,
-  GradedQuizInfo,
-  StartViewQuizInfo
+  TutorQuizInfo
 } from '~/containers/quiz/quiz-info/QuizInfo'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import styles from '~/containers/quiz/quiz-header/QuizHeader.styles'
 
 type QuizHeaderProps = {
-  isFinished: boolean
   title: string
   description: string
   points: number
   totalPoints: number
-  isGraded: boolean
-  questionsAnswered: number
+  questionsAnswered?: number
   createdAt: string
   updatedAt: string
-  isNotStarted: boolean
-  quizItems: Question[]
-  usedAttempts: number
-  settings: {
-    attemptLimit: QuizAttempt
-    timeLimit: QuizTimeLimit
-  }
-  handlePreview: (value: boolean) => void
+  type: 'active' | 'finished' | 'tutor'
 }
 
-const QuizHeader: React.FC<QuizHeaderProps> = ({
-  isFinished,
+const QuizHeader = ({
   title,
   description,
   points,
   totalPoints,
-  isGraded,
   questionsAnswered,
   createdAt,
   updatedAt,
-  isNotStarted,
-  quizItems,
-  settings,
-  usedAttempts,
-  handlePreview
+  type
 }: QuizHeaderProps) => {
-  const { userRole } = useAppSelector((state) => state.appMain)
-  const isStudent = userRole === UserRoleEnum.Student
-
-  const isTutor = userRole === UserRoleEnum.Tutor
-
   return (
     <Box sx={styles.wrapper}>
       <TitleWithDescription
@@ -66,13 +37,13 @@ const QuizHeader: React.FC<QuizHeaderProps> = ({
         style={styles.titleWithDescription}
         title={title}
       />
-      {!isFinished && isStudent && !isNotStarted && (
+      {type === 'active' && (
         <ActiveQuizInfo
-          questionsAnswered={questionsAnswered}
+          questionsAnswered={questionsAnswered ?? 0}
           totalPoints={totalPoints}
         />
       )}
-      {isFinished && isStudent && (
+      {type === 'finished' && (
         <FinishedQuizInfo
           createdAt={createdAt}
           points={points}
@@ -80,18 +51,8 @@ const QuizHeader: React.FC<QuizHeaderProps> = ({
           updatedAt={updatedAt}
         />
       )}
-      {!isGraded && isTutor && <UngradedQuizInfo />}
-      {isGraded && isTutor && (
-        <GradedQuizInfo points={points} totalPoints={totalPoints} />
-      )}
-      {!isFinished && isStudent && isNotStarted && (
-        <StartViewQuizInfo
-          attempts={settings.attemptLimit}
-          handleStartButton={handlePreview}
-          questionsAmount={quizItems.length}
-          timeLimit={settings.timeLimit}
-          usedAttempts={usedAttempts}
-        />
+      {type === 'tutor' && (
+        <TutorQuizInfo points={points} totalPoints={totalPoints} />
       )}
     </Box>
   )

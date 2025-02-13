@@ -168,7 +168,7 @@ const QuizSettingsContainer = ({
           title={t('myResourcesPage.quizzes.correctAnswers')}
         >
           <Switch
-            checked={checked}
+            checked={data.correctAnswers}
             data-testid='correctAnswers-switch'
             onChange={handleInputChange('correctAnswers')}
           />
