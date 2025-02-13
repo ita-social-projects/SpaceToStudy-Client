@@ -5,12 +5,10 @@ import Typography from '@mui/material/Typography'
 import Button from '~/design-system/components/button/Button'
 import DividerComponent from '~/design-system/components/divider/Divider'
 import { Alert } from '@mui/material'
-import { AccessTimeRounded } from '@mui/icons-material'
 
 import QuizInfoSection from '~/containers/quiz/quiz-info-section/QuizInfoSection'
 import Timer from '~/containers/quiz/timer/Timer'
 import Points from '~/containers/quiz/points/Points'
-import QuizDialog from '~/containers/quiz/quiz-dialog/QuizDialog'
 
 import styles from '~/containers/quiz/quiz-info/QuizInfo.styles'
 import {
@@ -23,7 +21,6 @@ import {
 import { QuizAttempt, QuizTimeLimit } from '~/types'
 import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { TFunction } from 'i18next'
-import { useState } from 'react'
 
 type ActiveQuizInfoProps = {
   questionsAnswered: number
@@ -138,6 +135,7 @@ type StartViewQuizInfoProps = {
   usedAttempts: number
   handleStartButton: () => void
 }
+
 const StartViewQuizInfo = ({
   questionsAmount,
   attempts,
@@ -146,10 +144,8 @@ const StartViewQuizInfo = ({
   handleStartButton
 }: StartViewQuizInfoProps) => {
   const { t } = useTranslation()
-  const [isOpen, setIsOpen] = useState(false)
 
   const totalAttempts = attempts.split(' ')[0]
-  const timeLimitNumber = timeLimit.split(' ')[0]
 
   const limits = {
     isNoLimitAttempt: attempts === QuizAttempt.NoLimit,
@@ -172,10 +168,6 @@ const StartViewQuizInfo = ({
       (option) => option.value === timeLimit
     )
     return timeOption?.title ?? ''
-  }
-
-  const handleStartAttempt = () => {
-    limits.isNoLimitTime ? handleStartButton() : setIsOpen(true)
   }
 
   const attemptLimitOutput = !limits.isNoLimitAttempt && (
@@ -222,27 +214,8 @@ const StartViewQuizInfo = ({
     <Alert severity='info'>{t('quiz.reachedAttemptLimit')}</Alert>
   )
 
-  const handleTimeLimitModal = (isOpen: boolean) => {
-    setIsOpen(isOpen)
-    handleStartButton()
-  }
-
   return (
     <>
-      <QuizDialog
-        actionText='quiz.start'
-        description='quiz.timeLimitReminderDescription'
-        descriptionParams={{ timeLimit: timeLimitNumber }}
-        icon={<AccessTimeRounded />}
-        onAction={() => {
-          handleTimeLimitModal(false)
-        }}
-        onClose={() => {
-          handleTimeLimitModal(false)
-        }}
-        open={isOpen}
-        title='quiz.timeLimitReminderTitle'
-      />
       <Box sx={styles.infoWrapper}>
         <Box sx={styles.quizSettings}>
           <Typography sx={typographyStyle(1)}>
@@ -256,7 +229,7 @@ const StartViewQuizInfo = ({
           <Button
             data-testid='startButton'
             disabled={!hasAttempts}
-            onClick={handleStartAttempt}
+            onClick={handleStartButton}
             size='sm'
           >
             {usedAttempts === 0 ? t('quiz.startQuiz') : t('quiz.tryAgain')}
