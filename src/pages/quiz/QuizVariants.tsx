@@ -85,7 +85,7 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
             return {
               text,
               isCorrect,
-              isChosen: data[_id] === text
+              isChosen: data[_id].includes(text)
             }
           })
         }
