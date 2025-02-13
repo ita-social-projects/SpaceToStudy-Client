@@ -101,7 +101,7 @@ const CategoriesContainer = () => {
   )
 
   const { mutate: handleDeleteCategory } = useMutation({
-    mutationFn: ResourceService.deleteResourceCategoryQuery,
+    mutationFn: ResourceService.deleteResourceCategory,
     onError: handleErrorAlert,
     onSuccess: () => {
       handleSuccessAlert(`myResourcesPage.categories.successDeletion`)

@@ -62,7 +62,7 @@ const QuizzesContainer = () => {
   }, [itemsPerPage, sort, searchTitle, page, selectedItems])
 
   const { mutate: handleDeleteQuiz } = useMutation({
-    mutationFn: ResourceService.deleteQuizQuery,
+    mutationFn: ResourceService.deleteQuiz,
     onError: handleErrorAlert,
     onSuccess: () => {
       handleSuccessAlert(`myResourcesPage.quizzes.successDeletion`)
