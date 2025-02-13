@@ -104,8 +104,6 @@ const QuizSettingsContainer = ({
 
   const isDisabled = (!id && !title) || !questions.length
 
-  const checked = !!data.view
-
   return (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
       <Box>
