@@ -32,9 +32,7 @@ describe('CategoriesContainer test', () => {
       .onGet(URLs.resources.resourcesCategories.get)
       .reply(200, responseCategoriesMock)
 
-    await waitFor(() => {
       renderWithProviders(<CategoriesContainer />)
-    })
   })
 
   afterEach(() => {
