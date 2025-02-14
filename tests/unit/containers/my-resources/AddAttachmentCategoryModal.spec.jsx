@@ -1,5 +1,9 @@
 import { screen, fireEvent } from '@testing-library/react'
-import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import {
+  renderWithProviders,
+  mockAxiosClient,
+  selectOption
+} from '~tests/test-utils'
 import { afterEach, beforeEach, describe, expect } from 'vitest'
 
 import AddAttachmentCategoryModal from '~/containers/my-resources/add-attachment-category-modal/AddAttachmentCategoryModal'
@@ -23,15 +27,6 @@ const attachmentMock = {
   updatedAt: '2023-11-05T16:22:35.063Z',
   description: 'Description',
   category: null
-}
-
-const changeCategory = (autocomplete, categoryName) => {
-  fireEvent.click(autocomplete)
-  fireEvent.change(autocomplete, {
-    target: { value: categoryName }
-  })
-  fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-  fireEvent.keyDown(autocomplete, { key: 'Enter' })
 }
 
 describe('AddAttachmentCategoryModal component', () => {
@@ -64,6 +59,11 @@ describe('AddAttachmentCategoryModal component', () => {
 
     expect(saveBtn).toBeInTheDocument()
 
+    await selectOption(
+      screen.getByRole('combobox'),
+      categoriesNamesMock[0].name
+    )
+
     fireEvent.click(saveBtn)
 
     expect(updateAttachmentCategory).toHaveBeenCalled()
@@ -79,10 +79,10 @@ describe('AddAttachmentCategoryModal component', () => {
     expect(updateAttachmentCategory).not.toHaveBeenCalled()
   })
 
-  it('should change category', () => {
+  it('should change category', async () => {
     const categoryDropbox = screen.getByRole('combobox')
 
-    changeCategory(categoryDropbox, categoriesNamesMock[1].name)
+    await selectOption(categoryDropbox, categoriesNamesMock[1].name)
     expect(categoryDropbox.value).toBe(categoriesNamesMock[1].name)
   })
 })

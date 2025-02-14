@@ -223,7 +223,6 @@ describe('resourseService tests', () => {
   })
 
   it('should get attachements' , async () => {
-
     const mockResponse = [
       {
         _id: '6255bc080a75adf9223df444',
