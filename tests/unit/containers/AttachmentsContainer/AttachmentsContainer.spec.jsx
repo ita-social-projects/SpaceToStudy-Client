@@ -1,7 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import AttachmentsContainer from '~/containers/my-resources/attachments-container/AttachmentsContainer'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
-import { URLs } from '~/constants/request'
 
 vi.mock(
   '~/containers/my-resources/my-resources-table/MyResourcesTable',
@@ -54,6 +54,12 @@ const attachmentMockData = {
   items: responseItemsMock
 }
 
+vi.mock('~/services/resource-service', () => ({
+  ResourceService: {
+    getAttachments: vi.fn(() => Promise.resolve(attachmentMockData))
+  }
+}))
+
 describe('AttachmentContainer renders correct data', () => {
   beforeEach(() => {
     mockAxiosClient
@@ -65,7 +71,6 @@ describe('AttachmentContainer renders correct data', () => {
 
   afterEach(() => {
     vi.clearAllMocks()
-    mockAxiosClient.reset()
   })
 
   it('should render "New attachment" button', () => {
