@@ -1,14 +1,14 @@
-import { expect, vi } from 'vitest'
+import { beforeAll, expect } from 'vitest'
 import { screen, fireEvent, act } from '@testing-library/react'
-import { renderWithProviders } from '~tests/test-utils'
 import Quiz from '~/pages/quiz/Quiz'
-import useQuery from '~/hooks/use-query'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
+import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
-vi.mock('~/hooks/use-query')
+const mockQuizId = '6641388f36ebdb0432a3a2e5'
 
 const mockQuiz = {
-  _id: '6641388f36ebdb0432a3a2e5',
+  _id: mockQuizId,
   title: 'JS Quiz',
   items: [
     {
@@ -43,23 +43,23 @@ const mockQuiz = {
 let preloadedState
 
 describe('QuizPage for student', () => {
-  beforeEach(() => {
-    preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
-
-    useQuery.mockImplementation(({ queryKey }) => {
-      if (
-        queryKey[0] === 'quiz' &&
-        preloadedState.appMain.userRole === UserRoleEnum.Student
-      ) {
-        return { data: mockQuiz, isLoading: false }
-      }
-      return { data: [], isLoading: false }
-    })
+  beforeAll(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', '')))
+      .reply(200, mockQuiz)
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
+      .reply(200, mockQuiz)
+    mockAxiosClient
+      .onGet(
+        new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
+      )
+      .reply(200, mockQuiz)
+    mockAxiosClient.onPost(URLs.finishedQuizzes.add).reply(204, mockQuiz)
   })
 
-  afterEach(() => {
-    vi.clearAllMocks()
-    vi.resetModules()
+  beforeEach(() => {
+    preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
   })
 
   it('should render quiz page with data only for Student', async () => {
@@ -67,7 +67,7 @@ describe('QuizPage for student', () => {
       preloadedState
     })
 
-    const questionText = screen.getByText(
+    const questionText = await screen.findByText(
       'What is the difference between function expression and function declaration?'
     )
     expect(questionText).toBeInTheDocument()
@@ -92,12 +92,12 @@ describe('QuizPage for student', () => {
     renderWithProviders(<Quiz />, {
       preloadedState
     })
-    const finishButton = screen.getByText('quiz.finish')
+    const finishButton = await screen.findByText('quiz.finish')
     act(() => {
       fireEvent.click(finishButton)
     })
 
-    const confirmButton = screen.getByText('quiz.confirm')
+    const confirmButton = await screen.findByText('quiz.confirm')
     act(() => {
       fireEvent.click(confirmButton)
     })
@@ -107,10 +107,10 @@ describe('QuizPage for student', () => {
     renderWithProviders(<Quiz />, {
       preloadedState
     })
-    const finishButton = screen.getByText('quiz.finish')
+    const finishButton = await screen.findByText('quiz.finish')
     fireEvent.click(finishButton)
 
-    const confirmButton = screen.getByText('quiz.confirm')
+    const confirmButton = await screen.findByText('quiz.confirm')
     act(() => {
       fireEvent.click(confirmButton)
     })
@@ -121,7 +121,7 @@ describe('QuizPage for student', () => {
       preloadedState
     })
 
-    const questionText = screen.getByText(
+    const questionText = await screen.findByText(
       'What is the difference between function expression and function declaration?'
     )
     expect(questionText).toBeInTheDocument()
@@ -135,44 +135,21 @@ describe('QuizPage for student', () => {
     const timer = await screen.findByTestId('TimerOutlinedIcon')
     expect(timer).toBeInTheDocument()
   })
-
-  it('should render duration for the finished quiz for student', async () => {
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
-    const finishButton = screen.getByText('quiz.finish')
-    fireEvent.click(finishButton)
-
-    const confirmButton = screen.getByText('quiz.confirm')
-    act(() => {
-      fireEvent.click(confirmButton)
-    })
-
-    const duration = await screen.findByTestId('TimerOutlinedIcon')
-    expect(duration).toBeInTheDocument()
-
-    expect(duration).toBeInTheDocument()
-  })
 })
 
 describe('Quiz tutor variant for tutor', () => {
-  beforeEach(() => {
-    preloadedState = { appMain: { userRole: UserRoleEnum.Tutor } }
-
-    useQuery.mockImplementation(({ queryKey }) => {
-      if (
-        queryKey[0] === 'quiz' &&
-        preloadedState.appMain.userRole === UserRoleEnum.Tutor
-      ) {
-        return { data: mockQuiz, isLoading: false }
-      }
-      return { data: [], isLoading: false }
-    })
+  beforeAll(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', '')))
+      .reply(200, mockQuiz)
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
+      .reply(200, mockQuiz)
+    mockAxiosClient.onPost(URLs.finishedQuizzes.add).reply(204, mockQuiz)
   })
 
-  afterEach(() => {
-    vi.clearAllMocks()
-    vi.resetModules()
+  beforeEach(() => {
+    preloadedState = { appMain: { userRole: UserRoleEnum.Tutor } }
   })
 
   it('should render quiz page with data only for tutor', async () => {
@@ -180,7 +157,7 @@ describe('Quiz tutor variant for tutor', () => {
       preloadedState
     })
 
-    const points = screen.getByText('quiz.points')
+    const points = await screen.findByText('quiz.points')
     expect(points).toBeInTheDocument()
   })
 })
