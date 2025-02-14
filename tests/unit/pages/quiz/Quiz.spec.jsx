@@ -40,22 +40,11 @@ const mockQuiz = {
   description: 'Js'
 }
 
-let mockNavigate
 let preloadedState
 
 describe('QuizPage for student', () => {
   beforeEach(() => {
     preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
-    mockNavigate = vi.fn()
-    vi.mock('react-router-dom', async () => {
-      const originalModule = await vi.importActual('react-router-dom')
-      return {
-        ...originalModule,
-        useNavigate: () => mockNavigate
-      }
-    })
-
-    vi.clearAllMocks()
 
     useQuery.mockImplementation(({ queryKey }) => {
       if (
@@ -69,6 +58,7 @@ describe('QuizPage for student', () => {
   })
 
   afterEach(() => {
+    vi.clearAllMocks()
     vi.resetModules()
   })
 
@@ -168,16 +158,6 @@ describe('QuizPage for student', () => {
 describe('Quiz tutor variant for tutor', () => {
   beforeEach(() => {
     preloadedState = { appMain: { userRole: UserRoleEnum.Tutor } }
-    mockNavigate = vi.fn()
-    vi.mock('react-router-dom', async () => {
-      const originalModule = await vi.importActual('react-router-dom')
-      return {
-        ...originalModule,
-        useNavigate: () => mockNavigate
-      }
-    })
-
-    vi.clearAllMocks()
 
     useQuery.mockImplementation(({ queryKey }) => {
       if (
@@ -191,6 +171,7 @@ describe('Quiz tutor variant for tutor', () => {
   })
 
   afterEach(() => {
+    vi.clearAllMocks()
     vi.resetModules()
   })
 
