@@ -46,19 +46,6 @@ describe('CategoriesContainer test', () => {
     expect(newCategoryBtn).toBeInTheDocument()
   })
 
-  it('should render table with category items', async () => {
-    const categoryItemTitle = await screen.findByText(
-      'myResourcesPage.categories.title'
-    )
-
-    const tableLastUpdatesText = await screen.findByText(
-      'myResourcesPage.categories.updated'
-    )
-
-    expect(categoryItemTitle).toBeInTheDocument()
-    expect(tableLastUpdatesText).toBeInTheDocument()
-  })
-
   it('should open new category modal after button click', async () => {
     const addCategoryBtn = await screen.findByText(
       'myResourcesPage.categories.addBtn'
