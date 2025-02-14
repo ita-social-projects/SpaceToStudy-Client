@@ -92,7 +92,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   })
 
   const { mutate: editQuiz } = useMutation({
-    queryKey: ['quiz', id],
+    queryKeys: [['quizzes'], ['quiz', id]],
     mutationFn: ResourceService.editQuiz,
     onSuccess: handleResponse,
     onError: handleErrorAlert
