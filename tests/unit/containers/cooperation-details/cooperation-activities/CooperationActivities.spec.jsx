@@ -21,6 +21,7 @@ const mockedInvalidSections = [
   {
     resources: [
       {
+        resource: {},
         availability: {
           status: 'openFrom',
           date: null
