@@ -21,18 +21,14 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
-import {
-  type ItemsWithCount,
-  type Attachment,
-  type ErrorResponse,
-  ResourcesTabsEnum
-} from '~/types'
+import { type Attachment, ResourcesTabsEnum } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import useMutation from '~/hooks/use-mutation'
 import useQuery from '~/hooks/use-query'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
+import { queryClient } from '~/plugins/queryClient'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -68,9 +64,8 @@ const AttachmentsContainer = () => {
   const {
     data: loadedAttachments,
     isLoading: isLoadingAttachments,
-    refetch: refetchAttachments,
     error: attachmentsLoadError
-  } = useQuery<ItemsWithCount<Attachment>>({
+  } = useQuery({
     queryKey: [
       'attachments',
       page,
@@ -80,12 +75,14 @@ const AttachmentsContainer = () => {
     ],
     queryFn: getAttachments,
     options: {
-      initialData: defaultResponses.itemsWithCount
+      staleTime: Infinity
     }
   })
 
-  const handleRefetchAttachments = async (): Promise<void> => {
-    await refetchAttachments()
+  const invalidateAttachments = async () => {
+    await queryClient.invalidateQueries({
+      queryKey: ['attachments']
+    })
   }
 
   const { mutate: handleUpdateAttachment } = useMutation({
@@ -101,6 +98,10 @@ const AttachmentsContainer = () => {
   })
 
   const onEdit = (id: string) => {
+    if (!loadedAttachments) {
+      return
+    }
+
     const attachment = loadedAttachments.items.find((item) => item._id === id)
 
     const handleConfirm = () =>
@@ -126,6 +127,10 @@ const AttachmentsContainer = () => {
   }
 
   const onAddCategory = (id: string) => {
+    if (!loadedAttachments) {
+      return
+    }
+
     const attachment = loadedAttachments.items.find((item) => item._id === id)
 
     openModal({
@@ -148,8 +153,8 @@ const AttachmentsContainer = () => {
   const props = {
     columns: columnsToShow,
     data: {
-      response: loadedAttachments,
-      getData: handleRefetchAttachments
+      response: loadedAttachments ?? defaultResponses.itemsWithCount,
+      getData: invalidateAttachments
     },
     services: { deleteService: deleteAttachment },
     itemsPerPage,
@@ -172,7 +177,7 @@ const AttachmentsContainer = () => {
           sx={styles.addAttachmentBtn}
         />
       }
-      fetchData={handleRefetchAttachments}
+      fetchData={invalidateAttachments}
       placeholder={'myResourcesPage.attachments.searchInput'}
       searchRef={searchFileName}
       selectedItems={selectedItems}
@@ -183,7 +188,7 @@ const AttachmentsContainer = () => {
 
   useEffect(() => {
     if (attachmentsLoadError) {
-      handleErrorAlert(attachmentsLoadError as ErrorResponse)
+      handleErrorAlert(attachmentsLoadError)
     }
   }, [attachmentsLoadError, handleErrorAlert])
 
