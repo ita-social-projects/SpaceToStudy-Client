@@ -1,13 +1,16 @@
 import { fireEvent, screen } from '@testing-library/react'
+import { useNavigate } from 'react-router-dom'
 import QuizzesContainer from '~/containers/my-quizzes/QuizzesContainer'
 import { renderWithProviders } from '~tests/test-utils'
+import { getFullUrl } from '~/utils/get-full-url'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 vi.mock(
   '~/containers/my-resources/my-resources-table/MyResourcesTable',
   () => ({
     default: ({ actions }) => (
       <div data-testid='testTable'>
-        <button data-testid='editButton' onClick={() => actions.onEdit()}>
+        <button data-testid='editButton' onClick={() => actions.onEdit('quizId')}>
           Edit
         </button>
       </div>
@@ -15,12 +18,27 @@ vi.mock(
   })
 )
 
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: vi.fn()
+  }
+})
+
 vi.mock(
   '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal',
   () => ({
-    default: () => <div data-testid='confirmModal' />
+    default: ({ onConfirm }) => (
+      <div data-testid='confirmModal'>
+        <button data-testid='confirmButton' onClick={onConfirm}>
+          Confirm
+        </button>
+      </div>
+    )
   })
 )
+
 const quizzesMock = {
   _id: '64ca5914b57f2442403394a5',
   title: 'First question',
@@ -87,5 +105,36 @@ describe('QuizzesContainer component with data', () => {
     const modal = await screen.findByTestId('confirmModal')
 
     expect(modal).toBeInTheDocument()
+  })
+})
+
+describe('QuizzesContainer component with edit action', () => {
+  const mockNavigate = vi.fn()
+
+  beforeEach(() => {
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate)
+    renderWithProviders(<QuizzesContainer />)
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should navigate to editQuiz page on confirm', async () => {
+    const editButton = await screen.findByTestId('editButton')
+    fireEvent.click(editButton)
+
+    const modal = await screen.findByTestId('confirmModal')
+    expect(modal).toBeInTheDocument()
+
+    const confirmButton = await screen.findByTestId('confirmButton')
+    fireEvent.click(confirmButton)
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      getFullUrl({
+        pathname: authRoutes.myResources.editQuiz.route,
+        parameters: { id: 'quizId' }
+      })
+    )
   })
 })
