@@ -98,11 +98,7 @@ const AttachmentsContainer = () => {
   })
 
   const onEdit = (id: string) => {
-    if (!loadedAttachments) {
-      return
-    }
-
-    const attachment = loadedAttachments.items.find((item) => item._id === id)
+    const attachment = loadedAttachments!.items.find((item) => item._id === id)
 
     const handleConfirm = () =>
       openModal({
@@ -127,11 +123,7 @@ const AttachmentsContainer = () => {
   }
 
   const onAddCategory = (id: string) => {
-    if (!loadedAttachments) {
-      return
-    }
-
-    const attachment = loadedAttachments.items.find((item) => item._id === id)
+    const attachment = loadedAttachments!.items.find((item) => item._id === id)
 
     openModal({
       component: (

@@ -1,7 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import AttachmentsContainer from '~/containers/my-resources/attachments-container/AttachmentsContainer'
-import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock(
   '~/containers/my-resources/my-resources-table/MyResourcesTable',
