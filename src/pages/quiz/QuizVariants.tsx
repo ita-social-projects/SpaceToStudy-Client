@@ -79,7 +79,7 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
             return {
               text,
               isCorrect,
-              isChosen: data[_id].includes(text)
+              isChosen: data[_id]?.includes(text) ?? false
             }
           })
         }
