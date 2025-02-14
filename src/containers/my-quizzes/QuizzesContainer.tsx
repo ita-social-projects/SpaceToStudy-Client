@@ -15,6 +15,7 @@ import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import usePagination from '~/hooks/table/use-pagination'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useModalContext } from '~/context/modal-context'
+import { defaultResponses } from '~/constants'
 
 import {
   columns,
@@ -85,7 +86,11 @@ const QuizzesContainer = () => {
   })
 
   const onEdit = (id: string) => {
-    const resource = quizzes?.items.find((item) => item._id === id)
+    if (!quizzes) {
+      return
+    }
+
+    const resource = quizzes.items.find((item) => item._id === id)
     openModal({
       component: (
         <ChangeResourceConfirmModal
@@ -107,7 +112,10 @@ const QuizzesContainer = () => {
 
   const props = {
     columns: columnsToShow,
-    data: { response: quizzes ?? { items: [], count: 0 }, getData: getQuizzes },
+    data: {
+      response: quizzes ?? defaultResponses.itemsWithCount,
+      getData: getQuizzes
+    },
     services: { deleteService: deleteQuiz },
     itemsPerPage,
     actions: { onEdit },
@@ -119,10 +127,10 @@ const QuizzesContainer = () => {
   return (
     <Box>
       <AddResourceWithInput
-        btnText={'myResourcesPage.quizzes.addBtn'}
+        btnText='myResourcesPage.quizzes.addBtn'
         fetchData={refetch}
         link={authRoutes.myResources.newQuiz.path}
-        placeholder={'myResourcesPage.quizzes.searchInput'}
+        placeholder='myResourcesPage.quizzes.searchInput'
         searchRef={searchTitle}
         selectedItems={selectedItems}
         setItems={setSelectedItems}
