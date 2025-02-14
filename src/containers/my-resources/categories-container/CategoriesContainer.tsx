@@ -19,8 +19,8 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
 import { useModalContext } from '~/context/modal-context'
-
 import { defaultResponses } from '~/constants'
+
 import {
   initialSort,
   itemsLoadLimit,
@@ -65,15 +65,12 @@ const CategoriesContainer = () => {
 
   const {
     error,
-    data,
+    data: categories,
     isLoading,
     refetch: fetchData
   } = useQuery({
     queryFn: getCategories,
-    queryKey: ['categories'],
-    options: {
-      initialData: defaultResponses.itemsWithCount
-    }
+    queryKey: ['categories', page, itemsPerPage, sort, searchTitle]
   })
 
   const updateInfo = useCallback(async () => {
@@ -139,7 +136,10 @@ const CategoriesContainer = () => {
   const props = {
     actions: { onEdit },
     columns: columnsToShow,
-    data: { response: data, getData: onCategoryUpdate },
+    data: {
+      response: categories ?? defaultResponses.itemsWithCount,
+      getData: onCategoryUpdate
+    },
     services: { deleteService: deleteCategory },
     pagination: { page, onChange: handleChangePage },
     sort: sortOptions,
@@ -161,7 +161,7 @@ const CategoriesContainer = () => {
         placeholder={'myResourcesPage.categories.searchInput'}
         searchRef={searchTitle}
       />
-      {isLoading && data ? (
+      {isLoading || !categories ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Categories> {...props} />
