@@ -33,9 +33,9 @@ describe('SearchAutocomplete', () => {
     expect(searchInput.value).toBe('Finland')
   })
 
-  it('filters options on typing', () => {
+  it('filters options on typing', async () => {
     const searchInput = screen.getByLabelText('Search')
-    userEvent.type(searchInput, 'F')
+    await userEvent.type(searchInput, 'F')
     const filteredOptions = screen.queryByText('Germany')
     expect(filteredOptions).toBeNull()
   })
