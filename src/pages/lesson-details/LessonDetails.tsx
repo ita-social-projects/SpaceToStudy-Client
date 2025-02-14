@@ -106,12 +106,12 @@ const LessonDetails = () => {
         (resource) => resource.resource._id === lessonId
       )
 
-      if (resource && resource.completionStatus !== completionStatus) {
+      if (resource) {
         setCompletionStatus(resource.completionStatus)
         return true
       }
     })
-  }, [cooperation, lessonId, setCompletionStatus, completionStatus])
+  }, [cooperation, lessonId, setCompletionStatus])
 
   const handleUpdateLessonStatus = useCallback(() => {
     return cooperationService.updateResourceCompletionStatus({
