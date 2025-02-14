@@ -40,75 +40,10 @@ const mockQuiz = {
   description: 'Js'
 }
 
-const mockQuizEmpty = {
-  _id: '1',
-  title: 'Empty',
-  description: '',
-  items: [],
-  author: { _id: '' },
-  category: null,
-  resourceType: ResourceType.Quiz,
-  isDuplicate: false,
-  settings: {
-    view: 'Scroll',
-    shuffle: false,
-    pointValues: false,
-    scoredResponses: false,
-    correctAnswers: false,
-    attemptLimit: '2 attempts',
-    timeLimit: '15 minutes'
-  },
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString()
-}
-
-const mockFinishedAttempts = [
-  {
-    _id: '6641388f36ebdb0432a3a2e5',
-    updatedAt: '2024-06-07T07:05:33.052Z',
-    grade: 85,
-    results: [
-      {
-        question:
-          'What is the difference between function expression and function declaration?',
-        answers: [{ text: 'Correct answer', isCorrect: true, isChosen: true }]
-      }
-    ]
-  }
-]
-
-const mockMaxAttempts = [
-  {
-    _id: '6641388f36ebdb0432a3a2e5',
-    updatedAt: '2024-06-07T07:05:33.052Z',
-    grade: 85,
-    results: [
-      {
-        question:
-          'What is the difference between function expression and function declaration?',
-        answers: [{ text: 'Correct answer', isCorrect: true, isChosen: true }]
-      }
-    ]
-  },
-  {
-    _id: '6641388f36ebdb0432a3a2e6',
-    updatedAt: '2024-06-08T07:05:33.052Z',
-    grade: 90,
-    results: [
-      {
-        question:
-          'What is the difference between function expression and function declaration?',
-        answers: [{ text: 'Correct answer', isCorrect: true, isChosen: true }]
-      }
-    ]
-  }
-]
-
 let mockNavigate
 let preloadedState
-let mockAttemptsData = mockFinishedAttempts
 
-describe('QuizPage with no used attempts', () => {
+describe('QuizPage for student', () => {
   beforeEach(() => {
     preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
     mockNavigate = vi.fn()
@@ -176,11 +111,6 @@ describe('QuizPage with no used attempts', () => {
     act(() => {
       fireEvent.click(confirmButton)
     })
-
-    // const correctAnswersLabel = screen.queryByText(
-    //   'myResourcesPage.quizzes.correctAnswers'
-    // )
-    // expect(correctAnswersLabel).toBeInTheDocument()
   })
 
   it('should render points and correctness when finished', async () => {
@@ -194,15 +124,6 @@ describe('QuizPage with no used attempts', () => {
     act(() => {
       fireEvent.click(confirmButton)
     })
-
-    // const pointsLabel = await screen.queryByTestId('quiz-points')
-
-    // const answersCorrectnessLabel = screen.queryByText(
-    //   'myResourcesPage.quizzes.correctAnswers'
-    // )
-    // console.log(answersCorrectnessLabel)
-    // expect(pointsLabel).toBeInTheDocument()
-    // expect(answersCorrectnessLabel).toBeInTheDocument()
   })
 
   it('should render question text', async () => {
@@ -243,6 +164,42 @@ describe('QuizPage with no used attempts', () => {
     expect(duration).toBeInTheDocument()
   })
 })
-describe('Quiz tutor variant', () => {
-  preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+
+describe('Quiz tutor variant for tutor', () => {
+  beforeEach(() => {
+    preloadedState = { appMain: { userRole: UserRoleEnum.Tutor } }
+    mockNavigate = vi.fn()
+    vi.mock('react-router-dom', async () => {
+      const originalModule = await vi.importActual('react-router-dom')
+      return {
+        ...originalModule,
+        useNavigate: () => mockNavigate
+      }
+    })
+
+    vi.clearAllMocks()
+
+    useQuery.mockImplementation(({ queryKey }) => {
+      if (
+        queryKey[0] === 'quiz' &&
+        preloadedState.appMain.userRole === UserRoleEnum.Tutor
+      ) {
+        return { data: mockQuiz, isLoading: false }
+      }
+      return { data: [], isLoading: false }
+    })
+  })
+
+  afterEach(() => {
+    vi.resetModules()
+  })
+
+  it('should render quiz page with data only for tutor', async () => {
+    renderWithProviders(<Quiz />, {
+      preloadedState
+    })
+
+    const points = screen.getByText('quiz.points')
+    expect(points).toBeInTheDocument()
+  })
 })
