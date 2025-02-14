@@ -25,11 +25,8 @@ import {
 } from '~/containers/my-quizzes/QuizzesContainer.constants'
 
 import { type Quiz, ResourcesTabsEnum } from '~/types'
-import {
-  adjustColumns,
-  createUrlPath,
-  getScreenBasedLimit
-} from '~/utils/helper-functions'
+import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
 import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
 
 const QuizzesContainer = () => {
@@ -95,7 +92,12 @@ const QuizzesContainer = () => {
       component: (
         <ChangeResourceConfirmModal
           onConfirm={() =>
-            navigate(createUrlPath(authRoutes.myResources.editQuiz.path, id))
+            navigate(
+              getFullUrl({
+                pathname: authRoutes.myResources.editQuiz.route,
+                parameters: { id }
+              })
+            )
           }
           resourceId={id}
           title={resource?.title}
