@@ -80,7 +80,7 @@ export const selectOption = async (
     fireEvent.change(selectLike, { target: { value: option } })
   })
 
-  const selectedOption = screen[selectionFn](option)
+  const selectedOption = await screen[selectionFn](option)
   await act(async () => {
     fireEvent.click(selectedOption)
   })
