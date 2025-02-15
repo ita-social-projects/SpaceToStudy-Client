@@ -21,25 +21,21 @@ vi.mock('~/services/auth-service', () => ({
   }
 }))
 
-const renderChangePasswordModal = () => {
-  renderWithProviders(
-    <TestSnackbar>
-      <ChangePasswordModal userId={userDataMock._id} />
-    </TestSnackbar>,
-    {
-      preloadedState: {
-        appMain: {
-          userId: userDataMock._id,
-          userStatus: 'active'
-        }
-      }
-    }
-  )
-}
-
 describe('ChangePasswordModal', () => {
   beforeEach(() => {
-    renderChangePasswordModal()
+    renderWithProviders(
+      <TestSnackbar>
+        <ChangePasswordModal userId={userDataMock._id} />
+      </TestSnackbar>,
+      {
+        preloadedState: {
+          appMain: {
+            userId: userDataMock._id,
+            userStatus: 'active'
+          }
+        }
+      }
+    )
   })
 
   it('should save data after positive response', async () => {
@@ -193,7 +189,7 @@ describe('ChangePasswordModal', () => {
     expect(currentPasswordInput).toHaveValue('oldPassword')
   })
   it('should display an error message for incorrect current password', async () => {
-    AuthService.changePassword.mockImplementation((id, data) => {
+    AuthService.changePassword.mockImplementation((_id, data) => {
       if (data.currentPassword !== userDataMock.currentPassword) {
         return Promise.reject({
           response: {
@@ -232,7 +228,7 @@ describe('ChangePasswordModal', () => {
       expect(
         screen.getByText(/common.errorMessages.incorrectCurrentPassword/i)
       ).toBeInTheDocument()
+      expect(currentPasswordInput).toHaveValue('')
     })
-    expect(currentPasswordInput).toHaveValue('')
   })
 })
