@@ -1,5 +1,3 @@
-//мені потрібно переписати цей компонент на tsx
-
 import { FC, useCallback, useEffect } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import {
@@ -65,10 +63,6 @@ const UserProfile: FC = () => {
       staleTime: Infinity
     }
   })
-
-  if (loading) {
-    return <Loader pageLoad size={70} />
-  }
 
   const isTutor = preferredRole === UserRoleEnum.Tutor
 

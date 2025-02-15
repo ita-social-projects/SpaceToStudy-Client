@@ -1,20 +1,17 @@
-import { screen } from '@testing-library/react'
-import { vi } from 'vitest'
-
-import useAxios from '~/hooks/use-axios'
+import { screen, waitFor } from '@testing-library/react'
 import UserProfile from '~/pages/user-profile/UserProfile.tsx'
 import { renderWithProviders } from '~tests/test-utils'
+import { URLs } from '../../../../src/constants/request'
+import { mockAxiosClient } from '../../../test-utils'
 
 const route = '/tutor/my-profile'
 
-const tutorAppMain = {
-  userRole: 'tutor',
-  _id: '648850c4fdc2d1a130c24aea'
+const mockTutorState = {
+  appMain: { userRole: 'tutor', userId: '648850c4fdc2d1a130c24aea' }
 }
 
-const studentAppMain = {
-  userRole: 'student',
-  _id: '648850c4fdc2d1a130c24aeb'
+const mockStudentState = {
+  appMain: { userRole: 'student', userId: '648850c4fdc2d1a130c24aeb' }
 }
 
 const videoMockDataStudent = {
@@ -23,21 +20,17 @@ const videoMockDataStudent = {
   }
 }
 
-const videoMockDataTutor = {
-  videoLink: {
-    tutor: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-  }
-}
-
 const professionalBlockMock = {
   professionalBlock: {
     awards: 'My awards are countless, why bother telling you them?'
   }
 }
-
-const mockData = {
+const tutorMockData = {
+  _id: '648850c4fdc2d1a130c24aea',
+  role: ['tutor'],
   firstName: 'Іван',
   lastName: 'Мавдрик',
+  email: 'ivan.mavdryk@example.com',
   mainSubjects: {
     student: [],
     tutor: [
@@ -61,62 +54,79 @@ const mockData = {
     student: 0,
     tutor: 0
   },
-  aboutStudent: {
-    personalIntroduction: '',
-    learningGoals: '',
-    learningActivities: ''
-  }
+  nativeLanguage: 'Ukrainian',
+  address: {
+    country: 'Ukraine',
+    city: 'Lviv',
+    street: 'Shevchenka St.',
+    postalCode: '79000'
+  },
+  photo: 'https://www.google.com',
+  lastLogin: '2024-02-15T12:00:00Z',
+  createdAt: '2023-06-12T10:00:00Z',
+  updatedAt: '2024-02-15T12:30:00Z',
+  videoLink: {
+    tutor: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    student: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+  },
+  status: {
+    student: 'active',
+    tutor: 'active'
+  },
+  notificationSettings: {
+    emailNotifications: true,
+    pushNotifications: false
+  },
+  bookmarkedOffers: ['64884f21fdc2d1a130c24ac0', '648850c4fdc2d1a130c24aea'],
+  lastSeen: '2024-02-15T12:15:00Z'
 }
 
-const getFakeData = (load, extraData = {}) => {
-  return {
-    loading: load,
-    response: { ...mockData, ...extraData }
-  }
-}
-
-const renderWithMockData = ({
-  load = false,
-  appMain = tutorAppMain,
+const renderWithMockData = async ({
+  mockData = tutorMockData,
+  appMain = mockTutorState,
   extraData = {}
 } = {}) => {
-  const fakeData = getFakeData(load, extraData)
-
-  useAxios.mockImplementation(() => fakeData)
+  await waitFor(() => {
+    mockAxiosClient
+      .onGet(
+        `${URLs.users.get}/${appMain.appMain.userId}?userRole=${appMain.appMain.userRole}`
+      )
+      .reply(200, { ...mockData, ...extraData })
+  })
   renderWithProviders(<UserProfile />, {
-    preloadedState: { appMain },
+    preloadedState: appMain,
     initialEntries: route
   })
 }
 
-vi.mock('~/hooks/use-axios')
-
 describe('UserProfile', () => {
-  it('should render loader', () => {
-    renderWithMockData({ load: true })
 
-    const loader = screen.getByTestId('loader')
+  it('should render loader', async () => {
+    renderWithMockData({ mockData: undefined })
+    const loader = await screen.findByTestId('loader')
+
     expect(loader).toBeInTheDocument()
   })
 
   it('should find rendering name', async () => {
     renderWithMockData()
-
-    const name = await screen.findByText(`${mockData.firstName} ${mockData.lastName}`)
+    const name = await screen.findByText(
+      `${tutorMockData.firstName} ${tutorMockData.lastName}`
+    )
     expect(name).toBeInTheDocument()
   })
 
-  it('Should render video presentation block for tutor', () => {
-    renderWithMockData({ extraData: videoMockDataTutor })
+  it('Should render video presentation block for tutor', async () => {
+    renderWithMockData()
 
-    const videoBlockTitle = screen.getByText(
+    const videoBlockTitle = await screen.findByText(
       'userProfilePage.videoPresentation.title'
     )
     expect(videoBlockTitle).toBeInTheDocument()
   })
 
   it('Should not render video presentation block when student has no video link', () => {
-    renderWithMockData({ appMain: studentAppMain })
+    renderWithMockData({ appMain: mockStudentState })
 
     const videoBlockTitle = screen.queryByText(
       'userProfilePage.videoPresentation.title'
@@ -124,32 +134,36 @@ describe('UserProfile', () => {
     expect(videoBlockTitle).not.toBeInTheDocument()
   })
 
-  it('Should render video presentation block when student has a video link', () => {
-    renderWithMockData({
-      appMain: studentAppMain,
-      extraData: videoMockDataStudent
+  it('Should render video presentation block when student has a video link', async () => {
+    await waitFor(() => {
+      renderWithMockData({
+        appMain: mockStudentState,
+        extraData: videoMockDataStudent
+      })
     })
 
-    const videoBlockTitle = screen.getByText(
+
+    const videoBlockTitle = await screen.findByText(
       'userProfilePage.videoPresentation.title'
     )
     expect(videoBlockTitle).toBeInTheDocument()
   })
 
-  it('Should render professional block info for tutor', () => {
-    renderWithMockData({
-      appMain: tutorAppMain,
-      extraData: professionalBlockMock
+  it('Should render professional block info for tutor', async () => {
+      await renderWithMockData({
+        appMain: mockTutorState,
+        extraData: professionalBlockMock
     })
 
-    const aboutTutorTitle = screen.getByText('userProfilePage.tutorAbout.title')
+    const aboutTutorTitle = await screen.findByText(
+      'userProfilePage.tutorAbout.title'
+    )
+
     expect(aboutTutorTitle).toBeInTheDocument()
   })
 
   it('Should not render professional block info for tutor if there is no information', () => {
-    renderWithMockData({
-      appMain: tutorAppMain
-    })
+    renderWithMockData({ appMain: mockTutorState })
 
     const aboutTutorTitle = screen.queryByText(
       'userProfilePage.tutorAbout.title'
