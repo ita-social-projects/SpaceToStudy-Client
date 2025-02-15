@@ -104,16 +104,6 @@ describe('QuizPage for student', () => {
     act(() => {
       fireEvent.click(confirmButton)
     })
-  })
-
-  it('should render correctness when finished', async () => {
-    renderWithProviders(<Quiz />, { preloadedState })
-
-    const finishButton = await screen.findByText('quiz.finish')
-    fireEvent.click(finishButton)
-
-    const confirmButton = await screen.findByText('quiz.confirm')
-    fireEvent.click(confirmButton)
 
     const correctAnswers = await screen.findByText(
       'myResourcesPage.quizzes.correctAnswers'
