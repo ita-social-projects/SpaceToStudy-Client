@@ -218,7 +218,7 @@ const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
 
   const mapResults = () => {
     const result: Record<string, string | string[]> = {}
-    finishedQuiz.results.forEach(({ question, answers }) => {
+    finishedQuiz.results?.forEach(({ question, answers }) => {
       const id = quiz?.items.find(({ text }) => text === question)?._id
       if (id) {
         result[id] = answers
@@ -268,7 +268,7 @@ const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
           description={description}
           points={items.length}
           title={title}
-          totalPoints={finishedQuiz.results.length}
+          totalPoints={finishedQuiz.results?.length}
           type='finished'
           updatedAt={finishedQuiz.updatedAt}
         />

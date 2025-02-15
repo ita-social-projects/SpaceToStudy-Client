@@ -51,6 +51,9 @@ describe('QuizPage for student', () => {
       .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
     mockAxiosClient
+      .onGet(new RegExp(URLs.finishedQuizzes.getById.replace(':id', '')))
+      .reply(200, mockQuiz)
+    mockAxiosClient
       .onGet(
         new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
       )
@@ -103,17 +106,19 @@ describe('QuizPage for student', () => {
     })
   })
 
-  it('should render points and correctness when finished', async () => {
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
+  it('should render correctness when finished', async () => {
+    renderWithProviders(<Quiz />, { preloadedState })
+
     const finishButton = await screen.findByText('quiz.finish')
     fireEvent.click(finishButton)
 
     const confirmButton = await screen.findByText('quiz.confirm')
-    act(() => {
-      fireEvent.click(confirmButton)
-    })
+    fireEvent.click(confirmButton)
+
+    const correctAnswers = await screen.findByText(
+      'myResourcesPage.quizzes.correctAnswers'
+    )
+    expect(correctAnswers).toBeInTheDocument()
   })
 
   it('should render question text', async () => {
