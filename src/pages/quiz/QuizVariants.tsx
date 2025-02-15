@@ -25,6 +25,7 @@ import { defaultResponses } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
 import { ComponentEnum, QuestionTypesEnum, QuizViewEnum } from '~/types'
+import { awaitPromise } from '~/utils/await-promise'
 
 type ActiveQuizProps = {
   finishQuiz: (quizId: string) => void
@@ -164,7 +165,7 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
         </Box>
         <FinishQuizModal
           onCancel={handleCancel}
-          onFinish={() => void handleFinish()}
+          onFinish={awaitPromise(handleFinish)}
           open={isOpen}
         />
       </Box>
