@@ -104,10 +104,6 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
     }
   }, [finishQuiz, mutateAsync, navigate, scoredResponses])
 
-  const handleFinishWrapper = () => {
-    void handleFinish()
-  }
-
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
@@ -168,7 +164,7 @@ const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
         </Box>
         <FinishQuizModal
           onCancel={handleCancel}
-          onFinish={handleFinishWrapper}
+          onFinish={() => void handleFinish()}
           open={isOpen}
         />
       </Box>
