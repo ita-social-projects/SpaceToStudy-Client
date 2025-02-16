@@ -69,8 +69,8 @@ const QuizzesContainer = () => {
 
   const {
     data: quizzes,
-    isLoading,
-    error,
+    isLoading: isQuizzesLoading,
+    error: quizzesError,
     refetch: refetchQuiz
   } = useQuery({
     queryKey: ['quizzes', itemsPerPage, sort, page, selectedItems],
@@ -105,10 +105,10 @@ const QuizzesContainer = () => {
   }
 
   useEffect(() => {
-    if (error) {
-      handleErrorAlert(error)
+    if (quizzesError) {
+      handleErrorAlert(quizzesError)
     }
-  }, [handleErrorAlert, error])
+  }, [handleErrorAlert, quizzesError])
 
   const props = {
     columns: columnsToShow,
@@ -136,7 +136,7 @@ const QuizzesContainer = () => {
         setItems={setSelectedItems}
         sortOptions={sortOptions}
       />
-      {isLoading || !quizzes ? (
+      {isQuizzesLoading || !quizzes ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Quiz> {...props} />

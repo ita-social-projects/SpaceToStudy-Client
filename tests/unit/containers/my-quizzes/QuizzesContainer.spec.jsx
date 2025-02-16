@@ -1,7 +1,8 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { useNavigate } from 'react-router-dom'
 import QuizzesContainer from '~/containers/my-quizzes/QuizzesContainer'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 import { getFullUrl } from '~/utils/get-full-url'
 import { authRoutes } from '~/router/constants/authRoutes'
 
@@ -10,7 +11,10 @@ vi.mock(
   () => ({
     default: ({ actions }) => (
       <div data-testid='testTable'>
-        <button data-testid='editButton' onClick={() => actions.onEdit('quizId')}>
+        <button
+          data-testid='editButton'
+          onClick={() => actions.onEdit('quizId')}
+        >
           Edit
         </button>
       </div>
@@ -38,6 +42,8 @@ vi.mock(
     )
   })
 )
+
+const mockNavigate = vi.fn()
 
 const quizzesMock = {
   _id: '64ca5914b57f2442403394a5',
@@ -70,14 +76,12 @@ const responseQuizzesMock = {
   items: responseQuizzesItemsMock
 }
 
-vi.mock('~/services/resource-service', () => ({
-  ResourceService: {
-    getQuizzesQuery: vi.fn(() => Promise.resolve(responseQuizzesMock))
-  }
-}))
-
 describe('QuizzesContainer component with data', () => {
   beforeEach(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.get))
+      .reply(200, responseQuizzesMock)
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate)
     renderWithProviders(<QuizzesContainer />)
   })
 
@@ -105,19 +109,6 @@ describe('QuizzesContainer component with data', () => {
     const modal = await screen.findByTestId('confirmModal')
 
     expect(modal).toBeInTheDocument()
-  })
-})
-
-describe('QuizzesContainer component with edit action', () => {
-  const mockNavigate = vi.fn()
-
-  beforeEach(() => {
-    vi.mocked(useNavigate).mockReturnValue(mockNavigate)
-    renderWithProviders(<QuizzesContainer />)
-  })
-
-  afterEach(() => {
-    vi.clearAllMocks()
   })
 
   it('should navigate to editQuiz page on confirm', async () => {
