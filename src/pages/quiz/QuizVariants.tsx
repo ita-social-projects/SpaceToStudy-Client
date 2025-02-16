@@ -45,8 +45,9 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     initialValues: defaultResponses.object
   })
 
-  const handleNonInputChange = (key: string) => (value: string | string[]) =>
+  const handleNonInputChange = (key: string) => (value: string | string[]) => {
     handleNonInputValueChange(key, value)
+  }
 
   const { quiz, isLoading } = useQuizQuery(quizId)
 
@@ -190,8 +191,9 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     initialValues: defaultResponses.object
   })
 
-  const handleNonInputChange = (key: string) => (value: string | string[]) =>
+  const handleNonInputChange = (key: string) => (value: string | string[]) => {
     handleNonInputValueChange(key, value)
+  }
 
   const { data: finishedQuiz, isLoading } = useQuery({
     queryKey: ['finishedQuiz', finishedQuizId],
@@ -287,8 +289,9 @@ const TutorQuiz: React.FC = () => {
     initialValues: defaultResponses.object
   })
 
-  const handleNonInputChange = (key: string) => (value: string | string[]) =>
+  const handleNonInputChange = (key: string) => (value: string | string[]) => {
     handleNonInputValueChange(key, value)
+  }
 
   const { quiz, isLoading } = useQuizQuery(quizId)
 

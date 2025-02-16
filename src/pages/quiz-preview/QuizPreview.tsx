@@ -65,7 +65,7 @@ const QuizPreviewPage = () => {
   }
 
   const attemptsList =
-    Array.isArray(finishedAttempts) && finishedAttempts.length !== 0 ? (
+    finishedAttempts.length !== 0 ? (
       finishedAttempts.map((item) => {
         return (
           <Box key={item._id} sx={styles.attemptWrapper}>
