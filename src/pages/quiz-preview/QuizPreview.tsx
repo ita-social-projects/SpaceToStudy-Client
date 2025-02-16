@@ -21,6 +21,7 @@ import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
 import { formatTime, getFormattedDate } from '~/utils/helper-functions'
 import { Typography } from '@mui/material'
+import useQuizQuery from '~/hooks/query-hooks/use-quiz-query'
 
 const QuizPreviewPage = () => {
   const { id: cooperationId = '', quizId = '' } = useParams()
@@ -29,14 +30,7 @@ const QuizPreviewPage = () => {
 
   const { t } = useTranslation()
 
-  const getQuiz = useCallback(() => {
-    return ResourceService.getQuizQuery(quizId)
-  }, [quizId])
-
-  const { data: quiz, isLoading } = useQuery({
-    queryKey: ['quiz', quizId],
-    queryFn: getQuiz
-  })
+  const { quiz, isLoading } = useQuizQuery(quizId)
 
   const openModal = useCallback(() => {
     setIsOpen(true)
@@ -58,7 +52,7 @@ const QuizPreviewPage = () => {
     queryFn: getQuizzes
   })
 
-  if (isLoading || !quiz || !finishedAttempts) {
+  if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
 
@@ -103,7 +97,6 @@ const QuizPreviewPage = () => {
             style={styles.titleWithDescription}
             title={title}
           />
-
           <StartViewQuizInfo
             attempts={attemptLimit}
             handleStartButton={openModal}

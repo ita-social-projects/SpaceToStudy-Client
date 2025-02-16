@@ -31,7 +31,6 @@ const styles = {
   },
   attemptWrapper: {
     display: 'flex',
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: theme.spacing(5)

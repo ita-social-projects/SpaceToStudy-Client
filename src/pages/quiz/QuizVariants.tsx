@@ -31,7 +31,7 @@ type ActiveQuizProps = {
   finishQuiz: (quizId: string) => void
 }
 
-const ActiveQuiz = ({ finishQuiz }: ActiveQuizProps) => {
+const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
   const { id: cooperationId = '', quizId = '' } = useParams()
   const navigate = useNavigate()
 
@@ -177,7 +177,7 @@ type FinishedQuizProps = {
   finishedQuizId: string
 }
 
-const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
+const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
   const { quizId = '' } = useParams()
 
   const getFinishedQuiz = useCallback(() => {
@@ -278,7 +278,7 @@ const FinishedQuiz = ({ finishedQuizId }: FinishedQuizProps) => {
   )
 }
 
-const TutorQuiz = () => {
+const TutorQuiz: React.FC = () => {
   const { quizId = '' } = useParams()
 
   const { handleInputChange, handleNonInputValueChange, data } = useForm<

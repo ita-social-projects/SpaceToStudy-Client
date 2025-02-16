@@ -111,7 +111,10 @@ type TutorQuizInfoProps = {
   totalPoints: number
 }
 
-const TutorQuizInfo = ({ points, totalPoints }: TutorQuizInfoProps) => {
+const TutorQuizInfo: React.FC<TutorQuizInfoProps> = ({
+  points,
+  totalPoints
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -145,7 +148,7 @@ const StartViewQuizInfo = ({
 }: StartViewQuizInfoProps) => {
   const { t } = useTranslation()
 
-  const totalAttempts = attempts.split(' ')[0]
+  const [totalAttempts] = attempts.split(' ')
 
   const limits = {
     isNoLimitAttempt: attempts === QuizAttempt.NoLimit,

@@ -1,3 +1,4 @@
+import React from 'react'
 import Box from '@mui/material/Box'
 
 import {
@@ -20,7 +21,7 @@ type QuizHeaderProps = {
   type: 'active' | 'finished' | 'tutor'
 }
 
-const QuizHeader = ({
+const QuizHeader: React.FC<QuizHeaderProps> = ({
   title,
   description,
   points,
@@ -29,7 +30,7 @@ const QuizHeader = ({
   createdAt,
   updatedAt,
   type
-}: QuizHeaderProps) => {
+}) => {
   return (
     <Box sx={styles.wrapper}>
       <TitleWithDescription
