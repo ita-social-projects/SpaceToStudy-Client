@@ -4,6 +4,9 @@ import { renderWithProviders } from '~tests/test-utils'
 import Subjects from '~/pages/subjects/Subjects'
 import useLoadMore from '~/hooks/use-load-more'
 import { useTranslation } from 'react-i18next'
+import { mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
+
 const resetDataMock = vi.fn()
 const loadMoreMock = vi.fn()
 import { titleToCamel } from '~/utils/title-to-camel-case'
@@ -24,6 +27,8 @@ vi.mock('i18next', () => ({
 }))
 describe('Subjects page', () => {
   beforeAll(() => {
+    mockAxiosClient.onGet(URLs.categories.getNames).reply(200, [])
+
     useLoadMore.mockImplementation(() => ({
       loading: false,
       data: [
