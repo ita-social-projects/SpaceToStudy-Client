@@ -48,17 +48,15 @@ const QuizzesContainer = () => {
     removeColumnRules
   )
 
-  const getQuizzes = useCallback(
-    () =>
-      ResourceService.getQuizzesQuery({
-        limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-        sort,
-        title: searchTitle.current,
-        categories: selectedItems
-      }),
-    [itemsPerPage, sort, searchTitle, page, selectedItems]
-  )
+  const getQuizzes = useCallback(() => {
+    return ResourceService.getQuizzesQuery({
+      limit: itemsPerPage,
+      skip: (page - 1) * itemsPerPage,
+      sort,
+      title: searchTitle.current,
+      categories: selectedItems
+    })
+  }, [itemsPerPage, sort, searchTitle, page, selectedItems])
 
   const deleteQuiz = useCallback(
     async (id?: string): Promise<AxiosResponse<unknown>> => {
@@ -73,7 +71,7 @@ const QuizzesContainer = () => {
     data: quizzes,
     isLoading,
     error,
-    refetch
+    refetch: refetchQuiz
   } = useQuery({
     queryKey: ['quizzes', itemsPerPage, sort, page, selectedItems],
     queryFn: getQuizzes,
@@ -91,14 +89,14 @@ const QuizzesContainer = () => {
     openModal({
       component: (
         <ChangeResourceConfirmModal
-          onConfirm={() =>
-            navigate(
+          onConfirm={() => {
+            return navigate(
               getFullUrl({
                 pathname: authRoutes.myResources.editQuiz.route,
                 parameters: { id }
               })
             )
-          }
+          }}
           resourceId={id}
           title={resource?.title}
         />
@@ -130,7 +128,7 @@ const QuizzesContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText='myResourcesPage.quizzes.addBtn'
-        fetchData={refetch}
+        fetchData={refetchQuiz}
         link={authRoutes.myResources.newQuiz.path}
         placeholder='myResourcesPage.quizzes.searchInput'
         searchRef={searchTitle}
