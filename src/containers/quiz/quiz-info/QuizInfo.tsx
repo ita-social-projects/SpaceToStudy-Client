@@ -27,10 +27,10 @@ type ActiveQuizInfoProps = {
   totalPoints: number
 }
 
-const ActiveQuizInfo = ({
+const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
   questionsAnswered,
   totalPoints
-}: ActiveQuizInfoProps) => {
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -139,13 +139,13 @@ type StartViewQuizInfoProps = {
   handleStartButton: () => void
 }
 
-const StartViewQuizInfo = ({
+const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
   questionsAmount,
   attempts,
   timeLimit,
   usedAttempts,
   handleStartButton
-}: StartViewQuizInfoProps) => {
+}) => {
   const { t } = useTranslation()
 
   const [totalAttempts] = attempts.split(' ')

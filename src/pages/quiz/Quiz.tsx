@@ -8,7 +8,7 @@ import styles from '~/pages/quiz/Quiz.styles'
 import { UserRoleEnum } from '~/types'
 import { ActiveQuiz, FinishedQuiz, TutorQuiz } from '~/pages/quiz/QuizVariants'
 
-const QuizPage = () => {
+const QuizPage: React.FC = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const [isFinished, setIsFinished] = useState(false)
