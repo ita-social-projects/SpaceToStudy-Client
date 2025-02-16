@@ -52,7 +52,7 @@ const QuizPreviewPage = () => {
     queryFn: getQuizzes
   })
 
-  if (isLoading || !quiz || !finishedAttempts) {
+  if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
 
@@ -65,7 +65,7 @@ const QuizPreviewPage = () => {
   }
 
   const attemptsList =
-    finishedAttempts.length !== 0 ? (
+    Array.isArray(finishedAttempts) && finishedAttempts.length !== 0 ? (
       finishedAttempts.map((item) => {
         return (
           <Box key={item._id} sx={styles.attemptWrapper}>
