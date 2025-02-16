@@ -1,10 +1,10 @@
 import { fireEvent, screen } from '@testing-library/react'
 
-import { ResourceService } from '~/services/resource-service'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 import { renderWithProviders } from '~tests/test-utils'
 import { SortEnum } from '~/types'
-import { vi } from 'vitest'
+import { mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
 const setCategories = vi.fn()
 const setSearch = vi.fn()
@@ -26,12 +26,12 @@ const props = {
   isMobile: false
 }
 
-vi.mock('~/services/resource-service')
-
-ResourceService.getResourcesCategoriesName.mockResolvedValue(mockCategories)
-
 describe('ResourcesToolBarDrawer test', () => {
   beforeEach(() => {
+    mockAxiosClient
+      .onGet(URLs.resources.resourcesCategories.getNames)
+      .reply(200, mockCategories)
+
     renderWithProviders(<ResourcesToolBarDrawer {...props} />)
   })
 

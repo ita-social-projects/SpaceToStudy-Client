@@ -137,7 +137,7 @@ describe('resourseService tests', () => {
       .onGet(URLs.resources.resourcesCategories.getNames)
       .reply(200, mockResponse)
 
-    const response = await ResourceService.getResourcesCategoriesName()
+    const response = await ResourceService.getResourcesCategoriesNames()
 
     expect(mockAxiosClient.history.get[0].url).toBe(
       URLs.resources.resourcesCategories.getNames
