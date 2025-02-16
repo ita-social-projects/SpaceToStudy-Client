@@ -52,7 +52,7 @@ const QuizPreviewPage = () => {
     queryFn: getQuizzes
   })
 
-  if (isLoading || !quiz) {
+  if (isLoading || !quiz || !finishedAttempts) {
     return <Loader pageLoad />
   }
 

@@ -142,34 +142,30 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
-      <Box>
-        <Box>
-          <QuizHeader
-            createdAt={createdAt}
-            description={description}
-            points={points}
-            questionsAnswered={questionsAnswered}
-            title={title}
-            totalPoints={items.length}
-            type='active'
-            updatedAt={updatedAt}
-          />
+      <QuizHeader
+        createdAt={createdAt}
+        description={description}
+        points={points}
+        questionsAnswered={questionsAnswered}
+        title={title}
+        totalPoints={items.length}
+        type='active'
+        updatedAt={updatedAt}
+      />
+      <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
+        <Divider sx={styles.divider} />
+        {questionsBlock}
+        <Box sx={styles.finishBlock.root}>
+          <Button onClick={openModal} sx={styles.finishBlock.button}>
+            {t('quiz.finish')}
+          </Button>
         </Box>
-        <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
-          <Divider sx={styles.divider} />
-          {questionsBlock}
-          <Box sx={styles.finishBlock.root}>
-            <Button onClick={openModal} sx={styles.finishBlock.button}>
-              {t('quiz.finish')}
-            </Button>
-          </Box>
-        </Box>
-        <FinishQuizModal
-          onCancel={handleCancel}
-          onFinish={awaitPromise(handleFinish)}
-          open={isOpen}
-        />
       </Box>
+      <FinishQuizModal
+        onCancel={handleCancel}
+        onFinish={awaitPromise(handleFinish)}
+        open={isOpen}
+      />
     </PageWrapper>
   )
 }
@@ -261,20 +257,18 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
-      <Box>
-        <QuizHeader
-          createdAt={finishedQuiz.createdAt}
-          description={description}
-          points={items.length}
-          title={title}
-          totalPoints={finishedQuiz.results?.length}
-          type='finished'
-          updatedAt={finishedQuiz.updatedAt}
-        />
-        <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
-          <Divider sx={styles.divider} />
-          {questionsBlock}
-        </Box>
+      <QuizHeader
+        createdAt={finishedQuiz.createdAt}
+        description={description}
+        points={items.length}
+        title={title}
+        totalPoints={finishedQuiz.results?.length}
+        type='finished'
+        updatedAt={finishedQuiz.updatedAt}
+      />
+      <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
+        <Divider sx={styles.divider} />
+        {questionsBlock}
       </Box>
     </PageWrapper>
   )
@@ -326,21 +320,19 @@ const TutorQuiz: React.FC = () => {
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
-      <Box>
-        <QuizHeader
-          createdAt={''}
-          description={''}
-          points={0}
-          questionsAnswered={0}
-          title={''}
-          totalPoints={0}
-          type='tutor'
-          updatedAt={''}
-        />
-        <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
-          <Divider sx={styles.divider} />
-          {questionsBlock}
-        </Box>
+      <QuizHeader
+        createdAt={''}
+        description={''}
+        points={0}
+        questionsAnswered={0}
+        title={''}
+        totalPoints={0}
+        type='tutor'
+        updatedAt={''}
+      />
+      <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
+        <Divider sx={styles.divider} />
+        {questionsBlock}
       </Box>
     </PageWrapper>
   )
