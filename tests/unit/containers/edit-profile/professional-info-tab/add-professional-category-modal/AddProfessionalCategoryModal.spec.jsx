@@ -76,11 +76,8 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const professionalSubjects = screen.getAllByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
-
-    await selectOption(
-      categoryAutocomplete,
-      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' })
-    )
+  
+    await selectOption(categoryAutocomplete, t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }), 'findByText')
 
     await act(() =>
       fireEvent.change(professionalSubjects[0], {
@@ -350,7 +347,8 @@ describe('AddProfessionalCategoryModal when clearing categories and subjects', (
   it('should reset category and related subjects when category is cleared', async () => {
     await selectOption(
       categoryAutocomplete,
-      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' })
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }),
+      'findByDisplayValue'
     )
 
     expect(professionalSubjects[0]).toHaveValue('Gastronomy')
@@ -372,7 +370,8 @@ describe('AddProfessionalCategoryModal when clearing categories and subjects', (
   it('should disable "Save changes" button when category is cleared', async () => {
     await selectOption(
       categoryAutocomplete,
-      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' })
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }),
+      'findByDisplayValue'
     )
     expect(submitButton).not.toBeDisabled()
 
@@ -385,7 +384,8 @@ describe('AddProfessionalCategoryModal when clearing categories and subjects', (
   it('should allow clearing the main study category field', async () => {
     await selectOption(
       categoryAutocomplete,
-      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' })
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }),
+      'findByDisplayValue'
     )
     expect(categoryAutocomplete.value).toBe('Cooking')
 
