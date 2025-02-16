@@ -8,7 +8,7 @@ const userRole = 'tutor'
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 
 mockAxiosClient
-  .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
+  .onGet(`${URLs.users.get}/${userId}?userRole=${userRole}`)
   .reply(200, userDataMock)
 
 describe('TutorHome component', () => {

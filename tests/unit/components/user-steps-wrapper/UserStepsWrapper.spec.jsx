@@ -20,8 +20,9 @@ const mockState = {
 }
 
 mockAxiosClient
-  .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
+  .onGet(`${URLs.users.get}/${userId}?userRole=${userRole}`)
   .reply(200, { data: userDataMock })
+
 const desktopData = {
   isLaptopAndAbove: true,
   isMobile: false,
