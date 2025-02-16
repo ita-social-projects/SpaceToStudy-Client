@@ -113,6 +113,15 @@ describe('CoursesFiltersDrawer', () => {
     })
 
     it('calls updateFiltersInQuery when subject is changed', async () => {
+      const categoryAutoComplete = screen.getByLabelText(
+        'myCoursesPage.coursesFilter.categoryLabel'
+      )
+      await selectOption(
+        categoryAutoComplete,
+        mockCategories[0].name,
+        'findByDisplayValue'
+      )
+
       const subjectAutoComplete = screen.getByLabelText(
         'myCoursesPage.coursesFilter.subjectLabel'
       )
