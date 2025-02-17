@@ -19,7 +19,7 @@ describe('resourseService tests', () => {
     }
     mockAxiosClient
       .onPatch(
-        new RegExp(URLs.resources.lessons.patch.replace(':id', lessonId))
+        URLs.resources.lessons.patch.replace(':id', lessonId)
       )
       .reply(200)
 
@@ -79,7 +79,7 @@ describe('resourseService tests', () => {
     }
   
     mockAxiosClient
-      .onPatch(new RegExp(URLs.quizzes.patch.replace(':id', quizId)))
+      .onPatch(URLs.quizzes.patch.replace(':id', quizId))
       .reply(200)
   
     await ResourceService.editQuiz({ id: quizId, ...quizData })
@@ -171,7 +171,7 @@ describe('resourseService tests', () => {
     }
 
     mockAxiosClient
-      .onPatch(RegExp(URLs.resources.attachments.patch.replace(':id', attachmentId)))
+      .onPatch(URLs.resources.attachments.patch.replace(':id', attachmentId))
       .reply(200, mockAttachmentResponse)  
 
     const updatedAttachmentResponse = await ResourceService.updateAttachment({

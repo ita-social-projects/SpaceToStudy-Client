@@ -1,4 +1,3 @@
-import { FC, SyntheticEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -25,31 +24,27 @@ interface AddAttachmentCategoryModalProps {
   onAttachmentUpdate: (params: UpdateAttachmentParams) => void
 }
 
-const AddAttachmentCategoryModal: FC<AddAttachmentCategoryModalProps> = ({
+const AddAttachmentCategoryModal: React.FC<AddAttachmentCategoryModalProps> = ({
   closeModal,
   attachment,
   onAttachmentUpdate
 }) => {
   const { t } = useTranslation()
 
-  const [loading, setLoading] = useState<boolean>(false)
-
   const { data, errors, handleNonInputValueChange, handleBlur, handleSubmit } =
     useForm<UpdateAttachmentParams>({
       initialValues: getInitialValues(attachment),
       onSubmit: () => {
-        setLoading(true)
         onAttachmentUpdate({
           id: attachment._id,
           category: data.category
         })
-        setLoading(false)
         closeModal()
       }
     })
 
   const onCategoryChange = (
-    _: SyntheticEvent,
+    _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
     handleNonInputValueChange('category', value?._id ?? null)
@@ -88,7 +83,6 @@ const AddAttachmentCategoryModal: FC<AddAttachmentCategoryModalProps> = ({
         </Button>
         <Button
           disabled={Boolean(errors.fileName) || !data.category}
-          loading={loading}
           sx={styles.saveBtn}
           type={ButtonTypeEnum.Submit}
         >

@@ -30,7 +30,7 @@ import useQuery from '~/hooks/use-query'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import { queryClient } from '~/plugins/queryClient'
 
-const AttachmentsContainer = () => {
+const AttachmentsContainer: React.FC = () => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useModalContext()
   const breakpoints = useBreakpoints()

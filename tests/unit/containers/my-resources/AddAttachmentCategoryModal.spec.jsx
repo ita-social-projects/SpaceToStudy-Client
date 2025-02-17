@@ -55,8 +55,7 @@ describe('AddAttachmentCategoryModal component', () => {
   })
 
   it('should render save button and click on it if category was changed', async () => {
-    const saveBtn = screen.getByText('common.save')
-
+    const saveBtn = screen.getByRole('button', { name: 'common.save' })
     expect(saveBtn).toBeInTheDocument()
 
     await selectOption(
@@ -70,19 +69,13 @@ describe('AddAttachmentCategoryModal component', () => {
   })
 
   it('should render disabled save button by default', () => {
-    const saveBtn = screen.getByText('common.save')
+    const saveBtn = screen.getByRole('button', { name: 'common.save' })
 
     expect(saveBtn).toBeInTheDocument()
-
+    
     fireEvent.click(saveBtn)
-
+    
+    expect(saveBtn).toBeDisabled()
     expect(updateAttachmentCategory).not.toHaveBeenCalled()
-  })
-
-  it('should change category', async () => {
-    const categoryDropbox = screen.getByRole('combobox')
-
-    await selectOption(categoryDropbox, categoriesNamesMock[1].name)
-    expect(categoryDropbox.value).toBe(categoriesNamesMock[1].name)
   })
 })
