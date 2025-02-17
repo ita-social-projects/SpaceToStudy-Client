@@ -19,17 +19,23 @@ const QuizPage: React.FC = () => {
     setIsFinished(true)
   }, [])
 
-  return (
-    <PageWrapper sx={styles.quizzesWrapper}>
-      {userRole === UserRoleEnum.Tutor && <TutorQuiz />}
-      {userRole === UserRoleEnum.Student && isFinished && (
-        <FinishedQuiz finishedQuizId={finishedQuizId} />
-      )}
-      {userRole === UserRoleEnum.Student && !isFinished && (
-        <ActiveQuiz finishQuiz={finishQuiz} />
-      )}
-    </PageWrapper>
-  )
+  const getQuizVariant = useCallback(() => {
+    if (userRole === UserRoleEnum.Tutor) {
+      return <TutorQuiz />
+    }
+
+    if (userRole === UserRoleEnum.Student) {
+      if (isFinished) {
+        return <FinishedQuiz finishedQuizId={finishedQuizId} />
+      }
+
+      return <ActiveQuiz finishQuiz={finishQuiz} />
+    }
+  }, [userRole, isFinished, finishedQuizId, finishQuiz])
+
+  const quizVariant = getQuizVariant()
+
+  return <PageWrapper sx={styles.quizzesWrapper}>{quizVariant}</PageWrapper>
 }
 
 export default QuizPage
