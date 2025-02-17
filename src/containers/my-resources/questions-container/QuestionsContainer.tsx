@@ -1,15 +1,18 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 import Box from '@mui/material/Box'
+import { AxiosResponse } from 'axios'
 
-import { useAppDispatch } from '~/hooks/use-redux'
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import { authRoutes } from '~/router/constants/authRoutes'
 import usePagination from '~/hooks/table/use-pagination'
 
@@ -20,26 +23,19 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/questions-container/QuestionsContainer.constants'
-import {
-  ItemsWithCount,
-  GetResourcesParams,
-  ErrorResponse,
-  ResourcesTabsEnum,
-  Question
-} from '~/types'
+import { ResourcesTabsEnum, type Question } from '~/types'
 import {
   adjustColumns,
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 const QuestionsContainer = () => {
-  const dispatch = useAppDispatch()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
+  const queryClient = useQueryClient()
+  const { handleAlert, handleErrorAlert } = useSnackbarAlert()
   const navigate = useNavigate()
   const { page, handleChangePage } = usePagination()
   const [selectedItems, setSelectedItems] = useState<string[]>([])
@@ -52,42 +48,36 @@ const QuestionsContainer = () => {
     removeColumnRules
   )
 
-  const onResponseError = useCallback(
-    (error?: ErrorResponse) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: getErrorKey(error)
-        })
-      )
-    },
-    [dispatch]
-  )
+  const getQuestions = useCallback(() => {
+    return ResourceService.getQuestionsQuery({
+      limit: itemsPerPage,
+      sort,
+      title: searchTitle.current,
+      skip: (page - 1) * itemsPerPage,
+      categories: selectedItems
+    })
+  }, [itemsPerPage, sort, page, selectedItems])
 
-  const getQuestions = useCallback(
-    () =>
-      ResourceService.getQuestions({
-        limit: itemsPerPage,
-        sort,
-        title: searchTitle.current,
-        skip: (page - 1) * itemsPerPage,
-        categories: selectedItems
-      }),
-    [itemsPerPage, sort, page, selectedItems]
-  )
-
-  const { response, loading, fetchData } = useAxios<
-    ItemsWithCount<Question>,
-    GetResourcesParams
-  >({
-    service: getQuestions,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError
+  const {
+    data: questions,
+    isLoading: isQuestionsLoading,
+    error: questionsError,
+    refetch: refetchQuestions
+  } = useQuery({
+    queryKey: ['questions', itemsPerPage, sort, page, selectedItems],
+    queryFn: getQuestions,
+    options: {
+      staleTime: Infinity
+    }
   })
 
   const deleteQuestion = useCallback(
-    (id?: string) => ResourceService.deleteQuestion(id ?? ''),
-    []
+    async (id?: string): Promise<AxiosResponse<unknown>> => {
+      const response = await ResourceService.deleteQuestion(id ?? '')
+      await queryClient.invalidateQueries({ queryKey: ['questions'] })
+      return response
+    },
+    [queryClient]
   )
 
   const editQuestion = (id: string) => {
@@ -95,12 +85,12 @@ const QuestionsContainer = () => {
   }
 
   const duplicateQuestion = useCallback(
-    (id?: string) => {
-      const item = response.items.find(
+    (id: string) => {
+      const item = questions?.items.find(
         (element) => element._id === id
       ) as Question
 
-      return ResourceService.createQuestion({
+      return ResourceService.createQuestionQuery({
         title: item.title,
         text: item.text,
         answers: item.answers,
@@ -108,50 +98,42 @@ const QuestionsContainer = () => {
         type: item.type
       })
     },
-    [response.items]
+    [questions]
   )
 
-  const onDuplicateError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
-
   const onDuplicateResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: `myResourcesPage.questions.successDuplication`
-      })
-    )
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: `myResourcesPage.questions.successDuplication`
+    })
   }
 
-  const { error: duplicationError, fetchData: duplicateItem } = useAxios({
-    service: duplicateQuestion,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError: onDuplicateError,
-    onResponse: onDuplicateResponse
+  const { mutate: duplicateItem } = useMutation({
+    queryKey: ['questions', itemsPerPage, sort, page, selectedItems],
+    mutationFn: duplicateQuestion,
+    onSuccess: onDuplicateResponse,
+    onError: handleErrorAlert
   })
 
-  const handleDuplicate = async (itemId: string) => {
-    await duplicateItem(itemId)
-    if (!duplicationError) await fetchData()
-  }
+  useEffect(() => {
+    if (questionsError) {
+      handleErrorAlert(questionsError)
+    }
+  }, [handleErrorAlert, questionsError])
 
   const props = {
     columns: columnsToShow,
-    data: { response, getData: fetchData },
+    data: {
+      response: questions ?? defaultResponses.itemsWithCount,
+      getData: getQuestions
+    },
     services: {
       deleteService: deleteQuestion
     },
     itemsPerPage,
     actions: {
       onEdit: editQuestion,
-      onDuplicate: (itemId: string) => handleDuplicate(itemId)
+      onDuplicate: (itemId: string) => duplicateItem(itemId)
     },
     resource: ResourcesTabsEnum.Questions,
     sort: sortOptions,
@@ -162,7 +144,7 @@ const QuestionsContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText={'myResourcesPage.questions.addBtn'}
-        fetchData={fetchData}
+        fetchData={refetchQuestions}
         link={authRoutes.myResources.newQuestion.path}
         placeholder={'myResourcesPage.questions.searchInput'}
         searchRef={searchTitle}
@@ -170,7 +152,7 @@ const QuestionsContainer = () => {
         setItems={setSelectedItems}
         sortOptions={sortOptions}
       />
-      {loading ? (
+      {isQuestionsLoading || !questions ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Question> {...props} />

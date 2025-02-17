@@ -199,6 +199,13 @@ export const ResourceService = {
   },
   getQuestion: async (id?: string): Promise<AxiosResponse<GetQuestion>> =>
     await axiosClient.get(createUrlPath(URLs.resources.questions.get, id)),
+  createQuestionQuery: (data: CreateQuestionData) => {
+    return baseService.request<Question>({
+      method: 'POST',
+      url: URLs.resources.questions.post,
+      data
+    })
+  },
   createQuestion: async (data?: CreateQuestionData): Promise<AxiosResponse> => {
     return await axiosClient.post(URLs.resources.questions.post, data)
   },
