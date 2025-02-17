@@ -96,10 +96,10 @@ const EditProfile = () => {
     }
   }, [loading, profileState, initialEditProfileState])
 
-  const changedProfileFields = useMemo<Partial<EditProfileState>>(() => {
-    if (!initialEditProfileState || !profileState) return {}
+  const changedProfileFields = useMemo<Partial<EditProfileState | null>>(() => {
+    if (!initialEditProfileState || !profileState) return null
 
-    const changedInitial = {
+    const initialProfileInformation = {
       firstName: initialEditProfileState.firstName,
       lastName: initialEditProfileState.lastName,
       photo: initialEditProfileState.photo,
@@ -110,7 +110,7 @@ const EditProfile = () => {
       videoLink: initialEditProfileState.videoLink
     }
 
-    const changedCurrent = {
+    const changedProfileInformation = {
       firstName: profileState.firstName,
       lastName: profileState.lastName,
       photo: profileState.photo,
@@ -121,42 +121,77 @@ const EditProfile = () => {
       videoLink: profileState.videoLink
     }
 
-    const hasPhotoChanged = hasPhotoChanges(
-      changedInitial.photo,
-      changedCurrent.photo
+    const isPhotoChanged = hasPhotoChanges(
+      initialProfileInformation.photo,
+      changedProfileInformation.photo
     )
 
-    const hasChanged =
-      hasChanges(changedInitial, changedCurrent) || hasPhotoChanged
+    const isProfileInformationChanged =
+      hasChanges(initialProfileInformation, changedProfileInformation) ||
+      isPhotoChanged
 
-    if (hasChanged) {
-      const changes: Partial<EditProfileState> = {
-        ...changedCurrent
-      }
-
-      if (!hasChanges(changedInitial.videoLink, changedCurrent.videoLink)) {
-        delete changes.videoLink
-      }
-
-      if (hasPhotoChanged) {
-        changes.photo = changedCurrent.photo
-      }
-
-      return changes
-    } else {
+    if (!isProfileInformationChanged) {
       return {}
     }
+
+    const changes: Partial<EditProfileState> = {
+      ...changedProfileInformation
+    }
+
+    if (
+      !hasChanges(
+        initialProfileInformation.videoLink,
+        changedProfileInformation.videoLink
+      )
+    ) {
+      delete changes.videoLink
+    }
+
+    if (isPhotoChanged) {
+      changes.photo = changedProfileInformation.photo
+    }
+
+    return changes
   }, [profileState, initialEditProfileState])
 
-  const isProfileChanged = useMemo<boolean>(
-    () => Object.keys(changedProfileFields).length > 0,
-    [changedProfileFields]
-  )
+  const isProfileChanged = Boolean(changedProfileFields)
 
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
+<<<<<<< HEAD
     if (!profileState || !initialEditProfileState) {
       return {}
     }
+=======
+    if (!initialEditProfileState || !profileState) return {}
+    const { videoLink: initialVideoLink } = initialEditProfileState
+    const { videoLink: currentVideoLink } = profileState
+
+    const { photo: initialPhoto, ...initialData } = initialEditProfileState
+    const { photo: currentPhoto, ...currentData } = profileState
+
+    const isPhotoChanged = hasPhotoChanges(initialPhoto, currentPhoto)
+
+    const hasChanged = hasChanges(initialData, currentData) || isPhotoChanged
+
+    if (!hasChanged) {
+      return {}
+    }
+
+    const changes: Partial<EditProfileState> = {
+      ...currentData
+    }
+
+    if (!hasChanges(initialVideoLink, currentVideoLink)) {
+      delete changes.videoLink
+    }
+
+    if (isPhotoChanged) {
+      changes.photo = currentPhoto
+    }
+
+    return changes
+  }, [profileState, initialEditProfileState])
+>>>>>>> 1df70c09 (fixed comments)
 
     return getChangedFields(initialEditProfileState, profileState)
   }, [profileState, initialEditProfileState])
@@ -242,7 +277,7 @@ const EditProfile = () => {
     if (hash) {
       navigate(`${authRoutes.myProfile.path}#complete`)
     }
-  }, [profileState, changedFields])
+  }, [profileState, changedFields, dispatch, userId, hash, userRole, navigate])
 
   const blocker = useBlocker(isProfileChanged)
   const { openDialog } = useConfirm()
