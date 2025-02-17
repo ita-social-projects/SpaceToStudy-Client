@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material'
 
@@ -24,7 +24,7 @@ interface AddDocumentsProps {
   removePreviousFiles?: boolean
 }
 
-const AddDocuments: FC<AddDocumentsProps> = ({
+const AddDocuments: React.FC<AddDocumentsProps> = ({
   onCreateDocument,
   formData,
   buttonText,

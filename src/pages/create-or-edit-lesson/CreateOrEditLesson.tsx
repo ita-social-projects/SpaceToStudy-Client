@@ -44,7 +44,7 @@ import {
 } from '~/types'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
-const CreateOrEditLesson = () => {
+const CreateOrEditLesson: React.FC = () => {
   const { t } = useTranslation()
 
   const { openModal } = useModalContext()
