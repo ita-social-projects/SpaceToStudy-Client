@@ -15,9 +15,8 @@ describe('FilterInput', () => {
   })
 
   it('calls the onChange function when text is entered', async () => {
-    const { getByRole } = render(
-      <FilterInput onChange={handleChange} defaultValue='' />
-    )
+    const { getByRole } = render(<FilterInput onChange={handleChange} />)
+
     const input = getByRole('textbox')
     fireEvent.change(input, { target: { value: 'test' } })
 
