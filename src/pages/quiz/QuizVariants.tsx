@@ -189,7 +189,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     handleNonInputValueChange(key, value)
   }
 
-  const { data: finishedQuiz, isLoading } = useQuery({
+  const { data: finishedQuiz, isLoading: isFinishedQuizLoading } = useQuery({
     queryKey: ['finishedQuiz', finishedQuizId],
     queryFn: getFinishedQuiz
   })
@@ -220,7 +220,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     return result
   }, [finishedQuiz?.results, quiz?.items])
 
-  if (isLoading || !finishedQuiz || isQuizLoading) {
+  if (isFinishedQuizLoading || !finishedQuiz || isQuizLoading) {
     return <Loader pageLoad />
   }
 
