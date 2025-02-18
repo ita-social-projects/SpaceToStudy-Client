@@ -30,6 +30,20 @@ describe('resourseService tests', () => {
     )
   })
 
+  it('should delete a lesson', async () => {
+    const lessonId = '6255bc080a75adf9223df444'
+
+    mockAxiosClient
+      .onDelete(URLs.resources.lessons.delete.replace(':id', lessonId))
+      .reply(200)
+
+    await ResourceService.deleteLesson(lessonId)
+
+    expect(mockAxiosClient.history.delete[0].url).toBe(
+      URLs.resources.lessons.delete.replace(':id', lessonId)
+    )
+  })
+
   it('should fetch a quiz by ID', async () => {
     const quizId = '6641388f36ebdb0432a3a2e5'
     const mockQuizData = {
@@ -124,6 +138,20 @@ describe('resourseService tests', () => {
   
     expect(createdQuiz).toEqual(mockResponse)
   })
+
+  it('should delete a quiz', async () => {
+    const quizId = '6255bc080a75adf9223df444'
+
+    mockAxiosClient
+      .onDelete(URLs.quizzes.delete.replace(':id', quizId))
+      .reply(200)
+
+    await ResourceService.deleteQuiz(quizId)
+
+    expect(mockAxiosClient.history.delete[0].url).toBe(
+      URLs.quizzes.delete.replace(':id', quizId)
+    )
+  })
   
   it('should get resource categories names', async () => {
     const mockResponse = [
@@ -156,34 +184,48 @@ describe('resourseService tests', () => {
     expect(response).toEqual(mockResponse)
   })
 
-   it('should edit an attachment', async () => {
-     const attachmentId = '6255bc080a75adf9223df444'
-     const attachment = {
-       description: 'Modified description',
-       category: '8655bc080a75adf9223df444'
-     }
-     const mockAttachmentResponse = {
-       ...attachment,
-       _id: attachmentId,
-       link: '1722535882408-test.pdf',
-       size: 15069,
-       resourceType: 'Attachment'
-     }
+  it('should delete a resource category', async () => {
+    const resourceCategoryId = '6255bc080a75adf9223df444'
 
-     mockAxiosClient.onPatch().reply((config) => {
-       expect(config.url).toBe(`/attachments/${attachmentId}`)
+    mockAxiosClient
+      .onDelete(URLs.resources.resourcesCategories.delete.replace(':id', resourceCategoryId))
+      .reply(200)
 
-       return [200, mockAttachmentResponse]
-     })
+    await ResourceService.deleteResourceCategory(resourceCategoryId)
 
-     const updatedAttachmentResponse =
-       await ResourceService.updateAttachmentQuery({
-         ...attachment,
-         id: attachmentId
-       })
+    expect(mockAxiosClient.history.delete[0].url).toBe(
+      URLs.resources.resourcesCategories.delete.replace(':id', resourceCategoryId)
+    )
+  })
 
-     expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
-   })
+  it('should edit an attachment', async () => {
+    const attachmentId = '6255bc080a75adf9223df444'
+    const attachment = {
+      description: 'Modified description',
+      category: '8655bc080a75adf9223df444'
+    }
+    const mockAttachmentResponse = {
+      ...attachment,
+      _id: attachmentId,
+      link: '1722535882408-test.pdf',
+      size: 15069,
+      resourceType: 'Attachment'
+    }
+
+    mockAxiosClient.onPatch().reply((config) => {
+      expect(config.url).toBe(`/attachments/${attachmentId}`)
+
+      return [200, mockAttachmentResponse]
+    })
+
+    const updatedAttachmentResponse =
+      await ResourceService.updateAttachmentQuery({
+        ...attachment,
+        id: attachmentId
+      })
+
+    expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
+  })
 
   it('should create a new question', async () => {
     const newQuestionData = {
@@ -235,6 +277,20 @@ describe('resourseService tests', () => {
 
     expect(mockAxiosClient.history.delete[0].url).toBe(
       URLs.resources.attachments.delete.replace(':id', attachmentId)
+    )
+  })
+
+  it('should delete a question', async () => {
+    const questionId = '6255bc080a75adf9223df444'
+
+    mockAxiosClient
+      .onDelete(URLs.resources.questions.delete.replace(':id', questionId))
+      .reply(200)
+
+    await ResourceService.deleteQuestion(questionId)
+
+    expect(mockAxiosClient.history.delete[0].url).toBe(
+      URLs.resources.questions.delete.replace(':id', questionId)
     )
   })
 })
