@@ -61,7 +61,7 @@ describe('SubjectsStep test with some data', () => {
   beforeEach(() => {
     renderWithProviders(
       <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
-        <SubjectsStep btnsBox={btnsBox} stepLabel={'subjects'} />
+        <SubjectsStep btnsBox={btnsBox} stepLabel='subjects' />
       </StepProvider>
     )
   })
