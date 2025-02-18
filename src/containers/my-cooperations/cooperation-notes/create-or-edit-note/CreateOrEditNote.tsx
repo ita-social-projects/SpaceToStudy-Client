@@ -23,7 +23,6 @@ import {
   NoteResponse,
   ComponentEnum,
   ButtonTypeEnum,
-  UserResponse,
   UserRole
 } from '~/types'
 
@@ -44,23 +43,17 @@ const CreateOrEditNote = ({
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
-  const getUserData: () => Promise<UserResponse> = useCallback(
-    () => userService.getUserByIdWithBaseService(userId, userRole as UserRole),
-    [userId, userRole]
-  )
+  const getUserData = useCallback(() => {
+    return userService.getUserByIdWithBaseService(userId, userRole as UserRole)
+  }, [userId, userRole])
 
-  const { isLoading: loading, data: userResponse } = useQuery({
+  const { isLoading: userIsLoading, data: userResponse } = useQuery({
     queryFn: getUserData,
     queryKey: ['user', userId],
     options: {
       staleTime: Infinity
     }
   })
-
-  const firstName = userResponse?.firstName
-  const lastName = userResponse?.lastName
-  const photo = userResponse?.photo
-
   const {
     data,
     isDirty,
@@ -76,6 +69,12 @@ const CreateOrEditNote = ({
       await onSubmit(data)
     }
   })
+  if (userIsLoading || !userResponse) {
+    return <Loader size={20} />
+  }
+  const firstName = userResponse?.firstName
+  const lastName = userResponse?.lastName
+  const photo = userResponse?.photo
 
   const userPhoto = photo
     ? new URL(photo, import.meta.env.VITE_APP_IMG_USER_URL).href
@@ -83,22 +82,19 @@ const CreateOrEditNote = ({
   const isNameValid = Boolean(firstName && lastName)
   const userName = isNameValid && `${firstName} ${lastName}`
 
-  const userInfo =
-    loading || !firstName || !lastName ? (
-      <Loader size={20} />
-    ) : (
-      <>
-        <AvatarIcon
-          firstName={firstName}
-          lastName={lastName}
-          photo={userPhoto}
-          sx={styles.accountIcon}
-        />
-        <Typography variant={TypographyVariantEnum.Subtitle2}>
-          {userName}
-        </Typography>
-      </>
-    )
+  const userInfo = (
+    <>
+      <AvatarIcon
+        firstName={firstName}
+        lastName={lastName}
+        photo={userPhoto}
+        sx={styles.accountIcon}
+      />
+      <Typography variant={TypographyVariantEnum.Subtitle2}>
+        {userName}
+      </Typography>
+    </>
+  )
 
   return (
     <Box
