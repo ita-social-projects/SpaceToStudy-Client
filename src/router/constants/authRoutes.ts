@@ -32,7 +32,7 @@ export const authRoutes = {
       path: '/my-resources/new-quiz'
     },
     editQuiz: {
-      route: 'my-resources/edit-quiz/:id',
+      route: '/my-resources/edit-quiz/:id',
       path: '/my-resources/edit-quiz'
     },
     newQuestion: {

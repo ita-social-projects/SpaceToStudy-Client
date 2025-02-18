@@ -6,7 +6,7 @@ import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const useQuizQuery = (quizId: string) => {
   const getQuiz = useCallback(() => {
-    return ResourceService.getQuizQuery(quizId)
+    return ResourceService.getQuiz(quizId)
   }, [quizId])
 
   const {

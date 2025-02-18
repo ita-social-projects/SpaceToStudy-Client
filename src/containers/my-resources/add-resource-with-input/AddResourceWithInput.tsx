@@ -1,7 +1,6 @@
 import {
   useState,
   ChangeEvent,
-  FC,
   MutableRefObject,
   ReactElement,
   Dispatch,
@@ -23,12 +22,12 @@ import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
-import { CategoryNameInterface, PositionEnum } from '~/types'
+import { type CategoryNameInterface, PositionEnum } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 interface AddResourceWithInputProps {
   btnText?: string
-  fetchData: () => Promise<void>
+  fetchData: (() => Promise<void>) | (() => void)
   link?: string
   searchRef: MutableRefObject<string>
   button?: ReactElement
@@ -38,7 +37,7 @@ interface AddResourceWithInputProps {
   placeholder: string
 }
 
-const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
+const AddResourceWithInput: React.FC<AddResourceWithInputProps> = ({
   btnText,
   fetchData,
   link,

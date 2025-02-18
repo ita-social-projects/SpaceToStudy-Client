@@ -1,18 +1,20 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
+import { useNavigate } from 'react-router-dom'
 import QuizzesContainer from '~/containers/my-quizzes/QuizzesContainer'
-import {
-  mockAxiosClient,
-  renderWithProviders,
-  TestSnackbar
-} from '~tests/test-utils'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { getFullUrl } from '~/utils/get-full-url'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 vi.mock(
   '~/containers/my-resources/my-resources-table/MyResourcesTable',
   () => ({
     default: ({ actions }) => (
       <div data-testid='testTable'>
-        <button data-testid='editButton' onClick={() => actions.onEdit()}>
+        <button
+          data-testid='editButton'
+          onClick={() => actions.onEdit('quizId')}
+        >
           Edit
         </button>
       </div>
@@ -20,12 +22,28 @@ vi.mock(
   })
 )
 
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: vi.fn()
+  }
+})
+
 vi.mock(
   '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal',
   () => ({
-    default: () => <div data-testid='confirmModal' />
+    default: ({ onConfirm }) => (
+      <div data-testid='confirmModal'>
+        <button data-testid='confirmButton' onClick={onConfirm}>
+          Confirm
+        </button>
+      </div>
+    )
   })
 )
+
+const mockNavigate = vi.fn()
 
 const quizzesMock = {
   _id: '64ca5914b57f2442403394a5',
@@ -59,17 +77,16 @@ const responseQuizzesMock = {
 }
 
 describe('QuizzesContainer component with data', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient.onGet(URLs.quizzes.get).reply(200, responseQuizzesMock)
-
-      renderWithProviders(<QuizzesContainer />)
-    })
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.get))
+      .reply(200, responseQuizzesMock)
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate)
+    renderWithProviders(<QuizzesContainer />)
   })
 
   afterEach(() => {
     vi.clearAllMocks()
-    mockAxiosClient.reset()
   })
 
   it('should render "New quiz" button', () => {
@@ -93,31 +110,22 @@ describe('QuizzesContainer component with data', () => {
 
     expect(modal).toBeInTheDocument()
   })
-})
 
-describe('QuizzesContainer component with an error', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient.onGet(URLs.quizzes.get).reply(404, {
-        code: 'UNAUTHORIZED',
-        message: 'The requested URL was not found.'
+  it('should navigate to editQuiz page on confirm', async () => {
+    const editButton = await screen.findByTestId('editButton')
+    fireEvent.click(editButton)
+
+    const modal = await screen.findByTestId('confirmModal')
+    expect(modal).toBeInTheDocument()
+
+    const confirmButton = await screen.findByTestId('confirmButton')
+    fireEvent.click(confirmButton)
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      getFullUrl({
+        pathname: authRoutes.myResources.editQuiz.route,
+        parameters: { id: 'quizId' }
       })
-
-      renderWithProviders(
-        <TestSnackbar>
-          <QuizzesContainer />
-        </TestSnackbar>
-      )
-    })
-  })
-  afterEach(() => {
-    vi.clearAllMocks()
-    mockAxiosClient.reset()
-  })
-
-  it('should return error message', async () => {
-    const notFound = await screen.findByText('errors.UNAUTHORIZED')
-
-    expect(notFound).toBeInTheDocument()
+    )
   })
 })

@@ -54,7 +54,7 @@ describe('resourseService tests', () => {
       .onGet(URLs.quizzes.getById.replace(':id', quizId))
       .reply(200, mockQuizData)
 
-    const result = await ResourceService.getQuizQuery(quizId)
+    const result = await ResourceService.getQuiz(quizId)
 
     expect(mockAxiosClient.history.get[0].url).toBe(
       URLs.quizzes.getById.replace(':id', quizId)

@@ -87,7 +87,7 @@ export const ResourceService = {
       })
     })
   },
-  getQuizQuery: async (id: string) => {
+  getQuiz: (id: string) => {
     return baseService.request<Quiz>({
       method: 'GET',
       url: getFullUrl({
@@ -96,16 +96,14 @@ export const ResourceService = {
       })
     })
   },
-  getQuiz: async (id?: string): Promise<AxiosResponse<Quiz>> =>
-    await axiosClient.get(createUrlPath(URLs.quizzes.get, id)),
-  addQuiz: async (data: CreateQuizParams) => {
+  addQuiz: (data: CreateQuizParams) => {
     return baseService.request<Quiz>({
       method: 'POST',
       url: URLs.quizzes.add,
       data
     })
   },
-  editQuiz: async (data: UpdateQuizParams) => {
+  editQuiz: (data: UpdateQuizParams) => {
     const { id, ...quizData } = data
 
     return baseService.request<void>({
