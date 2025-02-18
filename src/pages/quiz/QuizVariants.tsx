@@ -207,15 +207,14 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
   const mappedResults = useMemo(() => {
     const result: Record<string, string | string[]> = {}
     finishedQuiz?.results?.forEach(({ question, answers }) => {
-      const id = quiz?.items.find(({ text }) => text === question)?._id
-      if (id) {
-        result[id] = answers
-          .filter((answer) => answer.isChosen)
-          .map(({ text, isChosen }) => {
-            if (isChosen) {
-              return text
-            }
-          }) as string[]
+      const quizQuestion = quiz?.items.find((item) => item.text === question)
+      const quizQuestionId = quizQuestion?._id
+      if (quizQuestionId) {
+        const chosenAnswers = answers.filter((answer) => answer.isChosen)
+        const textAnswers = chosenAnswers.map(
+          (chosenAnswer) => chosenAnswer.text
+        )
+        result[quizQuestionId] = textAnswers
       }
     })
 
