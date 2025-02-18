@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
 import { vi } from 'vitest'
-import useQuizQuery from '~/hooks/query-hooks/use-quiz-query'
+import useQuizQuery from '~/hooks/query/use-quiz-query'
 import useQuery from '~/hooks/use-query'
 import { ResourceService } from '~/services/resource-service'
 

@@ -16,7 +16,7 @@ import FinishQuizModal from '~/containers/quiz/finish-quiz-modal/FinishQuizModal
 import useQuery from '~/hooks/use-query'
 import useMutation from '~/hooks/use-mutation'
 import useForm from '~/hooks/use-form'
-import useQuizQuery from '~/hooks/query-hooks/use-quiz-query'
+import useQuizQuery from '~/hooks/query/use-quiz-query'
 
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'

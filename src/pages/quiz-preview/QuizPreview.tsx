@@ -21,7 +21,7 @@ import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
 import { formatTime, getFormattedDate } from '~/utils/helper-functions'
 import { Typography } from '@mui/material'
-import useQuizQuery from '~/hooks/query-hooks/use-quiz-query'
+import useQuizQuery from '~/hooks/query/use-quiz-query'
 
 const QuizPreviewPage: React.FC = () => {
   const { id: cooperationId = '', quizId = '' } = useParams()
