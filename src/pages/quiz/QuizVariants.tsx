@@ -126,7 +126,6 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
   ) : (
     <ScrollQuestionsQuizView
       answers={data}
-      data-testid='scroll-questions-quiz-view'
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       isEditable
@@ -242,7 +241,6 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
   ) : (
     <ScrollQuestionsQuizView
       answers={mappedResults}
-      data-testid='scroll-questions-quiz-view'
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       isEditable={false}
@@ -309,7 +307,6 @@ const TutorQuiz: React.FC = () => {
   ) : (
     <ScrollQuestionsQuizView
       answers={data}
-      data-testid='scroll-questions-quiz-view'
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       questions={items}
