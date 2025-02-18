@@ -19,22 +19,14 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
-import {
-  ItemsWithCount,
-  Lesson,
-  ErrorResponse,
-  ResourcesTabsEnum
-} from '~/types'
-import {
-  adjustColumns,
-  createUrlPath,
-  getScreenBasedLimit
-} from '~/utils/helper-functions'
+import { type Lesson, ResourcesTabsEnum } from '~/types'
+import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import { useModalContext } from '~/context/modal-context'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
+import { getFullUrl } from '~/utils/get-full-url'
 
 const LessonsContainer = () => {
   const dispatch = useAppDispatch()
@@ -54,17 +46,14 @@ const LessonsContainer = () => {
     removeColumnRules
   )
 
-  const getMyLessons = useCallback(async (): Promise<
-    ItemsWithCount<Lesson>
-  > => {
-    const response = await ResourceService.getUsersLessons({
+  const getMyLessons = useCallback(() => {
+    return ResourceService.getUsersLessonsQuery({
       limit: itemsPerPage,
       skip: (page - 1) * itemsPerPage,
       sort,
       title: searchTitle.current,
       categories: selectedItems
     })
-    return response.data
   }, [page, itemsPerPage, sort, searchTitle, selectedItems])
 
   const deleteLesson = useCallback(
@@ -73,11 +62,10 @@ const LessonsContainer = () => {
   )
 
   const {
-    data: response,
+    data: lessons,
     isLoading,
-    isError,
     error,
-    refetch: fetchData
+    refetch: fetchLessons
   } = useQuery({
     queryKey: [
       'lessons',
@@ -89,18 +77,26 @@ const LessonsContainer = () => {
     ],
     queryFn: getMyLessons,
     options: {
-      initialData: defaultResponses.itemsWithCount
+      staleTime: Infinity
     }
   })
 
   const onEdit = (id: string) => {
-    const resource = response?.items.find((item) => item._id === id)
+    if (!lessons) {
+      return
+    }
+    const resource = lessons.items.find((item) => item._id === id)
     openModal({
       component: (
         <ChangeResourceConfirmModal
-          onConfirm={() =>
-            navigate(createUrlPath(authRoutes.myResources.editLesson.path, id))
-          }
+          onConfirm={() => {
+            return navigate(
+              getFullUrl({
+                pathname: authRoutes.myResources.editLesson.route,
+                parameters: { id }
+              })
+            )
+          }}
           resourceId={id}
           title={resource?.title}
         />
@@ -108,24 +104,27 @@ const LessonsContainer = () => {
     })
   }
 
-  const handleFetchData = useCallback(async () => {
-    await fetchData()
-  }, [fetchData])
+  const handleFetchLessons = useCallback(async () => {
+    await fetchLessons()
+  }, [fetchLessons])
 
   useEffect(() => {
-    if (isError && error) {
+    if (error) {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: getErrorKey(error as ErrorResponse)
+          message: getErrorKey(error)
         })
       )
     }
-  }, [isError, error, dispatch])
+  }, [error, dispatch])
 
   const props = {
     columns: columnsToShow,
-    data: { response, getData: handleFetchData },
+    data: {
+      response: lessons ?? defaultResponses.itemsWithCount,
+      getData: handleFetchLessons
+    },
     services: { deleteService: deleteLesson },
     itemsPerPage,
     actions: { onEdit },
@@ -137,16 +136,16 @@ const LessonsContainer = () => {
   return (
     <Box>
       <AddResourceWithInput
-        btnText={'myResourcesPage.lessons.addBtn'}
-        fetchData={handleFetchData}
+        btnText='myResourcesPage.lessons.addBtn'
+        fetchData={handleFetchLessons}
         link={authRoutes.myResources.newLesson.path}
-        placeholder={'myResourcesPage.lessons.searchInput'}
+        placeholder='myResourcesPage.lessons.searchInput'
         searchRef={searchTitle}
         selectedItems={selectedItems}
         setItems={setSelectedItems}
         sortOptions={sortOptions}
       />
-      {isLoading ? (
+      {isLoading || !lessons ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Lesson> {...props} />
