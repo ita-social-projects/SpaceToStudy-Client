@@ -45,13 +45,13 @@ const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
 describe('QuizPage for student', () => {
   beforeAll(() => {
     mockAxiosClient
-      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', '')))
+      .onGet(URLs.quizzes.getById.replace(':id', ''))
       .reply(200, mockQuiz)
     mockAxiosClient
       .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
     mockAxiosClient
-      .onGet(new RegExp(URLs.finishedQuizzes.getById.replace(':id', '')))
+      .onGet(URLs.finishedQuizzes.getById.replace(':id', ''))
       .reply(200, mockQuiz)
     mockAxiosClient
       .onGet(
