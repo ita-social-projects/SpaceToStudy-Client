@@ -19,7 +19,7 @@ const QuizPage: React.FC = () => {
     setIsFinished(true)
   }, [])
 
-  const getQuizVariant = useCallback(() => {
+  const getQuizVariant = () => {
     if (userRole === UserRoleEnum.Tutor) {
       return <TutorQuiz />
     }
@@ -31,7 +31,7 @@ const QuizPage: React.FC = () => {
 
       return <ActiveQuiz finishQuiz={finishQuiz} />
     }
-  }, [userRole, isFinished, finishedQuizId, finishQuiz])
+  }
 
   const quizVariant = getQuizVariant()
 
