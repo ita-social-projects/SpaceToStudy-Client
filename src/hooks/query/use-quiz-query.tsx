@@ -25,7 +25,7 @@ const useQuizQuery = (quizId: string) => {
 
   useEffect(() => {
     if (error) {
-      handleErrorAlert
+      handleErrorAlert(error)
     }
   }, [error, handleErrorAlert])
 

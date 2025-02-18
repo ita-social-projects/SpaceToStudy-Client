@@ -111,7 +111,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
 
   useEffect(() => {
     if (error) {
-      handleErrorAlert
+      handleErrorAlert(error)
     }
   }, [error, handleErrorAlert])
 
