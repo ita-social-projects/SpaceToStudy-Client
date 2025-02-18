@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -15,6 +15,7 @@ import FinishQuizModal from '~/containers/quiz/finish-quiz-modal/FinishQuizModal
 
 import useQuery from '~/hooks/use-query'
 import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import useForm from '~/hooks/use-form'
 import useQuizQuery from '~/hooks/query/use-quiz-query'
 
@@ -88,8 +89,11 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     })
   }, [data, cooperationId, items, points, quizId])
 
-  const { mutateAsync } = useMutation({
-    mutationFn: addFinishedQuiz
+  const { handleErrorAlert } = useSnackbarAlert()
+
+  const { mutateAsync, error } = useMutation({
+    mutationFn: addFinishedQuiz,
+    queryKey: ['finishedQuiz']
   })
 
   const handleCancel = useCallback(() => {
@@ -104,6 +108,12 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
       navigate(-1)
     }
   }, [finishQuiz, mutateAsync, navigate, scoredResponses])
+
+  useEffect(() => {
+    if (error) {
+      handleErrorAlert
+    }
+  }, [error, handleErrorAlert])
 
   if (isLoading || !quiz) {
     return <Loader pageLoad />
