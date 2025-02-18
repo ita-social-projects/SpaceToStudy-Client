@@ -1,8 +1,6 @@
 import { useCallback, useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQueryClient } from '@tanstack/react-query'
 import Box from '@mui/material/Box'
-import { AxiosResponse } from 'axios'
 
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
@@ -11,7 +9,6 @@ import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useQuery from '~/hooks/use-query'
-import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import usePagination from '~/hooks/table/use-pagination'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useModalContext } from '~/context/modal-context'
@@ -34,8 +31,6 @@ import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 const QuizzesContainer = () => {
   const navigate = useNavigate()
   const { page, handleChangePage } = usePagination()
-  const { handleErrorAlert } = useSnackbarAlert()
-  const queryClient = useQueryClient()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef('')
   const breakpoints = useBreakpoints()
@@ -66,9 +61,8 @@ const QuizzesContainer = () => {
     onError: handleErrorAlert,
     onSuccess: () => {
       handleSuccessAlert(`myResourcesPage.quizzes.successDeletion`)
-      void queryClient.invalidateQueries({ queryKey: ['quizzes'] }) // TODO: remove and replace with queryKey, when 3183 issue will be merged
-    }
-    // queryKey: ['quizzes']
+    },
+    queryKey: ['quizzes']
   })
 
   const {
