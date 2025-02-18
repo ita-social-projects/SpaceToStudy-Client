@@ -33,6 +33,7 @@ const ScrollQuestionsQuizView: FC<QuizViewProps> = ({
   shouldShowCorrectAnswers = false,
   shouldShowPoints = false,
   shouldShowAnswersCorrectness = false,
+  isEditable = false,
   ...props
 }) => {
   const questionList = questions.map((question, index) => {
@@ -41,6 +42,7 @@ const ScrollQuestionsQuizView: FC<QuizViewProps> = ({
         handleInputChange={handleInputChange(question._id)}
         handleNonInputValueChange={handleNonInputValueChange(question._id)}
         index={index}
+        isEditable={isEditable}
         key={question._id}
         question={question}
         shouldShowAnswersCorrectness={shouldShowAnswersCorrectness}

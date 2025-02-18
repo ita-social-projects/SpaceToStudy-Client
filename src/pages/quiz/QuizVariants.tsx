@@ -231,7 +231,6 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
       answers={mappedResults}
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
-      isEditable={false}
       questions={items}
       shouldShowAnswersCorrectness={scoredResponses}
       shouldShowCorrectAnswers={correctAnswers}
@@ -243,7 +242,6 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
       answers={mappedResults}
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
-      isEditable={false}
       questions={items}
       shouldShowAnswersCorrectness={scoredResponses}
       shouldShowCorrectAnswers={correctAnswers}
