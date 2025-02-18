@@ -23,7 +23,7 @@ import { formatTime, getFormattedDate } from '~/utils/helper-functions'
 import { Typography } from '@mui/material'
 import useQuizQuery from '~/hooks/query-hooks/use-quiz-query'
 
-const QuizPreviewPage = () => {
+const QuizPreviewPage: React.FC = () => {
   const { id: cooperationId = '', quizId = '' } = useParams()
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
