@@ -25,7 +25,7 @@ describe('StartViewQuizInfo', () => {
     questionsAmount: 3,
     attempts: QuizAttempt.Attempt2,
     timeLimit: QuizTimeLimit.Minute30,
-    handleStartButton: mockHandleStartButton,
+    onStartButton: mockHandleStartButton,
     usedAttempts: 0
   }
 
