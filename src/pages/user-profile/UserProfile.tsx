@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import {
   useParams,
@@ -31,7 +31,7 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { scrollToHash } from '~/utils/hash-scroll'
 import useQuery from '~/hooks/use-query'
 
-const UserProfile: FC = () => {
+const UserProfile: React.FC = () => {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
@@ -70,10 +70,10 @@ const UserProfile: FC = () => {
     (isTutor && isMyProfile) ||
     (!isTutor && response?.videoLink?.student) ||
     (!isMyProfile && response?.videoLink?.tutor)
-
-  return loading || !response ? (
-    <Loader size={70} />
-  ) : (
+  if (loading || !response) {
+    return <Loader size={70} />
+  }
+  return (
     <PageWrapper>
       {userRole && <ProfileInfo myRole={userRole} userData={response} />}
       {isMyProfile && (
