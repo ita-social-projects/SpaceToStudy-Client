@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -25,7 +25,6 @@ import { defaultResponses } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
 import { ComponentEnum, QuestionTypesEnum, QuizViewEnum } from '~/types'
-import { awaitPromise } from '~/utils/await-promise'
 
 type ActiveQuizProps = {
   finishQuiz: (quizId: string) => void
@@ -163,7 +162,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
       </Box>
       <FinishQuizModal
         onCancel={handleCancel}
-        onFinish={awaitPromise(handleFinish)}
+        onFinish={() => void handleFinish()}
         open={isOpen}
       />
     </PageWrapper>
@@ -205,15 +204,9 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     items
   } = quiz ?? defaultQuizResponse
 
-  if (isLoading || !finishedQuiz || isQuizLoading) {
-    return <Loader pageLoad />
-  }
-
-  const isStepper = view === QuizViewEnum.Stepper
-
-  const mapResults = () => {
+  const mappedResults = useMemo(() => {
     const result: Record<string, string | string[]> = {}
-    finishedQuiz.results?.forEach(({ question, answers }) => {
+    finishedQuiz?.results?.forEach(({ question, answers }) => {
       const id = quiz?.items.find(({ text }) => text === question)?._id
       if (id) {
         result[id] = answers
@@ -227,11 +220,17 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     })
 
     return result
+  }, [finishedQuiz?.results, quiz?.items])
+
+  if (isLoading || !finishedQuiz || isQuizLoading) {
+    return <Loader pageLoad />
   }
+
+  const isStepper = view === QuizViewEnum.Stepper
 
   const questionsBlock = isStepper ? (
     <SelectableQuestionQuizView
-      answers={mapResults()}
+      answers={mappedResults}
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       isEditable={false}
@@ -243,7 +242,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     />
   ) : (
     <ScrollQuestionsQuizView
-      answers={mapResults()}
+      answers={mappedResults}
       data-testid='scroll-questions-quiz-view'
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
