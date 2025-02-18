@@ -11,6 +11,7 @@ import {
   TableColumn,
   AdditionalPropsInterface
 } from '~/types'
+import { ResponseError } from '~/exceptions'
 import { createUrlPath, getFormattedDate } from '~/utils/helper-functions'
 import { CheckIcons } from '~/utils/check-icons'
 import { styles } from '~/containers/my-resources/questions-container/QuestionsContainer.styles'
@@ -76,4 +77,17 @@ export const itemsLoadLimit = {
   default: 10,
   tablet: 8,
   mobile: 6
+}
+
+export const DuplicateQuestionErrors = {
+  QUESTIONS_NOT_FOUND: new ResponseError({
+    status: 400,
+    code: 'QUESTIONS_NOT_FOUND',
+    message: 'Questions data is missing. Cannot duplicate question.'
+  }),
+  QUESTION_NOT_FOUND: new ResponseError({
+    status: 404,
+    code: 'QUESTION_NOT_FOUND',
+    message: `Question with ID not found. Cannot duplicate.`
+  })
 }

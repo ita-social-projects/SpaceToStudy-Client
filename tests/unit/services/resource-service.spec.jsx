@@ -4,8 +4,8 @@ import { ResourceService } from '~/services/resource-service'
 
 describe('resourseService tests', () => {
   afterEach(() => {
-    mockAxiosClient.resetHistory() 
-    mockAxiosClient.reset() 
+    mockAxiosClient.resetHistory()
+    mockAxiosClient.reset()
   })
 
   it('should edit a lesson', async () => {
@@ -77,18 +77,20 @@ describe('resourseService tests', () => {
         correctAnswers: true
       }
     }
-  
+
     mockAxiosClient
       .onPatch(new RegExp(URLs.quizzes.patch.replace(':id', quizId)))
       .reply(200)
-  
+
     await ResourceService.editQuiz({ id: quizId, ...quizData })
-  
+
     expect(mockAxiosClient.history.patch[0].url).toBe(
       URLs.quizzes.patch.replace(':id', quizId)
     )
-  
-    expect(mockAxiosClient.history.patch[0].data).toEqual(JSON.stringify(quizData))
+
+    expect(mockAxiosClient.history.patch[0].data).toEqual(
+      JSON.stringify(quizData)
+    )
   })
 
   it('should create a new quiz', async () => {
@@ -106,25 +108,27 @@ describe('resourseService tests', () => {
         correctAnswers: false
       }
     }
-  
+
     const mockResponse = {
       ...newQuizData,
       _id: 'new-quiz-id',
       createdAt: '2025-01-01T00:00:00.000Z',
       updatedAt: '2025-01-01T00:00:00.000Z'
     }
-  
+
     mockAxiosClient.onPost(URLs.quizzes.add).reply(200, mockResponse)
-  
+
     const createdQuiz = await ResourceService.addQuiz(newQuizData)
-  
+
     expect(mockAxiosClient.history.post[0].url).toBe(URLs.quizzes.add)
-  
-    expect(mockAxiosClient.history.post[0].data).toEqual(JSON.stringify(newQuizData))
-  
+
+    expect(mockAxiosClient.history.post[0].data).toEqual(
+      JSON.stringify(newQuizData)
+    )
+
     expect(createdQuiz).toEqual(mockResponse)
   })
-  
+
   it('should get resource categories names', async () => {
     const mockResponse = [
       { _id: '1', name: 'Category 1' },
@@ -137,7 +141,9 @@ describe('resourseService tests', () => {
 
     const response = await ResourceService.getResourcesCategoriesName()
 
-    expect(mockAxiosClient.history.get[0].url).toBe(URLs.resources.resourcesCategories.getNames)
+    expect(mockAxiosClient.history.get[0].url).toBe(
+      URLs.resources.resourcesCategories.getNames
+    )
     expect(response).toEqual(mockResponse)
   })
 
@@ -151,37 +157,78 @@ describe('resourseService tests', () => {
 
     const response = await ResourceService.createResourceCategory(params)
 
-    expect(mockAxiosClient.history.post[0].url).toBe(URLs.resources.resourcesCategories.post)
+    expect(mockAxiosClient.history.post[0].url).toBe(
+      URLs.resources.resourcesCategories.post
+    )
     expect(mockAxiosClient.history.post[0].data).toBe(JSON.stringify(params))
     expect(response).toEqual(mockResponse)
   })
 
-   it('should edit an attachment', async () => {
-     const attachmentId = '6255bc080a75adf9223df444'
-     const attachment = {
-       description: 'Modified description',
-       category: '8655bc080a75adf9223df444'
-     }
-     const mockAttachmentResponse = {
-       ...attachment,
-       _id: attachmentId,
-       link: '1722535882408-test.pdf',
-       size: 15069,
-       resourceType: 'Attachment'
-     }
+  it('should edit an attachment', async () => {
+    const attachmentId = '6255bc080a75adf9223df444'
+    const attachment = {
+      description: 'Modified description',
+      category: '8655bc080a75adf9223df444'
+    }
+    const mockAttachmentResponse = {
+      ...attachment,
+      _id: attachmentId,
+      link: '1722535882408-test.pdf',
+      size: 15069,
+      resourceType: 'Attachment'
+    }
 
-     mockAxiosClient.onPatch().reply((config) => {
-       expect(config.url).toBe(`/attachments/${attachmentId}`)
+    mockAxiosClient.onPatch().reply((config) => {
+      expect(config.url).toBe(`/attachments/${attachmentId}`)
 
-       return [200, mockAttachmentResponse]
-     })
+      return [200, mockAttachmentResponse]
+    })
 
-     const updatedAttachmentResponse =
-       await ResourceService.updateAttachmentQuery({
-         ...attachment,
-         id: attachmentId
-       })
+    const updatedAttachmentResponse =
+      await ResourceService.updateAttachmentQuery({
+        ...attachment,
+        id: attachmentId
+      })
 
-     expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
-   })
+    expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
+  })
+
+  it('should create a new question', async () => {
+    const newQuestionData = {
+      title: 'Counting Elephants',
+      text: 'How many elephants do you need to count to fall asleep?',
+      answers: [
+        { text: '10', isCorrect: true },
+        { text: '5', isCorrect: false },
+        { text: '15', isCorrect: false }
+      ],
+      type: 'oneAnswer',
+      author: '12345',
+      resourceType: 'question'
+    }
+
+    const mockResponse = {
+      ...newQuestionData,
+      _id: 'new-question-id',
+      createdAt: '2025-01-01T00:00:00.000Z',
+      updatedAt: '2025-02-08T14:30:31.101+00:00'
+    }
+
+    mockAxiosClient
+      .onPost(URLs.resources.questions.post)
+      .reply(200, mockResponse)
+
+    const createdQuestion =
+      await ResourceService.createQuestionQuery(newQuestionData)
+
+    expect(mockAxiosClient.history.post[0].url).toBe(
+      URLs.resources.questions.post
+    )
+
+    expect(mockAxiosClient.history.post[0].data).toEqual(
+      JSON.stringify(newQuestionData)
+    )
+
+    expect(createdQuestion).toEqual(mockResponse)
+  })
 })

@@ -17,6 +17,7 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import usePagination from '~/hooks/table/use-pagination'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
+import { DuplicateQuestionErrors } from '~/containers/my-resources/questions-container/QuestionsContainer.constants'
 import {
   columns,
   initialSort,
@@ -24,15 +25,12 @@ import {
   removeColumnRules
 } from '~/containers/my-resources/questions-container/QuestionsContainer.constants'
 import { ResourcesTabsEnum, type Question } from '~/types'
-import {
-  adjustColumns,
-  createUrlPath,
-  getScreenBasedLimit
-} from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
+import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const QuestionsContainer = () => {
   const sortOptions = useSort({ initialSort })
-  const searchTitle = useRef<string>('')
+  const searchTitle = useRef('')
   const breakpoints = useBreakpoints()
   const queryClient = useQueryClient()
   const { handleAlert, handleErrorAlert } = useSnackbarAlert()
@@ -81,16 +79,28 @@ const QuestionsContainer = () => {
   )
 
   const editQuestion = (id: string) => {
-    navigate(createUrlPath(authRoutes.myResources.editQuestion.path, id))
+    return navigate(
+      getFullUrl({
+        pathname: authRoutes.myResources.editQuestion.route,
+        parameters: { id }
+      })
+    )
   }
 
   const duplicateQuestion = useCallback(
-    (id: string) => {
-      const item = questions?.items.find(
-        (element) => element._id === id
-      ) as Question
+    async (id: string) => {
+      if (!questions) {
+        handleErrorAlert(DuplicateQuestionErrors.QUESTIONS_NOT_FOUND)
+        return
+      }
+      const item = questions.items.find((element) => element._id === id)
 
-      return ResourceService.createQuestionQuery({
+      if (!item) {
+        handleErrorAlert(DuplicateQuestionErrors.QUESTION_NOT_FOUND)
+        return
+      }
+
+      return await ResourceService.createQuestionQuery({
         title: item.title,
         text: item.text,
         answers: item.answers,
@@ -98,7 +108,7 @@ const QuestionsContainer = () => {
         type: item.type
       })
     },
-    [questions]
+    [questions, handleErrorAlert]
   )
 
   const onDuplicateResponse = () => {

@@ -40,7 +40,7 @@ export const authRoutes = {
       path: '/my-resources/new-question'
     },
     editQuestion: {
-      route: 'my-resources/edit-question/:id',
+      route: '/my-resources/edit-question/:id',
       path: '/my-resources/edit-question'
     }
   },
