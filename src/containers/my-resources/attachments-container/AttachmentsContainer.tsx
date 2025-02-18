@@ -66,13 +66,7 @@ const AttachmentsContainer: React.FC = () => {
     isLoading: isLoadingAttachments,
     error: attachmentsLoadError
   } = useQuery({
-    queryKey: [
-      'attachments',
-      page,
-      sort,
-      searchFileName.current,
-      selectedItems
-    ],
+    queryKey: ['attachments', page, sort, selectedItems],
     queryFn: getAttachments,
     options: {
       staleTime: Infinity
@@ -170,7 +164,7 @@ const AttachmentsContainer: React.FC = () => {
         />
       }
       fetchData={invalidateAttachments}
-      placeholder={'myResourcesPage.attachments.searchInput'}
+      placeholder='myResourcesPage.attachments.searchInput'
       searchRef={searchFileName}
       selectedItems={selectedItems}
       setItems={setSelectedItems}
