@@ -136,7 +136,7 @@ type StartViewQuizInfoProps = {
   attempts: QuizAttempt
   timeLimit: QuizTimeLimit
   usedAttempts: number
-  handleStartButton: () => void
+  onStartButton: () => void
 }
 
 const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
@@ -144,7 +144,7 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
   attempts,
   timeLimit,
   usedAttempts,
-  handleStartButton
+  onStartButton
 }) => {
   const { t } = useTranslation()
 
@@ -232,7 +232,7 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
           <Button
             data-testid='startButton'
             disabled={!hasAttempts}
-            onClick={handleStartButton}
+            onClick={onStartButton}
             size='sm'
           >
             {usedAttempts === 0 ? t('quiz.startQuiz') : t('quiz.tryAgain')}
