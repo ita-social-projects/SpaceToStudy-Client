@@ -99,7 +99,7 @@ const QuizPreviewPage = () => {
           />
           <StartViewQuizInfo
             attempts={attemptLimit}
-            handleStartButton={openModal}
+            onStartButton={openModal}
             questionsAmount={items.length}
             timeLimit={timeLimit}
             usedAttempts={finishedAttempts.length}
