@@ -74,9 +74,7 @@ const QuizPreviewPage: React.FC = () => {
               secondColumn={formatTime(item.updatedAt)}
               title={t('quiz.attemptFinished')}
             />
-            <Box>
-              <Button variant='tonal'>{t('quiz.reviewAttempt')}</Button>
-            </Box>
+            <Button variant='tonal'>{t('quiz.reviewAttempt')}</Button>
           </Box>
         )
       })
