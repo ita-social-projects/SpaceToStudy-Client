@@ -35,7 +35,7 @@ describe('QuestionComment', () => {
         expect(inputField).toBeInTheDocument()
     })
 
-    test('should does not submit comment if input is empty', async () => {
+    test('should does not submit comment if input is empty', () => {
         const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
         fireEvent.click(addCommentButton)
 
@@ -45,7 +45,7 @@ describe('QuestionComment', () => {
         expect(mockSubmit).not.toHaveBeenCalled()
     })
 
-    test('should submit comment if input is not empty', async () => {
+    test('should submit comment if input is not empty', () => {
         const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
         fireEvent.click(addCommentButton)
 
@@ -59,7 +59,7 @@ describe('QuestionComment', () => {
         expect(mockSubmit).toHaveBeenCalledWith('Great answer!')
     })
 
-    test('should toggle comment input visibility when clicking comment button', async () => {
+    test('should toggle comment input visibility when clicking comment button', () => {
         const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
         
         const textField = screen.queryByTestId('textField')

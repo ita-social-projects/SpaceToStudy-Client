@@ -14,7 +14,7 @@ describe('FilterInput', () => {
     expect(getByRole('textbox')).toBeInTheDocument()
   })
 
-  it('calls the onChange function when text is entered', async () => {
+  it('calls the onChange function when text is entered', () => {
     const { getByRole } = render(<FilterInput onChange={handleChange} />)
 
     const input = getByRole('textbox')

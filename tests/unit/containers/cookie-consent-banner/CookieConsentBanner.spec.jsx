@@ -14,7 +14,7 @@ vi.mock('react-dom', async () => {
   }
 })
 
-vi.mock('~/services/local-storage-service', async () => ({
+vi.mock('~/services/local-storage-service', () => ({
   getFromLocalStorage: () => getFromLocalStorageMock(),
   setToLocalStorage: vi.fn()
 }))
@@ -44,7 +44,7 @@ describe('CookieConsentBanner', () => {
     expect(acceptButton).not.toBeInTheDocument()
   })
 
-  it('banner should disappear after accept button click', async () => {
+  it('banner should disappear after accept button click', () => {
     getFromLocalStorageMock.mockReturnValue(false)
     renderWithProviders(<CookieConsentBanner />)
 

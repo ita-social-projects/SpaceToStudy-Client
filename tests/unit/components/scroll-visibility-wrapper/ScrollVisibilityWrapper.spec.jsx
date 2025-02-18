@@ -5,7 +5,7 @@ import { fireEvent, screen } from '@testing-library/react'
 const children = 'childrenElement'
 
 describe('ScrollVisibilityWrapper test', () => {
-  it('Should show children', async () => {
+  it('Should show children', () => {
     renderWithProviders(
       <ScrollVisibilityWrapper heightToShow={100} pageRef={{ current: window }}>
         {children}
@@ -14,7 +14,7 @@ describe('ScrollVisibilityWrapper test', () => {
     fireEvent.scroll(window, { target: { scrollTop: 120 } })
     expect(screen.getByText(children)).toBeInTheDocument()
   })
-  it('Should not show children ', async () => {
+  it('Should not show children ', () => {
     renderWithProviders(
       <ScrollVisibilityWrapper heightToShow={100} pageRef={{ current: window }}>
         {children}

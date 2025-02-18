@@ -61,7 +61,7 @@ describe('ListOfUsersWithSearch component', () => {
     expect(filteredChatItems[0]).toHaveTextContent('Alaya McKenzie')
   })
 
-  it('calls setSelectedChat when a chat is clicked', async () => {
+  it('calls setSelectedChat when a chat is clicked', () => {
     const chatItem = screen.getAllByTestId('chat-item')[0]
 
     fireEvent.click(chatItem)

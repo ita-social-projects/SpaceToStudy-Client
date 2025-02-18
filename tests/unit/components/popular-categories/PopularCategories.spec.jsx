@@ -49,7 +49,7 @@ describe('PopularCategories', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('should render offer count descriptions for popularCategories', async () => {
+  it('should render offer count descriptions for popularCategories', () => {
     const noOffers = screen.queryByText(/offers/)
     expect(noOffers).not.toBeInTheDocument()
   })

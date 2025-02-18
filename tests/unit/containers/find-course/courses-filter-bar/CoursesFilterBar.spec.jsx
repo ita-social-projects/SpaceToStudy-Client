@@ -21,7 +21,7 @@ describe('tests for Courses filter ber menu', () => {
     expect(myCoursesSortBy).toBeInTheDocument()
   })
 
-  it('should change sort', async () => {
+  it('should change sort', () => {
     const select = screen.getByTestId('app-select')
 
     expect(select.value).toBe(selectValueMock.default)

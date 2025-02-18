@@ -24,7 +24,7 @@ describe('Sidebar test', () => {
     expect(text).toBeInTheDocument()
   })
 
-  it('should render link and call setIsSidebarOpen with false after click link', async () => {
+  it('should render link and call setIsSidebarOpen with false after click link', () => {
     const [linkElement] = screen.getAllByRole('link')
     expect(linkElement).toHaveAttribute('href', '/#route-test')
 
