@@ -66,12 +66,12 @@ type FinishedQuizInfoProps = {
   updatedAt: string
 }
 
-const FinishedQuizInfo = ({
+const FinishedQuizInfo: React.FC<FinishedQuizInfoProps> = ({
   points,
   totalPoints,
   createdAt,
   updatedAt
-}: FinishedQuizInfoProps) => {
+}) => {
   const { t } = useTranslation()
 
   return (
