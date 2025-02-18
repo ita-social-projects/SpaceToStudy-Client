@@ -30,6 +30,34 @@ const QuizHeader: React.FC<QuizHeaderProps> = ({
   updatedAt,
   type
 }) => {
+  const getQuizInfoVariant = () => {
+    if (type === 'active') {
+      return (
+        <ActiveQuizInfo
+          questionsAnswered={questionsAnswered ?? 0}
+          totalPoints={totalPoints}
+        />
+      )
+    }
+
+    if (type === 'finished') {
+      return (
+        <FinishedQuizInfo
+          createdAt={createdAt}
+          points={points}
+          totalPoints={totalPoints}
+          updatedAt={updatedAt}
+        />
+      )
+    }
+
+    if (type === 'tutor') {
+      return <TutorQuizInfo points={points} totalPoints={totalPoints} />
+    }
+  }
+
+  const quizInfoVariant = getQuizInfoVariant()
+
   return (
     <Box sx={styles.wrapper}>
       <TitleWithDescription
@@ -37,23 +65,7 @@ const QuizHeader: React.FC<QuizHeaderProps> = ({
         style={styles.titleWithDescription}
         title={title}
       />
-      {type === 'active' && (
-        <ActiveQuizInfo
-          questionsAnswered={questionsAnswered ?? 0}
-          totalPoints={totalPoints}
-        />
-      )}
-      {type === 'finished' && (
-        <FinishedQuizInfo
-          createdAt={createdAt}
-          points={points}
-          totalPoints={totalPoints}
-          updatedAt={updatedAt}
-        />
-      )}
-      {type === 'tutor' && (
-        <TutorQuizInfo points={points} totalPoints={totalPoints} />
-      )}
+      {quizInfoVariant}
     </Box>
   )
 }
