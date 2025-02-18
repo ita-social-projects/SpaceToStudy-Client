@@ -1,9 +1,22 @@
 import { screen, waitFor, fireEvent } from '@testing-library/react'
+import { useNavigate } from 'react-router-dom'
 
 import QuestionsContainer from '~/containers/my-resources/questions-container/QuestionsContainer'
 
 import { URLs } from '~/constants/request'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { getFullUrl } from '~/utils/get-full-url'
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: vi.fn()
+  }
+})
+
+const mockNavigate = vi.fn()
 
 const questionMock = {
   _id: '64fb2c33eba89699411d22bb',
@@ -51,6 +64,7 @@ describe('QuestionsContainer test', () => {
     mockAxiosClient
       .onGet(new RegExp(URLs.resources.questions.get))
       .reply(200, questionResponseMock)
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate)
 
     renderWithProviders(<QuestionsContainer />)
   })
@@ -103,6 +117,25 @@ describe('QuestionsContainer test', () => {
         category: null,
         type: 'multiple-choice'
       })
+    })
+  })
+
+  it('should navigate to edit question page when edit button is clicked', async () => {
+    const menuButtons = await screen.findAllByTestId('menu-icon')
+
+    fireEvent.click(menuButtons[0])
+
+    const editBtn = await screen.findByText('common.edit')
+
+    fireEvent.click(editBtn)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(
+        getFullUrl({
+          pathname: authRoutes.myResources.editQuestion.route,
+          parameters: { id: '0' }
+        })
+      )
     })
   })
 })
