@@ -93,7 +93,12 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   )
 
   const answersList = question.answers.map((answer) => {
-    const isChecked = value?.includes(answer.text) ?? false
+    const formattedValue =
+      typeof value === 'string'
+        ? value.toLowerCase()
+        : value?.map((v) => v.toLowerCase())
+    const isChecked =
+      formattedValue?.includes(answer.text.toLowerCase()) ?? false
 
     const handleChange = () => {
       if (isMultipleChoice) {
