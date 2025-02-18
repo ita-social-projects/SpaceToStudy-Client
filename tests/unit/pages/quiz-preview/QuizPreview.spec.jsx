@@ -48,13 +48,15 @@ describe('QuizPage for student', () => {
       .onGet(URLs.quizzes.getById.replace(':id', ''))
       .reply(200, mockQuiz)
     mockAxiosClient
-      .onGet(URLs.quizzes.getById.replace(':id', mockQuizId))
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
     mockAxiosClient
       .onGet(URLs.finishedQuizzes.getById.replace(':id', ''))
       .reply(200, mockQuiz)
     mockAxiosClient
-      .onGet(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
+      .onGet(
+        new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
+      )
       .reply(200, mockQuiz)
   })
 
