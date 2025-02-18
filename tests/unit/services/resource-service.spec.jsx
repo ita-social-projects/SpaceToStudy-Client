@@ -223,4 +223,18 @@ describe('resourseService tests', () => {
 
     expect(createdQuestion).toEqual(mockResponse)
   })
+
+  it('should delete an attachment', async () => {
+    const attachmentId = '6255bc080a75adf9223df444'
+
+    mockAxiosClient
+      .onDelete(URLs.resources.attachments.delete.replace(':id', attachmentId))
+      .reply(200)
+
+    await ResourceService.deleteAttachment(attachmentId)
+
+    expect(mockAxiosClient.history.delete[0].url).toBe(
+      URLs.resources.attachments.delete.replace(':id', attachmentId)
+    )
+  })
 })
