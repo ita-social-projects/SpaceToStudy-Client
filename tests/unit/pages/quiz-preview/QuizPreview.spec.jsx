@@ -40,7 +40,7 @@ const mockQuiz = {
   description: 'Js'
 }
 
-let preloadedState
+const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
 
 describe('QuizPage for student', () => {
   beforeAll(() => {
@@ -58,10 +58,6 @@ describe('QuizPage for student', () => {
         new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
       )
       .reply(200, mockQuiz)
-  })
-
-  beforeEach(() => {
-    preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
   })
 
   it('should render quiz preview page with data', async () => {
