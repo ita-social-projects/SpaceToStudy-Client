@@ -77,7 +77,7 @@ const QuizPreviewPage: React.FC = () => {
   }
 
   const attemptsList =
-    Array.isArray(finishedQuizzes) && finishedQuizzes.length !== 0 ? (
+    finishedQuizzes.length !== 0 ? (
       finishedQuizzes.map((item) => {
         return (
           <Box key={item._id} sx={styles.attemptWrapper}>
