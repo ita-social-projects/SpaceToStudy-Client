@@ -1,11 +1,14 @@
-import { screen, fireEvent, waitFor  } from '@testing-library/react'
+import { screen, fireEvent, waitFor, render } from '@testing-library/react'
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 import { renderWithProviders } from '~tests/test-utils'
 import useQuery from '~/hooks/use-query'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import { snackbarVariants } from '~/constants'
+import { getFullUrl } from '~/utils/get-full-url'
+import { authRoutes } from '~/router/constants/authRoutes'
 
+const mockNavigate = vi.fn()
 const mockDispatch = vi.fn()
 const mockOpenModal = vi.fn()
 
@@ -20,7 +23,7 @@ vi.mock(
   () => ({
     default: ({ actions }) => (
       <div data-testid='testTable'>
-        <button data-testid='editButton' onClick={() => actions.onEdit('')}>
+        <button data-testid='editButton' onClick={() => actions.onEdit('0')}>
           Edit
         </button>
       </div>
@@ -53,6 +56,20 @@ vi.mock('~/context/modal-context', async () => {
     })
   }
 })
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate
+  }
+})
+
+vi.mock('~/utils/get-full-url', () => ({
+  getFullUrl: vi.fn(({ pathname, parameters }) => 
+    `${pathname.replace(':id', parameters.id)}`
+  )
+}))
 
 const lessonMock = {
   _id: '64e49ce305b3353b2ae6309e',
@@ -185,6 +202,31 @@ describe('LessonContainer test', () => {
   
     const editButton = screen.queryByTestId('editButton')
     expect(editButton).toBeNull()
+  })
+
+  it('should navigate to the correct edit URL when onEdit is called', async () => {
+    useQuery.mockReturnValue({
+      data: lessonResponseMock.items,
+      isLoading: false,
+      error: null,
+      refetch: vi.fn(),
+    })
+    renderWithProviders(<LessonsContainer />)
+
+    const editButton = await screen.findByTestId('editButton')
+    expect(editButton).toBeInTheDocument()
+
+    fireEvent.click(editButton)
+    await waitFor(() => {
+      expect(mockOpenModal).toHaveBeenCalled();
+    })
+    
+    const expectedUrl = getFullUrl({
+      pathname: authRoutes.myResources.editLesson.route,
+      parameters: { id: '0' }
+    })
+
+    expect(expectedUrl).toBe(`my-resources/edit-lesson/0`)
   })
 })
 
