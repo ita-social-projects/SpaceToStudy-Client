@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react'
 import { ResourceService } from '~/services/resource-service'
 import useQuery from '~/hooks/use-query'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
+import { ONE_HOUR } from '~/constants'
 
 const useQuizQuery = (quizId: string) => {
   const getQuiz = useCallback(() => {
@@ -17,7 +18,7 @@ const useQuizQuery = (quizId: string) => {
     queryKey: ['quiz', quizId],
     queryFn: getQuiz,
     options: {
-      staleTime: 1000 * 60 * 60
+      staleTime: ONE_HOUR
     }
   })
 

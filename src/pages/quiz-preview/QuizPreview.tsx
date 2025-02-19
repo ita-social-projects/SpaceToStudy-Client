@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
 
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -22,8 +23,9 @@ import styles from '~/pages/quiz-preview/QuizPreview.styles'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
 import { formatTime, getFormattedDate } from '~/utils/helper-functions'
-import { Typography } from '@mui/material'
+
 import useQuizQuery from '~/hooks/query/use-quiz-query'
+import { ONE_HOUR } from '~/constants'
 
 const QuizPreviewPage: React.FC = () => {
   const { id: cooperationId = '', quizId = '' } = useParams()
@@ -53,7 +55,7 @@ const QuizPreviewPage: React.FC = () => {
     queryKey: ['finished-quizzes', cooperationId, quizId],
     queryFn: getFinishedQuizzes,
     options: {
-      staleTime: 1000 * 60 * 60
+      staleTime: ONE_HOUR
     }
   })
 
@@ -106,7 +108,7 @@ const QuizPreviewPage: React.FC = () => {
         />
         <StartViewQuizInfo
           attempts={attemptLimit}
-          onStartButton={openModal}
+          onStart={openModal}
           questionsAmount={items.length}
           timeLimit={timeLimit}
           usedAttempts={finishedQuizzes.length}
