@@ -99,11 +99,11 @@ describe('QuestionsContainer test', () => {
 
     const menuButtons = screen.getAllByTestId('menu-icon')
 
-    await waitFor(() => fireEvent.click(menuButtons[0]))
+    fireEvent.click(menuButtons[0])
 
     const duplicateBtn = await screen.findByText('common.duplicate')
 
-    await waitFor(() => fireEvent.click(duplicateBtn))
+    fireEvent.click(duplicateBtn)
 
     await waitFor(() => {
       expect(mockAxiosClient.history.post.length).toBe(1)

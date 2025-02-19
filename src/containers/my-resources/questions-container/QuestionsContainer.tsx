@@ -2,7 +2,7 @@ import { useCallback, useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import Box from '@mui/material/Box'
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
@@ -93,6 +93,7 @@ const QuestionsContainer = () => {
         handleErrorAlert(DuplicateQuestionErrors.QUESTIONS_NOT_FOUND)
         return
       }
+
       const item = questions.items.find((element) => element._id === id)
 
       if (!item) {
