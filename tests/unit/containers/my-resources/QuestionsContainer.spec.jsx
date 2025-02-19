@@ -92,7 +92,7 @@ describe('QuestionsContainer test', () => {
 
   it('should open menu and duplicate a question successfully', async () => {
     mockAxiosClient
-      .onPost(new RegExp(URLs.resources.questions.post))
+      .onPost(URLs.resources.questions.post)
       .reply(200, { success: true })
 
     expect(screen.getAllByTestId('menu-icon').length).toBeGreaterThan(0)
