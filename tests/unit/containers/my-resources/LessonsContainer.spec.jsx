@@ -260,4 +260,25 @@ describe('LessonContainer - error', () => {
       })
     )
   })
+
+  it('should dispatch openAlert when there is an error', async () => {
+    const errorMock = new Error('Test error')
+    useQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: errorMock,
+      refetch: vi.fn(),
+    })
+  
+    renderWithProviders(<LessonsContainer />)
+  
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: 'mockedErrorMessage',
+        })
+      )
+    })
+  })
 })
