@@ -1,4 +1,4 @@
-import { beforeAll, expect } from 'vitest'
+import { beforeAll, beforeEach, expect } from 'vitest'
 import { screen, fireEvent, act } from '@testing-library/react'
 import Quiz from '~/pages/quiz/Quiz'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
@@ -40,8 +40,6 @@ const mockQuiz = {
   description: 'Js'
 }
 
-let preloadedState
-
 describe('QuizPage for student', () => {
   beforeAll(() => {
     mockAxiosClient
@@ -62,14 +60,12 @@ describe('QuizPage for student', () => {
   })
 
   beforeEach(() => {
-    preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+    renderWithProviders(<Quiz />, {
+      preloadedState: { appMain: { userRole: UserRoleEnum.Student } }
+    })
   })
 
   it('should render quiz page with data only for Student', async () => {
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
-
     const questionText = await screen.findByText(
       'What is the difference between function expression and function declaration?'
     )
@@ -77,10 +73,6 @@ describe('QuizPage for student', () => {
   })
 
   it('should update checkbox value', async () => {
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
-
     const checkbox = screen.getByRole('checkbox')
     expect(checkbox).toHaveProperty('checked', false)
 
@@ -92,9 +84,6 @@ describe('QuizPage for student', () => {
   })
 
   it('should display correct answers after finishing quiz', async () => {
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
     const finishButton = await screen.findByText('quiz.finish')
     act(() => {
       fireEvent.click(finishButton)
@@ -112,10 +101,6 @@ describe('QuizPage for student', () => {
   })
 
   it('should render question text', async () => {
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
-
     const questionText = await screen.findByText(
       'What is the difference between function expression and function declaration?'
     )
@@ -123,10 +108,6 @@ describe('QuizPage for student', () => {
   })
 
   it('should render timer for the active quiz for student', async () => {
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
-
     const timer = await screen.findByTestId('TimerOutlinedIcon')
     expect(timer).toBeInTheDocument()
   })
@@ -144,14 +125,12 @@ describe('Quiz tutor variant for tutor', () => {
   })
 
   beforeEach(() => {
-    preloadedState = { appMain: { userRole: UserRoleEnum.Tutor } }
+    renderWithProviders(<Quiz />, {
+      preloadedState: { appMain: { userRole: UserRoleEnum.Tutor } }
+    })
   })
 
   it('should render quiz page with data only for tutor', async () => {
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
-
     const points = await screen.findByText('quiz.points')
     expect(points).toBeInTheDocument()
   })
