@@ -204,7 +204,7 @@ describe('LessonContainer test', () => {
     expect(editButton).toBeNull()
   })
 
-  it('should navigate to the correct edit URL when onEdit is called', async () => {
+  it('should create correct edit URL when onEdit is called', async () => {
     useQuery.mockReturnValue({
       data: lessonResponseMock.items,
       isLoading: false,
@@ -227,6 +227,10 @@ describe('LessonContainer test', () => {
     })
 
     expect(expectedUrl).toBe(`my-resources/edit-lesson/0`)
+
+    mockNavigate(expectedUrl)
+
+    expect(mockNavigate).toHaveBeenCalled()
   })
 })
 
