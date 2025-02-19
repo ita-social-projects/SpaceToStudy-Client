@@ -1,4 +1,4 @@
-import { beforeAll, expect } from 'vitest'
+import { beforeAll, beforeEach, expect } from 'vitest'
 import { screen } from '@testing-library/react'
 import QuizPreview from '~/pages/quiz-preview/QuizPreview'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
@@ -40,8 +40,6 @@ const mockQuiz = {
   description: 'Js'
 }
 
-const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
-
 describe('QuizPage for student', () => {
   beforeAll(() => {
     mockAxiosClient
@@ -60,11 +58,13 @@ describe('QuizPage for student', () => {
       .reply(200, mockQuiz)
   })
 
-  it('should render quiz preview page with data', async () => {
+  beforeEach(() => {
     renderWithProviders(<QuizPreview />, {
-      preloadedState
+      appMain: { userRole: UserRoleEnum.Student }
     })
+  })
 
+  it('should render quiz preview page with data', async () => {
     const quizTitle = await screen.findByText('JS Quiz')
     expect(quizTitle).toBeInTheDocument()
   })
