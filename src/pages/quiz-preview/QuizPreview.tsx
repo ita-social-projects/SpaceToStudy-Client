@@ -64,12 +64,12 @@ const QuizPreviewPage: React.FC = () => {
   }
 
   const handleStart = () => {
-    const fullUrl = `/${getFullUrl({
-      pathname: authRoutes.cooperationQuiz.route,
-      parameters: { id: cooperationId, quizId }
-    })}`
-
-    navigate(fullUrl)
+    navigate(
+      getFullUrl({
+        pathname: authRoutes.cooperationQuiz.route,
+        parameters: { id: cooperationId, quizId }
+      })
+    )
   }
 
   const handleClose = () => {
