@@ -12,6 +12,8 @@ import Button from '~scss-components/button/Button'
 import QuizInfoSection from '~/containers/quiz/quiz-info-section/QuizInfoSection'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import TimeLimitReminder from '~/containers/quiz/time-limit-reminder/TimeLimitReminder'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { getFullUrl } from '~/utils/get-full-url'
 
 import useQuery from '~/hooks/use-query'
 
@@ -57,7 +59,12 @@ const QuizPreviewPage: React.FC = () => {
   }
 
   const handleStart = () => {
-    navigate(`/my-cooperations/${cooperationId}/quiz/${quizId}`)
+    const fullUrl = `/${getFullUrl({
+      pathname: authRoutes.cooperationQuiz.route,
+      parameters: { id: cooperationId, quizId }
+    })}`
+
+    navigate(fullUrl)
   }
 
   const handleClose = () => {
