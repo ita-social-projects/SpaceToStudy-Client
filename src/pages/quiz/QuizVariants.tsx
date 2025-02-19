@@ -202,6 +202,8 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     items
   } = quiz ?? defaultQuizResponse
 
+  const isStepper = view === QuizViewEnum.Stepper
+
   const mappedResults = useMemo(() => {
     const result: Record<string, string | string[]> = {}
     finishedQuiz?.results?.forEach(({ question, answers }) => {
@@ -218,12 +220,6 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
 
     return result
   }, [finishedQuiz?.results, quiz?.items])
-
-  if (isFinishedQuizLoading || !finishedQuiz || isQuizLoading) {
-    return <Loader pageLoad />
-  }
-
-  const isStepper = view === QuizViewEnum.Stepper
 
   const questionsBlock = isStepper ? (
     <SelectableQuestionQuizView
@@ -247,6 +243,10 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
       shouldShowPoints={pointValues}
     />
   )
+
+  if (isFinishedQuizLoading || !finishedQuiz || isQuizLoading) {
+    return <Loader pageLoad />
+  }
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
