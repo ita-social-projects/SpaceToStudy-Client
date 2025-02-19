@@ -77,7 +77,7 @@ const LessonsContainer = () => {
     ],
     queryFn: getMyLessons,
     options: {
-      staleTime: Infinity
+      staleTime: 0
     }
   })
 
