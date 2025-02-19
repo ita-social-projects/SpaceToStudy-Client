@@ -20,7 +20,7 @@ vi.mock(
   () => ({
     default: ({ actions }) => (
       <div data-testid='testTable'>
-        <button data-testid='editButton' onClick={() => actions.onEdit('1')}>
+        <button data-testid='editButton' onClick={() => actions.onEdit('')}>
           Edit
         </button>
       </div>
@@ -158,9 +158,9 @@ describe('LessonContainer test', () => {
     expect(loader).toBeInTheDocument()
   })
 
-  /*it('should call onEdit and open modal when edit button is clicked', async () => {
+  it('should call onEdit and open modal when edit button is clicked', async () => {
     useQuery.mockReturnValue({
-      data: null,
+      data: lessonResponseMock.items,
       isLoading: false,
       error: null,
       refetch: vi.fn(),
@@ -172,7 +172,7 @@ describe('LessonContainer test', () => {
     fireEvent.click(editButton)
 
     expect(mockOpenModal).toHaveBeenCalled()
-  })*/
+  })
 })
 
 describe('LessonContainer - error', () => {
