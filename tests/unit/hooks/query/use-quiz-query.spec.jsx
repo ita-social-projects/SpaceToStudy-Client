@@ -49,7 +49,7 @@ describe('useQuizQuery', () => {
     useQuery.mockReturnValue({ data: mockQuizData, isLoading: false })
 
     const { result } = renderHook(() => useQuizQuery(quizId), {
-      wrapper: wrapper
+      wrapper
     })
 
     expect(result.current.quiz).toEqual(mockQuizData)
@@ -60,7 +60,7 @@ describe('useQuizQuery', () => {
     useQuery.mockReturnValue({ data: null, isLoading: true })
 
     const { result } = renderHook(() => useQuizQuery(quizId), {
-      wrapper: wrapper
+      wrapper
     })
 
     expect(result.current.quiz).toBeNull()
