@@ -42,7 +42,7 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 
-const CategoriesContainer: React.FC = () => {
+const CategoriesContainer = () => {
   const { t } = useTranslation()
   const searchTitle = useRef<string>('')
   const sortOptions = useSort({ initialSort })

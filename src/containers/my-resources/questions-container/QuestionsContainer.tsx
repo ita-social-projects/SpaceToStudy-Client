@@ -28,7 +28,7 @@ import { ResourcesTabsEnum, type Question } from '~/types'
 import { getFullUrl } from '~/utils/get-full-url'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
-const QuestionsContainer = () => {
+const QuestionsContainer: React.FC = () => {
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef('')
   const breakpoints = useBreakpoints()
