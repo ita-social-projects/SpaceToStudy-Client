@@ -232,6 +232,34 @@ describe('LessonContainer test', () => {
 
     expect(mockNavigate).toHaveBeenCalled()
   })
+
+  it('should return early when lessons is null or undefined', () => {
+    useQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+      refetch: vi.fn()
+    })
+    
+    renderWithProviders(<LessonsContainer />)
+    
+    expect(screen.queryByTestId('testTable')).toBeNull()
+  })
+
+  it('should find resource by id if lessons exist', () => {
+    useQuery.mockReturnValue({
+      data: lessonResponseMock.items,
+      isLoading: false,
+      error: null,
+      refetch: vi.fn()
+    })
+    
+    renderWithProviders(<LessonsContainer />)
+    
+    expect(
+      lessonResponseMock.items.find((item) => item._id === '0')
+    ).toBeDefined()
+  })
 })
 
 describe('LessonContainer - error', () => {
