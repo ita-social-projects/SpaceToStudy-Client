@@ -64,6 +64,27 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     updatedAt
   } = quiz ?? defaultQuizResponse
 
+  const isStepper = view === QuizViewEnum.Stepper
+
+  const questionsBlock = isStepper ? (
+    <SelectableQuestionQuizView
+      answers={data}
+      handleInputChange={handleInputChange}
+      handleNonInputValueChange={handleNonInputChange}
+      isEditable
+      questions={items}
+      sx={styles.selectableQuestionQuizWrapper}
+    />
+  ) : (
+    <ScrollQuestionsQuizView
+      answers={data}
+      handleInputChange={handleInputChange}
+      handleNonInputValueChange={handleNonInputChange}
+      isEditable
+      questions={items}
+    />
+  )
+
   const points = countPoints(
     items.filter(({ type }) => type !== QuestionTypesEnum.OpenAnswer),
     data
@@ -113,27 +134,6 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
-
-  const isStepper = view === QuizViewEnum.Stepper
-
-  const questionsBlock = isStepper ? (
-    <SelectableQuestionQuizView
-      answers={data}
-      handleInputChange={handleInputChange}
-      handleNonInputValueChange={handleNonInputChange}
-      isEditable
-      questions={items}
-      sx={styles.selectableQuestionQuizWrapper}
-    />
-  ) : (
-    <ScrollQuestionsQuizView
-      answers={data}
-      handleInputChange={handleInputChange}
-      handleNonInputValueChange={handleNonInputChange}
-      isEditable
-      questions={items}
-    />
-  )
 
   const questionsAnswered = Object.keys(data).length
 
