@@ -49,7 +49,7 @@ const QuizPreviewPage: React.FC = () => {
     return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
   }, [cooperationId, quizId])
 
-  const { data: finishedAttempts = [] } = useQuery({
+  const { data: finishedQuizzes = [] } = useQuery({
     queryKey: ['finished-quizzes', cooperationId, quizId],
     queryFn: getFinishedQuizzes,
     options: {
@@ -75,8 +75,8 @@ const QuizPreviewPage: React.FC = () => {
   }
 
   const attemptsList =
-    Array.isArray(finishedAttempts) && finishedAttempts.length !== 0 ? (
-      finishedAttempts.map((item) => {
+    Array.isArray(finishedQuizzes) && finishedQuizzes.length !== 0 ? (
+      finishedQuizzes.map((item) => {
         return (
           <Box key={item._id} sx={styles.attemptWrapper}>
             <QuizInfoSection
@@ -109,7 +109,7 @@ const QuizPreviewPage: React.FC = () => {
           onStartButton={openModal}
           questionsAmount={items.length}
           timeLimit={timeLimit}
-          usedAttempts={finishedAttempts.length}
+          usedAttempts={finishedQuizzes.length}
         />
       </Box>
       <Divider sx={styles.divider} />
