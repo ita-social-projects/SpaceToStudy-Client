@@ -20,12 +20,12 @@ describe('TutorQuizInfo', () => {
 })
 
 describe('StartViewQuizInfo', () => {
-  const mockHandleStartButton = vi.fn()
+  const mockHandleStart = vi.fn()
   const defaultProps = {
     questionsAmount: 3,
     attempts: QuizAttempt.Attempt2,
     timeLimit: QuizTimeLimit.Minute30,
-    onStart: mockHandleStartButton,
+    onStart: mockHandleStart,
     usedAttempts: 0
   }
 
@@ -55,7 +55,7 @@ describe('StartViewQuizInfo', () => {
     const button = screen.getByText('quiz.startQuiz')
     fireEvent.click(button)
 
-    expect(mockHandleStartButton).toHaveBeenCalledOnce()
+    expect(mockHandleStart).toHaveBeenCalledOnce()
   })
 
   it('should render try again button if not first attempt', () => {
