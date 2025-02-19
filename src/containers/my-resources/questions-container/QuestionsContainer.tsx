@@ -79,7 +79,7 @@ const QuestionsContainer: React.FC = () => {
   )
 
   const editQuestion = (id: string) => {
-    return navigate(
+    navigate(
       getFullUrl({
         pathname: authRoutes.myResources.editQuestion.route,
         parameters: { id }
@@ -144,7 +144,7 @@ const QuestionsContainer: React.FC = () => {
     itemsPerPage,
     actions: {
       onEdit: editQuestion,
-      onDuplicate: (itemId: string) => duplicateItem(itemId)
+      onDuplicate: duplicateItem
     },
     resource: ResourcesTabsEnum.Questions,
     sort: sortOptions,
@@ -154,10 +154,10 @@ const QuestionsContainer: React.FC = () => {
   return (
     <Box>
       <AddResourceWithInput
-        btnText={'myResourcesPage.questions.addBtn'}
+        btnText='myResourcesPage.questions.addBtn'
         fetchData={refetchQuestions}
         link={authRoutes.myResources.newQuestion.path}
-        placeholder={'myResourcesPage.questions.searchInput'}
+        placeholder='myResourcesPage.questions.searchInput'
         searchRef={searchTitle}
         selectedItems={selectedItems}
         setItems={setSelectedItems}

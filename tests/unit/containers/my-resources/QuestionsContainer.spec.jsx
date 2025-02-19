@@ -60,7 +60,7 @@ const questionResponseMockCategory = {
 }
 
 describe('QuestionsContainer test', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient
       .onGet(new RegExp(URLs.resources.questions.get))
       .reply(200, questionResponseMock)
@@ -141,7 +141,7 @@ describe('QuestionsContainer test', () => {
 })
 
 describe('QuestionCategory test', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient
       .onGet(new RegExp(URLs.resources.questions.get))
       .reply(200, questionResponseMockCategory)
