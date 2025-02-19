@@ -17,12 +17,12 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import usePagination from '~/hooks/table/use-pagination'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
-import { DuplicateQuestionErrors } from '~/containers/my-resources/questions-container/QuestionsContainer.constants'
 import {
   columns,
   initialSort,
   itemsLoadLimit,
-  removeColumnRules
+  removeColumnRules,
+  DuplicateQuestionErrors
 } from '~/containers/my-resources/questions-container/QuestionsContainer.constants'
 import { ResourcesTabsEnum, type Question } from '~/types'
 import { getFullUrl } from '~/utils/get-full-url'
