@@ -128,9 +128,6 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
       handleNonInputValueChange={handleNonInputChange}
       isEditable
       questions={items}
-      shouldShowAnswersCorrectness={false}
-      shouldShowCorrectAnswers={false}
-      shouldShowPoints={false}
       sx={styles.selectableQuestionQuizWrapper}
     />
   ) : (
@@ -140,9 +137,6 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
       handleNonInputValueChange={handleNonInputChange}
       isEditable
       questions={items}
-      shouldShowAnswersCorrectness={false}
-      shouldShowCorrectAnswers={false}
-      shouldShowPoints={false}
     />
   )
 
