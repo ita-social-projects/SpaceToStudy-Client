@@ -100,20 +100,18 @@ const QuizPreviewPage: React.FC = () => {
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
-      <Box>
-        <TitleWithDescription
-          description={description}
-          style={styles.titleWithDescription}
-          title={title}
-        />
-        <StartViewQuizInfo
-          attempts={attemptLimit}
-          onStart={openModal}
-          questionsAmount={items.length}
-          timeLimit={timeLimit}
-          usedAttempts={finishedQuizzes.length}
-        />
-      </Box>
+      <TitleWithDescription
+        description={description}
+        style={styles.titleWithDescription}
+        title={title}
+      />
+      <StartViewQuizInfo
+        attempts={attemptLimit}
+        onStart={openModal}
+        questionsAmount={items.length}
+        timeLimit={timeLimit}
+        usedAttempts={finishedQuizzes.length}
+      />
       <Divider sx={styles.divider} />
       {attemptsList}
       <TimeLimitReminder
