@@ -93,7 +93,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
 
   const { mutateAsync, error } = useMutation({
     mutationFn: addFinishedQuiz,
-    queryKey: ['finishedQuiz']
+    queryKey: ['finished-quizzes']
   })
 
   const handleCancel = useCallback(() => {

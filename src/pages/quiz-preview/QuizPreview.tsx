@@ -45,13 +45,16 @@ const QuizPreviewPage: React.FC = () => {
     items
   } = quiz ?? defaultQuizResponse
 
-  const getQuizzes = useCallback(() => {
+  const getFinishedQuizzes = useCallback(() => {
     return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
   }, [cooperationId, quizId])
 
   const { data: finishedAttempts = [] } = useQuery({
     queryKey: ['finished-quizzes', cooperationId, quizId],
-    queryFn: getQuizzes
+    queryFn: getFinishedQuizzes,
+    options: {
+      staleTime: 1000 * 60 * 60
+    }
   })
 
   if (isLoading || !quiz) {
