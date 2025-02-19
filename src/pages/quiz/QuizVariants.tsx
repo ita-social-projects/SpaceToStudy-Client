@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -91,9 +91,10 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
 
   const { handleErrorAlert } = useSnackbarAlert()
 
-  const { mutateAsync, error } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: addFinishedQuiz,
-    queryKey: ['finished-quizzes']
+    queryKey: ['finished-quizzes'],
+    onError: handleErrorAlert
   })
 
   const handleCancel = useCallback(() => {
@@ -108,12 +109,6 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
       navigate(-1)
     }
   }, [finishQuiz, mutateAsync, navigate, scoredResponses])
-
-  useEffect(() => {
-    if (error) {
-      handleErrorAlert(error)
-    }
-  }, [error, handleErrorAlert])
 
   if (isLoading || !quiz) {
     return <Loader pageLoad />
