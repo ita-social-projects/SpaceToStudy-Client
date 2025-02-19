@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { screen, fireEvent, waitFor  } from '@testing-library/react'
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 import { renderWithProviders } from '~tests/test-utils'
 import useQuery from '~/hooks/use-query'
@@ -172,6 +172,19 @@ describe('LessonContainer test', () => {
     fireEvent.click(editButton)
 
     expect(mockOpenModal).toHaveBeenCalled()
+  })
+
+  it('should not render editButton if lessons is undefined or null', () => {
+    useQuery.mockReturnValue({ 
+      data: null, 
+      isLoading: false, 
+      error: null, 
+      refetch: vi.fn(), 
+    })
+    renderWithProviders(<LessonsContainer />)
+  
+    const editButton = screen.queryByTestId('editButton')
+    expect(editButton).toBeNull()
   })
 })
 
