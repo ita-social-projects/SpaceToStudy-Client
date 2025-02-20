@@ -68,7 +68,7 @@ describe('CooperationSectionView', () => {
     fireEvent.click(resourceItem)
 
     expect(navigateMock).toHaveBeenCalledWith(
-      `quiz/${mockSection.resources[0].resource._id}`
+      `quizzes/${mockSection.resources[0].resource._id}/attempts`
     )
   })
 })
