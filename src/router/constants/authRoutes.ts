@@ -51,7 +51,7 @@ export const authRoutes = {
   cooperationQuiz: {
     route: '/my-cooperations/:id/quizzes/:quizId'
   },
-  cooperationQuizAttempt: {
+  cooperationQuizAttempts: {
     route: 'my-cooperations/:id/quizzes/:quizId/attempts'
   },
   accountMenu: {

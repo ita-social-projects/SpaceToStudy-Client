@@ -25,7 +25,7 @@ import {
   editCourse,
   cooperationQuiz,
   bookmarkedOffers,
-  cooperationQuizAttempt
+  cooperationQuizAttempts
 } from '~/router/constants/crumbs'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
 import { UserRoleEnum } from '~/types'
@@ -182,10 +182,10 @@ export const authRouter = (
           myCooperations,
           cooperationDetails,
           cooperationQuiz,
-          cooperationQuizAttempt
+          cooperationQuizAttempts
         ]
       }}
-      path={authRoutes.cooperationQuizAttempt.route}
+      path={authRoutes.cooperationQuizAttempts.route}
     />
     <Route
       element={<CreateOrEditQuestion />}
