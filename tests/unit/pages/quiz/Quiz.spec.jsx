@@ -72,7 +72,7 @@ describe('QuizPage for student', () => {
     expect(questionText).toBeInTheDocument()
   })
 
-  it('should update checkbox value', async () => {
+  it('should update checkbox value', () => {
     const checkbox = screen.getByRole('checkbox')
     expect(checkbox).toHaveProperty('checked', false)
 
