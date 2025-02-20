@@ -72,16 +72,14 @@ const CreateOrEditNote = ({
   if (userIsLoading || !userResponse) {
     return <Loader size={20} />
   }
-  const firstName = userResponse?.firstName
-  const lastName = userResponse?.lastName
-  const photo = userResponse?.photo
+  const firstName = userResponse.firstName
+  const lastName = userResponse.lastName
+  const photo = userResponse.photo
 
   const userPhoto = photo
     ? new URL(photo, import.meta.env.VITE_APP_IMG_USER_URL).href
     : undefined
-  const isNameValid = Boolean(firstName && lastName)
-  const userName = isNameValid && `${firstName} ${lastName}`
-
+  const userName = `${firstName} ${lastName}`
   const userInfo = (
     <>
       <AvatarIcon
