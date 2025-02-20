@@ -131,11 +131,11 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     }
   }, [finishQuiz, mutateAsync, navigate, scoredResponses])
 
+  const questionsAnswered = Object.keys(data).length
+
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
-
-  const questionsAnswered = Object.keys(data).length
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
@@ -287,10 +287,6 @@ const TutorQuiz: React.FC = () => {
     items
   } = quiz ?? defaultQuizResponse
 
-  if (isLoading || !quiz) {
-    return <Loader pageLoad />
-  }
-
   const isStepper = view === QuizViewEnum.Stepper
 
   const questionsBlock = isStepper ? (
@@ -309,6 +305,10 @@ const TutorQuiz: React.FC = () => {
       questions={items}
     />
   )
+
+  if (isLoading || !quiz) {
+    return <Loader pageLoad />
+  }
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
