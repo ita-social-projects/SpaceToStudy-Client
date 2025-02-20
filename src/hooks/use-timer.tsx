@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react'
 
 import { formatDuration } from '~/utils/helper-functions'
 
-const useTimer = (initialTime: number, onTimerEnd?: () => void) => {
+const useTimer = (initialTime: number) => {
   const [time, setTime] = useState(() => (initialTime <= 0 ? 0 : initialTime))
 
   useEffect(() => {
     if (time <= 0) {
-      onTimerEnd?.()
       return
     }
 
@@ -18,7 +17,7 @@ const useTimer = (initialTime: number, onTimerEnd?: () => void) => {
     return () => {
       clearInterval(intervalId)
     }
-  }, [time, onTimerEnd])
+  }, [time])
 
   return formatDuration(time)
 }

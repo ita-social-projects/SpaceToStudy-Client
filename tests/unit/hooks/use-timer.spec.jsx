@@ -2,9 +2,10 @@ import { renderHook, act } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import useTimer from '~/hooks/use-timer'
+import { ONE_MINUTE } from '~/constants'
 
 describe('useTimer', () => {
-  const initialTime = 60000
+  const initialTime = ONE_MINUTE
 
   beforeEach(() => {
     vi.useFakeTimers()

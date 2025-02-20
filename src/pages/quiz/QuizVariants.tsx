@@ -18,6 +18,7 @@ import useMutation from '~/hooks/use-mutation'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import useForm from '~/hooks/use-form'
 import useQuizQuery from '~/hooks/query/use-quiz-query'
+import useTimer from '~/hooks/use-timer'
 
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
@@ -25,7 +26,13 @@ import styles from '~/pages/quiz/Quiz.styles'
 import { defaultResponses } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
-import { ComponentEnum, QuestionTypesEnum, QuizViewEnum } from '~/types'
+import {
+  ComponentEnum,
+  QuestionTypesEnum,
+  QuizTimeLimit,
+  QuizViewEnum
+} from '~/types'
+import { getTime } from '~/utils/helper-functions'
 
 type ActiveQuizProps = {
   finishQuiz: (quizId: string) => void
@@ -50,6 +57,10 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
   }
 
   const { quiz, isLoading } = useQuizQuery(quizId)
+
+  const time = useTimer(
+    getTime(quiz?.settings.timeLimit ?? QuizTimeLimit.NoLimit)
+  )
 
   const openModal = useCallback(() => {
     setIsOpen(true)
@@ -139,17 +150,19 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
-      <QuizHeader
-        createdAt={createdAt}
-        description={description}
-        points={points}
-        questionsAnswered={questionsAnswered}
-        title={title}
-        totalPoints={items.length}
-        type='active'
-        updatedAt={updatedAt}
-      />
       <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
+        <QuizHeader
+          createdAt={createdAt}
+          description={description}
+          isTimeEnds={false}
+          points={points}
+          questionsAnswered={questionsAnswered}
+          time={time}
+          title={title}
+          totalPoints={items.length}
+          type='active'
+          updatedAt={updatedAt}
+        />
         <Divider sx={styles.divider} />
         {questionsBlock}
         <Box sx={styles.finishBlock.root}>
@@ -250,16 +263,16 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
-      <QuizHeader
-        createdAt={finishedQuiz.createdAt}
-        description={description}
-        points={items.length}
-        title={title}
-        totalPoints={finishedQuiz.results?.length}
-        type='finished'
-        updatedAt={finishedQuiz.updatedAt}
-      />
       <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
+        <QuizHeader
+          createdAt={finishedQuiz.createdAt}
+          description={description}
+          points={items.length}
+          title={title}
+          totalPoints={finishedQuiz.results?.length}
+          type='finished'
+          updatedAt={finishedQuiz.updatedAt}
+        />
         <Divider sx={styles.divider} />
         {questionsBlock}
       </Box>
@@ -312,17 +325,17 @@ const TutorQuiz: React.FC = () => {
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
-      <QuizHeader
-        createdAt={''}
-        description={''}
-        points={0}
-        questionsAnswered={0}
-        title={''}
-        totalPoints={0}
-        type='tutor'
-        updatedAt={''}
-      />
       <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
+        <QuizHeader
+          createdAt={''}
+          description={''}
+          points={0}
+          questionsAnswered={0}
+          title={''}
+          totalPoints={0}
+          type='tutor'
+          updatedAt={''}
+        />
         <Divider sx={styles.divider} />
         {questionsBlock}
       </Box>

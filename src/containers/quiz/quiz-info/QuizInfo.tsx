@@ -25,11 +25,15 @@ import { TFunction } from 'i18next'
 type ActiveQuizInfoProps = {
   questionsAnswered: number
   totalPoints: number
+  time: string
+  isTimeEnds: boolean
 }
 
 const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
   questionsAnswered,
-  totalPoints
+  totalPoints,
+  time,
+  isTimeEnds
 }) => {
   const { t } = useTranslation()
 
@@ -40,7 +44,7 @@ const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
         gap: '24px'
       }}
     >
-      <Timer isTimeEnds={false} label='00:19:59' />
+      <Timer isTimeEnds={isTimeEnds} label={time} />
       <Divider
         flexItem
         orientation='vertical'

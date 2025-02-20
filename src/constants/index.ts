@@ -1,4 +1,4 @@
-import { type AlertColor } from '~/design-system/components/alert/Alert'
+import type { AlertColor } from '~/design-system/components/alert/Alert'
 
 export const s2s = 's2s'
 
@@ -29,5 +29,7 @@ export const itemsLoadLimit = {
   mobile: 6,
   default: 12
 }
+
+export const ONE_MINUTE = 1000 * 60
 
 export const ONE_HOUR = 1000 * 60 * 60

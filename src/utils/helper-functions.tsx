@@ -21,6 +21,7 @@ import {
   Categories,
   type QuizTimeLimit
 } from '~/types'
+import { ONE_MINUTE, ONE_HOUR } from '~/constants'
 
 export const parseJwt = <T,>(token: string): T => {
   const base64Url = token.split('.')[1]
@@ -338,5 +339,5 @@ export const getTime = (timeLimit: QuizTimeLimit) => {
     return -1
   }
 
-  return parsedTimeLimit === 1 ? 60 * 60 * 1000 : parsedTimeLimit * 60 * 1000
+  return parsedTimeLimit === 1 ? ONE_HOUR : parsedTimeLimit * ONE_MINUTE
 }
