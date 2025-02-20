@@ -19,7 +19,7 @@ import { getFullUrl } from '~/utils/get-full-url'
 import useQuery from '~/hooks/use-query'
 
 import { ResourceService } from '~/services/resource-service'
-import styles from '~/pages/quiz-preview/QuizPreview.styles'
+import styles from '~/pages/quiz-preview/QuizAttempts.styles'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
 import { formatTime, getFormattedDate } from '~/utils/helper-functions'
@@ -27,7 +27,7 @@ import { formatTime, getFormattedDate } from '~/utils/helper-functions'
 import useQuizQuery from '~/hooks/query/use-quiz-query'
 import { ONE_HOUR } from '~/constants'
 
-const QuizPreviewPage: React.FC = () => {
+const QuizAttemptsPage: React.FC = () => {
   const { id: cooperationId = '', quizId = '' } = useParams()
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
@@ -124,4 +124,4 @@ const QuizPreviewPage: React.FC = () => {
   )
 }
 
-export default QuizPreviewPage
+export default QuizAttemptsPage

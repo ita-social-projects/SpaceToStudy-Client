@@ -62,7 +62,7 @@ const CreateOrEditQuestion = lazy(
 )
 const CreateCourse = lazy(() => import('~/pages/create-course/CreateCourse'))
 const Quiz = lazy(() => import('~/pages/quiz/Quiz'))
-const QuizPreview = lazy(() => import('~/pages/quiz-preview/QuizPreview'))
+const QuizAttempts = lazy(() => import('~/pages/quiz-preview/QuizAttempts'))
 
 export const authRouter = (
   <Route
@@ -176,7 +176,7 @@ export const authRouter = (
       path={authRoutes.cooperationQuiz.route}
     />
     <Route
-      element={<QuizPreview />}
+      element={<QuizAttempts />}
       handle={{
         crumb: [
           myCooperations,
