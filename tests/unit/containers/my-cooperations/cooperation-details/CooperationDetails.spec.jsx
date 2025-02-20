@@ -199,12 +199,10 @@ describe('CooperationClosureDeclinedBanner without answer being submitted', () =
   })
 
   it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for answer" and role equals users role', async () => {
-    await waitFor(() => {
-      const cooperationClosingModal = screen.getByText(
-        'titles.cooperationClosureDeclined'
-      )
-      expect(cooperationClosingModal).toBeInTheDocument()
-    })
+    const cooperationClosingModal = await screen.findByText(
+      'titles.cooperationClosureDeclined'
+    )
+    expect(cooperationClosingModal).toBeInTheDocument()
   })
 })
 
@@ -221,12 +219,10 @@ describe('CooperationClosureDeclinedBanner with submitted answer', () => {
   })
 
   it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for approval" and role is not the same as users role', async () => {
-    await waitFor(() => {
-      const cooperationClosingModal = screen.getByText(
-        'titles.cooperationClosureDeclined'
-      )
-      expect(cooperationClosingModal).toBeInTheDocument()
-    })
+    const cooperationClosingModal = await screen.findByText(
+      'titles.cooperationClosureDeclined'
+    )
+    expect(cooperationClosingModal).toBeInTheDocument()
   })
 })
 
@@ -243,11 +239,9 @@ describe('AcceptCooperationClosing modal with submitted answer', () => {
   })
 
   it('should render AcceptCooperationClosing modal when needAction type is "waiting for answer" and role is not the same as users role', async () => {
-    await waitFor(() => {
-      const cooperationClosingModal = screen.getByText(
-        'titles.acceptCooperationClosing'
-      )
-      expect(cooperationClosingModal).toBeInTheDocument()
-    })
+    const cooperationClosingModal = screen.getByText(
+      'titles.acceptCooperationClosing'
+    )
+    expect(cooperationClosingModal).toBeInTheDocument()
   })
 })
