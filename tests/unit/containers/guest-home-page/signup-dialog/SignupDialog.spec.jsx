@@ -92,7 +92,7 @@ describe('Signup dialog test', () => {
     expect(error).toBeInTheDocument()
   })
 
-  it('should call mutation after button submit', async () => {
+  it('should call mutation after button submit', () => {
     const inputFirstName = screen.getByLabelText(/common.labels.firstName/i)
 
     fireEvent.change(inputFirstName, { target: { value: 'test' } })

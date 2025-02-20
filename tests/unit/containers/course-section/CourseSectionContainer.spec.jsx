@@ -309,7 +309,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     })
   })
 
-  it('should handle resource order change event [CourseResourceEventType.ResourcesOrderChange]', async () => {
+  it('should handle resource order change event [CourseResourceEventType.ResourcesOrderChange]', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({
@@ -340,7 +340,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     )
   })
 
-  it('should handle resource remove event [CourseResourceEventType.ResourceRemoved]', async () => {
+  it('should handle resource remove event [CourseResourceEventType.ResourceRemoved]', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({
@@ -364,7 +364,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     )
   })
 
-  it('should handle edit resource event when resourceType is not Attachment', async () => {
+  it('should handle edit resource event when resourceType is not Attachment', () => {
     const resource = mockedSectionData.resources[0].resource
     const editResourceSpy = vi
       .spyOn(window, 'open')
@@ -386,7 +386,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     )
   })
 
-  it('should handle edit resource event when resourceType is Attachment', async () => {
+  it('should handle edit resource event when resourceType is Attachment', () => {
     const resource = mockedSectionData.resources[2].resource
 
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
@@ -424,7 +424,7 @@ describe('should remove duplicates from list', () => {
     vi.resetAllMocks()
   })
 
-  it('should edit duplicate resources', async () => {
+  it('should edit duplicate resources', () => {
     const resource = mockedDuplicatedSectionData.resources[0].resource
     const editResourceSpy = vi
       .spyOn(window, 'open')
@@ -449,7 +449,7 @@ describe('should remove duplicates from list', () => {
     )
   })
 
-  it('should handle resource remove event on Quiz', async () => {
+  it('should handle resource remove event on Quiz', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({
@@ -473,7 +473,7 @@ describe('should remove duplicates from list', () => {
     )
   })
 
-  it('should handle resource remove event on Quiz', async () => {
+  it('should handle resource remove event on Quiz', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({
@@ -497,7 +497,7 @@ describe('should remove duplicates from list', () => {
     )
   })
 
-  it('should handle resource remove event on Attachement', async () => {
+  it('should handle resource remove event on Attachement', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({

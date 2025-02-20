@@ -152,7 +152,7 @@ describe('ResourceItem tests with isCooperation prop', () => {
     expect(availabilitySelect.value).toBe('openFrom')
   })
 
-  it('should call setOpenFromDate when DatePicker value changes', async () => {
+  it('should call setOpenFromDate when DatePicker value changes', () => {
     const datePickerInput = screen.getByTestId('mock-DatePicker')
     fireEvent.change(datePickerInput, { target: { value: '2025-08-16' } })
 

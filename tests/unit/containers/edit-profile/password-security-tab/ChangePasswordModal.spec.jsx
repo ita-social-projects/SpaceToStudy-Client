@@ -149,7 +149,7 @@ describe('ChangePasswordModal', () => {
     expect(confirmPasswordInput).toHaveValue('')
   })
 
-  it('should show visibility icon', async () => {
+  it('should show visibility icon', () => {
     const visibilityOffIcons = screen.getAllByTestId('VisibilityOffIcon')
     const visibilityOffIcon = visibilityOffIcons[0]
     fireEvent.click(visibilityOffIcon)

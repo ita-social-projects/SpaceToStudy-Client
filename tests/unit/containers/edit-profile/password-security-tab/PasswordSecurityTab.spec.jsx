@@ -71,7 +71,7 @@ describe('PasswordSecurityTab', () => {
     expect(description).toBeInTheDocument()
   })
 
-  it('renders title and description deactivate account', async () => {
+  it('renders title and description deactivate account', () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
@@ -104,7 +104,7 @@ describe('PasswordSecurityTab', () => {
 
     expect(deactivateDescription).not.toBeInTheDocument()
   })
-  it('should open the modal when clicking the Deactivate account button', async () => {
+  it('should open the modal when clicking the Deactivate account button', () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
@@ -120,7 +120,7 @@ describe('PasswordSecurityTab', () => {
     expect(deactivateTitle).toBeInTheDocument()
     expect(deactivateDescription).toBeInTheDocument()
   })
-  it('should render Deactivate and Cancel buttons in the modal', async () => {
+  it('should render Deactivate and Cancel buttons in the modal', () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
@@ -132,7 +132,7 @@ describe('PasswordSecurityTab', () => {
     expect(deactivateButton).toBeInTheDocument()
     expect(cancelButton).toBeInTheDocument()
   })  
-  it('should close modal on Cancel button click and stays on Password & Security tab', async () => {
+  it('should close modal on Cancel button click and stays on Password & Security tab', () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
