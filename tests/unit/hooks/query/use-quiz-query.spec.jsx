@@ -44,6 +44,17 @@ describe('useQuizQuery', () => {
     vi.clearAllMocks()
   })
 
+  it('should return loading state initially', () => {
+    useQuery.mockReturnValue({ data: null, isLoading: true })
+
+    const { result } = renderHook(() => useQuizQuery(quizId), {
+      wrapper
+    })
+
+    expect(result.current.quiz).toBeNull()
+    expect(result.current.isLoading).toBe(true)
+  })
+
   it('should return quiz data when query is successful', () => {
     ResourceService.getQuiz.mockResolvedValue(mockQuizData)
     useQuery.mockReturnValue({ data: mockQuizData, isLoading: false })
@@ -54,16 +65,5 @@ describe('useQuizQuery', () => {
 
     expect(result.current.quiz).toEqual(mockQuizData)
     expect(result.current.isLoading).toBe(false)
-  })
-
-  it('should return loading state initially', () => {
-    useQuery.mockReturnValue({ data: null, isLoading: true })
-
-    const { result } = renderHook(() => useQuizQuery(quizId), {
-      wrapper
-    })
-
-    expect(result.current.quiz).toBeNull()
-    expect(result.current.isLoading).toBe(true)
   })
 })
