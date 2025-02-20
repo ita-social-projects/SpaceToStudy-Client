@@ -11,6 +11,12 @@ import { authRoutes } from '~/router/constants/authRoutes'
 const mockNavigate = vi.fn()
 const mockDispatch = vi.fn()
 const mockOpenModal = vi.fn()
+const mockHandleErrorAlert = vi.fn((error) => {
+  return {
+    text: getErrorKey(error),
+    options: { message: getErrorMessage(error.message) }
+  }
+})
 
 vi.mock('~/hooks/use-query')
 
@@ -22,10 +28,7 @@ vi.mock('~/hooks/use-snackbar-alert', () => ({
   __esModule: true,
   default: vi.fn(() => ({
     handleAlert: vi.fn(),
-    handleErrorAlert:vi.fn((error) => ({
-      text: getErrorKey(error),
-      options: { message: getErrorMessage(error.message) }
-    })),
+    handleErrorAlert: mockHandleErrorAlert
   })),
 }))
 
@@ -41,18 +44,6 @@ vi.mock(
     )
   })
 )
-
-/*vi.mock('~/hooks/use-snackbar-alert', () => ({
-  useSnackbarAlert: vi.fn()
-}))*/
-
-/*vi.mock('~/hooks/use-snackbar-alert', async () => {
-  const actual = await vi.importActual('~/hooks/use-snackbar-alert')
-  return {
-    ...actual,
-    useSnackbarAlert: vi.fn()
-  }
-})*/
 
 /*vi.mock('~/redux/features/snackbarSlice', async () => {
   const actual = await vi.importActual('~/redux/features/snackbarSlice')
@@ -285,7 +276,7 @@ describe('LessonContainer test', () => {
   })
 })
 
-/*describe('LessonContainer - error', () => {
+describe('LessonContainer - error', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     mockDispatch.mockReset()
@@ -298,8 +289,12 @@ describe('LessonContainer test', () => {
     getErrorKey.mockImplementation(mockGetErrorKey)
     getErrorMessage.mockImplementation(mockGetErrorMessage)
 
-    
-    const testError = { message: 'Test error' }
+    const testError = {
+      text: 'mockErrorKey',
+      options: {
+        message: 'This is a mock error message'
+      }
+    }
 
     useQuery.mockReturnValue({
       data: null,
@@ -309,13 +304,17 @@ describe('LessonContainer test', () => {
     })
 
     renderWithProviders(<LessonsContainer />)
-
-    expect(useSnackbarAlert().handleErrorAlert).toHaveBeenCalledWith({
-      text: 'mockErrorKey',
-      options: { message: 'This is a mock error message' }
-    })    
+    
+    await waitFor(() => {
+      expect(mockHandleErrorAlert).toHaveBeenCalledWith(expect.objectContaining({
+        text: 'mockErrorKey',
+        options: expect.objectContaining({
+          message: 'This is a mock error message',
+        }),
+      }))
+    })
 
     expect(mockGetErrorKey).toHaveBeenCalledWith(testError)
     expect(mockGetErrorMessage).toHaveBeenCalledWith(testError.message)
   })
-})*/
+})
