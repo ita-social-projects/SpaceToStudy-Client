@@ -10,8 +10,9 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useQuery from '~/hooks/use-query'
 import usePagination from '~/hooks/table/use-pagination'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
-import { defaultResponses, snackbarVariants } from '~/constants'
+import { defaultResponses } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
   columns,
@@ -21,15 +22,11 @@ import {
 } from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
 import { type Lesson, ResourcesTabsEnum } from '~/types'
 import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-import { useAppDispatch } from '~/hooks/use-redux'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 import { useModalContext } from '~/context/modal-context'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import { getFullUrl } from '~/utils/get-full-url'
 
 const LessonsContainer = () => {
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { openModal } = useModalContext()
   const { page, handleChangePage } = usePagination()
@@ -37,6 +34,7 @@ const LessonsContainer = () => {
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
   const [selectedItems, setSelectedItems] = useState<string[]>([])
+  const { handleErrorAlert } = useSnackbarAlert()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -90,7 +88,7 @@ const LessonsContainer = () => {
       component: (
         <ChangeResourceConfirmModal
           onConfirm={() => {
-            return navigate(
+            navigate(
               getFullUrl({
                 pathname: authRoutes.myResources.editLesson.route,
                 parameters: { id }
@@ -110,14 +108,9 @@ const LessonsContainer = () => {
 
   useEffect(() => {
     if (error) {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: getErrorKey(error)
-        })
-      )
+      handleErrorAlert(error)
     }
-  }, [error, dispatch])
+  }, [handleErrorAlert, error])
 
   const props = {
     columns: columnsToShow,

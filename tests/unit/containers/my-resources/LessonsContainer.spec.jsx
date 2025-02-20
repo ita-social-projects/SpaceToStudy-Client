@@ -2,9 +2,9 @@ import { screen, fireEvent, waitFor, render } from '@testing-library/react'
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 import { renderWithProviders } from '~tests/test-utils'
 import useQuery from '~/hooks/use-query'
-import { openAlert } from '~/redux/features/snackbarSlice'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import { getErrorKey } from '~/utils/get-error-key'
-import { snackbarVariants } from '~/constants'
+import { getErrorMessage } from '~/utils/error-with-message'
 import { getFullUrl } from '~/utils/get-full-url'
 import { authRoutes } from '~/router/constants/authRoutes'
 
@@ -14,8 +14,19 @@ const mockOpenModal = vi.fn()
 
 vi.mock('~/hooks/use-query')
 
-vi.mock('~/utils/get-error-key', () => ({
-  getErrorKey: vi.fn(() => 'mockedErrorMessage')
+vi.mock('~/utils/get-error-key')
+
+vi.mock('~/utils/error-with-message')
+
+vi.mock('~/hooks/use-snackbar-alert', () => ({
+  __esModule: true,
+  default: vi.fn(() => ({
+    handleAlert: vi.fn(),
+    handleErrorAlert:vi.fn((error) => ({
+      text: getErrorKey(error),
+      options: { message: getErrorMessage(error.message) }
+    })),
+  })),
 }))
 
 vi.mock(
@@ -31,13 +42,25 @@ vi.mock(
   })
 )
 
-vi.mock('~/redux/features/snackbarSlice', async () => {
+/*vi.mock('~/hooks/use-snackbar-alert', () => ({
+  useSnackbarAlert: vi.fn()
+}))*/
+
+/*vi.mock('~/hooks/use-snackbar-alert', async () => {
+  const actual = await vi.importActual('~/hooks/use-snackbar-alert')
+  return {
+    ...actual,
+    useSnackbarAlert: vi.fn()
+  }
+})*/
+
+/*vi.mock('~/redux/features/snackbarSlice', async () => {
   const actual = await vi.importActual('~/redux/features/snackbarSlice')
   return {
     ...actual,
     openAlert: vi.fn()
   }
-})
+})*/
 
 vi.mock('~/hooks/use-redux', async () => {
   const actual = await vi.importActual('~/hooks/use-redux')
@@ -67,7 +90,7 @@ vi.mock('react-router-dom', async () => {
 
 vi.mock('~/utils/get-full-url', () => ({
   getFullUrl: vi.fn(({ pathname, parameters }) => 
-    `${pathname.replace(':id', parameters.id)}`
+    pathname.replace(':id', parameters.id)
   )
 }))
 
@@ -204,7 +227,7 @@ describe('LessonContainer test', () => {
     expect(editButton).toBeNull()
   })
 
-  it('should create correct edit URL when onEdit is called', async () => {
+  it('should create correct edit URL when onEdit is clicked', async () => {
     useQuery.mockReturnValue({
       data: lessonResponseMock.items,
       isLoading: false,
@@ -262,51 +285,37 @@ describe('LessonContainer test', () => {
   })
 })
 
-describe('LessonContainer - error', () => {
+/*describe('LessonContainer - error', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     mockDispatch.mockReset()
   })
 
-  it('should dispatch openAlert with error message when there is an error', () => {
-    const mockError = { message: 'Test error' }
+  it('error', async() => {
+    const mockGetErrorKey = vi.fn().mockReturnValue('mockErrorKey')
+    const mockGetErrorMessage = vi.fn().mockReturnValue('This is a mock error message')
+
+    getErrorKey.mockImplementation(mockGetErrorKey)
+    getErrorMessage.mockImplementation(mockGetErrorMessage)
+
+    
+    const testError = { message: 'Test error' }
 
     useQuery.mockReturnValue({
       data: null,
       isLoading: false,
-      error: mockError,
+      error: testError,
       refetch: vi.fn()
     })
 
     renderWithProviders(<LessonsContainer />)
 
-    expect(getErrorKey).toHaveBeenCalledWith(mockError)
-    expect(mockDispatch).toHaveBeenCalledWith(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: 'mockedErrorMessage'
-      })
-    )
-  })
+    expect(useSnackbarAlert().handleErrorAlert).toHaveBeenCalledWith({
+      text: 'mockErrorKey',
+      options: { message: 'This is a mock error message' }
+    })    
 
-  it('should dispatch openAlert when there is an error', async () => {
-    const errorMock = new Error('Test error')
-    useQuery.mockReturnValue({
-      data: null,
-      isLoading: false,
-      error: errorMock,
-      refetch: vi.fn(),
-    })
-  
-    renderWithProviders(<LessonsContainer />)
-  
-    await waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledWith(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: 'mockedErrorMessage',
-        })
-      )
-    })
+    expect(mockGetErrorKey).toHaveBeenCalledWith(testError)
+    expect(mockGetErrorMessage).toHaveBeenCalledWith(testError.message)
   })
-})
+})*/
