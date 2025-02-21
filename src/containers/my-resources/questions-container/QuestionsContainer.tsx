@@ -72,9 +72,8 @@ const QuestionsContainer: React.FC = () => {
     onError: handleErrorAlert,
     onSuccess: () => {
       handleSuccessAlert(`myResourcesPage.questions.successDeletion`)
-      void refetchQuestions() // TODO: remove and replace with queryKey, when 3184 issue will be merged
-    }
-    // queryKey: ['questions']
+    },
+    queryKey: ['questions']
   })
 
   const editQuestion = (id: string) => {
