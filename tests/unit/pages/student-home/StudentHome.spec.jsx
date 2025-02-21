@@ -18,7 +18,7 @@ const secondLoginState = {
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 
 describe('StudentsHome component', () => {
-  beforeAll( async () => {
+  beforeAll( () => {
     mockAxiosClient
             .onGet(new RegExp(URLs.users.getUserById.replace(':id', userId)))
             .reply(200, userDataMock)

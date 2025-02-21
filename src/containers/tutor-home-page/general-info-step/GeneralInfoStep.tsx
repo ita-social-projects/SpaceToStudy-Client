@@ -24,7 +24,7 @@ interface GeneralInfoStepProps {
 
 type UserName = { firstName: string; lastName: string }
 
-const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
+const GeneralInfoStep: React.FC<GeneralInfoStepProps> = ({ btnsBox }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleGeneralInfo } = useStepContext()
