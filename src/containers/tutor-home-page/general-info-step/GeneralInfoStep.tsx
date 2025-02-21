@@ -30,7 +30,7 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
   const { stepData, handleGeneralInfo } = useStepContext()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const generalInfo = stepData.generalInfo
-
+  const firstRender = useRef<boolean>(true)
   const {
     handleInputChange,
     handleBlur,
@@ -61,22 +61,20 @@ const GeneralInfoStep = ({ btnsBox }: GeneralInfoStepProps) => {
       staleTime: Infinity
     }
   })
-
-  const updateUserNameRef = useRef<(user: UserName) => void>()
-
-  useEffect(() => {
-    updateUserNameRef.current = (user: UserName) => {
+  const updateUserName = useCallback(
+    (user: UserName) => {
       handleNonInputValueChange('firstName', user.firstName)
       handleNonInputValueChange('lastName', user.lastName)
-    }
-  }, [handleNonInputValueChange])
-
+    },
+    [handleNonInputValueChange]
+  )
   useEffect(() => {
-    if (userResponse && updateUserNameRef.current) {
-      console.count('updateUserNameRef')
-      updateUserNameRef.current(userResponse)
+    if (userResponse && firstRender.current) {
+      updateUserName(userResponse)
+
+      firstRender.current = false
     }
-  }, [userResponse])
+  }, [updateUserName, userResponse])
 
   useEffect(() => {
     handleGeneralInfo({ data, errors })
