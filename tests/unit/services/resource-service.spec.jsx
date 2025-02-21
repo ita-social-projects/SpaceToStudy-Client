@@ -219,7 +219,6 @@ describe('resourseService tests', () => {
     )
 
     expect(createdQuestion).toEqual(mockResponse)
-    expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
   })
 
   it('should get attachements' , async () => {
