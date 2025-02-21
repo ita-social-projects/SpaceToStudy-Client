@@ -14,7 +14,6 @@ import { URLs } from '~/constants/request'
 const setIsUserFetched = vi.fn()
 
 const userId = '63f5d0ebb'
-const userRole = 'tutor'
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 const countriesDataMock = [
   { name: 'Ukraine', iso2: 'UA' },
@@ -35,41 +34,42 @@ const btnsBox = (
 
 describe('GeneralInfoStep test', () => {
   beforeEach(() => {
-    mockAxiosClient
-      .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
-      .reply(200, userDataMock)
-    mockAxiosClient
-      .onGet(URLs.location.getCountries)
-      .reply(200, countriesDataMock)
-    mockAxiosClient
-      .onGet(
-        new RegExp(
-          URLs.location.getCitiesByCountryName.replace(':countryName', '')
+      mockAxiosClient
+        .onGet(new RegExp(URLs.users.getUserById.replace(':id', userId)))
+        .reply(200, userDataMock)
+      mockAxiosClient
+        .onGet(URLs.location.getCountries)
+        .reply(200, countriesDataMock)
+      mockAxiosClient
+        .onGet(
+          new RegExp(
+            URLs.location.getCitiesByCountryName.replace(':countryName', '')
+          )
         )
+        .reply(200, citiesDataMock)
+      renderWithProviders(
+        <StepProvider
+          initialValues={initialValues}
+          stepLabels={tutorStepLabels}
+        >
+          <GeneralInfoStep
+            btnsBox={btnsBox}
+            isUserFetched={false}
+            setIsUserFetched={setIsUserFetched}
+            stepLabel={'generalInfo'}
+          />
+        </StepProvider>,
+        { preloadedState: mockState }
       )
-      .reply(200, citiesDataMock)
-
-    renderWithProviders(
-      <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
-        <GeneralInfoStep
-          btnsBox={btnsBox}
-          isUserFetched={false}
-          setIsUserFetched={setIsUserFetched}
-          stepLabel={'generalInfo'}
-        />
-      </StepProvider>,
-      { preloadedState: mockState }
-    )
   })
 
   it('should change firstName input', async () => {
-    const firstNameInput = await screen.findByLabelText(
-      /common.labels.firstName/i
-    )
+      const firstNameInput = await screen.findByLabelText(
+          /common.labels.firstName/i
+      )
+      fireEvent.change(firstNameInput, { target: { value: 'testName' } })
 
-    fireEvent.change(firstNameInput, { target: { value: 'testName' } })
-
-    expect(firstNameInput.value).toBe('testName')
+      expect(firstNameInput.value).toBe('testName')
   })
 
   it('should choose option in countries autocomplete', async () => {
@@ -77,13 +77,13 @@ describe('GeneralInfoStep test', () => {
       /common.labels.country/i
     )
 
-    fireEvent.click(countriesAutoComplete)
-    fireEvent.change(countriesAutoComplete, {
-      target: { value: 'Belgium' }
-    })
-    fireEvent.keyDown(countriesAutoComplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(countriesAutoComplete, { key: 'Enter' })
+      fireEvent.click(countriesAutoComplete)
+      fireEvent.change(countriesAutoComplete, {
+        target: { value: 'Belgium' }
+      })
+      fireEvent.keyDown(countriesAutoComplete, { key: 'ArrowDown' })
+      fireEvent.keyDown(countriesAutoComplete, { key: 'Enter' })
 
-    expect(countriesAutoComplete.value).toBe('Belgium')
+      expect(countriesAutoComplete.value).toBe('Belgium')
   })
 })
