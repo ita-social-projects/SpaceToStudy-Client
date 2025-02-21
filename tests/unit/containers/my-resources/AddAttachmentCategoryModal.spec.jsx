@@ -39,7 +39,7 @@ describe('AddAttachmentCategoryModal component', () => {
       <AddAttachmentCategoryModal
         attachment={attachmentMock}
         closeModal={closeModalMock}
-        updateAttachmentCategory={updateAttachmentCategory}
+        onAttachmentUpdate={updateAttachmentCategory}
       />
     )
   })
