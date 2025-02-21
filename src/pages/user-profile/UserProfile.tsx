@@ -23,19 +23,21 @@ import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rat
 
 import { DataByRole, UserRoleEnum } from '~/types'
 
+import useQuery from '~/hooks/use-query'
 import { userService } from '~/services/user-service'
 import videoImgProfile from '~/assets/img/user-profile-page/presentationVideoImg.png'
 
 import { responseMock } from '~/pages/user-profile/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { scrollToHash } from '~/utils/hash-scroll'
-import useQuery from '~/hooks/use-query'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const UserProfile: React.FC = () => {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const paramsRole = searchParams.get('role') as UserRoleEnum
+  const { handleErrorAlert } = useSnackbarAlert()
   const { user } = responseMock
   const { reviews } = user.reviewStats || {}
 
@@ -56,7 +58,11 @@ const UserProfile: React.FC = () => {
     [preferredId, preferredRole]
   )
 
-  const { isLoading: loading, data: response } = useQuery({
+  const {
+    isLoading: userLoading,
+    data: userResponse,
+    error: fetchUserError
+  } = useQuery({
     queryFn: getUserData,
     queryKey: ['user', preferredId, preferredRole],
     options: {
@@ -64,21 +70,27 @@ const UserProfile: React.FC = () => {
     }
   })
 
+  useEffect(() => {
+    if (fetchUserError) {
+      handleErrorAlert(fetchUserError)
+    }
+  }, [handleErrorAlert, fetchUserError])
+
   const isTutor = preferredRole === UserRoleEnum.Tutor
 
   const shouldShowPresentation =
     (isTutor && isMyProfile) ||
-    (!isTutor && response?.videoLink?.student) ||
-    (!isMyProfile && response?.videoLink?.tutor)
-  if (loading || !response) {
+    (!isTutor && userResponse?.videoLink?.student) ||
+    (!isMyProfile && userResponse?.videoLink?.tutor)
+  if (userLoading || !userResponse) {
     return <Loader size={70} />
   }
   return (
     <PageWrapper>
-      {userRole && <ProfileInfo myRole={userRole} userData={response} />}
+      {userRole && <ProfileInfo myRole={userRole} userData={userResponse} />}
       {isMyProfile && (
         <CompleteProfileBlock
-          data={response}
+          data={userResponse}
           openAccordion={!!hash}
           profileItems={
             preferredRole === UserRoleEnum.Student
@@ -87,20 +99,22 @@ const UserProfile: React.FC = () => {
           }
         />
       )}
-      {response?.professionalBlock && (
-        <AboutTutorBlock data={response?.professionalBlock} />
+      {userResponse?.professionalBlock && (
+        <AboutTutorBlock data={userResponse?.professionalBlock} />
       )}
-      {response?.aboutStudent && (
-        <AboutStudentBlock data={response?.aboutStudent} />
+      {userResponse?.aboutStudent && (
+        <AboutStudentBlock data={userResponse?.aboutStudent} />
       )}
       {shouldShowPresentation && (
         <VideoPresentation
           video={
-            response?.videoLink?.[preferredRole as keyof DataByRole<string>]
+            userResponse?.videoLink?.[preferredRole as keyof DataByRole<string>]
           }
           videoMock={videoImgProfile}
           videoPreview={
-            !response?.videoLink?.[preferredRole as keyof DataByRole<string>]
+            !userResponse?.videoLink?.[
+              preferredRole as keyof DataByRole<string>
+            ]
           }
         />
       )}

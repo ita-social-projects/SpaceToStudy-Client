@@ -1,8 +1,7 @@
-import { act, screen, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import UserProfile from '~/pages/user-profile/UserProfile.tsx'
-import { renderWithProviders } from '~tests/test-utils'
+import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '../../../../src/constants/request'
-import { mockAxiosClient } from '../../../test-utils'
 
 const route = '/tutor/my-profile'
 
@@ -81,12 +80,11 @@ const tutorMockData = {
   lastSeen: '2024-02-15T12:15:00Z'
 }
 
-const renderWithMockData = async ({
+const renderWithMockData = ({
   mockData = tutorMockData,
   appMain = mockTutorState,
   extraData = {}
 } = {}) => {
-  await waitFor(() => {
     mockAxiosClient
       .onGet(
         `${URLs.users.get}/${appMain.appMain?.userId}?userRole=${appMain.appMain?.userRole}`
@@ -96,21 +94,15 @@ const renderWithMockData = async ({
       preloadedState: appMain,
       initialEntries: route
     })
-  })
 }
 
 describe('UserProfile', () => {
   beforeEach(() => {
-    mockAxiosClient.resetHandlers()
     mockAxiosClient.reset()
-  })
-  afterEach(() => {
-    mockAxiosClient.reset()
-    mockAxiosClient.resetHandlers()
   })
 
   it('Should render professional block info for tutor', async () => {
-    await renderWithMockData({ extraData: professionalBlockMock })
+    renderWithMockData({ extraData: professionalBlockMock })
     const aboutTutorTitle = await screen.findByText(
         'userProfilePage.tutorAbout.title'
     )
@@ -119,7 +111,7 @@ describe('UserProfile', () => {
   })
 
   it('should find rendering name', async () => {
-    await renderWithMockData()
+    renderWithMockData()
 
     const name = await screen.findByText(
       `${tutorMockData.firstName} ${tutorMockData.lastName}`
@@ -128,7 +120,7 @@ describe('UserProfile', () => {
   })
 
   it('Should render video presentation block for tutor', async () => {
-    await renderWithMockData()
+    renderWithMockData()
 
     const videoBlockTitle = await screen.findByText(
       'userProfilePage.videoPresentation.title'
@@ -146,7 +138,7 @@ describe('UserProfile', () => {
   })
 
   it('Should render video presentation block when student has a video link', async () => {
-    await renderWithMockData({
+    renderWithMockData({
       appMain: mockStudentState,
       extraData: videoMockDataStudent
     })
@@ -159,7 +151,7 @@ describe('UserProfile', () => {
   })
 
   it('should render loader', async () => {
-    await renderWithMockData({appMain: {} , mockData: {} })
+    renderWithMockData({appMain: {} , mockData: {} })
 
     await waitFor(() => {
       expect(screen.getByTestId('loader')).toBeInTheDocument()
