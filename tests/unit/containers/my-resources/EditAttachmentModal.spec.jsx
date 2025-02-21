@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { beforeEach, describe, expect } from 'vitest'
 
@@ -36,17 +36,20 @@ const selectCategory = (autocomplete, categoryName) => {
 
 describe('EditAttachmentModal component', () => {
   beforeEach(() => {
-      mockAxiosClient
-        .onGet(URLs.resources.resourcesCategories.getNames)
-        .reply(200, [categoriesNamesMock.WEB_DEVELOPMENT, categoriesNamesMock.MOTION_DESIGN])
+    mockAxiosClient
+      .onGet(URLs.resources.resourcesCategories.getNames)
+      .reply(200, [
+        categoriesNamesMock.WEB_DEVELOPMENT,
+        categoriesNamesMock.MOTION_DESIGN
+      ])
 
-      renderWithProviders(
-        <EditAttachmentModal
-          attachment={attachmentMock}
-          closeModal={closeModalMock}
-          onAttachmentUpdate={updateAttachment}
-        />
-      )
+    renderWithProviders(
+      <EditAttachmentModal
+        attachment={attachmentMock}
+        closeModal={closeModalMock}
+        onAttachmentUpdate={updateAttachment}
+      />
+    )
   })
 
   afterEach(() => {
@@ -75,9 +78,7 @@ describe('EditAttachmentModal component', () => {
 
     expect(autocomplete).toBeInTheDocument()
 
-    await waitFor(() => {
-      selectCategory(autocomplete, categoriesNamesMock.MOTION_DESIGN.name)
-    })
+    selectCategory(autocomplete, categoriesNamesMock.MOTION_DESIGN.name)
 
     fireEvent.click(saveBtn)
 
@@ -89,9 +90,7 @@ describe('EditAttachmentModal component', () => {
 
     expect(autocomplete).toBeInTheDocument()
 
-    await waitFor(() => {
-      selectCategory(autocomplete, categoriesNamesMock.MOTION_DESIGN.name)
-    })
+    selectCategory(autocomplete, categoriesNamesMock.MOTION_DESIGN.name)
 
     expect(autocomplete.value).toBe(categoriesNamesMock.MOTION_DESIGN.name)
   })

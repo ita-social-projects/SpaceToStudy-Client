@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { describe, expect, vi } from 'vitest'
 
 import BookmarkedOffers from '~/pages/bookmarked-offers/BookmarkedOffers'
@@ -58,14 +58,12 @@ vi.spyOn(sortValues, 'sortTranslationKeys', 'get').mockReturnValue(
 )
 
 describe('BookmarkedOffers page with offers', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient
       .onGet(getBookmarksUrl)
       .reply(200, { items: offersMock, count: offersMock.length })
 
-    await waitFor(() => {
-      renderWithProviders(<BookmarkedOffers />, { preloadedState })
-    })
+    renderWithProviders(<BookmarkedOffers />, { preloadedState })
   })
 
   afterEach(() => {
@@ -130,12 +128,10 @@ describe('BookmarkedOffers page with offers', () => {
 })
 
 describe('BookmarkedOffers page without offers', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient.onGet(getBookmarksUrl).reply(200, { items: [], count: 0 })
 
-    await waitFor(() => {
-      renderWithProviders(<BookmarkedOffers />, { preloadedState })
-    })
+    renderWithProviders(<BookmarkedOffers />, { preloadedState })
   })
 
   it('should render the page without offers', async () => {
@@ -148,17 +144,15 @@ describe('BookmarkedOffers page without offers', () => {
 })
 
 describe("BookmarkedOffers page couldn't load offers", () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient.onGet(getBookmarksUrl).reply(400, mockError)
 
-    await waitFor(() => {
-      renderWithProviders(
-        <TestSnackbar>
-          <BookmarkedOffers />
-        </TestSnackbar>,
-        { preloadedState }
-      )
-    })
+    renderWithProviders(
+      <TestSnackbar>
+        <BookmarkedOffers />
+      </TestSnackbar>,
+      { preloadedState }
+    )
   })
 
   it('should show a snackbar with an error text', async () => {

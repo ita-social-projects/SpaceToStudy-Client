@@ -19,6 +19,7 @@ export const URLs = {
   },
   users: {
     get: '/users',
+    getUserById: '/users/:id',
     update: '/users',
     delete: '/users/delete',
     deactivate: '/users/deactivate',
@@ -112,13 +113,14 @@ export const URLs = {
     get: '/quizzes',
     getById: '/quizzes/:id',
     add: '/quizzes',
-    patch: '/quizzes',
+    patch: '/quizzes/:id',
     delete: '/quizzes'
   },
   finishedQuizzes: {
     add: '/finished-quizzes',
     get: '/finished-quizzes',
-    getById: '/finished-quizzes/:id'
+    getById: '/finished-quizzes/:id',
+    getByQuizId: '/finished-quizzes/by-quiz-id/:cooperationId/:quizId'
   },
   attachments: {
     post: '/attachments'

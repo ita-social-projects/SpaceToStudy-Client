@@ -39,6 +39,7 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
   shouldShowCorrectAnswers = false,
   shouldShowPoints = false,
   shouldShowAnswersCorrectness = false,
+  isEditable = false,
   sx,
   ...props
 }) => {
@@ -116,6 +117,7 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
         handleInputChange={handleInputChange(question._id)}
         handleNonInputValueChange={handleNonInputValueChange(question._id)}
         index={selectedIndex}
+        isEditable={isEditable}
         key={question._id}
         question={question}
         shouldShowAnswersCorrectness={shouldShowAnswersCorrectness}

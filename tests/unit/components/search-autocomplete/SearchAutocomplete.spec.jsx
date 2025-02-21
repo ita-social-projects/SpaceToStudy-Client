@@ -2,7 +2,6 @@ import { describe, vi } from 'vitest'
 import { render, fireEvent, screen } from '@testing-library/react'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import userEvent from '@testing-library/user-event'
-import { waitForTimeout } from '~tests/test-utils'
 
 const options = ['Finland', 'France', 'Italy', 'Germany']
 const setSearch = vi.fn()
@@ -29,14 +28,14 @@ describe('SearchAutocomplete', () => {
 
     const searchInput = screen.getByLabelText('Search')
 
-    await waitForTimeout(() => user.type(searchInput, 'Finland'))
+    await user.type(searchInput, 'Finland')
 
     expect(searchInput.value).toBe('Finland')
   })
 
-  it('filters options on typing', () => {
+  it('filters options on typing', async () => {
     const searchInput = screen.getByLabelText('Search')
-    userEvent.type(searchInput, 'F')
+    await userEvent.type(searchInput, 'F')
     const filteredOptions = screen.queryByText('Germany')
     expect(filteredOptions).toBeNull()
   })

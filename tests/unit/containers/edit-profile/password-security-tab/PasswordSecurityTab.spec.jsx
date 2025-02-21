@@ -6,16 +6,19 @@ import {
   within,
   waitFor
 } from '@testing-library/react'
-import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
+import {
+  mockAxiosClient,
+  renderWithProviders,
+  TestSnackbar
+} from '~tests/test-utils'
 import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
+import { URLs } from '~/constants/request'
 
 const userDataMock = {
-  _id: 123456
+  _id: '123456'
 }
-
-const mockDispatch = vi.fn()
 
 vi.mock('~/redux/features/snackbarSlice', async () => {
   const actual = await vi.importActual('~/redux/features/snackbarSlice')
@@ -24,12 +27,6 @@ vi.mock('~/redux/features/snackbarSlice', async () => {
     openAlert: vi.fn()
   }
 })
-
-vi.mock('~/services/auth-service', () => ({
-  AuthService: {
-    changePassword: vi.fn()
-  }
-}))
 
 const renderWithMockData = () => {
   renderWithProviders(
@@ -74,7 +71,7 @@ describe('PasswordSecurityTab', () => {
     expect(description).toBeInTheDocument()
   })
 
-  it('renders title and description deactivate account', async () => {
+  it('renders title and description deactivate account', () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
@@ -107,7 +104,7 @@ describe('PasswordSecurityTab', () => {
 
     expect(deactivateDescription).not.toBeInTheDocument()
   })
-  it('should open the modal when clicking the Deactivate account button', async () => {
+  it('should open the modal when clicking the Deactivate account button', () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
@@ -123,7 +120,7 @@ describe('PasswordSecurityTab', () => {
     expect(deactivateTitle).toBeInTheDocument()
     expect(deactivateDescription).toBeInTheDocument()
   })
-  it('should render Deactivate and Cancel buttons in the modal', async () => {
+  it('should render Deactivate and Cancel buttons in the modal', () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
@@ -135,7 +132,7 @@ describe('PasswordSecurityTab', () => {
     expect(deactivateButton).toBeInTheDocument()
     expect(cancelButton).toBeInTheDocument()
   })  
-  it('should close modal on Cancel button click and stays on Password & Security tab', async () => {
+  it('should close modal on Cancel button click and stays on Password & Security tab', () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
@@ -150,6 +147,10 @@ describe('PasswordSecurityTab', () => {
     expect(tabTitle).toBeInTheDocument()
   })
   it('should appear success message after clicking the Deactivate button', async () => {
+    mockAxiosClient
+      .onPatch(`${URLs.users.deactivate}/${userDataMock._id}`)
+      .reply(204)
+
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
@@ -159,13 +160,11 @@ describe('PasswordSecurityTab', () => {
     expect(deactivateButton).toBeInTheDocument()
     fireEvent.click(deactivateButton)
 
-    waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledWith(
-        openAlert({
-          severity: snackbarVariants.success,
-          message: 'offerPage.createOffer.successMessage'
-        })
-      )
+    await waitFor(() => {
+      expect(openAlert).toHaveBeenCalledWith({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
     })
   })
 })

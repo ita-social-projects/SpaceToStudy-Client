@@ -54,11 +54,11 @@ describe('GoogleLogin component test for login', () => {
     expect(text).toBeInTheDocument()
   })
 
-  it('should close login modal after click', async () => {
+  it('should close login modal after click', () => {
     const link = screen.getByText('login.joinUs')
     fireEvent.click(link)
 
-    await waitFor(() => expect(mockCloseModal).toHaveBeenCalled())
+    expect(mockCloseModal).toHaveBeenCalled()
   })
 })
 

@@ -42,6 +42,8 @@
   "responseInputFieldLabel": "Please provide a reason for resending the request.",
   "inputError": "This field is required.",
   "submitMessage": "Your reason has been successfully submitted to the opposite party.",
-  "cooperationCloseDeclinedMessage": "<userWrapper>{{user}}</userWrapper> declined the cooperation closing process due to the following reason:",
-  "resendRequestBtn": "Resend request"
+  "submittedReason": "Submitted reason: ",
+  "cooperationCloseDeclinedMessage": "<userWrapper>{{user}}</userWrapper> declined to close the cooperation due to the following reason:",
+  "resendRequestBtn": "Resend request",
+  "answer": "Response from "
 }

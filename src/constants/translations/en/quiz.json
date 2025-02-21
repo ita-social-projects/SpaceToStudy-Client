@@ -20,5 +20,13 @@
   "submitComment": "Submit comment",
   "timeIsUpTitle": "Time's Up",
   "timeIsUpDescription": "The time limit for this quiz has expired. Any unanswered questions have been marked as incorrect. Your results will be calculated based on your submitted answers.",
-  "viewResults": "View results"
+  "viewResults": "View results",
+  "startQuiz": "Start Quiz",
+  "tryAgain": "Try again",
+  "reviewAttempt": "Review attempt",
+  "attemptLimit": "Attempts limits",
+  "timeLimit": "Time limit",
+  "reachedAttemptLimit": "Attempt limit reached.",
+  "noUsedAttempts": "No attempts have been made yet",
+  "questionsAmount": "Questions amount"
 }

@@ -1,3 +1,4 @@
+import { type FinishedQuiz } from '~/types/finished-quizzes/types/finishedQuizzes.types'
 import {
   CommonEntityFields,
   UserResponse,
@@ -38,3 +39,5 @@ export interface UpdateQuizParams
   extends Partial<Omit<Quiz, 'author' | '_id' | 'createdAt' | 'updatedAt'>> {
   id: string
 }
+
+export type FinishedAttempts = FinishedQuiz[]

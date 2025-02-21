@@ -33,25 +33,21 @@ describe('ResetPassword test', () => {
     fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })
     fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY' } })
 
-    await waitFor(() => {
-      fireEvent.click(button)
-    })
+    fireEvent.click(button)
 
-    expect(openModal).toHaveBeenCalled()
+    await waitFor(() => expect(openModal).toHaveBeenCalled())
   })
 
   it('should open snackbar with error after reject', async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onPatch(`${URLs.auth.resetPassword}/${resetToken}`)
-        .reply(404, error)
+    mockAxiosClient
+      .onPatch(`${URLs.auth.resetPassword}/${resetToken}`)
+      .reply(404, error)
 
-      renderWithProviders(
-        <TestSnackbar>
-          <ResetPassword resetToken={resetToken} setModal={openModal} />
-        </TestSnackbar>
-      )
-    })
+    renderWithProviders(
+      <TestSnackbar>
+        <ResetPassword resetToken={resetToken} setModal={openModal} />
+      </TestSnackbar>
+    )
 
     const passwordInput = screen.getByLabelText(/common.labels.password/i)
     const confirmPasswordInput = screen.getByLabelText(

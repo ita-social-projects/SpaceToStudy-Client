@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
@@ -59,21 +59,19 @@ const userState = {
 }
 
 describe('CooperationNotes', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockGetNote.mockReturnValue({
       data: mockNotesData
     })
 
-    await waitFor(() => {
-      renderWithProviders(
-        <ConfirmationDialogProvider>
-          <TestSnackbar>
-            <CooperationNotes />
-          </TestSnackbar>
-        </ConfirmationDialogProvider>,
-        { preloadedState: userState }
-      )
-    })
+    renderWithProviders(
+      <ConfirmationDialogProvider>
+        <TestSnackbar>
+          <CooperationNotes />
+        </TestSnackbar>
+      </ConfirmationDialogProvider>,
+      { preloadedState: userState }
+    )
   })
 
   afterEach(() => {
@@ -86,7 +84,7 @@ describe('CooperationNotes', () => {
     expect(notes).toBeInTheDocument()
   })
 
-  it('should open create note form and save the note', async () => {
+  it('should open create note form and save the note', () => {
     const newNoteText = 'Newly created note'
     const addNoteBtn = screen.getByTestId('AddIcon')
     fireEvent.click(addNoteBtn)
@@ -107,10 +105,8 @@ describe('CooperationNotes', () => {
     })
     fireEvent.click(saveButton)
 
-    await waitFor(() => {
-      const newNote = screen.getByText(newNoteText)
-      expect(newNote).toBeInTheDocument()
-    })
+    const newNote = screen.getByText(newNoteText)
+    expect(newNote).toBeInTheDocument()
   })
 
   it('should close create note form', () => {
@@ -127,7 +123,7 @@ describe('CooperationNotes', () => {
     expect(noteFormSettings).toBeNull()
   })
 
-  it('should enable the edit mode and handle updates', async () => {
+  it('should enable the edit mode and handle updates', () => {
     const newNoteText = 'New note text'
     const [menuButton] = screen.getAllByTestId('MoreVertIcon')
     fireEvent.click(menuButton)
@@ -143,25 +139,21 @@ describe('CooperationNotes', () => {
 
     const newNote = screen.getByText(newNoteText)
 
-    await waitFor(() => {
-      expect(mockUpdateNote).toHaveBeenCalled()
-      expect(newNote).toBeInTheDocument()
-    })
+    expect(mockUpdateNote).toHaveBeenCalled()
+    expect(newNote).toBeInTheDocument()
   })
 
-  it('should handle duplicate notes', async () => {
+  it('should handle duplicate notes', () => {
     const [menuButton] = screen.getAllByTestId('MoreVertIcon')
     fireEvent.click(menuButton)
 
     const duplicateButton = screen.getByTestId('ContentCopyIcon')
     fireEvent.click(duplicateButton)
 
-    await waitFor(() => {
-      expect(mockCreateNote).toHaveBeenCalled()
-    })
+    expect(mockCreateNote).toHaveBeenCalled()
   })
 
-  it('should handle delete notes', async () => {
+  it('should handle delete notes', () => {
     const [menuButton] = screen.getAllByTestId('MoreVertIcon')
     fireEvent.click(menuButton)
 
@@ -171,9 +163,7 @@ describe('CooperationNotes', () => {
     const confirmButton = screen.getByRole('button', { name: 'common.yes' })
     fireEvent.click(confirmButton)
 
-    await waitFor(() => {
-      expect(mockDeleteNote).toHaveBeenCalled()
-    })
+    expect(mockDeleteNote).toHaveBeenCalled()
   })
 })
 
@@ -182,19 +172,17 @@ describe('CooperationNotes with error', () => {
     message: 'UNKNOWN_ERROR'
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     mockGetNote.mockRejectedValue({
       response: { data: fakeError }
     })
 
-    await waitFor(() => {
-      renderWithProviders(
-        <TestSnackbar>
-          <CooperationNotes />
-        </TestSnackbar>,
-        { preloadedState: userState }
-      )
-    })
+    renderWithProviders(
+      <TestSnackbar>
+        <CooperationNotes />
+      </TestSnackbar>,
+      { preloadedState: userState }
+    )
   })
 
   it('should show the error message', () => {

@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
@@ -6,19 +5,17 @@ import Typography from '@mui/material/Typography'
 import Switch from '~/design-system/components/switch/Switch'
 
 import { ResourceService } from '~/services/resource-service'
-import { useAppDispatch } from '~/hooks/use-redux'
-import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import SettingItem from '~/components/setting-item/SettingItem'
 import AppSelect from '~/components/app-select/AppSelect'
 import Button from '~scss-components/button/Button'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
+import useMutation from '~/hooks/use-mutation'
 
 import { spliceSx } from '~/utils/helper-functions'
-import { getErrorMessage } from '~/utils/error-with-message'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import { snackbarVariants } from '~/constants'
-import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
   getQuizViewFields,
   getQuizTimeLimitFields,
@@ -26,21 +23,15 @@ import {
 } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 import {
+  type QuizViewEnum,
+  type QuizTimeLimit,
+  type QuizAttempt,
   ButtonTypeEnum,
-  QuizViewEnum,
-  QuizTimeLimit,
-  UpdateQuizParams,
-  ErrorResponse,
-  CreateQuizParams,
-  Quiz,
   QuizTabsEnum,
   ComponentEnum,
   QuizSettings,
-  ResourcesTypesEnum,
-  QuizAttempt
+  ResourcesTypesEnum
 } from '~/types'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 const QuizSettingsContainer = ({
   title,
@@ -51,76 +42,43 @@ const QuizSettingsContainer = ({
   setActiveTab
 }: QuizContentProps) => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const { id = '' } = useParams()
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const { handleErrorAlert, handleAlert } = useSnackbarAlert()
 
-  const editQuiz = useCallback(
-    (params?: UpdateQuizParams) => ResourceService.editQuiz(params),
-    []
-  )
-
-  const createQuizService = useCallback(
-    (data?: CreateQuizParams) => ResourceService.addQuiz(data),
-    []
-  )
-
-  const onResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: id
-          ? 'myResourcesPage.quizzes.successEditedQuiz'
-          : 'myResourcesPage.quizzes.successAddedQuiz'
-      })
-    )
+  const handleResponse = () => {
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: id
+        ? 'myResourcesPage.quizzes.successEditedQuiz'
+        : 'myResourcesPage.quizzes.successAddedQuiz'
+    })
 
     id
       ? setActiveTab(QuizTabsEnum.Edit)
       : navigate(authRoutes.myResources.root.path)
   }
 
-  const onResponseError = (error?: ErrorResponse) => {
-    const errorKey = getErrorKey(error)
-
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: error
-          ? {
-              text: errorKey,
-              options: {
-                message: getErrorMessage(error.message)
-              }
-            }
-          : errorKey
-      })
-    )
-  }
-
-  const { fetchData: updateQuiz } = useAxios<null, UpdateQuizParams>({
-    service: editQuiz,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse,
-    onResponseError
+  const { mutate: createQuiz } = useMutation({
+    mutationFn: ResourceService.addQuiz,
+    onSuccess: handleResponse,
+    onError: handleErrorAlert
   })
 
-  const { fetchData: createQuiz } = useAxios<Quiz, CreateQuizParams>({
-    service: createQuizService,
-    fetchOnMount: false,
-    defaultResponse: { ...defaultResponse, id: '' },
-    onResponse,
-    onResponseError
+  const { mutate: editQuiz } = useMutation({
+    queryKey: ['quiz', id],
+    mutationFn: ResourceService.editQuiz,
+    onSuccess: handleResponse,
+    onError: handleErrorAlert
   })
 
   const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
     useForm<QuizSettings>({
       initialValues: { ...settings },
-      onSubmit: async () => {
+      onSubmit: () => {
         id
-          ? await updateQuiz({ settings: data, id })
-          : await createQuiz({
+          ? editQuiz({ settings: data, id })
+          : createQuiz({
               title,
               description,
               items: questions,
@@ -145,8 +103,6 @@ const QuizSettingsContainer = ({
   }
 
   const isDisabled = (!id && !title) || !questions.length
-
-  const checked = !!data.view
 
   return (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
@@ -210,7 +166,7 @@ const QuizSettingsContainer = ({
           title={t('myResourcesPage.quizzes.correctAnswers')}
         >
           <Switch
-            checked={checked}
+            checked={data.correctAnswers}
             data-testid='correctAnswers-switch'
             onChange={handleInputChange('correctAnswers')}
           />

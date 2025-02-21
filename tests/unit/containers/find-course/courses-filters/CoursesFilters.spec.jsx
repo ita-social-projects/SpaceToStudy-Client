@@ -1,5 +1,5 @@
 import { renderWithProviders } from '~tests/test-utils'
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import CoursesFilters from '~/containers/find-course/courses-filters/CoursesFilters'
 
@@ -14,18 +14,16 @@ const onLevelChangeMocked = vi.fn()
 const resetFiltersMocked = vi.fn()
 
 describe('CoursesFilters component', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <CoursesFilters
-          filters={filtersMocked}
-          onCategoryChange={onCategoryChangeMocked}
-          onLevelChange={onLevelChangeMocked}
-          onSubjectChange={onSubjectChangeMocked}
-          resetFilters={resetFiltersMocked}
-        />
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <CoursesFilters
+        filters={filtersMocked}
+        onCategoryChange={onCategoryChangeMocked}
+        onLevelChange={onLevelChangeMocked}
+        onSubjectChange={onSubjectChangeMocked}
+        resetFilters={resetFiltersMocked}
+      />
+    )
   })
 
   it('should render courses filters', () => {

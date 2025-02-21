@@ -29,3 +29,5 @@ export const itemsLoadLimit = {
   mobile: 6,
   default: 12
 }
+
+export const ONE_HOUR = 1000 * 60 * 60

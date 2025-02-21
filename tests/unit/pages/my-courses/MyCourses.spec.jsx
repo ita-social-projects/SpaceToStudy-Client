@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, act } from '@testing-library/react'
+import { fireEvent, screen, act } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
@@ -19,10 +19,10 @@ const mockCoursesData = {
 }
 
 describe('tests for MyCourses page', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient.onGet(URLs.courses.get).reply(200, mockCoursesData)
     mockAxiosClient.onPost(URLs.courses.create).reply(200, null)
-    await waitFor(() => renderWithProviders(<MyCourses />))
+    renderWithProviders(<MyCourses />)
   })
 
   it('should render page title', async () => {

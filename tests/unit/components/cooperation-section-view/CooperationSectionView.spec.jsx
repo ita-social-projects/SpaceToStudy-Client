@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
 import {
   ResourcesTypesEnum as ResourceType,
@@ -24,7 +24,7 @@ describe('CooperationSectionView', () => {
     resources: [
       {
         resource: {
-          id: '662ba5f9f3edc14ca7b2336f',
+          _id: '662ba5f9f3edc14ca7b2336f',
           title: 'The newest',
           description:
             'The newestThe newestThe newestThe newestThe newestThe newestThe newest',
@@ -67,6 +67,8 @@ describe('CooperationSectionView', () => {
     )
     fireEvent.click(resourceItem)
 
-    waitFor(() => expect(navigateMock).toHaveBeenCalled())
+    expect(navigateMock).toHaveBeenCalledWith(
+      `quizzes/${mockSection.resources[0].resource._id}/attempts`
+    )
   })
 })

@@ -1,10 +1,9 @@
-import { screen, render, fireEvent, waitFor } from '@testing-library/react'
+import { screen, render, fireEvent } from '@testing-library/react'
 import { mockAxiosClient, selectOption } from '~tests/test-utils'
 import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import { URLs } from '~/constants/request'
 import { ProficiencyLevelEnum } from '~/types'
 import { proficiencyLevelLabels } from '~/constants/labels'
-import { act } from 'react-dom/test-utils'
 
 const mockData = {
   title: '',
@@ -140,10 +139,8 @@ describe('CourseToolbar', () => {
   })
 
   describe('with single render', () => {
-    beforeEach(async () => {
-      await waitFor(() => {
-        render(getCourseToolbarElement())
-      })
+    beforeEach(() => {
+      render(getCourseToolbarElement())
     })
 
     it('should render correctly', () => {
@@ -168,9 +165,7 @@ describe('CourseToolbar', () => {
     it('should update value of level select correctly', () => {
       const select = screen.getByLabelText(/level/i)
 
-      waitFor(() => {
-        fireEvent.mouseDown(select)
-      })
+      fireEvent.mouseDown(select)
 
       const proficiencyCheckbox = screen.getByText(
         proficiencyLevelLabels.get(ProficiencyLevelEnum.Beginner)

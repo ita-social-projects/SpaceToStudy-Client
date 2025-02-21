@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
@@ -17,16 +17,14 @@ categoryService.getCategoriesNames.mockResolvedValue({
 })
 
 describe('CreateSubjectModal container', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <ConfirmationDialogProvider>
-          <TestSnackbar>
-            <CreateSubjectModal />
-          </TestSnackbar>
-        </ConfirmationDialogProvider>
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <ConfirmationDialogProvider>
+        <TestSnackbar>
+          <CreateSubjectModal />
+        </TestSnackbar>
+      </ConfirmationDialogProvider>
+    )
   })
 
   it('should render component', () => {
@@ -39,23 +37,19 @@ describe('CreateSubjectModal container', () => {
 
     expect(categoryInput).toBeInTheDocument()
 
-    waitFor(() => {
-      fireEvent.click(categoryInput)
-      fireEvent.change(categoryInput, {
-        target: { value: 'Category 1' }
-      })
-      fireEvent.keyDown(categoryInput, { key: 'Escape' })
+    fireEvent.click(categoryInput)
+    fireEvent.change(categoryInput, {
+      target: { value: 'Category 1' }
     })
+    fireEvent.keyDown(categoryInput, { key: 'Escape' })
 
     expect(categoryInput.value).toBe('Category 1')
 
-    waitFor(() => {
-      fireEvent.click(categoryInput)
-      fireEvent.change(categoryInput, {
-        target: { value: '' }
-      })
-      fireEvent.keyDown(categoryInput, { key: 'Enter' })
+    fireEvent.click(categoryInput)
+    fireEvent.change(categoryInput, {
+      target: { value: '' }
     })
+    fireEvent.keyDown(categoryInput, { key: 'Enter' })
 
     expect(categoryInput.value).toBe('')
   })

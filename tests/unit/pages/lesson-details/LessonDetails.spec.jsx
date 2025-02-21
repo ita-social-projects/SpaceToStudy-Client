@@ -62,10 +62,8 @@ const lessonMock = {
 ResourceService.getLesson.mockResolvedValue(lessonMock)
 
 describe('LessonDetails', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(<LessonDetails />, { preloadedState: mockState })
-    })
+  beforeEach(() => {
+    renderWithProviders(<LessonDetails />, { preloadedState: mockState })
   })
 
   it('should render page with title and description fields', async () => {

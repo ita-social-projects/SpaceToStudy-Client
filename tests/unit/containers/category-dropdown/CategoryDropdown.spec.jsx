@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
@@ -14,13 +14,11 @@ describe('CategoryDropdown test', () => {
     .onGet(URLs.resources.resourcesCategories.getNames)
     .reply(200, categoriesNamesMock)
 
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(<CategoryDropdown />)
-    })
+  beforeEach(() => {
+    renderWithProviders(<CategoryDropdown />)
   })
 
-  it('should choose the category from options list', async () => {
+  it('should choose the category from options list', () => {
     const autocomplete = screen.getByRole('combobox')
 
     expect(autocomplete).toBeInTheDocument()
@@ -36,9 +34,7 @@ describe('CategoryDropdown test', () => {
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
 
-    await waitFor(() => {
-      expect(autocomplete.value).toBe(categoriesNamesMock[1].name)
-    })
+    expect(autocomplete.value).toBe(categoriesNamesMock[1].name)
 
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
@@ -46,7 +42,7 @@ describe('CategoryDropdown test', () => {
     expect(autocomplete.value).toBe(categoriesNamesMock[1].name)
   })
 
-  it('should click on "add button" in options list', async () => {
+  it('should click on "add button" in options list', () => {
     const autocomplete = screen.getByRole('combobox')
 
     fireEvent.click(autocomplete)
@@ -54,16 +50,12 @@ describe('CategoryDropdown test', () => {
 
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
 
-    await waitFor(() => {
-      const addButton = screen.queryByText('myResourcesPage.categories.addBtn')
+    const addButton = screen.queryByText('myResourcesPage.categories.addBtn')
 
-      fireEvent.click(addButton)
-    })
+    fireEvent.click(addButton)
 
-    await waitFor(() => {
-      const newCategory = screen.getByText('myResourcesPage.categories.name')
+    const newCategory = screen.getByText('myResourcesPage.categories.name')
 
-      expect(newCategory).toBeInTheDocument()
-    })
+    expect(newCategory).toBeInTheDocument()
   })
 })

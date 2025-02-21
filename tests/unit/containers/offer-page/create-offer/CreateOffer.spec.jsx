@@ -1,9 +1,7 @@
-import React from 'react'
 import { beforeEach, expect, vi } from 'vitest'
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
 import { renderWithProviders } from '~tests/test-utils'
-import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { categoryService } from '~/services/category-service'
 
 vi.mock('~/services/category-service')
@@ -21,20 +19,13 @@ categoryService.getCategoriesNames.mockResolvedValue({
 const closeDrawerMock = vi.fn()
 
 describe('CreateOffer component', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <ConfirmationDialogProvider>
-          <CreateOffer closeDrawer={closeDrawerMock} />
-        </ConfirmationDialogProvider>,
-        {
-          preloadedState: { appMain: { userRole: 'tutor' } }
-        }
-      )
+  beforeEach(() => {
+    renderWithProviders(<CreateOffer closeDrawer={closeDrawerMock} />, {
+      preloadedState: { appMain: { userRole: 'tutor' } }
     })
   })
 
-  it('should render correctly', async () => {
+  it('should render correctly', () => {
     const mainTitle = screen.getByText('offerPage.createOffer.title.tutor')
     const mainDescription = screen.getByText(
       'offerPage.createOffer.description.tutor'
@@ -81,24 +72,20 @@ describe('CreateOffer component', () => {
       `offerPage.labels.category${requiredSymbol}`
     )
 
-    waitFor(() => {
-      fireEvent.click(categoryInput)
-      fireEvent.change(categoryInput, {
-        target: { value: 'Category 1' }
-      })
-      fireEvent.keyDown(categoryInput, { key: 'ArrowDown' })
-      fireEvent.keyDown(categoryInput, { key: 'Enter' })
+    fireEvent.click(categoryInput)
+    fireEvent.change(categoryInput, {
+      target: { value: 'Category 1' }
     })
+    fireEvent.keyDown(categoryInput, { key: 'ArrowDown' })
+    fireEvent.keyDown(categoryInput, { key: 'Enter' })
 
     expect(categoryInput.value).toBe('Category 1')
 
-    waitFor(() => {
-      fireEvent.click(categoryInput)
-      fireEvent.change(categoryInput, {
-        target: { value: '' }
-      })
-      fireEvent.keyDown(categoryInput, { key: 'Enter' })
+    fireEvent.click(categoryInput)
+    fireEvent.change(categoryInput, {
+      target: { value: '' }
     })
+    fireEvent.keyDown(categoryInput, { key: 'Enter' })
 
     expect(categoryInput.value).toBe('')
   })

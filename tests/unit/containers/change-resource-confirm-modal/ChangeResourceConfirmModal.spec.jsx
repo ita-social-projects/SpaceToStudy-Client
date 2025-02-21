@@ -1,4 +1,4 @@
-import { screen, waitFor, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import useQuery from '~/hooks/use-query'
@@ -140,9 +140,7 @@ describe('ChangeResourceConfirmModal component tests', () => {
   
     fireEvent.click(confirmButton)
 
-    await waitFor(() => {
-      expect(handleConfirm).toHaveBeenCalled()
-      expect(closeModal).toHaveBeenCalled()
-    })
+    expect(handleConfirm).toHaveBeenCalled()
+    expect(closeModal).toHaveBeenCalled()
   })
 })

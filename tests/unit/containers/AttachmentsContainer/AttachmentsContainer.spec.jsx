@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import AttachmentsContainer from '~/containers/my-resources/attachments-container/AttachmentsContainer'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
@@ -55,13 +55,12 @@ const attachmentMockData = {
 }
 
 describe('AttachmentContainer renders correct data', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(URLs.resources.attachments.get)
-        .reply(200, attachmentMockData)
-      renderWithProviders(<AttachmentsContainer />)
-    })
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(URLs.resources.attachments.get)
+      .reply(200, attachmentMockData)
+
+    renderWithProviders(<AttachmentsContainer />)
   })
 
   afterEach(() => {

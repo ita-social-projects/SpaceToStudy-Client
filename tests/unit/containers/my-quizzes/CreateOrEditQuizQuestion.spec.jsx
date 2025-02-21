@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
 import {
@@ -28,17 +28,15 @@ const mockedQuestion = {
 }
 
 describe('CreateOrEditQuizQuestion component without question', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <TestSnackbar>
-          <CreateOrEditQuizQuestion
-            onCancel={onCancel}
-            setQuestions={setQuestions}
-          />
-        </TestSnackbar>
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <TestSnackbar>
+        <CreateOrEditQuizQuestion
+          onCancel={onCancel}
+          setQuestions={setQuestions}
+        />
+      </TestSnackbar>
+    )
   })
 
   it('should render modal', () => {
@@ -119,18 +117,16 @@ describe('CreateOrEditQuizQuestion component without question', () => {
 })
 
 describe('CreateOrEditQuizQuestion component with a question', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <TestSnackbar>
-          <CreateOrEditQuizQuestion
-            onCancel={onCancel}
-            question={mockedQuestion}
-            setQuestions={setQuestions}
-          />
-        </TestSnackbar>
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <TestSnackbar>
+        <CreateOrEditQuizQuestion
+          onCancel={onCancel}
+          question={mockedQuestion}
+          setQuestions={setQuestions}
+        />
+      </TestSnackbar>
+    )
   })
 
   it('should render QuestionEditor', () => {

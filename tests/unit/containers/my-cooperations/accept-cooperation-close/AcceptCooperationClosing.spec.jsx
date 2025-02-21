@@ -7,6 +7,7 @@ vi.mock('react-i18next', () => ({
     t: (key) => key
   })
 }))
+
 describe('AcceptCooperationClosing', () => {
   const mockOnAccept = vi.fn()
   const mockOnDecline = vi.fn()
@@ -17,6 +18,7 @@ describe('AcceptCooperationClosing', () => {
         user='John Doe'
         onAccept={mockOnAccept}
         onDecline={mockOnDecline}
+        message='You forgot to add a quiz'
       />
     )
   })
@@ -47,5 +49,10 @@ describe('AcceptCooperationClosing', () => {
 
     const errorMessage = screen.getByText('cooperationDetailsPage.inputError')
     expect(errorMessage).toBeInTheDocument()
+  })
+
+  it('should render answer when message is provided', () => {
+    const message = screen.getByText('You forgot to add a quiz')
+    expect(message).toBeInTheDocument()
   })
 })

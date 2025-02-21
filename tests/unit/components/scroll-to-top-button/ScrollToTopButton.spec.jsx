@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import ScrollToTopButton from '~/components/scroll-to-top-button/ScrollToTopButton'
 
 window.scrollTo = vi.fn()
@@ -8,14 +8,12 @@ describe('ScrollToTopButton dialog test', () => {
     render(<ScrollToTopButton element={{ current: window }} />)
   })
 
-  it('should show ArrowUpwardRoundedIcon', async () => {
+  it('should show ArrowUpwardRoundedIcon', () => {
     fireEvent.scroll(window, { target: { scrollTop: 500 } })
 
-    await waitFor(() =>
-      expect(screen.getByTestId('ArrowUpwardRoundedIcon')).toBeInTheDocument()
-    )
+    expect(screen.getByTestId('ArrowUpwardRoundedIcon')).toBeInTheDocument()
   })
-  it('should call function scrollTo', async () => {
+  it('should call function scrollTo', () => {
     fireEvent.scroll(window, { target: { scrollTop: 500 } })
 
     const button = screen.queryByTestId('ArrowUpwardRoundedIcon')

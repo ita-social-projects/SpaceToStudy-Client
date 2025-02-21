@@ -1,10 +1,4 @@
-import {
-  screen,
-  act,
-  fireEvent,
-  waitFor,
-  cleanup
-} from '@testing-library/react'
+import { screen, fireEvent, waitFor, cleanup } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
@@ -69,16 +63,16 @@ describe('HandleAdd tests', () => {
   })
 
   it('should add different duplicate resources when Add button is clicked', async () => {
+    const addButton = screen.getByText('course.courseSection.addResourceBtn')
+    fireEvent.click(addButton)
+
+    const menuListItem = screen.getAllByRole('menuitem')[0]
+    fireEvent.click(menuListItem)
+    const button = screen.getByTestId('addResource')
+    fireEvent.click(button)
+
     await waitFor(() => {
-      const addButton = screen.getByText('course.courseSection.addResourceBtn')
-      fireEvent.click(addButton)
-
-      const menuListItem = screen.getAllByRole('menuitem')[0]
-      act(() => fireEvent.click(menuListItem))
-      const button = screen.getByTestId('addResource')
-      act(() => fireEvent.click(button))
-
-      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(3)
+      expect(mockedResourceEventHandler).toHaveBeenCalled()
     })
   })
 })

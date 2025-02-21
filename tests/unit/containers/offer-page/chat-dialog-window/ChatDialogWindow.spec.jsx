@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import ChatDialogWindow from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
@@ -43,13 +43,12 @@ const chatInfoEmptyIdTutorMock = {
 const chat = createUrlPath(URLs.chats.get, chatInfoMock.chatId)
 
 describe('ChatDialogWindow Component with ChatId', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(`${chat}${URLs.messages.get}`)
-        .reply(200, messagesMock)
-      renderWithProviders(<ChatDialogWindow chatInfo={chatInfoMock} />)
-    })
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(`${chat}${URLs.messages.get}`)
+      .reply(200, messagesMock)
+
+    renderWithProviders(<ChatDialogWindow chatInfo={chatInfoMock} />)
   })
 
   it('should render user profile info', () => {
@@ -64,10 +63,8 @@ describe('ChatDialogWindow Component with ChatId', () => {
 })
 
 describe('ChatDialogWindow Component without ChatId', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(<ChatDialogWindow chatInfo={chatInfoEmptyIdMock} />)
-    })
+  beforeEach(() => {
+    renderWithProviders(<ChatDialogWindow chatInfo={chatInfoEmptyIdMock} />)
   })
 
   it('should render default message when there is no chatId', () => {
@@ -82,12 +79,10 @@ describe('ChatDialogWindow Component without ChatId', () => {
 })
 
 describe('ChatDialogWindow Component without ChatId with tutor role', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <ChatDialogWindow chatInfo={chatInfoEmptyIdTutorMock} />
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <ChatDialogWindow chatInfo={chatInfoEmptyIdTutorMock} />
+    )
   })
 
   it('should render questions to the tutor', () => {

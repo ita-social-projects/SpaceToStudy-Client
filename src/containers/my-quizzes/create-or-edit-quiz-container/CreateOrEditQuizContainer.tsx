@@ -1,7 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
@@ -13,9 +12,10 @@ import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-qui
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import QuestionsList from '~/containers/questions-list/QuestionsList'
 import { useModalContext } from '~/context/modal-context'
-import { useAppDispatch } from '~/hooks/use-redux'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import { ResourceService } from '~/services/resource-service'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -28,29 +28,22 @@ import {
   columns,
   removeColumnRules
 } from '~/containers/add-resources/AddQuestions.constants'
-import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
+  type Question,
+  type Quiz,
+  type CategoryNameInterface,
   ButtonTypeEnum,
-  ErrorResponse,
-  CreateQuizParams,
-  Question,
-  Quiz,
   SizeEnum,
   TextFieldVariantEnum,
   ResourcesTabsEnum,
   ResourcesTypesEnum as ResourceType,
-  UpdateQuizParams,
-  CategoryNameInterface,
   PositionEnum
 } from '~/types'
-import { getErrorMessage } from '~/utils/error-with-message'
 import { createUrlPath } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
-const CreateOrEditQuizContainer = ({
+const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   title,
   setTitle,
   description,
@@ -60,12 +53,12 @@ const CreateOrEditQuizContainer = ({
   category,
   setCategory,
   setSettings
-}: QuizContentProps) => {
+}) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
-  const { id } = useParams()
+  const { id = '' } = useParams()
+  const { handleErrorAlert, handleAlert } = useSnackbarAlert()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
 
   const onCategoryChange = (
@@ -82,90 +75,68 @@ const CreateOrEditQuizContainer = ({
   }
 
   const handleResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: id
-          ? 'myResourcesPage.quizzes.successEditedQuiz'
-          : 'myResourcesPage.quizzes.successAddedQuiz'
-      })
-    )
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: id
+        ? 'myResourcesPage.quizzes.successEditedQuiz'
+        : 'myResourcesPage.quizzes.successAddedQuiz'
+    })
     navigateToQuizzesTab()
   }
 
-  const onResponseError = (error?: ErrorResponse) => {
-    const errorKey = getErrorKey(error)
-
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: error
-          ? {
-              text: errorKey,
-              options: {
-                message: getErrorMessage(error.message)
-              }
-            }
-          : errorKey
-      })
-    )
-  }
-
-  const createQuizService = useCallback(
-    (data?: CreateQuizParams) => ResourceService.addQuiz(data),
-    []
-  )
-
-  const { fetchData: addNewQuiz } = useAxios<Quiz, CreateQuizParams>({
-    service: createQuizService,
-    fetchOnMount: false,
-    defaultResponse,
-    onResponse: handleResponse,
-    onResponseError
+  const { mutate: createQuiz } = useMutation({
+    queryKey: ['quizzes'],
+    mutationFn: ResourceService.addQuiz,
+    onSuccess: handleResponse,
+    onError: handleErrorAlert
   })
 
-  const editQuizService = useCallback(
-    (params?: UpdateQuizParams) => ResourceService.editQuiz(params),
-    []
-  )
-
-  const { fetchData: fetchEditedQuiz } = useAxios<null, UpdateQuizParams>({
-    service: editQuizService,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse: handleResponse,
-    onResponseError
+  const { mutate: editQuiz } = useMutation({
+    queryKeys: [['quizzes'], ['quiz', id]],
+    mutationFn: ResourceService.editQuiz,
+    onSuccess: handleResponse,
+    onError: handleErrorAlert
   })
 
-  const getQuiz = (id?: string): Promise<AxiosResponse> => {
+  const getQuiz = useCallback(() => {
     return ResourceService.getQuiz(id)
-  }
+  }, [id])
 
-  const handleGetQuizResponse = (quiz: Quiz) => {
-    setTitle(quiz.title)
-    setDescription(quiz.description)
-    setQuestions(quiz.items)
-    setCategory(typeof quiz.category === 'string' ? quiz.category : null)
-    setSettings(quiz.settings)
-  }
+  const handleGetQuizResponse = useCallback(
+    (quiz: Quiz) => {
+      setTitle(quiz.title)
+      setDescription(quiz.description)
+      setQuestions(quiz.items)
+      setCategory(typeof quiz.category === 'string' ? quiz.category : null)
+      setSettings(quiz.settings)
+    },
+    [setTitle, setDescription, setQuestions, setCategory, setSettings]
+  )
 
-  const { loading: getQuizLoading, fetchData: fetchQuizData } = useAxios<
-    Quiz,
-    string
-  >({
-    service: getQuiz,
-    fetchOnMount: false,
-    defaultResponse,
-    onResponse: handleGetQuizResponse,
-    onResponseError
+  const {
+    data: quiz,
+    isLoading,
+    error
+  } = useQuery({
+    queryKey: ['quiz', id],
+    queryFn: getQuiz,
+    options: {
+      enabled: Boolean(id),
+      staleTime: Infinity
+    }
   })
 
   useEffect(() => {
-    if (id) {
-      void fetchQuizData(id)
+    if (error) {
+      handleErrorAlert(error)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [handleErrorAlert, error])
+
+  useEffect(() => {
+    if (quiz) {
+      handleGetQuizResponse(quiz)
+    }
+  }, [handleGetQuizResponse, quiz])
 
   const onOpenAddQuestionsModal = () => {
     openModal({
@@ -199,14 +170,14 @@ const CreateOrEditQuizContainer = ({
 
   const onSaveQuiz = () =>
     id
-      ? void fetchEditedQuiz({
+      ? editQuiz({
           id,
           title,
           description,
           items: questions,
           category: category ? { _id: category, name: '' } : null
         })
-      : void addNewQuiz({
+      : createQuiz({
           title,
           description,
           items: questions,
@@ -214,7 +185,7 @@ const CreateOrEditQuizContainer = ({
           resourceType: ResourceType.Quiz
         })
 
-  if (getQuizLoading) {
+  if (isLoading) {
     return <Loader pageLoad />
   }
 
@@ -242,7 +213,7 @@ const CreateOrEditQuizContainer = ({
     <PageWrapper sx={styles.container}>
       <Box sx={styles.root}>
         <AppTextField
-          InputLabelProps={styles.titleLabel(!!title)}
+          InputLabelProps={styles.titleLabel(Boolean(title))}
           InputProps={styles.titleInput}
           fullWidth
           inputProps={styles.input}
@@ -252,7 +223,7 @@ const CreateOrEditQuizContainer = ({
           variant={TextFieldVariantEnum.Standard}
         />
         <AppTextField
-          InputLabelProps={styles.descriptionLabel(!!description)}
+          InputLabelProps={styles.descriptionLabel(Boolean(description))}
           InputProps={styles.descriptionInput}
           fullWidth
           inputProps={styles.input}

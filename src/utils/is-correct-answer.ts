@@ -16,7 +16,8 @@ export const isCorrectAnswer = (
   if (isUnanswered) return false
 
   if (isSingleChoice) {
-    return question.answers.find((item) => item.isCorrect)?.text === userAnswer
+    const correctAnswer = question.answers.find((item) => item.isCorrect)
+    return correctAnswer?.text === userAnswer[0]
   }
 
   if (isMultipleChoice && Array.isArray(userAnswer)) {

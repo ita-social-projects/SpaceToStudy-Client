@@ -17,6 +17,7 @@ type CooperationActionInputProps = {
   isReasonSubmitted: boolean
   onReasonSubmit: (reason: string) => void
   setIsInputShown: (value: boolean) => void
+  submittedReason?: string
 }
 
 const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
@@ -25,7 +26,8 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
   isReasonSubmitted,
   isInputShown,
   onReasonSubmit,
-  setIsInputShown
+  setIsInputShown,
+  submittedReason
 }) => {
   const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -93,9 +95,15 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
   return (
     isReasonSubmitted &&
     !hasErrors && (
-      <Typography sx={styles.textGray}>
-        {t('cooperationDetailsPage.submitMessage')}
-      </Typography>
+      <Box>
+        <Typography sx={styles.textGray}>
+          {t('cooperationDetailsPage.submitMessage')}
+        </Typography>
+        <Typography sx={styles.textGray}>
+          {t('cooperationDetailsPage.submittedReason')}
+          {submittedReason}
+        </Typography>
+      </Box>
     )
   )
 }

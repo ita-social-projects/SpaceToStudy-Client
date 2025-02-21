@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import SubjectsStep from '~/containers/tutor-home-page/subjects-step/SubjectsStep'
 import { StepProvider } from '~/context/step-context'
@@ -41,36 +41,29 @@ const btnsBox = (
   </div>
 )
 
-const chooseOption = (name) => {
-  const firstOption = screen.getByRole('option', {
+const chooseOption = async (name) => {
+  const firstOption = await screen.findByRole('option', {
     name
   })
   fireEvent.click(firstOption)
 }
 
 const chooseCategoryOrSubject = async (inputField, value) => {
-  await waitFor(() => {
-    fireEvent.click(inputField)
-    fireEvent.change(inputField, {
-      target: { value }
-    })
+  fireEvent.click(inputField)
+  fireEvent.change(inputField, {
+    target: { value }
   })
 
-  chooseOption(value)
+  await chooseOption(value)
 }
 
 describe('SubjectsStep test with some data', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <StepProvider
-          initialValues={initialValues}
-          stepLabels={tutorStepLabels}
-        >
-          <SubjectsStep btnsBox={btnsBox} stepLabel={'subjects'} />
-        </StepProvider>
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
+        <SubjectsStep btnsBox={btnsBox} stepLabel='subjects' />
+      </StepProvider>
+    )
   })
 
   afterEach(() => {

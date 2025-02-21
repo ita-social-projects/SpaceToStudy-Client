@@ -49,7 +49,7 @@ describe('snackbar', () => {
 
     const snackbar = await screen.findByText('errors.error')
 
-    await waitFor(() => expect(snackbar).toBeInTheDocument())
+    expect(snackbar).toBeInTheDocument()
   })
 
   it('should close snackbar on blur', async () => {

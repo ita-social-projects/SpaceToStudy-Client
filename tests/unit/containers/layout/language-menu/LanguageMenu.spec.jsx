@@ -63,7 +63,7 @@ describe('LanguageMenu', () => {
     }
   })
 
-  it('should change language', async () => {
+  it('should change language', () => {
     mockChangeLanguage.mockResolvedValue(null)
 
     render(<LanguageMenu anchorEl={anchorEl} onClose={mockHandleClose} />)

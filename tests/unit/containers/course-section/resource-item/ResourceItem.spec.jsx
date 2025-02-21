@@ -1,5 +1,5 @@
 import { renderWithProviders } from '~tests/test-utils'
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import {
   mockedLessonDataOriginal,
@@ -106,7 +106,9 @@ describe('ResourceItem tests with isView prop', () => {
   })
 
   it('should render availability icon', () => {
-    const availabilityIcon = screen.getByTestId('CheckCircleOutlineOutlinedIcon')
+    const availabilityIcon = screen.getByTestId(
+      'CheckCircleOutlineOutlinedIcon'
+    )
     expect(availabilityIcon).toBeInTheDocument()
   })
 
@@ -150,19 +152,17 @@ describe('ResourceItem tests with isCooperation prop', () => {
     expect(availabilitySelect.value).toBe('openFrom')
   })
 
-  it('should call setOpenFromDate when DatePicker value changes', async () => {
+  it('should call setOpenFromDate when DatePicker value changes', () => {
     const datePickerInput = screen.getByTestId('mock-DatePicker')
     fireEvent.change(datePickerInput, { target: { value: '2025-08-16' } })
 
-    await waitFor(() => {
-      expect(mockUpdateAvailability).toHaveBeenCalledWith(
-        mockedQuizDataDuplicate,
-        expect.objectContaining({
-          status: 'openFrom',
-          date: '2025-08-16T00:00:00.000Z'
-        })
-      )
-    })
+    expect(mockUpdateAvailability).toHaveBeenCalledWith(
+      mockedQuizDataDuplicate,
+      expect.objectContaining({
+        status: 'openFrom',
+        date: '2025-08-16T00:00:00.000Z'
+      })
+    )
   })
 
   it('should call updateAvailability when availability status changes', () => {

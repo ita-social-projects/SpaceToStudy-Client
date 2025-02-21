@@ -1,45 +1,62 @@
-import { useAppSelector } from '~/hooks/use-redux'
 import Box from '@mui/material/Box'
 
-import { UserRoleEnum } from '~/types'
 import {
   ActiveQuizInfo,
   FinishedQuizInfo,
-  UngradedQuizInfo,
-  GradedQuizInfo
+  TutorQuizInfo
 } from '~/containers/quiz/quiz-info/QuizInfo'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import styles from '~/containers/quiz/quiz-header/QuizHeader.styles'
 
 type QuizHeaderProps = {
-  isFinished: boolean
   title: string
   description: string
   points: number
   totalPoints: number
-  isGraded: boolean
-  questionsAnswered: number
+  questionsAnswered?: number
   createdAt: string
   updatedAt: string
+  type: 'active' | 'finished' | 'tutor'
 }
 
-const QuizHeader = ({
-  isFinished,
+const QuizHeader: React.FC<QuizHeaderProps> = ({
   title,
   description,
   points,
   totalPoints,
-  isGraded,
   questionsAnswered,
   createdAt,
-  updatedAt
-}: QuizHeaderProps) => {
-  const { userRole } = useAppSelector((state) => state.appMain)
+  updatedAt,
+  type
+}) => {
+  const getQuizInfoVariant = () => {
+    if (type === 'active') {
+      return (
+        <ActiveQuizInfo
+          questionsAnswered={questionsAnswered ?? 0}
+          totalPoints={totalPoints}
+        />
+      )
+    }
 
-  const isStudent = userRole === UserRoleEnum.Student
+    if (type === 'finished') {
+      return (
+        <FinishedQuizInfo
+          createdAt={createdAt}
+          points={points}
+          totalPoints={totalPoints}
+          updatedAt={updatedAt}
+        />
+      )
+    }
 
-  const isTutor = userRole === UserRoleEnum.Tutor
+    if (type === 'tutor') {
+      return <TutorQuizInfo points={points} totalPoints={totalPoints} />
+    }
+  }
+
+  const quizInfoVariant = getQuizInfoVariant()
 
   return (
     <Box sx={styles.wrapper}>
@@ -48,24 +65,7 @@ const QuizHeader = ({
         style={styles.titleWithDescription}
         title={title}
       />
-      {!isFinished && isStudent && (
-        <ActiveQuizInfo
-          questionsAnswered={questionsAnswered}
-          totalPoints={totalPoints}
-        />
-      )}
-      {isFinished && isStudent && (
-        <FinishedQuizInfo
-          createdAt={createdAt}
-          points={points}
-          totalPoints={totalPoints}
-          updatedAt={updatedAt}
-        />
-      )}
-      {!isGraded && isTutor && <UngradedQuizInfo />}
-      {isGraded && isTutor && (
-        <GradedQuizInfo points={points} totalPoints={totalPoints} />
-      )}
+      {quizInfoVariant}
     </Box>
   )
 }

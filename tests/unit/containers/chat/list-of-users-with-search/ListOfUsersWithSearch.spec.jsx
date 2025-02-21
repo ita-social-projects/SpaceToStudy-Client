@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import { useAppSelector } from '~/hooks/use-redux'
@@ -56,19 +56,16 @@ describe('ListOfUsersWithSearch component', () => {
     fireEvent.change(searchInput, { target: { value: 'alaya' } })
 
     const filteredChatItems = screen.getAllByTestId('chat-item')
-    waitFor(() => {
-      expect(filteredChatItems.length).toBe(1)
-      expect(filteredChatItems).toHaveTextContent('Alaya McKenzie')
-      expect(filteredChatItems._id).toBe(chatsMock[1]._id)
-    })
+
+    expect(filteredChatItems.length).toBe(1)
+    expect(filteredChatItems[0]).toHaveTextContent('Alaya McKenzie')
   })
 
-  it('calls setSelectedChat when a chat is clicked', async () => {
+  it('calls setSelectedChat when a chat is clicked', () => {
     const chatItem = screen.getAllByTestId('chat-item')[0]
 
     fireEvent.click(chatItem)
-    await waitFor(() => {
-      expect(props.setSelectedChat).toHaveBeenCalledWith(chatsMock[0])
-    })
+
+    expect(props.setSelectedChat).toHaveBeenCalledWith(chatsMock[0])
   })
 })

@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, act } from '@testing-library/react'
+import { fireEvent, screen, act } from '@testing-library/react'
 import { afterEach, beforeEach, expect, vi } from 'vitest'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 
@@ -49,12 +49,12 @@ describe('FindOffers component with data', () => {
   beforeEach(async () => {
     window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
     mockAxiosClient.onGet(new RegExp(URLs.offers.get)).reply(200, offersMock)
-    waitFor(() => {
-      useFilterQuery.mockReturnValue(filterQueryMock)
-      useBreakpoints.mockImplementation(() => desktopData)
-      renderWithProviders(<FindOffers />, {
-        preloadedState
-      })
+
+    useFilterQuery.mockReturnValue(filterQueryMock)
+    useBreakpoints.mockImplementation(() => desktopData)
+
+    renderWithProviders(<FindOffers />, {
+      preloadedState
     })
   })
 

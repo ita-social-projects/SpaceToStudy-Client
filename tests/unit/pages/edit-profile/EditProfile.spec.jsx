@@ -375,10 +375,9 @@ describe('EditProfile', () => {
       name: 'editProfilePage.profile.generalTab.tabTitle'
     })
     fireEvent.click(profileMenuTab)
-    await waitFor(() => {
-      const profileContent = screen.getByText('ProfileTab')
-      expect(profileContent).toBeInTheDocument()
-    })
+
+    const profileContent = screen.getByText('ProfileTab')
+    expect(profileContent).toBeInTheDocument()
   })
 
   it('should render Professional tab Container after click on Professional menu button', async () => {

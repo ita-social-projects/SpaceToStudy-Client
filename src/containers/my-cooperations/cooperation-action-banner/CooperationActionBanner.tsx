@@ -30,7 +30,7 @@ const CooperationActionBanner: React.FC<Properties> = ({
         </Box>
         {actionButtons && <Box sx={styles.buttonsWrapper}>{actionButtons}</Box>}
       </Box>
-      {children && <Box>{children}</Box>}
+      {children}
     </Box>
   )
 }

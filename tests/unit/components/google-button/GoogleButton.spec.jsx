@@ -1,4 +1,3 @@
-import { waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import GoogleButton from '~/containers/guest-home-page/google-button/GoogleButton'
@@ -77,20 +76,16 @@ describe('GoogleButton component test', () => {
     const unwrapMock = vi.fn().mockResolvedValueOnce({})
     mockGoogleAuth.mockReturnValue({ unwrap: unwrapMock })
 
-    await waitFor(() =>
-      expect(mockGoogle.accounts.id.initialize).toHaveBeenCalled()
-    )
-    await waitFor(() =>
-      expect(mockGoogle.accounts.id.renderButton).toHaveBeenCalled()
-    )
+    expect(mockGoogle.accounts.id.initialize).toHaveBeenCalled()
+
+    expect(mockGoogle.accounts.id.renderButton).toHaveBeenCalled()
 
     const { callback } = mockGoogle.accounts.id.initialize.mock.calls[0][0]
     await callback(token)
 
-    await waitFor(() =>
-      expect(mockGoogleAuth).toHaveBeenCalledWith({ token, role })
-    )
-    await waitFor(() => expect(mockCloseModal).toHaveBeenCalled())
+    expect(mockGoogleAuth).toHaveBeenCalledWith({ token, role })
+
+    expect(mockCloseModal).toHaveBeenCalled()
   })
 
   it('should handle google auth error and user not found', async () => {
@@ -102,29 +97,25 @@ describe('GoogleButton component test', () => {
     const unwrapMock = vi.fn().mockRejectedValueOnce(error)
     mockGoogleAuth.mockReturnValue({ unwrap: unwrapMock })
 
-    await waitFor(() =>
-      expect(mockGoogle.accounts.id.initialize).toHaveBeenCalled()
-    )
-    await waitFor(() =>
-      expect(mockGoogle.accounts.id.renderButton).toHaveBeenCalled()
-    )
+    expect(mockGoogle.accounts.id.initialize).toHaveBeenCalled()
+
+    expect(mockGoogle.accounts.id.renderButton).toHaveBeenCalled()
 
     const { callback } = mockGoogle.accounts.id.initialize.mock.calls[0][0]
     await callback(invalidToken)
 
-    await waitFor(() =>
-      expect(mockGoogleAuth).toHaveBeenCalledWith({ token: invalidToken, role })
-    )
-    await waitFor(() => expect(unwrapMock).toHaveBeenCalled())
-    await waitFor(() =>
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: 'snackbarSlice/openAlert',
-        payload: {
-          severity: snackbarVariants.error,
-          message: getErrorKey(error.data)
-        }
-      })
-    )
-    await waitFor(() => expect(mockCloseModal).toHaveBeenCalled())
+    expect(mockGoogleAuth).toHaveBeenCalledWith({ token: invalidToken, role })
+
+    expect(unwrapMock).toHaveBeenCalled()
+
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: 'snackbarSlice/openAlert',
+      payload: {
+        severity: snackbarVariants.error,
+        message: getErrorKey(error.data)
+      }
+    })
+
+    expect(mockCloseModal).toHaveBeenCalled()
   })
 })

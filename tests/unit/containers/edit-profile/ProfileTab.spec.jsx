@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import { UserRoleEnum } from '~/types'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
@@ -104,7 +104,7 @@ describe('ProfileTab', () => {
     expect(form).toBeInTheDocument()
   })
 
-  it('should update store after input value change', async () => {
+  it('should update store after input value change', () => {
     renderWithMockData()
     const videoLinkInput = screen.getByPlaceholderText('firstName')
     fireEvent.change(videoLinkInput, { target: { value: 'NewValue' } })

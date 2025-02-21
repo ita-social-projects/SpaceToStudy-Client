@@ -42,6 +42,8 @@
   "responseInputFieldLabel": "Будь ласка, вкажіть причину повторного надсилання запиту.",
   "inputError": "Це поле є обов'язковим для заповнення.",
   "submitMessage": "Вашу причину було успішно надіслано протилежній стороні.",
+  "submittedReason": "Надіслана причина: ",
   "cooperationCloseDeclinedMessage": "<userWrapper>{{user}}</userWrapper> відмовив(-ла) у закритті співпраці з наступної причини:",
-  "resendRequestBtn": "Надіслати повторно"
+  "resendRequestBtn": "Надіслати повторно",
+  "answer": "Відповідь від "
 }

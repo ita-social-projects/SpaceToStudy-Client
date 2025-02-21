@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
 import { vi } from 'vitest'
@@ -24,12 +24,12 @@ describe('test with guest role', () => {
     })
   })
 
-  it('should open login popup after click', async () => {
+  it('should open login popup after click', () => {
     const loginButton = screen.getByText('header.loginButton')
     fireEvent.click(loginButton)
     const img = screen.getByAltText('login')
 
-    await waitFor(() => expect(img).toBeInTheDocument())
+    expect(img).toBeInTheDocument()
   })
 
   it('should render and click menu icon', () => {
@@ -42,14 +42,9 @@ describe('test with guest role', () => {
 
 describe('test with student role', () => {
   const preloadedState = { appMain: { userRole: 'student' } }
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <NavigationIcons setSidebarOpen={setIsSidebarOpen} />,
-        {
-          preloadedState
-        }
-      )
+  beforeEach(() => {
+    renderWithProviders(<NavigationIcons setSidebarOpen={setIsSidebarOpen} />, {
+      preloadedState
     })
   })
 

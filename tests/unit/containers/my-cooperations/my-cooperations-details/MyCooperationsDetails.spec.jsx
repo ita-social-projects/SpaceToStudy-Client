@@ -2,7 +2,7 @@ import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import MyCooperationsDetails from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.tsx'
 
-import { waitFor, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 
 const mockedOffer = {
   initiator: { _id: 'initiatorId', role: ['tutor'] },
@@ -41,7 +41,7 @@ vi.mock('~/context/chat-context', () => ({
 
 
 describe('MyCooperationsDetails component', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient
       .onGet(URLs.cooperations.getById.replace(':id', ''))
       .reply(200, mockedOffer)
@@ -73,12 +73,10 @@ describe('MyCooperationsDetails component', () => {
 
     const chatWindow = await screen.findByTestId('MessageIcon')
 
-    await waitFor(() => {
-      expect(chatWindow).toBeInTheDocument()
-    })
+    expect(chatWindow).toBeInTheDocument()
   })
 
-  it('should render link to user profile with correct url', async () => {
+  it('should render link to user profile with correct url', () => {
     const profileButton = screen.queryByText('cooperationDetailsPage.profile')
 
     expect(profileButton).toBeInTheDocument()

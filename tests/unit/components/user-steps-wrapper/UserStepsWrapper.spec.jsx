@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
@@ -29,24 +29,22 @@ const desktopData = {
 }
 
 describe('UserStepsWrapper test', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      useBreakpoints.mockImplementation(() => desktopData)
-      window.URL.createObjectURL = vi.fn(() => 'image/png')
-      renderWithProviders(<UserStepsWrapper userRole='tutor' />, {
-        preloadedState: mockState
-      })
+  beforeEach(() => {
+    useBreakpoints.mockImplementation(() => desktopData)
+    window.URL.createObjectURL = vi.fn(() => 'image/png')
+    renderWithProviders(<UserStepsWrapper userRole='tutor' />, {
+      preloadedState: mockState
     })
   })
 
-  it('should render first tab', () => {
-    const firstTab = screen.getByText(/becomeTutor.generalInfo.title/i)
+  it('should render first tab', async () => {
+    const firstTab = await screen.findByText(/becomeTutor.generalInfo.title/i)
 
     expect(firstTab).toBeInTheDocument()
   })
 
-  it('should render second tab', () => {
-    const nextBtn = screen.getByText(/Next/i)
+  it('should render second tab', async () => {
+    const nextBtn = await screen.findByText(/Next/i)
     fireEvent.click(nextBtn)
 
     const secondTab = screen.getByText(/becomeTutor.categories.title/i)
@@ -67,7 +65,7 @@ describe('UserStepsWrapper test', () => {
     fireEvent.change(input, { target: { files: [fakeFile] } })
     const error = screen.queryByText('becomeTutor.photo.fileSizeError')
 
-    await waitFor(() => expect(error).toBeInTheDocument())
+    expect(error).toBeInTheDocument()
   })
 
   it('should resize and show photo after adding photo', async () => {
@@ -85,6 +83,6 @@ describe('UserStepsWrapper test', () => {
     const photoPreview = await screen.findByAltText(
       'becomeTutor.photo.imageAlt'
     )
-    await waitFor(() => expect(photoPreview).toBeInTheDocument())
+    expect(photoPreview).toBeInTheDocument()
   })
 })

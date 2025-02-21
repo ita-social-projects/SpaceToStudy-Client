@@ -1,3 +1,4 @@
+import { afterAll, beforeAll } from 'vitest'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import useChangeUserStatus from '~/hooks/use-change-user-status'
 import { configureStore } from '@reduxjs/toolkit'
@@ -49,11 +50,19 @@ const wrapper = ({ children }) => (
 )
 
 describe('useChangeUserStatus custom hook', () => {
-  it('should throw an error and not change the status', async () => {
-    const mockSetItem = vi
+  let mockSetItem
+
+  beforeAll(() => {
+    mockSetItem = vi
       .spyOn(Storage.prototype, 'setItem')
       .mockImplementation(vi.fn())
+  })
 
+  afterAll(() => {
+    mockSetItem.mockRestore()
+  })
+
+  it('should throw an error and not change the status', () => {
     mockActivateUser.mockRejectedValue({
       response: { data: mockError }
     })
@@ -64,11 +73,7 @@ describe('useChangeUserStatus custom hook', () => {
       result.current.checkStatusChange('title', 'message')
     })
 
-    await waitFor(() => {
-      expect(result.current.neededAction).toBe('activate')
-    })
-
-    mockSetItem.mockRestore()
+    expect(result.current.neededAction).toBe('activate')
   })
 
   it('should activate and deactivate a user account', async () => {
@@ -85,8 +90,9 @@ describe('useChangeUserStatus custom hook', () => {
       result.current.checkStatusChange('title', 'message')
     })
 
+    expect(mockActivateUser).toHaveBeenCalled()
+
     await waitFor(() => {
-      expect(mockActivateUser).toHaveBeenCalled()
       expect(result.current.neededAction).toBe('deactivate')
     })
 

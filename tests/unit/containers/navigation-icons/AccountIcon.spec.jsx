@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import AccountIcon from '~/containers/navigation-icons/AccountIcon'
 import { renderWithProviders } from '~tests/test-utils'
 
@@ -14,16 +14,14 @@ vi.mock('~/services/user-service', () => ({
 
 describe('AccountIcon test with user role', () => {
   const preloadedState = { appMain: { userRole: 'tutor' } }
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(<AccountIcon openMenu={mockOpenMenu} />, {
-        preloadedState
-      })
+  beforeEach(() => {
+    renderWithProviders(<AccountIcon openMenu={mockOpenMenu} />, {
+      preloadedState
     })
   })
 
-  it('should render click menu icon and open account menu after click on it', () => {
-    const AccountIconButton = screen.getByAltText('JD')
+  it('should render click menu icon and open account menu after click on it', async () => {
+    const AccountIconButton = await screen.findByAltText('JD')
     expect(AccountIconButton).toBeInTheDocument()
 
     fireEvent.click(AccountIconButton)

@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
@@ -81,7 +81,7 @@ describe('Login dialog test', () => {
     expect(error).toBeInTheDocument()
   })
 
-  it('should dispatch after button submit', async () => {
+  it('should dispatch after button submit', () => {
     const inputEmail = screen.getByLabelText(/common.labels.email/i)
     fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } })
 
@@ -91,8 +91,6 @@ describe('Login dialog test', () => {
     const button = screen.getByText('common.labels.login')
     fireEvent.click(button)
 
-    await waitFor(() => {
-      expect(loginUser).toHaveBeenCalledTimes(1)
-    })
+    expect(loginUser).toHaveBeenCalledTimes(1)
   })
 })

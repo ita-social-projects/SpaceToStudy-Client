@@ -12,7 +12,15 @@ const styles = {
       flexDirection: 'column',
       alignItems: 'flex-start',
       gap: theme.spacing(2)
-    }
+    },
+    marginBottom: theme.spacing(2)
+  },
+  infoWrapperNew: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing(1.25),
+    marginTop: theme.spacing(2)
   },
   divider: {
     borderWidth: '1px',
@@ -35,7 +43,19 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: '12px'
+    gap: theme.spacing(1.5)
+  },
+  quizSettings: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(1),
+    width: '50%',
+    justifyContent: 'flex-start',
+    flexFrow: 1
+  },
+  dividerEllipse: {
+    width: '8px',
+    m: theme.spacing(0, 0.5)
   },
   subtitle1: {
     typography: TypographyVariantEnum.Subtitle1
@@ -43,6 +63,9 @@ const styles = {
   subtitle2: {
     typography: TypographyVariantEnum.Subtitle2,
     color: 'primary.800'
+  },
+  subtitleSize: {
+    fontSize: '14px'
   },
   buttonWrapper: {
     marginLeft: 'auto',

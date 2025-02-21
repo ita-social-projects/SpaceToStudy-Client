@@ -9,8 +9,8 @@ import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import { CourseService } from '~/services/course-service'
 import { userService } from '~/services/user-service'
-import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
+import useQuery from '~/hooks/use-query'
 import Loader from '~/components/loader/Loader'
 import Button from '~scss-components/button/Button'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
@@ -22,24 +22,20 @@ import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import CoursesFilters from '~/containers/find-course/courses-filters/CoursesFilters'
 
 import { coursesDefaultFilters } from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal.constants'
-import { defaultResponses } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { initialSort } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import { styles } from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal.styles'
 import {
-  ItemsWithCount,
   Course,
   SortEnum,
   CategoryNameInterface,
   SubjectNameInterface,
   ProficiencyLevelEnum,
-  UserRole,
-  UserResponse
+  UserRole
 } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 import { setIsActivityCreated } from '~/redux/features/cooperationsSlice'
-
 interface AddCourseTemplateModalProps {
   closeModal: () => void
 }
@@ -64,21 +60,24 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   }
 
   const getUserData = useCallback(
-    () => userService.getUserById(userId, userRole as UserRole),
+    () => userService.getUserByIdWithBaseService(userId, userRole as UserRole),
     [userId, userRole]
   )
 
-  const { loading: userLoading, response: user } =
-    useAxios<UserResponse | null>({
-      service: getUserData,
-      defaultResponse: null
-    })
+  const { isLoading: userLoading, data: userData = null } = useQuery({
+    queryFn: getUserData,
+    queryKey: ['user', userId],
+    options: {
+      staleTime: Infinity
+    }
+  })
 
-  const getCourses = useCallback(() => CourseService.getCourses(), [])
-
-  const { response, loading } = useAxios<ItemsWithCount<Course>>({
-    service: getCourses,
-    defaultResponse: defaultResponses.itemsWithCount
+  const { data: coursesData, isLoading: coursesLoading } = useQuery({
+    queryFn: CourseService.getCoursesWithBaseService,
+    queryKey: ['courses'],
+    options: {
+      staleTime: Infinity
+    }
   })
 
   const { updateFiltersInQuery, resetFilters } = filterQueryActions
@@ -130,7 +129,10 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   }
 
   const getItems = () => {
-    return response.items
+    if (!coursesData) {
+      return []
+    }
+    return coursesData.items
       .filter(
         (item) =>
           'title' in item &&
@@ -204,13 +206,13 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
           onLevelChange={onLevelChange}
           onSubjectChange={onSubjectChange}
           resetFilters={resetFilters}
-          user={user}
+          user={userData}
           userLoading={userLoading}
         />
       )}
 
       <SimpleBar style={styles.cardsScroll(showFilters)}>
-        {loading || userLoading ? (
+        {coursesLoading || userLoading ? (
           <Loader containerSx={styles.loaderWrapper} pageLoad size={50} />
         ) : (
           scrollableContent

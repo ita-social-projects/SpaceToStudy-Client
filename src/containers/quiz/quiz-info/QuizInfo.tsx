@@ -3,6 +3,8 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import Button from '~/design-system/components/button/Button'
+import DividerComponent from '~/design-system/components/divider/Divider'
+import { Alert } from '@mui/material'
 
 import QuizInfoSection from '~/containers/quiz/quiz-info-section/QuizInfoSection'
 import Timer from '~/containers/quiz/timer/Timer'
@@ -12,18 +14,23 @@ import styles from '~/containers/quiz/quiz-info/QuizInfo.styles'
 import {
   getFormattedDate,
   formatTime,
-  formatTimeDifference
+  formatTimeDifference,
+  spliceSx
 } from '~/utils/helper-functions'
+
+import { QuizAttempt, QuizTimeLimit } from '~/types'
+import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
+import { TFunction } from 'i18next'
 
 type ActiveQuizInfoProps = {
   questionsAnswered: number
   totalPoints: number
 }
 
-const ActiveQuizInfo = ({
+const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
   questionsAnswered,
   totalPoints
-}: ActiveQuizInfoProps) => {
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -59,12 +66,12 @@ type FinishedQuizInfoProps = {
   updatedAt: string
 }
 
-const FinishedQuizInfo = ({
+const FinishedQuizInfo: React.FC<FinishedQuizInfoProps> = ({
   points,
   totalPoints,
   createdAt,
   updatedAt
-}: FinishedQuizInfoProps) => {
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -99,49 +106,15 @@ const FinishedQuizInfo = ({
   )
 }
 
-const UngradedQuizInfo = () => {
-  const { t } = useTranslation()
-
-  return (
-    <Box sx={styles.infoWrapper}>
-      <QuizInfoSection
-        firstColumn='May 17, 2024'
-        secondColumn='14:15'
-        title={t('quiz.attemptFinished')}
-      />
-      <Divider
-        flexItem
-        orientation='vertical'
-        sx={styles.divider}
-        variant='middle'
-      />
-      <QuizInfoSection
-        firstColumn='13:50 - 14:15'
-        secondColumn='25 min'
-        title={t('quiz.duration')}
-      />
-      <Divider
-        flexItem
-        orientation='vertical'
-        sx={styles.divider}
-        variant='middle'
-      />
-      <QuizInfoSection firstColumn='-' title={t('quiz.points')} />
-      <Box sx={styles.buttonWrapper}>
-        <Button size='sm' variant='tonal'>
-          {t('quiz.evaluate')}
-        </Button>
-      </Box>
-    </Box>
-  )
-}
-
-type GradedQuizInfoProps = {
+type TutorQuizInfoProps = {
   points: number
   totalPoints: number
 }
 
-const GradedQuizInfo = ({ points, totalPoints }: GradedQuizInfoProps) => {
+const TutorQuizInfo: React.FC<TutorQuizInfoProps> = ({
+  points,
+  totalPoints
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -158,4 +131,117 @@ const GradedQuizInfo = ({ points, totalPoints }: GradedQuizInfoProps) => {
   )
 }
 
-export { ActiveQuizInfo, FinishedQuizInfo, UngradedQuizInfo, GradedQuizInfo }
+type StartViewQuizInfoProps = {
+  questionsAmount: number
+  attempts: QuizAttempt
+  timeLimit: QuizTimeLimit
+  usedAttempts: number
+  onStart: () => void
+}
+
+const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
+  questionsAmount,
+  attempts,
+  timeLimit,
+  usedAttempts,
+  onStart
+}) => {
+  const { t } = useTranslation()
+
+  const [totalAttempts] = attempts.split(' ')
+
+  const limits = {
+    isNoLimitAttempt: attempts === QuizAttempt.NoLimit,
+    isNoLimitTime: timeLimit === QuizTimeLimit.NoLimit,
+    maxAttempts: Number(totalAttempts) || 0
+  }
+
+  const hasAttempts =
+    limits.isNoLimitAttempt || usedAttempts < limits.maxAttempts
+
+  const typographyStyle = (subType: number) => {
+    return spliceSx(
+      styles[`subtitle${subType}` as keyof typeof styles],
+      styles.subtitleSize
+    )
+  }
+
+  const getQuizTimeLimitTitle = (t: TFunction, timeLimit: QuizTimeLimit) => {
+    const timeOption = getQuizTimeLimitFields(t).find(
+      (option) => option.value === timeLimit
+    )
+    return timeOption?.title ?? ''
+  }
+
+  const attemptLimitOutput = !limits.isNoLimitAttempt && (
+    <>
+      <Box sx={styles.dividerEllipse}>
+        <DividerComponent
+          caption=''
+          orientation='horizontal'
+          size='small'
+          textAlign='center'
+          thickness='md'
+          type='ellipse'
+          variant='middle'
+        />
+      </Box>
+      <Typography sx={typographyStyle(1)}>{t('quiz.attemptLimit')}:</Typography>
+      <Typography sx={typographyStyle(2)}>
+        {usedAttempts}/{totalAttempts}
+      </Typography>
+    </>
+  )
+
+  const timeLimitOutput = !limits.isNoLimitTime && (
+    <>
+      <Box sx={styles.dividerEllipse}>
+        <DividerComponent
+          caption=''
+          orientation='horizontal'
+          size='small'
+          textAlign='right'
+          thickness='md'
+          type='ellipse'
+          variant='inset'
+        />
+      </Box>
+      <Typography sx={typographyStyle(1)}>{t('quiz.timeLimit')}:</Typography>
+      <Typography sx={typographyStyle(2)}>
+        {getQuizTimeLimitTitle(t, timeLimit)}
+      </Typography>
+    </>
+  )
+
+  const noAttemptsAlert = !hasAttempts && (
+    <Alert severity='info'>{t('quiz.reachedAttemptLimit')}</Alert>
+  )
+
+  return (
+    <>
+      <Box sx={styles.infoWrapper}>
+        <Box sx={styles.quizSettings}>
+          <Typography sx={typographyStyle(1)}>
+            {t('quiz.questionsAmount')}:
+          </Typography>
+          <Typography sx={typographyStyle(2)}>{questionsAmount}</Typography>
+          {attemptLimitOutput}
+          {timeLimitOutput}
+        </Box>
+        <Box sx={styles.buttonWrapper}>
+          <Button
+            data-testid='startButton'
+            disabled={!hasAttempts}
+            onClick={onStart}
+            size='sm'
+          >
+            {usedAttempts === 0 ? t('quiz.startQuiz') : t('quiz.tryAgain')}
+          </Button>
+        </Box>
+      </Box>
+      {noAttemptsAlert}
+    </>
+  )
+}
+
+export { ActiveQuizInfo, FinishedQuizInfo, TutorQuizInfo, StartViewQuizInfo }

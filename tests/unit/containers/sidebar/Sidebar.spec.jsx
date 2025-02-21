@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
@@ -24,11 +24,11 @@ describe('Sidebar test', () => {
     expect(text).toBeInTheDocument()
   })
 
-  it('should render link and call setIsSidebarOpen with false after click link', async () => {
+  it('should render link and call setIsSidebarOpen with false after click link', () => {
     const [linkElement] = screen.getAllByRole('link')
     expect(linkElement).toHaveAttribute('href', '/#route-test')
 
     fireEvent.click(linkElement)
-    await waitFor(() => expect(setIsSidebarOpen).toHaveBeenCalled())
+    expect(setIsSidebarOpen).toHaveBeenCalled()
   })
 })

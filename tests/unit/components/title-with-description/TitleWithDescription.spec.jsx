@@ -1,4 +1,4 @@
-import { screen, render, fireEvent, waitFor } from '@testing-library/react'
+import { screen, render, fireEvent } from '@testing-library/react'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
@@ -30,18 +30,16 @@ describe('title-with-description component with tooltip', () => {
     title: 'Title for test case',
     description: 'Description for test case'
   }
-  it('should show tooltip when isDescriptionTooltip is true', () => {
+  it('should show tooltip when isDescriptionTooltip is true', async () => {
     render(<TitleWithDescription {...props} isDescriptionTooltip />)
 
     const descriptionElement = screen.getByText(props.description)
 
     fireEvent.mouseOver(descriptionElement)
 
-    waitFor(() => {
-      const tooltipContent = screen.getByRole('tooltip')
-      expect(tooltipContent).toBeInTheDocument()
-      expect(tooltipContent).toHaveTextContent(props.description)
-    })
+    const tooltipContent = await screen.findByRole('tooltip')
+    expect(tooltipContent).toBeInTheDocument()
+    expect(tooltipContent).toHaveTextContent(props.description)
   })
 
   describe('title-with-description component with React component as description', () => {

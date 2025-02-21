@@ -1,10 +1,4 @@
-import {
-  screen,
-  act,
-  fireEvent,
-  waitFor,
-  cleanup
-} from '@testing-library/react'
+import { screen, act, fireEvent, cleanup } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import { CourseResourceEventType } from '~/types'
@@ -123,10 +117,10 @@ describe('CourseSectionContainer tests', () => {
 
   it('should call handleSectionInputChange with the correct arguments when the resource status is changed', async () => {
     const activityIndexToChange = 1
-    await waitFor(() => {
-      const allMenuAvailabilityStatus = screen.getAllByTestId('app-select')
-      const menuAvailabilityToChange =
-        allMenuAvailabilityStatus[activityIndexToChange]
+
+    const allMenuAvailabilityStatus = await screen.findAllByTestId('app-select')
+    const menuAvailabilityToChange =
+      allMenuAvailabilityStatus[activityIndexToChange]
 
       act(() =>
         fireEvent.change(menuAvailabilityToChange, {
@@ -134,7 +128,6 @@ describe('CourseSectionContainer tests', () => {
         })
       )
       act(() => fireEvent.blur(menuAvailabilityToChange))
-    })
 
     expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
@@ -241,10 +234,9 @@ describe('CourseSectionContainer tests', () => {
   })
 
   it('should delete lesson and call event handler with properly type when the delete button is clicked on lesson', async () => {
-    await waitFor(() => {
-      const lessonDelete = screen.getAllByTestId('CloseIcon')[0].parentElement
-      act(() => fireEvent.click(lessonDelete))
-    })
+    const [lessonDelete] = await screen.findAllByTestId('CloseIcon')
+    act(() => fireEvent.click(lessonDelete.parentElement))
+
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
       resourceId: mockedSectionData.resources[0].resource.id,
       sectionId: 1,
@@ -253,10 +245,9 @@ describe('CourseSectionContainer tests', () => {
   })
 
   it('should delete quiz and call event handler with properly type when the delete button is clicked on quiz', async () => {
-    await waitFor(() => {
-      const quizDelete = screen.getAllByTestId('CloseIcon')[1].parentElement
-      act(() => fireEvent.click(quizDelete))
-    })
+    const quizDelete = await screen.findAllByTestId('CloseIcon')
+    act(() => fireEvent.click(quizDelete[1].parentElement))
+
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
       resourceId: mockedSectionData.resources[1].resource.id,
       sectionId: 1,
@@ -265,11 +256,9 @@ describe('CourseSectionContainer tests', () => {
   })
 
   it('should delete attachment and call event handler with properly type when the delete button is clicked on attachment', async () => {
-    await waitFor(() => {
-      const attachmentDelete =
-        screen.getAllByTestId('CloseIcon')[2].parentElement
-      act(() => fireEvent.click(attachmentDelete))
-    })
+    const attachmentDelete = await screen.findAllByTestId('CloseIcon')
+    act(() => fireEvent.click(attachmentDelete[2].parentElement))
+
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
       resourceId: mockedSectionData.resources[2].resource.id,
       sectionId: 1,
@@ -302,13 +291,11 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     const updatedResource = mockedSectionData.resources[0]
     const newAvailability = 'closed'
 
-    await waitFor(() => {
-      const availabilitySelect = screen.getAllByTestId('app-select')[0]
-      fireEvent.change(availabilitySelect, {
-        target: { value: newAvailability }
-      })
-      fireEvent.blur(availabilitySelect)
+    const [availabilitySelect] = await screen.findAllByTestId('app-select')
+    fireEvent.change(availabilitySelect, {
+      target: { value: newAvailability }
     })
+    fireEvent.blur(availabilitySelect)
 
     expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
@@ -322,7 +309,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     })
   })
 
-  it('should handle resource order change event [CourseResourceEventType.ResourcesOrderChange]', async () => {
+  it('should handle resource order change event [CourseResourceEventType.ResourcesOrderChange]', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({
@@ -336,26 +323,24 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
-      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: CourseResourceEventType.ResourcesOrderChange,
-          sectionId: mockSectionId,
-          resources: expect.objectContaining({
-            resources: expect.arrayContaining([
-              expect.objectContaining({
-                _id: expect.any(String),
-                resourceType: expect.any(String)
-              })
-            ])
-          })
+    expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+    expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: CourseResourceEventType.ResourcesOrderChange,
+        sectionId: mockSectionId,
+        resources: expect.objectContaining({
+          resources: expect.arrayContaining([
+            expect.objectContaining({
+              _id: expect.any(String),
+              resourceType: expect.any(String)
+            })
+          ])
         })
-      )
-    })
+      })
+    )
   })
 
-  it('should handle resource remove event [CourseResourceEventType.ResourceRemoved]', async () => {
+  it('should handle resource remove event [CourseResourceEventType.ResourceRemoved]', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({
@@ -369,19 +354,17 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
-      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: CourseResourceEventType.ResourceRemoved,
-          sectionId: mockSectionId,
-          resourceId: mockedSectionData.resources[0].id
-        })
-      )
-    })
+    expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+    expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: CourseResourceEventType.ResourceRemoved,
+        sectionId: mockSectionId,
+        resourceId: mockedSectionData.resources[0].id
+      })
+    )
   })
 
-  it('should handle edit resource event when resourceType is not Attachment', async () => {
+  it('should handle edit resource event when resourceType is not Attachment', () => {
     const resource = mockedSectionData.resources[0].resource
     const editResourceSpy = vi
       .spyOn(window, 'open')
@@ -396,16 +379,14 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(editResourceSpy).toHaveBeenCalledTimes(1)
-      expect(editResourceSpy).toHaveBeenCalledWith(
-        expect.stringContaining(`lesson-details/${resource._id}`),
-        '_blank'
-      )
-    })
+    expect(editResourceSpy).toHaveBeenCalledTimes(1)
+    expect(editResourceSpy).toHaveBeenCalledWith(
+      expect.stringContaining(`lesson-details/${resource._id}`),
+      '_blank'
+    )
   })
 
-  it('should handle edit resource event when resourceType is Attachment', async () => {
+  it('should handle edit resource event when resourceType is Attachment', () => {
     const resource = mockedSectionData.resources[2].resource
 
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
@@ -417,11 +398,9 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(
-        screen.getByText('myResourcesPage.attachments.edit')
-      ).toBeInTheDocument()
-    })
+    expect(
+      screen.getByText('myResourcesPage.attachments.edit')
+    ).toBeInTheDocument()
   })
 })
 
@@ -445,7 +424,7 @@ describe('should remove duplicates from list', () => {
     vi.resetAllMocks()
   })
 
-  it('should edit duplicate resources', async () => {
+  it('should edit duplicate resources', () => {
     const resource = mockedDuplicatedSectionData.resources[0].resource
     const editResourceSpy = vi
       .spyOn(window, 'open')
@@ -460,19 +439,17 @@ describe('should remove duplicates from list', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(editResourceSpy).toHaveBeenCalledTimes(1)
-      expect(editResourceSpy).toHaveBeenCalledWith(
-        expect.stringContaining(
-          authRoutes.myResources[resourceNavigationMap[resource.resourceType]]
-            .path
-        ),
-        '_blank'
-      )
-    })
+    expect(editResourceSpy).toHaveBeenCalledTimes(1)
+    expect(editResourceSpy).toHaveBeenCalledWith(
+      expect.stringContaining(
+        authRoutes.myResources[resourceNavigationMap[resource.resourceType]]
+          .path
+      ),
+      '_blank'
+    )
   })
 
-  it('should handle resource remove event on Quiz', async () => {
+  it('should handle resource remove event on Quiz', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({
@@ -486,19 +463,17 @@ describe('should remove duplicates from list', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
-      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: CourseResourceEventType.ResourceRemoved,
-          sectionId: mockSectionId,
-          resourceId: mockedDuplicatedSectionData.resources[0].id
-        })
-      )
-    })
+    expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+    expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: CourseResourceEventType.ResourceRemoved,
+        sectionId: mockSectionId,
+        resourceId: mockedDuplicatedSectionData.resources[0].id
+      })
+    )
   })
 
-  it('should handle resource remove event on Quiz', async () => {
+  it('should handle resource remove event on Quiz', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({
@@ -512,19 +487,17 @@ describe('should remove duplicates from list', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
-      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: CourseResourceEventType.ResourceRemoved,
-          sectionId: mockSectionId,
-          resourceId: mockedDuplicatedSectionData.resources[1].id
-        })
-      )
-    })
+    expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+    expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: CourseResourceEventType.ResourceRemoved,
+        sectionId: mockSectionId,
+        resourceId: mockedDuplicatedSectionData.resources[1].id
+      })
+    )
   })
 
-  it('should handle resource remove event on Attachement', async () => {
+  it('should handle resource remove event on Attachement', () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
         value: JSON.stringify({
@@ -538,15 +511,13 @@ describe('should remove duplicates from list', () => {
       }
     })
 
-    await waitFor(() => {
-      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
-      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: CourseResourceEventType.ResourceRemoved,
-          sectionId: mockSectionId,
-          resourceId: mockedDuplicatedSectionData.resources[2].id
-        })
-      )
-    })
+    expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+    expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: CourseResourceEventType.ResourceRemoved,
+        sectionId: mockSectionId,
+        resourceId: mockedDuplicatedSectionData.resources[2].id
+      })
+    )
   })
 })

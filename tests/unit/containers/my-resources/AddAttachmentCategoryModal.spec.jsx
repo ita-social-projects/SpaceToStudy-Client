@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { afterEach, beforeEach, describe, expect } from 'vitest'
 
@@ -30,16 +30,14 @@ describe('AddAttachmentCategoryModal component', () => {
     .onGet(URLs.resources.resourcesCategories.getNames)
     .reply(200, categoriesNamesMock)
 
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <AddAttachmentCategoryModal
-          attachment={attachmentMock}
-          closeModal={closeModalMock}
-          updateAttachmentCategory={updateAttachmentCategory}
-        />
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <AddAttachmentCategoryModal
+        attachment={attachmentMock}
+        closeModal={closeModalMock}
+        updateAttachmentCategory={updateAttachmentCategory}
+      />
+    )
   })
 
   afterEach(() => {
@@ -57,7 +55,7 @@ describe('AddAttachmentCategoryModal component', () => {
 
     expect(saveBtn).toBeInTheDocument()
 
-    waitFor(() => fireEvent.click(saveBtn))
+    fireEvent.click(saveBtn)
 
     expect(updateAttachmentCategory).toHaveBeenCalled()
   })

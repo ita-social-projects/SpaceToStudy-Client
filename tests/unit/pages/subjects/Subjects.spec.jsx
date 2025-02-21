@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import Subjects from '~/pages/subjects/Subjects'
 import useLoadMore from '~/hooks/use-load-more'
@@ -56,8 +56,8 @@ describe('Subjects page', () => {
     vi.clearAllMocks()
   })
 
-  beforeEach(async () => {
-    await waitFor(() => renderWithProviders(<Subjects />))
+  beforeEach(() => {
+    renderWithProviders(<Subjects />)
   })
 
   it('should render title with description', () => {
@@ -100,8 +100,8 @@ describe('Subjects page with empty data', () => {
     vi.clearAllMocks()
   })
 
-  beforeEach(async () => {
-    await waitFor(() => renderWithProviders(<Subjects />))
+  beforeEach(() => {
+    renderWithProviders(<Subjects />)
   })
 
   it('should render not found results when no subjects are found', () => {
@@ -109,10 +109,8 @@ describe('Subjects page with empty data', () => {
     expect(newNotFound).toBeInTheDocument()
   })
 
-  it('should render offer count descriptions for subjects', async () => {
-    await waitFor(() => {
-      const noOffers = screen.queryByText(/offers/)
-      expect(noOffers).not.toBeInTheDocument()
-    })
+  it('should render offer count descriptions for subjects', () => {
+    const noOffers = screen.queryByText(/offers/)
+    expect(noOffers).not.toBeInTheDocument()
   })
 })

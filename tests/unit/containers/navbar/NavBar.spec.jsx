@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import NavBar from '~/containers/layout/navbar/NavBar'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
@@ -37,22 +37,22 @@ describe('Guest NavBar test', () => {
 
     expect(text).toBeInTheDocument()
   })
-  it('should click login button', async () => {
+  it('should click login button', () => {
     const loginButton = screen.getByText('header.loginButton')
     fireEvent.click(loginButton)
     const img = screen.getByAltText('login')
 
-    await waitFor(() => expect(img).toBeInTheDocument())
+    expect(img).toBeInTheDocument()
   })
 
-  it('should open sidebar with close icon after click menu icon', async () => {
+  it('should open sidebar with close icon after click menu icon', () => {
     const menuIcon = screen.getByTestId('MenuIcon')
     expect(menuIcon).toBeInTheDocument()
 
     fireEvent.click(menuIcon)
     const closeIcon = screen.getByTestId('CloseRoundedIcon')
 
-    await waitFor(() => expect(closeIcon).toBeInTheDocument())
+    expect(closeIcon).toBeInTheDocument()
   })
 })
 

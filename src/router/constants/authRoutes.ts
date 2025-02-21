@@ -32,7 +32,7 @@ export const authRoutes = {
       path: '/my-resources/new-quiz'
     },
     editQuiz: {
-      route: 'my-resources/edit-quiz/:id',
+      route: '/my-resources/edit-quiz/:id',
       path: '/my-resources/edit-quiz'
     },
     newQuestion: {
@@ -40,7 +40,7 @@ export const authRoutes = {
       path: '/my-resources/new-question'
     },
     editQuestion: {
-      route: 'my-resources/edit-question/:id',
+      route: '/my-resources/edit-question/:id',
       path: '/my-resources/edit-question'
     }
   },
@@ -49,7 +49,10 @@ export const authRoutes = {
     route: 'my-cooperations/:id/lesson-details/:lessonId'
   },
   cooperationQuiz: {
-    route: 'my-cooperations/:id/quiz/:quizId'
+    route: '/my-cooperations/:id/quizzes/:quizId'
+  },
+  cooperationQuizAttempts: {
+    route: 'my-cooperations/:id/quizzes/:quizId/attempts'
   },
   accountMenu: {
     admin: {

@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import AddResources from '~/containers/add-resources/AddResources'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
@@ -42,22 +42,21 @@ const mockRequestService = vi.fn(() =>
 const mockOnAddResources = () => {}
 
 describe('Tests for AddResources container', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(URLs.resources.attachments.get)
-        .reply(200, attachmentMockData)
-      renderWithProviders(
-        <AddResources
-          columns={columns}
-          onAddResources={mockOnAddResources}
-          removeColumnRules={removeColumnRules}
-          requestService={mockRequestService}
-          resourceTab={ResourcesTabsEnum.Attachments}
-          resources={responseItemsMock}
-        />
-      )
-    })
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(URLs.resources.attachments.get)
+      .reply(200, attachmentMockData)
+
+    renderWithProviders(
+      <AddResources
+        columns={columns}
+        onAddResources={mockOnAddResources}
+        removeColumnRules={removeColumnRules}
+        requestService={mockRequestService}
+        resourceTab={ResourcesTabsEnum.Attachments}
+        resources={responseItemsMock}
+      />
+    )
   })
 
   afterEach(() => {

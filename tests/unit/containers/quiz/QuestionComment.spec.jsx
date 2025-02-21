@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, waitFor, userEvent } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import QuestionComment from '~/containers/quiz/question-comment/QuestionComment.tsx'
 
@@ -35,46 +35,38 @@ describe('QuestionComment', () => {
         expect(inputField).toBeInTheDocument()
     })
 
-    test('should does not submit comment if input is empty', async () => {
+    test('should does not submit comment if input is empty', () => {
         const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
         fireEvent.click(addCommentButton)
 
         const submitButton = screen.getByTestId('SendIcon')
         fireEvent.click(submitButton)
 
-        await waitFor(() => {
-            expect(mockSubmit).not.toHaveBeenCalled()
-        })
+        expect(mockSubmit).not.toHaveBeenCalled()
     })
 
-    test('should submit comment if input is not empty', async () => {
+    test('should submit comment if input is not empty', () => {
         const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
         fireEvent.click(addCommentButton)
 
         const textField = screen.queryByTestId('textField').querySelector('textarea')
-        await waitFor(() => {
-            expect(textField).toBeInTheDocument()
-        })
+        expect(textField).toBeInTheDocument()
         fireEvent.change(textField, { target: { value: 'Great answer!' } })
 
         const submitButton = screen.getByTestId('SendIcon')
         fireEvent.click(submitButton)
 
-        await waitFor(() => {
-            expect(mockSubmit).toHaveBeenCalledWith('Great answer!')
-        })
+        expect(mockSubmit).toHaveBeenCalledWith('Great answer!')
     })
 
-    test('should toggle comment input visibility when clicking comment button', async () => {
+    test('should toggle comment input visibility when clicking comment button', () => {
         const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
         
         const textField = screen.queryByTestId('textField')
         expect(textField).not.toBeInTheDocument()
 
         fireEvent.click(addCommentButton)
-        await waitFor(() => {
-            expect(screen.queryByTestId('textField')).toBeInTheDocument()
-        })
+        expect(screen.queryByTestId('textField')).toBeInTheDocument()
 
         fireEvent.click(addCommentButton)
         expect(textField).not.toBeInTheDocument()

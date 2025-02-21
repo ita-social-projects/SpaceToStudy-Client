@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 
 import { renderWithProviders } from '~tests/test-utils'
 import ActiveStudentsBlock from '~/components/active-students/ActiveStudentsBlock'
@@ -120,7 +120,7 @@ describe('ActiveStudentsBlock', () => {
     const showMoreButton = screen.getByTestId('showMore')
     fireEvent.click(showMoreButton)
 
-    waitFor(() => expect(navigateMock).toHaveBeenCalled())
+    expect(navigateMock).toHaveBeenCalledWith('/my-cooperations')
   })
 
   it('should render Loader when loading', () => {
@@ -144,7 +144,9 @@ describe('ActiveStudentsBlock', () => {
     const showMoreButton = screen.getByTestId('addStudent')
     fireEvent.click(showMoreButton)
 
-    waitFor(() => expect(navigateMock).toHaveBeenCalled())
+    expect(navigateMock).toHaveBeenCalledWith(
+      '/categories/subjects/find-offers'
+    )
   })
 
   it('should not render on error', () => {

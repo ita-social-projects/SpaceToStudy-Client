@@ -1,7 +1,7 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
-import { URLs } from '~/constants/request'
+import { fireEvent, screen, cleanup } from '@testing-library/react'
+import { renderWithProviders } from '~tests/test-utils'
 import { useParams } from 'react-router-dom'
+import { ResourceService } from '~/services/resource-service'
 
 import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer'
 
@@ -9,8 +9,10 @@ const setTitle = vi.fn()
 const setDescription = vi.fn()
 const setQuestions = vi.fn()
 const setCategory = vi.fn()
+const setSettings = vi.fn()
 const category = 'mock-category'
 const mockId = '676728f88a5ae7b4b41f5e89'
+let getQuizSpy
 
 vi.mock('react-router-dom', async () => {
   const original = await vi.importActual('react-router-dom')
@@ -24,7 +26,9 @@ const renderComponent = (props = {}) => {
   const defaultProps = {
     setDescription,
     setTitle,
-    setQuestions
+    setQuestions,
+    setCategory,
+    setSettings
   }
 
   renderWithProviders(
@@ -37,13 +41,15 @@ describe('CreateOrEditQuizContainer without id', () => {
     useParams.mockReturnValue({ id: undefined })
   })
 
+  beforeEach(() => {
+    renderComponent()
+  })
+
   afterAll(() => {
     vi.clearAllMocks()
   })
 
-  it('should change title and description inputs', async () => {
-    await waitFor(() => renderComponent())
-
+  it('should change title and description inputs', () => {
     const titleInput = screen.getByLabelText(
       'myResourcesPage.quizzes.defaultNewTitle'
     )
@@ -60,9 +66,7 @@ describe('CreateOrEditQuizContainer without id', () => {
     expect(descriptionInput.value).toBe('quiz description')
   })
 
-  it('should click on save button and save quiz without category', async () => {
-    await waitFor(() => renderComponent())
-
+  it('should click on save button and save quiz without category', () => {
     const saveBtn = screen.getByText('common.save')
 
     fireEvent.click(saveBtn)
@@ -71,36 +75,33 @@ describe('CreateOrEditQuizContainer without id', () => {
     expect(setDescription).toHaveBeenCalled()
   })
 
-  it('should click on save button and save quiz with category', async () => {
-    await waitFor(() => renderComponent({ category }))
+  it('should click on save button and save quiz with category', () => {
+    cleanup()
+    renderComponent({ category })
 
     const saveBtn = screen.getByText('common.save')
 
     fireEvent.click(saveBtn)
   })
 
-  it('should render create new question form', async () => {
-    await waitFor(() => renderComponent())
-
+  it('should render create new question form', () => {
     const btnAddQuestion = screen.getByText(
       'myResourcesPage.quizzes.createNewQuestion'
     )
 
-    waitFor(() => fireEvent.click(btnAddQuestion))
+    fireEvent.click(btnAddQuestion)
 
     const formTitle = screen.getByText(/title:/i)
 
     expect(formTitle).toBeInTheDocument()
   })
 
-  it('should render add questions form', async () => {
-    await waitFor(() => renderComponent())
-
+  it('should render add questions form', () => {
     const btnAddNewQuestion = screen.getByText(
       'myResourcesPage.quizzes.addQuestion'
     )
 
-    waitFor(() => fireEvent.click(btnAddNewQuestion))
+    fireEvent.click(btnAddNewQuestion)
 
     const formTitle = screen.getByText('myResourcesPage.questions.add')
 
@@ -109,44 +110,47 @@ describe('CreateOrEditQuizContainer without id', () => {
 })
 
 describe('CreateOrEditQuizContainer with id', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     useParams.mockReturnValue({ id: mockId })
-    mockAxiosClient
-      .onGet(new RegExp(URLs.quizzes.get.replace(':id', mockId)))
-      .reply(200, {
+
+    getQuizSpy = vi.spyOn(ResourceService, 'getQuiz').mockResolvedValue({
+      data: {
         _id: mockId,
         title: 'Mock title',
         description: 'Mock description',
-        category,
+        category: '665799d795ab9dbdd7ad40df',
+        settings: {
+          view: 'Stepper',
+          shuffle: false,
+          pointValues: true,
+          scoredResponses: true,
+          correctAnswers: true
+        },
         items: []
-      })
+      }
+    })
   })
 
   afterEach(() => {
     vi.clearAllMocks()
   })
 
-  it('should save quiz with category and questions', async () => {
-    await waitFor(() => renderComponent({ category, questions: [] }))
+  it('should call ResourceService.getQuizQuery with the correct id when loading the quiz', async () => {
+    renderComponent()
 
-    const saveBtn = screen.getByText('common.save')
+    expect(getQuizSpy).toHaveBeenCalledWith(mockId)
+  })
+
+  it('should call set functions when saving the quiz', async () => {
+    renderComponent()
+
+    const saveBtn = await screen.findByText('common.save')
     fireEvent.click(saveBtn)
 
     expect(setTitle).toHaveBeenCalled()
-  })
-
-  it('should save quiz without category', async () => {
-    await waitFor(() => renderComponent())
-
-    const saveBtn = screen.getByText('common.save')
-    fireEvent.click(saveBtn)
-
-    expect(setTitle).toHaveBeenCalled()
-  })
-
-  it('should call setCategory', async () => {
-    await waitFor(() => renderComponent({ setCategory }))
-
+    expect(setDescription).toHaveBeenCalled()
     expect(setCategory).toHaveBeenCalled()
+    expect(setQuestions).toHaveBeenCalled()
+    expect(setSettings).toHaveBeenCalled()
   })
 })

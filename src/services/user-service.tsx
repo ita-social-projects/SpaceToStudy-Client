@@ -2,6 +2,8 @@ import { AxiosResponse } from 'axios'
 import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 import { createUrlPath } from '~/utils/helper-functions'
+import { getFullUrl } from '~/utils/get-full-url'
+import { baseService } from './base-service'
 import {
   GetUsersParams,
   UpdateUserParams,
@@ -25,6 +27,25 @@ export const userService = {
       createUrlPath(URLs.users.get, userId, { role: userRole, isEdit })
     )
   },
+
+  getUserByIdWithBaseService: (
+    id: string,
+    userRole: UserRole,
+    isEdit?: boolean
+  ) => {
+    return baseService.request<UserResponse>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.users.getUserById,
+        parameters: { id },
+        searchParameters: {
+          userRole,
+          isEdit: isEdit?.toString() ?? undefined
+        }
+      })
+    })
+  },
+
   updateUser: (
     userId: string,
     params: UpdateUserParams

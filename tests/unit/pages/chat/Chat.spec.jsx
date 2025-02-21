@@ -67,12 +67,10 @@ describe('Chat for desktop', () => {
     isTablet: false
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
 
-    await waitFor(() => {
-      renderWithProviders(<Chat />)
-    })
+    renderWithProviders(<Chat />)
   })
 
   afterEach(() => {
@@ -88,9 +86,7 @@ describe('Chat for desktop', () => {
   it('should choose chat and render MessagesList component with messages', async () => {
     const chatItem = await screen.findByText('Scott Short')
 
-    await waitFor(() => {
-      fireEvent.click(chatItem)
-    })
+    fireEvent.click(chatItem)
 
     const messagesList = screen.getByTestId('mock-messages-list')
     expect(messagesList).toBeInTheDocument()
@@ -99,7 +95,7 @@ describe('Chat for desktop', () => {
   })
 
   it('should send new message and clear input', async () => {
-    const chatItem = screen.getByText('Scott Short')
+    const chatItem = await screen.findByText('Scott Short')
 
     fireEvent.click(chatItem)
 
@@ -125,23 +121,23 @@ describe('Chat for mobile', () => {
     isMobile: true,
     isTablet: false
   }
-  beforeEach(async () => {
+  beforeEach(() => {
     useBreakpoints.mockImplementation(() => mobileData)
 
-    await waitFor(() => {
-      renderWithProviders(<Chat />)
-    })
+    renderWithProviders(<Chat />)
   })
 
   it('should not render left panel in a chat', async () => {
     const chip = await screen.findByText('chatPage.chat.chipLabel')
 
-    expect(chip).not.toBeInTheDocument()
+    await waitFor(() => {
+      expect(chip).not.toBeInTheDocument()
+    })
   })
 })
 
 describe('Chat - open last chat and close mini chat window', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     vi.mock('~/context/chat-context', () => ({
       useChatContext: () => ({
         chatInfo: { chatId: chatsMock[0]._id },
@@ -154,9 +150,7 @@ describe('Chat - open last chat and close mini chat window', () => {
     })
     Storage.prototype.setItem = vi.fn()
 
-    await waitFor(() => {
-      renderWithProviders(<Chat />)
-    })
+    renderWithProviders(<Chat />)
   })
 
   afterEach(() => {
@@ -164,9 +158,9 @@ describe('Chat - open last chat and close mini chat window', () => {
   })
 
   it('should open the last chat and close the mini chat window', async () => {
-    await waitFor(() => {
-      expect(screen.getByTestId('mock-messages-list')).toBeInTheDocument()
-    })
+    const messageList = await screen.findByTestId('mock-messages-list')
+    expect(messageList).toBeInTheDocument()
+
     expect(localStorage.getItem).toHaveBeenCalledWith('currentChatId')
     expect(localStorage.setItem).toHaveBeenCalledWith(
       'currentChatId',

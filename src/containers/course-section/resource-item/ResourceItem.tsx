@@ -63,7 +63,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   const routeMap = {
     [ResourceType.Lesson]: 'lesson-details/',
-    [ResourceType.Quiz]: 'quiz/'
+    [ResourceType.Quiz]: 'quizzes/'
   }
 
   const handleDeleteResource = useCallback(() => {
@@ -202,7 +202,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
     navigate(
       `${routeMap[type as ResourceType.Lesson | ResourceType.Quiz]}${
         resource._id
-      }`
+      }${type === ResourceType.Quiz ? '/attempts' : ''}`
     )
   }
 

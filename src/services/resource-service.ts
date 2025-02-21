@@ -25,7 +25,8 @@ import {
   UpdateQuizParams,
   ApiMethodEnum,
   GetQuestion,
-  type FinishedQuiz
+  type FinishedQuiz,
+  type FinishedAttempts
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -86,7 +87,7 @@ export const ResourceService = {
       })
     })
   },
-  getQuizQuery: async (id: string) => {
+  getQuiz: (id: string) => {
     return baseService.request<Quiz>({
       method: 'GET',
       url: getFullUrl({
@@ -95,15 +96,25 @@ export const ResourceService = {
       })
     })
   },
-  getQuiz: async (id?: string): Promise<AxiosResponse<Quiz>> =>
-    await axiosClient.get(createUrlPath(URLs.quizzes.get, id)),
-  addQuiz: async (data?: CreateQuizParams): Promise<AxiosResponse> =>
-    await axiosClient.post(URLs.quizzes.add, data),
-  editQuiz: async (params?: UpdateQuizParams) =>
-    await axiosClient.patch(
-      createUrlPath(URLs.quizzes.patch, params?.id),
-      params
-    ),
+  addQuiz: (data: CreateQuizParams) => {
+    return baseService.request<Quiz>({
+      method: 'POST',
+      url: URLs.quizzes.add,
+      data
+    })
+  },
+  editQuiz: (data: UpdateQuizParams) => {
+    const { id, ...quizData } = data
+
+    return baseService.request<void>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.quizzes.patch,
+        parameters: { id }
+      }),
+      data: quizData
+    })
+  },
   deleteQuiz: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(createUrlPath(URLs.quizzes.delete, id)),
   addFinishedQuiz: async (data: CreateFinishedQuizParams) => {
@@ -119,6 +130,15 @@ export const ResourceService = {
       url: getFullUrl({
         pathname: URLs.finishedQuizzes.getById,
         parameters: { id }
+      })
+    })
+  },
+  getFinishedQuizzesByQuizId: (cooperationId: string, quizId: string) => {
+    return baseService.request<FinishedAttempts>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.finishedQuizzes.getByQuizId,
+        parameters: { cooperationId, quizId }
       })
     })
   },
@@ -179,6 +199,13 @@ export const ResourceService = {
   },
   getQuestion: async (id?: string): Promise<AxiosResponse<GetQuestion>> =>
     await axiosClient.get(createUrlPath(URLs.resources.questions.get, id)),
+  createQuestionQuery: (data: CreateQuestionData) => {
+    return baseService.request<Question>({
+      method: 'POST',
+      url: URLs.resources.questions.post,
+      data
+    })
+  },
   createQuestion: async (data?: CreateQuestionData): Promise<AxiosResponse> => {
     return await axiosClient.post(URLs.resources.questions.post, data)
   },

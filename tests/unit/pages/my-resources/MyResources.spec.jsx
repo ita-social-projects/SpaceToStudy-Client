@@ -1,11 +1,11 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import MyResources from '~/pages/my-resources/MyResources'
 
 describe('MyResources', () => {
-  beforeEach(async () => {
-    await waitFor(() => renderWithProviders(<MyResources />))
+  beforeEach(() => {
+    renderWithProviders(<MyResources />)
   })
 
   it('renders the component with tabs', () => {

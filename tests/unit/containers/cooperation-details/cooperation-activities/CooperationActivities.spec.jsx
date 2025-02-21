@@ -21,6 +21,7 @@ const mockedInvalidSections = [
   {
     resources: [
       {
+        resource: {},
         availability: {
           status: 'openFrom',
           date: null
@@ -84,7 +85,7 @@ vi.mock('~/components/app-select/AppSelect', () => ({
 }))
 
 describe('CooperationActivities', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     renderWithProviders(
       <CooperationActivities
         cooperationId='123'
@@ -167,7 +168,7 @@ describe('CooperationActivities', () => {
     expect(imgElement).toHaveAttribute('src', openIcon)
   })
 
-  it('should call handleResourcesAvailabilityChange when a new availability option is selected', async () => {
+  it('should call handleResourcesAvailabilityChange when a new availability option is selected', () => {
     const elementAppSelect = screen.getByTestId('mock-AppSelect')
     const selectedAvailability = {
       status: ResourcesAvailabilityEnum.OpenManually

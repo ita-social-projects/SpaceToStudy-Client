@@ -36,11 +36,10 @@ const props = {
 }
 
 describe('QuizSettingsContainer', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient.onPost(URLs.quizzes.add).reply(201, null)
-      renderWithProviders(<QuizSettingsContainer {...props} />)
-    })
+  beforeEach(() => {
+    mockAxiosClient.onPost(URLs.quizzes.add).reply(201, null)
+
+    renderWithProviders(<QuizSettingsContainer {...props} />)
   })
 
   afterEach(() => {
@@ -97,7 +96,7 @@ describe('QuizSettingsContainer', () => {
     expect(screen.getByTestId('shuffle-switch').firstChild.checked).toBe(true)
   })
 
-  it('should change view and click on apply', () => {
+  it('should change view and click on apply', async () => {
     const selects = screen.getAllByTestId('app-select')
 
     const select = selects[0]
@@ -111,6 +110,6 @@ describe('QuizSettingsContainer', () => {
 
     fireEvent.click(applyButton)
 
-    waitFor(() => expect(navigateMock).toHaveBeenCalled())
+    await waitFor(() => expect(navigateMock).toHaveBeenCalled())
   })
 })

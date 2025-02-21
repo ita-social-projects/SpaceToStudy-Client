@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
@@ -16,16 +16,14 @@ mockAxiosClient
   .reply(200, mockData)
 
 describe('MyOffers', () => {
-  beforeEach(async () => {
-    await waitFor(() =>
-      renderWithProviders(<MyOffers />, {
-        preloadedState: {
-          appMain: {
-            userRole: UserRoleEnum.Tutor
-          }
+  beforeEach(() => {
+    renderWithProviders(<MyOffers />, {
+      preloadedState: {
+        appMain: {
+          userRole: UserRoleEnum.Tutor
         }
-      })
-    )
+      }
+    })
   })
   it('should render title on page', () => {
     const title = screen.getByText('myOffersPage.title.tutor')

@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import CookieConsentBanner from '~/containers/cookie-consent-banner/CookieConsentBanner'
 import { renderWithProviders } from '~tests/test-utils'
@@ -14,7 +14,7 @@ vi.mock('react-dom', async () => {
   }
 })
 
-vi.mock('~/services/local-storage-service', async () => ({
+vi.mock('~/services/local-storage-service', () => ({
   getFromLocalStorage: () => getFromLocalStorageMock(),
   setToLocalStorage: vi.fn()
 }))
@@ -44,7 +44,7 @@ describe('CookieConsentBanner', () => {
     expect(acceptButton).not.toBeInTheDocument()
   })
 
-  it('banner should disappear after accept button click', async () => {
+  it('banner should disappear after accept button click', () => {
     getFromLocalStorageMock.mockReturnValue(false)
     renderWithProviders(<CookieConsentBanner />)
 
@@ -52,8 +52,7 @@ describe('CookieConsentBanner', () => {
     expect(acceptButton).toBeInTheDocument()
 
     fireEvent.click(acceptButton)
-    await waitFor(() => {
-      expect(acceptButton).not.toBeInTheDocument()
-    })
+
+    expect(acceptButton).not.toBeInTheDocument()
   })
 })

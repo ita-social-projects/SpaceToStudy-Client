@@ -32,7 +32,7 @@ describe('EnrollOffer', () => {
     expect(levelSelect.value).toBe(newLevel)
   })
 
-  it('should display error message', async () => {
+  it('should display error message', () => {
     const newAdditionalInfo = 'Some text'
     const additionalInfoInput = screen.getByLabelText(
       'offerDetailsPage.enrollOffer.labels.info'
@@ -43,7 +43,7 @@ describe('EnrollOffer', () => {
     expect(additionalInfoInput.value).toBe(newAdditionalInfo)
 
     const button = screen.getByText('button.createCooperation')
-    await waitFor(() => fireEvent.click(button))
+    fireEvent.click(button)
 
     const errorMessage = screen.getByText(
       'offerDetailsPage.errors.additionalInfo'
@@ -54,8 +54,8 @@ describe('EnrollOffer', () => {
   it('should send form', async () => {
     const button = screen.getByText('button.createCooperation')
 
-    await waitFor(() => fireEvent.click(button))
+    fireEvent.click(button)
 
-    expect(mockFetchData).toBeCalledTimes(1)
+    await waitFor(() => expect(mockFetchData).toBeCalledTimes(1))
   })
 })

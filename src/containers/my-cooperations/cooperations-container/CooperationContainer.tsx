@@ -15,6 +15,7 @@ import {
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import { type Cooperation, SizeEnum, StatusEnum } from '~/types'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface CooperationContainerProps {
   items: Cooperation[]
@@ -30,6 +31,7 @@ const CooperationContainer: React.FC<CooperationContainerProps> = ({
   const breakpoints = useBreakpoints()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const columnsToShow = adjustColumns<Cooperation>(
     breakpoints,
@@ -43,7 +45,8 @@ const CooperationContainer: React.FC<CooperationContainerProps> = ({
           component: <AcceptCooperationModal cooperation={item} />
         })
       : (item.status === StatusEnum.Active ||
-          item.status === StatusEnum.RequestToClose) &&
+          item.status === StatusEnum.RequestToClose ||
+          item.status === StatusEnum.NeedAction) &&
         navigate(`./${item._id}`)
   }
 
@@ -62,7 +65,22 @@ const CooperationContainer: React.FC<CooperationContainerProps> = ({
   const cooperationTable = (
     <EnhancedTable
       columns={columnsToShow}
-      data={{ items }}
+      data={{
+        items: items.map((item) => {
+          const roleBasedStatus =
+            item.needAction.role === userRole
+              ? StatusEnum.NeedAction
+              : StatusEnum.RequestToClose
+
+          return {
+            ...item,
+            status:
+              item.status === StatusEnum.RequestToClose
+                ? roleBasedStatus
+                : item.status
+          }
+        })
+      }}
       onRowClick={handleCardClick}
       size={SizeEnum.Small}
       sort={sort}

@@ -31,14 +31,19 @@ import { styles } from '~/containers/my-cooperations/cooperation-details/Coopera
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { cooperationService } from '~/services/cooperation-service'
 
-import { CooperationTabsEnum, PositionEnum, StatusEnum } from '~/types'
+import {
+  CooperationTabsEnum,
+  NeedActionTypeEnum,
+  PositionEnum,
+  StatusEnum
+} from '~/types'
 import {
   cooperationsSelector,
   setCooperationSections,
-  setCooperationStatus,
   setIsActivityCreated
 } from '~/redux/features/cooperationsSlice'
 import AcceptCooperationClosing from '~/containers/my-cooperations/accept-cooperation-close/AcceptCooperationClosing'
+import CooperationClosureDeclinedBanner from '~/containers/my-cooperations/cooperation-closure-declined-banner/CooperationClosureDeclinedBanner'
 
 const CooperationDetails = () => {
   const dispatch = useAppDispatch()
@@ -49,9 +54,7 @@ const CooperationDetails = () => {
   const { isActivityCreated } = useAppSelector(cooperationsSelector)
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
   const [editMode, setEditMode] = useState<boolean>(false)
-  const [isClosed, setIsClosed] = useState<boolean>(false)
   const { userRole } = useAppSelector((state) => state.appMain)
-  const cooperationStatus = useAppSelector((state) => state.cooperations.status)
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -91,7 +94,6 @@ const CooperationDetails = () => {
   useEffect(() => {
     if (cooperation) {
       dispatch(setCooperationSections(cooperation.sections))
-      dispatch(setCooperationStatus(cooperation.status))
       setEditMode(Boolean(cooperation.sections?.length))
     }
   }, [cooperation, dispatch])
@@ -108,14 +110,32 @@ const CooperationDetails = () => {
     })
   }, [id])
 
-  const handleCooperationStatusUpdateSuccess = useCallback(() => {
-    setIsClosed(true)
-    dispatch(setCooperationStatus(StatusEnum.Closed))
-  }, [dispatch])
-
   const { mutate: handleCooperationClosingAccept } = useMutation({
     mutationFn: handleCooperationStatusUpdate,
-    onSuccess: handleCooperationStatusUpdateSuccess,
+    queryKeys: [['cooperations'], ['cooperation', id]]
+  })
+
+  const handleCooperationClosingDecline = async (declineReason: string) => {
+    await cooperationService.updateCooperation({
+      _id: id,
+      newMessage: declineReason
+    })
+  }
+
+  const { mutate: handleReasonSubmit } = useMutation({
+    mutationFn: handleCooperationClosingDecline,
+    queryKeys: [['cooperations'], ['cooperation', id]]
+  })
+
+  const handleAnswerForDecliningSend = async (answer: string) => {
+    await cooperationService.updateCooperation({
+      _id: id,
+      newMessage: answer
+    })
+  }
+
+  const { mutate: handleAnswerSubmit } = useMutation({
+    mutationFn: handleAnswerForDecliningSend,
     queryKeys: [['cooperations'], ['cooperation', id]]
   })
 
@@ -160,18 +180,73 @@ const CooperationDetails = () => {
       ? cooperation.initiator
       : cooperation.receiver
 
-  const acceptClosingProcess = !isClosed && (
-    <AcceptCooperationClosing
-      isReasonSubmitted={false}
-      onAccept={handleCooperationClosingAccept}
-      onReasonSubmit={() => {}}
-      user={closeCooperationInitiator.firstName}
-    />
-  )
+  const closeCooperationReceiver =
+    cooperation.needAction.role === cooperation.initiatorRole
+      ? cooperation.initiator
+      : cooperation.receiver
 
-  const isCooperationClosingRequestSend =
-    cooperation.needAction.role === userRole &&
+  const roleBasedStatus =
+    cooperation.needAction.role === userRole
+      ? StatusEnum.NeedAction
+      : StatusEnum.RequestToClose
+
+  const cooperationStatus =
     cooperation.status === StatusEnum.RequestToClose
+      ? roleBasedStatus
+      : cooperation.status
+
+  const getCooperationClosingModal = () => {
+    if (cooperation.status !== StatusEnum.RequestToClose) {
+      return null
+    }
+
+    const lastMessage = cooperation.needAction.messages.at(-1)
+    const secondLastMessage = cooperation.needAction.messages.at(-2)
+
+    if (cooperation.needAction.type === NeedActionTypeEnum.WaitingForApproval) {
+      return cooperation.needAction.role === userRole ? (
+        <AcceptCooperationClosing
+          isReasonSubmitted={false}
+          message={lastMessage}
+          onAccept={handleCooperationClosingAccept}
+          onReasonSubmit={handleReasonSubmit}
+          user={closeCooperationInitiator.firstName}
+        />
+      ) : (
+        cooperation.needAction.messages.length !== 0 && (
+          <CooperationClosureDeclinedBanner
+            isAnswerSubmitted
+            message={secondLastMessage}
+            onSend={handleAnswerSubmit}
+            submittedReason={lastMessage}
+            user={closeCooperationReceiver.firstName}
+          />
+        )
+      )
+    }
+
+    if (cooperation.needAction.type === NeedActionTypeEnum.WaitingForAnswer) {
+      return cooperation.needAction.role === userRole ? (
+        <CooperationClosureDeclinedBanner
+          isAnswerSubmitted={false}
+          message={lastMessage}
+          onSend={handleAnswerSubmit}
+          user={closeCooperationInitiator.firstName}
+        />
+      ) : (
+        <AcceptCooperationClosing
+          isReasonSubmitted
+          message={secondLastMessage}
+          onAccept={handleCooperationClosingAccept}
+          onReasonSubmit={handleReasonSubmit}
+          submittedReason={lastMessage}
+          user={closeCooperationReceiver.firstName}
+        />
+      )
+    }
+  }
+
+  const cooperationClosingModal = getCooperationClosingModal()
 
   const iconConditionals = isNotesOpen ? (
     <KeyboardDoubleArrowRightIcon />
@@ -208,9 +283,7 @@ const CooperationDetails = () => {
           </Button>
         </Box>
       </Box>
-      {activeTab === CooperationTabsEnum.Activities &&
-        isCooperationClosingRequestSend &&
-        acceptClosingProcess}
+      {activeTab === CooperationTabsEnum.Activities && cooperationClosingModal}
       <Box sx={styles.notesBlock}>
         <Box sx={styles.pageContent}>{pageContent()}</Box>
         {!isDesktop && isNotesOpen && (

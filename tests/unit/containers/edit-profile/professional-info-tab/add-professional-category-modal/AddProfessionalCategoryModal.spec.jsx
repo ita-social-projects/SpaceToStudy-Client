@@ -47,24 +47,26 @@ const initialValues = {
 }
 
 describe('AddProfessionalCategoryModal without initial value', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(URLs.categories.getNames)
-        .reply(200, [initialValues.category, ...mockedBlockedCategory])
-      mockAxiosClient
-        .onGet(
-          `${URLs.categories.get}/${initialValues.category._id}${URLs.subjects.getNames}`
-        )
-        .reply(200, initialValues.subjects)
-
-      renderWithProviders(
-        <AddProfessionalCategoryModal
-          blockedCategoriesOptions={mockedBlockedCategory}
-          closeModal={mockCloseModal}
-        />
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(URLs.categories.getNames)
+      .reply(200, [initialValues.category, ...mockedBlockedCategory])
+    mockAxiosClient
+      .onGet(
+        `${URLs.categories.get}/${initialValues.category._id}${URLs.subjects.getNames}`
       )
-    })
+      .reply(200, initialValues.subjects)
+
+    mockAxiosClient
+      .onGet(`${URLs.categories.get}${URLs.subjects.getNames}`)
+      .reply(200, [])
+
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={mockedBlockedCategory}
+        closeModal={mockCloseModal}
+      />
+    )
   })
 
   it('should update the correct subject when changing value', async () => {
@@ -77,11 +79,11 @@ describe('AddProfessionalCategoryModal without initial value', () => {
   
     await selectOption(categoryAutocomplete, t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }))
 
-    await act(async () => {
+    await act(() =>
       fireEvent.change(professionalSubjects[0], {
         target: { value: 'Updated Gastronomy' }
       })
-    })
+    )
 
     expect(professionalSubjects[0].value).toBe('Updated Gastronomy')
     if (professionalSubjects.length > 1) {
@@ -121,11 +123,11 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     )
     await selectOption(categoryAutocomplete,  t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }))
 
-    await act(async () => {
+    await act(() =>
       fireEvent.change(professionalSubjects, {
         target: { value: 'Varenychky' }
       })
-    })
+    )
     expect(professionalSubjects.value).toBe('Varenychky')
   })
 
@@ -142,18 +144,18 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     )
     await selectOption(categoryAutocomplete, t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }))
 
-    await act(async () => {
+    await act(() =>
       fireEvent.change(professionalSubjects[0], {
         target: { value: 'Gastronomy' }
       })
-    })
+    )
     expect(professionalSubjects[0].value).toBe('Gastronomy')
 
-    await act(async () => {
+    await act(() =>
       fireEvent.change(professionalSubjects[1], {
         target: { value: 'Varenychky' }
       })
-    })
+    )
     expect(professionalSubjects[1].value).toBe('Varenychky')
   })
 
@@ -180,18 +182,15 @@ describe('AddProfessionalCategoryModal without initial value', () => {
 })
 
 describe('AddProfessionalCategoryModal with initial value', () => {
-  beforeEach(
-    async () =>
-      await waitFor(() => {
-        renderWithProviders(
-          <AddProfessionalCategoryModal
-            blockedCategoriesOptions={mockedBlockedCategory}
-            closeModal={mockCloseModal}
-            initialValues={initialValues}
-            isEdit
-          />
-        )
-      })
+  beforeEach(() =>
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={mockedBlockedCategory}
+        closeModal={mockCloseModal}
+        initialValues={initialValues}
+        isEdit
+      />
+    )
   )
 
   it('should create SubjectGroup list according to passed initial values (modal edit mode)', async () => {
@@ -215,7 +214,7 @@ describe('AddProfessionalCategoryModal with initial value', () => {
 
     expect(professionalSubjectsBefore).toHaveLength(2)
 
-    await act(async () => fireEvent.click(deleteBtn[0]))
+    await act(() => fireEvent.click(deleteBtn[0]))
 
     const professionalSubjectsAfter = screen.getAllByLabelText(
       /editProfilePage.profile.professionalTab.subject/
@@ -228,26 +227,22 @@ describe('AddProfessionalCategoryModal with initial value', () => {
     const submitButton = screen.getByText(
       /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
     )
-    await act(async () => {
-      fireEvent.click(submitButton)
-    })
+    await act(() => fireEvent.click(submitButton))
 
     expect(mockCloseModal).toHaveBeenCalled()
   })
 })
 
 describe('AddProfessionalCategoryModal Subject Updates', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <AddProfessionalCategoryModal
-          blockedCategoriesOptions={mockedBlockedCategory}
-          closeModal={mockCloseModal}
-          initialValues={initialValues}
-          isEdit
-        />
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={mockedBlockedCategory}
+        closeModal={mockCloseModal}
+        initialValues={initialValues}
+        isEdit
+      />
+    )
   })
 
   it('should update only the specific subject when changing value', async () => {
@@ -259,11 +254,11 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
     )
 
     await selectOption(categoryAutocomplete,t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }))
-    await act(async () => {
+    await act(() =>
       fireEvent.change(professionalSubjects[0], {
         target: { value: 'Gastronomy' }
       })
-    })
+    )
     expect(screen.getByDisplayValue('Gastronomy')).toBeInTheDocument()
     expect(professionalSubjects[1].value).toBe('Varenychky')
   })
@@ -281,11 +276,11 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
       /editProfilePage.profile.professionalTab.subject/
     )
 
-    await act(async () => {
+    await act(() =>
       fireEvent.change(professionalSubjects[0], {
         target: { value: '' }
       })
-    })
+    )
 
     expect(submitButton).toBeInTheDocument()
   })
@@ -311,17 +306,16 @@ describe('AddProfessionalCategoryModal when clearing categories and subjects', (
   let professionalSubjects
   let submitButton
 
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(
-        <AddProfessionalCategoryModal
-          blockedCategoriesOptions={mockedBlockedCategory}
-          closeModal={mockCloseModal}
-          initialValues={initialValues}
-          isEdit
-        />
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={mockedBlockedCategory}
+        closeModal={mockCloseModal}
+        initialValues={initialValues}
+        isEdit
+      />
+    )
+
     categoryAutocomplete = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
@@ -338,18 +332,18 @@ describe('AddProfessionalCategoryModal when clearing categories and subjects', (
       categoryAutocomplete,
       t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' })
     )
-    await waitFor(() => {
-      expect(professionalSubjects[0]).toHaveValue('Gastronomy')
-    })
-    await act(async () => {
-      fireEvent.change(categoryAutocomplete, { target: { value: '' } })
-    })
-    await waitFor(() => {
-      expect(categoryAutocomplete).toHaveValue('')
-    })
-    professionalSubjects.forEach(async (subject) => {
-      await waitFor(() => expect(subject).toHaveValue(''))
-    })
+
+    expect(professionalSubjects[0]).toHaveValue('Gastronomy')
+    await act(() => fireEvent.change(categoryAutocomplete, { target: { value: '' } }))
+
+    expect(categoryAutocomplete).toHaveValue('')
+
+    professionalSubjects = screen.queryAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    expect(professionalSubjects).toHaveLength(0)
+
     expect(submitButton.parentNode).toBeDisabled()
   })
   

@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { beforeEach, describe } from 'vitest'
 
@@ -51,9 +51,7 @@ describe('AddCategoriesModal component', () => {
     const createBtn = screen.getByText('common.create')
     const nameInput = screen.getByRole('textbox')
 
-    waitFor(() => {
-      fireEvent.change(nameInput, { target: { value: 'New Category' } })
-    })
+    fireEvent.change(nameInput, { target: { value: 'New Category' } })
 
     expect(createBtn).toBeInTheDocument()
 
@@ -79,15 +77,13 @@ describe('AddCategoriesModal component', () => {
     const createButton = screen.getByText('common.create')
     fireEvent.click(createButton)
 
-    await waitFor(() => {
-      expect(createCategory).toHaveBeenCalledWith({ name: 'New Category' })
+    expect(createCategory).toHaveBeenCalledWith({ name: 'New Category' })
 
-      const request = mockAxiosClient.handlers.post[0]
-      const responseStatus = request[3]
-      const responseData = request[4]
+    const request = mockAxiosClient.handlers.post[0]
+    const responseStatus = request[3]
+    const responseData = request[4]
 
-      expect(responseStatus).toBe(201)
-      expect(responseData).toEqual(createdCategoryMock)
-    })
+    expect(responseStatus).toBe(201)
+    expect(responseData).toEqual(createdCategoryMock)
   })
 })

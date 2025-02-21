@@ -1,4 +1,4 @@
-import { screen, render, fireEvent, waitFor } from '@testing-library/react'
+import { screen, render, fireEvent } from '@testing-library/react'
 import { expect, vi } from 'vitest'
 import CooperationCompletion from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion'
 import { UserRoleEnum } from '~/types'
@@ -26,7 +26,7 @@ describe('CooperationCompletion Component', () => {
     expect(closeButton).toBeInTheDocument()
   })
 
-  it('should call mockCloseCooperation when closing cooperation', async () => {
+  it('should call mockCloseCooperation when closing cooperation', () => {
     render(
       <CooperationCompletion
         cooperationStatus='active'
@@ -39,8 +39,6 @@ describe('CooperationCompletion Component', () => {
 
     fireEvent.click(closeButton)
 
-    await waitFor(() => {
-      expect(mockOnCloseCooperation).toHaveBeenCalled()
-    })
+    expect(mockOnCloseCooperation).toHaveBeenCalled()
   })
 })

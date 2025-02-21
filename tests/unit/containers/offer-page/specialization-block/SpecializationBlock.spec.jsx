@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import { useAppSelector } from '~/hooks/use-redux'
@@ -160,12 +160,11 @@ describe('Test SpecializationBlock container - [ user role: tutor & with errors 
   it('should handle proficiency level change correctly', () => {
     const beginnerCheckbox = screen.getByLabelText('Beginner')
     const advancedCheckbox = screen.getByLabelText('Advanced')
-    waitFor(() => {
-      fireEvent.click(beginnerCheckbox)
-      fireEvent.click(advancedCheckbox)
-      fireEvent.change(beginnerCheckbox, { target: { checked: true } })
-      fireEvent.change(advancedCheckbox, { target: { checked: true } })
-    })
+
+    fireEvent.click(beginnerCheckbox)
+    fireEvent.click(advancedCheckbox)
+    fireEvent.change(beginnerCheckbox, { target: { checked: true } })
+    fireEvent.change(advancedCheckbox, { target: { checked: true } })
 
     expect(mockHandleNonInputValueChange).toHaveBeenCalledWith(
       'proficiencyLevel',

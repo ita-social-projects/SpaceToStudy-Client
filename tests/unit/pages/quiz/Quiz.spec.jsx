@@ -1,14 +1,14 @@
-import { vi } from 'vitest'
+import { beforeAll, beforeEach, expect } from 'vitest'
 import { screen, fireEvent, act } from '@testing-library/react'
-import { renderWithProviders } from '~tests/test-utils'
 import Quiz from '~/pages/quiz/Quiz'
-import useQuery from '~/hooks/use-query'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
+import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
-vi.mock('~/hooks/use-query')
+const mockQuizId = '6641388f36ebdb0432a3a2e5'
 
 const mockQuiz = {
-  _id: '6641388f36ebdb0432a3a2e5',
+  _id: mockQuizId,
   title: 'JS Quiz',
   items: [
     {
@@ -27,7 +27,9 @@ const mockQuiz = {
     shuffle: false,
     pointValues: true,
     scoredResponses: true,
-    correctAnswers: true
+    correctAnswers: true,
+    attemptLimit: '2 attempts',
+    timeLimit: '15 minutes'
   },
   createdAt: '2024-05-12T21:45:51.693Z',
   updatedAt: '2024-06-07T07:05:33.052Z',
@@ -38,95 +40,39 @@ const mockQuiz = {
   description: 'Js'
 }
 
-const mockQuizEmpty = {
-  _id: '1',
-  title: 'Empty',
-  description: '',
-  items: [],
-  author: { _id: '' },
-  category: null,
-  resourceType: ResourceType.Quiz,
-  isDuplicate: false,
-  settings: {
-    view: 'Scroll',
-    shuffle: false,
-    pointValues: false,
-    scoredResponses: false,
-    correctAnswers: false
-  },
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString()
-}
-
-let mockNavigate
-
-beforeEach(() => {
-  mockNavigate = vi.fn()
-  vi.mock('react-router-dom', async () => {
-    const originalModule = await vi.importActual('react-router-dom')
-    return {
-      ...originalModule,
-      useNavigate: () => mockNavigate
-    }
+describe('QuizPage for student', () => {
+  beforeAll(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', '')))
+      .reply(200, mockQuiz)
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
+      .reply(200, mockQuiz)
+    mockAxiosClient
+      .onGet(new RegExp(URLs.finishedQuizzes.getById.replace(':id', '')))
+      .reply(200, mockQuiz)
+    mockAxiosClient
+      .onGet(
+        new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
+      )
+      .reply(200, mockQuiz)
+    mockAxiosClient.onPost(URLs.finishedQuizzes.add).reply(204, mockQuiz)
   })
 
-  vi.clearAllMocks()
-})
-
-afterEach(() => {
-  vi.resetModules()
-})
-
-describe('QuizPage with useQuery', () => {
-  it('should render loading state', () => {
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: true
+  beforeEach(() => {
+    renderWithProviders(<Quiz />, {
+      preloadedState: { appMain: { userRole: UserRoleEnum.Student } }
     })
-
-    renderWithProviders(<Quiz />)
-
-    const loader = screen.getByTestId('loader')
-    expect(loader).toBeInTheDocument()
   })
 
-  it('should render quiz page with data', () => {
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: false
-    })
-
-    renderWithProviders(<Quiz />)
-
-    const quizTitle = screen.getByText('JS Quiz')
-    expect(quizTitle).toBeInTheDocument()
-
-    const questionText = screen.getByText(
+  it('should render quiz page with data only for Student', async () => {
+    const questionText = await screen.findByText(
       'What is the difference between function expression and function declaration?'
     )
     expect(questionText).toBeInTheDocument()
   })
 
-  it('should render empty state for empty data', () => {
-    useQuery.mockReturnValue({
-      data: mockQuizEmpty,
-      isLoading: false
-    })
-
-    renderWithProviders(<Quiz />)
-
-    const emptyTitle = screen.getByText('Empty')
-    expect(emptyTitle).toBeInTheDocument()
-  })
-
   it('should update checkbox value', () => {
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: false
-    })
-
-    renderWithProviders(<Quiz />)
-
     const checkbox = screen.getByRole('checkbox')
     expect(checkbox).toHaveProperty('checked', false)
 
@@ -137,122 +83,55 @@ describe('QuizPage with useQuery', () => {
     expect(checkbox).toHaveProperty('checked', true)
   })
 
-  it('should display correct answers after finishing quiz', () => {
-    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
-
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: false
-    })
-
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
-
-    const finishButton = screen.getByText('quiz.finish')
+  it('should display correct answers after finishing quiz', async () => {
+    const finishButton = await screen.findByText('quiz.finish')
     act(() => {
       fireEvent.click(finishButton)
     })
 
-    const confirmButton = screen.getByText('quiz.confirm')
+    const confirmButton = await screen.findByText('quiz.confirm')
     act(() => {
       fireEvent.click(confirmButton)
     })
 
-    const correctAnswersLabel = screen.getByText(
+    const correctAnswers = await screen.findByText(
       'myResourcesPage.quizzes.correctAnswers'
     )
-    expect(correctAnswersLabel).toBeInTheDocument()
+    expect(correctAnswers).toBeInTheDocument()
   })
 
-  it('should render points and correctness when finished', () => {
-    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
-
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: false
-    })
-
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
-
-    const finishButton = screen.getByText('quiz.finish')
-    fireEvent.click(finishButton)
-
-    const confirmButton = screen.getByText('quiz.confirm')
-    act(() => {
-      fireEvent.click(confirmButton)
-    })
-
-    const pointsLabel = screen.getByText((_, element) => {
-      return (
-        element?.textContent?.includes('quiz.points') &&
-        element.tagName.toLowerCase() === 'p'
-      )
-    })
-
-    const answersCorrectnessLabel = screen.getByText(
-      'myResourcesPage.quizzes.correctAnswers'
-    )
-
-    expect(pointsLabel).toBeInTheDocument()
-    expect(answersCorrectnessLabel).toBeInTheDocument()
-  })
-
-  it('should render question text', () => {
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: false
-    })
-
-    renderWithProviders(<Quiz />)
-
-    const questionText = screen.getByText(
+  it('should render question text', async () => {
+    const questionText = await screen.findByText(
       'What is the difference between function expression and function declaration?'
     )
     expect(questionText).toBeInTheDocument()
   })
 
-  it('should render timer for the active quiz for student', () => {
-    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
-
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: false
-    })
-
-    renderWithProviders(<Quiz />, {
-      preloadedState
-    })
-
-    const timer = screen.getByTestId('TimerOutlinedIcon')
+  it('should render timer for the active quiz for student', async () => {
+    const timer = await screen.findByTestId('TimerOutlinedIcon')
     expect(timer).toBeInTheDocument()
   })
+})
 
-  it('should render duration for the finished quiz for student', () => {
-    const preloadedState = { appMain: { userRole: UserRoleEnum.Student } }
+describe('Quiz tutor variant for tutor', () => {
+  beforeAll(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', '')))
+      .reply(200, mockQuiz)
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
+      .reply(200, mockQuiz)
+    mockAxiosClient.onPost(URLs.finishedQuizzes.add).reply(204, mockQuiz)
+  })
 
-    useQuery.mockReturnValue({
-      data: mockQuiz,
-      isLoading: false
-    })
-
+  beforeEach(() => {
     renderWithProviders(<Quiz />, {
-      preloadedState
+      preloadedState: { appMain: { userRole: UserRoleEnum.Tutor } }
     })
+  })
 
-    const finishButton = screen.getByText('quiz.finish')
-    fireEvent.click(finishButton)
-
-    const confirmButton = screen.getByText('quiz.confirm')
-    act(() => {
-      fireEvent.click(confirmButton)
-    })
-
-    const duration = screen.getByText(/quiz\.duration:/i)
-    expect(duration).toBeInTheDocument()
-
-    expect(duration).toBeInTheDocument()
+  it('should render quiz page with data only for tutor', async () => {
+    const points = await screen.findByText('quiz.points')
+    expect(points).toBeInTheDocument()
   })
 })

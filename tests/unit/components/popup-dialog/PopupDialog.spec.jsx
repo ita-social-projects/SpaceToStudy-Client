@@ -47,12 +47,12 @@ describe('Popup dialog test with timerId', () => {
     render(<PopupDialog {...propsWithTimerId} />)
   })
 
-  it('should close popup after delay', async () => {
+  it('should close popup after delay', () => {
     const popupContent = screen.getByTestId('popupContent')
 
     fireEvent.mouseEnter(popupContent)
     fireEvent.mouseLeave(popupContent)
 
-    await waitFor(() => expect(closeModalAfterDelay).toHaveBeenCalled())
+    expect(closeModalAfterDelay).toHaveBeenCalled()
   })
 })

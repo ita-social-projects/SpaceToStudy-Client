@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
@@ -86,7 +86,7 @@ describe('Signup form test', () => {
     expect(button).toBeInTheDocument()
   })
 
-  it('should enable signup button', async () => {
+  it('should enable signup button', () => {
     const checkbox = screen.getByRole('checkbox')
     const button = screen.getByText('common.labels.signup').parentNode
 
@@ -97,21 +97,19 @@ describe('Signup form test', () => {
     expect(button).toBeEnabled()
   })
 
-  it('should show visibility icon', async () => {
+  it('should show visibility icon', () => {
     const visibilityOffIcons = screen.getAllByTestId('VisibilityOffIcon')
     fireEvent.click(visibilityOffIcons[0])
     fireEvent.click(visibilityOffIcons[1])
     const visibilityIcons = screen.getAllByTestId('VisibilityIcon')
 
-    await waitFor(() => {
-      expect(visibilityIcons[0]).toBeInTheDocument()
-      expect(visibilityOffIcons[0]).not.toBeInTheDocument()
-      expect(visibilityIcons[1]).toBeInTheDocument()
-      expect(visibilityOffIcons[1]).not.toBeInTheDocument()
-    })
+    expect(visibilityIcons[0]).toBeInTheDocument()
+    expect(visibilityOffIcons[0]).not.toBeInTheDocument()
+    expect(visibilityIcons[1]).toBeInTheDocument()
+    expect(visibilityOffIcons[1]).not.toBeInTheDocument()
   })
 
-  it('should submit form', async () => {
+  it('should submit form', () => {
     handleSubmit.mockImplementation((event) => {
       event.preventDefault()
     })

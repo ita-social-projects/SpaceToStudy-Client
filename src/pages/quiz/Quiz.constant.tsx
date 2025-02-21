@@ -1,5 +1,7 @@
 import {
   Quiz,
+  QuizAttempt,
+  QuizTimeLimit,
   QuizViewEnum as QuizView,
   ResourcesTypesEnum as ResourceType
 } from '~/types'
@@ -18,7 +20,9 @@ export const defaultQuizResponse: Quiz = {
     shuffle: false,
     pointValues: false,
     scoredResponses: false,
-    correctAnswers: false
+    correctAnswers: false,
+    timeLimit: QuizTimeLimit.NoLimit,
+    attemptLimit: QuizAttempt.NoLimit
   },
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString()
