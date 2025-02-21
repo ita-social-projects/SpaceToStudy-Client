@@ -24,7 +24,7 @@ const CooperationActionBanner: React.FC<Properties> = ({
         <Box>
           <Box sx={styles.header}>
             {icon}
-            <Typography>{title}</Typography>
+            <Typography sx={styles.headerText}>{title}</Typography>
           </Box>
           <Typography sx={styles.description}>{description}</Typography>
         </Box>

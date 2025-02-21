@@ -12,10 +12,17 @@ export const styles = {
     height: '50px',
     mt: '10px'
   },
+  divider: {
+    marginBottom: '16px'
+  },
   inputField: {
     flex: 1
   },
   textGray: {
-    color: palette.basic.darkGray
+    color: palette.basic.lightBlue
+  },
+  textMediumGray: {
+    color: palette.basic.lightBlue,
+    fontWeight: 'medium'
   }
 } satisfies Record<string, SxProps>

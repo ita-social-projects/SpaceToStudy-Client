@@ -8,6 +8,7 @@ const palette = {
     black: '#000000',
     gray: '#B0BEC5',
     softGray: '#F1F2F3',
+    softWhite: '#F7F8F8',
     blue: '#0B8AF8',
     white: '#FFFFFF',
     grey: '#ECEFF1',

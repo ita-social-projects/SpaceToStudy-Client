@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Divider, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import InputField from '~/design-system/components/input-field/InputField'
@@ -71,7 +71,8 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
   if (isInputShown) {
     return (
       <Box sx={styles.inputBox}>
-        <Typography sx={styles.textGray}>{inputLabel}</Typography>
+        <Divider sx={styles.divider} />
+        <Typography sx={styles.textMediumGray}>{inputLabel}</Typography>
         <Box sx={styles.inputContainer}>
           <InputField
             error={hasErrors}
@@ -96,7 +97,7 @@ const CooperationActionInput: React.FC<CooperationActionInputProps> = ({
     isReasonSubmitted &&
     !hasErrors && (
       <Box>
-        <Typography sx={styles.textGray}>
+        <Typography sx={styles.textMediumGray}>
           {t('cooperationDetailsPage.submitMessage')}
         </Typography>
         <Typography sx={styles.textGray}>

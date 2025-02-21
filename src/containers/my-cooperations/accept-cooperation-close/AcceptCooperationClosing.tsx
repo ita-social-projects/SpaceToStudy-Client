@@ -66,7 +66,7 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
                 {user}:
               </Typography>
               <br />
-              <Typography sx={styles.secondaryText}>{message}</Typography>
+              <Typography>{message}</Typography>
             </Box>
           )}
         </>
