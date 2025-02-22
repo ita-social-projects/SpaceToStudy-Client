@@ -58,8 +58,33 @@ export const OfferService = {
   ): Promise<AxiosResponse> =>
     await axiosClient.patch(createUrlPath(URLs.offers.update, id), updateData),
 
-  getOffer: async (id: string): Promise<AxiosResponse<Offer>> =>
-    await axiosClient.get(createUrlPath(URLs.offers.get, id)),
+  updateOfferWithBaseService: (
+    id: string,
+    updateData: Partial<CreateOrUpdateOfferData>
+  ) => {
+    const resultUrl = getFullUrl({
+      pathname: URLs.offers.update,
+      parameters: { id }
+    })
+
+    return baseService.request<Offer>({
+      method: 'PATCH',
+      url: resultUrl,
+      data: updateData
+    })
+  },
+
+  getOffer: (id: string) => {
+    const resultUrl = getFullUrl({
+      pathname: URLs.offers.getById,
+      parameters: { id }
+    })
+
+    return baseService.request<Offer>({
+      method: 'GET',
+      url: resultUrl
+    })
+  },
 
   getUsersOffers: (params: GetMyOffersParams) => {
     const resultUrl = getFullUrl({

@@ -34,7 +34,7 @@ import { type ResponseError } from '~/exceptions'
 
 interface EnrollOfferProps {
   offer: Offer
-  enrollOffer: () => Promise<void>
+  enrollOffer: () => void
 }
 
 const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
