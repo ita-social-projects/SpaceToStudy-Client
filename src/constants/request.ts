@@ -120,7 +120,7 @@ export const URLs = {
     add: '/finished-quizzes',
     get: '/finished-quizzes',
     getById: '/finished-quizzes/:id',
-    getByQuizId: '/finished-quizzes/by-quiz-id/:cooperationId/:quizId'
+    getByQuizId: '/finished-quizzes/:cooperationId/:quizId'
   },
   attachments: {
     post: '/attachments'
