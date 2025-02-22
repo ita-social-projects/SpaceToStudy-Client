@@ -35,6 +35,7 @@ export const URLs = {
     update: '/offers',
     updateById: '/offers/:id',
     get: '/categories/subjects/offers',
+    getById: '/categories/subjects/offers/:id',
     getByCategoryAndSubjectId:
       '/categories/:categoryId/subjects/:subjectId/offers',
     getByCategoryId: '/categories/:categoryId/subjects/offers',

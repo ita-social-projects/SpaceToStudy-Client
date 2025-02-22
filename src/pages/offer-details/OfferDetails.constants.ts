@@ -7,7 +7,7 @@ interface ActiveButtonActionsProps {
   isMyOffer: boolean
   status?: StatusEnum
   handleEnrollOfferClick: () => void
-  handleToggleOfferStatus: () => Promise<void>
+  handleToggleOfferStatus: () => void
   handleCloseOffer: () => Promise<void>
   handleSendMessage: () => void
 }
