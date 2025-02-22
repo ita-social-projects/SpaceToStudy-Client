@@ -28,9 +28,7 @@ const mockCategoriesNames = [
   { _id: '6422dbc0823be47b41eeb8d8', name: 'Category 2' }
 ]
 
-categoryService.getCategoriesNames.mockResolvedValue({
-  data: mockCategoriesNames
-})
+categoryService.getCategoriesNames.mockResolvedValue(mockCategoriesNames)
 
 const closeDrawerMock = vi.fn()
 

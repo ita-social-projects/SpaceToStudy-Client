@@ -27,13 +27,8 @@ const mockSubjectsNames = [
   { _id: '6', name: 'Subject 2' }
 ]
 
-categoryService.getCategoriesNames.mockResolvedValue({
-  data: mockCategoriesNames
-})
-
-subjectService.getSubjectsNames.mockResolvedValue({
-  data: mockSubjectsNames
-})
+categoryService.getCategoriesNames.mockResolvedValue(mockCategoriesNames)
+subjectService.getSubjectsNames.mockResolvedValue(mockSubjectsNames)
 
 const btnsBox = (
   <div>
@@ -83,6 +78,7 @@ describe('SubjectsStep test with some data', () => {
     const categoryField = screen.getByLabelText(
       'becomeTutor.categories.mainSubjectsLabel'
     )
+
     expect(categoryField.value).toBe('')
 
     await chooseCategoryOrSubject(categoryField, 'Category 2')
@@ -91,6 +87,7 @@ describe('SubjectsStep test with some data', () => {
     const subjectField = screen.getByLabelText(
       'becomeTutor.categories.subjectLabel'
     )
+
     await chooseCategoryOrSubject(subjectField, 'Subject 1')
     expect(subjectField.value).toBe('Subject 1')
 
@@ -98,6 +95,7 @@ describe('SubjectsStep test with some data', () => {
     expect(subjectField.value).toBe('')
 
     await chooseCategoryOrSubject(subjectField, 'Subject 1')
+    expect(subjectField.value).toBe('Subject 1')
 
     fireEvent.click(addSubject)
 

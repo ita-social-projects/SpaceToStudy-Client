@@ -51,15 +51,17 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     mockAxiosClient
       .onGet(URLs.categories.getNames)
       .reply(200, [initialValues.category, ...mockedBlockedCategory])
+
     mockAxiosClient
       .onGet(
-        `${URLs.categories.get}/${initialValues.category._id}${URLs.subjects.getNames}`
+        URLs.subjects.getNamesByCategoryId.replace(
+          ':id',
+          initialValues.category._id
+        )
       )
       .reply(200, initialValues.subjects)
 
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.getNames}`)
-      .reply(200, [])
+    mockAxiosClient.onGet(URLs.subjects.getNames).reply(200, [])
 
     renderWithProviders(
       <AddProfessionalCategoryModal
@@ -264,8 +266,10 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
 
     await selectOption(
       categoryAutocomplete,
-      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' })
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }),
+      'findByDisplayValue'
     )
+    
     await act(() =>
       fireEvent.change(professionalSubjects[0], {
         target: { value: 'Gastronomy' }

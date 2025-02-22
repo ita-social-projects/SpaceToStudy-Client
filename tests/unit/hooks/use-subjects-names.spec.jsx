@@ -21,10 +21,6 @@ const mockError = {
 }
 
 describe('useSubjectsNames', () => {
-  afterEach(() => {
-    queryClient.clear()
-  })
-
   it('fetches subjects with a category successfully', async () => {
     subjectService.getSubjectsNames.mockResolvedValueOnce(mockSubjectsNames)
 

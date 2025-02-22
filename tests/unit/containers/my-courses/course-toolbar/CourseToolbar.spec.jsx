@@ -1,5 +1,9 @@
-import { screen, render, fireEvent } from '@testing-library/react'
-import { mockAxiosClient, selectOption } from '~tests/test-utils'
+import { screen, fireEvent } from '@testing-library/react'
+import {
+  mockAxiosClient,
+  selectOption,
+  renderWithProviders
+} from '~tests/test-utils'
 import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import { URLs } from '~/constants/request'
 import { ProficiencyLevelEnum } from '~/types'
@@ -103,7 +107,7 @@ const getCourseToolbarElement = ({
 }
 
 const checkErrorMessage = (errorFieldKey, errorMessage) => {
-  const { rerender } = render(getCourseToolbarElement())
+  const { rerender } = renderWithProviders(getCourseToolbarElement())
 
   expect(screen.queryByText(errorMessage)).not.toBeInTheDocument()
 
@@ -117,7 +121,7 @@ const checkErrorMessage = (errorFieldKey, errorMessage) => {
 }
 
 const checkInputValueChange = (fieldKey, name) => {
-  const { rerender } = render(getCourseToolbarElement())
+  const { rerender } = renderWithProviders(getCourseToolbarElement())
 
   const value = 'test'
   const titleTextarea = screen.getByRole('textbox', { name })
@@ -134,14 +138,15 @@ const checkInputValueChange = (fieldKey, name) => {
 describe('CourseToolbar', () => {
   beforeAll(() => {
     mockAxiosClient.onGet(URLs.categories.getNames).reply(200, mockCategories)
+    
     mockAxiosClient
-      .onGet(`${URLs.categories.get}/1${URLs.subjects.getNames}`)
+      .onGet(URLs.subjects.getNamesByCategoryId.replace(':id', '1'))
       .reply(200, mockSubjects)
   })
 
   describe('with single render', () => {
     beforeEach(() => {
-      render(getCourseToolbarElement())
+      renderWithProviders(getCourseToolbarElement())
     })
 
     it('should render correctly', () => {
@@ -182,7 +187,7 @@ describe('CourseToolbar', () => {
 
   describe('with rerenders', () => {
     it('should update value of subject dropdown correctly', async () => {
-      const { rerender } = render(getCourseToolbarElement())
+      const { rerender } = renderWithProviders(getCourseToolbarElement())
 
       const categoryAutocomplete = screen.getByLabelText(/category/i)
       await selectOption(categoryAutocomplete, mockCategories[0].name)
@@ -193,7 +198,7 @@ describe('CourseToolbar', () => {
       )
 
       const subjectAutocomplete = screen.getByLabelText(/subject/i)
-      await selectOption(subjectAutocomplete, mockSubjects[0].name)
+      await selectOption(subjectAutocomplete, mockSubjects[0].name, 'findByText')
     })
 
     it('should output error message if category is not selected', () => {

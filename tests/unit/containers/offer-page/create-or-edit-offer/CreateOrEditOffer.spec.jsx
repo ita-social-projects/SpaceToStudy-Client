@@ -54,7 +54,7 @@ const MOCK_SUBJECTS_NAMES = [MOCK_SUBJECT]
 
 const fillAndSubmitOfferForm = async () => {
   const categorySelect = screen.getByLabelText('offerPage.labels.category *')
-  await selectOption(categorySelect, MOCK_CATEGORY.name)
+  await selectOption(categorySelect, MOCK_CATEGORY.name, 'findByText')
 
   const subjectSelect = screen.getByLabelText('offerPage.labels.subject *')
   await selectOption(subjectSelect, MOCK_SUBJECT.name)
@@ -108,7 +108,7 @@ describe('CreateOrEditOffer', () => {
 
     mockAxiosClient
       .onGet(
-        `${URLs.categories.get}/${MOCK_CATEGORY._id}${URLs.subjects.getNames}`
+        URLs.subjects.getNamesByCategoryId.replace(':id', MOCK_CATEGORY._id)
       )
       .reply(200, MOCK_SUBJECTS_NAMES)
 
