@@ -10,6 +10,11 @@ import { Category, ServiceFunctionNew, ErrorResponse } from '~/types'
 
 type QueryLabel = 'categories' | 'resources-categories' | 'subjects'
 
+interface QueryOptions {
+  type: QueryLabel
+  categoryId?: string
+}
+
 export interface AsyncAutocompleteProps<
   Response,
   Params,
@@ -23,7 +28,7 @@ export interface AsyncAutocompleteProps<
   valueField?: keyof TransformedResponse
   labelField?: keyof TransformedResponse
   value: TransformedResponse[keyof TransformedResponse] | null | Category
-  queryLabel: QueryLabel
+  queryOptions: QueryOptions
   fetchCondition?: boolean
   textFieldProps?: TextFieldProps
   fetchOnFocus?: boolean
@@ -45,7 +50,7 @@ const AsyncAutocomplete = <
   valueField,
   labelField,
   value,
-  queryLabel,
+  queryOptions,
   service,
   axiosProps,
   ...props
@@ -63,10 +68,9 @@ const AsyncAutocomplete = <
         : result
       return transformed
     },
-    queryKey: ['async-autocomplete', queryLabel, axiosProps?.transform],
+    queryKey: ['async-autocomplete', queryOptions, axiosProps?.transform],
     options: {
-      initialData: defaultResponses.array,
-      enabled: false
+      initialData: defaultResponses.array
     }
   })
 
