@@ -80,7 +80,7 @@ function SubjectGroup({
           getOptionDisabled={handleDisableOptions}
           labelField='displayName'
           onChange={(_, value) => handleChange(value!)}
-          queryLabel='subjects'
+          queryOptions={{ type: 'subjects', categoryId: selectedCategory }}
           service={getSubjectsNames}
           textFieldProps={{
             label: `${t('editProfilePage.profile.professionalTab.subject')}*`
@@ -253,7 +253,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
           getOptionDisabled={handleBlockOption}
           labelField='displayName'
           onChange={handleMainStudyCategoryChange}
-          queryLabel='categories'
+          queryOptions={{ type: 'categories' }}
           service={fetchTranslatedCategories}
           textFieldProps={{
             label: `${t(

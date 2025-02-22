@@ -68,7 +68,7 @@ const AddAttachmentCategoryModal: React.FC<AddAttachmentCategoryModalProps> = ({
           labelField='name'
           onBlur={handleBlur('category')}
           onChange={onCategoryChange}
-          queryLabel='resources-categories'
+          queryOptions={{ type: 'resources-categories' }}
           service={ResourceService.getResourcesCategoriesNames}
           textFieldProps={{
             error: Boolean(errors.category),

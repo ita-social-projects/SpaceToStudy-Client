@@ -66,7 +66,7 @@ const OfferSearchToolbar = ({
       <AsyncAutocomplete
         labelField='name'
         onChange={onCategoryChange}
-        queryLabel='categories'
+        queryOptions={{ type: 'categories' }}
         service={categoryService.getCategoriesNames}
         sx={styles.autocomplete}
         textFieldProps={{
@@ -78,7 +78,7 @@ const OfferSearchToolbar = ({
       <AsyncAutocomplete
         labelField='name'
         onChange={onSubjectChange}
-        queryLabel='subjects'
+        queryOptions={{ type: 'subjects', categoryId: filters.categoryId }}
         service={getSubjectsNames}
         sx={styles.autocomplete}
         textFieldProps={{

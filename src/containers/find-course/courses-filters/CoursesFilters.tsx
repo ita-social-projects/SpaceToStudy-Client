@@ -84,7 +84,7 @@ const CoursesFilters = ({
         groupBy={(option) => option.title}
         labelField='name'
         onChange={onCategoryChange}
-        queryLabel='categories'
+        queryOptions={{ type: 'categories' }}
         service={categoryService.getCategoriesNames}
         sx={styles.autocomplete}
         textFieldProps={{
@@ -102,7 +102,7 @@ const CoursesFilters = ({
         groupBy={(option) => option.title}
         labelField='name'
         onChange={onSubjectChange}
-        queryLabel='subjects'
+        queryOptions={{ type: 'subjects' }}
         service={getSubjectsNames}
         sx={styles.autocomplete}
         textFieldProps={{

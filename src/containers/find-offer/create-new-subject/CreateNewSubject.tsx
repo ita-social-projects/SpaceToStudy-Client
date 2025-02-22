@@ -134,7 +134,7 @@ const CreateSubjectModal = () => {
           onBlur={handleBlur('category')}
           onChange={handleCategoryChange}
           onInputChange={handleCategoryChange}
-          queryLabel='categories'
+          queryOptions={{ type: 'categories' }}
           service={categoryService.getCategoriesNames}
           textFieldProps={{
             label: t('offerPage.labels.category'),
