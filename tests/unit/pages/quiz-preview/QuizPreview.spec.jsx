@@ -1,9 +1,10 @@
 import { beforeAll, beforeEach, expect } from 'vitest'
-import { screen } from '@testing-library/react'
+import { findByText, screen, waitFor } from '@testing-library/react'
 import QuizPreview from '~/pages/quiz-preview/QuizAttempts'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import QuizReview from '~/pages/quiz-review/QuizReview'
 
 const mockQuizId = '6641388f36ebdb0432a3a2e5'
 
@@ -67,5 +68,17 @@ describe('QuizPage for student', () => {
   it('should render quiz preview page with data', async () => {
     const quizTitle = await screen.findByText('JS Quiz')
     expect(quizTitle).toBeInTheDocument()
+  })
+
+  it('should render Quiz review after review button is clicked', () => {
+    const reviewButton = findByText('quiz.reviewAttempt')
+    reviewButton.toBeInTheDocument()
+
+    act(() => {
+      fireEvent.click(reviewButton)
+    })
+
+    const title = findByText(mockQuiz.description)
+    title.toBeInTheDocument()
   })
 })
