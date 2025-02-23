@@ -8,7 +8,7 @@ const QuizReview: React.FC = () => {
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
-      <FinishedQuiz finishedQuizId={attemptId}></FinishedQuiz>
+      <FinishedQuiz finishedQuizId={attemptId} />
     </PageWrapper>
   )
 }
