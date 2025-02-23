@@ -19,7 +19,7 @@ describe('useTimer', () => {
   it('should initialize with the given initial time', () => {
     const { result } = renderHook(() => useTimer(initialTime))
 
-    expect(result.current).toBe('00:01:00')
+    expect(result.current.time).toBe('00:01:00')
   })
 
   it('should decrement time every second', () => {
@@ -29,7 +29,7 @@ describe('useTimer', () => {
       vi.advanceTimersByTime(1000)
     })
 
-    expect(result.current).toBe('00:00:59')
+    expect(result.current.time).toBe('00:00:59')
   })
 
   it('should clear interval on unmount', () => {
