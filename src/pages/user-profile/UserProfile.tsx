@@ -21,7 +21,7 @@ import AboutStudentBlock from '~/containers/user-profile/about-user-block/AboutS
 import VideoPresentation from '~/containers/user-profile/video-presentation/VideoPresentation'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 
-import { DataByRole, UserRoleEnum } from '~/types'
+import { UserRoleEnum } from '~/types'
 
 import useQuery from '~/hooks/use-query'
 import { userService } from '~/services/user-service'
@@ -108,12 +108,14 @@ const UserProfile: React.FC = () => {
       {shouldShowPresentation && (
         <VideoPresentation
           video={
-            userResponse?.videoLink?.[preferredRole as keyof DataByRole<string>]
+            userResponse?.videoLink?.[
+              preferredRole as UserRoleEnum.Tutor | UserRoleEnum.Student
+            ]
           }
           videoMock={videoImgProfile}
           videoPreview={
             !userResponse?.videoLink?.[
-              preferredRole as keyof DataByRole<string>
+              preferredRole as UserRoleEnum.Tutor | UserRoleEnum.Student
             ]
           }
         />

@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react'
 import UserProfile from '~/pages/user-profile/UserProfile.tsx'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
-import { URLs } from '../../../../src/constants/request'
+import { URLs } from '~/constants/request'
 
 const route = '/tutor/my-profile'
 
@@ -97,10 +97,6 @@ const renderWithMockData = ({
 }
 
 describe('UserProfile', () => {
-  beforeEach(() => {
-    mockAxiosClient.reset()
-  })
-
   it('Should render professional block info for tutor', async () => {
     renderWithMockData({ extraData: professionalBlockMock })
     const aboutTutorTitle = await screen.findByText(
