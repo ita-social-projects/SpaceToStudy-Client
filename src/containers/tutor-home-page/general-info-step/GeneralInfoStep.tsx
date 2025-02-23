@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { type ReactNode, useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import img from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
@@ -19,7 +19,7 @@ import { userService } from '~/services/user-service'
 import { type UserGeneralInfo, type UserRole } from '~/types'
 
 interface GeneralInfoStepProps {
-  btnsBox: ReactNode
+  btnsBox: React.ReactNode
 }
 
 type UserName = { firstName: string; lastName: string }
@@ -30,7 +30,7 @@ const GeneralInfoStep: React.FC<GeneralInfoStepProps> = ({ btnsBox }) => {
   const { stepData, handleGeneralInfo } = useStepContext()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const generalInfo = stepData.generalInfo
-  const firstRender = useRef<boolean>(true)
+  const isFirstRender = useRef<boolean>(true)
   const {
     handleInputChange,
     handleBlur,
@@ -61,20 +61,18 @@ const GeneralInfoStep: React.FC<GeneralInfoStepProps> = ({ btnsBox }) => {
       staleTime: Infinity
     }
   })
-  const updateUserName = useCallback(
-    (user: UserName) => {
+
+  useEffect(() => {
+    const updateUserName = (user: UserName) => {
       handleNonInputValueChange('firstName', user.firstName)
       handleNonInputValueChange('lastName', user.lastName)
-    },
-    [handleNonInputValueChange]
-  )
-  useEffect(() => {
-    if (userResponse && firstRender.current) {
+    }
+    if (userResponse && isFirstRender.current) {
       updateUserName(userResponse)
 
-      firstRender.current = false
+      isFirstRender.current = false
     }
-  }, [updateUserName, userResponse])
+  }, [handleNonInputValueChange, userResponse])
 
   useEffect(() => {
     handleGeneralInfo({ data, errors })

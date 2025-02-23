@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { markFirstLoginComplete } from '~/redux/reducer'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
@@ -21,7 +21,7 @@ interface UserStepsWrapperProps {
   userRole: string
 }
 
-const UserStepsWrapper: FC<UserStepsWrapperProps> = ({ userRole }) => {
+const UserStepsWrapper: React.FC<UserStepsWrapperProps> = ({ userRole }) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
