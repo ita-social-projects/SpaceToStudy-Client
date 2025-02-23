@@ -35,6 +35,7 @@ import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 import { styles } from '~/pages/edit-profile/EditProfile.styles'
+import { getChangedFields } from '~/utils/get-changed-fields'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -94,34 +95,11 @@ const EditProfile = () => {
   }, [loading, profileState, initialEditProfileState])
 
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
-    if (!initialEditProfileState || !profileState) return {}
-
-    type EditableFields = Omit<
-      EditProfileState,
-      'loading' | 'error' | 'tabValidityStatus'
-    >
-
-    type NullableFields = {
-      [K in keyof EditableFields]: EditableFields[K] | null
-    }
-
-    const changes: Partial<NullableFields> = {}
-    ;(Object.keys(profileState) as Array<keyof EditableFields>).forEach(
-      <K extends keyof EditableFields>(key: K) => {
-        const initialValue = initialEditProfileState[key]
-        const currentValue = profileState[key]
-
-        if (
-          (currentValue || initialValue) &&
-          JSON.stringify(initialValue) !== JSON.stringify(currentValue)
-        ) {
-          changes[key] = currentValue || null
-        }
-      }
-    )
-    return changes as Partial<EditProfileState>
+    return getChangedFields(
+      initialEditProfileState,
+      profileState
+    ) as Partial<EditProfileState>
   }, [profileState, initialEditProfileState])
-
   const isChanged = useMemo<boolean>(
     () => Object.keys(changedFields).length > 0,
     [changedFields]
