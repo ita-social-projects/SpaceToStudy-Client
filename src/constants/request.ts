@@ -122,7 +122,7 @@ export const URLs = {
     patch: '/finished-quizzes/:id',
     get: '/finished-quizzes',
     getById: '/finished-quizzes/:id',
-    getByQuizId: '/finished-quizzes/by-quiz-id/:cooperationId/:quizId'
+    getByQuizId: '/finished-quizzes/:cooperationId/:quizId'
   },
   attachments: {
     post: '/attachments'

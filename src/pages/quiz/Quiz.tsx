@@ -1,4 +1,3 @@
-import { useState, useCallback } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -6,18 +5,10 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import styles from '~/pages/quiz/Quiz.styles'
 
 import { UserRoleEnum } from '~/types'
-import { ActiveQuiz, FinishedQuiz, TutorQuiz } from '~/pages/quiz/QuizVariants'
+import { ActiveQuiz, TutorQuiz } from '~/pages/quiz/QuizVariants'
 
 const QuizPage: React.FC = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
-
-  const [isFinished, setIsFinished] = useState(false)
-  const [finishedQuizId, setFinishedQuizId] = useState('')
-
-  const finishQuiz = useCallback((finishedQuizId: string) => {
-    setFinishedQuizId(finishedQuizId)
-    setIsFinished(true)
-  }, [])
 
   const getQuizVariant = () => {
     if (userRole === UserRoleEnum.Tutor) {
@@ -25,11 +16,7 @@ const QuizPage: React.FC = () => {
     }
 
     if (userRole === UserRoleEnum.Student) {
-      if (isFinished) {
-        return <FinishedQuiz finishedQuizId={finishedQuizId} />
-      }
-
-      return <ActiveQuiz finishQuiz={finishQuiz} />
+      return <ActiveQuiz />
     }
   }
 

@@ -28,5 +28,6 @@
   "category": "Category",
   "subject": "Subject",
   "level": "Level",
-  "bookmarks": "Bookmarks"
+  "bookmarks": "Bookmarks",
+  "quizAttemptsReview": "Review"
 }

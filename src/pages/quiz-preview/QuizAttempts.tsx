@@ -76,6 +76,15 @@ const QuizAttemptsPage: React.FC = () => {
     setIsOpen(false)
   }
 
+  const handleReviewAttempt = (attemptId: string) => {
+    navigate(
+      getFullUrl({
+        pathname: authRoutes.cooperationQuizReview.route,
+        parameters: { id: cooperationId, quizId, attemptId }
+      })
+    )
+  }
+
   const attemptsList =
     finishedQuizzes.length !== 0 ? (
       finishedQuizzes.map((item) => {
@@ -86,7 +95,12 @@ const QuizAttemptsPage: React.FC = () => {
               secondColumn={formatTime(item.updatedAt)}
               title={t('quiz.attemptFinished')}
             />
-            <Button variant='tonal'>{t('quiz.reviewAttempt')}</Button>
+            <Button
+              onClick={() => handleReviewAttempt(item._id)}
+              variant='tonal'
+            >
+              {t('quiz.reviewAttempt')}
+            </Button>
           </Box>
         )
       })

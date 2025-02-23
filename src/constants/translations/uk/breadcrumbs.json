@@ -28,5 +28,6 @@
   "category": "Категорія",
   "subject": "Предмет",
   "level": "Рівень",
-  "bookmarks": "Закладки"
+  "bookmarks": "Закладки",
+  "quizAttemptsReview": "Огляд"
 }
