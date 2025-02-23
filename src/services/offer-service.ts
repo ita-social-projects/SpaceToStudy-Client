@@ -56,7 +56,13 @@ export const OfferService = {
     id: string,
     updateData?: Partial<CreateOrUpdateOfferData>
   ): Promise<AxiosResponse> =>
-    await axiosClient.patch(createUrlPath(URLs.offers.update, id), updateData),
+    await axiosClient.patch(
+      getFullUrl({
+        pathname: URLs.offers.update,
+        parameters: { id }
+      }),
+      updateData
+    ),
 
   updateOfferWithBaseService: (
     id: string,
