@@ -201,7 +201,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     if (time === '00:00:00' && timeLimit !== QuizTimeLimit.NoLimit) {
       handleFinish()
     }
-  }, [handleFinish, time, timeLimit])
+  }, [time, timeLimit, handleFinish])
 
   if (isLoading || !quiz) {
     return <Loader pageLoad />
