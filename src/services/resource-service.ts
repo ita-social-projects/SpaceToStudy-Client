@@ -20,7 +20,8 @@ import {
   CreateCategoriesParams,
   UpdateQuestionParams,
   CreateQuizParams,
-  CreateFinishedQuizParams,
+  type CreateFinishedQuizParams,
+  type UpdateFinishedQuizParams,
   Quiz,
   UpdateQuizParams,
   ApiMethodEnum,
@@ -121,6 +122,16 @@ export const ResourceService = {
     return baseService.request<FinishedQuiz>({
       method: 'POST',
       url: URLs.finishedQuizzes.add,
+      data
+    })
+  },
+  editFinishedQuiz: async (id: string, data: UpdateFinishedQuizParams) => {
+    return baseService.request<void>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.finishedQuizzes.patch,
+        parameters: { id }
+      }),
       data
     })
   },

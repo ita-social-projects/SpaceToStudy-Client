@@ -29,6 +29,7 @@ interface SelectableQuestionQuizViewProps {
   shouldShowPoints?: boolean
   shouldShowAnswersCorrectness?: boolean
   sx?: { root?: SxProps; question?: SxProps }
+  onNextButtonClick?: () => void
 }
 
 const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
@@ -41,6 +42,7 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
   shouldShowAnswersCorrectness = false,
   isEditable = false,
   sx,
+  onNextButtonClick,
   ...props
 }) => {
   const { t } = useTranslation()
@@ -79,7 +81,10 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
 
   const question = questions[selectedIndex]
 
-  const onNext = () => !isLastQuestion && setSelectedIndex(selectedIndex + 1)
+  const onNext = () => {
+    onNextButtonClick?.()
+    !isLastQuestion && setSelectedIndex(selectedIndex + 1)
+  }
 
   const onBack = () => !isFirstQuestion && setSelectedIndex(selectedIndex - 1)
 

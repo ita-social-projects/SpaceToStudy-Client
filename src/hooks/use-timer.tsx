@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 
+import { ONE_MINUTE } from '~/constants'
 import { formatDuration } from '~/utils/helper-functions'
 
 const useTimer = (initialTime: number) => {
   const [time, setTime] = useState(() => (initialTime <= 0 ? 0 : initialTime))
+
+  const isTimeEnds = time <= ONE_MINUTE
 
   useEffect(() => {
     if (time <= 0) {
@@ -11,7 +14,7 @@ const useTimer = (initialTime: number) => {
     }
 
     const intervalId = setInterval(() => {
-      setTime((prevTime) => Math.max(0, prevTime - 1000))
+      setTime((previousTime) => Math.max(0, previousTime - 1000))
     }, 1000)
 
     return () => {
@@ -19,7 +22,10 @@ const useTimer = (initialTime: number) => {
     }
   }, [time])
 
-  return formatDuration(time)
+  return {
+    time: formatDuration(time),
+    isTimeEnds
+  }
 }
 
 export default useTimer

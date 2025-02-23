@@ -20,7 +20,7 @@ const styles = {
     fontWeight: 500,
     fontSize: '18px',
     lineHeight: '24px',
-    width: '80px'
+    width: '84px'
   },
   successLabel: {
     color: 'var(--s2s-green-800)'

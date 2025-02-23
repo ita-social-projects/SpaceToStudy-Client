@@ -1,4 +1,4 @@
-import { type CommonEntityFields } from '~/types'
+import type { CommonEntityFields } from '~/types'
 
 type Answer = {
   text: string
@@ -14,6 +14,11 @@ export type Result = {
 export type CreateFinishedQuizParams = {
   quiz: string
   cooperation: string
+  grade: number
+  results: Result[]
+}
+
+export type UpdateFinishedQuizParams = {
   grade: number
   results: Result[]
 }

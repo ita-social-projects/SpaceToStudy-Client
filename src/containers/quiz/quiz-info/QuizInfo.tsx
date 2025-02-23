@@ -25,6 +25,7 @@ import { TFunction } from 'i18next'
 type ActiveQuizInfoProps = {
   questionsAnswered: number
   totalPoints: number
+  isTimeLimit?: boolean
   time: string
   isTimeEnds: boolean
 }
@@ -32,6 +33,7 @@ type ActiveQuizInfoProps = {
 const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
   questionsAnswered,
   totalPoints,
+  isTimeLimit = false,
   time,
   isTimeEnds
 }) => {
@@ -44,13 +46,17 @@ const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
         gap: '24px'
       }}
     >
-      <Timer isTimeEnds={isTimeEnds} label={time} />
-      <Divider
-        flexItem
-        orientation='vertical'
-        sx={styles.smallDivider}
-        variant='middle'
-      />
+      {isTimeLimit && (
+        <>
+          <Timer isTimeEnds={isTimeEnds} label={time} />
+          <Divider
+            flexItem
+            orientation='vertical'
+            sx={styles.smallDivider}
+            variant='middle'
+          />
+        </>
+      )}
       <Box sx={styles.questionsAnsweredWrapper}>
         <Typography sx={styles.subtitle1}>
           {t('quiz.questionsAnswered')}:
@@ -152,12 +158,12 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const [totalAttempts] = attempts.split(' ')
+  const [totalAttempts] = (attempts ?? '').split(' ')
 
   const limits = {
     isNoLimitAttempt: attempts === QuizAttempt.NoLimit,
     isNoLimitTime: timeLimit === QuizTimeLimit.NoLimit,
-    maxAttempts: Number(totalAttempts) || 0
+    maxAttempts: Number(totalAttempts) || Number.MAX_SAFE_INTEGER
   }
 
   const hasAttempts =

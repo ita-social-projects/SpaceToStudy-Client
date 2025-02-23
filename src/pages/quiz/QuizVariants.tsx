@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -45,6 +45,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
   const { t } = useTranslation()
 
   const [isOpen, setIsOpen] = useState(false)
+  const [finishedQuizId, setFinishedQuizId] = useState('')
 
   const { handleInputChange, handleNonInputValueChange, data } = useForm<
     Record<string, string | string[]>
@@ -58,16 +59,8 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
 
   const { quiz, isLoading } = useQuizQuery(quizId)
 
-  const time = useTimer(
-    getTime(quiz?.settings.timeLimit ?? QuizTimeLimit.NoLimit)
-  )
-
-  const openModal = useCallback(() => {
-    setIsOpen(true)
-  }, [])
-
   const {
-    settings: { scoredResponses, view },
+    settings: { scoredResponses, view, timeLimit },
     description,
     title,
     items,
@@ -75,25 +68,10 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     updatedAt
   } = quiz ?? defaultQuizResponse
 
-  const isStepper = view === QuizViewEnum.Stepper
+  const isTimeLimit = timeLimit !== QuizTimeLimit.NoLimit
 
-  const questionsBlock = isStepper ? (
-    <SelectableQuestionQuizView
-      answers={data}
-      handleInputChange={handleInputChange}
-      handleNonInputValueChange={handleNonInputChange}
-      isEditable
-      questions={items}
-      sx={styles.selectableQuestionQuizWrapper}
-    />
-  ) : (
-    <ScrollQuestionsQuizView
-      answers={data}
-      handleInputChange={handleInputChange}
-      handleNonInputValueChange={handleNonInputChange}
-      isEditable
-      questions={items}
-    />
+  const { time, isTimeEnds } = useTimer(
+    getTime(timeLimit ?? QuizTimeLimit.NoLimit)
   )
 
   const points = countPoints(
@@ -101,11 +79,47 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     data
   )
 
+  const openModal = useCallback(() => {
+    setIsOpen(true)
+  }, [])
+
+  const grade = Math.round((points / items.length) * 100)
+
+  const mappedResults = useMemo(() => {
+    return items.map(({ text, answers, _id }) => {
+      return {
+        question: text,
+        answers: answers.map(({ text, isCorrect }) => {
+          return {
+            text,
+            isCorrect,
+            isChosen: data[_id]?.includes(text) ?? false
+          }
+        })
+      }
+    })
+  }, [data, items])
+
   const addFinishedQuiz = useCallback(() => {
     return ResourceService.addFinishedQuiz({
       cooperation: cooperationId,
       quiz: quizId,
-      grade: Math.round((points / items.length) * 100),
+      grade,
+      results: mappedResults
+    })
+  }, [cooperationId, grade, mappedResults, quizId])
+
+  const { handleErrorAlert } = useSnackbarAlert()
+
+  const { mutateAsync: createFinishedQuiz } = useMutation({
+    mutationFn: addFinishedQuiz,
+    queryKey: ['finished-quizzes'],
+    onError: handleErrorAlert
+  })
+
+  const editFinishedQuiz = useCallback(() => {
+    return ResourceService.editFinishedQuiz(finishedQuizId, {
+      grade,
       results: items.map(({ text, answers, _id }) => {
         return {
           question: text,
@@ -119,30 +133,75 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
         }
       })
     })
-  }, [data, cooperationId, items, points, quizId])
+  }, [data, finishedQuizId, grade, items])
 
-  const { handleErrorAlert } = useSnackbarAlert()
-
-  const { mutateAsync } = useMutation({
-    mutationFn: addFinishedQuiz,
+  const { mutate: updateFinishedQuiz } = useMutation({
+    mutationFn: editFinishedQuiz,
     queryKey: ['finished-quizzes'],
     onError: handleErrorAlert
   })
+
+  const handleNextButtonClick = useCallback(() => {
+    updateFinishedQuiz()
+  }, [updateFinishedQuiz])
+
+  const isStepper = view === QuizViewEnum.Stepper
+
+  const questionsBlock = isStepper ? (
+    <SelectableQuestionQuizView
+      answers={data}
+      handleInputChange={handleInputChange}
+      handleNonInputValueChange={handleNonInputChange}
+      isEditable
+      onNextButtonClick={handleNextButtonClick}
+      questions={items}
+      sx={styles.selectableQuestionQuizWrapper}
+    />
+  ) : (
+    <ScrollQuestionsQuizView
+      answers={data}
+      handleInputChange={handleInputChange}
+      handleNonInputValueChange={handleNonInputChange}
+      isEditable
+      questions={items}
+    />
+  )
 
   const handleCancel = useCallback(() => {
     setIsOpen(false)
   }, [])
 
-  const handleFinish = useCallback(async () => {
-    const finishedQuiz = await mutateAsync()
+  const handleFinish = useCallback(() => {
+    updateFinishedQuiz()
     setIsOpen(false)
-    finishQuiz(finishedQuiz?._id)
+    finishQuiz(finishedQuizId)
     if (!scoredResponses) {
       navigate(-1)
     }
-  }, [finishQuiz, mutateAsync, navigate, scoredResponses])
+  }, [
+    finishedQuizId,
+    scoredResponses,
+    updateFinishedQuiz,
+    finishQuiz,
+    navigate
+  ])
 
   const questionsAnswered = Object.keys(data).length
+
+  useEffect(() => {
+    const postFinishedQuiz = async () => {
+      const finishedQuiz = await createFinishedQuiz()
+      setFinishedQuizId(finishedQuiz?._id)
+    }
+
+    void postFinishedQuiz()
+  }, [createFinishedQuiz])
+
+  useEffect(() => {
+    if (time === '00:00:00' && timeLimit !== QuizTimeLimit.NoLimit) {
+      handleFinish()
+    }
+  }, [handleFinish, time, timeLimit])
 
   if (isLoading || !quiz) {
     return <Loader pageLoad />
@@ -154,7 +213,8 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
         <QuizHeader
           createdAt={createdAt}
           description={description}
-          isTimeEnds={false}
+          isTimeEnds={isTimeEnds}
+          isTimeLimit={isTimeLimit}
           points={points}
           questionsAnswered={questionsAnswered}
           time={time}
@@ -173,7 +233,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
       </Box>
       <FinishQuizModal
         onCancel={handleCancel}
-        onFinish={() => void handleFinish()}
+        onFinish={handleFinish}
         open={isOpen}
       />
     </PageWrapper>

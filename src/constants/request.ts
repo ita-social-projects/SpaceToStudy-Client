@@ -118,6 +118,7 @@ export const URLs = {
   },
   finishedQuizzes: {
     add: '/finished-quizzes',
+    patch: '/finished-quizzes/:id',
     get: '/finished-quizzes',
     getById: '/finished-quizzes/:id',
     getByQuizId: '/finished-quizzes/by-quiz-id/:cooperationId/:quizId'
