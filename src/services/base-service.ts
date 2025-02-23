@@ -31,8 +31,6 @@ export const baseService = {
       return response.data
     } catch (error) {
       if (isAxiosError(error) && error.response) {
-        console.log(error)
-
         const serverError = error.response.data as ErrorResponse
 
         throw new ResponseError(serverError)

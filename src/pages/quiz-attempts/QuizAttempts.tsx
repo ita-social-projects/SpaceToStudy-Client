@@ -59,8 +59,6 @@ const QuizAttemptsPage: React.FC = () => {
     }
   })
 
-  console.log(finishedQuizzes)
-
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
