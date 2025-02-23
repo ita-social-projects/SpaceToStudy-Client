@@ -141,10 +141,6 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     onError: handleErrorAlert
   })
 
-  const handleNextButtonClick = useCallback(() => {
-    updateFinishedQuiz()
-  }, [updateFinishedQuiz])
-
   const isStepper = view === QuizViewEnum.Stepper
 
   const questionsBlock = isStepper ? (
@@ -153,7 +149,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       isEditable
-      onNextButtonClick={handleNextButtonClick}
+      onNextButtonClick={updateFinishedQuiz}
       questions={items}
       sx={styles.selectableQuestionQuizWrapper}
     />
@@ -195,6 +191,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     }
 
     void postFinishedQuiz()
+    console.log('postFinishedQuiz')
   }, [createFinishedQuiz])
 
   useEffect(() => {
@@ -206,6 +203,8 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
+
+  console.log('quiz', quiz)
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
