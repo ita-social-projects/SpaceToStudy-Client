@@ -19,7 +19,7 @@ export function getChangedFields<T>(
       (currentValue !== undefined || initialValue !== undefined) &&
       JSON.stringify(initialValue) !== JSON.stringify(currentValue)
     ) {
-      changes[typedKey] = currentValue ?? null
+      changes[typedKey] = currentValue || null
     }
   })
 
