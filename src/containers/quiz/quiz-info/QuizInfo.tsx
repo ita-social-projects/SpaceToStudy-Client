@@ -158,12 +158,12 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const [totalAttempts] = (attempts ?? '').split(' ')
+  const [totalAttempts] = attempts.split(' ')
 
   const limits = {
     isNoLimitAttempt: attempts === QuizAttempt.NoLimit,
     isNoLimitTime: timeLimit === QuizTimeLimit.NoLimit,
-    maxAttempts: Number(totalAttempts) || Number.MAX_SAFE_INTEGER
+    maxAttempts: Number(totalAttempts) || 0
   }
 
   const hasAttempts =
