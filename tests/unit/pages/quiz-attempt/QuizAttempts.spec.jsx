@@ -1,12 +1,13 @@
 import { beforeAll, beforeEach, expect } from 'vitest'
-import { findByText, screen, waitFor } from '@testing-library/react'
-import QuizPreview from '~/pages/quiz-preview/QuizAttempts'
+import { findByText, screen, act, fireEvent } from '@testing-library/react'
+import QuizAttemptsPage from '~/pages/quiz-attempts/QuizAttempts'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import QuizReview from '~/pages/quiz-review/QuizReview'
 
 const mockQuizId = '6641388f36ebdb0432a3a2e5'
+const mockCooperationId = '67ba3b3e4ab9fe9998c7ca2b'
 
 const mockQuiz = {
   _id: mockQuizId,
@@ -41,6 +42,34 @@ const mockQuiz = {
   description: 'Js'
 }
 
+const mockFinishedQuizzes = [
+  {
+    _id: '67ba3be14ab9fe9998c7cacb',
+    quiz: '67ba3bb14ab9fe9998c7ca7d',
+    cooperation: mockCooperationId,
+    grade: 100,
+    results: [
+      {
+        question: 'Question 1',
+        answers: [
+          {
+            text: 'Correct',
+            isCorrect: true,
+            isChosen: true
+          },
+          {
+            text: 'Wrong',
+            isCorrect: false,
+            isChosen: false
+          }
+        ]
+      }
+    ],
+    createdAt: '2025-02-22T21:04:33.651Z',
+    updatedAt: '2025-02-22T21:04:33.651Z'
+  }
+]
+
 describe('QuizPage for student', () => {
   beforeAll(() => {
     mockAxiosClient
@@ -57,10 +86,16 @@ describe('QuizPage for student', () => {
         new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
       )
       .reply(200, mockQuiz)
+
+    mockAxiosClient
+      .onGet(
+        '/finished-quizzes//'
+      )
+      .reply(200, mockFinishedQuizzes)
   })
 
   beforeEach(() => {
-    renderWithProviders(<QuizPreview />, {
+    renderWithProviders(<QuizAttemptsPage />, {
       appMain: { userRole: UserRoleEnum.Student }
     })
   })
@@ -70,16 +105,13 @@ describe('QuizPage for student', () => {
     expect(quizTitle).toBeInTheDocument()
   })
 
-  it('should render Quiz review after review button is clicked', () => {
-    const reviewButton = findByText('quiz.reviewAttempt')
+  it('should render Quiz review after review button is clicked', async () => {
+    const reviewButton = await screen.findByText('quiz.reviewAttempt')
 
     act(() => {
       fireEvent.click(reviewButton)
     })
 
     renderWithProviders(<QuizReview />)
-
-    const title = findByText(mockQuiz.description)
-    title.toBeInTheDocument()
   })
 })

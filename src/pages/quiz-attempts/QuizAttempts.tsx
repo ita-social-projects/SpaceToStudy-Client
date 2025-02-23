@@ -19,7 +19,7 @@ import { getFullUrl } from '~/utils/get-full-url'
 import useQuery from '~/hooks/use-query'
 
 import { ResourceService } from '~/services/resource-service'
-import styles from '~/pages/quiz-preview/QuizAttempts.styles'
+import styles from '~/pages/quiz-attempts/QuizAttempts.styles'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
 import { formatTime, getFormattedDate } from '~/utils/helper-functions'
@@ -58,6 +58,8 @@ const QuizAttemptsPage: React.FC = () => {
       staleTime: ONE_HOUR
     }
   })
+
+  console.log(finishedQuizzes)
 
   if (isLoading || !quiz) {
     return <Loader pageLoad />

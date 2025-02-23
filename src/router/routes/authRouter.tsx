@@ -63,7 +63,7 @@ const CreateOrEditQuestion = lazy(
 )
 const CreateCourse = lazy(() => import('~/pages/create-course/CreateCourse'))
 const Quiz = lazy(() => import('~/pages/quiz/Quiz'))
-const QuizAttempts = lazy(() => import('~/pages/quiz-preview/QuizAttempts'))
+const QuizAttempts = lazy(() => import('~/pages/quiz-attempts/QuizAttempts'))
 const QuizAttemptsReview = lazy(() => import('~/pages/quiz-review/QuizReview'))
 
 export const authRouter = (
