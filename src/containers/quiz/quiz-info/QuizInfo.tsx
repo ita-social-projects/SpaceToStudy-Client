@@ -26,16 +26,16 @@ type ActiveQuizInfoProps = {
   questionsAnswered: number
   totalPoints: number
   isTimeLimit?: boolean
-  time: string
-  isTimeEnds: boolean
+  initialTime: number
+  onTimeEnd?: () => void
 }
 
 const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
   questionsAnswered,
   totalPoints,
   isTimeLimit = false,
-  time,
-  isTimeEnds
+  initialTime,
+  onTimeEnd
 }) => {
   const { t } = useTranslation()
 
@@ -48,7 +48,7 @@ const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
     >
       {isTimeLimit && (
         <>
-          <Timer isTimeEnds={isTimeEnds} label={time} />
+          <Timer initialTime={initialTime} onTimeEnd={onTimeEnd} />
           <Divider
             flexItem
             orientation='vertical'

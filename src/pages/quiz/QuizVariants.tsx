@@ -18,7 +18,6 @@ import useMutation from '~/hooks/use-mutation'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import useForm from '~/hooks/use-form'
 import useQuizQuery from '~/hooks/query/use-quiz-query'
-import useTimer from '~/hooks/use-timer'
 
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
@@ -70,9 +69,9 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
 
   const isTimeLimit = timeLimit !== QuizTimeLimit.NoLimit
 
-  const { time, isTimeEnds } = useTimer(
-    getTime(timeLimit ?? QuizTimeLimit.NoLimit)
-  )
+  const initialTime = useMemo(() => {
+    return getTime(timeLimit ?? QuizTimeLimit.NoLimit)
+  }, [timeLimit])
 
   const points = countPoints(
     items.filter(({ type }) => type !== QuestionTypesEnum.OpenAnswer),
@@ -191,20 +190,11 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     }
 
     void postFinishedQuiz()
-    console.log('postFinishedQuiz')
   }, [createFinishedQuiz])
-
-  useEffect(() => {
-    if (time === '00:00:00' && timeLimit !== QuizTimeLimit.NoLimit) {
-      handleFinish()
-    }
-  }, [time, timeLimit, handleFinish])
 
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
-
-  console.log('quiz', quiz)
 
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
@@ -212,11 +202,11 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
         <QuizHeader
           createdAt={createdAt}
           description={description}
-          isTimeEnds={isTimeEnds}
+          initialTime={initialTime}
           isTimeLimit={isTimeLimit}
+          onTimeEnd={handleFinish}
           points={points}
           questionsAnswered={questionsAnswered}
-          time={time}
           title={title}
           totalPoints={items.length}
           type='active'
