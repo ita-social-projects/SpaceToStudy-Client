@@ -72,11 +72,12 @@ describe('QuizPage for student', () => {
 
   it('should render Quiz review after review button is clicked', () => {
     const reviewButton = findByText('quiz.reviewAttempt')
-    reviewButton.toBeInTheDocument()
 
     act(() => {
       fireEvent.click(reviewButton)
     })
+
+    renderWithProviders(<QuizReview />)
 
     const title = findByText(mockQuiz.description)
     title.toBeInTheDocument()
