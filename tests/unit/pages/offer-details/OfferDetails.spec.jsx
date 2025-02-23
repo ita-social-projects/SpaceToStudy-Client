@@ -51,26 +51,30 @@ const desktopData = {
   isTablet: false
 }
 
-const mockState = {
+const mockStateTutor = {
   appMain: { userId: mockOffer.author._id, userRole: 'tutor' }
 }
 
+const mockStateStudent = {
+  appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
+}
+
+useBreakpoints.mockImplementation(() => desktopData)
+
+mockAxiosClient
+  .onGet(URLs.offers.getById.replace(':id', mockOffer._id))
+  .reply(200, mockOffer)
+
+mockAxiosClient
+  .onPatch(URLs.offers.update.replace(':id', mockOffer._id))
+  .reply(204, null)
+
+mockAxiosClient.onGet(URLs.offers.get).reply(200, { offers: [], count: 0 })
+
 describe('OfferDetails on desktop', () => {
   beforeEach(() => {
-    useBreakpoints.mockImplementation(() => desktopData)
-    
-    mockAxiosClient
-      .onGet(`${URLs.offers.getById}/${mockOffer._id}`)
-      .reply(200, mockOffer)
-    mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-      .reply(200, { offers: [], count: 0 })
-    
     renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
+      preloadedState: mockStateTutor
     })
   })
 
@@ -91,22 +95,15 @@ describe('OfferDetails on desktop', () => {
 
   it('should change toggle button to active/draft', async () => {
     mockAxiosClient
-      .onGet(`${URLs.offers.getById}/${mockOffer._id}`)
+      .onGet(URLs.offers.getById.replace(':id', mockOffer._id))
       .reply(200, { ...mockOffer, status: 'draft' })
 
     const draft = await screen.findByText('common.labels.moveToDraft')
 
-    mockAxiosClient
-      .onGet(`${URLs.offers.getById}/${mockOffer._id}`)
-      .reply(200, { ...mockOffer, status: 'active' })
-
     fireEvent.click(draft)
 
-
-    await waitFor(() => {
-      const active = screen.getByText('common.labels.makeActive')
-      expect(active).toBeInTheDocument()
-    })
+    const active = await screen.findByText('common.labels.makeActive')
+    expect(active).toBeInTheDocument()
   })
 
   it('should open modal window on close offer', async () => {
@@ -130,23 +127,11 @@ describe('OfferDetails on desktop', () => {
 
 describe('Offer details with student role', () => {
   beforeEach(() => {
-    useBreakpoints.mockImplementation(() => desktopData)
-
     renderWithProviders(<OfferDetails />, {
       preloadedState: {
-        appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
+        appMain: mockStateStudent
       }
     })
-
-    mockAxiosClient
-      .onGet(`${URLs.offers.getById}/${mockOffer._id}`)
-      .reply(200, mockOffer)
-    mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-      .reply(200, { offers: [], count: 0 })
   })
 
   it('should open modal window with enroll offer', async () => {
@@ -247,7 +232,7 @@ describe('OfferDetails on mobile', () => {
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => mobileData)
     renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
+      preloadedState: mockStateTutor
     })
   })
 
@@ -270,7 +255,7 @@ describe('Offer details with student role', () => {
   beforeEach(() => {
     renderWithProviders(<OfferDetails />, {
       preloadedState: {
-        appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
+        appMain: mockStateStudent
       }
     })
   })
