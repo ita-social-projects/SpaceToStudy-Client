@@ -3,8 +3,8 @@ type Nullable<T> = {
 }
 
 export function getChangedFields<T>(
-  initialState: Readonly<Partial<T>> | null,
-  currentState: Readonly<Partial<T>> | null
+  initialState: Partial<T> | null,
+  currentState: Partial<T> | null
 ): Partial<Nullable<T>> {
   if (!initialState || !currentState) return {}
 
