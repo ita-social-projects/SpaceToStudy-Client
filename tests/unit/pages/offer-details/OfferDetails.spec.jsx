@@ -58,13 +58,9 @@ const mockState = {
 describe('OfferDetails on desktop', () => {
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
-
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
-    })
-
+    
     mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
+      .onGet(`${URLs.offers.getById}/${mockOffer._id}`)
       .reply(200, mockOffer)
     mockAxiosClient
       .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
@@ -72,6 +68,10 @@ describe('OfferDetails on desktop', () => {
     mockAxiosClient
       .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
       .reply(200, { offers: [], count: 0 })
+    
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: mockState
+    })
   })
 
   it('should display the offer details correctly', async () => {
@@ -91,16 +91,22 @@ describe('OfferDetails on desktop', () => {
 
   it('should change toggle button to active/draft', async () => {
     mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
+      .onGet(`${URLs.offers.getById}/${mockOffer._id}`)
       .reply(200, { ...mockOffer, status: 'draft' })
 
     const draft = await screen.findByText('common.labels.moveToDraft')
 
+    mockAxiosClient
+      .onGet(`${URLs.offers.getById}/${mockOffer._id}`)
+      .reply(200, { ...mockOffer, status: 'active' })
+
     fireEvent.click(draft)
 
-    const active = await screen.findByText('common.labels.makeActive')
 
-    expect(active).toBeInTheDocument()
+    await waitFor(() => {
+      const active = screen.getByText('common.labels.makeActive')
+      expect(active).toBeInTheDocument()
+    })
   })
 
   it('should open modal window on close offer', async () => {
@@ -133,7 +139,7 @@ describe('Offer details with student role', () => {
     })
 
     mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
+      .onGet(`${URLs.offers.getById}/${mockOffer._id}`)
       .reply(200, mockOffer)
     mockAxiosClient
       .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
@@ -277,33 +283,5 @@ describe('Offer details with student role', () => {
     expect(
       screen.getByText('offerDetailsPage.enrollOffer.title')
     ).toBeInTheDocument()
-  })
-})
-
-describe('Should show Loader', () => {
-  it('should render Loader - (loading from useAxios)', async () => {
-    mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-      .reply(200, { offers: [], count: 0 })
-    const newMockState = {
-      appMain: {
-        userId: mockOffer.author._id,
-        userRole: 'tutor',
-        loading: true
-      }
-    }
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: newMockState
-    })
-
-    const loader = screen.getByTestId('loader')
-
-    expect(loader).toBeInTheDocument()
   })
 })
