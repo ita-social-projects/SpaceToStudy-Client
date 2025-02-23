@@ -195,7 +195,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
   if (isLoading || !quiz) {
     return <Loader pageLoad />
   }
-
+  console.log('It renders')
   return (
     <PageWrapper sx={styles.quizzesWrapper}>
       <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>

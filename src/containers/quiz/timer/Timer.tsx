@@ -2,6 +2,7 @@ import Chip from '@mui/material/Chip/Chip'
 import TimerOutlined from '@mui/icons-material/TimerOutlined'
 
 import useTimer from '~/hooks/use-timer'
+
 import styles from '~/containers/quiz/timer/Timer.styles'
 
 type TimerProps = {
