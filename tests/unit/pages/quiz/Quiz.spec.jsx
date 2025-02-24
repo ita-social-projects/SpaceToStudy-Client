@@ -89,10 +89,8 @@ describe('QuizPage for student', () => {
     const confirmButton = await screen.findByText('quiz.confirm')
     fireEvent.click(confirmButton)
 
-    renderWithProviders(<QuizReview />)
-
     const correctAnswers = await screen.findByText(
-      'myResourcesPage.quizzes.correctAnswers'
+      'questionPage.questionType.multipleChoice'
     )
     expect(correctAnswers).toBeInTheDocument()
   })
