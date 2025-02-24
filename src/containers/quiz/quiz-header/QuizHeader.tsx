@@ -19,7 +19,6 @@ type QuizHeaderProps = {
   updatedAt: string
   isTimeLimit?: boolean
   initialTime?: number
-  isTimeEnds?: boolean
   onTimeEnd?: () => void
   type: 'active' | 'finished' | 'tutor'
 }
