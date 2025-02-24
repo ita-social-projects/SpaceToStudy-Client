@@ -6,7 +6,7 @@ export const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    rowGap: '20px',
+    rowGap: '16px',
     padding: '24px',
     borderTop: `4px solid ${palette.basic.mediumRed}`,
     borderRadius: '5px',
