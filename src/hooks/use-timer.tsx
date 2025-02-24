@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { ONE_MINUTE } from '~/constants'
+import { ONE_SECOND, ONE_MINUTE } from '~/constants'
 import { formatDuration } from '~/utils/helper-functions'
 
 const useTimer = (initialTime: number, onTimeEnd?: () => void) => {
@@ -15,14 +15,14 @@ const useTimer = (initialTime: number, onTimeEnd?: () => void) => {
 
     const intervalId = setInterval(() => {
       setTime((previousTime) => {
-        if (previousTime === 1000) {
+        if (previousTime === ONE_SECOND) {
           onTimeEnd?.()
           return 0
         }
 
-        return previousTime - 1000
+        return previousTime - ONE_SECOND
       })
-    }, 1000)
+    }, ONE_SECOND)
 
     return () => {
       clearInterval(intervalId)
