@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
@@ -35,6 +36,7 @@ const LessonsContainer = () => {
   const breakpoints = useBreakpoints()
   const [selectedItems, setSelectedItems] = useState<string[]>([])
   const { handleErrorAlert } = useSnackbarAlert()
+  const queryClient = useQueryClient()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -62,8 +64,7 @@ const LessonsContainer = () => {
   const {
     data: lessons,
     isLoading,
-    error,
-    refetch: fetchLessons
+    error
   } = useQuery({
     queryKey: [
       'lessons',
@@ -75,7 +76,7 @@ const LessonsContainer = () => {
     ],
     queryFn: getMyLessons,
     options: {
-      staleTime: 0
+      staleTime: Infinity
     }
   })
 
@@ -102,9 +103,9 @@ const LessonsContainer = () => {
     })
   }
 
-  const handleFetchLessons = useCallback(async () => {
-    await fetchLessons()
-  }, [fetchLessons])
+  const handleInvalidateLessons = useCallback(async () => {
+    await queryClient.invalidateQueries({ queryKey: ['lessons'] })
+  }, [queryClient])
 
   useEffect(() => {
     if (error) {
@@ -116,7 +117,7 @@ const LessonsContainer = () => {
     columns: columnsToShow,
     data: {
       response: lessons ?? defaultResponses.itemsWithCount,
-      getData: handleFetchLessons
+      getData: handleInvalidateLessons
     },
     services: { deleteService: deleteLesson },
     itemsPerPage,
@@ -130,7 +131,7 @@ const LessonsContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText='myResourcesPage.lessons.addBtn'
-        fetchData={handleFetchLessons}
+        fetchData={handleInvalidateLessons}
         link={authRoutes.myResources.newLesson.path}
         placeholder='myResourcesPage.lessons.searchInput'
         searchRef={searchTitle}

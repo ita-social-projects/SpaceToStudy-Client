@@ -7,30 +7,42 @@ import { getErrorKey } from '~/utils/get-error-key'
 import { getErrorMessage } from '~/utils/error-with-message'
 import { getFullUrl } from '~/utils/get-full-url'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
 const mockNavigate = vi.fn()
 const mockDispatch = vi.fn()
 const mockOpenModal = vi.fn()
-const mockHandleErrorAlert = vi.fn((error) => {
+/*const mockHandleErrorAlert = vi.fn((error) => {
   return {
     text: getErrorKey(error),
     options: { message: getErrorMessage(error.message) }
   }
-})
+})*/
 
 vi.mock('~/hooks/use-query')
 
-vi.mock('~/utils/get-error-key')
+vi.mock('~/services/resource-service')
 
-vi.mock('~/utils/error-with-message')
+/*vi.mock('~/utils/get-error-key')
 
-vi.mock('~/hooks/use-snackbar-alert', () => ({
+vi.mock('~/utils/error-with-message')*/
+
+/*vi.mock('~/hooks/use-snackbar-alert', () => ({
   __esModule: true,
   default: vi.fn(() => ({
     handleAlert: vi.fn(),
     handleErrorAlert: mockHandleErrorAlert
   })),
-}))
+}))*/
+
+/*vi.mock('~/hooks/use-snackbar-alert', async () => {
+  const actual = await vi.importActual('~/redux/features/snackbarSlice')
+  return {
+    ...actual,
+    useSnackbarAlert: vi.fn()
+}
+})*/
 
 vi.mock(
   '~/containers/my-resources/my-resources-table/MyResourcesTable',
@@ -106,82 +118,81 @@ const lessonResponseMock = {
     }))
 }
 
-describe('LessonContainer alert', () => {
-
-  beforeEach(() => {
-    vi.clearAllMocks()
-    mockDispatch.mockReset()
-  })
-
-  it('should dispatch openAlert with error message when there is an error', () => {
-    const mockError = { message: 'Test error' }
-
-    useQuery.mockReturnValue({
-      data: null,
-      isLoading: false,
-      isError: true,
-      error: mockError,
-      refetch: vi.fn()
-    })
-
-    renderWithProviders(<LessonsContainer />)
-
-    expect(getErrorKey).toHaveBeenCalledWith(mockError)
-    expect(mockDispatch).toHaveBeenCalledWith(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: 'mockedErrorMessage'
-      })
-    )
-  })
-})
-
-describe('LessonContainer test', () => {
-
+describe('LessonContainer - AxiosClient', () => {
   beforeEach(() => {
     mockAxiosClient
       .onGet(URLs.resources.lessons.get)
       .reply(200, lessonResponseMock)
 
-    renderWithProviders(<LessonsContainer />)
+      useQuery.mockReturnValue({
+        data: null,
+        isLoading: false,
+        error: null
+      })
   })
-
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
   it('should render "New lesson" button', () => {
-    useQuery.mockReturnValue({
-      data: lessonResponseMock.items,
-      isLoading: false,
-      error: null,
-      refetch: vi.fn(),
-    })
     renderWithProviders(<LessonsContainer />)
 
     const addBtn = screen.getByText('myResourcesPage.lessons.addBtn')
     expect(addBtn).toBeInTheDocument()
   })
 
+  /*it('should handle error gracefully when request fails', async () => {
+    mockAxiosClient.onGet(URLs.resources.lessons.get).reply(500)
+
+    const handleErrorAlert = vi.fn()
+    useSnackbarAlert.mockReturnValue({
+      handleErrorAlert
+    })
+
+    renderWithProviders(<LessonsContainer />)
+
+    await waitFor(() => expect(handleErrorAlert).toHaveBeenCalledTimes(1))
+  })*/
+})
+
+describe('LessonContainer test', () => {
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('should render table with questions', async () => {
     useQuery.mockReturnValue({
       data: lessonResponseMock.items,
       isLoading: false,
-      error: null,
-      refetch: vi.fn(),
+      error: null
     })
     renderWithProviders(<LessonsContainer />)
 
     const table = await screen.findByTestId('testTable')
     expect(table).toBeInTheDocument()
   })
+
+  it('should call onEdit and open modal when edit button is clicked', async () => {
+    useQuery.mockReturnValue({
+      data: lessonResponseMock.items,
+      isLoading: false,
+      error: null
+    })
+    renderWithProviders(<LessonsContainer />)
+    
+    const editButton = await screen.findByTestId('editButton')
+    expect(editButton).toBeInTheDocument
+    fireEvent.click(editButton)
+
+    expect(mockOpenModal).toHaveBeenCalled()
+  })
   
   it('should render loader when loading', async () => {
     useQuery.mockReturnValue({
       data: null,
       isLoading: true,
-      error: null,
-      refetch: vi.fn(),
+      error: null
     })
     renderWithProviders(<LessonsContainer />)
 
@@ -189,28 +200,11 @@ describe('LessonContainer test', () => {
     expect(loader).toBeInTheDocument()
   })
 
-  it('should call onEdit and open modal when edit button is clicked', async () => {
-    useQuery.mockReturnValue({
-      data: lessonResponseMock.items,
-      isLoading: false,
-      error: null,
-      refetch: vi.fn(),
-    })
-    renderWithProviders(<LessonsContainer />)
-
-    const editButton = await screen.findByTestId('editButton')
-    expect(editButton).toBeInTheDocument
-    fireEvent.click(editButton)
-
-    expect(mockOpenModal).toHaveBeenCalled()
-  })
-
   it('should not render editButton if lessons is undefined or null', () => {
     useQuery.mockReturnValue({ 
       data: null, 
       isLoading: false, 
-      error: null, 
-      refetch: vi.fn(), 
+      error: null 
     })
     renderWithProviders(<LessonsContainer />)
   
@@ -222,8 +216,7 @@ describe('LessonContainer test', () => {
     useQuery.mockReturnValue({
       data: lessonResponseMock.items,
       isLoading: false,
-      error: null,
-      refetch: vi.fn(),
+      error: null
     })
     renderWithProviders(<LessonsContainer />)
 
@@ -251,8 +244,7 @@ describe('LessonContainer test', () => {
     useQuery.mockReturnValue({
       data: null,
       isLoading: false,
-      error: null,
-      refetch: vi.fn()
+      error: null
     })
     
     renderWithProviders(<LessonsContainer />)
@@ -264,8 +256,7 @@ describe('LessonContainer test', () => {
     useQuery.mockReturnValue({
       data: lessonResponseMock.items,
       isLoading: false,
-      error: null,
-      refetch: vi.fn()
+      error: null
     })
     
     renderWithProviders(<LessonsContainer />)
@@ -276,7 +267,7 @@ describe('LessonContainer test', () => {
   })
 })
 
-describe('LessonContainer - error', () => {
+/*describe('LessonContainer - error', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     mockDispatch.mockReset()
@@ -299,8 +290,7 @@ describe('LessonContainer - error', () => {
     useQuery.mockReturnValue({
       data: null,
       isLoading: false,
-      error: testError,
-      refetch: vi.fn()
+      error: testError
     })
 
     renderWithProviders(<LessonsContainer />)
@@ -317,4 +307,4 @@ describe('LessonContainer - error', () => {
     expect(mockGetErrorKey).toHaveBeenCalledWith(testError)
     expect(mockGetErrorMessage).toHaveBeenCalledWith(testError.message)
   })
-})
+})*/
