@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState, useEffect } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -17,9 +18,11 @@ import useQuery from '~/hooks/use-query'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { useAppDispatch } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import { useModalContext } from '~/context/modal-context'
-import { defaultResponses } from '~/constants'
+import { defaultResponses, snackbarVariants } from '~/constants'
 
 import {
   initialSort,
@@ -43,6 +46,8 @@ const CategoriesContainer = () => {
   const [selectedItemId, setSelectedItemId] = useState<string>('')
   const [updateResourceCategory] = useUpdateResourceCategoryMutation()
   const { handleErrorAlert } = useSnackbarAlert()
+  const queryClient = useQueryClient()
+  const dispatch = useAppDispatch()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -74,7 +79,7 @@ const CategoriesContainer = () => {
   })
 
   const updateInfo = useCallback(async () => {
-    await fetchData()
+    await queryClient.invalidateQueries({ queryKey: ['categories'] })
   }, [fetchData])
 
   useEffect(() => {
@@ -83,6 +88,25 @@ const CategoriesContainer = () => {
     }
   }, [handleErrorAlert, error])
 
+  const onResponse = useCallback(
+    (response: Categories | null) => {
+      const categoryName = response ? response.name : ''
+
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: {
+            text: 'myResourcesPage.categories.successCreation',
+            options: {
+              category: categoryName
+            }
+          }
+        })
+      )
+    },
+    [dispatch]
+  )
+
   const { data: allCategoriesNames = [], refetch: fetchAllCategoriesNames } =
     useQuery({
       queryKey: ['categoriesNames'],
@@ -90,12 +114,13 @@ const CategoriesContainer = () => {
     })
 
   const onCategoryUpdate = useCallback(async () => {
-    await Promise.all([fetchData(), fetchAllCategoriesNames()])
+    await queryClient.invalidateQueries({ queryKey: ['categories'] })
   }, [fetchData, fetchAllCategoriesNames])
 
   const { mutate: handleCreateCategory } = useMutation({
     mutationFn: ResourceService.createResourceCategory,
     onError: handleErrorAlert,
+    onSuccess: onResponse,
     queryKey: ['categories']
   })
 
