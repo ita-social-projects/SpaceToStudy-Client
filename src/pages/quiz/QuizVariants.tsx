@@ -67,7 +67,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
     updatedAt
   } = quiz ?? defaultQuizResponse
 
-  const isTimeLimit = timeLimit !== QuizTimeLimit.NoLimit
+  const hasTimeLimit = timeLimit !== QuizTimeLimit.NoLimit
 
   const initialTime = useMemo(() => {
     return getTime(timeLimit ?? QuizTimeLimit.NoLimit)
@@ -202,8 +202,8 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({ finishQuiz }) => {
         <QuizHeader
           createdAt={createdAt}
           description={description}
+          hasTimeLimit={hasTimeLimit}
           initialTime={initialTime}
-          isTimeLimit={isTimeLimit}
           onTimeEnd={handleFinish}
           points={points}
           questionsAnswered={questionsAnswered}

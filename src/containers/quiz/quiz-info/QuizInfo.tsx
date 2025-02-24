@@ -25,7 +25,7 @@ import { TFunction } from 'i18next'
 type ActiveQuizInfoProps = {
   questionsAnswered: number
   totalPoints: number
-  isTimeLimit?: boolean
+  hasTimeLimit?: boolean
   initialTime: number
   onTimeEnd?: () => void
 }
@@ -33,7 +33,7 @@ type ActiveQuizInfoProps = {
 const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
   questionsAnswered,
   totalPoints,
-  isTimeLimit = false,
+  hasTimeLimit = false,
   initialTime,
   onTimeEnd
 }) => {
@@ -46,7 +46,7 @@ const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
         gap: '24px'
       }}
     >
-      {isTimeLimit && (
+      {hasTimeLimit && (
         <>
           <Timer initialTime={initialTime} onTimeEnd={onTimeEnd} />
           <Divider
