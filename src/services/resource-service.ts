@@ -191,6 +191,7 @@ export const ResourceService = {
   },
   getQuestion: async (id?: string): Promise<AxiosResponse<GetQuestion>> =>
     await axiosClient.get(createUrlPath(URLs.resources.questions.get, id)),
+
   createQuestionQuery: (data: CreateQuestionData) => {
     return baseService.request<Question>({
       method: 'POST',
@@ -200,6 +201,19 @@ export const ResourceService = {
   },
   createQuestion: async (data?: CreateQuestionData): Promise<AxiosResponse> => {
     return await axiosClient.post(URLs.resources.questions.post, data)
+  },
+
+  updateQuestionQuery: (data: UpdateQuestionParams) => {
+    const { id, ...questionData } = data
+
+    return baseService.request<Question>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.resources.questions.patch,
+        parameters: { id }
+      }),
+      data: questionData
+    })
   },
   updateQuestion: async (params?: UpdateQuestionParams) =>
     await axiosClient.patch(
