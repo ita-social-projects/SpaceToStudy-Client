@@ -328,8 +328,15 @@ export const formatTimeDifference = (startDate: string, endDate: string) => {
 }
 
 export const formatDuration = (ms: number) => {
-  const duration = intervalToDuration({ start: 0, end: ms })
-  return `${String(duration.hours).padStart(2, '0')}:${String(duration.minutes).padStart(2, '0')}:${String(duration.seconds).padStart(2, '0')}`
+  const {
+    hours = 0,
+    minutes = 0,
+    seconds = 0
+  } = intervalToDuration({ start: 0, end: ms })
+
+  return [hours, minutes, seconds]
+    .map((unit) => String(unit).padStart(2, '0'))
+    .join(':')
 }
 
 export const getTime = (timeLimit: QuizTimeLimit) => {
