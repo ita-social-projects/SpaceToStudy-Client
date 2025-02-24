@@ -1,22 +1,12 @@
 import { screen, waitFor } from '@testing-library/react'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
-import useAxios from '~/hooks/use-axios'
 import { afterAll, beforeEach, vi } from 'vitest'
 import OfferCarousel from '~/containers/offer-details/offer-carousel/OfferCarousel'
 import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
 import { URLs } from '~/constants/request'
+import { userService } from '~/services/user-service'
 
-vi.mock('~/hooks/use-axios')
-
-const mockData = {
-  loading: false,
-  response: { count: 1, items: [{ ...mockOffer, _id: 'id2' }] }
-}
-
-const emptyData = {
-  loading: false,
-  response: { count: 0, items: [] }
-}
+const mockBookmarkedOffers = ['id2']
 
 describe('OfferCarousel with data', () => {
   beforeAll(() => {
@@ -30,7 +20,6 @@ describe('OfferCarousel with data', () => {
         )
       )
       .reply(200, { items: [{ ...mockOffer, _id: 'id2' }], count: 1 })
-    useAxios.mockImplementation(() => mockData)
 
     global.ResizeObserver = vi.fn().mockImplementation(() => ({
       observe: vi.fn(),
@@ -62,6 +51,25 @@ describe('OfferCarousel with data', () => {
     const title = await screen.findByText('findOffers.otherOffers.title')
     expect(title).toBeInTheDocument()
   })
+
+  it('should bookmark offer', async () => {
+    mockAxiosClient
+      .onPatch(
+        new RegExp(
+          URLs.users.updateBookmarks
+            .replace(':userId', mockOffer.author._id)
+            .replace(':offerId', mockOffer._id)
+        )
+      )
+      .reply(200, mockBookmarkedOffers)
+
+    const result = await userService.toggleBookmark(
+      mockOffer.author._id,
+      mockOffer._id
+    )
+
+    expect(result).toEqual(mockBookmarkedOffers)
+  })
 })
 
 describe('OfferCarousel without data', () => {
@@ -76,7 +84,6 @@ describe('OfferCarousel without data', () => {
         )
       )
       .reply(200, { items: [], count: 0 })
-    useAxios.mockImplementation(() => emptyData)
   })
 
   beforeEach(() => {
