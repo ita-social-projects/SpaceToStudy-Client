@@ -84,6 +84,7 @@ const LessonsContainer = () => {
     if (!lessons) {
       return
     }
+
     const resource = lessons.items?.find((item) => item._id === id)
     openModal({
       component: (

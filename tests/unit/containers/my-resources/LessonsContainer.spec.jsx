@@ -82,12 +82,13 @@ describe('LessonContainer - AxiosClient', () => {
       .onGet(URLs.resources.lessons.get)
       .reply(200, lessonResponseMock)
       
-      vi.mocked(useNavigate).mockReturnValue(mockNavigate)
-      useQuery.mockReturnValue({
-        data: lessonResponseMock.items,
-        isLoading: false,
-        error: null
-      })
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate)
+
+    useQuery.mockReturnValue({
+      data: lessonResponseMock.items,
+      isLoading: false,
+      error: null
+    })
 
       renderWithProviders(<LessonsContainer />)
   })
