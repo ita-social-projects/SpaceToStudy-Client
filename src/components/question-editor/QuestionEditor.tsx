@@ -47,7 +47,7 @@ interface QuestionEditorProps {
   ) => void
   onCancel?: () => void
   onEdit?: () => void
-  onSave?: () => Promise<void>
+  onSave?: () => void
   loading?: boolean
   isQuizQuestion?: boolean
   handleErrors: (key: keyof QuestionForm, error: string) => void

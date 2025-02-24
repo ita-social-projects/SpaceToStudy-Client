@@ -16,7 +16,7 @@ import {
   type QuestionModalForm
 } from '~/types'
 import { initialValues } from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion.constants'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 
 interface CreateOrEditQuizQuestionProps {
   question?: Question
@@ -30,8 +30,12 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
   onCancel
 }) => {
   const { handleErrorAlert, handleAlert } = useSnackbarAlert()
-  const [isNewQuestion, setIsNewQuestion] = useState(Boolean(question))
   const { openModal, closeModal } = useModalContext()
+
+  const onCreateResponse = (response: Question | null) => {
+    response && setQuestions((prev) => [...prev, response])
+    onResponse()
+  }
 
   const onUpdateResponse = (response: Question | null) => {
     response &&
@@ -49,20 +53,13 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
     onCancel()
   }
 
-  const { mutate: createQuestion } = useMutation({
-    mutationFn: ResourceService.createQuestion,
-    onSuccess: onResponse,
+  const { mutate: createQuestion, isPending: createPending } = useMutation({
+    mutationFn: ResourceService.createQuestionQuery,
+    onSuccess: onCreateResponse,
     onError: handleErrorAlert
   })
-  // const { loading: createLoading, fetchData: createQuestion } = useAxios({
-  //   service: createQuestionService,
-  //   defaultResponse: null,
-  //   fetchOnMount: false,
-  //   onResponse: onCreateResponse,
-  //   onResponseError
-  // })
 
-  const { mutate: updateQuestion } = useMutation({
+  const { mutate: updateQuestion, isPending: editPending } = useMutation({
     mutationFn: ResourceService.updateQuestionQuery,
     onSuccess: onUpdateResponse,
     onError: handleErrorAlert
@@ -95,10 +92,9 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
     ({ title, category }: QuestionModalForm) => {
       handleNonInputValueChange('title', title)
       handleNonInputValueChange('category', category)
-      setIsNewQuestion(true)
       closeModal()
     },
-    [closeModal, handleNonInputValueChange, setIsNewQuestion]
+    [closeModal, handleNonInputValueChange]
   )
 
   const onCreateQuestion = () => {
@@ -132,12 +128,13 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
     })
   }, [openModal, onCloseCreation, onOpenCreation, data, onCancel])
 
-  useEffect(() => {
-    !question && onOpenCreateQuestionModal()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   if (!question) {
+  //     onOpenCreateQuestionModal()
+  //   }
+  // }, [question])
 
-  return isNewQuestion ? (
+  return question ? (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
       <QuestionEditor
         data={data}
@@ -146,7 +143,7 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
         handleInputChange={handleInputChange}
         handleNonInputValueChange={handleNonInputValueChange}
         isQuizQuestion
-        // loading={createLoading || updateLoading}
+        loading={createPending || editPending}
         onCancel={onCancel}
         onEdit={onOpenCreateQuestionModal}
         onSave={question ? onUpdateQuestion : onCreateQuestion}
