@@ -196,7 +196,7 @@ export const ResourceService = {
     })
   },
 
-  createQuestionQuery: (data: CreateQuestionData) => {
+  createQuestion: (data: CreateQuestionData) => {
     return baseService.request<Question>({
       method: 'POST',
       url: URLs.resources.questions.post,
@@ -204,7 +204,7 @@ export const ResourceService = {
     })
   },
 
-  updateQuestionQuery: (data: UpdateQuestionParams) => {
+  updateQuestion: (data: UpdateQuestionParams) => {
     const { id, ...questionData } = data
 
     return baseService.request<Question>({

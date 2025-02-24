@@ -216,7 +216,7 @@ describe('resourseService tests', () => {
       .reply(200, mockResponse)
 
     const createdQuestion =
-      await ResourceService.createQuestionQuery(newQuestionData)
+      await ResourceService.createQuestion(newQuestionData)
 
     expect(mockAxiosClient.history.post[0].url).toBe(
       URLs.resources.questions.post
@@ -295,7 +295,7 @@ describe('resourseService tests', () => {
       )
       .reply(200, mockResponse)
 
-    const updatedQuestion = await ResourceService.updateQuestionQuery({
+    const updatedQuestion = await ResourceService.updateQuestion({
       id: questionId,
       ...questionData
     })

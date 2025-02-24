@@ -86,7 +86,7 @@ describe('CreateOrEditQuizQuestion component without question', () => {
     mockAxiosClient
       .onPost(URLs.resources.questions.post)
       .reply(200, { data: mockedQuestion })
-    const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestionQuery')
+    const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestion')
     const modalSaveBtn = screen.getByText('common.save')
     const modalInput = screen.getByRole('textbox')
 
@@ -120,7 +120,7 @@ describe('CreateOrEditQuizQuestion component without question', () => {
     mockAxiosClient
       .onPost(URLs.resources.questions.post)
       .reply(200, { data: mockedOpenAnswerQuestion })
-    const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestionQuery')
+    const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestion')
     const modalSaveBtn = screen.getByText('common.save')
     const modalInput = screen.getByRole('textbox')
 

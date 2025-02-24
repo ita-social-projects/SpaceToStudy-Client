@@ -62,14 +62,14 @@ const CreateOrEditQuizQuestionComponent = (
 
   const { mutate: createQuestion, isPending: createPending } = useMutation({
     queryKey: ['questions'],
-    mutationFn: ResourceService.createQuestionQuery,
+    mutationFn: ResourceService.createQuestion,
     onSuccess: onCreateResponse,
     onError: handleErrorAlert
   })
 
   const { mutate: updateQuestion, isPending: updatePending } = useMutation({
     queryKeys: [['questions'], ['question', question?._id]],
-    mutationFn: ResourceService.updateQuestionQuery,
+    mutationFn: ResourceService.updateQuestion,
     onSuccess: onUpdateResponse,
     onError: handleErrorAlert
   })

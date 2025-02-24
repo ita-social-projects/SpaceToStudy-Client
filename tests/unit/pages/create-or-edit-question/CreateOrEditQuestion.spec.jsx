@@ -1,16 +1,48 @@
 import { screen } from '@testing-library/react'
+import { useParams } from 'react-router-dom'
 
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 import CreateOrEditQuestion from '~/pages/create-or-edit-question/CreateOrEditQuestion'
+
+vi.mock('react-router-dom', async () => {
+  const original = await vi.importActual('react-router-dom')
+  return {
+    ...original,
+    useParams: vi.fn()
+  }
+})
+
+const mockQuestion = {
+  _id: '123',
+  title: 'Sample Question',
+  text: 'What is the capital of France?',
+  answers: [{ text: 'Paris', isCorrect: true }],
+  type: 'oneAnswer',
+  category: null
+}
+
+const getQuestionstUrl = URLs.resources.questions.getById.replace(
+  ':id',
+  mockQuestion._id
+)
 
 describe('CreateOrEditQuestion component test', () => {
   beforeEach(() => {
+    useParams.mockReturnValue({ id: mockQuestion._id })
+
+    mockAxiosClient.onGet(getQuestionstUrl).reply(200, mockQuestion)
+
     renderWithProviders(<CreateOrEditQuestion />)
   })
 
-  it('should display CreateQuestion form', () => {
-    const title = screen.getByLabelText('questionPage.untitled')
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
 
-    expect(title).toBeInTheDocument()
+  it('should display CreateQuestion form', async () => {
+    const title = await screen.findByLabelText('questionPage.untitled')
+
+    expect(title.value).toBe('Sample Question')
   })
 })
