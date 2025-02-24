@@ -101,7 +101,7 @@ const QuestionsContainer: React.FC = () => {
         return
       }
 
-      return await ResourceService.createQuestionQuery({
+      return await ResourceService.createQuestion({
         title: item.title,
         text: item.text,
         answers: item.answers,
