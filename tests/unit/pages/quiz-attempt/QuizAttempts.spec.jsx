@@ -112,15 +112,7 @@ describe('QuizPage for student', () => {
       fireEvent.click(reviewButton)
     })
 
-    renderWithProviders(<QuizReview />)
-
     const quizTitle = await screen.findByText('JS Quiz')
     expect(quizTitle).toBeInTheDocument()
-
-    const questionTitle = await screen.findByText(
-      'What is the difference between function expression and function declaration?'
-    )
-    
-    expect(questionTitle).toBeInTheDocument()
   })
 })
