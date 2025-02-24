@@ -81,7 +81,7 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
 
   const question = questions[selectedIndex]
 
-  const onNext = () => {
+  const handleNextButtonClick = () => {
     onNextButtonClick?.()
     !isLastQuestion && setSelectedIndex(selectedIndex + 1)
   }
@@ -106,7 +106,7 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
         endIcon={
           <ArrowForward fontSize={SizeEnum.Medium} sx={styles.nextIcon} />
         }
-        onClick={onNext}
+        onClick={handleNextButtonClick}
         size='lg'
         variant='tonal'
       >
