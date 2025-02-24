@@ -57,7 +57,7 @@ const ActiveQuiz: React.FC = () => {
   const { quiz, isLoading } = useQuizQuery(quizId)
 
   const {
-    settings: { scoredResponses, view, timeLimit },
+    settings: { view, scoredResponses, timeLimit },
     description,
     title,
     items,
