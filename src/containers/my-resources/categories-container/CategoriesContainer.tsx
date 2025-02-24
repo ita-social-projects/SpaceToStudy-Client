@@ -71,8 +71,7 @@ const CategoriesContainer = () => {
   const {
     error,
     data: categories,
-    isLoading,
-    refetch: fetchData
+    isLoading
   } = useQuery({
     queryFn: getCategories,
     queryKey: ['categories', page, itemsPerPage, sort, searchTitle]
@@ -80,7 +79,7 @@ const CategoriesContainer = () => {
 
   const updateInfo = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: ['categories'] })
-  }, [fetchData])
+  }, [queryClient])
 
   useEffect(() => {
     if (error) {
@@ -107,15 +106,10 @@ const CategoriesContainer = () => {
     [dispatch]
   )
 
-  const { data: allCategoriesNames = [], refetch: fetchAllCategoriesNames } =
-    useQuery({
-      queryKey: ['categoriesNames'],
-      queryFn: ResourceService.getResourcesCategoriesName
-    })
-
-  const onCategoryUpdate = useCallback(async () => {
-    await queryClient.invalidateQueries({ queryKey: ['categories'] })
-  }, [fetchData, fetchAllCategoriesNames])
+  const { data: allCategoriesNames = [] } = useQuery({
+    queryKey: ['categoriesNames'],
+    queryFn: ResourceService.getResourcesCategoriesName
+  })
 
   const { mutate: handleCreateCategory } = useMutation({
     mutationFn: ResourceService.createResourceCategory,
@@ -140,7 +134,7 @@ const CategoriesContainer = () => {
   const onSave = async (name: string) => {
     if (name) {
       await updateResourceCategory({ id: selectedItemId, name })
-      await onCategoryUpdate()
+      await updateInfo()
     }
     setSelectedItemId('')
   }
@@ -163,7 +157,7 @@ const CategoriesContainer = () => {
     columns: columnsToShow,
     data: {
       response: categories ?? defaultResponses.itemsWithCount,
-      getData: onCategoryUpdate
+      getData: updateInfo
     },
     services: { deleteService: deleteCategory },
     pagination: { page, onChange: handleChangePage },
