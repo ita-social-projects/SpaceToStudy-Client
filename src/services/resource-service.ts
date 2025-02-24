@@ -189,8 +189,15 @@ export const ResourceService = {
       })
     })
   },
-  getQuestion: async (id?: string): Promise<AxiosResponse<GetQuestion>> =>
-    await axiosClient.get(createUrlPath(URLs.resources.questions.get, id)),
+  getQuestion: (id: string) => {
+    return baseService.request<GetQuestion>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.resources.questions.getById,
+        parameters: { id }
+      })
+    })
+  },
 
   createQuestionQuery: (data: CreateQuestionData) => {
     return baseService.request<Question>({

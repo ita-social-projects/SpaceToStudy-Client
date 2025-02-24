@@ -1,6 +1,7 @@
 import { fireEvent, screen, cleanup } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import { useParams } from 'react-router-dom'
+import { debug } from 'vitest-preview'
 import { ResourceService } from '~/services/resource-service'
 
 import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer'
@@ -84,14 +85,14 @@ describe('CreateOrEditQuizContainer without id', () => {
     fireEvent.click(saveBtn)
   })
 
-  it('should render create new question form', () => {
+  it('should render create new question form', async () => {
     const btnAddQuestion = screen.getByText(
       'myResourcesPage.quizzes.createNewQuestion'
     )
 
     fireEvent.click(btnAddQuestion)
 
-    const formTitle = screen.getByText(/title:/i)
+    const formTitle = await screen.findByText(/title:/i)
 
     expect(formTitle).toBeInTheDocument()
   })

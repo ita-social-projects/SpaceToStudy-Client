@@ -1,3 +1,4 @@
+import { useImperativeHandle, forwardRef } from 'react'
 import Box from '@mui/material/Box'
 
 import { useModalContext } from '~/context/modal-context'
@@ -24,23 +25,29 @@ interface CreateOrEditQuizQuestionProps {
   onCancel: () => void
 }
 
-const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
-  question,
-  setQuestions,
-  onCancel
-}) => {
+export interface CreateOrEditQuizQuestionRef {
+  openCreateModal: () => void
+}
+
+const CreateOrEditQuizQuestionComponent = (
+  { question, setQuestions, onCancel }: CreateOrEditQuizQuestionProps,
+  ref: React.Ref<CreateOrEditQuizQuestionRef>
+) => {
   const { handleErrorAlert, handleAlert } = useSnackbarAlert()
   const { openModal, closeModal } = useModalContext()
 
-  const onCreateResponse = (response: Question | null) => {
-    response && setQuestions((prev) => [...prev, response])
+  const onCreateResponse = (createdQuestion: Question | null) => {
+    createdQuestion &&
+      setQuestions((prevQuestions) => [...prevQuestions, createdQuestion])
     onResponse()
   }
 
-  const onUpdateResponse = (response: Question | null) => {
-    response &&
-      setQuestions((prev) =>
-        prev.map((item) => (item._id === response._id ? response : item))
+  const onUpdateResponse = (updatedQuestion: Question | null) => {
+    updatedQuestion &&
+      setQuestions((prevQuestions) =>
+        prevQuestions.map((question) =>
+          question._id === updatedQuestion._id ? updatedQuestion : question
+        )
       )
     onResponse()
   }
@@ -59,19 +66,11 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
     onError: handleErrorAlert
   })
 
-  const { mutate: updateQuestion, isPending: editPending } = useMutation({
+  const { mutate: updateQuestion, isPending: updatePending } = useMutation({
     mutationFn: ResourceService.updateQuestionQuery,
     onSuccess: onUpdateResponse,
     onError: handleErrorAlert
   })
-
-  // const { loading: updateLoading, fetchData: updateQuestion } = useAxios({
-  //   service: updateQuestionService,
-  //   defaultResponse: null,
-  //   fetchOnMount: false,
-  //   onResponse: onUpdateResponse,
-  //   onResponseError
-  // })
 
   const {
     data,
@@ -128,13 +127,11 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
     })
   }, [openModal, onCloseCreation, onOpenCreation, data, onCancel])
 
-  // useEffect(() => {
-  //   if (!question) {
-  //     onOpenCreateQuestionModal()
-  //   }
-  // }, [question])
+  useImperativeHandle(ref, () => ({
+    openCreateModal: onOpenCreateQuestionModal
+  }))
 
-  return question ? (
+  return (
     <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
       <QuestionEditor
         data={data}
@@ -143,13 +140,15 @@ const CreateOrEditQuizQuestion: React.FC<CreateOrEditQuizQuestionProps> = ({
         handleInputChange={handleInputChange}
         handleNonInputValueChange={handleNonInputValueChange}
         isQuizQuestion
-        loading={createPending || editPending}
+        loading={createPending || updatePending}
         onCancel={onCancel}
         onEdit={onOpenCreateQuestionModal}
         onSave={question ? onUpdateQuestion : onCreateQuestion}
       />
     </Box>
-  ) : null
+  )
 }
+
+const CreateOrEditQuizQuestion = forwardRef(CreateOrEditQuizQuestionComponent)
 
 export default CreateOrEditQuizQuestion

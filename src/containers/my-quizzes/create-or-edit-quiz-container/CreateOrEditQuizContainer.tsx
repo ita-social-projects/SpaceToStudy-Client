@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
@@ -8,7 +8,9 @@ import AddIcon from '@mui/icons-material/Add'
 import Tooltip from '@mui/material/Tooltip'
 
 import AddResources from '~/containers/add-resources/AddResources'
-import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
+import CreateOrEditQuizQuestion, {
+  CreateOrEditQuizQuestionRef
+} from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import QuestionsList from '~/containers/questions-list/QuestionsList'
 import { useModalContext } from '~/context/modal-context'
@@ -22,6 +24,7 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Loader from '~/components/loader/Loader'
 
 import { snackbarVariants } from '~/constants'
+import { getFullUrl } from '~/utils/get-full-url'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import {
@@ -39,7 +42,6 @@ import {
   ResourcesTypesEnum as ResourceType,
   PositionEnum
 } from '~/types'
-import { createUrlPath } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
@@ -60,6 +62,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   const { id = '' } = useParams()
   const { handleErrorAlert, handleAlert } = useSnackbarAlert()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
+  const modalRef = useRef<CreateOrEditQuizQuestionRef>(null)
 
   const onCategoryChange = (
     _: React.SyntheticEvent,
@@ -70,7 +73,10 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
 
   const navigateToQuizzesTab = () => {
     navigate(
-      createUrlPath(authRoutes.myResources.root.path, '', { tab: 'quizzes' })
+      getFullUrl({
+        pathname: authRoutes.myResources.root.path,
+        searchParameters: { tab: 'questions' }
+      })
     )
   }
 
@@ -84,14 +90,14 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
     navigateToQuizzesTab()
   }
 
-  const { mutate: createQuiz } = useMutation({
+  const { mutate: createQuiz, isPending: createQuizPending } = useMutation({
     queryKey: ['quizzes'],
     mutationFn: ResourceService.addQuiz,
     onSuccess: handleResponse,
     onError: handleErrorAlert
   })
 
-  const { mutate: editQuiz } = useMutation({
+  const { mutate: updateQuiz, isPending: updateQuizPending } = useMutation({
     queryKeys: [['quizzes'], ['quiz', id]],
     mutationFn: ResourceService.editQuiz,
     onSuccess: handleResponse,
@@ -165,12 +171,18 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
     setDescription(e.target.value)
   }
 
-  const onOpenCreateQuestion = () => setIsCreationOpen(true)
+  const onOpenCreateQuestion = () => {
+    setIsCreationOpen(true)
+    queueMicrotask(() => {
+      modalRef.current?.openCreateModal()
+    })
+  }
+
   const onCloseCreateQuestion = () => setIsCreationOpen(false)
 
   const onSaveQuiz = () =>
     id
-      ? editQuiz({
+      ? updateQuiz({
           id,
           title,
           description,
@@ -245,6 +257,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
         {isCreationOpen && (
           <CreateOrEditQuizQuestion
             onCancel={onCloseCreateQuestion}
+            ref={modalRef}
             setQuestions={setQuestions}
           />
         )}
@@ -263,7 +276,12 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
           <Button onClick={navigateToQuizzesTab} size='lg' variant='tonal'>
             {t('common.cancel')}
           </Button>
-          <Button onClick={onSaveQuiz} size='lg' type={ButtonTypeEnum.Submit}>
+          <Button
+            loading={createQuizPending || updateQuizPending}
+            onClick={onSaveQuiz}
+            size='lg'
+            type={ButtonTypeEnum.Submit}
+          >
             {t('common.save')}
           </Button>
         </Box>

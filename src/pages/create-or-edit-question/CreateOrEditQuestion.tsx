@@ -1,7 +1,6 @@
-import { SyntheticEvent, useCallback, useEffect } from 'react'
+import { type SyntheticEvent, useCallback, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 
@@ -13,42 +12,30 @@ import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import Loader from '~/components/loader/Loader'
 
 import useForm from '~/hooks/use-form'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import { ResourceService } from '~/services/resource-service'
-import { useAppDispatch } from '~/hooks/use-redux'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { getErrorMessage } from '~/utils/error-with-message'
-import { createUrlPath } from '~/utils/helper-functions'
-import { defaultResponses, snackbarVariants } from '~/constants'
-import {
-  initialValues,
-  defaultResponse
-} from './CreateOrEditQuestion.constants'
+import { snackbarVariants } from '~/constants'
+import { initialValues } from './CreateOrEditQuestion.constants'
 import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
+import { getFullUrl } from '~/utils/get-full-url'
 import {
+  type CategoryNameInterface,
+  type CreateOrEditQuestionForm,
+  type GetQuestion,
   ButtonTypeEnum,
-  CategoryNameInterface,
   ComponentEnum,
-  CreateOrEditQuestionForm,
-  ErrorResponse,
-  GetQuestion,
-  TextFieldVariantEnum,
-  UpdateQuestionParams
+  TextFieldVariantEnum
 } from '~/types'
 import { styles } from '~/pages/create-or-edit-question/CreateOrEditQuestion.styles'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
-const CreateOrEditQuestion = () => {
+const CreateOrEditQuestion: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const { id } = useParams()
-
-  const createQuestion = useCallback(
-    (data?: CreateOrEditQuestionForm) => ResourceService.createQuestion(data),
-    []
-  )
+  const { id = '' } = useParams()
+  const { handleAlert, handleErrorAlert } = useSnackbarAlert()
 
   const onCategoryChange = (
     _: SyntheticEvent,
@@ -56,76 +43,56 @@ const CreateOrEditQuestion = () => {
   ) => {
     handleNonInputValueChange('category', value?._id ?? null)
   }
+
   const navigateToQuestionsTab = () => {
     navigate(
-      createUrlPath(authRoutes.myResources.root.path, '', { tab: 'questions' })
-    )
-  }
-  const onResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: id
-          ? 'myResourcesPage.questions.successEditedQuestion'
-          : 'myResourcesPage.questions.successAddedQuestion'
+      getFullUrl({
+        pathname: authRoutes.myResources.root.path,
+        searchParameters: { tab: 'questions' }
       })
     )
+  }
+
+  const onResponse = () => {
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: id
+        ? 'myResourcesPage.questions.successEditedQuestion'
+        : 'myResourcesPage.questions.successAddedQuestion'
+    })
     navigateToQuestionsTab()
   }
 
-  const onResponseError = (error: ErrorResponse) => {
-    const errorKey = getErrorKey(error)
-
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: error
-          ? {
-              text: errorKey,
-              options: {
-                message: getErrorMessage(error.message)
-              }
-            }
-          : errorKey
-      })
-    )
-  }
-
-  const { loading: createQuestionLoading, fetchData: handleCreateQuestion } =
-    useAxios({
-      service: createQuestion,
-      defaultResponse: defaultResponses.object,
-      fetchOnMount: false,
-      onResponse,
-      onResponseError
+  const { mutate: createQuestion, isPending: createQuestionPending } =
+    useMutation({
+      queryKey: ['questions'],
+      mutationFn: ResourceService.createQuestionQuery,
+      onSuccess: onResponse,
+      onError: handleErrorAlert
     })
 
-  const editQuestion = useCallback(
-    (params?: UpdateQuestionParams) => ResourceService.updateQuestion(params),
-    []
-  )
-
-  const { loading: editQuestionLoading, fetchData: handleEditQuestion } =
-    useAxios<null, UpdateQuestionParams>({
-      service: editQuestion,
-      fetchOnMount: false,
-      defaultResponse: null,
-      onResponse,
-      onResponseError
+  const { mutate: editQuestion, isPending: updateQuestionPending } =
+    useMutation({
+      queryKeys: [['questions'], ['question', id]],
+      mutationFn: ResourceService.updateQuestionQuery,
+      onSuccess: onResponse,
+      onError: handleErrorAlert
     })
 
-  const getQuestion = (id?: string): Promise<AxiosResponse<GetQuestion>> => {
+  const getQuestion = useCallback(() => {
     return ResourceService.getQuestion(id)
-  }
+  }, [id])
 
   const {
-    loading: getQuestionLoading,
-    fetchData: handleGetQuestion,
-    response: question
-  } = useAxios<GetQuestion, string>({
-    service: getQuestion,
-    fetchOnMount: false,
-    defaultResponse
+    data: question,
+    isLoading: questionLoading,
+    error: questionError
+  } = useQuery({
+    queryKey: ['question', id],
+    queryFn: getQuestion,
+    options: {
+      staleTime: Infinity
+    }
   })
 
   const {
@@ -138,10 +105,8 @@ const CreateOrEditQuestion = () => {
     errors
   } = useForm<CreateOrEditQuestionForm>({
     initialValues: initialValues,
-    onSubmit: async () => {
-      id
-        ? await handleEditQuestion({ ...data, id })
-        : await handleCreateQuestion(data)
+    onSubmit: () => {
+      id ? editQuestion({ ...data, id: id }) : createQuestion(data)
     }
   })
 
@@ -159,7 +124,7 @@ const CreateOrEditQuestion = () => {
       </Button>
       <Button
         disabled={!isButtonsVisible}
-        loading={createQuestionLoading || editQuestionLoading}
+        loading={createQuestionPending || updateQuestionPending}
         type={ButtonTypeEnum.Submit}
       >
         {t('common.save')}
@@ -168,19 +133,18 @@ const CreateOrEditQuestion = () => {
   )
 
   useEffect(() => {
-    if (id) {
-      void handleGetQuestion(id)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
-
-  useEffect(() => {
     if (question) {
       handleDataChange<GetQuestion>(question)
     }
   }, [question, handleDataChange])
 
-  if (getQuestionLoading) {
+  useEffect(() => {
+    if (questionError) {
+      handleErrorAlert(questionError)
+    }
+  }, [questionError, handleErrorAlert])
+
+  if (questionLoading || !question) {
     return <Loader pageLoad />
   }
 
