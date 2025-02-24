@@ -65,14 +65,14 @@ export const userService = {
     return axiosClient.patch(createUrlPath(URLs.users.activate, userId))
   },
 
-  toggleBookmark: (
-    userId: string,
-    offerId: string
-  ): Promise<AxiosResponse<string[]>> => {
-    const user = createUrlPath(URLs.users.get, userId)
-    const bookmarkedOffers = createUrlPath(URLs.users.bookmarks, offerId)
-
-    return axiosClient.patch(`${user}${bookmarkedOffers}`)
+  toggleBookmark: (userId: string, offerId: string) => {
+    return baseService.request<string[]>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.users.updateBookmarks,
+        parameters: { userId, offerId }
+      })
+    })
   },
 
   getBookmarkedOffers: async (
