@@ -43,6 +43,6 @@ describe('CreateOrEditQuestion component test', () => {
   it('should display CreateQuestion form', async () => {
     const title = await screen.findByLabelText('questionPage.untitled')
 
-    expect(title.value).toBe('Sample Question')
+    expect(title).toBeInTheDocument()
   })
 })

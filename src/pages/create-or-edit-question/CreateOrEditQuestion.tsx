@@ -66,7 +66,7 @@ const CreateOrEditQuestion: React.FC = () => {
   const { mutate: createQuestion, isPending: createQuestionPending } =
     useMutation({
       queryKey: ['questions'],
-      mutationFn: ResourceService.createQuestionQuery,
+      mutationFn: ResourceService.createQuestion,
       onSuccess: onResponse,
       onError: handleErrorAlert
     })
@@ -74,7 +74,7 @@ const CreateOrEditQuestion: React.FC = () => {
   const { mutate: editQuestion, isPending: updateQuestionPending } =
     useMutation({
       queryKeys: [['questions'], ['question', id]],
-      mutationFn: ResourceService.updateQuestionQuery,
+      mutationFn: ResourceService.updateQuestion,
       onSuccess: onResponse,
       onError: handleErrorAlert
     })
