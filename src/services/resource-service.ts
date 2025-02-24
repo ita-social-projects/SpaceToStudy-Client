@@ -125,7 +125,7 @@ export const ResourceService = {
       data
     })
   },
-  editFinishedQuiz: async (id: string, data: UpdateFinishedQuizParams) => {
+  editFinishedQuiz: (id: string, data: UpdateFinishedQuizParams) => {
     return baseService.request<void>({
       method: 'PATCH',
       url: getFullUrl({
