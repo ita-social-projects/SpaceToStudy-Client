@@ -86,7 +86,11 @@ describe('QuizPage for student', () => {
       )
       .reply(200, mockQuiz)
 
-    mockAxiosClient.onGet('/finished-quizzes//').reply(200, mockFinishedQuizzes)
+    mockAxiosClient
+      .onGet(
+        URLs.finishedQuizzes.getById.replace(':id','')
+      )
+      .reply(200, mockFinishedQuizzes)
   })
 
   beforeEach(() => {
