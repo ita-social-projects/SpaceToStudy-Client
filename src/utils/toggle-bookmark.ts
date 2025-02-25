@@ -8,10 +8,11 @@ export const useToggleBookmark = (
   onResponseError: UseAxiosProps<string[], string>['onResponseError']
 ) => {
   const { mutate: toggleBookmark } = useMutation({
+    queryKey: ['bookmarks'],
     mutationFn: (offerID: string) =>
       userService.toggleBookmark(userId, offerID),
-    onSuccess: (response) => onResponse?.(response),
-    onError: (error) => onResponseError?.(error)
+    onSuccess: onResponse,
+    onError: onResponseError
   })
 
   return toggleBookmark
