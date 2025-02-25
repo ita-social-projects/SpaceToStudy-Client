@@ -48,7 +48,7 @@ describe('CategoriesContainer test', () => {
       .reply(200, resourceCateogiresNamesMock)
 
     mockAxiosClient
-      .onGet(URLs.resources.resourcesCategories.post)
+      .onPost(URLs.resources.resourcesCategories.post)
       .reply(201, resourceCategoriesPostMock)
 
     mockAxiosClient
