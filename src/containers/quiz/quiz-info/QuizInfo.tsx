@@ -25,7 +25,7 @@ import { TFunction } from 'i18next'
 type ActiveQuizInfoProps = {
   questionsAnswered: number
   totalPoints: number
-  hasTimeLimit?: boolean
+  hasTimeLimit: boolean
   initialTime: number
   onTimeEnd?: () => void
 }
