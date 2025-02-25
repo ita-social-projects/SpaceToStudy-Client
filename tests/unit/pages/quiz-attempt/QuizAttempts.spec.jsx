@@ -88,7 +88,9 @@ describe('QuizPage for student', () => {
 
     mockAxiosClient
       .onGet(
-        URLs.finishedQuizzes.getById.replace(':id','')
+        URLs.finishedQuizzes.getByQuizId
+          .replace(':cooperationId', '')
+          .replace(':quizId', '')
       )
       .reply(200, mockFinishedQuizzes)
   })
