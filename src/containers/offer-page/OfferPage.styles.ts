@@ -8,15 +8,15 @@ export const styles = {
     maxWidth: { md: '700px' },
     px: { sm: '16px', md: '32px' },
     color: 'primary.700',
-    gap: '12px',
+    gap: '25px',
     boxSizing: 'border-box',
     ...column
   },
   title: {
     display: 'flex',
     alignItems: 'center',
-    mb: '12px',
-    gap: '10px',
+    mt: '14px',
+    mb: '7px',
     typography: { xs: 'midTitle', sm: 'h5' },
     pt: { xs: '5px', sm: 0 },
     width: '100%',
@@ -27,15 +27,16 @@ export const styles = {
     pl: { sm: '32px' }
   },
   inputBlock: {
-    ...column,
-    gap: '12px'
+    ...column
   },
   icon: {
     width: { xs: '18px', sm: '22px' }
   },
   description: {
     color: 'primary.500',
-    typography: { xs: 'body2', sm: 'body1' }
+    typography: { xs: 'body2', sm: 'body1' },
+    mt: '14px',
+    mb: '7px'
   },
   currencyIcon: { width: '10px' },
   buttonBox: {
@@ -45,17 +46,34 @@ export const styles = {
     mt: { xs: '16px', sm: '24px' }
   },
   category: {
-    mb: '12px'
+    mt: '14px',
+    mb: '7px'
   },
   inputs: {
-    mb: '6px'
+    mt: '14px'
   },
-  faqError: { minHeight: '20px', typography: 'caption', color: 'error.500' },
+  faqError: {
+    minHeight: '20px',
+    typography: 'caption',
+    color: 'error.500'
+  },
   faqButton: {
     width: 'fit-content',
     alignSelf: 'start'
   },
-  faqInputsBlock: { display: 'flex', gap: '12px', alignItems: 'start' },
-  faqInputs: { flex: 1 },
-  submit: { minWidth: '166px' }
+  faqInputsBlock: {
+    display: 'flex',
+    gap: '12px',
+    alignItems: 'start',
+    mt: '14px',
+    mb: '10px'
+  },
+  faqInputs: {
+    ...column,
+    flex: 1,
+    gap: '12px'
+  },
+  submit: {
+    minWidth: '166px'
+  }
 }

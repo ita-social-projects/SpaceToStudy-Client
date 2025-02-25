@@ -74,7 +74,7 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
             textFieldProps={{
               label: t('offerPage.labels.category'),
               error: Boolean(errors.category),
-              helperText: errors.category ? t(errors.category) : ' ',
+              helperText: errors.category ? t(errors.category) : '',
               required: true
             }}
             value={data.category}
@@ -90,7 +90,7 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
             sx={styles.inputs}
             textFieldProps={{
               error: Boolean(subjectError),
-              helperText: subjectError ? t(errors.subject) : ' ',
+              helperText: subjectError ? t(errors.subject) : '',
               label: t('offerPage.labels.subject'),
               required: true
             }}

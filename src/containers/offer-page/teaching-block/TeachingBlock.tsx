@@ -104,7 +104,7 @@ const TeachingBlock = <T extends CreateOrUpdateOfferData>({
             options={Object.values(LanguagesEnum)}
             textFieldProps={{
               error: Boolean(errors.languages),
-              helperText: t(errors.languages) || ' ',
+              helperText: t(errors.languages) || '',
               label: t('offerPage.labels.language')
             }}
             value={null}
