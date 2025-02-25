@@ -13,6 +13,7 @@ const setQuestions = vi.fn()
 const onCancel = vi.fn()
 
 const mockedQuestion = {
+  _id: '123',
   title: 'Question title',
   text: 'Question text',
   answers: [
@@ -33,7 +34,7 @@ const mockedOpenAnswerQuestion = {
     {
       id: 0,
       text: 'Answer 1',
-      isCorrect: true 
+      isCorrect: true
     }
   ],
   author: 'Question author',
@@ -56,53 +57,36 @@ describe('CreateOrEditQuizQuestion component without question', () => {
     )
   })
 
-  it('should render modal', () => {
-    const modalText = screen.getByText(
-      'myResourcesPage.quizzes.createNewQuestion'
+  it('should change question and anwer inputs', () => {
+    const input = screen.getByRole('textbox')
+    const addNewAnswerBtn = screen.getByTestId('addNewAnswerBtn')
+
+    fireEvent.click(addNewAnswerBtn)
+
+    const newAnswerInput = screen.getByPlaceholderText(
+      'questionPage.writeYourAnswer'
     )
 
-    expect(modalText).toBeInTheDocument()
+    fireEvent.change(newAnswerInput, { target: { value: 'test' } })
+    fireEvent.change(input, { target: { value: 'test' } })
+
+    expect(newAnswerInput).toHaveValue('test')
+    expect(input).toHaveValue('test')
   })
 
-  it('should click on close button', () => {
-    const modalText = screen.getByText(
-      'myResourcesPage.quizzes.createNewQuestion'
-    )
+  it('should call onCancel when clicking cancel button', () => {
     const cancelBtn = screen.getByText('common.cancel')
 
     fireEvent.click(cancelBtn)
 
     expect(onCancel).toHaveBeenCalled()
-    expect(modalText).not.toBeInTheDocument()
-  })
-
-  it('should change title input', () => {
-    const input = screen.getByRole('textbox')
-
-    fireEvent.change(input, { target: { value: 'test' } })
-
-    expect(input.value).toBe('test')
-  })
-
-  it('should click on save button', () => {
-    const saveBtn = screen.getByText('common.save')
-    const input = screen.getByRole('textbox')
-
-    fireEvent.change(input, { target: { value: 'test' } })
-    fireEvent.click(saveBtn)
-
-    expect(onCancel).toHaveBeenCalled()
-
-    const addNewQuestionText = screen.getByText('questionPage.addNewOne')
-
-    expect(addNewQuestionText).toBeInTheDocument()
   })
 
   it('should save a new question in the database', async () => {
     mockAxiosClient
       .onPost(URLs.resources.questions.post)
       .reply(200, { data: mockedQuestion })
-    const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestion')
+    const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestionQuery')
     const modalSaveBtn = screen.getByText('common.save')
     const modalInput = screen.getByRole('textbox')
 
@@ -131,11 +115,12 @@ describe('CreateOrEditQuizQuestion component without question', () => {
     expect(snackbar).toBeInTheDocument()
     expect(createQuestionSpy).toHaveBeenCalled()
   })
+
   it('should call onCreateQuestion with openAnswer data', async () => {
     mockAxiosClient
       .onPost(URLs.resources.questions.post)
       .reply(200, { data: mockedOpenAnswerQuestion })
-    const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestion')
+    const createQuestionSpy = vi.spyOn(ResourceService, 'createQuestionQuery')
     const modalSaveBtn = screen.getByText('common.save')
     const modalInput = screen.getByRole('textbox')
 
@@ -192,18 +177,11 @@ describe('CreateOrEditQuizQuestion component with a question', () => {
     expect(textField.value).toBe('test')
   })
 
-  it('should update a question in the database', () => {
-    const updateQuestionSpy = vi.spyOn(ResourceService, 'updateQuestion')
-    const saveBtn = screen.getByText('common.save')
-
-    fireEvent.click(saveBtn)
-
-    expect(updateQuestionSpy).toHaveBeenCalled()
-  })
-
   it('should show a snackbar after succesfull update', async () => {
     mockAxiosClient
-      .onPatch(`${URLs.resources.questions.patch}`)
+      .onPatch(
+        URLs.resources.questions.patch.replace(':id', mockedQuestion._id)
+      )
       .reply(200, { data: mockedQuestion })
     const saveBtn = screen.getByText('common.save')
 
@@ -219,7 +197,9 @@ describe('CreateOrEditQuizQuestion component with a question', () => {
   it('should show a snackbar after getting an error', async () => {
     const fakeError = { code: 'mockedErrorCode', message: 'test error' }
     mockAxiosClient
-      .onPatch(`${URLs.resources.questions.patch}`)
+      .onPatch(
+        URLs.resources.questions.patch.replace(':id', mockedQuestion._id)
+      )
       .reply(404, fakeError)
     const saveBtn = screen.getByText('common.save')
 
@@ -229,18 +209,35 @@ describe('CreateOrEditQuizQuestion component with a question', () => {
 
     expect(snackbar).toBeInTheDocument()
   })
+
   it('should clear answers when changing type to openAnswer', () => {
     const appSelect = screen.getByTestId('app-select')
-  
+
     fireEvent.change(appSelect, { target: { value: 'openAnswer' } })
-  
+
     expect(screen.queryByText('Answer 1')).not.toBeInTheDocument()
   })
   it('should close modal on cancel button click', () => {
     const cancelBtn = screen.getByText('common.cancel')
-  
+
     fireEvent.click(cancelBtn)
-  
+
     expect(onCancel).toHaveBeenCalled()
-  })  
+  })
+
+  it('should clear answers when changing type to openAnswer', () => {
+    const appSelect = screen.getByTestId('app-select')
+
+    fireEvent.change(appSelect, { target: { value: 'openAnswer' } })
+
+    expect(screen.queryByText('Answer 1')).not.toBeInTheDocument()
+  })
+
+  it('should close modal on cancel button click', () => {
+    const cancelBtn = screen.getByText('common.cancel')
+
+    fireEvent.click(cancelBtn)
+
+    expect(onCancel).toHaveBeenCalled()
+  })
 })

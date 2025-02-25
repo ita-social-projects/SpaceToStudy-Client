@@ -175,11 +175,7 @@ export const ResourceService = {
       data
     })
   },
-  getQuestions: (
-    params?: GetResourcesParams
-  ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
-    return axiosClient.get(URLs.resources.questions.get, { params })
-  },
+
   getQuestionsQuery: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Question>>({
       method: 'GET',
@@ -189,6 +185,7 @@ export const ResourceService = {
       })
     })
   },
+
   getQuestion: (id: string) => {
     return baseService.request<GetQuestion>({
       method: 'GET',
@@ -206,9 +203,6 @@ export const ResourceService = {
       data
     })
   },
-  createQuestion: async (data?: CreateQuestionData): Promise<AxiosResponse> => {
-    return await axiosClient.post(URLs.resources.questions.post, data)
-  },
 
   updateQuestionQuery: (data: UpdateQuestionParams) => {
     const { id, ...questionData } = data
@@ -222,11 +216,7 @@ export const ResourceService = {
       data: questionData
     })
   },
-  updateQuestion: async (params?: UpdateQuestionParams) =>
-    await axiosClient.patch(
-      createUrlPath(URLs.resources.questions.patch, params?.id),
-      params
-    ),
+
   deleteQuestion: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.questions.delete, id)

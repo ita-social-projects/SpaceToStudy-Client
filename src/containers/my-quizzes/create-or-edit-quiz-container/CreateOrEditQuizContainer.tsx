@@ -171,14 +171,15 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
     setDescription(e.target.value)
   }
 
-  const onOpenCreateQuestion = () => {
-    setIsCreationOpen(true)
-    queueMicrotask(() => {
-      modalRef.current?.openCreateModal()
-    })
-  }
+  const onOpenCreateQuestion = () => setIsCreationOpen(true)
 
   const onCloseCreateQuestion = () => setIsCreationOpen(false)
+
+  useEffect(() => {
+    if (isCreationOpen) {
+      modalRef.current?.openCreateModal()
+    }
+  }, [isCreationOpen])
 
   const onSaveQuiz = () =>
     id
