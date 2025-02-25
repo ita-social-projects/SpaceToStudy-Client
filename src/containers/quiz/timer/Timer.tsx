@@ -11,24 +11,24 @@ type TimerProps = {
 }
 
 const Timer: React.FC<TimerProps> = ({ initialTime, onTimeEnd }) => {
-  const { time, isTimeEnds } = useTimer(initialTime, onTimeEnd)
+  const { time, isTimeRunningOut } = useTimer({ initialTime, onTimeEnd })
 
   return (
     <Chip
-      color={isTimeEnds ? 'error' : 'success'}
+      color={isTimeRunningOut ? 'error' : 'success'}
       icon={
         <TimerOutlined
-          sx={isTimeEnds ? styles.errorTimer : styles.successTimer}
+          sx={isTimeRunningOut ? styles.errorTimer : styles.successTimer}
         />
       }
       label={time}
       size='medium'
       sx={{
         ...styles.chip,
-        ...(isTimeEnds ? styles.errorChip : styles.successChip),
+        ...(isTimeRunningOut ? styles.errorChip : styles.successChip),
         '& .MuiChip-label': {
           ...styles.label,
-          ...(isTimeEnds ? styles.errorLabel : styles.successLabel)
+          ...(isTimeRunningOut ? styles.errorLabel : styles.successLabel)
         }
       }}
       variant='outlined'

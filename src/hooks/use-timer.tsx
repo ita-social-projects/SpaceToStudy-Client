@@ -3,10 +3,20 @@ import { useState, useEffect } from 'react'
 import { ONE_SECOND, ONE_MINUTE } from '~/constants'
 import { formatDuration } from '~/utils/helper-functions'
 
-const useTimer = (initialTime: number, onTimeEnd?: () => void) => {
+type UseTimerOptions = {
+  initialTime: number
+  runningOutTime?: number
+  onTimeEnd?: () => void
+}
+
+const useTimer = ({
+  initialTime,
+  runningOutTime = ONE_MINUTE,
+  onTimeEnd
+}: UseTimerOptions) => {
   const [time, setTime] = useState(() => (initialTime <= 0 ? 0 : initialTime))
 
-  const isTimeEnds = time <= ONE_MINUTE
+  const isTimeRunningOut = time <= runningOutTime
 
   useEffect(() => {
     if (time <= 0) {
@@ -31,7 +41,7 @@ const useTimer = (initialTime: number, onTimeEnd?: () => void) => {
 
   return {
     time: formatDuration(time),
-    isTimeEnds
+    isTimeRunningOut
   }
 }
 
