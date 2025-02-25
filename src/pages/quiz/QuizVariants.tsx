@@ -257,7 +257,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
   }
 
   const { data: finishedQuiz, isLoading: isFinishedQuizLoading } = useQuery({
-    queryKey: ['finishedQuiz', finishedQuizId],
+    queryKey: ['finished-quizzes', finishedQuizId],
     queryFn: getFinishedQuiz
   })
 
