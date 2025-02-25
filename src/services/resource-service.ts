@@ -176,7 +176,7 @@ export const ResourceService = {
     })
   },
 
-  getQuestionsQuery: (params?: GetResourcesParams) => {
+  getQuestions: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Question>>({
       method: 'GET',
       url: getFullUrl({

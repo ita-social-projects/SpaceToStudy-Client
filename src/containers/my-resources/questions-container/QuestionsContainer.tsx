@@ -47,7 +47,7 @@ const QuestionsContainer: React.FC = () => {
   )
 
   const getQuestions = useCallback(() => {
-    return ResourceService.getQuestionsQuery({
+    return ResourceService.getQuestions({
       limit: itemsPerPage,
       sort,
       title: searchTitle.current,

@@ -22,16 +22,13 @@ const mockQuestion = {
   category: null
 }
 
-const getQuestionstUrl = URLs.resources.questions.getById.replace(
-  ':id',
-  mockQuestion._id
-)
-
 describe('CreateOrEditQuestion component test', () => {
   beforeEach(() => {
     useParams.mockReturnValue({ id: mockQuestion._id })
 
-    mockAxiosClient.onGet(getQuestionstUrl).reply(200, mockQuestion)
+    mockAxiosClient
+      .onGet(URLs.resources.questions.getById.replace(':id', mockQuestion._id))
+      .reply(200, mockQuestion)
 
     renderWithProviders(<CreateOrEditQuestion />)
   })

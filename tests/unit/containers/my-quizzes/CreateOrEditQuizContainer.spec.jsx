@@ -113,7 +113,7 @@ describe('CreateOrEditQuizContainer with id', () => {
     useParams.mockReturnValue({ id: mockId })
 
     mockAxiosClient
-      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockId)))
+      .onGet(URLs.quizzes.getById.replace(':id', mockId))
       .reply(200, {
         _id: mockId,
         title: 'Mock title',

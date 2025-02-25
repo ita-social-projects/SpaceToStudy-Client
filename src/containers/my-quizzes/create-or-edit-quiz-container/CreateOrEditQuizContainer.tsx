@@ -1,4 +1,11 @@
-import { ChangeEvent, useCallback, useEffect, useState, useRef } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+  type ComponentRef,
+  type ChangeEvent
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
@@ -8,9 +15,7 @@ import AddIcon from '@mui/icons-material/Add'
 import Tooltip from '@mui/material/Tooltip'
 
 import AddResources from '~/containers/add-resources/AddResources'
-import CreateOrEditQuizQuestion, {
-  CreateOrEditQuizQuestionRef
-} from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
+import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import QuestionsList from '~/containers/questions-list/QuestionsList'
 import { useModalContext } from '~/context/modal-context'
@@ -62,7 +67,9 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
   const { id = '' } = useParams()
   const { handleErrorAlert, handleAlert } = useSnackbarAlert()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
-  const modalRef = useRef<CreateOrEditQuizQuestionRef>(null)
+  const modalRef = useRef<ComponentRef<typeof CreateOrEditQuizQuestion> | null>(
+    null
+  )
 
   const onCategoryChange = (
     _: React.SyntheticEvent,
@@ -151,7 +158,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
           columns={columns}
           onAddResources={onAddQuestions}
           removeColumnRules={removeColumnRules}
-          requestService={ResourceService.getQuestionsQuery}
+          requestService={ResourceService.getQuestions}
           resourceTab={ResourcesTabsEnum.Questions}
           resources={questions}
         />

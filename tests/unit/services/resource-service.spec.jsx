@@ -156,19 +156,19 @@ describe('resourseService tests', () => {
     expect(response).toEqual(mockResponse)
   })
 
-   it('should edit an attachment', async () => {
-     const attachmentId = '6255bc080a75adf9223df444'
-     const attachment = {
-       description: 'Modified description',
-       category: '8655bc080a75adf9223df444'
-     }
-     const mockAttachmentResponse = {
-       ...attachment,
-       _id: attachmentId,
-       link: '1722535882408-test.pdf',
-       size: 15069,
-       resourceType: 'Attachment'
-     }
+  it('should edit an attachment', async () => {
+    const attachmentId = '6255bc080a75adf9223df444'
+    const attachment = {
+      description: 'Modified description',
+      category: '8655bc080a75adf9223df444'
+    }
+    const mockAttachmentResponse = {
+      ...attachment,
+      _id: attachmentId,
+      link: '1722535882408-test.pdf',
+      size: 15069,
+      resourceType: 'Attachment'
+    }
 
     mockAxiosClient
       .onPatch(URLs.resources.attachments.patch.replace(':id', attachmentId))
@@ -283,7 +283,7 @@ describe('resourseService tests', () => {
 
     mockAxiosClient
       .onPatch(
-        new RegExp(URLs.resources.questions.patch.replace(':id', questionId))
+        URLs.resources.questions.patch.replace(':id', questionId)
       )
       .reply(200, mockResponse)
 

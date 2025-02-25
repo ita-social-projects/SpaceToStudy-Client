@@ -53,7 +53,7 @@ const CreateOrEditQuestion: React.FC = () => {
     )
   }
 
-  const onResponse = () => {
+  const handleResponse = () => {
     handleAlert({
       severity: snackbarVariants.success,
       message: id
@@ -67,7 +67,7 @@ const CreateOrEditQuestion: React.FC = () => {
     useMutation({
       queryKey: ['questions'],
       mutationFn: ResourceService.createQuestion,
-      onSuccess: onResponse,
+      onSuccess: handleResponse,
       onError: handleErrorAlert
     })
 
@@ -75,7 +75,7 @@ const CreateOrEditQuestion: React.FC = () => {
     useMutation({
       queryKeys: [['questions'], ['question', id]],
       mutationFn: ResourceService.updateQuestion,
-      onSuccess: onResponse,
+      onSuccess: handleResponse,
       onError: handleErrorAlert
     })
 
@@ -106,7 +106,10 @@ const CreateOrEditQuestion: React.FC = () => {
   } = useForm<CreateOrEditQuestionForm>({
     initialValues: initialValues,
     onSubmit: () => {
-      id ? editQuestion({ ...data, id: id }) : createQuestion(data)
+      if (id) {
+        editQuestion({ ...data, id: id })
+      }
+      createQuestion(data)
     }
   })
 

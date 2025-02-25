@@ -28,7 +28,7 @@ export interface Categories extends CommonEntityFields {
 
 export type GetResourcesParams = Partial<RequestParams> & {
   title?: string
-  fileName: string
+  fileName?: string
 }
 
 export interface UpdateResourceCategory {

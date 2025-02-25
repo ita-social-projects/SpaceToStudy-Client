@@ -24,34 +24,32 @@ interface CreateOrEditQuizQuestionProps {
   onCancel: () => void
 }
 
-export interface CreateOrEditQuizQuestionRef {
-  openCreateModal: () => void
-}
-
-const CreateOrEditQuizQuestionComponent = (
-  { question, setQuestions, onCancel }: CreateOrEditQuizQuestionProps,
-  ref: React.Ref<CreateOrEditQuizQuestionRef>
-) => {
+const CreateOrEditQuizQuestion = forwardRef<
+  { openCreateModal: () => void },
+  CreateOrEditQuizQuestionProps
+>(({ question, setQuestions, onCancel }, reference) => {
   const { handleErrorAlert, handleAlert } = useSnackbarAlert()
   const { openModal, closeModal } = useModalContext()
 
-  const onCreateResponse = (createdQuestion: Question | null) => {
-    createdQuestion &&
+  const handleCreateResponse = (createdQuestion: Question) => {
+    if (createdQuestion) {
       setQuestions((prevQuestions) => [...prevQuestions, createdQuestion])
-    onResponse()
+    }
+    handleResponse()
   }
 
-  const onUpdateResponse = (updatedQuestion: Question | null) => {
-    updatedQuestion &&
-      setQuestions((prevQuestions) =>
-        prevQuestions.map((question) =>
+  const handleUpdateResponse = (updatedQuestion: Question) => {
+    if (updatedQuestion) {
+      setQuestions((prevQuestions) => {
+        return prevQuestions.map((question) =>
           question._id === updatedQuestion._id ? updatedQuestion : question
         )
-      )
-    onResponse()
+      })
+    }
+    handleResponse()
   }
 
-  const onResponse = () => {
+  const handleResponse = () => {
     handleAlert({
       severity: snackbarVariants.success,
       message: 'myResourcesPage.questions.successAddedQuestion'
@@ -62,14 +60,14 @@ const CreateOrEditQuizQuestionComponent = (
   const { mutate: createQuestion, isPending: createPending } = useMutation({
     queryKey: ['questions'],
     mutationFn: ResourceService.createQuestion,
-    onSuccess: onCreateResponse,
+    onSuccess: handleCreateResponse,
     onError: handleErrorAlert
   })
 
   const { mutate: updateQuestion, isPending: updatePending } = useMutation({
     queryKeys: [['questions'], ['question', question?._id]],
     mutationFn: ResourceService.updateQuestion,
-    onSuccess: onUpdateResponse,
+    onSuccess: handleUpdateResponse,
     onError: handleErrorAlert
   })
 
@@ -83,12 +81,12 @@ const CreateOrEditQuizQuestionComponent = (
   } = useForm<QuestionForm>({
     initialValues: initialValues(question)
   })
-  const onCloseCreation = useCallback(() => {
+  const handleCloseCreation = useCallback(() => {
     closeModal()
     onCancel()
   }, [closeModal, onCancel])
 
-  const onOpenCreation = useCallback(
+  const handleOpenCreation = useCallback(
     ({ title, category }: QuestionModalForm) => {
       handleNonInputValueChange('title', title)
       handleNonInputValueChange('category', category)
@@ -97,7 +95,7 @@ const CreateOrEditQuizQuestionComponent = (
     [closeModal, handleNonInputValueChange]
   )
 
-  const onCreateQuestion = () => {
+  const handleCreateQuestion = () => {
     const updatedData = data.openAnswer
       ? {
           ...data,
@@ -112,24 +110,29 @@ const CreateOrEditQuizQuestionComponent = (
     createQuestion(updatedData)
   }
 
-  const onUpdateQuestion = () => {
-    question && updateQuestion({ ...data, id: question._id })
+  const handleUpdateQuestion = () => {
+    if (question) {
+      updateQuestion({ ...data, id: question._id })
+    }
   }
 
-  const onOpenCreateQuestionModal = useCallback(() => {
+  const handleOpenCreateQuestionModal = useCallback(() => {
     openModal({
       component: (
         <CreateOrEditQuestionModal
-          actions={{ onCancel: onCloseCreation, onSave: onOpenCreation }}
+          actions={{
+            onCancel: handleCloseCreation,
+            onSave: handleOpenCreation
+          }}
           initialData={data}
         />
       ),
       customCloseModal: onCancel
     })
-  }, [openModal, onCloseCreation, onOpenCreation, data, onCancel])
+  }, [openModal, handleCloseCreation, handleOpenCreation, data, onCancel])
 
-  useImperativeHandle(ref, () => ({
-    openCreateModal: onOpenCreateQuestionModal
+  useImperativeHandle(reference, () => ({
+    openCreateModal: handleOpenCreateQuestionModal
   }))
 
   return (
@@ -143,13 +146,13 @@ const CreateOrEditQuizQuestionComponent = (
         isQuizQuestion
         loading={createPending || updatePending}
         onCancel={onCancel}
-        onEdit={onOpenCreateQuestionModal}
-        onSave={question ? onUpdateQuestion : onCreateQuestion}
+        onEdit={handleOpenCreateQuestionModal}
+        onSave={question ? handleUpdateQuestion : handleCreateQuestion}
       />
     </Box>
   )
-}
+})
 
-const CreateOrEditQuizQuestion = forwardRef(CreateOrEditQuizQuestionComponent)
+CreateOrEditQuizQuestion.displayName = 'CreateOrEditQuizQuestion'
 
 export default CreateOrEditQuizQuestion
