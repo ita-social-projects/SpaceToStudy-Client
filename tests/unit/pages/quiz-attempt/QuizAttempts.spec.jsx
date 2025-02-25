@@ -69,7 +69,24 @@ const mockFinishedQuizzes = [
   }
 ]
 
+const mockUseParams = vi.fn()
+
+vi.mock('react-router-dom', async () => {
+  const original = await vi.importActual('react-router-dom')
+  return {
+    ...original,
+    useParams: () => mockUseParams()
+  }
+})
+
 describe('QuizPage for student', () => {
+  beforeEach(() => {
+    mockUseParams.mockReturnValue({
+      id: mockCooperationId,
+      quizId: mockQuizId
+    })
+  })
+
   beforeAll(() => {
     mockAxiosClient
       .onGet(URLs.quizzes.getById.replace(':id', ''))
@@ -88,9 +105,11 @@ describe('QuizPage for student', () => {
 
     mockAxiosClient
       .onGet(
-        URLs.finishedQuizzes.getByQuizId
-          .replace(':cooperationId', '')
-          .replace(':quizId', '')
+        new RegExp(
+          URLs.finishedQuizzes.getByQuizId
+            .replace(':cooperationId', mockCooperationId)
+            .replace(':quizId', mockQuizId)
+        )
       )
       .reply(200, mockFinishedQuizzes)
   })
