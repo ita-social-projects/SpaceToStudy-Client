@@ -161,11 +161,16 @@ const EditProfile = () => {
     if (typeof photo === 'object' || photo === '') {
       dataToUpdate.photo = photo
     }
-
+    const dataWithoutEmptyStrings = Object.fromEntries(
+      Object.entries(dataToUpdate).map(([key, value]) => [
+        key,
+        value === '' ? null : value
+      ])
+    )
     await dispatch(
       updateUser({
         userId,
-        params: dataToUpdate
+        params: dataWithoutEmptyStrings
       })
     )
 

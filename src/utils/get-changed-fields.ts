@@ -3,8 +3,8 @@ type Nullable<T> = {
 }
 
 export function getChangedFields<T>(
-  initialState: Partial<T> | null,
-  currentState: Partial<T> | null
+  initialState: T | null,
+  currentState: T | null
 ): Partial<Nullable<T>> {
   if (!initialState || !currentState) return {}
 
@@ -19,9 +19,8 @@ export function getChangedFields<T>(
       (currentValue !== undefined || initialValue !== undefined) &&
       JSON.stringify(initialValue) !== JSON.stringify(currentValue)
     ) {
-      changes[typedKey] = currentValue || null
+      changes[typedKey] = currentValue
     }
   })
-
   return changes
 }
