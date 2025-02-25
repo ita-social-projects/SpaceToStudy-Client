@@ -75,7 +75,7 @@ const CreateOrEditQuizContainer: React.FC<QuizContentProps> = ({
     navigate(
       getFullUrl({
         pathname: authRoutes.myResources.root.path,
-        searchParameters: { tab: 'questions' }
+        searchParameters: { tab: 'quizzes' }
       })
     )
   }
