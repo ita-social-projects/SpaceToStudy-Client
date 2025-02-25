@@ -52,16 +52,14 @@ const CategoriesContainer = () => {
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const getCategories = useCallback(
-    () =>
-      ResourceService.getResourcesCategories({
-        limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-        sort,
-        name: searchTitle.current
-      }),
-    [page, itemsPerPage, sort, searchTitle]
-  )
+  const getCategories = useCallback(() => {
+    return ResourceService.getResourcesCategories({
+      limit: itemsPerPage,
+      skip: (page - 1) * itemsPerPage,
+      sort,
+      name: searchTitle.current
+    })
+  }, [page, itemsPerPage, sort, searchTitle])
 
   const deleteCategory = useCallback(
     (id?: string) => ResourceService.deleteResourceCategory(id ?? ''),
@@ -88,7 +86,7 @@ const CategoriesContainer = () => {
   }, [handleErrorAlert, error])
 
   const onResponse = useCallback(
-    (response: Categories | null) => {
+    (response: Categories) => {
       const categoryName = response ? response.name : ''
 
       dispatch(
