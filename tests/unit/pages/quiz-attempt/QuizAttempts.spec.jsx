@@ -1,10 +1,9 @@
 import { beforeAll, beforeEach, expect } from 'vitest'
-import { findByText, screen, act, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import QuizAttemptsPage from '~/pages/quiz-attempts/QuizAttempts'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import QuizReview from '~/pages/quiz-review/QuizReview'
 
 const mockQuizId = '6641388f36ebdb0432a3a2e5'
 const mockCooperationId = '67ba3b3e4ab9fe9998c7ca2b'
@@ -87,11 +86,7 @@ describe('QuizPage for student', () => {
       )
       .reply(200, mockQuiz)
 
-    mockAxiosClient
-      .onGet(
-        '/finished-quizzes//'
-      )
-      .reply(200, mockFinishedQuizzes)
+    mockAxiosClient.onGet('/finished-quizzes//').reply(200, mockFinishedQuizzes)
   })
 
   beforeEach(() => {
@@ -108,9 +103,7 @@ describe('QuizPage for student', () => {
   it('should render Quiz review after review button is clicked', async () => {
     const reviewButton = await screen.findByText('quiz.reviewAttempt')
 
-    act(() => {
-      fireEvent.click(reviewButton)
-    })
+    fireEvent.click(reviewButton)
 
     const quizTitle = await screen.findByText('JS Quiz')
     expect(quizTitle).toBeInTheDocument()
