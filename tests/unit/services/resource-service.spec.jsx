@@ -87,7 +87,7 @@ describe('resourseService tests', () => {
     expect(mockAxiosClient.history.patch[0].url).toBe(
       URLs.quizzes.patch.replace(':id', quizId)
     )
-
+  
     expect(mockAxiosClient.history.patch[0].data).toEqual(JSON.stringify(quizData))
   })
 
@@ -119,9 +119,9 @@ describe('resourseService tests', () => {
     const createdQuiz = await ResourceService.addQuiz(newQuizData)
   
     expect(mockAxiosClient.history.post[0].url).toBe(URLs.quizzes.add)
-
+  
     expect(mockAxiosClient.history.post[0].data).toEqual(JSON.stringify(newQuizData))
-
+  
     expect(createdQuiz).toEqual(mockResponse)
   })
   
@@ -156,19 +156,19 @@ describe('resourseService tests', () => {
     expect(response).toEqual(mockResponse)
   })
 
-  it('should edit an attachment', async () => {
-    const attachmentId = '6255bc080a75adf9223df444'
-    const attachment = {
-      description: 'Modified description',
-      category: '8655bc080a75adf9223df444'
-    }
-    const mockAttachmentResponse = {
-      ...attachment,
-      _id: attachmentId,
-      link: '1722535882408-test.pdf',
-      size: 15069,
-      resourceType: 'Attachment'
-    }
+   it('should edit an attachment', async () => {
+     const attachmentId = '6255bc080a75adf9223df444'
+     const attachment = {
+       description: 'Modified description',
+       category: '8655bc080a75adf9223df444'
+     }
+     const mockAttachmentResponse = {
+       ...attachment,
+       _id: attachmentId,
+       link: '1722535882408-test.pdf',
+       size: 15069,
+       resourceType: 'Attachment'
+     }
 
     mockAxiosClient
       .onPatch(URLs.resources.attachments.patch.replace(':id', attachmentId))
