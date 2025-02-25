@@ -64,18 +64,6 @@ describe('CategoriesContainer test', () => {
     expect(newCategoryBtn).toBeInTheDocument()
   })
 
-  it('should open new category modal after button click', async () => {
-    const addCategoryBtn = await screen.findByText(
-      'myResourcesPage.categories.addBtn'
-    )
-
-    fireEvent.click(addCategoryBtn)
-
-    const addCategoryPopover = screen.getByTestId('popupContent')
-
-    expect(addCategoryPopover).toBeInTheDocument()
-  })
-
   it('should render table with category items', async () => {
     const categoryItemTitle = await screen.findByText(
       responseCategoriesMock.items[0].name
@@ -86,6 +74,18 @@ describe('CategoriesContainer test', () => {
 
     expect(categoryItemTitle).toBeInTheDocument()
     expect(tableLastUpdatesText).toBeInTheDocument()
+  })
+
+  it('should open new category modal after button click', async () => {
+    const addCategoryBtn = await screen.findByText(
+      'myResourcesPage.categories.addBtn'
+    )
+
+    fireEvent.click(addCategoryBtn)
+
+    const addCategoryPopover = screen.getByTestId('popupContent')
+
+    expect(addCategoryPopover).toBeInTheDocument()
   })
 
   it('should display category menu', async () => {
