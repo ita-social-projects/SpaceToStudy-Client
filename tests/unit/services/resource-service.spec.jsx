@@ -4,8 +4,8 @@ import { ResourceService } from '~/services/resource-service'
 
 describe('resourseService tests', () => {
   afterEach(() => {
-    mockAxiosClient.resetHistory()
-    mockAxiosClient.reset()
+    mockAxiosClient.resetHistory() 
+    mockAxiosClient.reset() 
   })
 
   it('should edit a lesson', async () => {
@@ -77,20 +77,18 @@ describe('resourseService tests', () => {
         correctAnswers: true
       }
     }
-
+  
     mockAxiosClient
       .onPatch(URLs.quizzes.patch.replace(':id', quizId))
       .reply(200)
-
+  
     await ResourceService.editQuiz({ id: quizId, ...quizData })
-
+  
     expect(mockAxiosClient.history.patch[0].url).toBe(
       URLs.quizzes.patch.replace(':id', quizId)
     )
 
-    expect(mockAxiosClient.history.patch[0].data).toEqual(
-      JSON.stringify(quizData)
-    )
+    expect(mockAxiosClient.history.patch[0].data).toEqual(JSON.stringify(quizData))
   })
 
   it('should create a new quiz', async () => {
@@ -108,27 +106,25 @@ describe('resourseService tests', () => {
         correctAnswers: false
       }
     }
-
+  
     const mockResponse = {
       ...newQuizData,
       _id: 'new-quiz-id',
       createdAt: '2025-01-01T00:00:00.000Z',
       updatedAt: '2025-01-01T00:00:00.000Z'
     }
-
+  
     mockAxiosClient.onPost(URLs.quizzes.add).reply(200, mockResponse)
-
+  
     const createdQuiz = await ResourceService.addQuiz(newQuizData)
-
+  
     expect(mockAxiosClient.history.post[0].url).toBe(URLs.quizzes.add)
 
-    expect(mockAxiosClient.history.post[0].data).toEqual(
-      JSON.stringify(newQuizData)
-    )
+    expect(mockAxiosClient.history.post[0].data).toEqual(JSON.stringify(newQuizData))
 
     expect(createdQuiz).toEqual(mockResponse)
   })
-
+  
   it('should get resource categories names', async () => {
     const mockResponse = [
       { _id: '1', name: 'Category 1' },
@@ -141,9 +137,7 @@ describe('resourseService tests', () => {
 
     const response = await ResourceService.getResourcesCategoriesName()
 
-    expect(mockAxiosClient.history.get[0].url).toBe(
-      URLs.resources.resourcesCategories.getNames
-    )
+    expect(mockAxiosClient.history.get[0].url).toBe(URLs.resources.resourcesCategories.getNames)
     expect(response).toEqual(mockResponse)
   })
 
@@ -157,9 +151,7 @@ describe('resourseService tests', () => {
 
     const response = await ResourceService.createResourceCategory(params)
 
-    expect(mockAxiosClient.history.post[0].url).toBe(
-      URLs.resources.resourcesCategories.post
-    )
+    expect(mockAxiosClient.history.post[0].url).toBe(URLs.resources.resourcesCategories.post)
     expect(mockAxiosClient.history.post[0].data).toBe(JSON.stringify(params))
     expect(response).toEqual(mockResponse)
   })
