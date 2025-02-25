@@ -1,9 +1,9 @@
-import { afterEach, expect, vi } from 'vitest'
+import { afterAll, afterEach, expect, vi } from 'vitest'
 import { fireEvent, waitFor, screen } from '@testing-library/react'
 import { URLs } from '~/constants/request'
 import OfferDetails from '~/pages/offer-details/OfferDetails'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import useQuery from '~/hooks/use-query'
+import * as useQuery from '~/hooks/use-query'
 import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { setField } from '~/redux/features/editProfileSlice'
@@ -22,14 +22,6 @@ vi.mock('react-router-dom', async () => {
     useOutletContext: () => ({
       data: mockOffer
     })
-  }
-})
-
-let actual;
-vi.mock('~/hooks/use-query', async () => {
-  actual = await vi.importActual('~/hooks/use-query')
-  return {
-    default: vi.fn()
   }
 })
 
@@ -57,6 +49,12 @@ const dispatch = vi.fn()
 const desktopData = {
   isLaptopAndAbove: true,
   isMobile: false,
+  isTablet: false
+}
+
+const mobileData = {
+  isLaptopAndAbove: false,
+  isMobile: true,
   isTablet: false
 }
 
@@ -233,26 +231,24 @@ describe('Offer details with student role', () => {
 })
 
 describe('OfferDetails on mobile', () => {
-  const mobileData = {
-    isLaptopAndAbove: false,
-    isMobile: true,
-    isTablet: false
-  }
+  const useQuerySpy = vi.spyOn(useQuery, 'default')
+
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => mobileData)
-
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: mockStateTutor
-    })
-
-    useQuery.mockImplementation(actual)
   })
 
   afterEach(() => {
-    vi.resetAllMocks()
+    useQuerySpy.mockReset()
+  })
+
+  afterAll(() => {
+    useQuerySpy.mockRestore()
   })
 
   it('should display the offer details correctly', async () => {
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: mockStateTutor
+    })
     const authorAvgRating = await screen.findByText(
       mockOffer.author.averageRating.tutor
     )
@@ -266,16 +262,14 @@ describe('OfferDetails on mobile', () => {
     expect(name).toBeInTheDocument()
   })
 
-  it('should render Loader', async () => {
-    useQuery.mockImplementationOnce(() => ({
-      isLoading: true,
-      data: null,
-      error: null
-    }))
+  it('should render Loader', () => {
+    useQuerySpy.mockReturnValue({ isLoading: true })
 
-    renderWithProviders(<OfferDetails />)
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: mockStateTutor
+    })
 
-    const loader = await screen.getByTestId('loader')
+    const loader = screen.getByTestId('loader')
 
     expect(loader).toBeInTheDocument()
   })
