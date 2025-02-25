@@ -105,11 +105,9 @@ describe('QuizPage for student', () => {
 
     mockAxiosClient
       .onGet(
-        new RegExp(
-          URLs.finishedQuizzes.getByQuizId
-            .replace(':cooperationId', mockCooperationId)
-            .replace(':quizId', mockQuizId)
-        )
+        URLs.finishedQuizzes.getByQuizId
+          .replace(':cooperationId', mockCooperationId)
+          .replace(':quizId', mockQuizId)
       )
       .reply(200, mockFinishedQuizzes)
   })
