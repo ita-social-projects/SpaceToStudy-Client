@@ -55,11 +55,9 @@ describe('OfferCarousel with data', () => {
   it('should bookmark offer', async () => {
     mockAxiosClient
       .onPatch(
-        new RegExp(
-          URLs.users.updateBookmarks
-            .replace(':userId', mockOffer.author._id)
-            .replace(':offerId', mockOffer._id)
-        )
+        URLs.users.updateBookmarks
+          .replace(':userId', mockOffer.author._id)
+          .replace(':offerId', mockOffer._id)
       )
       .reply(200, mockBookmarkedOffers)
 
