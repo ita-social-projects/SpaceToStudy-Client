@@ -17,13 +17,13 @@ describe('useTimer', () => {
   })
 
   it('should initialize with the given initial time', () => {
-    const { result } = renderHook(() => useTimer(initialTime))
+    const { result } = renderHook(() => useTimer({ initialTime }))
 
     expect(result.current.time).toBe('00:01:00')
   })
 
   it('should decrement time every second', () => {
-    const { result } = renderHook(() => useTimer(initialTime))
+    const { result } = renderHook(() => useTimer({ initialTime }))
 
     act(() => {
       vi.advanceTimersByTime(1000)
@@ -35,7 +35,7 @@ describe('useTimer', () => {
   it('should clear interval on unmount', () => {
     const clearIntervalSpy = vi.spyOn(global, 'clearInterval')
 
-    const { unmount } = renderHook(() => useTimer(initialTime))
+    const { unmount } = renderHook(() => useTimer({ initialTime }))
 
     unmount()
 
