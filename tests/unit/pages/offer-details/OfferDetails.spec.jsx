@@ -1,8 +1,9 @@
-import { expect, vi } from 'vitest'
+import { afterEach, expect, vi } from 'vitest'
 import { fireEvent, waitFor, screen } from '@testing-library/react'
 import { URLs } from '~/constants/request'
 import OfferDetails from '~/pages/offer-details/OfferDetails'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import useQuery from '~/hooks/use-query'
 import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { setField } from '~/redux/features/editProfileSlice'
@@ -21,6 +22,14 @@ vi.mock('react-router-dom', async () => {
     useOutletContext: () => ({
       data: mockOffer
     })
+  }
+})
+
+let actual;
+vi.mock('~/hooks/use-query', async () => {
+  actual = await vi.importActual('~/hooks/use-query')
+  return {
+    default: vi.fn()
   }
 })
 
@@ -231,9 +240,16 @@ describe('OfferDetails on mobile', () => {
   }
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => mobileData)
+
     renderWithProviders(<OfferDetails />, {
       preloadedState: mockStateTutor
     })
+
+    useQuery.mockImplementation(actual)
+  })
+
+  afterEach(() => {
+    vi.resetAllMocks()
   })
 
   it('should display the offer details correctly', async () => {
@@ -248,6 +264,20 @@ describe('OfferDetails on mobile', () => {
     expect(authorAvgRating).toBeInTheDocument()
     expect(title).toBeInTheDocument()
     expect(name).toBeInTheDocument()
+  })
+
+  it('should render Loader', async () => {
+    useQuery.mockImplementationOnce(() => ({
+      isLoading: true,
+      data: null,
+      error: null
+    }))
+
+    renderWithProviders(<OfferDetails />)
+
+    const loader = await screen.getByTestId('loader')
+
+    expect(loader).toBeInTheDocument()
   })
 })
 

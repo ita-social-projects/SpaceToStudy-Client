@@ -64,6 +64,7 @@ export interface CreateOrUpdateOfferData
   category: CategoryNameInterface['name']
   subject: SubjectNameInterface['name']
   price: string
+  id: string
 }
 
 export interface PriceRange {

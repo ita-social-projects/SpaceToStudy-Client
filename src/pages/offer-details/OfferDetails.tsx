@@ -93,16 +93,10 @@ const OfferDetails = () => {
     }
   }, [isError, responseError])
 
-  const updateOffer = useCallback(
-    (updateData: Partial<CreateOrUpdateOfferData>) => {
-      return OfferService.updateOfferWithBaseService(id, updateData)
-    },
-    [id]
-  )
-
   const { mutate: updateOfferDetails, isPending: updateLoading } = useMutation({
     queryKeys: [['offers'], ['offer', id]],
-    mutationFn: updateOffer,
+    mutationFn: (updateData: Partial<CreateOrUpdateOfferData>) =>
+      OfferService.updateOfferWithBaseService(id, updateData),
     onError: responseError
   })
 
@@ -149,7 +143,7 @@ const OfferDetails = () => {
         : StatusEnum.Draft
 
     if (offerData) {
-      updateOfferDetails({ status })
+      updateOfferDetails({ status, id })
     }
   }
 
@@ -160,14 +154,15 @@ const OfferDetails = () => {
       check: true
     })
     if (confirmed) {
-      updateOfferDetails({ status: StatusEnum.Closed })
+      updateOfferDetails({ status: StatusEnum.Closed, id })
     }
   }
 
   const handleEnrollOffer = () => {
     if (offerData) {
       updateOfferDetails({
-        enrolledUsers: [...offerData.enrolledUsers, userId]
+        enrolledUsers: [...offerData.enrolledUsers, userId],
+        id
       })
     }
   }
@@ -214,12 +209,8 @@ const OfferDetails = () => {
     )
   }, [dispatch, userId, userRole])
 
-  if (isOfferLoading) {
+  if (isOfferLoading || !offerData) {
     return <Loader pageLoad />
-  }
-
-  if (!offerData) {
-    return null
   }
 
   return (
