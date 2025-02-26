@@ -1,4 +1,4 @@
-import { FC, useEffect, Dispatch, SetStateAction } from 'react'
+import { FC, useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
 import LeakAddSharpIcon from '@mui/icons-material/LeakAddSharp'
@@ -53,6 +53,8 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { hash } = useLocation()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isDrafting, setIsDrafting] = useState(false)
 
   const offerAction = existingOffer
     ? OfferActionsEnum.Edit
@@ -128,6 +130,15 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   const changeStatus = () =>
     handleNonInputValueChange('status', StatusEnum.Draft)
 
+  const handleSubmitClick = () => {
+    setIsSubmitting(true)
+  }
+
+  const handleDraftClick = () => {
+    setIsDrafting(true)
+    changeStatus()
+  }
+
   const isMovableToDrafts =
     existingOffer?.status !== StatusEnum.Closed &&
     existingOffer?.status !== StatusEnum.Draft
@@ -164,7 +175,8 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
       />
       <Box sx={styles.buttonBox}>
         <Button
-          loading={loading}
+          loading={loading && isSubmitting}
+          onClick={handleSubmitClick}
           size='lg'
           sx={styles.submit}
           type={ButtonTypeEnum.Submit}
@@ -173,7 +185,8 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
         </Button>
         {isMovableToDrafts && (
           <Button
-            onClick={changeStatus}
+            loading={loading && isDrafting}
+            onClick={handleDraftClick}
             size='lg'
             type={ButtonTypeEnum.Submit}
             variant='tonal'
