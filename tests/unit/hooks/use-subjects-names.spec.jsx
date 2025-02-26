@@ -4,7 +4,6 @@ import useSubjects from '~/hooks/use-subjects-names'
 import { subjectService } from '~/services/subject-service'
 import { baseService } from '~/services/base-service'
 import QueryProvider from '~/QueryProvider'
-import { queryClient } from '~/plugins/queryClient'
 
 vi.mock('~/services/subject-service')
 vi.mock('~/services/base-service')
