@@ -70,9 +70,10 @@ export const OfferService = {
     ),
 
   updateOfferWithBaseService: (
-    id: string,
-    updateData: Partial<CreateOrUpdateOfferData>
+    updateData: Partial<CreateOrUpdateOfferData> & Record<'id', string>
   ) => {
+    const { id, ...dataToUpdate } = updateData
+
     const resultUrl = getFullUrl({
       pathname: URLs.offers.update,
       parameters: { id }
@@ -81,7 +82,7 @@ export const OfferService = {
     return baseService.request<Offer>({
       method: 'PATCH',
       url: resultUrl,
-      data: updateData
+      data: dataToUpdate
     })
   },
 
