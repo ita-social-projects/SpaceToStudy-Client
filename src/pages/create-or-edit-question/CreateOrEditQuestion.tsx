@@ -63,6 +63,14 @@ const CreateOrEditQuestion: React.FC = () => {
     navigateToQuestionsTab()
   }
 
+  const handleSubmitQuestion = () => {
+    if (id) {
+      editQuestion({ ...data, id: id })
+    } else {
+      createQuestion(data)
+    }
+  }
+
   const { mutate: createQuestion, isPending: createQuestionPending } =
     useMutation({
       queryKey: ['questions'],
@@ -105,12 +113,7 @@ const CreateOrEditQuestion: React.FC = () => {
     errors
   } = useForm<CreateOrEditQuestionForm>({
     initialValues: initialValues,
-    onSubmit: () => {
-      if (id) {
-        editQuestion({ ...data, id: id })
-      }
-      createQuestion(data)
-    }
+    onSubmit: handleSubmitQuestion
   })
 
   const { type, title, text, answers, openAnswer, category } = data
