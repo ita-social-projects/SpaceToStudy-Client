@@ -85,7 +85,12 @@ const LessonsContainer = () => {
       return
     }
 
-    const resource = lessons.items?.find((item) => item._id === id)
+    const resource = lessons.items.find((item) => item._id === id)
+
+    if (!resource) {
+      return
+    }
+
     openModal({
       component: (
         <ChangeResourceConfirmModal
@@ -98,7 +103,7 @@ const LessonsContainer = () => {
             )
           }}
           resourceId={id}
-          title={resource?.title}
+          title={resource.title}
         />
       )
     })
