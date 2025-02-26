@@ -27,7 +27,6 @@ import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import {
-  CreateOrUpdateOfferData,
   OutletContext,
   StatusEnum,
   ErrorResponse,
@@ -95,8 +94,7 @@ const OfferDetails = () => {
 
   const { mutate: updateOfferDetails, isPending: updateLoading } = useMutation({
     queryKeys: [['offers'], ['offer', id]],
-    mutationFn: (updateData: Partial<CreateOrUpdateOfferData>) =>
-      OfferService.updateOfferWithBaseService(id, updateData),
+    mutationFn: OfferService.updateOfferWithBaseService,
     onError: responseError
   })
 
