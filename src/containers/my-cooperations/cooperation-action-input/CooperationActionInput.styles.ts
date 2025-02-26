@@ -13,7 +13,7 @@ export const styles = {
     mt: '10px'
   },
   divider: {
-    marginBottom: '16px'
+    mb: '16px'
   },
   inputField: {
     flex: 1
