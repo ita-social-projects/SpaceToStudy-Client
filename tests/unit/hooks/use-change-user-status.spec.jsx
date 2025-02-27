@@ -7,6 +7,7 @@ import cooperationsReducer from '~/redux/features/cooperationsSlice'
 import snackbarReducer from '~/redux/features/snackbarSlice'
 import { Provider } from 'react-redux'
 import PopupsProvider from '~/PopupsProvider'
+import QueryProvider from '~/QueryProvider'
 
 vi.mock('~/hooks/use-confirm', () => {
   return {
@@ -45,7 +46,9 @@ const store = configureStore({
 
 const wrapper = ({ children }) => (
   <Provider store={store}>
-    <PopupsProvider>{children}</PopupsProvider>
+    <QueryProvider>
+      <PopupsProvider>{children}</PopupsProvider>
+    </QueryProvider>
   </Provider>
 )
 
