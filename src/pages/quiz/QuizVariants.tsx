@@ -82,22 +82,26 @@ const ActiveQuiz: React.FC = () => {
 
   const grade = Math.round((points / items.length) * 100)
 
+  console.log('data in quizVariants', data)
+
   const mappedResults = useMemo(() => {
     return items.map(({ text, answers, _id }) => {
+      const isOpenAnswer = !Array.isArray(data[_id])
+
       return {
         question: text,
-        answers: answers.map(({ text, isCorrect }) => {
-          return {
-            text,
-            isCorrect,
-            isChosen: data[_id]?.includes(text) ?? false
-          }
-        })
+        answers: answers.map(({ text, isCorrect }) => ({
+          text,
+          isCorrect,
+          isChosen: isOpenAnswer || (data[_id]?.includes(text) ?? false)
+        }))
       }
     })
   }, [data, items])
 
   const addFinishedQuiz = useCallback(() => {
+    console.log('mappedResults', mappedResults)
+
     return ResourceService.addFinishedQuiz({
       cooperation: cooperationId,
       quiz: quizId,
@@ -289,6 +293,10 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
         const textAnswers = chosenAnswers.map(
           (chosenAnswer) => chosenAnswer.text
         )
+
+        console.log('chosenAnswers', chosenAnswers)
+        console.log('textAnswers', textAnswers)
+
         result[quizQuestionId] = textAnswers
       }
     })

@@ -168,7 +168,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
         type={question.type}
         value={value as string}
       />
-      {/* <TutorAnswerGrading /> */}
+      <TutorAnswerGrading />
     </Box>
   ) : (
     multipleChoiceAnswersBlock
