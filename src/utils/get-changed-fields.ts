@@ -2,8 +2,6 @@ export function getChangedFields<T extends Record<string, unknown>>(
   initialState: T,
   currentState: T
 ): Partial<T> {
-  if (!initialState || !currentState) return {}
-
   const changes: Partial<T> = {}
 
   Object.keys(currentState).forEach((key) => {
