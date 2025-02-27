@@ -80,10 +80,8 @@ const CreateOrEditNote = ({
     )
   }
 
-  const photo = userResponse.photo
-
-  const userPhoto = photo
-    ? new URL(photo, import.meta.env.VITE_APP_IMG_USER_URL).href
+  const userPhoto = userResponse.photo
+    ? new URL(userResponse.photo, import.meta.env.VITE_APP_IMG_USER_URL).href
     : undefined
   const userName = `${userResponse.firstName} ${userResponse.lastName}`
   const userInfo = (

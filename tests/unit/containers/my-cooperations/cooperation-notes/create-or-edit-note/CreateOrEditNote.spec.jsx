@@ -1,22 +1,44 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { beforeEach, vi } from 'vitest'
 import CreateOrEditNote from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
+import { getFullUrl } from '~/utils/get-full-url'
 
 const addNewNoteMock = vi.fn()
 
-const noteMock = { text: 'noteText', isPrivate: true }
+const noteMock = { text: 'cooperationsPage.notes.noteText', isPrivate: true }
+const userMock = {
+  _id: '648850c4fdc2d1a130c24aea',
+  role: 'tutor',
+  firstName: 'Test',
+  lastName: 'User',
+  photo: 'https://www.google.com'
+}
+
+const appMain = {
+  appMain: { userRole: 'tutor', userId: '648850c4fdc2d1a130c24aea' }
+}
+
+beforeEach(async () => {
+  const url = getFullUrl({
+    parameters: { id: userMock._id },
+    pathname: URLs.users.getUserById,
+    searchParameters: { userRole: userMock.role }
+  })
+  mockAxiosClient.onGet(url).reply(200, userMock)
+  renderWithProviders(
+      <CreateOrEditNote onSubmit={addNewNoteMock} onSubmitLoading={false} />,
+      {
+        preloadedState: appMain
+      }
+  )
+})
 
 describe('CreateOrEditNote component', () => {
-  beforeEach(() => {
-    renderWithProviders(
-      <CreateOrEditNote onSubmit={addNewNoteMock} onSubmitLoading={false} />
-    )
-  })
-
-  it('should render component', () => {
-    const noteSettings = screen.getByText(
-      'cooperationsPage.notes.privateSetting'
+  it('should render component', async () => {
+    const noteSettings = await screen.findByText(
+        'cooperationsPage.notes.privateSetting'
     )
     expect(noteSettings).toBeInTheDocument()
   })
@@ -44,19 +66,8 @@ describe('CreateOrEditNote component', () => {
 })
 
 describe('CreateOrEditNote component with initial note', () => {
-  beforeEach(() => {
-    renderWithProviders(
-      <CreateOrEditNote
-        note={noteMock}
-        onSubmit={addNewNoteMock}
-        onSubmitLoading={false}
-      />
-    )
-  })
-
-  it('should set note as initial data to form', () => {
-    const noteText = screen.getByText(noteMock.text)
-
+  it('should set note as initial data to form', async () => {
+    const noteText = await screen.findByText(noteMock.text)
     expect(noteText).toBeInTheDocument()
   })
 })
