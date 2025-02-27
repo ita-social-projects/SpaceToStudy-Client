@@ -17,85 +17,76 @@ import { useFilterQuery } from '~/hooks/use-filter-query'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import {
   defaultFilters,
-  defaultResponse,
   itemsPerPage
 } from '~/pages/bookmarked-offers/BookmarkedOffers.constants'
 import { styles } from '~/pages/bookmarked-offers/BookmarkedOffers.styles'
 import { fetchUserById } from '~/redux/features/editProfileSlice'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { userService } from '~/services/user-service'
-import {
-  CardsView,
-  CardsViewEnum,
-  GetOffersParams,
-  GetOffersResponse,
-  SizeEnum,
-  UserRole
-} from '~/types'
+import { CardsView, CardsViewEnum, SizeEnum, UserRole } from '~/types'
 import { parseQueryParams } from '~/utils/helper-functions'
+import useQuery from '~/hooks/use-query'
 
 const BookmarkedOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
-  const [offers, setOffers] = useState<GetOffersResponse>({
-    items: [],
-    count: -1
-  })
-  const [isOffersLoading, setIsOffersLoading] = useState(false)
   const { userId, userRole } = useAppSelector((state) => state.appMain)
-  const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
   const { isMobile } = useBreakpoints()
   const dispatch = useAppDispatch()
   const toolbarRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()
 
-  const { items, count: offersCount } = offers
-
   const { filters, searchParams, filterQueryActions } = useFilterQuery({
     defaultFilters
   })
+
+  const handleResponseError = useCallback(() => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: t('bookmarkedOffers.loadingError')
+      })
+    )
+  }, [dispatch, t])
+
+  const getBookmarkedOffers = useCallback(() => {
+    const parsedFilters = parseQueryParams(searchParams, defaultFilters)
+    const filters = { ...defaultFilters, ...parsedFilters }
+
+    return userService.getBookmarkedOffers(userId, {
+      ...filters,
+      limit: itemsPerPage,
+      skip: (Number(filters.page) - 1) * itemsPerPage
+    })
+  }, [userId, searchParams])
+
+  const {
+    isLoading: isOffersLoading,
+    data: offers,
+    refetch: fetchData,
+    isError
+  } = useQuery({
+    queryKey: ['bookmarks', filters, searchParams.toString()],
+    queryFn: getBookmarkedOffers,
+    options: {
+      staleTime: Infinity
+    }
+  })
+
+  useEffect(() => {
+    if (isError) handleResponseError()
+  }, [isError, handleResponseError])
+
+  const initialData = { items: [], count: isError ? 0 : -1 }
+  const { items, count: offersCount } = offers ?? initialData
 
   const { pageCount } = usePagination({
     itemsCount: offersCount,
     itemsPerPage
   })
 
-  const fetchData = useCallback(
-    async (params: GetOffersParams) => {
-      try {
-        setIsOffersLoading(true)
-        const response = await userService.getBookmarkedOffers(userId, params)
-        setOffers(response.data as GetOffersResponse)
-      } catch (e) {
-        setOffers(defaultResponse)
-        dispatch(
-          openAlert({
-            severity: snackbarVariants.error,
-            message: t('bookmarkedOffers.loadingError')
-          })
-        )
-      } finally {
-        setIsOffersLoading(false)
-      }
-    },
-    [userId, dispatch, t]
-  )
-
   const updateInfo = useCallback(() => {
-    const parsedFilters = parseQueryParams(searchParams, defaultFilters)
-    const filters = { ...defaultFilters, ...parsedFilters }
-
-    void fetchData({
-      ...filters,
-      limit: itemsPerPage,
-      skip: (Number(filters.page) - 1) * itemsPerPage
-    })
-  }, [searchParams, fetchData])
-
-  const searchString = searchParams.toString()
-
-  useEffect(() => {
-    updateInfo()
-  }, [searchString, bookmarkedOffers, updateInfo])
+    void fetchData()
+  }, [fetchData])
 
   const defaultParams = { page: defaultFilters.page }
 
