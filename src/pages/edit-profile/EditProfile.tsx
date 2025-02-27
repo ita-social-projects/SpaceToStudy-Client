@@ -96,7 +96,10 @@ const EditProfile = () => {
   }, [loading, profileState, initialEditProfileState])
 
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
-    if (!profileState || !initialEditProfileState) return {}
+    if (!profileState || !initialEditProfileState) {
+      return {}
+    }
+
     return getChangedFields(initialEditProfileState, profileState)
   }, [profileState, initialEditProfileState])
   const isChanged = useMemo<boolean>(
@@ -160,7 +163,9 @@ const EditProfile = () => {
     if (typeof photo === 'object' || photo === '') {
       dataToUpdate.photo = photo
     }
+
     const dataWithoutEmptyStrings = replaceEmptyStringsWithNull(dataToUpdate)
+
     await dispatch(
       updateUser({
         userId,
