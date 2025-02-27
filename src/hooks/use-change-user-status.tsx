@@ -2,10 +2,11 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
-import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
 import useConfirm from '~/hooks/use-confirm'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
-import { ErrorResponse, UserStatusEnum } from '~/types'
+import { UserStatusEnum } from '~/types'
 import { userService } from '~/services/user-service'
 import { setUserStatus } from '~/redux/reducer'
 import {
@@ -13,13 +14,13 @@ import {
   setToLocalStorage
 } from '~/services/local-storage-service'
 import { dismissedActivation, snackbarVariants } from '~/constants'
-import { openAlert } from '~/redux/features/snackbarSlice'
 
 const useChangeUserStatus = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { checkConfirmation } = useConfirm()
   const { userId, userStatus } = useAppSelector((state) => state.appMain)
+  const { handleAlert, handleErrorAlert } = useSnackbarAlert()
 
   const isActive = userStatus === UserStatusEnum.Active
   const neededAction = isActive ? 'deactivate' : 'activate'
@@ -32,38 +33,24 @@ const useChangeUserStatus = () => {
     [userId, isActive]
   )
 
-  const onResponse = useCallback(() => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: t('editProfilePage.profile.successMessage')
-      })
-    )
+  const handleSuccessfulResponse = useCallback(() => {
+    handleAlert({
+      message: t('editProfilePage.profile.successMessage'),
+      severity: snackbarVariants.success
+    })
 
     const status = isActive ? UserStatusEnum.Deactivated : UserStatusEnum.Active
     dispatch(setUserStatus(status))
 
-    if (!isActive) setToLocalStorage('activation', dismissedActivation)
-  }, [dispatch, isActive, t])
+    if (!isActive) {
+      setToLocalStorage('activation', dismissedActivation)
+    }
+  }, [isActive, t, dispatch, handleAlert])
 
-  const onResponseError = useCallback(
-    (error: ErrorResponse) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: `errors.${error.message}`
-        })
-      )
-    },
-    [dispatch]
-  )
-
-  const { fetchData: changeStatus } = useAxios({
-    service: changeStatusService,
-    defaultResponse: null,
-    fetchOnMount: false,
-    onResponse,
-    onResponseError
+  const { mutate: changeStatus } = useMutation({
+    mutationFn: changeStatusService,
+    onSuccess: handleSuccessfulResponse,
+    onError: handleErrorAlert
   })
 
   const checkStatusChange = useCallback(
@@ -83,7 +70,9 @@ const useChangeUserStatus = () => {
         })
 
         setToLocalStorage('activation', dismissedActivation)
-        if (confirmed) await changeStatus()
+        if (confirmed) {
+          changeStatus()
+        }
       }
     },
     [t, checkConfirmation, changeStatus, isActive, neededAction]

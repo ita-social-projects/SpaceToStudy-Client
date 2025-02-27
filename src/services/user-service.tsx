@@ -58,11 +58,23 @@ export const userService = {
   deleteUsers: (userIds: string[]): Promise<AxiosResponse<null>> => {
     return axiosClient.post(URLs.users.delete, userIds)
   },
-  deactivateUser: (userId: string): Promise<AxiosResponse<null>> => {
-    return axiosClient.patch(createUrlPath(URLs.users.deactivate, userId))
+
+  deactivateUser: (userId: string) => {
+    return baseService.request<null>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: `${URLs.users.deactivate}/${userId}`
+      })
+    })
   },
-  activateUser: (userId: string): Promise<AxiosResponse<null>> => {
-    return axiosClient.patch(createUrlPath(URLs.users.activate, userId))
+
+  activateUser: (userId: string) => {
+    return baseService.request<null>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: `${URLs.users.activate}/${userId}`
+      })
+    })
   },
 
   toggleBookmark: (userId: string, offerId: string) => {
