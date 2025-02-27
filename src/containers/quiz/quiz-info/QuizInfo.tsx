@@ -18,9 +18,10 @@ import {
   spliceSx
 } from '~/utils/helper-functions'
 
-import { QuizAttempt, QuizTimeLimit } from '~/types'
+import { QuizAttempt, QuizTimeLimit, UserRoleEnum } from '~/types'
 import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { TFunction } from 'i18next'
+import { useAppSelector } from '~/hooks/use-redux'
 
 type ActiveQuizInfoProps = {
   questionsAnswered: number
@@ -157,7 +158,7 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
   onStart
 }) => {
   const { t } = useTranslation()
-
+  const { userRole } = useAppSelector((state) => state.appMain)
   const [totalAttempts] = attempts.split(' ')
 
   const limits = {
@@ -245,7 +246,11 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
             onClick={onStart}
             size='sm'
           >
-            {usedAttempts === 0 ? t('quiz.startQuiz') : t('quiz.tryAgain')}
+            {userRole === UserRoleEnum.Student
+              ? usedAttempts === 0
+                ? t('quiz.startQuiz')
+                : t('quiz.tryAgain')
+              : t('quiz.viewQuiz')}
           </Button>
         </Box>
       </Box>

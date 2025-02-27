@@ -22,6 +22,7 @@
   "timeIsUpDescription": "The time limit for this quiz has expired. Any unanswered questions have been marked as incorrect. Your results will be calculated based on your submitted answers.",
   "viewResults": "View results",
   "startQuiz": "Start Quiz",
+  "viewQuiz": "View Quiz",
   "tryAgain": "Try again",
   "reviewAttempt": "Review attempt",
   "attemptLimit": "Attempts limits",

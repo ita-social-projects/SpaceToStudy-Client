@@ -16,8 +16,11 @@ import { isCorrectAnswer } from '~/utils/is-correct-answer'
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/containers/quiz/quiz-question/Question.styles'
 
-import { Question } from '~/types'
+import { Question, UserRoleEnum } from '~/types'
 import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
+import { useAppSelector } from '~/hooks/use-redux'
+
+import TutorAnswerGrading from '~/containers/quiz/quiz-question/TutorAnswerGrading'
 
 interface QuizQuestionProps {
   question: Question
@@ -47,6 +50,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   handleNonInputValueChange
 }) => {
   const { t } = useTranslation()
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const { isMultipleChoice, isOpenAnswer } = determineQuestionType(
     question.type
@@ -133,6 +137,8 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     <RadioGroup sx={styles.answersContainer}>{answersList}</RadioGroup>
   )
 
+  console.log(isCorrect)
+
   const answersBlock = isOpenAnswer ? (
     <Answer
       isCorrect={isCorrect}
@@ -144,6 +150,26 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
       type={question.type}
       value={value as string}
     />
+  ) : (
+    multipleChoiceAnswersBlock
+  )
+
+  console.log(value)
+
+  const answersBlockForTutors = isOpenAnswer ? (
+    <Box sx={styles.tutorOpenAnswerContainer}>
+      <Answer
+        isCorrect={isCorrect}
+        isEditable={isEditable}
+        label={question.text}
+        onTextInputChange={handleInputChange}
+        shouldShowCorrectness={shouldShowAnswersCorrectness}
+        text={question.text}
+        type={question.type}
+        value={value as string}
+      />
+      {/* <TutorAnswerGrading /> */}
+    </Box>
   ) : (
     multipleChoiceAnswersBlock
   )
@@ -166,7 +192,8 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
         <Typography sx={styles.title}>{index + 1}.</Typography>
         <Typography sx={styles.title}>{question.text}</Typography>
       </Box>
-      {answersBlock}
+      {userRole === UserRoleEnum.Student && answersBlock}
+      {userRole === UserRoleEnum.Tutor && answersBlockForTutors}
 
       {correctAnswers}
     </ContainerComponent>
