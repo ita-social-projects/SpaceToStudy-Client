@@ -10,7 +10,8 @@ import type {
   UserResponse,
   UserRole,
   GetOffersParams,
-  ItemsWithCount
+  ItemsWithCount,
+  Offer
 } from '~/types'
 
 export const userService = {
@@ -102,14 +103,14 @@ export const userService = {
       })
     })
   },
-  getBookmarkedOffers: async (
-    userId: string,
-    params?: GetOffersParams
-  ): Promise<AxiosResponse> => {
-    const userPath = createUrlPath(URLs.users.get, userId)
-
-    return await axiosClient.get(`${userPath}${URLs.users.bookmarks}`, {
-      params
+  getBookmarkedOffers: (userId: string, params?: GetOffersParams) => {
+    return baseService.request<ItemsWithCount<Offer>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.users.bookmarks,
+        parameters: { id: userId },
+        searchParameters: params
+      })
     })
   }
 }
