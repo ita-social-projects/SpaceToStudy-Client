@@ -69,8 +69,15 @@ const CreateOrEditNote = ({
       await onSubmit(data)
     }
   })
+
   if (userIsLoading || !userResponse) {
-    return <Loader size={20} />
+    return (
+      <Box sx={styles.container}>
+        <Box sx={styles.header}>
+          <Loader size={20} />
+        </Box>
+      </Box>
+    )
   }
   const firstName = userResponse.firstName
   const lastName = userResponse.lastName
