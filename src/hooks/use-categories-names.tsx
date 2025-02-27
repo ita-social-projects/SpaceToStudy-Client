@@ -1,26 +1,17 @@
-import { useCallback } from 'react'
-import { defaultResponses } from '~/constants'
-
 import useQuery from '~/hooks/use-query'
 import { categoryService } from '~/services/category-service'
 
-const useCategoriesNames = ({ fetchOnMount = true } = {}) => {
-  const getCategoriesNames = useCallback(
-    () => categoryService.getCategoriesNames(),
-    []
-  )
-
+const useCategoriesNames = () => {
   const {
     isLoading: loading,
-    data: response,
+    data: response = [],
     refetch: fetchData,
     error
   } = useQuery({
     queryKey: ['categories-names'],
-    queryFn: getCategoriesNames,
+    queryFn: categoryService.getCategoriesNames,
     options: {
-      initialData: defaultResponses.array,
-      enabled: fetchOnMount
+      staleTime: Infinity
     }
   })
 

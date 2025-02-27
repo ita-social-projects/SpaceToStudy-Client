@@ -1,30 +1,25 @@
-import {
-  QueryObserverResult,
-  QueryObserverBaseResult
-} from '@tanstack/react-query'
+import { QueryObserverResult } from '@tanstack/react-query'
 import { useCallback } from 'react'
-import { defaultResponses } from '~/constants'
+import { ResponseError } from '~/exceptions'
 
 import useQuery from '~/hooks/use-query'
 import { subjectService } from '~/services/subject-service'
-import { SubjectNameInterface } from '~/types'
+import { type SubjectNameInterface } from '~/types'
 
 interface UseSubjectsNamesProps<T> {
   category: string | null
-  fetchOnMount?: boolean
   transform?: (data: SubjectNameInterface[]) => T[]
 }
 
 interface UseSubjectsNamesResult<T> {
   loading: boolean
   response: T[]
-  fetchData: () => Promise<QueryObserverResult<SubjectNameInterface[]>>
-  error: QueryObserverBaseResult['error']
+  fetchData: () => Promise<QueryObserverResult<T[]>>
+  error: ResponseError | null
 }
 
 const useSubjectsNames = <T = SubjectNameInterface,>({
   category,
-  fetchOnMount = true,
   transform
 }: UseSubjectsNamesProps<T>): UseSubjectsNamesResult<T> => {
   const getSubjectsNames = useCallback(
@@ -34,21 +29,21 @@ const useSubjectsNames = <T = SubjectNameInterface,>({
 
   const {
     isFetching: loading,
-    data,
+    data: response = [],
     refetch: fetchData,
     error
   } = useQuery({
-    queryKey: ['subjects-names'],
+    queryKey: ['subjects-names', category],
     queryFn: getSubjectsNames,
     options: {
-      initialData: defaultResponses.array,
-      enabled: fetchOnMount
+      staleTime: Infinity,
+      select: transform
     }
   })
 
   return {
     loading,
-    response: transform ? transform(data) : (data as unknown as T[]),
+    response,
     fetchData,
     error
   }
