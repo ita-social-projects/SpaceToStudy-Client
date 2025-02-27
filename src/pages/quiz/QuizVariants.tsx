@@ -184,13 +184,13 @@ const ActiveQuiz: React.FC = () => {
       navigate(-1)
     }
   }, [
-    updateFinishedQuiz,
-    handleAlert,
     scoredResponses,
-    navigate,
     cooperationId,
     quizId,
-    finishedQuizId
+    finishedQuizId,
+    handleAlert,
+    navigate,
+    updateFinishedQuiz
   ])
 
   const questionsAnswered = Object.keys(data).length
