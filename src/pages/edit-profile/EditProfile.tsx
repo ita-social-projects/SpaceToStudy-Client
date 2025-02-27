@@ -112,7 +112,9 @@ const EditProfile = () => {
   )
 
   const getProfileTabChangedFields = useMemo<Partial<EditProfileState>>(() => {
-    if (!initialEditProfileState || !profileState) return {}
+    if (!initialEditProfileState || !profileState) {
+      return {}
+    }
 
     const initialProfileTab = {
       firstName: initialEditProfileState.firstName,
@@ -229,7 +231,7 @@ const EditProfile = () => {
   const openAffirmativeModal = useCallback(
     (hasPathnameChanged: boolean) => {
       if (hasPathnameChanged) {
-        return openDialog({
+        openDialog({
           title: t(
             'editProfilePage.profile.profileTab.saveUnsavedChangesModal.title'
           ),
