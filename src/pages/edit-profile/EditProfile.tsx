@@ -44,6 +44,8 @@ const EditProfile = () => {
     typeof profileState | null
   >(null)
 
+  const [isModalConfirmed, setIsModalConfirmed] = useState(false)
+
   const [searchParams, setSearchParams] = useSearchParams({
     tab: UserProfileTabsEnum.Profile
   })
@@ -96,10 +98,23 @@ const EditProfile = () => {
     }
   }, [loading, profileState, initialEditProfileState])
 
-  const changedProfileFields = useMemo<Partial<EditProfileState | null>>(() => {
-    if (!initialEditProfileState || !profileState) return null
+  const changedFields = useMemo<Partial<EditProfileState>>(() => {
+    if (!profileState || !initialEditProfileState) {
+      return {}
+    }
 
-    const initialProfileInformation = {
+    return getChangedFields(initialEditProfileState, profileState)
+  }, [profileState, initialEditProfileState])
+
+  const isChanged = useMemo<boolean>(
+    () => Object.keys(changedFields).length > 0,
+    [changedFields]
+  )
+
+  const getProfileTabChangedFields = useMemo<Partial<EditProfileState>>(() => {
+    if (!initialEditProfileState || !profileState) return {}
+
+    const initialProfileTab = {
       firstName: initialEditProfileState.firstName,
       lastName: initialEditProfileState.lastName,
       photo: initialEditProfileState.photo,
@@ -110,7 +125,7 @@ const EditProfile = () => {
       videoLink: initialEditProfileState.videoLink
     }
 
-    const changedProfileInformation = {
+    const changedProfileTab = {
       firstName: profileState.firstName,
       lastName: profileState.lastName,
       photo: profileState.photo,
@@ -121,83 +136,12 @@ const EditProfile = () => {
       videoLink: profileState.videoLink
     }
 
-    const isPhotoChanged = hasPhotoChanges(
-      initialProfileInformation.photo,
-      changedProfileInformation.photo
-    )
+    return getChangedFields(initialProfileTab, changedProfileTab)
+  }, [initialEditProfileState, profileState])
 
-    const isProfileInformationChanged =
-      hasChanges(initialProfileInformation, changedProfileInformation) ||
-      isPhotoChanged
-
-    if (!isProfileInformationChanged) {
-      return {}
-    }
-
-    const changes: Partial<EditProfileState> = {
-      ...changedProfileInformation
-    }
-
-    if (
-      !hasChanges(
-        initialProfileInformation.videoLink,
-        changedProfileInformation.videoLink
-      )
-    ) {
-      delete changes.videoLink
-    }
-
-    if (isPhotoChanged) {
-      changes.photo = changedProfileInformation.photo
-    }
-
-    return changes
-  }, [profileState, initialEditProfileState])
-
-  const isProfileChanged = Boolean(changedProfileFields)
-
-  const changedFields = useMemo<Partial<EditProfileState>>(() => {
-<<<<<<< HEAD
-    if (!profileState || !initialEditProfileState) {
-      return {}
-    }
-=======
-    if (!initialEditProfileState || !profileState) return {}
-    const { videoLink: initialVideoLink } = initialEditProfileState
-    const { videoLink: currentVideoLink } = profileState
-
-    const { photo: initialPhoto, ...initialData } = initialEditProfileState
-    const { photo: currentPhoto, ...currentData } = profileState
-
-    const isPhotoChanged = hasPhotoChanges(initialPhoto, currentPhoto)
-
-    const hasChanged = hasChanges(initialData, currentData) || isPhotoChanged
-
-    if (!hasChanged) {
-      return {}
-    }
-
-    const changes: Partial<EditProfileState> = {
-      ...currentData
-    }
-
-    if (!hasChanges(initialVideoLink, currentVideoLink)) {
-      delete changes.videoLink
-    }
-
-    if (isPhotoChanged) {
-      changes.photo = currentPhoto
-    }
-
-    return changes
-  }, [profileState, initialEditProfileState])
->>>>>>> 1df70c09 (fixed comments)
-
-    return getChangedFields(initialEditProfileState, profileState)
-  }, [profileState, initialEditProfileState])
-  const isChanged = useMemo<boolean>(
-    () => Object.keys(changedFields).length > 0,
-    [changedFields]
+  const isProfileTabChanged = useMemo<boolean>(
+    () => Object.keys(getProfileTabChangedFields).length > 0,
+    [getProfileTabChangedFields]
   )
 
   const handleClick = async (tab: UserProfileTabsEnum) => {
@@ -279,20 +223,13 @@ const EditProfile = () => {
     }
   }, [profileState, changedFields, dispatch, userId, hash, userRole, navigate])
 
-  const blocker = useBlocker(isProfileChanged)
+  const blocker = useBlocker(isProfileTabChanged)
   const { openDialog } = useConfirm()
 
-  useEffect(() => {
-    if (blocker && blocker.location) {
-      const hasPathnameChanged = pathname !== blocker.location.pathname
-      const hasSearchChanged = search !== blocker.location.search
-
-      if (hasSearchChanged && !hasPathnameChanged) {
-        blocker.proceed?.()
-      }
-
+  const openAffirmativeModal = useCallback(
+    (hasPathnameChanged: boolean) => {
       if (hasPathnameChanged) {
-        openDialog({
+        return openDialog({
           title: t(
             'editProfilePage.profile.profileTab.saveUnsavedChangesModal.title'
           ),
@@ -306,12 +243,40 @@ const EditProfile = () => {
             'editProfilePage.profile.profileTab.saveUnsavedChangesModal.submitBtn'
           ),
           sendConfirm: (isConfirmed) => {
-            isConfirmed ? void handleUpdateUser() : blocker.proceed?.()
+            if (isConfirmed) {
+              setIsModalConfirmed(true)
+              void handleUpdateUser()
+            } else {
+              blocker.proceed?.()
+            }
           }
         })
       }
+    },
+    [blocker, handleUpdateUser, openDialog, t]
+  )
+
+  useEffect(() => {
+    if (blocker && blocker.location && !isModalConfirmed) {
+      const hasPathnameChanged = pathname !== blocker.location.pathname
+      const hasSearchChanged = search !== blocker.location.search
+
+      if (hasSearchChanged && !hasPathnameChanged) {
+        blocker.proceed?.()
+      }
+
+      openAffirmativeModal(hasPathnameChanged)
     }
-  }, [blocker, pathname, openDialog, search, t, handleUpdateUser])
+  }, [
+    blocker,
+    pathname,
+    openDialog,
+    search,
+    t,
+    handleUpdateUser,
+    openAffirmativeModal,
+    isModalConfirmed
+  ])
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
 
