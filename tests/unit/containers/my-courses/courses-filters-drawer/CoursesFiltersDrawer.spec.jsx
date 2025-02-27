@@ -36,10 +36,10 @@ const mockCategories = [
 
 const mockSubjects = [{ _id: '1', name: 'Algebra' }]
 
-const setup = async (filters) => {
+const setup = (filters) => {
   mockAxiosClient.onGet(URLs.categories.getNames).reply(200, mockCategories)
   mockAxiosClient
-    .onGet(new RegExp(URLs.subjects.getNamesByCategoryId.replace(':id', '1')))
+    .onGet(URLs.subjects.getNamesByCategoryId.replace(':id', '1'))
     .reply(200, mockSubjects)
 
   renderWithProviders(
@@ -59,8 +59,8 @@ beforeEach(() => {
 
 describe('CoursesFiltersDrawer', () => {
   describe('with default filters', () => {
-    beforeEach(async () => {
-      await setup(defaultFilters)
+    beforeEach(() => {
+      setup(defaultFilters)
     })
 
     it('renders filter titles correctly', async () => {
@@ -108,8 +108,8 @@ describe('CoursesFiltersDrawer', () => {
   })
 
   describe('with category filter', () => {
-    beforeEach(async () => {
-      await setup(filterWithCategory)
+    beforeEach(() => {
+      setup(filterWithCategory)
     })
 
     it('calls updateFiltersInQuery when subject is changed', async () => {
