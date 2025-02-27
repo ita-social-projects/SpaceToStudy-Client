@@ -79,19 +79,18 @@ const CreateOrEditNote = ({
       </Box>
     )
   }
-  const firstName = userResponse.firstName
-  const lastName = userResponse.lastName
+
   const photo = userResponse.photo
 
   const userPhoto = photo
     ? new URL(photo, import.meta.env.VITE_APP_IMG_USER_URL).href
     : undefined
-  const userName = `${firstName} ${lastName}`
+  const userName = `${userResponse.firstName} ${userResponse.lastName}`
   const userInfo = (
     <>
       <AvatarIcon
-        firstName={firstName}
-        lastName={lastName}
+        firstName={userResponse.firstName}
+        lastName={userResponse.lastName}
         photo={userPhoto}
         sx={styles.accountIcon}
       />
