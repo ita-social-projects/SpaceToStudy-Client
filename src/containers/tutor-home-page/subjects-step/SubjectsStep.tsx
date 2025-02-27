@@ -133,12 +133,12 @@ const SubjectsStep = ({ btnsBox }: SubjectsStepProps) => {
             valueField='_id'
           />
           <AsyncAutocomplete
-            axiosProps={{ onResponse: fetchSubjectHandler }}
             disabled={!subjects.category}
             fetchCondition={!subjectIsFetched}
             fetchOnFocus
             labelField='name'
             onChange={onChangeSubject}
+            onResponse={fetchSubjectHandler}
             queryOptions={{
               type: 'subjects',
               categoryId: subjects.category?._id

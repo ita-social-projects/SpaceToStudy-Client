@@ -84,7 +84,6 @@ const CourseToolbar = ({
         CategoryNameInterface,
         CourseExtendedAutocompleteOptions
       >
-        axiosProps={{ transform: transformCategories }}
         groupBy={(option) => option.title}
         labelField='name'
         onBlur={handleBlur('category')}
@@ -98,6 +97,7 @@ const CourseToolbar = ({
           helperText: errors.category ? t(errors.category) : ' ',
           required: true
         }}
+        transform={transformCategories}
         value={category}
         valueField='_id'
       />
@@ -106,7 +106,6 @@ const CourseToolbar = ({
         SubjectNameInterface,
         CourseExtendedAutocompleteOptions
       >
-        axiosProps={{ transform: transformSubjects }}
         disabled={Boolean(!category)}
         groupBy={(option) => option.title}
         labelField='name'
@@ -121,6 +120,7 @@ const CourseToolbar = ({
           helperText: errors.subject ? t(errors.subject) : ' ',
           required: true
         }}
+        transform={transformSubjects}
         value={subject}
         valueField='_id'
       />

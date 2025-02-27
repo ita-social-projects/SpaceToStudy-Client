@@ -55,7 +55,7 @@ const Categories = () => {
     loading: categoriesNamesLoading,
     response: categoriesNamesItems,
     fetchData
-  } = useCategoriesNames({ fetchOnMount: false })
+  } = useCategoriesNames()
 
   const {
     data: categories,

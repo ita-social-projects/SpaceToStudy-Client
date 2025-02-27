@@ -11,31 +11,21 @@ import AsyncAutocomplete, {
 
 import { styles } from '~/containers/my-courses/course-toolbar/CourseToolbar.style'
 
-interface DividedDropdownAutocompleteProps<
-  Response,
-  TransformedResponse,
-  Params
-> extends Omit<
-    AsyncAutocompleteProps<
-      Response,
-      Params,
-      TransformedResponse,
-      boolean | undefined
-    >,
+interface DividedDropdownAutocompleteProps<Response, TransformedResponse>
+  extends Omit<
+    AsyncAutocompleteProps<Response, TransformedResponse, boolean | undefined>,
     'onChange'
   > {
   onChange: (_: SyntheticEvent, value: TransformedResponse | null) => void
 }
 
-const DividedDropdownAutocomplete = <
-  Response,
-  TransformedResponse,
-  Params = undefined
->({
-  axiosProps,
+const DividedDropdownAutocomplete = <Response, TransformedResponse>({
+  transform,
+  onResponse,
+  onResponseError,
   groupBy,
   ...props
-}: DividedDropdownAutocompleteProps<Response, TransformedResponse, Params>) => {
+}: DividedDropdownAutocompleteProps<Response, TransformedResponse>) => {
   const { t } = useTranslation()
 
   const optionsList = ({
@@ -52,10 +42,12 @@ const DividedDropdownAutocomplete = <
   )
 
   return (
-    <AsyncAutocomplete<Response, Params, TransformedResponse>
-      axiosProps={axiosProps}
+    <AsyncAutocomplete<Response, TransformedResponse>
       groupBy={groupBy}
+      onResponse={onResponse}
+      onResponseError={onResponseError}
       renderGroup={optionsList}
+      transform={transform}
       {...props}
     />
   )

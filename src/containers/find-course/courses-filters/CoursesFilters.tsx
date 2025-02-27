@@ -79,7 +79,6 @@ const CoursesFilters = ({
         CategoryNameInterface,
         CourseExtendedAutocompleteOptions
       >
-        axiosProps={{ transform: transformCategories }}
         disabled={userLoading}
         groupBy={(option) => option.title}
         labelField='name'
@@ -90,6 +89,7 @@ const CoursesFilters = ({
         textFieldProps={{
           label: t('breadCrumbs.categories')
         }}
+        transform={transformCategories}
         value={filters.category}
         valueField='_id'
       />
@@ -97,7 +97,6 @@ const CoursesFilters = ({
         SubjectNameInterface,
         CourseExtendedAutocompleteOptions
       >
-        axiosProps={{ transform: transformSubjects }}
         disabled={!filters.category}
         groupBy={(option) => option.title}
         labelField='name'
@@ -108,6 +107,7 @@ const CoursesFilters = ({
         textFieldProps={{
           label: t('breadCrumbs.subjects')
         }}
+        transform={transformSubjects}
         value={filters.subject}
         valueField='_id'
       />
