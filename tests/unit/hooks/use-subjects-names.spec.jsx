@@ -1,12 +1,10 @@
-import { vi } from 'vitest'
+import { expect, vi } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
 import useSubjects from '~/hooks/use-subjects-names'
 import { subjectService } from '~/services/subject-service'
-import { baseService } from '~/services/base-service'
 import QueryProvider from '~/QueryProvider'
-
-vi.mock('~/services/subject-service')
-vi.mock('~/services/base-service')
+import { mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
 const mockSubjectsNames = [
   { _id: '1', name: 'Subject 1' },
@@ -21,13 +19,20 @@ const mockError = {
 
 describe('useSubjectsNames', () => {
   it('fetches subjects with a category successfully', async () => {
-    subjectService.getSubjectsNames.mockResolvedValueOnce(mockSubjectsNames)
+    mockAxiosClient
+      .onGet(URLs.subjects.getNamesByCategoryId.replace(':id', 'category'))
+      .reply(200, mockSubjectsNames)
+
+    const getSubjectsNamesSpy = vi.spyOn(subjectService, 'getSubjectsNames')
 
     const { result } = renderHook(() => useSubjects({ category: 'category' }), {
       wrapper: QueryProvider
     })
 
-    expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
+    expect(result.current.loading).toBe(true)
+    expect(result.current.response).toEqual([])
+
+    expect(getSubjectsNamesSpy).toHaveBeenCalledWith('category')
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false)
@@ -36,21 +41,27 @@ describe('useSubjectsNames', () => {
   })
 
   it('handles API errors', async () => {
-    baseService.request.mockRejectedValueOnce({
-      response: {
-        data: mockError
-      }
-    })
+    mockAxiosClient
+      .onGet(URLs.subjects.getNamesByCategoryId.replace(':id', 'mock'))
+      .reply(400, mockError)
 
-    const { result } = renderHook(() => useSubjects({ category: 'category' }), {
+    const getSubjectsNamesSpy = vi.spyOn(subjectService, 'getSubjectsNames')
+
+    const { result } = renderHook(() => useSubjects({ category: 'mock' }), {
       wrapper: QueryProvider
     })
 
-    expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
+    expect(result.current.loading).toBe(true)
+    expect(result.current.response).toEqual([])
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false)
-      expect(result.current.error).not.toEqual([])
-    })
-  })
+    expect(getSubjectsNamesSpy).toHaveBeenCalledWith('mock')
+
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false)
+        expect(result.current.error.message).toEqual(mockError.message)
+      },
+      { timeout: 8000 }
+    )
+  }, 8000)
 })

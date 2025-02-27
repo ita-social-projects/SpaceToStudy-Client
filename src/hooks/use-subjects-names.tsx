@@ -28,7 +28,7 @@ const useSubjectsNames = <T = SubjectNameInterface,>({
   )
 
   const {
-    isFetching: loading,
+    isLoading: loading,
     data: response = [],
     refetch: fetchData,
     error
