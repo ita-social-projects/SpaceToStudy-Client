@@ -36,6 +36,7 @@ import { authRoutes } from '~/router/constants/authRoutes'
 
 import { styles } from '~/pages/edit-profile/EditProfile.styles'
 import { getChangedFields } from '~/utils/get-changed-fields'
+import { replaceEmptyStringsWithNull } from '~/utils/replace-empty-strings-with-null'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -95,10 +96,8 @@ const EditProfile = () => {
   }, [loading, profileState, initialEditProfileState])
 
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
-    return getChangedFields(
-      initialEditProfileState,
-      profileState
-    ) as Partial<EditProfileState>
+    if (!profileState || !initialEditProfileState) return {}
+    return getChangedFields(initialEditProfileState, profileState)
   }, [profileState, initialEditProfileState])
   const isChanged = useMemo<boolean>(
     () => Object.keys(changedFields).length > 0,
@@ -161,12 +160,7 @@ const EditProfile = () => {
     if (typeof photo === 'object' || photo === '') {
       dataToUpdate.photo = photo
     }
-    const dataWithoutEmptyStrings = Object.fromEntries(
-      Object.entries(dataToUpdate).map(([key, value]) => [
-        key,
-        value === '' ? null : value
-      ])
-    )
+    const dataWithoutEmptyStrings = replaceEmptyStringsWithNull(dataToUpdate)
     await dispatch(
       updateUser({
         userId,

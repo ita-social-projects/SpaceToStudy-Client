@@ -76,8 +76,7 @@ export interface UserGeneralInfo
   city: UserResponse['address']['city'] | null
 }
 
-export interface UpdateUserParams
-  extends Partial<Pick<UserResponse, UpdateFields>> {
+export type UpdateUserParams = Partial<Pick<UserResponse, UpdateFields>> & {
   mainSubjects?: DataByRole<UserMainSubject[]>
   videoLink?: string
   photo?: EditProfilePhoto
