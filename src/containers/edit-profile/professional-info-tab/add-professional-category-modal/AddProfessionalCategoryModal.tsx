@@ -11,6 +11,7 @@ import {
   ComponentEnum,
   MainUserRole,
   SubjectInterface,
+  SubjectNameInterface,
   UserMainSubject
 } from '~/types'
 
@@ -31,7 +32,7 @@ import {
 } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
-import { fetchAndTranslateData } from '~/utils/fetch-and-translate-category'
+import { translateData } from '~/utils/translate-data'
 import { titleToCamel } from '~/utils/title-to-camel-case'
 
 interface SubjectGroupProps {
@@ -52,12 +53,15 @@ function SubjectGroup({
   const { t } = useTranslation()
 
   const getSubjectsNames = useCallback(() => {
-    return fetchAndTranslateData(
-      () => subjectService.getSubjectsNames(selectedCategory),
-      'subjects',
-      t
-    )
-  }, [selectedCategory, t])
+    return subjectService.getSubjectsNames(selectedCategory)
+  }, [selectedCategory])
+
+  const translateSubjects = useCallback(
+    (data: SubjectNameInterface[]) => {
+      return translateData(data, 'subjects', t)
+    },
+    [t]
+  )
 
   const handleDisableOptions = (option: Partial<SubjectInterface>) => {
     return disableOptions.some((subject) => subject._id === option._id)
@@ -85,6 +89,7 @@ function SubjectGroup({
           textFieldProps={{
             label: `${t('editProfilePage.profile.professionalTab.subject')}*`
           }}
+          transform={translateSubjects}
           value={subject._id}
           valueField='_id'
         />
@@ -214,13 +219,14 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     )
     return isBlocked && isCurrent
   }
-  const fetchTranslatedCategories = useCallback(() => {
-    return fetchAndTranslateData(
-      () => categoryService.getCategoriesNames(),
-      'categories',
-      t
-    )
-  }, [t])
+
+  const translateCategories = useCallback(
+    (data: CategoryNameInterface[]) => {
+      return translateData(data, 'categories', t)
+    },
+    [t]
+  )
+
   const SubjectsGroup = data.subjects.map((subject, index) => (
     <SubjectGroup
       disableOptions={data.subjects as Array<Partial<SubjectInterface>>}
@@ -254,7 +260,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
           labelField='displayName'
           onChange={handleMainStudyCategoryChange}
           queryOptions={{ type: 'categories' }}
-          service={fetchTranslatedCategories}
+          service={categoryService.getCategoriesNames}
           textFieldProps={{
             label: `${t(
               'editProfilePage.profile.professionalTab.mainStudyCategory'
@@ -262,6 +268,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
             error: Boolean(errors.category),
             helperText: errors.category
           }}
+          transform={translateCategories}
           value={data.category?._id || ''}
           valueField='_id'
         />

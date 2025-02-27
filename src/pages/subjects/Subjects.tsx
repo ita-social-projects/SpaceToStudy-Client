@@ -28,7 +28,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { mapArrayByField } from '~/utils/map-array-by-field'
 import { getSuffixes } from '~/utils/get-translation-suffixes'
-import { fetchAndTranslateData } from '~/utils/fetch-and-translate-category'
+import { translateData } from '~/utils/translate-data'
 import {
   CategoryNameInterface,
   SizeEnum,
@@ -67,7 +67,6 @@ const Subjects = () => {
     response: subjectsNamesItems,
     fetchData
   } = useSubjectsNames({
-    fetchOnMount: false,
     category: categoryId,
     transform
   })
@@ -139,24 +138,26 @@ const Subjects = () => {
     const category = response.find((option) => option._id === categoryId)
     setCategoryName(category?.name ?? '')
   }
-  const fetchTranslatedCategories = useCallback(() => {
-    return fetchAndTranslateData(
-      () => categoryService.getCategoriesNames(),
-      'categories',
-      t
-    )
-  }, [t])
+
+  const translateCategories = useCallback(
+    (data: CategoryNameInterface[]) => {
+      return translateData(data, 'categories', t)
+    },
+    [t]
+  )
+
   const autoCompleteCategories = (
     <AsyncAutocomplete
-      axiosProps={{ onResponse: onResponseCategory }}
       labelField='displayName'
       onChange={onCategoryChange}
+      onResponse={onResponseCategory}
       queryOptions={{ type: 'categories' }}
-      service={fetchTranslatedCategories}
+      service={categoryService.getCategoriesNames}
       sx={styles.categoryInput}
       textFieldProps={{
         label: t('breadCrumbs.categories')
       }}
+      transform={translateCategories}
       value={categoryId}
       valueField='_id'
     />
