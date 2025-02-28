@@ -31,7 +31,7 @@ const ForgotPassword: React.FC = () => {
   const { openModal, closeModal } = useModalContext()
   const dispatch = useAppDispatch()
 
-  const backToLogin = useCallback(() => {
+  const handleBackToLogin = useCallback(() => {
     openModal({ component: <LoginDialog /> })
   }, [openModal])
 
@@ -116,7 +116,7 @@ const ForgotPassword: React.FC = () => {
         </Button>
       </Box>
       <Button
-        onClick={backToLogin}
+        onClick={handleBackToLogin}
         size='md'
         sx={styles.backButton}
         variant='text-secondary'
