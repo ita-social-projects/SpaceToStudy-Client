@@ -1,8 +1,8 @@
-import { FC, useEffect, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useForm from '~/hooks/use-form'
-import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
 import { AuthService } from '~/services/auth-service'
@@ -26,67 +26,76 @@ import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import { Component } from '~/context/modal-context'
+import { type ResponseError } from '~/exceptions'
 
 interface ResetPasswordProps {
   resetToken: string
-  openModal: (component: Component, delayToClose?: number) => void
+  openModal: (component: Component) => void
 }
 
-const ResetPassword: FC<ResetPasswordProps> = ({ resetToken, openModal }) => {
+const ResetPassword: React.FC<ResetPasswordProps> = ({
+  resetToken,
+  openModal
+}) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
 
-  const successNotification = useMemo(
-    () => (
-      <Box sx={styles.box}>
-        <ImgTitleDescription
-          img={imgSuccess}
-          style={styles}
-          title={t('login.successReset')}
-        />
-        <Button
-          onClick={() => openModal({ component: <LoginDialog /> })}
-          size='lg'
-          sx={styles.button}
-        >
-          {t('button.goToLogin')}
-        </Button>
-      </Box>
-    ),
-    [openModal, t]
+  const handleResetPassword = useCallback(
+    (password: string) => {
+      return AuthService.resetPassword(resetToken, password)
+    },
+    [resetToken]
   )
 
-  const {
-    response,
-    error,
-    loading,
-    fetchData: sendResetPassword
-  } = useAxios({
-    service: (newPassword: NewPassword) =>
-      AuthService.resetPassword(resetToken, newPassword),
-    fetchOnMount: false,
-    defaultResponse: null
-  })
+  const handleSuccess = useCallback(() => {
+    openModal({
+      component: (
+        <Box sx={styles.box}>
+          <ImgTitleDescription
+            img={imgSuccess}
+            style={styles}
+            title={t('login.successReset')}
+          />
+          <Button
+            onClick={() => openModal({ component: <LoginDialog /> })}
+            size='lg'
+            sx={styles.button}
+          >
+            {t('button.goToLogin')}
+          </Button>
+        </Box>
+      )
+    })
+  }, [openModal, t])
 
-  useEffect(() => {
-    if (error) {
+  const handleError = useCallback(
+    (error: ResponseError) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
           message: getErrorKey(error)
         })
       )
-    } else if (response !== null) {
-      openModal({ component: successNotification }, 5000)
-    }
-  }, [error, openModal, response, dispatch, successNotification])
+    },
+    [dispatch]
+  )
+
+  const { isPending, mutate: resetPassword } = useMutation({
+    mutationFn: handleResetPassword,
+    onSuccess: handleSuccess,
+    onError: handleError
+  })
 
   const { handleSubmit, handleInputChange, handleBlur, errors, data } =
     useForm<NewPassword>({
-      onSubmit: async (): Promise<void> =>
-        sendResetPassword({ password: data.password }),
+      onSubmit: (data) => {
+        if (data) {
+          resetPassword(data.password)
+        }
+      },
       initialValues: { password: '', confirmPassword: '' },
-      validations: { password, confirmPassword }
+      validations: { password, confirmPassword },
+      submitWithData: true
     })
 
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
@@ -124,16 +133,17 @@ const ResetPassword: FC<ResetPasswordProps> = ({ resetToken, openModal }) => {
           onBlur={handleBlur('confirmPassword')}
           onChange={handleInputChange('confirmPassword')}
           required
+          sx={{ mb: '5px' }}
           type={showConfirmPassword ? 'text' : 'password'}
           value={data.confirmPassword}
         />
         <Button
-          disabled={loading}
+          disabled={isPending}
           fullWidth
           size='lg'
           type={ButtonTypeEnum.Submit}
         >
-          {loading ? <Loader size={20} /> : t('login.savePassword')}
+          {isPending ? <Loader size={20} /> : t('login.savePassword')}
         </Button>
       </Box>
     </Box>

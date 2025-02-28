@@ -35,12 +35,15 @@ export const AuthService = {
   forgotPassword: (userEmail: string): Promise<AxiosResponse> => {
     return axiosClient.post(URLs.auth.forgotPassword, userEmail)
   },
-  resetPassword: (
-    resetToken: string,
-    newPassword: { password: string }
-  ): Promise<AxiosResponse> => {
-    const confirmUrl = createUrlPath(URLs.auth.resetPassword, resetToken)
-    return axiosClient.patch(confirmUrl, newPassword)
+  resetPassword: (token: string, password: string) => {
+    return baseService.request({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.auth.resetPassword,
+        parameters: { token }
+      }),
+      data: { password }
+    })
   },
   changePassword: (
     userId: string,

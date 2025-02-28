@@ -14,7 +14,7 @@ export const URLs = {
     refresh: '/auth/refresh',
     confirm: '/auth/confirm-email/:token',
     forgotPassword: '/auth/forgot-password',
-    resetPassword: '/auth/reset-password',
+    resetPassword: '/auth/reset-password/:token',
     changePassword: '/auth/change-password'
   },
   users: {
