@@ -116,8 +116,8 @@ export interface NewPassword {
   password: string
 }
 
-export interface SendResetPasswordPayload {
-  password: string
+export interface ForgotPasswordParams {
+  email: string
 }
 
 export interface SignupResponse {

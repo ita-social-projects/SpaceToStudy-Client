@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -22,65 +22,70 @@ import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import { ButtonTypeEnum } from '~/types'
+import { ButtonTypeEnum, type ForgotPasswordParams } from '~/types'
+import useMutation from '~/hooks/use-mutation'
+import { type ResponseError } from '~/exceptions'
 
-const ForgotPassword = () => {
+const ForgotPassword: React.FC = () => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useModalContext()
-  const [loading, setLoading] = useState(false)
   const dispatch = useAppDispatch()
 
-  const backToLogin = () => {
+  const backToLogin = useCallback(() => {
     openModal({ component: <LoginDialog /> })
-  }
+  }, [openModal])
 
-  const sendEmail = async (data) => {
-    try {
-      setLoading(true)
-      await AuthService.forgotPassword(data)
-      openModal(
-        {
-          component: (
-            <NotificationModal
-              buttonTitle={t('common.confirmButton')}
-              description={description}
-              img={info}
-              onClose={closeModal}
-              title={t('login.passwordReset')}
-            />
-          )
-        },
-        5000
+  const { handleSubmit, handleInputChange, handleBlur, errors, data } =
+    useForm<ForgotPasswordParams>({
+      onSubmit: (data) => {
+        if (data) {
+          sendEmail(data)
+        }
+      },
+      initialValues: { email: '' },
+      validations: { email },
+      submitWithData: true
+    })
+
+  const handleSuccessSending = useCallback(() => {
+    openModal({
+      component: (
+        <NotificationModal
+          buttonTitle={t('common.confirmButton')}
+          description={
+            <Typography component='span'>
+              {t('login.weSentEmail')}
+              <Typography component='span' variant='subtitle2'>
+                {data.email}
+              </Typography>
+              {t('login.emailArrive')}
+            </Typography>
+          }
+          img={info}
+          onClose={closeModal}
+          title={t('login.passwordReset')}
+        />
       )
-    } catch (e) {
+    })
+  }, [closeModal, data, openModal, t])
+
+  const handleError = useCallback(
+    (error: ResponseError) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: getErrorKey(e.response.data)
+          message: getErrorKey(error)
         })
       )
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const { handleSubmit, handleInputChange, handleBlur, errors, data } = useForm(
-    {
-      onSubmit: async () => sendEmail(data),
-      initialValues: { email: '' },
-      validations: { email }
-    }
+    },
+    [dispatch]
   )
 
-  const description = (
-    <Typography component='span'>
-      {t('login.weSentEmail')}
-      <Typography component='span' variant='subtitle2'>
-        {data.email}
-      </Typography>
-      {t('login.emailArrive')}
-    </Typography>
-  )
+  const { isPending, mutate: sendEmail } = useMutation({
+    mutationFn: AuthService.forgotPassword,
+    onSuccess: handleSuccessSending,
+    onError: handleError
+  })
 
   return (
     <Box sx={styles.root}>
@@ -89,7 +94,6 @@ const ForgotPassword = () => {
         style={styles.titleWithDescription}
         title={t('login.forgotPassword')}
       />
-
       <Box component='form' onSubmit={handleSubmit}>
         <AppTextField
           autoFocus
@@ -99,16 +103,18 @@ const ForgotPassword = () => {
           onBlur={handleBlur('email')}
           onChange={handleInputChange('email')}
           required
-          size='large'
           sx={{ mb: '16px', mt: '32px' }}
           type='email'
           value={data.email}
         />
-        <Button loading={loading} sx={styles.sentPassword} type={ButtonTypeEnum.Submit}>
+        <Button
+          loading={isPending}
+          sx={styles.sentPassword}
+          type={ButtonTypeEnum.Submit}
+        >
           {t('login.sendPassword')}
         </Button>
       </Box>
-
       <Button
         onClick={backToLogin}
         size='md'

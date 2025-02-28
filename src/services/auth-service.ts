@@ -8,6 +8,7 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
 import {
   ApiMethodEnum,
+  ForgotPasswordParams,
   GoogleAuthParams,
   LoginParams,
   LoginResponse,
@@ -32,8 +33,14 @@ export const AuthService = {
       })
     })
   },
-  forgotPassword: (userEmail: string): Promise<AxiosResponse> => {
-    return axiosClient.post(URLs.auth.forgotPassword, userEmail)
+  forgotPassword: (data: ForgotPasswordParams) => {
+    return baseService.request<void>({
+      method: 'POST',
+      url: getFullUrl({
+        pathname: URLs.auth.forgotPassword
+      }),
+      data
+    })
   },
   resetPassword: (token: string, password: string) => {
     return baseService.request({

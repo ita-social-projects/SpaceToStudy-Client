@@ -70,7 +70,7 @@ describe('ForgotPassword test', () => {
       .onPost(URLs.auth.forgotPassword)
       .reply(404, { code: 'EMAIL_NOT_FOUND' })
 
-    const input = screen.getByLabelText(/common.labels.email/i)
+    const input = await screen.findByLabelText(/common.labels.email/i)
     fireEvent.change(input, { target: { value: 'error@gmail.com' } })
 
     const button = screen.getByText('login.sendPassword')
