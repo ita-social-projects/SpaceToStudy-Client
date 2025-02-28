@@ -31,6 +31,7 @@ const GeneralInfoStep: React.FC<GeneralInfoStepProps> = ({ btnsBox }) => {
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const generalInfo = stepData.generalInfo
   const isFirstRender = useRef<boolean>(true)
+
   const {
     handleInputChange,
     handleBlur,
