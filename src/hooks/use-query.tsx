@@ -11,7 +11,13 @@ import {
 import { type ResponseError } from '~/exceptions'
 
 type RequiredQueryOptions = 'queryFn' | 'queryKey'
-type OptionalQueryOptions = 'enabled' | 'initialData' | 'select' | 'staleTime'
+type OptionalQueryOptions =
+  | 'enabled'
+  | 'initialData'
+  | 'refetchOnWindowFocus'
+  | 'retry'
+  | 'select'
+  | 'staleTime'
 type ReturningQueryParams =
   | 'data'
   | 'error'
