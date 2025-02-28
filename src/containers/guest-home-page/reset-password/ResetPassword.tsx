@@ -10,7 +10,6 @@ import { useAppDispatch } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
 
-import Loader from '~/components/loader/Loader'
 import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
@@ -138,12 +137,12 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
           value={data.confirmPassword}
         />
         <Button
-          disabled={isPending}
           fullWidth
+          loading={isPending}
           size='lg'
           type={ButtonTypeEnum.Submit}
         >
-          {isPending ? <Loader size={20} /> : t('login.savePassword')}
+          {t('login.savePassword')}
         </Button>
       </Box>
     </Box>
