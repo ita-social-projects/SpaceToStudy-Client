@@ -18,13 +18,13 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { styles } from '~/containers/guest-home-page/reset-password/ResetPassword.styles'
 
-import { ButtonTypeEnum, NewPassword } from '~/types'
+import { ButtonTypeEnum, type NewPassword } from '~/types'
 import { confirmPassword, password } from '~/utils/validations/login'
 import { snackbarVariants } from '~/constants'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import { Component } from '~/context/modal-context'
+import { type Component } from '~/context/modal-context'
 import { type ResponseError } from '~/exceptions'
 
 interface ResetPasswordProps {

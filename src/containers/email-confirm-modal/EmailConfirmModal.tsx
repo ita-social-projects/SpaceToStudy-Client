@@ -15,7 +15,7 @@ import imgReject from '~/assets/img/email-confirmation-modals/not-success-icon.s
 
 import { AuthService } from '~/services/auth-service'
 import useQuery from '~/hooks/use-query'
-import { Component, useModalContext } from '~/context/modal-context'
+import { type Component, useModalContext } from '~/context/modal-context'
 
 interface EmailConfirmModalProps {
   confirmToken: string
