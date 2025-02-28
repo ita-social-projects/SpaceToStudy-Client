@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react'
 import UserProfile from '~/pages/user-profile/UserProfile.tsx'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { getFullUrl } from '../../../../src/utils/get-full-url'
 
 const route = '/tutor/my-profile'
 
@@ -85,22 +86,23 @@ const renderWithMockData = ({
   appMain = mockTutorState,
   extraData = {}
 } = {}) => {
-    mockAxiosClient
-      .onGet(
-        `${URLs.users.get}/${appMain.appMain?.userId}?userRole=${appMain.appMain?.userRole}`
-      )
-      .reply(200, { ...mockData, ...extraData })
-    renderWithProviders(<UserProfile />, {
-      preloadedState: appMain,
-      initialEntries: route
-    })
+  const url = getFullUrl({
+    parameters: { id: appMain.appMain?.userId },
+    pathname: URLs.users.getUserById,
+    searchParameters: { userRole: appMain.appMain?.userRole }
+  })
+  mockAxiosClient.onGet(url).reply(200, { ...mockData, ...extraData })
+  renderWithProviders(<UserProfile />, {
+    preloadedState: appMain,
+    initialEntries: route
+  })
 }
 
 describe('UserProfile', () => {
   it('Should render professional block info for tutor', async () => {
     renderWithMockData({ extraData: professionalBlockMock })
     const aboutTutorTitle = await screen.findByText(
-        'userProfilePage.tutorAbout.title'
+      'userProfilePage.tutorAbout.title'
     )
 
     expect(aboutTutorTitle).toBeInTheDocument()
@@ -147,10 +149,8 @@ describe('UserProfile', () => {
   })
 
   it('should render loader', async () => {
-    renderWithMockData({appMain: {} , mockData: {} })
+    renderWithMockData({ appMain: {}, mockData: {} })
 
-    await waitFor(() => {
-      expect(screen.getByTestId('loader')).toBeInTheDocument()
-    })
+    expect(screen.getByTestId('loader')).toBeInTheDocument()
   })
 })

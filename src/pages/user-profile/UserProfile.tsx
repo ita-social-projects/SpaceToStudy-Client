@@ -82,6 +82,7 @@ const UserProfile: React.FC = () => {
     (isTutor && isMyProfile) ||
     (!isTutor && userResponse?.videoLink?.student) ||
     (!isMyProfile && userResponse?.videoLink?.tutor)
+
   if (userLoading || !userResponse) {
     return <Loader size={70} />
   }
