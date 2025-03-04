@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { useAppDispatch } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
 import { useModalContext } from '~/context/modal-context'
 
@@ -18,18 +17,16 @@ import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassw
 
 import info from '~/assets/img/guest-home-page/info.svg'
 import { AuthService } from '~/services/auth-service'
-import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 import { ButtonTypeEnum, type ForgotPasswordParams } from '~/types'
 import useMutation from '~/hooks/use-mutation'
-import { type ResponseError } from '~/exceptions'
+
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const ForgotPassword: React.FC = () => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useModalContext()
-  const dispatch = useAppDispatch()
+  const { handleErrorAlert } = useSnackbarAlert()
 
   const handleBackToLogin = useCallback(() => {
     openModal({ component: <LoginDialog /> })
@@ -69,22 +66,10 @@ const ForgotPassword: React.FC = () => {
     })
   }, [closeModal, data, openModal, t])
 
-  const handleError = useCallback(
-    (error: ResponseError) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: getErrorKey(error)
-        })
-      )
-    },
-    [dispatch]
-  )
-
   const { isPending, mutate: sendEmail } = useMutation({
     mutationFn: AuthService.forgotPassword,
     onSuccess: handleSuccessSending,
-    onError: handleError
+    onError: handleErrorAlert
   })
 
   return (

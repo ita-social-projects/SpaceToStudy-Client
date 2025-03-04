@@ -6,7 +6,6 @@ import useMutation from '~/hooks/use-mutation'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
 import { AuthService } from '~/services/auth-service'
-import { useAppDispatch } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
 
@@ -20,12 +19,9 @@ import { styles } from '~/containers/guest-home-page/reset-password/ResetPasswor
 
 import { ButtonTypeEnum, type NewPassword } from '~/types'
 import { confirmPassword, password } from '~/utils/validations/login'
-import { snackbarVariants } from '~/constants'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 import { type Component } from '~/context/modal-context'
-import { type ResponseError } from '~/exceptions'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 interface ResetPasswordProps {
   resetToken: string
@@ -37,7 +33,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
   openModal
 }) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
+  const { handleErrorAlert } = useSnackbarAlert()
 
   const handleResetPassword = useCallback(
     (password: string) => {
@@ -67,22 +63,10 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
     })
   }, [openModal, t])
 
-  const handleError = useCallback(
-    (error: ResponseError) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: getErrorKey(error)
-        })
-      )
-    },
-    [dispatch]
-  )
-
   const { isPending, mutate: resetPassword } = useMutation({
     mutationFn: handleResetPassword,
     onSuccess: handleSuccess,
-    onError: handleError
+    onError: handleErrorAlert
   })
 
   const { handleSubmit, handleInputChange, handleBlur, errors, data } =
