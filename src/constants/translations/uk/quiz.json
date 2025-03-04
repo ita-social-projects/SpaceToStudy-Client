@@ -28,5 +28,6 @@
   "timeLimit": "Обмеження часу",
   "reachedAttemptLimit": "Кількість спроб вичерпано.",
   "noUsedAttempts": "Спроб ще не було",
-  "questionsAmount": "Кількість питань"
+  "questionsAmount": "Кількість питань",
+  "successSubmittedQuiz": "Тест був успішно пройдений."
 }
