@@ -21,11 +21,11 @@ import {
 } from '~/pages/bookmarked-offers/BookmarkedOffers.constants'
 import { styles } from '~/pages/bookmarked-offers/BookmarkedOffers.styles'
 import { fetchUserById } from '~/redux/features/editProfileSlice'
-import { openAlert } from '~/redux/features/snackbarSlice'
 import { userService } from '~/services/user-service'
 import { CardsView, CardsViewEnum, SizeEnum, UserRole } from '~/types'
 import { parseQueryParams } from '~/utils/helper-functions'
 import useQuery from '~/hooks/use-query'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const BookmarkedOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
@@ -34,19 +34,18 @@ const BookmarkedOffers = () => {
   const dispatch = useAppDispatch()
   const toolbarRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()
+  const { handleAlert } = useSnackbarAlert()
 
   const { filters, searchParams, filterQueryActions } = useFilterQuery({
     defaultFilters
   })
 
   const handleResponseError = useCallback(() => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: t('bookmarkedOffers.loadingError')
-      })
-    )
-  }, [dispatch, t])
+    handleAlert({
+      severity: snackbarVariants.error,
+      message: t('bookmarkedOffers.loadingError')
+    })
+  }, [handleAlert, t])
 
   const getBookmarkedOffers = useCallback(() => {
     const parsedFilters = parseQueryParams(searchParams, defaultFilters)
@@ -60,9 +59,9 @@ const BookmarkedOffers = () => {
   }, [userId, searchParams])
 
   const {
-    isLoading: isOffersLoading,
-    data: offers,
-    refetch: fetchData,
+    isLoading: isBookmarksLoading,
+    data: bookmarks,
+    refetch: fetchBookmarks,
     isError
   } = useQuery({
     queryKey: ['bookmarks', filters, searchParams.toString()],
@@ -77,16 +76,16 @@ const BookmarkedOffers = () => {
   }, [isError, handleResponseError])
 
   const initialData = { items: [], count: isError ? 0 : -1 }
-  const { items, count: offersCount } = offers ?? initialData
+  const { items, count: bookmarksCount } = bookmarks ?? initialData
 
   const { pageCount } = usePagination({
-    itemsCount: offersCount,
+    itemsCount: bookmarksCount,
     itemsPerPage
   })
 
   const updateInfo = useCallback(() => {
-    void fetchData()
-  }, [fetchData])
+    void fetchBookmarks()
+  }, [fetchBookmarks])
 
   const defaultParams = { page: defaultFilters.page }
 
@@ -114,9 +113,9 @@ const BookmarkedOffers = () => {
       />
       <Divider sx={styles.divider} />
 
-      {isOffersLoading && <Loader pageLoad />}
+      {isBookmarksLoading && <Loader pageLoad />}
 
-      {offersCount > 0 && (
+      {bookmarksCount > 0 && (
         <OfferContainer
           offerCards={items}
           updateOffersInfo={updateInfo}
@@ -124,7 +123,7 @@ const BookmarkedOffers = () => {
         />
       )}
 
-      {offersCount === 0 && (
+      {bookmarksCount === 0 && (
         <NotFoundResults
           description={t('bookmarkedOffers.notFound.description')}
           sx={styles.notFound}
@@ -136,7 +135,7 @@ const BookmarkedOffers = () => {
         page={Number(filters.page)}
         pageCount={pageCount}
         size={isMobile ? SizeEnum.Small : SizeEnum.Medium}
-        sx={styles.pagination(isOffersLoading || !offersCount)}
+        sx={styles.pagination(isBookmarksLoading || !bookmarksCount)}
       />
     </PageWrapper>
   )
