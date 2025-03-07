@@ -26,7 +26,6 @@ export default [
   },
   ...compat.extends(
     'eslint:recommended',
-    'plugin:prettier/recommended',
     'plugin:react/recommended',
     'plugin:storybook/recommended',
     'plugin:vitest-globals/recommended'
