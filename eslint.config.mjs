@@ -22,7 +22,13 @@ const compat = new FlatCompat({
 export default [
   ...pluginQuery.configs['flat/recommended'],
   {
-    ignores: ['src/assets/*', 'src/stories/assets/*', '.storybook/**/*']
+    ignores: [
+      'src/assets/*',
+      'src/stories/assets/*',
+      '.storybook/**/*',
+      'tests/coverage/**/*',
+      'dist/**/*'
+    ]
   },
   ...compat.extends(
     'eslint:recommended',
@@ -132,11 +138,19 @@ export default [
     }
   },
   {
-    files: ['**/tests/**/*.*.js', '**/tests/**/*.js'],
+    files: [
+      '**/tests/**/*.*.js',
+      '**/tests/**/*.js',
+      '**/tests/**/*.*.jsx',
+      '**/tests/**/*.jsx'
+    ],
     languageOptions: {
       globals: {
         ...globals.jest
       }
+    },
+    rules: {
+      'react-hooks/rules-of-hooks': 'off'
     }
   },
   {
