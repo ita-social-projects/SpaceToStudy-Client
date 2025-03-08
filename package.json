@@ -112,16 +112,23 @@
     "build": "vite build",
     "test": "cross-env CI=true vitest --coverage",
     "serve": "vite preview --port 3000",
-    "lint": "eslint src/**/*.{js,jsx,ts,tsx} && stylelint src/**/*.{css,scss}",
-    "lint-fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix && stylelint src/**/*.{css,scss} --fix",
+    "lint:check": "eslint . && stylelint src/**/*.{css,scss} && prettier . --check",
+    "lint:fix": "eslint . --fix && stylelint src/**/*.{css,scss} --fix && prettier . --write",
     "prepare": "husky",
     "pre-commit": "lint-staged",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --fix",
-    "*.{css,scss}": "stylelint --fix"
+    "*.{js,mjs,jsx,ts,mts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{html,json,yaml,yml}": "prettier --write"
   },
   "browserslist": {
     "production": [
