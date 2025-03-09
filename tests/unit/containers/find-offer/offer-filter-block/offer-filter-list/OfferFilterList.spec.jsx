@@ -1,4 +1,5 @@
 import { screen, fireEvent } from '@testing-library/react'
+import { vi } from 'vitest'
 
 import OfferFilterList from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList'
 

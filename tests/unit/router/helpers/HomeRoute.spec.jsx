@@ -1,6 +1,7 @@
 import { renderWithProviders } from '~tests/test-utils'
 import { screen } from '@testing-library/react'
 import HomeRoute from '~/router/helpers/HomeRoute'
+import { vi } from 'vitest'
 
 const mockedUseNavigate = vi.fn()
 vi.mock('react-router-dom', async () => ({

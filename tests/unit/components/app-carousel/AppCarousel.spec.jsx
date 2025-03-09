@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { beforeAll, beforeEach } from 'vitest'
+import { beforeAll, beforeEach, vi } from 'vitest'
 import AppCarousel from '~/components/app-carousel/AppCarousel'
 
 const childrenText = 'I am a children'

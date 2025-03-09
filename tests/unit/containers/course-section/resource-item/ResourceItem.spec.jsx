@@ -11,6 +11,7 @@ import {
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
+import { vi } from 'vitest'
 
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
@@ -58,7 +59,7 @@ describe('ResourceItem tests', () => {
 
   it('should render added resource', () => {
     const resourceTitle = screen.getByText(mockedLessonDataOriginal.title)
-    
+
     expect(resourceTitle).toBeInTheDocument()
   })
 

@@ -20,7 +20,9 @@ describe('CarouselWithImage component test', () => {
     render(<CarouselWithImage items={items} />)
   })
   it('Test image', () => {
-    const mapLogo = screen.getByAltText('/src/assets/img/guest-home-page/map.svg')
+    const mapLogo = screen.getByAltText(
+      '/src/assets/img/guest-home-page/map.svg'
+    )
 
     expect(mapLogo).toBeInTheDocument()
   })

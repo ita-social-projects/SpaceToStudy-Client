@@ -5,6 +5,7 @@ import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer
 import { renderWithProviders } from '~tests/test-utils'
 import { mockAxiosClient, selectOption } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { vi } from 'vitest'
 
 const mockUpdateFiltersInQuery = vi.fn()
 const mockResetFilters = vi.fn()

@@ -4,6 +4,7 @@ import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
 import { messagesMock } from '~tests/unit/pages/chat/ChatsMock.constants'
+import { vi } from 'vitest'
 
 global.window.getComputedStyle = vi.fn().mockImplementation(() => ({
   getPropertyValue: vi.fn()

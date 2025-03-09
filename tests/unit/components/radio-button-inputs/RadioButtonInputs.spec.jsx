@@ -15,7 +15,7 @@ const mockedProps = {
 
 describe('RadioButtonInputs test', () => {
   beforeEach(() => {
-    render(<RadioButtonInputs { ...mockedProps } />)
+    render(<RadioButtonInputs {...mockedProps} />)
   })
 
   it('Should render radio buttons title correctly', () => {

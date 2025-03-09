@@ -22,11 +22,11 @@ const mockedValues = {
   spaceField: '    ',
   firstNameWithApostropheEn: "O'braian",
   firstNameWithApostropheUa: "Мар'яна",
-  firstNameWithHyphen: "Анна-Марія",
-  firstNameWithSpace: "Анна Марія",
+  firstNameWithHyphen: 'Анна-Марія',
+  firstNameWithSpace: 'Анна Марія',
   lastNameWithApostrophe: "Mc'Neil",
   lastNameWithApostropheAndHyphen: "O'Neill-Johnson",
-  lastNameWithSpace: "Van Gogh",
+  lastNameWithSpace: 'Van Gogh'
 }
 
 const errorMessages = {
@@ -90,7 +90,6 @@ describe('commonValidation', () => {
   })
 
   it('Should display updated name when clicking "Update" button', () => {
-    const updatedName = mockedValues.nameWithHyphen
     const isUpdated = true
     expect(isUpdated).toBe(true)
     const notificationText = 'Success! Your data has been updated.'

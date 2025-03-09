@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { fireEvent } from '@testing-library/react'
+import { vi } from 'vitest'
 import Switch from '~/design-system/components/switch/Switch'
 
 describe('Switch Component', () => {
@@ -22,7 +23,7 @@ describe('Switch Component', () => {
   })
 
   it('renders label when provided', () => {
-    render(<Switch label="Test Label" />)
+    render(<Switch label='Test Label' />)
 
     const labelEl = screen.getByText('Test Label')
     expect(labelEl).toBeInTheDocument()
@@ -32,10 +33,12 @@ describe('Switch Component', () => {
     it.each([
       ['lg', 's2s-switch--lg'],
       ['md', 's2s-switch--md'],
-      ['sm', 's2s-switch--sm'],
+      ['sm', 's2s-switch--sm']
     ])('applies the correct class for size: %s', (size, expectedClass) => {
       render(<Switch size={size} />)
-      const switchWrapper = screen.getByRole('checkbox').closest('.s2s-switch--lg, .s2s-switch--md, .s2s-switch--sm')
+      const switchWrapper = screen
+        .getByRole('checkbox')
+        .closest('.s2s-switch--lg, .s2s-switch--md, .s2s-switch--sm')
 
       expect(switchWrapper).toHaveClass(expectedClass)
     })
@@ -61,15 +64,12 @@ describe('Switch Component', () => {
       ['end', 'End Label'],
       ['start', 'Start Label'],
       ['top', 'Top Label'],
-      ['bottom', 'Bottom Label'],
-    ])(
-      'renders label in correct position: %s',
-      (position, label) => {
-        render(<Switch label={label} labelPosition={position} />)
-        const labelEl = screen.getByText(label)
+      ['bottom', 'Bottom Label']
+    ])('renders label in correct position: %s', (position, label) => {
+      render(<Switch label={label} labelPosition={position} />)
+      const labelEl = screen.getByText(label)
 
-        expect(labelEl).toBeInTheDocument()
-      }
-    )
+      expect(labelEl).toBeInTheDocument()
+    })
   })
 })

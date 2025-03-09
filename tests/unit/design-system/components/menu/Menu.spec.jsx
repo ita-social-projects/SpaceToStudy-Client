@@ -1,4 +1,5 @@
 import { render, fireEvent, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import Menu from '~scss-components/menu/Menu'
 
 const resourcesMenuItems = [
@@ -37,8 +38,8 @@ describe('Menu Component', () => {
     render(
       <Menu
         anchorEl={anchor}
-        setAnchorEl={() => {}}
         menuItems={resourcesMenuItems}
+        setAnchorEl={() => {}}
       />
     )
 
@@ -51,9 +52,9 @@ describe('Menu Component', () => {
     const { getByText } = render(
       <Menu
         anchorEl={anchor}
-        setAnchorEl={() => {}}
+        isItemsRemovalEnabled
         menuItems={resourcesMenuItems}
-        isItemsRemovalEnabled={true}
+        setAnchorEl={() => {}}
       />
     )
 
@@ -69,10 +70,10 @@ describe('Menu Component', () => {
     render(
       <Menu
         anchorEl={anchor}
-        setAnchorEl={() => {}}
+        isItemsRemovalEnabled
         menuItems={[]}
         noItemsMessage={noItemsCustomMessage}
-        isItemsRemovalEnabled={true}
+        setAnchorEl={() => {}}
       />
     )
 
@@ -88,8 +89,8 @@ describe('Menu Component', () => {
         <button onClick={handleClick}>Open Menu</button>
         <Menu
           anchorEl={null}
-          setAnchorEl={setAnchorEl}
           menuItems={resourcesMenuItems}
+          setAnchorEl={setAnchorEl}
         />
       </>
     )
@@ -105,9 +106,9 @@ describe('Menu Component', () => {
     render(
       <Menu
         anchorEl={anchor}
-        setAnchorEl={() => {}}
-        menuItems={resourcesMenuItems}
         defaultOnItemClick={defaultOnItemClick}
+        menuItems={resourcesMenuItems}
+        setAnchorEl={() => {}}
       />
     )
 
@@ -121,9 +122,9 @@ describe('Menu Component', () => {
     render(
       <Menu
         anchorEl={anchor}
-        setAnchorEl={() => {}}
-        menuItems={resourcesMenuItemsWithCustomArgs}
         defaultOnItemClick={defaultOnItemClick}
+        menuItems={resourcesMenuItemsWithCustomArgs}
+        setAnchorEl={() => {}}
       />
     )
 
@@ -140,9 +141,9 @@ describe('Menu Component', () => {
     render(
       <Menu
         anchorEl={anchor}
-        setAnchorEl={() => {}}
-        menuItems={resourcesMenuItemsWithNestedItems}
         defaultOnItemClick={defaultOnItemClick}
+        menuItems={resourcesMenuItemsWithNestedItems}
+        setAnchorEl={() => {}}
       />
     )
 
@@ -158,8 +159,8 @@ describe('Menu Component', () => {
     render(
       <Menu
         anchorEl={anchor}
-        setAnchorEl={() => {}}
         menuItems={resourcesMenuItemsWithNestedItems}
+        setAnchorEl={() => {}}
       />
     )
 
@@ -174,8 +175,8 @@ describe('Menu Component', () => {
     render(
       <Menu
         anchorEl={anchor}
-        setAnchorEl={() => {}}
         menuItems={resourcesMenuItemsWithAdditionalInfo}
+        setAnchorEl={() => {}}
       />
     )
 
@@ -189,8 +190,8 @@ describe('Menu Component', () => {
     render(
       <Menu
         anchorEl={anchor}
-        setAnchorEl={() => {}}
         menuItems={resourcesMenuItemsWithIcon}
+        setAnchorEl={() => {}}
       />
     )
 

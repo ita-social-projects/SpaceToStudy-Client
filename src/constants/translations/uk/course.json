@@ -19,7 +19,7 @@
     "sectionMenu": {
       "deleteSection": "Видалити"
     },
-    "resourceCount":{
+    "resourceCount": {
       "lesson_one": "{{count}} урок",
       "lesson_few": "{{count}} уроки",
       "lesson_many": "{{count}} уроків",

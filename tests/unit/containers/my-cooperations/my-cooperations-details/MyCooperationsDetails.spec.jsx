@@ -3,6 +3,7 @@ import { URLs } from '~/constants/request'
 import MyCooperationsDetails from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.tsx'
 
 import { screen, fireEvent } from '@testing-library/react'
+import { vi } from 'vitest'
 
 const mockedOffer = {
   initiator: { _id: 'initiatorId', role: ['tutor'] },
@@ -38,7 +39,6 @@ const mockChatContext = {
 vi.mock('~/context/chat-context', () => ({
   useChatContext: () => mockChatContext
 }))
-
 
 describe('MyCooperationsDetails component', () => {
   beforeEach(() => {

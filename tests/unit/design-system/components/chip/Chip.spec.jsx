@@ -5,7 +5,7 @@ import Chip from '~/design-system/components/chip/Chip'
 
 describe('Chip', () => {
   it('should render chip with correct classes', () => {
-    render(<Chip type='input' size='sm' label='Chip' disabled />)
+    render(<Chip disabled label='Chip' size='sm' type='input' />)
 
     const chip = screen.getByText('Chip').parentElement
     expect(chip).toHaveClass('s2s-chip--input')
@@ -19,9 +19,9 @@ describe('FilterChip', () => {
   it('should render the filter chip with a label', () => {
     render(
       <Chip
-        type='filter'
         label='Filter Chip'
         options={['Option 1', 'Option 2']}
+        type='filter'
       />
     )
 
@@ -31,9 +31,9 @@ describe('FilterChip', () => {
   it('should open the dropdown menu when clicked', async () => {
     render(
       <Chip
-        type='filter'
         label='Filter Chip'
         options={['Option 1', 'Option 2']}
+        type='filter'
       />
     )
 
@@ -49,9 +49,9 @@ describe('FilterChip', () => {
   it('should select an option when clicked and close dropdown menu after', async () => {
     render(
       <Chip
-        type='filter'
         label='Filter Chip'
         options={['Option 1', 'Option 2']}
+        type='filter'
       />
     )
 
@@ -68,10 +68,10 @@ describe('FilterChip', () => {
   it('should be initial open with initialIsOpen=true', async () => {
     render(
       <Chip
-        type='filter'
+        initialIsOpen
         label='Filter Chip'
         options={['Option 1', 'Option 2']}
-        initialIsOpen
+        type='filter'
       />
     )
 
@@ -85,10 +85,10 @@ describe('FilterChip', () => {
   it('should have initial selected option', async () => {
     render(
       <Chip
-        type='filter'
+        initialSelectedOption='Option 1'
         label='Filter Chip'
         options={['Option 1', 'Option 2']}
-        initialSelectedOption='Option 1'
+        type='filter'
       />
     )
 
@@ -102,10 +102,10 @@ describe('FilterChip', () => {
   it('should not be closed after selecting option if chip is controllable by isOpen state', async () => {
     render(
       <Chip
-        type='filter'
+        isOpen
         label='Filter Chip'
         options={['Option 1', 'Option 2']}
-        isOpen={true}
+        type='filter'
       />
     )
     const option1 = await screen.findByText('Option 1')
@@ -120,10 +120,10 @@ describe('FilterChip', () => {
   it('should not be open after clicking on dropdown trigger if chip is controllable by isOpen state', async () => {
     render(
       <Chip
-        type='filter'
+        isOpen={false}
         label='Filter Chip'
         options={['Option 1', 'Option 2']}
-        isOpen={false}
+        type='filter'
       />
     )
     const dropdownTrigger = screen.queryByText('Filter Chip')
@@ -138,10 +138,10 @@ describe('FilterChip', () => {
   it('should not change selected option if chip is controllable by selectedOption state', async () => {
     render(
       <Chip
-        type='filter'
         label='Filter Chip'
         options={['Option 1', 'Option 2']}
         selectedOption='Option 1'
+        type='filter'
       />
     )
     const dropdownTrigger = screen.getByTestId('s2s-dropdown-trigger')
@@ -160,10 +160,10 @@ describe('FilterChip', () => {
 
     render(
       <Chip
-        type='filter'
         label='Filter Chip'
-        options={['Option 1', 'Option 2']}
         onIsOpenChange={onIsOpenChange}
+        options={['Option 1', 'Option 2']}
+        type='filter'
       />
     )
 
@@ -185,10 +185,10 @@ describe('FilterChip', () => {
 
     render(
       <Chip
-        type='filter'
         label='Filter Chip'
-        options={['Option 1', 'Option 2']}
         onSelectedOptionChange={onSelectedOptionChange}
+        options={['Option 1', 'Option 2']}
+        type='filter'
       />
     )
 
@@ -207,13 +207,13 @@ describe('FilterChip', () => {
 
 describe('InputChip', () => {
   it('should render the input chip with a label', () => {
-    render(<Chip type='input' label='Input Chip' />)
+    render(<Chip label='Input Chip' type='input' />)
 
     expect(screen.getByText('Input Chip')).toBeInTheDocument()
   })
 
   it('should render with the correct variant', () => {
-    render(<Chip type='input' label='Input Chip' variant='outlined' />)
+    render(<Chip label='Input Chip' type='input' variant='outlined' />)
 
     const chip = screen.getByText('Input Chip').parentElement
     expect(chip).toHaveClass('s2s-outlined')
@@ -224,10 +224,10 @@ describe('InputChip', () => {
 
     render(
       <Chip
-        type='input'
         label='Input Chip'
-        variant='outlined'
         onRemoveButtonClick={onRemoveButtonClick}
+        type='input'
+        variant='outlined'
       />
     )
 
@@ -243,10 +243,10 @@ describe('CategoryChip', () => {
   it('should render the category chip with a label and detail', () => {
     render(
       <Chip
-        type='category'
-        label='Category Chip'
-        detail='Detail'
         color='blue'
+        detail='Detail'
+        label='Category Chip'
+        type='category'
       />
     )
 
@@ -257,10 +257,10 @@ describe('CategoryChip', () => {
   it('should apply the correct style based on the color prop', () => {
     render(
       <Chip
-        type='category'
-        label='Category Chip'
-        detail='Detail'
         color='blue'
+        detail='Detail'
+        label='Category Chip'
+        type='category'
       />
     )
 
@@ -278,13 +278,13 @@ describe('CategoryChip', () => {
 
 describe('StateChip', () => {
   it('should render the state chip with a label', () => {
-    render(<Chip type='state' label='State Chip' color='green' />)
+    render(<Chip color='green' label='State Chip' type='state' />)
 
     expect(screen.getByText('State Chip')).toBeInTheDocument()
   })
 
   it('should apply the correct style based on the color prop', () => {
-    render(<Chip type='state' label='State Chip' color='green' />)
+    render(<Chip color='green' label='State Chip' type='state' />)
 
     const chip = screen.getByText('State Chip').parentElement
     expect(chip.style.getPropertyValue('--chip-bg-color')).toBe(

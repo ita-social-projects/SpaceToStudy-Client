@@ -1,6 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import ChatItem from '~/containers/chat/chat-item/ChatItem'
+import { vi } from 'vitest'
 
 const user = {
   _id: '644e6b1668cc37f543f2f37c',

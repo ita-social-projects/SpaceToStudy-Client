@@ -22,7 +22,7 @@ describe('Badge Component', () => {
 
   it('it should be rendered with correct badge content when "lg" is passed', () => {
     render(
-      <Badge variant='lg' badgeContent={5}>
+      <Badge badgeContent={5} variant='lg'>
         <IconButton>
           <NotificationsActiveRounded />
         </IconButton>
@@ -35,7 +35,7 @@ describe('Badge Component', () => {
 
   it('badge content should be hidden when "isVisible" is false', () => {
     render(
-      <Badge variant='lg' badgeContent={5} isVisible={false}>
+      <Badge badgeContent={5} isVisible={false} variant='lg'>
         <IconButton>
           <NotificationsActiveRounded />
         </IconButton>

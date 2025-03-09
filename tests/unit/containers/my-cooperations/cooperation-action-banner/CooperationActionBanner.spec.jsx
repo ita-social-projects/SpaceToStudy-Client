@@ -9,10 +9,11 @@ describe('CooperationActionBanner', () => {
     render(
       <CooperationActionBanner
         description='cooperationDetailsPage.closingMessage'
-        title='titles.acceptCooperationClosing'
-        children='cooperationDetailsPage.someAdditionalText'
         icon={<ErrorOutlineRounded data-testid='icon-example' />}
-      />
+        title='titles.acceptCooperationClosing'
+      >
+        {'cooperationDetailsPage.someAdditionalText'}
+      </CooperationActionBanner>
     )
   })
 

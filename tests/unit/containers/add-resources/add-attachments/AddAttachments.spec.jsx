@@ -7,6 +7,7 @@ import {
   columns,
   removeColumnRules
 } from '~/containers/add-resources/AddAttachments.constants'
+import { vi } from 'vitest'
 
 const attachmentDataMock = {
   _id: '64cd12f1fad091e0ee719830',

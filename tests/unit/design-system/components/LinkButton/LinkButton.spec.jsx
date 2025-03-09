@@ -17,7 +17,7 @@ describe('LinkButton Component', () => {
   beforeEach(() => {
     render(
       <Router>
-        <LinkButton to={mockLink} variant={props.variant} size={props.size}>
+        <LinkButton size={props.size} to={mockLink} variant={props.variant}>
           {mockText}
         </LinkButton>
       </Router>

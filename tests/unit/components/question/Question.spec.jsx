@@ -1,4 +1,5 @@
 import { screen, render, fireEvent } from '@testing-library/react'
+import { vi } from 'vitest'
 import Question from '~/components/question/Question'
 
 const mockedQuestion = {

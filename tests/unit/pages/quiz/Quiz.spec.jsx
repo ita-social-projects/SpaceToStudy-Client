@@ -1,7 +1,6 @@
 import { beforeAll, beforeEach, expect } from 'vitest'
-import { screen, fireEvent, act } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import Quiz from '~/pages/quiz/Quiz'
-import QuizReview from '~/pages/quiz-review/QuizReview'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'

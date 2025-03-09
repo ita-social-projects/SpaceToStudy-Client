@@ -5,8 +5,8 @@ import { renderWithProviders } from '~tests/test-utils'
 import Categories from '~/pages/categories/Categories'
 import useLoadMore from '~/hooks/use-load-more'
 import { useTranslation } from 'react-i18next'
-import {titleToCamel} from '~/utils/title-to-camel-case'
-const {t} = useTranslation();
+import { titleToCamel } from '~/utils/title-to-camel-case'
+const { t } = useTranslation()
 
 const resetDataMock = vi.fn()
 const loadMoreMock = vi.fn()
@@ -24,8 +24,8 @@ vi.mock('~/hooks/use-categories-names', () => ({
 
 vi.mock('~/hooks/use-load-more')
 vi.mock('i18next', () => ({
-  t: (key) => key,
-}));
+  t: (key) => key
+}))
 describe('Categories page', () => {
   beforeAll(() => {
     useLoadMore.mockImplementation(() => ({
@@ -83,7 +83,9 @@ describe('Categories page', () => {
 
     expect(autocomplete.value).toBe('Music')
 
-    const categoryName = screen.getByText(t(`categories.${titleToCamel('Music')}`, {defaultValue: 'Music'}))
+    const categoryName = screen.getByText(
+      t(`categories.${titleToCamel('Music')}`, { defaultValue: 'Music' })
+    )
 
     expect(categoryName).toBeInTheDocument()
   })

@@ -5,6 +5,7 @@ import {
   ResourcesAvailabilityEnum
 } from '~/types'
 import { useAppSelector } from '~/hooks/use-redux'
+import { vi } from 'vitest'
 
 const navigateMock = vi.fn()
 
@@ -57,7 +58,7 @@ describe('CooperationSectionView', () => {
 
   it('should render resource title', () => {
     const title = screen.getByText(mockSection.resources[0].resource.title)
-    
+
     expect(title).toBeInTheDocument()
   })
 

@@ -19,7 +19,7 @@
     "sectionMenu": {
       "deleteSection": "Delete"
     },
-    "resourceCount":{
+    "resourceCount": {
       "lesson_one": "{{count}} lesson",
       "lesson_few": "{{count}} lessons",
       "lesson_many": "{{count}} lessons",

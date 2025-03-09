@@ -11,6 +11,7 @@ import { resourceNavigationMap } from '~/containers/course-section/CourseSection
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 import { mockedDuplicatedSectionData } from './CourseSectionContainer.spec.constants'
+import { vi } from 'vitest'
 
 const mockedHandleSectionInputChange = vi.fn()
 const mockedResourceEventHandler = vi.fn()
@@ -122,12 +123,12 @@ describe('CourseSectionContainer tests', () => {
     const menuAvailabilityToChange =
       allMenuAvailabilityStatus[activityIndexToChange]
 
-      act(() =>
-        fireEvent.change(menuAvailabilityToChange, {
-          target: { value: 'closed' }
-        })
-      )
-      act(() => fireEvent.blur(menuAvailabilityToChange))
+    act(() =>
+      fireEvent.change(menuAvailabilityToChange, {
+        target: { value: 'closed' }
+      })
+    )
+    act(() => fireEvent.blur(menuAvailabilityToChange))
 
     expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({

@@ -6,8 +6,8 @@ import useLoadMore from '~/hooks/use-load-more'
 import { useTranslation } from 'react-i18next'
 const resetDataMock = vi.fn()
 const loadMoreMock = vi.fn()
-import {titleToCamel} from '~/utils/title-to-camel-case'
-const {t} = useTranslation();
+import { titleToCamel } from '~/utils/title-to-camel-case'
+const { t } = useTranslation()
 vi.mock('~/hooks/use-subjects-names', () => ({
   __esModule: true,
   default: () => ({
@@ -20,8 +20,8 @@ vi.mock('~/hooks/use-subjects-names', () => ({
 vi.mock('~/hooks/use-load-more')
 
 vi.mock('i18next', () => ({
-  t: (key) => key,
-}));
+  t: (key) => key
+}))
 describe('Subjects page', () => {
   beforeAll(() => {
     useLoadMore.mockImplementation(() => ({
@@ -80,7 +80,9 @@ describe('Subjects page', () => {
 
     expect(autocomplete.value).toBe('Violin')
 
-    const subjectName = screen.getByText(t(`subjects.${titleToCamel('Violin')}`, {defaultValue: 'Violin'}))
+    const subjectName = screen.getByText(
+      t(`subjects.${titleToCamel('Violin')}`, { defaultValue: 'Violin' })
+    )
     expect(subjectName).toBeInTheDocument()
   })
 })

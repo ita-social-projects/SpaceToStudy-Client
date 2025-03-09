@@ -1,6 +1,7 @@
 import { renderWithProviders } from '~tests/test-utils'
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
+import { vi } from 'vitest'
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')

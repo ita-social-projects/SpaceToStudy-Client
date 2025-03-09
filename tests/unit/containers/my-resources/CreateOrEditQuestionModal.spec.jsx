@@ -1,6 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
-import { beforeEach, describe, it } from 'vitest'
+import { beforeEach, describe, it, vi } from 'vitest'
 
 import CreateOrEditQuestionModal from '~/containers/my-resources/create-or-edit-question-modal/CreateOrEditQuestionModal'
 import { URLs } from '~/constants/request'

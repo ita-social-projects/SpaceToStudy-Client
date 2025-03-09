@@ -3,6 +3,7 @@ import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import { imageResize } from '~/utils/image-resize'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
 import { formDataMock } from '~tests/unit/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.spec.constants'
+import { vi } from 'vitest'
 
 vi.mock('~/utils/image-resize')
 

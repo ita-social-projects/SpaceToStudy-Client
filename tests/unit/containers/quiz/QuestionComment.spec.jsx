@@ -12,63 +12,60 @@ const mockQuiz = {
 const mockSubmit = vi.fn()
 
 describe('QuestionComment', () => {
-    beforeEach(() => {
-        render(
-            <QuestionComment
-                quiz={mockQuiz}
-                onCommentSubmit={mockSubmit} 
-            />
-        )
-        mockSubmit.mockClear()
-    })
+  beforeEach(() => {
+    render(<QuestionComment onCommentSubmit={mockSubmit} quiz={mockQuiz} />)
+    mockSubmit.mockClear()
+  })
 
-    test('should render comment button', () => {
-        const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
-        expect(addCommentButton).toBeInTheDocument()
-    })
+  test('should render comment button', () => {
+    const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
+    expect(addCommentButton).toBeInTheDocument()
+  })
 
-    test('should open comment input when comment button is clicked', () => {
-        const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
-        fireEvent.click(addCommentButton)
+  test('should open comment input when comment button is clicked', () => {
+    const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
+    fireEvent.click(addCommentButton)
 
-        const inputField = screen.getByTestId('textField')
-        expect(inputField).toBeInTheDocument()
-    })
+    const inputField = screen.getByTestId('textField')
+    expect(inputField).toBeInTheDocument()
+  })
 
-    test('should does not submit comment if input is empty', () => {
-        const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
-        fireEvent.click(addCommentButton)
+  test('should does not submit comment if input is empty', () => {
+    const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
+    fireEvent.click(addCommentButton)
 
-        const submitButton = screen.getByTestId('SendIcon')
-        fireEvent.click(submitButton)
+    const submitButton = screen.getByTestId('SendIcon')
+    fireEvent.click(submitButton)
 
-        expect(mockSubmit).not.toHaveBeenCalled()
-    })
+    expect(mockSubmit).not.toHaveBeenCalled()
+  })
 
-    test('should submit comment if input is not empty', () => {
-        const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
-        fireEvent.click(addCommentButton)
+  test('should submit comment if input is not empty', () => {
+    const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
+    fireEvent.click(addCommentButton)
 
-        const textField = screen.queryByTestId('textField').querySelector('textarea')
-        expect(textField).toBeInTheDocument()
-        fireEvent.change(textField, { target: { value: 'Great answer!' } })
+    const textField = screen
+      .queryByTestId('textField')
+      .querySelector('textarea')
+    expect(textField).toBeInTheDocument()
+    fireEvent.change(textField, { target: { value: 'Great answer!' } })
 
-        const submitButton = screen.getByTestId('SendIcon')
-        fireEvent.click(submitButton)
+    const submitButton = screen.getByTestId('SendIcon')
+    fireEvent.click(submitButton)
 
-        expect(mockSubmit).toHaveBeenCalledWith('Great answer!')
-    })
+    expect(mockSubmit).toHaveBeenCalledWith('Great answer!')
+  })
 
-    test('should toggle comment input visibility when clicking comment button', () => {
-        const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
-        
-        const textField = screen.queryByTestId('textField')
-        expect(textField).not.toBeInTheDocument()
+  test('should toggle comment input visibility when clicking comment button', () => {
+    const addCommentButton = screen.getByTestId('AddCommentOutlinedIcon')
 
-        fireEvent.click(addCommentButton)
-        expect(screen.queryByTestId('textField')).toBeInTheDocument()
+    const textField = screen.queryByTestId('textField')
+    expect(textField).not.toBeInTheDocument()
 
-        fireEvent.click(addCommentButton)
-        expect(textField).not.toBeInTheDocument()
-    })
+    fireEvent.click(addCommentButton)
+    expect(screen.queryByTestId('textField')).toBeInTheDocument()
+
+    fireEvent.click(addCommentButton)
+    expect(textField).not.toBeInTheDocument()
+  })
 })

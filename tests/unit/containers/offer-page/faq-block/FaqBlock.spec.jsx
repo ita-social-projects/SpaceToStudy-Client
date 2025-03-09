@@ -1,4 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 
 import FaqBlock from '~/containers/offer-page/faq-block/FaqBlock'
 import { renderWithProviders } from '~tests/test-utils'
@@ -22,8 +23,8 @@ const renderAndMock = (questions = generateQuestions()) => {
   const data = { FAQ: questions }
   return renderWithProviders(
     <FaqBlock
-      handleNonInputValueChange={handleNonInputValueChange}
       data={data}
+      handleNonInputValueChange={handleNonInputValueChange}
     />
   )
 }
@@ -82,9 +83,8 @@ describe('FaqBlock component', () => {
     const closeButton = screen.getAllByTestId('CloseRoundedIcon')[0]
     fireEvent.click(closeButton)
 
-    expect(handleNonInputValueChange).toHaveBeenCalledWith(
-      'FAQ',
-      [initialQuestions[1]]
-    )
+    expect(handleNonInputValueChange).toHaveBeenCalledWith('FAQ', [
+      initialQuestions[1]
+    ])
   })
 })

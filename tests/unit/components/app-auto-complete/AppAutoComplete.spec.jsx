@@ -49,7 +49,9 @@ describe('AppAutoComplete test', () => {
     expect(screen.getByRole('listbox')).toBeInTheDocument()
 
     const optionsInDropdown = screen.getAllByRole('option')
-    const countryNames = optionsInDropdown.map(option => option.textContent?.trim())
+    const countryNames = optionsInDropdown.map((option) =>
+      option.textContent?.trim()
+    )
     const sortedCountryNames = [...countryNames].sort()
     expect(countryNames).toEqual(sortedCountryNames)
   })
@@ -80,7 +82,7 @@ describe('AppAutoComplete test', () => {
     fireEvent.mouseDown(countryField)
     fireEvent.focus(countryField)
     fireEvent.click(countryField)
-    
+
     fireEvent.change(countryField, { target: { value: 'Ukraine' } })
     fireEvent.change(countryField, { target: { value: '' } })
 
@@ -89,7 +91,9 @@ describe('AppAutoComplete test', () => {
     expect(screen.getByRole('listbox')).toBeInTheDocument()
 
     const optionsInDropdown = screen.getAllByRole('option')
-    const countryNames = optionsInDropdown.map(option => option.textContent?.trim())
+    const countryNames = optionsInDropdown.map((option) =>
+      option.textContent?.trim()
+    )
     const sortedCountryNames = [...countryNames].sort()
     expect(countryNames).toEqual(sortedCountryNames)
   })
@@ -131,8 +135,10 @@ describe('AppAutoComplete test', () => {
     expect(screen.getByRole('listbox')).toBeInTheDocument()
 
     const optionsInDropdown = screen.getAllByRole('option')
-    
-    const cityNames = optionsInDropdown.map(option => option.textContent?.trim())
+
+    const cityNames = optionsInDropdown.map((option) =>
+      option.textContent?.trim()
+    )
     const sortedCityNames = [...cityNames].sort()
     expect(cityNames).toEqual(sortedCityNames)
   })
@@ -152,7 +158,7 @@ describe('AppAutoComplete test', () => {
     fireEvent.mouseDown(cityField)
     fireEvent.focus(cityField)
     fireEvent.click(cityField)
-    
+
     fireEvent.change(cityField, { target: { value: 'Verhovyna' } })
     fireEvent.change(cityField, { target: { value: '' } })
 
@@ -161,7 +167,9 @@ describe('AppAutoComplete test', () => {
     expect(screen.getByRole('listbox')).toBeInTheDocument()
 
     const optionsInDropdown = screen.getAllByRole('option')
-    const cityNames = optionsInDropdown.map(option => option.textContent?.trim())
+    const cityNames = optionsInDropdown.map((option) =>
+      option.textContent?.trim()
+    )
     const sortedCityNames = [...cityNames].sort()
     expect(cityNames).toEqual(sortedCityNames)
   })

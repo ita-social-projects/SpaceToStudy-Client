@@ -1,6 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
-import { beforeEach, describe } from 'vitest'
+import { beforeEach, describe, vi } from 'vitest'
 
 import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
 import { URLs } from '~/constants/request'

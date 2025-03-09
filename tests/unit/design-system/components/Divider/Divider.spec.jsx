@@ -1,90 +1,98 @@
-import { render, screen } from '@testing-library/react';
-import DividerComponent from '~scss-components/divider/Divider';
+import { render, screen } from '@testing-library/react'
+import DividerComponent from '~scss-components/divider/Divider'
 
 describe('DividerComponent', () => {
   it('renders a linear divider with caption', () => {
     render(
       <DividerComponent
-        variant='fullWidth'
-        orientation='horizontal'
-        thickness='md'
-        textAlign='center'
         caption='Test Caption'
+        orientation='horizontal'
+        textAlign='center'
+        thickness='md'
         type='linear'
+        variant='fullWidth'
       />
-    );
+    )
 
-    expect(screen.getByText('Test Caption')).toBeInTheDocument();
+    expect(screen.getByText('Test Caption')).toBeInTheDocument()
 
-    expect(screen.getByText('Test Caption').closest('.s2s-divider')).toHaveClass('s2s-divider-horizontal');
-  });
+    expect(
+      screen.getByText('Test Caption').closest('.s2s-divider')
+    ).toHaveClass('s2s-divider-horizontal')
+  })
 
   it('renders a linear thick divider', () => {
     render(
       <DividerComponent
-        variant='fullWidth'
-        orientation='horizontal'
-        thickness='lg'
-        textAlign='center'
         caption='Thick Divider'
+        orientation='horizontal'
+        textAlign='center'
+        thickness='lg'
         type='linear'
+        variant='fullWidth'
       />
-    );
+    )
 
-    expect(screen.getByText('Thick Divider')).toBeInTheDocument();
+    expect(screen.getByText('Thick Divider')).toBeInTheDocument()
 
-    const dividerElement = screen.getByText('Thick Divider').closest('.s2s-divider');
-    expect(dividerElement).toHaveClass('s2s-divider-horizontal');
-  });
+    const dividerElement = screen
+      .getByText('Thick Divider')
+      .closest('.s2s-divider')
+    expect(dividerElement).toHaveClass('s2s-divider-horizontal')
+  })
 
   it('renders an ellipse divider with small size', () => {
     const { container } = render(
       <DividerComponent
-        variant='inset'
+        caption=''
         orientation='horizontal'
+        size='small'
+        textAlign='center'
         thickness='sm'
         type='ellipse'
-        size='small'
-        caption=''
-        textAlign='center'
+        variant='inset'
       />
-    );
+    )
 
-    const ellipseDivider = container.querySelector('.s2s-divider-ellipse-small');
-    expect(ellipseDivider).toBeInTheDocument();
-    expect(ellipseDivider).toHaveClass('s2s-divider-ellipse-small');
-  });
+    const ellipseDivider = container.querySelector('.s2s-divider-ellipse-small')
+    expect(ellipseDivider).toBeInTheDocument()
+    expect(ellipseDivider).toHaveClass('s2s-divider-ellipse-small')
+  })
 
   it('renders a vertical linear divider', () => {
     render(
       <DividerComponent
-        variant='middle'
+        caption='Vertical Divider'
         orientation='vertical'
+        textAlign='center'
         thickness='md'
         type='linear'
-        caption='Vertical Divider'
-        textAlign='center'
+        variant='middle'
       />
-    );
+    )
 
-    expect(screen.getByText('Vertical Divider')).toBeInTheDocument();
+    expect(screen.getByText('Vertical Divider')).toBeInTheDocument()
 
-    expect(screen.getByText('Vertical Divider').closest('.s2s-divider')).toHaveClass('s2s-divider-vertical');
-  });
+    expect(
+      screen.getByText('Vertical Divider').closest('.s2s-divider')
+    ).toHaveClass('s2s-divider-vertical')
+  })
 
   it('applies custom thickness styling', () => {
     render(
       <DividerComponent
-        variant='middle'
+        caption='Styled Divider'
         orientation='horizontal'
+        textAlign='left'
         thickness='lg'
         type='linear'
-        caption='Styled Divider'
-        textAlign='left'
+        variant='middle'
       />
-    );
+    )
 
-    const dividerElement = screen.getByText('Styled Divider').closest('.s2s-divider');
-    expect(dividerElement).toHaveClass('s2s-divider-horizontal');
-  });
-});
+    const dividerElement = screen
+      .getByText('Styled Divider')
+      .closest('.s2s-divider')
+    expect(dividerElement).toHaveClass('s2s-divider-horizontal')
+  })
+})

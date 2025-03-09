@@ -7,6 +7,7 @@ import {
   removeColumnRules
 } from '~/containers/add-resources/AddLessons.constants'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import { vi } from 'vitest'
 
 const lessonDataMock = {
   _id: '1',
@@ -34,9 +35,7 @@ const resourcesMockData = {
 }
 
 const mockRequestService = vi.fn(() =>
-  Promise.resolve(
-{ items: responseItemsMock, count: responseItemsMock.length }
-  )
+  Promise.resolve({ items: responseItemsMock, count: responseItemsMock.length })
 )
 
 const mockOnAddResources = () => {}

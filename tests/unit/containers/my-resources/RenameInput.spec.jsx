@@ -1,4 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 
 import RenameInput from '~/containers/my-resources/rename-input/RenameInput'
 import { renderWithProviders } from '~tests/test-utils'

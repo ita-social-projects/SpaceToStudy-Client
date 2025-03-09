@@ -5,6 +5,7 @@ import QuizSettingsContainer from '~/containers/my-quizzes/quiz-settings-contain
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { initialSettings } from '~/pages/new-quiz/NewQuiz.constants'
+import { vi } from 'vitest'
 
 const setActiveTabMock = vi.fn()
 const navigateMock = vi.fn()

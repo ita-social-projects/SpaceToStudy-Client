@@ -9,10 +9,14 @@ const after = <span>After text</span>
 
 describe('DirectionLink', () => {
   beforeEach(() => {
-    renderWithProviders(<DirectionLink
-      after={ after } before={ before } linkTo={ linkTo }
-      title={ title }
-    />)
+    renderWithProviders(
+      <DirectionLink
+        after={after}
+        before={before}
+        linkTo={linkTo}
+        title={title}
+      />
+    )
   })
   it('renders the link with the provided text', () => {
     expect(screen.getByText(title)).toBeInTheDocument()

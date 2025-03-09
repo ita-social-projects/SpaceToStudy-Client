@@ -4,7 +4,7 @@ import {
   mockAxiosClient,
   selectOption
 } from '~tests/test-utils'
-import { afterEach, beforeEach, describe, expect } from 'vitest'
+import { afterEach, beforeEach, describe, expect, vi } from 'vitest'
 
 import AddAttachmentCategoryModal from '~/containers/my-resources/add-attachment-category-modal/AddAttachmentCategoryModal'
 import { URLs } from '~/constants/request'
@@ -72,9 +72,9 @@ describe('AddAttachmentCategoryModal component', () => {
     const saveBtn = screen.getByRole('button', { name: 'common.save' })
 
     expect(saveBtn).toBeInTheDocument()
-    
+
     fireEvent.click(saveBtn)
-    
+
     expect(saveBtn).toBeDisabled()
     expect(updateAttachmentCategory).not.toHaveBeenCalled()
   })

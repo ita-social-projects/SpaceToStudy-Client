@@ -5,6 +5,7 @@ import CourseSectionsList from '~/containers/course-sections-list/CourseSections
 import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
 
 import { ResourcesTypesEnum as ResourceType } from '~/types'
+import { vi } from 'vitest'
 
 const mockedHandleSectionChange = vi.fn()
 const mockedResourceEventHandler = vi.fn()

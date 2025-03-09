@@ -4,8 +4,8 @@ import { ResourceService } from '~/services/resource-service'
 
 describe('resourseService tests', () => {
   afterEach(() => {
-    mockAxiosClient.resetHistory() 
-    mockAxiosClient.reset() 
+    mockAxiosClient.resetHistory()
+    mockAxiosClient.reset()
   })
 
   it('should edit a lesson', async () => {
@@ -18,9 +18,7 @@ describe('resourseService tests', () => {
       category: null
     }
     mockAxiosClient
-      .onPatch(
-        URLs.resources.lessons.patch.replace(':id', lessonId)
-      )
+      .onPatch(URLs.resources.lessons.patch.replace(':id', lessonId))
       .reply(200)
 
     await ResourceService.editLesson(lessonData, lessonId)
@@ -77,18 +75,20 @@ describe('resourseService tests', () => {
         correctAnswers: true
       }
     }
-  
+
     mockAxiosClient
       .onPatch(URLs.quizzes.patch.replace(':id', quizId))
       .reply(200)
-  
+
     await ResourceService.editQuiz({ id: quizId, ...quizData })
-  
+
     expect(mockAxiosClient.history.patch[0].url).toBe(
       URLs.quizzes.patch.replace(':id', quizId)
     )
-  
-    expect(mockAxiosClient.history.patch[0].data).toEqual(JSON.stringify(quizData))
+
+    expect(mockAxiosClient.history.patch[0].data).toEqual(
+      JSON.stringify(quizData)
+    )
   })
 
   it('should create a new quiz', async () => {
@@ -106,25 +106,27 @@ describe('resourseService tests', () => {
         correctAnswers: false
       }
     }
-  
+
     const mockResponse = {
       ...newQuizData,
       _id: 'new-quiz-id',
       createdAt: '2025-01-01T00:00:00.000Z',
       updatedAt: '2025-01-01T00:00:00.000Z'
     }
-  
+
     mockAxiosClient.onPost(URLs.quizzes.add).reply(200, mockResponse)
-  
+
     const createdQuiz = await ResourceService.addQuiz(newQuizData)
-  
+
     expect(mockAxiosClient.history.post[0].url).toBe(URLs.quizzes.add)
-  
-    expect(mockAxiosClient.history.post[0].data).toEqual(JSON.stringify(newQuizData))
-  
+
+    expect(mockAxiosClient.history.post[0].data).toEqual(
+      JSON.stringify(newQuizData)
+    )
+
     expect(createdQuiz).toEqual(mockResponse)
   })
-  
+
   it('should get resource categories names', async () => {
     const mockResponse = [
       { _id: '1', name: 'Category 1' },
@@ -137,7 +139,9 @@ describe('resourseService tests', () => {
 
     const response = await ResourceService.getResourcesCategoriesName()
 
-    expect(mockAxiosClient.history.get[0].url).toBe(URLs.resources.resourcesCategories.getNames)
+    expect(mockAxiosClient.history.get[0].url).toBe(
+      URLs.resources.resourcesCategories.getNames
+    )
     expect(response).toEqual(mockResponse)
   })
 
@@ -151,7 +155,9 @@ describe('resourseService tests', () => {
 
     const response = await ResourceService.createResourceCategory(params)
 
-    expect(mockAxiosClient.history.post[0].url).toBe(URLs.resources.resourcesCategories.post)
+    expect(mockAxiosClient.history.post[0].url).toBe(
+      URLs.resources.resourcesCategories.post
+    )
     expect(mockAxiosClient.history.post[0].data).toBe(JSON.stringify(params))
     expect(response).toEqual(mockResponse)
   })
@@ -172,15 +178,15 @@ describe('resourseService tests', () => {
 
     mockAxiosClient
       .onPatch(URLs.resources.attachments.patch.replace(':id', attachmentId))
-      .reply(200, mockAttachmentResponse)  
+      .reply(200, mockAttachmentResponse)
 
     const updatedAttachmentResponse = await ResourceService.updateAttachment({
       ...attachment,
       id: attachmentId
     })
-    
+
     expect(updatedAttachmentResponse).toEqual(mockAttachmentResponse)
-   })
+  })
 
   it('should create a new question', async () => {
     const newQuestionData = {
@@ -221,7 +227,7 @@ describe('resourseService tests', () => {
     expect(createdQuestion).toEqual(mockResponse)
   })
 
-  it('should get attachements' , async () => {
+  it('should get attachements', async () => {
     const mockResponse = [
       {
         _id: '6255bc080a75adf9223df444',
@@ -232,7 +238,9 @@ describe('resourseService tests', () => {
       }
     ]
 
-    mockAxiosClient.onGet(URLs.resources.attachments.get).reply(200, mockResponse)  
+    mockAxiosClient
+      .onGet(URLs.resources.attachments.get)
+      .reply(200, mockResponse)
 
     const response = await ResourceService.getAttachments()
 
@@ -259,7 +267,7 @@ describe('resourseService tests', () => {
 
     expect(response).toEqual(mockAttachmentResponse)
   })
-  
+
   it('should update a question', async () => {
     const questionId = '6255bc080a75adf9223df444'
     const questionData = {
@@ -282,9 +290,7 @@ describe('resourseService tests', () => {
     }
 
     mockAxiosClient
-      .onPatch(
-        URLs.resources.questions.patch.replace(':id', questionId)
-      )
+      .onPatch(URLs.resources.questions.patch.replace(':id', questionId))
       .reply(200, mockResponse)
 
     const updatedQuestion = await ResourceService.updateQuestion({

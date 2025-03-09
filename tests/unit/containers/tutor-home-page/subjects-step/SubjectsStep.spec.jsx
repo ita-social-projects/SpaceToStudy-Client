@@ -13,6 +13,7 @@ import {
   initialValues,
   tutorStepLabels
 } from '~/components/user-steps-wrapper/constants'
+import { vi } from 'vitest'
 
 const mockCategoriesNames = [
   { _id: '1', name: 'Category 1' },

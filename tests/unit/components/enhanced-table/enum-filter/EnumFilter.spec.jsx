@@ -20,16 +20,14 @@ const mockedFilterBeforeClick = ''
 
 describe('EnumFilter test', () => {
   beforeEach(() => {
-    render(
-      <EnumFilter { ...mockedProps } filter={ mockedFilterBeforeClick } />
-    )
+    render(<EnumFilter {...mockedProps} filter={mockedFilterBeforeClick} />)
   })
- 
+
   it('should open menu after clicking on filter icon', () => {
     const filterIcon = screen.getByTestId('filter-icon')
     fireEvent.click(filterIcon)
 
-    const filterMenu = screen.getByRole('menu') 
+    const filterMenu = screen.getByRole('menu')
     expect(filterMenu).toBeInTheDocument()
   })
 
@@ -46,10 +44,10 @@ describe('EnumFilter test', () => {
     fireEvent.click(filterCheckbox)
 
     const mockedFilterAfterClick = 'name'
-    
+
     cleanup()
 
-    render(<EnumFilter { ...mockedProps } filter={ mockedFilterAfterClick } />)
+    render(<EnumFilter {...mockedProps} filter={mockedFilterAfterClick} />)
 
     const clearIcon = screen.getByTestId('clear-icon-in-filter')
     expect(clearIcon).toHaveClass('visible')
@@ -65,7 +63,7 @@ describe('EnumFilter test', () => {
     expect(mockedProps.setFilter).toHaveBeenCalled()
   })
 
-  it('should clear filter after clicking clearIcon', () => { 
+  it('should clear filter after clicking clearIcon', () => {
     const clearIcon = screen.getByTestId('clear-icon-in-filter')
     fireEvent.click(clearIcon)
 

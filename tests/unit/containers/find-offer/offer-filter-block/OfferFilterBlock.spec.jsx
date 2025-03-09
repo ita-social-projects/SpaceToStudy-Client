@@ -1,5 +1,5 @@
 import { screen, fireEvent } from '@testing-library/react'
-import { beforeEach } from 'vitest'
+import { beforeEach, vi } from 'vitest'
 
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'

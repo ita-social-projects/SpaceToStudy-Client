@@ -1,13 +1,13 @@
 import QuestionEditor from '~/components/question-editor/QuestionEditor'
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
+import { vi } from 'vitest'
 
 const handleInputChange = vi.fn()
 const handleNonInputValueChange = vi.fn()
 const addNewOneAnswer = vi.fn()
 const onEditMock = vi.fn()
 const onSave = vi.fn()
-
 
 const props = {
   handleInputChange,
@@ -34,7 +34,12 @@ describe('QuestionEditor component with an open question type', () => {
   }
 
   beforeEach(() => {
-    renderWithProviders(<QuestionEditor addNewOneAnswer={addNewOneAnswer} {...openQuestionProps} />)
+    renderWithProviders(
+      <QuestionEditor
+        addNewOneAnswer={addNewOneAnswer}
+        {...openQuestionProps}
+      />
+    )
   })
 
   afterEach(() => {
@@ -87,9 +92,9 @@ describe('QuestionEditor component with an open question type', () => {
 
     const addNewOneButton = screen.getByTestId('addNewAnswerBtn')
     fireEvent.click(addNewOneButton)
-    
+
     expect(handleNonInputValueChange).toHaveBeenCalledWith('answers', [
-      { 
+      {
         id: 0,
         text: '',
         isCorrect: true,

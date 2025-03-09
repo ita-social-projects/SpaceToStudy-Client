@@ -1,13 +1,13 @@
-{   
-    "sortBy":{
-        "sortByTitle":"Sort by:",
-        "sortByFields":{
-            "tutorRating":"Tutor rating",
-            "ascendingPrice":"Ascending price",
-            "descendingPrice": "Descending price",
-            "creationTime": "Creation time"
-        }
-    },
-    "filtersListTitle": "Filters",
-    "filterLevelsLabel": "Levels"
+{
+  "sortBy": {
+    "sortByTitle": "Sort by:",
+    "sortByFields": {
+      "tutorRating": "Tutor rating",
+      "ascendingPrice": "Ascending price",
+      "descendingPrice": "Descending price",
+      "creationTime": "Creation time"
+    }
+  },
+  "filtersListTitle": "Filters",
+  "filterLevelsLabel": "Levels"
 }

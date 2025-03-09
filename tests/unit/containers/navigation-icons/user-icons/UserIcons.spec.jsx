@@ -19,8 +19,8 @@ vi.mock('@mui/material/Tooltip', () => ({
       {title}
       {children}
     </div>
-  ),
-}));
+  )
+}))
 
 describe('test with user role', () => {
   const preloadedState = { appMain: { loading: false, userRole: 'student' } }

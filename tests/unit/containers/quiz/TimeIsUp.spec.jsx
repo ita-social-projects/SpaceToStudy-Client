@@ -2,6 +2,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import TimeIsUp from '~/containers/quiz/time-is-up/TimeIsUp'
+import { vi } from 'vitest'
 
 describe('TimeIsUp', () => {
   const handleStart = vi.fn()
@@ -9,7 +10,7 @@ describe('TimeIsUp', () => {
 
   beforeEach(() => {
     renderWithProviders(
-      <TimeIsUp open onStart={handleStart} onClose={handleClose} />
+      <TimeIsUp onClose={handleClose} onStart={handleStart} open />
     )
   })
 

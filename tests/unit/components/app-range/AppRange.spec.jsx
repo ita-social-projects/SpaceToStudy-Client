@@ -1,4 +1,5 @@
 import { render, fireEvent, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import AppRange from '~/components/app-range/AppRange'
 
 const onChangeMock = vi.fn()

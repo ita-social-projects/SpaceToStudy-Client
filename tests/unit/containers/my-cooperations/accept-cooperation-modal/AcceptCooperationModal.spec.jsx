@@ -8,6 +8,7 @@ import {
 import { URLs } from '~/constants/request'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { mockedCoop } from '~tests/unit/containers/my-cooperations/MyCooperations.spec.constants'
+import { vi } from 'vitest'
 
 vi.mock('~/hooks/use-debounce', () => ({
   useDebounce: (callback) => callback
@@ -85,7 +86,9 @@ describe('AcceptCooperationModal component ', () => {
 
     fireEvent.change(input, { target: { value: 200 } })
 
-    const resendButton = screen.getByText('cooperationsPage.acceptModal.resend').parentNode
+    const resendButton = screen.getByText(
+      'cooperationsPage.acceptModal.resend'
+    ).parentNode
 
     fireEvent.click(resendButton)
 

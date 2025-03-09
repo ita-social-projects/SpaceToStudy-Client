@@ -1,10 +1,10 @@
 {
-    "language": "Мова",
-    "messages": "Повідомлення",
-    "bookmarks": "Пропозиції",
-    "notifications": "Сповіщення",
-    "account": "Профіль",
-    "menu": "Меню",
-    "login": "Увійти",
-    "logout": "Вийти"
-  }
+  "language": "Мова",
+  "messages": "Повідомлення",
+  "bookmarks": "Пропозиції",
+  "notifications": "Сповіщення",
+  "account": "Профіль",
+  "menu": "Меню",
+  "login": "Увійти",
+  "logout": "Вийти"
+}

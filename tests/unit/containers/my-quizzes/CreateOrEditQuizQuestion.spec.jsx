@@ -8,6 +8,7 @@ import {
 } from '~tests/test-utils'
 import { ResourceService } from '~/services/resource-service'
 import { URLs } from '~/constants/request'
+import { vi } from 'vitest'
 
 const setQuestions = vi.fn()
 const onCancel = vi.fn()

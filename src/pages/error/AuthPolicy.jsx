@@ -23,11 +23,7 @@ const AuthPolicy = () => {
           style={styles.titleWithDescription}
           title={t('errorPage.401.title')}
         />
-        <Button
-          component={Link}
-          size='lg'
-          to={guestRoutes.home.path}
-        >
+        <Button component={Link} size='lg' to={guestRoutes.home.path}>
           {t('button.toMain')}
         </Button>
       </Box>

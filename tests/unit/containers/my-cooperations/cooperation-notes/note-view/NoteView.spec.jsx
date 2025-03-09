@@ -1,4 +1,5 @@
 import { screen, fireEvent, act } from '@testing-library/react'
+import { vi } from 'vitest'
 import NoteView from '~/containers/my-cooperations/cooperation-notes/note-view/NoteView'
 import { renderWithProviders } from '~tests/test-utils'
 

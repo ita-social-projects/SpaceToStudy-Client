@@ -40,11 +40,11 @@ describe('SearchByMessage', () => {
   beforeEach(() => {
     render(
       <SearchByMessage
+        allMessages={mockMessage}
         isCloseSearch={isCloseSearch}
         messages={mockMessage}
         onFilteredIndexChange={onFilteredIndexChange}
         onFilteredMessagesChange={onFilteredMessagesChange}
-        allMessages={mockMessage}
         setLimit={setLimit}
       />
     )

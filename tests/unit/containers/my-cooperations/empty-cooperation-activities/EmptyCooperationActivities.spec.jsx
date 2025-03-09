@@ -1,4 +1,5 @@
 import { screen, fireEvent, act, waitFor } from '@testing-library/react'
+import { vi } from 'vitest'
 import EmptyCooperationActivities from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities'
 import { renderWithProviders } from '~tests/test-utils'
 

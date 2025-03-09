@@ -1,4 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 

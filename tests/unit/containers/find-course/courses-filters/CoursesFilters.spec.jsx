@@ -2,6 +2,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { fireEvent, screen } from '@testing-library/react'
 
 import CoursesFilters from '~/containers/find-course/courses-filters/CoursesFilters'
+import { vi } from 'vitest'
 
 const filtersMocked = {
   category: 'Music',

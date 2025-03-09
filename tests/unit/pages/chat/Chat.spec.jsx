@@ -10,7 +10,7 @@ import {
   chatsMock,
   messagesMock
 } from '~tests/unit/pages/chat/ChatsMock.constants'
-import { afterEach } from 'vitest'
+import { afterEach, vi } from 'vitest'
 
 vi.mock('~/pages/chat/MessagesList', () => ({
   default: vi.fn(() => (

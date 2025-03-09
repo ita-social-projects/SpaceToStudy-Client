@@ -10,7 +10,7 @@ import { AuthService } from '~/services/auth-service'
 import { URLs } from '~/constants/request'
 const userDataMock = {
   _id: 123456,
-  currentPassword: '12345qwert',
+  currentPassword: '12345qwert'
 }
 
 const handleSubmit = vi.fn()
@@ -196,26 +196,28 @@ describe('ChangePasswordModal', () => {
             status: 400,
             data: {
               code: 'WRONG_CURRENT_PASSWORD',
-              message: 'Wrong current password',
-            },
-          },
+              message: 'Wrong current password'
+            }
+          }
         })
       }
       return Promise.resolve()
     })
-    
+
     const currentPasswordInput = screen.getByLabelText(
       /editProfilePage.profile.passwordSecurityTab.currentPassword/i
     )
     const saveButton = screen.getByText(
       /editProfilePage.profile.passwordSecurityTab.savePassword/i
     )
-    fireEvent.change(currentPasswordInput, { target: { value: 'wrongPassword1' } })
+    fireEvent.change(currentPasswordInput, {
+      target: { value: 'wrongPassword1' }
+    })
     fireEvent.change(screen.getByLabelText(/newPassword/i), {
-      target: { value: '12345qwertY' },
+      target: { value: '12345qwertY' }
     })
     fireEvent.change(screen.getByLabelText(/retypePassword/i), {
-      target: { value: '12345qwertY' },
+      target: { value: '12345qwertY' }
     })
 
     fireEvent.click(saveButton)

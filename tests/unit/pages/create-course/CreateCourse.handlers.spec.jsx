@@ -9,6 +9,7 @@ import {
 } from '~/pages/create-course/CreateCourse.handlers'
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import { isValidUUID } from '~tests/test-utils'
+import { vi } from 'vitest'
 
 describe('Test CreateCourse handlers:', () => {
   it('addNewSection: should add a new section with a unique ID', () => {

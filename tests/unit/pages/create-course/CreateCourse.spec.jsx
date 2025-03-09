@@ -24,6 +24,7 @@ import {
 } from '~tests/unit/pages/create-course/CreateCourse.spec.constants'
 
 import CreateCourse from '~/pages/create-course/CreateCourse'
+import { vi } from 'vitest'
 
 const mockState = {
   appMain: {

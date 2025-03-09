@@ -28,7 +28,7 @@ describe('useCategoriesNames', () => {
     expect(result.current.response).toEqual([])
 
     expect(categoryService.getCategoriesNames).toHaveBeenCalled()
-    
+
     await waitFor(() => {
       expect(result.current.loading).toBe(false)
       expect(result.current.response).toEqual(mockCategoriesNames)
@@ -46,7 +46,7 @@ describe('useCategoriesNames', () => {
     expect(result.current.response).toEqual([])
 
     expect(categoryService.getCategoriesNames).toHaveBeenCalled()
-    
+
     await waitFor(() => {
       expect(result.current.loading).toBe(false)
       expect(result.current.error).toBe(mockError)

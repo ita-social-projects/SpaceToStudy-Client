@@ -2,6 +2,7 @@ import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import CoursesFilterBar from '~/containers/find-course/courses-filter-bar/CoursesFilterBar'
+import { vi } from 'vitest'
 
 const onChangeValueMock = vi.fn()
 const selectValueMock = { default: 'updatedAt desc', updated: 'updatedAt asc' }

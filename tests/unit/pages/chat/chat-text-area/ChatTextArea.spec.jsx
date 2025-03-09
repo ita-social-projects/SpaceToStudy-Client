@@ -5,6 +5,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 
 import { renderWithProviders } from '~tests/test-utils'
+import { vi } from 'vitest'
 
 vi.mock('~/hooks/use-breakpoints')
 
@@ -13,8 +14,8 @@ vi.stubGlobal('matchMedia', (query) => ({
   media: query,
   onchange: null,
   addEventListener: vi.fn(),
-  removeEventListener: vi.fn(),
-}));
+  removeEventListener: vi.fn()
+}))
 
 global.IntersectionObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),

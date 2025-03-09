@@ -4,6 +4,7 @@ import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import { URLs } from '~/constants/request'
 import { ProficiencyLevelEnum } from '~/types'
 import { proficiencyLevelLabels } from '~/constants/labels'
+import { vi } from 'vitest'
 
 const mockData = {
   title: '',

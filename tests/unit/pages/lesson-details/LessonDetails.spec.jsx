@@ -3,6 +3,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import { ResourceService } from '~/services/resource-service'
 import LessonDetails from '~/pages/lesson-details/LessonDetails'
+import { vi } from 'vitest'
 
 const lessonId = '64ef41f7806a06c65338c433'
 const mockNavigate = vi.fn()

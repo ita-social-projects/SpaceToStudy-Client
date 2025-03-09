@@ -4,6 +4,7 @@ import { ResourceService } from '~/services/resource-service'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 import { renderWithProviders } from '~tests/test-utils'
 import { SortEnum } from '~/types'
+import { vi } from 'vitest'
 
 const setCategories = vi.fn()
 const setSearch = vi.fn()
@@ -27,9 +28,7 @@ const props = {
 
 vi.mock('~/services/resource-service')
 
-ResourceService.getResourcesCategoriesName.mockResolvedValue(
-  mockCategories
-)
+ResourceService.getResourcesCategoriesName.mockResolvedValue(mockCategories)
 
 describe('ResourcesToolBarDrawer test', () => {
   beforeEach(() => {

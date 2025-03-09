@@ -5,6 +5,7 @@ import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { mockCourse } from '~tests/unit/pages/my-courses/MyCourses.spec.constans'
+import { vi } from 'vitest'
 
 const closeModalMock = vi.fn()
 

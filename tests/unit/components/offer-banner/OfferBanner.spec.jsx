@@ -3,6 +3,7 @@ import OfferBanner from '~/components/offer-banner/OfferBanner'
 import { screen } from '@testing-library/react'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
+import { vi } from 'vitest'
 
 vi.mock('~/hooks/use-breakpoints')
 

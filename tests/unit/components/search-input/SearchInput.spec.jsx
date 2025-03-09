@@ -9,7 +9,7 @@ const textValue = 'test'
 
 describe('SearchInput tests', () => {
   beforeEach(() => {
-    render(<SearchInput search={ searchMock } setSearch={ setSearchMock } />)
+    render(<SearchInput search={searchMock} setSearch={setSearchMock} />)
   })
 
   it('should render text correctly', () => {
@@ -56,9 +56,9 @@ describe('SearchInput tests', () => {
 
 describe('SearchInput test', () => {
   beforeEach(() => {
-    render(<SearchInput search={ textValue } setSearch={ setSearchMock } />)
+    render(<SearchInput search={textValue} setSearch={setSearchMock} />)
   })
-  
+
   it('should have visible class if search is not empty', () => {
     const deleteIcon = screen.getByTestId('delete-icon')
 

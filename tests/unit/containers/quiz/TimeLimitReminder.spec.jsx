@@ -2,6 +2,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import TimeLimitReminder from '~/containers/quiz/time-limit-reminder/TimeLimitReminder'
+import { vi } from 'vitest'
 
 describe('TimeLimitReminder', () => {
   const handleStart = vi.fn()
@@ -9,7 +10,7 @@ describe('TimeLimitReminder', () => {
 
   it('should render the dialog when open is true', () => {
     renderWithProviders(
-      <TimeLimitReminder open onStart={handleStart} onClose={handleClose} />
+      <TimeLimitReminder onClose={handleClose} onStart={handleStart} open />
     )
 
     expect(screen.getByText('quiz.timeLimitReminderTitle')).toBeInTheDocument()
@@ -17,7 +18,7 @@ describe('TimeLimitReminder', () => {
 
   it('should call handleStart when start button is clicked', () => {
     renderWithProviders(
-      <TimeLimitReminder open onStart={handleStart} onClose={handleClose} />
+      <TimeLimitReminder onClose={handleClose} onStart={handleStart} open />
     )
 
     const startButton = screen.getByText('quiz.start')
@@ -28,7 +29,7 @@ describe('TimeLimitReminder', () => {
 
   it('should call handleClose when close button is clicked', () => {
     renderWithProviders(
-      <TimeLimitReminder open onStart={handleStart} onClose={handleClose} />
+      <TimeLimitReminder onClose={handleClose} onStart={handleStart} open />
     )
 
     const closeButton = screen.getByTestId('CloseRoundedIcon')

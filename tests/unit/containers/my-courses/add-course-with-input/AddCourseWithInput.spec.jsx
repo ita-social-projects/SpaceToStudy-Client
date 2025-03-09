@@ -1,6 +1,7 @@
 import { fireEvent, screen, act } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import AddCourseWithInput from '~/containers/my-courses/add-course-with-input/AddCourseWithInput'
+import { vi } from 'vitest'
 
 const mockedFilterActions = {
   updateFiltersInQuery: vi.fn()
@@ -16,7 +17,7 @@ describe('AddCourseWithInput test', () => {
       <AddCourseWithInput
         filterActions={mockedFilterActions}
         filters={mockedFilters}
-        sort=""
+        sort=''
       />
     )
   })

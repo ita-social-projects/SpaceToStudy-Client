@@ -5,6 +5,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
 import { chatsMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.constants'
+import { vi } from 'vitest'
 
 vi.mock('simplebar-react', () => {
   return {

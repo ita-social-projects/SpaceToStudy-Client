@@ -1,4 +1,5 @@
 import { screen, fireEvent } from '@testing-library/react'
+import { vi } from 'vitest'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 import { renderWithProviders } from '~tests/test-utils'
 

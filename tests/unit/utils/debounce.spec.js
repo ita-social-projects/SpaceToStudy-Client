@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { debounce } from '~/utils/debounce'
 
 describe('debounce', () => {

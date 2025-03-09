@@ -13,6 +13,7 @@ import { ResourcesAvailabilityEnum } from '~/types'
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
 
 import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
+import { vi } from 'vitest'
 
 const mockSetEditMode = vi.fn()
 const mockDispatch = vi.fn()

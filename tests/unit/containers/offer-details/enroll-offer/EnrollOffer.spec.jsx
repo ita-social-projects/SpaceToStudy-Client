@@ -2,6 +2,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
+import { vi } from 'vitest'
 
 const mockFetchData = vi.fn()
 

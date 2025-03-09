@@ -7,6 +7,7 @@ import {
   Route,
   RouterProvider
 } from 'react-router-dom'
+import { vi } from 'vitest'
 
 const mockedMatches = vi.fn()
 

@@ -2,6 +2,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
+import { vi } from 'vitest'
 
 const mockNotesData = [
   {

@@ -1,6 +1,6 @@
 import { fireEvent, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect } from 'vitest'
+import { expect, vi } from 'vitest'
 
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import { renderWithProviders } from '~tests/test-utils'

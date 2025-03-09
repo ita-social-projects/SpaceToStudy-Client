@@ -11,6 +11,8 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 import CreateOrEditLesson from '~/pages/create-or-edit-lesson/CreateOrEditLesson'
+import { vi } from 'vitest'
+
 const mockNavigate = vi.fn()
 const mockedCategory = { _id: 'categoryId', name: 'categoryName' }
 

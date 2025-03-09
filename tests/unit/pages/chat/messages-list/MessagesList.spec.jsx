@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import MessagesList from '~/pages/chat/MessagesList'
 import { renderWithProviders } from '~tests/test-utils'
 
@@ -83,8 +84,8 @@ describe('MessagesList component', () => {
     renderWithProviders(
       <MessagesList
         infiniteLoadCallback={vi.fn()}
+        isMessagesLoading
         messages={[]}
-        isMessagesLoading={true}
       />
     )
     const loader = screen.getByTestId('loader')

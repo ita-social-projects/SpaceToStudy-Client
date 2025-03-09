@@ -1,6 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
-import { beforeEach, describe, expect } from 'vitest'
+import { beforeEach, describe, expect, vi } from 'vitest'
 
 import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
 import { URLs } from '~/constants/request'
@@ -9,8 +9,8 @@ const closeModalMock = vi.fn()
 const updateAttachment = vi.fn()
 
 const categoriesNamesMock = {
-  WEB_DEVELOPMENT :{ _id: '650c27618a9fbf234b8bb4cf', name: 'Web development' },
-  MOTION_DESIGN :{ _id: '650c27618a9fbf234b8bb4cd', name: 'Motion design' }
+  WEB_DEVELOPMENT: { _id: '650c27618a9fbf234b8bb4cf', name: 'Web development' },
+  MOTION_DESIGN: { _id: '650c27618a9fbf234b8bb4cd', name: 'Motion design' }
 }
 
 const attachmentMock = {

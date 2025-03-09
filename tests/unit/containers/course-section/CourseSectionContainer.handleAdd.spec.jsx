@@ -3,6 +3,7 @@ import { renderWithProviders } from '~tests/test-utils'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 import { mockedDuplicatedSectionData } from './CourseSectionContainer.spec.constants'
+import { vi } from 'vitest'
 
 const mockedResourceEventHandler = vi.fn()
 

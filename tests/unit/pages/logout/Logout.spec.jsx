@@ -2,6 +2,7 @@ import { render, waitFor } from '@testing-library/react'
 import { useNavigate } from 'react-router-dom'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import Logout from '~/pages/logout/Logout'
+import { vi } from 'vitest'
 
 vi.mock('react-router-dom', () => ({
   useNavigate: vi.fn()

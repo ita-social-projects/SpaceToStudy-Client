@@ -15,6 +15,7 @@ import AppSnackbar from '~/containers/layout/app-snackbar/AppSnackbar'
 
 import MockAdapter from 'axios-mock-adapter'
 import { axiosClient } from '~/plugins/axiosClient'
+import { vi } from 'vitest'
 
 export const renderWithProviders = (
   ui,

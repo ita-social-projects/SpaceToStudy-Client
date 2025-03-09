@@ -1,4 +1,5 @@
 import { screen, fireEvent } from '@testing-library/react'
+import { vi } from 'vitest'
 import AddDocuments from '~/containers/add-documents/AddDocuments'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 

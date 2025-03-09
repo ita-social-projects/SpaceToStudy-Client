@@ -2,6 +2,7 @@ import { renderHook, act, waitFor } from '@testing-library/react'
 import { mockAxiosClient } from '~tests/test-utils'
 import useLoadMore from '~/hooks/use-load-more'
 import QueryProvider from '~/QueryProvider'
+import { vi } from 'vitest'
 
 const mockParams = { limit: 1 }
 const mockResponseData = [

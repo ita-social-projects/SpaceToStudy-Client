@@ -21,8 +21,8 @@ vi.mock('@mui/material/Tooltip', () => ({
       {title}
       {children}
     </div>
-  ),
-}));
+  )
+}))
 
 describe('test with guest role', () => {
   beforeEach(() => {

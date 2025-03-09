@@ -5,6 +5,7 @@ import { useMatch } from 'react-router-dom'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
 import useAxios from '~/hooks/use-axios'
+import { vi } from 'vitest'
 
 const mockNavigate = vi.fn()
 

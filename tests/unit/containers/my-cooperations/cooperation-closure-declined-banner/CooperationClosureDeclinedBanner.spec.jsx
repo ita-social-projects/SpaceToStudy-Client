@@ -1,4 +1,4 @@
-import { beforeEach, expect } from 'vitest'
+import { beforeEach, expect, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 import CooperationClosureDeclinedBanner from '~/containers/my-cooperations/cooperation-closure-declined-banner/CooperationClosureDeclinedBanner'
@@ -19,9 +19,9 @@ describe('CooperationClosureDeclinedBanner', () => {
   beforeEach(() => {
     render(
       <CooperationClosureDeclinedBanner
-        user={userName}
         message={userMessage}
         onSend={mockOnSend}
+        user={userName}
       />
     )
   })

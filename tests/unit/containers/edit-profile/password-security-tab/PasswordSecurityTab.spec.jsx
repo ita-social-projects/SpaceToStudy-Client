@@ -125,22 +125,24 @@ describe('PasswordSecurityTab', () => {
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
     fireEvent.click(deactivateAccountButton)
-  
-    const deactivateButton = screen.getByText('editProfilePage.profile.passwordSecurityTab.deactivateBtn')
+
+    const deactivateButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateBtn'
+    )
     const cancelButton = screen.getByText('common.cancel')
-  
+
     expect(deactivateButton).toBeInTheDocument()
     expect(cancelButton).toBeInTheDocument()
-  })  
+  })
   it('should close modal on Cancel button click and stays on Password & Security tab', () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
     fireEvent.click(deactivateAccountButton)
-  
+
     const cancelButton = screen.getByText('common.cancel')
     fireEvent.click(cancelButton)
-    
+
     const tabTitle = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.title'
     )
@@ -155,8 +157,10 @@ describe('PasswordSecurityTab', () => {
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
     fireEvent.click(deactivateAccountButton)
-  
-    const deactivateButton = screen.getByText('editProfilePage.profile.passwordSecurityTab.deactivateBtn')
+
+    const deactivateButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateBtn'
+    )
     expect(deactivateButton).toBeInTheDocument()
     fireEvent.click(deactivateButton)
 

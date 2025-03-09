@@ -14,17 +14,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-            
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 20.15.1
           cache: 'npm'
-          
+
       - name: Install dependency
         run: npm install
-        
-      - name : Run linter
+
+      - name: Run linter
         run: npm run lint
   tests:
     strategy:
@@ -37,17 +37,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 20.15.1
           cache: 'npm'
-          
+
       - name: Install dependency
         run: npm install
-        
-      - name : Test
+
+      - name: Test
         run: npx cross-env CI=true vitest --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
 
       - run: mkdir -p coverage/lcov
@@ -55,7 +55,7 @@ jobs:
 
       - name: Move coverage report
         run: mv ./tests/coverage/lcov.info coverage/lcov/${{matrix.shardIndex}}.info
-        
+
       - name: Move coverage report
         run: mv ./test-report.xml coverage/xml/${{matrix.shardIndex}}.xml
 
@@ -65,15 +65,15 @@ jobs:
         with:
           name: coverage-artifacts-${{ matrix.shardIndex }}
           path: coverage/
-        
-     # - name: Upload blob report to GitHub Actions Artifacts
-     #   if: ${{ !cancelled() }}
-     #   uses: actions/upload-artifact@v4
-     #   with:
-     #     name: blob-report-${{ matrix.shardIndex }}
-     #     path: .vitest-reports/*
-     #     include-hidden-files: true
-     #     retention-days: 1
+
+      # - name: Upload blob report to GitHub Actions Artifacts
+      #   if: ${{ !cancelled() }}
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: blob-report-${{ matrix.shardIndex }}
+      #     path: .vitest-reports/*
+      #     include-hidden-files: true
+      #     retention-days: 1
 
   merge-reports-and-sonar-scan:
     if: ${{ !cancelled() }}
@@ -82,7 +82,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Download coverage artifacts
         uses: actions/download-artifact@v4
         with:
@@ -91,20 +91,19 @@ jobs:
           merge-multiple: true
 
       - name: Run script to merge all the xml files
-        run: | 
+        run: |
           echo '<testExecutions version="1">' > test-report.xml
           grep -vh testExecutions coverage/xml/*.xml >> test-report.xml
           echo '</testExecutions>' >> test-report.xml
-          
+
       - name: Run script to merge all the lcov files
         run: |
-            mkdir ./tests/coverage
-            cat coverage/lcov/*.info > ./tests/coverage/lcov.info
-      
+          mkdir ./tests/coverage
+          cat coverage/lcov/*.info > ./tests/coverage/lcov.info
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v5.0.0
         if: success() || failure()
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-

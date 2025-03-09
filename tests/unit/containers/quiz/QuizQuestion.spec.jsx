@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import QuizQuestion from '~/containers/quiz/quiz-question/Question.tsx'
 
 const mockQuestion = {
@@ -39,7 +40,10 @@ describe('Quiz Question tests', () => {
     expect(element).toBeInTheDocument()
   })
   it('should render correctness icon if shouldShowAnswersCorrectness is true', () => {
-    renderWithProps({ shouldShowAnswersCorrectness: true, value: 'Correct answer' })
+    renderWithProps({
+      shouldShowAnswersCorrectness: true,
+      value: 'Correct answer'
+    })
 
     const icon = screen.getAllByTestId('CheckIcon')[0]
     expect(icon).toBeInTheDocument()
@@ -50,7 +54,7 @@ describe('Quiz Question tests', () => {
     renderWithProps({
       question: openAnswerQuestion,
       value: '',
-      handleInputChange: handleInputChangeMock,
+      handleInputChange: handleInputChangeMock
     })
 
     const input = screen.getByRole('textbox')

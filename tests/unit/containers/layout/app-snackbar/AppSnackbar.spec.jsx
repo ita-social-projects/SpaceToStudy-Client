@@ -2,6 +2,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { TestSnackbar } from '~tests/test-utils'
+import { vi } from 'vitest'
 
 const preloadedState = {
   appMain: { loading: false, authLoading: false, userRole: '', error: '' }

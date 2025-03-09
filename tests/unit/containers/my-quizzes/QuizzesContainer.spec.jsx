@@ -5,6 +5,7 @@ import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { getFullUrl } from '~/utils/get-full-url'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { vi } from 'vitest'
 
 vi.mock(
   '~/containers/my-resources/my-resources-table/MyResourcesTable',

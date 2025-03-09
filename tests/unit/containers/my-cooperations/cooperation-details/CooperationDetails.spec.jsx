@@ -3,6 +3,7 @@ import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
 import CooperationDetails from '~/containers/my-cooperations/cooperation-details/CooperationDetails'
+import { vi } from 'vitest'
 
 const cooperationID = '123456789'
 const userId = '33t5ffe34'
@@ -123,7 +124,9 @@ describe('CooperationDetails', () => {
   })
 
   beforeEach(() => {
-    renderWithProviders(<CooperationDetails />, { preloadedState: mockStateTutor })
+    renderWithProviders(<CooperationDetails />, {
+      preloadedState: mockStateTutor
+    })
   })
 
   afterAll(() => {
@@ -195,7 +198,9 @@ describe('CooperationClosureDeclinedBanner without answer being submitted', () =
   })
 
   beforeEach(() => {
-    renderWithProviders(<CooperationDetails />, { preloadedState: mockStateStudent })
+    renderWithProviders(<CooperationDetails />, {
+      preloadedState: mockStateStudent
+    })
   })
 
   it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for answer" and role equals users role', async () => {
@@ -215,7 +220,9 @@ describe('CooperationClosureDeclinedBanner with submitted answer', () => {
   })
 
   beforeEach(() => {
-    renderWithProviders(<CooperationDetails />, { preloadedState: mockStateTutor })
+    renderWithProviders(<CooperationDetails />, {
+      preloadedState: mockStateTutor
+    })
   })
 
   it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for approval" and role is not the same as users role', async () => {
@@ -235,7 +242,9 @@ describe('AcceptCooperationClosing modal with submitted answer', () => {
   })
 
   beforeEach(() => {
-    renderWithProviders(<CooperationDetails />, { preloadedState: mockStateStudent })
+    renderWithProviders(<CooperationDetails />, {
+      preloadedState: mockStateStudent
+    })
   })
 
   it('should render AcceptCooperationClosing modal when needAction type is "waiting for answer" and role is not the same as users role', async () => {

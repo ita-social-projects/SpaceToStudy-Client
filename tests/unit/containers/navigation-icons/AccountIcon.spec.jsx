@@ -1,4 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import AccountIcon from '~/containers/navigation-icons/AccountIcon'
 import { renderWithProviders } from '~tests/test-utils'
 

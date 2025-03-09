@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import { expect } from 'vitest'
+import { expect, vi } from 'vitest'
 import AppMenuButton from '~/components/app-menu-button/AppMenuButton'
 
 describe('AppMenuButton', () => {

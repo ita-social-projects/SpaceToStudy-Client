@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/react'
+import { vi } from 'vitest'
 
 import useAxios from '~/hooks/use-axios'
 import UserProfile from '~/pages/user-profile/UserProfile.jsx'

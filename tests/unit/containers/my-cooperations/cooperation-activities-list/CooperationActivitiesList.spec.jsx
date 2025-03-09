@@ -9,6 +9,7 @@ import {
 } from '~tests/unit/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList.spec.constants'
 
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
+import { vi } from 'vitest'
 
 const originalDateNow = Date.now
 Date.now = () => 1487076708000

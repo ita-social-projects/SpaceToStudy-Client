@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import CourseCard from '~/components/course-card/CourseCard'
 
 const deleteCourseMock = vi.fn()

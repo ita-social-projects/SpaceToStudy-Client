@@ -7,6 +7,7 @@ import {
   columns,
   removeColumnRules
 } from '~/containers/add-resources/AddQuizzes.constants'
+import { vi } from 'vitest'
 
 const quizMock = {
   _id: '64fb2c33eba89699411d22bb',

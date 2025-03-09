@@ -1,4 +1,4 @@
-import { beforeAll, beforeEach, expect } from 'vitest'
+import { beforeAll, beforeEach, expect, vi } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import QuizAttemptsPage from '~/pages/quiz-attempts/QuizAttempts'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'

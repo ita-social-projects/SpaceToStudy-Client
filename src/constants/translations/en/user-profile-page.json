@@ -5,18 +5,18 @@
     "tutorOffers": "Tutor offers",
     "studentRequests": "Student requests",
     "sendMessage": "Send message",
-    "withS2S":"at space2study",
+    "withS2S": "at space2study",
     "reviews": "reviews",
-    "nativeLanguage" : "Native: ",
-    "location" : "Based in",
-    "timeForYear_one" : "{{count}} year",
-    "timeForYear_other" : "{{count}} years",
-    "timeForMonth_one" : "{{count}} month",
-    "timeForMonth_other" : "{{count}} months",
-    "timeForWeek_one" : "{{count}} week",
-    "timeForWeek_other" : "{{count}} weeks",
-    "timeForDay_one" : "{{count}} day",
-    "timeForDay_other" : "{{count}} days"
+    "nativeLanguage": "Native: ",
+    "location": "Based in",
+    "timeForYear_one": "{{count}} year",
+    "timeForYear_other": "{{count}} years",
+    "timeForMonth_one": "{{count}} month",
+    "timeForMonth_other": "{{count}} months",
+    "timeForWeek_one": "{{count}} week",
+    "timeForWeek_other": "{{count}} weeks",
+    "timeForDay_one": "{{count}} day",
+    "timeForDay_other": "{{count}} days"
   },
   "videoPresentation": {
     "title": "Video Presentation"
@@ -34,16 +34,16 @@
     "learningGoals": "Learning Goals",
     "learningActivities": "Learning Activities"
   },
-  "reviews":{
-    "titleTutor":"What students say",
-    "titleStudent":"What tutors say",
-    "buttonTitle":"More reviews",
+  "reviews": {
+    "titleTutor": "What students say",
+    "titleStudent": "What tutors say",
+    "buttonTitle": "More reviews",
     "starsCount_one": "{{count}} star",
     "starsCount_other": "{{count}} stars",
     "reviewsCount_one": "{{count}} review",
     "reviewsCount_other": "{{count}} reviews"
-},
-"sortItems": {
+  },
+  "sortItems": {
     "Newest": "Newest",
     "Relevant": "Relevant",
     "highestRating": "Highest rating",

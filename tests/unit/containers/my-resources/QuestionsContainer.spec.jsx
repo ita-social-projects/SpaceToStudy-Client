@@ -7,6 +7,7 @@ import { URLs } from '~/constants/request'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { getFullUrl } from '~/utils/get-full-url'
+import { vi } from 'vitest'
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')

@@ -1,5 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
-import { expect, vi } from 'vitest'
+import { expect } from 'vitest'
 
 import CategoriesContainer from '~/containers/my-resources/categories-container/CategoriesContainer'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
@@ -32,14 +32,6 @@ const resourceCateogiresNamesMock = [
     name: 'New Category 1'
   }
 ]
-
-const resourceCategoriesPostMock = {
-  _id: '650b14441e8d4a4484e2e2f5',
-  name: 'Chemical Category',
-  author: '6494128829631adbaf5cf615',
-  createdAt: '2023-20-01T13:25:36.292Z',
-  updatedAt: '2023-20-01T13:25:36.292Z'
-}
 
 describe('CategoriesContainer test', () => {
   beforeEach(() => {

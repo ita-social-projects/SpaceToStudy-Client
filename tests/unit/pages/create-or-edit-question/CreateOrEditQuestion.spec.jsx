@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import CreateOrEditQuestion from '~/pages/create-or-edit-question/CreateOrEditQuestion'
+import { vi } from 'vitest'
 
 vi.mock('react-router-dom', async () => {
   const original = await vi.importActual('react-router-dom')

@@ -1,13 +1,13 @@
-{   
-    "sortBy":{
-    	"sortByTitle":"Сортувати за:",
-    	"sortByFields":{
-        	"tutorRating":"Рейтингом викладача",
-            "ascendingPrice":"Зростанням ціни",
-            "descendingPrice": "Спаданням ціни",
-            "creationTime": "Часом створення"
-    	}
-    },
-	"filtersListTitle": "Фільтри",
-	"filterLevelsLabel": "Рівні"
+{
+  "sortBy": {
+    "sortByTitle": "Сортувати за:",
+    "sortByFields": {
+      "tutorRating": "Рейтингом викладача",
+      "ascendingPrice": "Зростанням ціни",
+      "descendingPrice": "Спаданням ціни",
+      "creationTime": "Часом створення"
+    }
+  },
+  "filtersListTitle": "Фільтри",
+  "filterLevelsLabel": "Рівні"
 }

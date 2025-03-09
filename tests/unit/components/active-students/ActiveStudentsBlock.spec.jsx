@@ -3,6 +3,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import ActiveStudentsBlock from '~/components/active-students/ActiveStudentsBlock'
 import useQuery from '~/hooks/use-query'
+import { vi } from 'vitest'
 
 vi.mock('~/hooks/use-query')
 

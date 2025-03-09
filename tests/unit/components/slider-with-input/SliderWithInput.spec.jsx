@@ -1,4 +1,5 @@
 import { render, fireEvent, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import SliderWithInput from '~/components/slider-with-input/SliderWithInput'
 
 const onChangeMock = vi.fn()

@@ -4,6 +4,7 @@ import { URLs } from '~/constants/request'
 import { useParams } from 'react-router-dom'
 
 import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer'
+import { vi } from 'vitest'
 
 const setTitle = vi.fn()
 const setDescription = vi.fn()

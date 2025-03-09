@@ -2,10 +2,11 @@ import { render, screen } from '@testing-library/react'
 import { InfoOutlined } from '@mui/icons-material'
 
 import Alert from '~scss-components/alert/Alert'
+import { vi } from 'vitest'
 
 describe('Alert Component', () => {
   test('renders the Alert component with the correct title and description', () => {
-    render(<Alert title='Test Title' description='Test Description' />)
+    render(<Alert description='Test Description' title='Test Title' />)
 
     expect(screen.getByText('Test Title')).toBeInTheDocument()
     expect(screen.getByText('Test Description')).toBeInTheDocument()

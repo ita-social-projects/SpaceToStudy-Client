@@ -3,7 +3,7 @@ import { fireEvent, screen } from '@testing-library/react'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
 import { categoryService } from '~/services/category-service'
-import { beforeEach } from 'vitest'
+import { beforeEach, vi } from 'vitest'
 import { TestSnackbar, renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/services/category-service')

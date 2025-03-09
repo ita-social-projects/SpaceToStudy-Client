@@ -3,7 +3,10 @@ import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 import { UserRoleEnum } from '~/types'
-import { initialProfessoinalBlock, initialAboutStudent } from '~/redux/features/editProfileSlice.ts'
+import {
+  initialProfessoinalBlock,
+  initialAboutStudent
+} from '~/redux/features/editProfileSlice.ts'
 
 const mockOpenModal = vi.fn()
 

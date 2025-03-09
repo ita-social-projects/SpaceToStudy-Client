@@ -2,6 +2,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import useQuery from '~/hooks/use-query'
+import { vi } from 'vitest'
 
 const handleConfirm = vi.fn()
 const closeModal = vi.fn()
@@ -137,7 +138,7 @@ describe('ChangeResourceConfirmModal component tests', () => {
 
     const confirmButton = await screen.findByText('changeConfirm.confirmButton')
     expect(confirmButton).toBeInTheDocument()
-  
+
     fireEvent.click(confirmButton)
 
     expect(handleConfirm).toHaveBeenCalled()

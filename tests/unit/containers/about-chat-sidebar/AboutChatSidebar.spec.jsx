@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
 
 import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
+import { vi } from 'vitest'
 
 vi.mock('simplebar-react', () => {
   return {

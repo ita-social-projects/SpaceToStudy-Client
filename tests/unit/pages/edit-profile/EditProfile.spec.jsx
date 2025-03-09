@@ -79,9 +79,9 @@ const mockData = {
   errors: {
     firstName: '',
     lastName: '',
-    videoLink: '',
-  },
-};
+    videoLink: ''
+  }
+}
 
 vi.mock('~/hooks/use-confirm', () => ({
   default: () => ({ checkConfirmation: () => true })
@@ -145,18 +145,26 @@ vi.mock(
 
 vi.mock('AppTextField', () => ({
   __esModule: true,
-  default: ({ errorMsg, label, onBlur, onChange, placeholder, value, InputProps }) => (
+  default: ({
+    errorMsg,
+    label,
+    onBlur,
+    onChange,
+    placeholder,
+    value,
+    InputProps
+  }) => (
     <input
+      aria-invalid={errorMsg ? 'true' : 'false'}
       aria-label={label}
-      value={value || ''}
       onBlur={onBlur}
       onChange={onChange}
       placeholder={placeholder}
-      aria-invalid={errorMsg ? 'true' : 'false'}
+      value={value || ''}
       {...InputProps}
     />
-  ),
-}));
+  )
+}))
 
 describe('EditProfile', () => {
   beforeEach(async () => {
@@ -439,74 +447,73 @@ describe('EditProfile', () => {
     expect(dataToUpdate).toHaveProperty('videoLink', '')
   })
 
-
   it('should replace the existing text in the "First name" field with test data and Update button becomes anable and active', () => {
-    const testData = ["O'braian", "Мар'яна", "Анна-Марія", "Анна Марія"];
+    const testData = ["O'braian", "Мар'яна", 'Анна-Марія', 'Анна Марія']
 
     const mockT = vi.fn((key) => {
       const translations = {
         'common.labels.firstName': 'First Name',
-        'editProfilePage.updateBtn': 'Update',
-      };
-      return translations[key] || key;
-    });
+        'editProfilePage.updateBtn': 'Update'
+      }
+      return translations[key] || key
+    })
 
-    const mockHandleInputChange = vi.fn();
+    const mockHandleInputChange = vi.fn()
 
     renderWithProviders(
       <ProfileTabForm
-        t={mockT}
         data={mockData}
         errors={mockData.errors}
-        handleInputChange={mockHandleInputChange}
         handleBlur={() => {}}
+        handleInputChange={mockHandleInputChange}
         openAlert={() => {}}
+        t={mockT}
       />
-    );
+    )
 
     const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
-    expect(firstNameInput).toBeInTheDocument();
+    expect(firstNameInput).toBeInTheDocument()
 
     for (const data of testData) {
-      fireEvent.change(firstNameInput, { target: { value: data } });
+      fireEvent.change(firstNameInput, { target: { value: data } })
 
       const updateButton = screen.getByText('editProfilePage.updateBtn')
-      expect(updateButton).not.toBeDisabled();
+      expect(updateButton).not.toBeDisabled()
     }
-  });
+  })
 
   it('should replace the existing text in the "Last name" field with test data and Update button becomes anable and active', () => {
-    const testData = ["Mc'Neil", "O'Neill-Johnson", "Van Gogh"];
+    const testData = ["Mc'Neil", "O'Neill-Johnson", 'Van Gogh']
 
     const mockT = vi.fn((key) => {
       const translations = {
         'common.labels.lastName': 'Last Name',
-        'editProfilePage.updateBtn': 'Update',
-      };
-      return translations[key] || key;
-    });
+        'editProfilePage.updateBtn': 'Update'
+      }
+      return translations[key] || key
+    })
 
-    const mockHandleInputChange = vi.fn();
+    const mockHandleInputChange = vi.fn()
 
     renderWithProviders(
       <ProfileTabForm
-        t={mockT}
         data={mockData}
         errors={mockData.errors}
-        handleInputChange={mockHandleInputChange}
         handleBlur={() => {}}
+        handleInputChange={mockHandleInputChange}
         openAlert={() => {}}
+        t={mockT}
       />
-    );
+    )
 
     const lastNameInput = screen.getByLabelText(/common.labels.lastName/i)
-    expect(lastNameInput).toBeInTheDocument();
+    expect(lastNameInput).toBeInTheDocument()
 
     for (const data of testData) {
-      fireEvent.change(lastNameInput, { target: { value: data } });
+      fireEvent.change(lastNameInput, { target: { value: data } })
 
       const updateButton = screen.getByText('editProfilePage.updateBtn')
-      expect(updateButton).not.toBeDisabled();
+      expect(updateButton).not.toBeDisabled()
     }
-  });
-});
+  })
+})

@@ -1,4 +1,4 @@
-import { beforeEach } from 'vitest'
+import { beforeEach, vi } from 'vitest'
 import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
 
 const createMockElement = (id) => {

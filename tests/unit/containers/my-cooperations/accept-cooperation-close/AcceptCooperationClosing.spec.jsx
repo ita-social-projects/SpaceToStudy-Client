@@ -15,10 +15,10 @@ describe('AcceptCooperationClosing', () => {
   beforeEach(() => {
     render(
       <AcceptCooperationClosing
-        user='John Doe'
+        message='You forgot to add a quiz'
         onAccept={mockOnAccept}
         onDecline={mockOnDecline}
-        message='You forgot to add a quiz'
+        user='John Doe'
       />
     )
   })

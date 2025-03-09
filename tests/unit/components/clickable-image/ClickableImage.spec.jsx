@@ -4,7 +4,6 @@ import { render, fireEvent } from '@testing-library/react'
 import ClickableImage from '~/components/clickable-image/ClickableImage'
 
 import someAvatar from '~/assets/img/user-profile-page/avatar.png'
-import { ButtonVariantEnum } from '~/types'
 
 describe('ClickableImage', () => {
   const image = someAvatar

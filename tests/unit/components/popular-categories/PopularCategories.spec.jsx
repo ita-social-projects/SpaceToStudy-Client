@@ -1,13 +1,14 @@
 import { screen } from '@testing-library/react'
+import { vi } from 'vitest'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 import { URLs } from '~/constants/request'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (key, options) => options?.defaultValue || key.split('.').pop(),
-  }),
-}));
+    t: (key, options) => options?.defaultValue || key.split('.').pop()
+  })
+}))
 const items = [
   {
     _id: '1',

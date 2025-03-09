@@ -1,5 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event'
 import { UserRoleEnum } from '~/types'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { renderWithProviders } from '~tests/test-utils'
@@ -155,7 +155,7 @@ describe('ProfileTab', () => {
     expect(photoInput).not.toBeInTheDocument()
   })
 
-  it('should place cursor in the "First name" field when clicked', async() => {
+  it('should place cursor in the "First name" field when clicked', async () => {
     renderWithMockData()
     const firstNameInput = screen.getByPlaceholderText('firstName')
     await userEvent.click(firstNameInput)
@@ -164,16 +164,15 @@ describe('ProfileTab', () => {
   })
 
   it('should place cursor in the "Last name" field when clicked', async () => {
-    renderWithMockData();
-  
-    const lastNameInput = screen.getByPlaceholderText('lastName');
-    expect(lastNameInput).toBeInTheDocument();
-    expect(document.activeElement).not.toBe(lastNameInput);
-  
-    await userEvent.click(lastNameInput);
-  
-    expect(document.activeElement).toBe(lastNameInput);
+    renderWithMockData()
+
+    const lastNameInput = screen.getByPlaceholderText('lastName')
+    expect(lastNameInput).toBeInTheDocument()
+    expect(document.activeElement).not.toBe(lastNameInput)
+
+    await userEvent.click(lastNameInput)
+
+    expect(document.activeElement).toBe(lastNameInput)
     expect(lastNameInput).toHaveFocus()
-  });
-  
+  })
 })

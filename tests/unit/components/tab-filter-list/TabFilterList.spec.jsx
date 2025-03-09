@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, fireEvent, screen } from '@testing-library/react'
 import TabFilterList from '~/components/tab-filter-list/TabFilterList'
+import { vi } from 'vitest'
 
 const mockData = {
   tab1: {

@@ -6,6 +6,7 @@ import {
   TestSnackbar
 } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { vi } from 'vitest'
 
 vi.mock('~/hooks/use-confirm', () => {
   return {

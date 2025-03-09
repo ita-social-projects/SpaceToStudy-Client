@@ -1,5 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
-import { beforeEach } from 'vitest'
+import { beforeEach, vi } from 'vitest'
 import CreateOrEditNote from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote'
 import { renderWithProviders } from '~tests/test-utils'
 

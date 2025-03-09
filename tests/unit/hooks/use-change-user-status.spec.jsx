@@ -1,4 +1,4 @@
-import { afterAll, beforeAll } from 'vitest'
+import { afterAll, beforeAll, vi } from 'vitest'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import useChangeUserStatus from '~/hooks/use-change-user-status'
 import { configureStore } from '@reduxjs/toolkit'
