@@ -29,5 +29,5 @@
   "reachedAttemptLimit": "Кількість спроб вичерпано.",
   "noUsedAttempts": "Спроб ще не було",
   "questionsAmount": "Кількість питань",
-  "successSubmittedQuiz": "Тест успішно надіслано!"
+  "successSubmittedQuiz": "Тест було успішно надіслано викладачу на перевірку!"
 }
