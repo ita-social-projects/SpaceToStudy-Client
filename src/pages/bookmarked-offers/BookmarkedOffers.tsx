@@ -22,7 +22,7 @@ import {
 import { styles } from '~/pages/bookmarked-offers/BookmarkedOffers.styles'
 import { fetchUserById } from '~/redux/features/editProfileSlice'
 import { userService } from '~/services/user-service'
-import { CardsView, CardsViewEnum, SizeEnum, UserRole } from '~/types'
+import { type CardsView, CardsViewEnum, SizeEnum, type UserRole } from '~/types'
 import { parseQueryParams } from '~/utils/helper-functions'
 import useQuery from '~/hooks/use-query'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
