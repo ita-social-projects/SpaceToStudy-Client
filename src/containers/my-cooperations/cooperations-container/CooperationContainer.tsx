@@ -44,10 +44,7 @@ const CooperationContainer: React.FC<CooperationContainerProps> = ({
       ? openModal({
           component: <AcceptCooperationModal cooperation={item} />
         })
-      : (item.status === StatusEnum.Active ||
-          item.status === StatusEnum.RequestToClose ||
-          item.status === StatusEnum.NeedAction) &&
-        navigate(`./${item._id}`)
+      : navigate(`./${item._id}`)
   }
 
   const cooperationGrid = (
