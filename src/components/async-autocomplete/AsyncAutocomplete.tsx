@@ -7,11 +7,6 @@ import useQuery from '~/hooks/use-query'
 import { Category, ServiceFunctionNew } from '~/types'
 import { ResponseError } from '~/exceptions'
 
-interface QueryOptions {
-  type: string
-  categoryId?: string
-}
-
 export interface AsyncAutocompleteProps<
   Response,
   TransformedResponse,
@@ -24,7 +19,7 @@ export interface AsyncAutocompleteProps<
   valueField?: keyof TransformedResponse
   labelField?: keyof TransformedResponse
   value: TransformedResponse[keyof TransformedResponse] | null | Category
-  queryOptions: QueryOptions
+  queryOptions: Record<string, unknown>
   fetchCondition?: boolean
   textFieldProps?: TextFieldProps
   fetchOnFocus?: boolean
