@@ -111,9 +111,9 @@ const EditProfile = () => {
     [changedFields]
   )
 
-  const getProfileTabChangedFields = useMemo<Partial<EditProfileState>>(() => {
+  const getProfileTabChangedFields = useMemo<boolean>(() => {
     if (!initialEditProfileState || !profileState) {
-      return {}
+      return false
     }
 
     const initialProfileTab = {
@@ -138,13 +138,13 @@ const EditProfile = () => {
       videoLink: profileState.videoLink
     }
 
-    return getChangedFields(initialProfileTab, changedProfileTab)
-  }, [initialEditProfileState, profileState])
+    const hasFieldsChanged = getChangedFields(
+      initialProfileTab,
+      changedProfileTab
+    )
 
-  const isProfileTabChanged = useMemo<boolean>(
-    () => Object.keys(getProfileTabChangedFields).length > 0,
-    [getProfileTabChangedFields]
-  )
+    return Object.keys(hasFieldsChanged).length > 0
+  }, [initialEditProfileState, profileState])
 
   const handleClick = async (tab: UserProfileTabsEnum) => {
     if (activeTab === tab) return
@@ -225,7 +225,7 @@ const EditProfile = () => {
     }
   }, [profileState, changedFields, dispatch, userId, hash, userRole, navigate])
 
-  const blocker = useBlocker(isProfileTabChanged)
+  const blocker = useBlocker(getProfileTabChangedFields)
   const { openDialog } = useConfirm()
 
   const openAffirmativeModal = useCallback(
