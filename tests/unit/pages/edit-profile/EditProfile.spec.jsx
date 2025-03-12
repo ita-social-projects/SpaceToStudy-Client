@@ -82,17 +82,28 @@ const mockData = {
     videoLink: '',
   },
 };
+
+const mockOpenDialog = vi.fn();
+
 vi.mock('react-router-dom', async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,
-    useBlocker: vi.fn(),
+    useBlocker: vi.fn(() => ({
+      location: { pathname: '/another-page', search: '' },
+      proceed: vi.fn(),
+    })),
+    useNavigate: () => vi.fn()
   };
 });
 
 vi.mock('~/hooks/use-confirm', () => ({
-  default: () => ({ checkConfirmation: () => true })
-}))
+  default: () => ({
+    checkConfirmation: () => true,
+    openDialog: mockOpenDialog, 
+    setNeedConfirmation: vi.fn()
+  })
+}));
 
 vi.mock('~/redux/features/editProfileSlice', async () => {
   const actual = await vi.importActual('~/redux/features/editProfileSlice')
@@ -522,5 +533,45 @@ describe('EditProfile', () => {
       const updateButton = screen.getByText('editProfilePage.updateBtn')
       expect(updateButton).not.toBeDisabled()
     }
+  });
+
+  it('should show modal window if changes in profile tab are detected', () => {
+    const mockHandleInputChange = vi.fn();
+
+    useAppSelector.mockImplementation((selector) =>
+      selector({
+        ...mockState,
+        editProfile: {
+          ...mockState.editProfile,
+          profileState: { ...userMock },
+          loading: LoadingStatusEnum.Fulfilled
+        }
+      })
+    )
+
+    renderWithProviders(
+      <ProfileTabForm
+        data={mockData}
+        errors={mockData.errors}
+        handleBlur={() => {}}
+        handleInputChange={mockHandleInputChange}
+        openAlert={() => {}}
+      />
+    );
+
+    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
+    expect(firstNameInput).toBeInTheDocument();
+
+    fireEvent.change(firstNameInput, { target: { value: 'Jack' } });
+
+    window.history.pushState({}, '', '/another-page')
+
+    expect(mockOpenDialog).toHaveBeenCalledWith({
+      message: 'editProfilePage.profile.profileTab.saveUnsavedChangesModal.description',
+      cancelButton: 'editProfilePage.profile.profileTab.saveUnsavedChangesModal.cancelBtn',
+      confirmButton: 'editProfilePage.profile.profileTab.saveUnsavedChangesModal.submitBtn',
+      sendConfirm: expect.any(Function),
+      title: 'editProfilePage.profile.profileTab.saveUnsavedChangesModal.title'
+    })
   })
-})
+});
