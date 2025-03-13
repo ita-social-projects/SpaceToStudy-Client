@@ -29,5 +29,5 @@
   "reachedAttemptLimit": "Attempt limit reached.",
   "noUsedAttempts": "No attempts have been made yet",
   "questionsAmount": "Questions amount",
-  "successSubmittedQuiz": "The quiz was successfully submitted for review!"
+  "successSubmittedQuiz": "The quiz has been successfully sent to the tutor for review!"
 }
