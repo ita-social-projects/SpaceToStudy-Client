@@ -20,7 +20,7 @@ const appMain = {
   appMain: { userRole: 'tutor', userId: '648850c4fdc2d1a130c24aea' }
 }
 
-beforeEach(async () => {
+beforeEach(() => {
   const url = getFullUrl({
     parameters: { id: userMock._id },
     pathname: URLs.users.getUserById,
