@@ -47,6 +47,7 @@ export interface Cooperation extends CommonEntityFields {
   receiver: UserResponse
   receiverRole: UserRoleEnum.Tutor | UserRoleEnum.Student
   sections: CourseSection[]
+  completedResourcesPercentage: number
 }
 
 export interface CreateCooperationsParams extends EnrollOfferForm {

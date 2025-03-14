@@ -15,15 +15,16 @@ import AppProgressBarLine from '~/components/app-progress-bar-line/AppProgressBa
 
 interface CooperationActivitiesViewProps {
   setEditMode: Dispatch<SetStateAction<boolean>>
+  progress: number
 }
 
 const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
-  setEditMode
+  setEditMode,
+  progress
 }) => {
   const { sections } = useAppSelector(cooperationsSelector)
   const { userRole } = useAppSelector((state) => state.appMain)
   const isTutor = userRole === UserRoleEnum.Tutor
-  const percentValue = 23
   const onEdit = () => {
     setEditMode(true)
   }
@@ -34,7 +35,7 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
         <AppProgressBarLine
           isCooperationActivities
           userRole=''
-          value={percentValue}
+          value={progress}
         />
       </Box>
       {sections.map((item) => (

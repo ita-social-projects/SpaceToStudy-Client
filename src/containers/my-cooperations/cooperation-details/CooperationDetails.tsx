@@ -163,7 +163,12 @@ const CooperationDetails = () => {
     }
 
     if (editMode && activeTab === CooperationTabsEnum.Activities) {
-      return <CooperationActivitiesView setEditMode={handleEditMode} />
+      return (
+        <CooperationActivitiesView
+          progress={cooperation.completedResourcesPercentage}
+          setEditMode={handleEditMode}
+        />
+      )
     }
 
     if (isActivityCreated) {
