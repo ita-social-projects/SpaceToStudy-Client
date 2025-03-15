@@ -1,15 +1,13 @@
-import { useCallback, useState } from 'react'
-
-import useAxios from '~/hooks/use-axios'
+import { useState, useCallback } from 'react'
+import useMutation from '~/hooks/use-mutation'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
-
 import { useModalContext } from '~/context/modal-context'
 import { useStepContext } from '~/context/step-context'
 import { userService } from '~/services/user-service'
 import { snackbarVariants } from '~/constants'
-import { ErrorResponse, StepData, UpdateUserParams } from '~/types'
+import { type StepData, type UpdateUserParams } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 interface UseSteps {
   steps: string[]
@@ -21,20 +19,14 @@ const useSteps = ({ steps }: UseSteps) => {
   const { stepData } = useStepContext()
   const dispatch = useAppDispatch()
   const { userId } = useAppSelector((state) => state.appMain)
+  const { handleErrorAlert } = useSnackbarAlert()
 
-  const updateUser = useCallback(
-    (params?: UpdateUserParams) => userService.updateUser(userId, params!),
+  const handleUpdateUser = useCallback(
+    (params?: UpdateUserParams) => {
+      return userService.updateUser(userId, params!)
+    },
     [userId]
   )
-
-  const handleResponseError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
 
   const handleResponse = () => {
     dispatch(
@@ -46,12 +38,10 @@ const useSteps = ({ steps }: UseSteps) => {
     closeModal()
   }
 
-  const { loading, fetchData } = useAxios({
-    service: updateUser,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
+  const { mutate: updateUser, isPending: loading } = useMutation({
+    mutationFn: handleUpdateUser,
+    onSuccess: handleResponse,
+    onError: handleErrorAlert
   })
 
   const stepDataValues = Object.values(stepData) as Array<
@@ -78,7 +68,7 @@ const useSteps = ({ steps }: UseSteps) => {
 
   const isLastStep = activeStep === steps.length - 1
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const hasErrors = stepErrors.some((stepError) => Boolean(stepError))
 
     const { firstName, lastName, country, city, professionalSummary } =
@@ -100,7 +90,7 @@ const useSteps = ({ steps }: UseSteps) => {
     }
 
     if (!hasErrors) {
-      await fetchData(data)
+      updateUser(data)
     }
   }
 

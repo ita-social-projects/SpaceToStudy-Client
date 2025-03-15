@@ -941,7 +941,7 @@ describe('editProfileSlice test', () => {
     const expectedState = createState({ loading: LoadingStatusEnum.Fulfilled })
 
     mockAxiosClient
-      .onPatch(createUrlPath(URLs.users.update, userId), params)
+      .onPatch(createUrlPath(URLs.users.updateById, userId), params)
       .reply(200)
 
     await store.dispatch(updateUser({ userId, params }))
@@ -960,7 +960,7 @@ describe('editProfileSlice test', () => {
     })
 
     mockAxiosClient
-      .onPatch(createUrlPath(URLs.users.update, userId), params)
+      .onPatch(createUrlPath(URLs.users.updateById, userId), params)
       .reply(404, error)
 
     await store.dispatch(updateUser({ userId, params }))
