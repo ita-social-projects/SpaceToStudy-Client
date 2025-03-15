@@ -28,17 +28,17 @@ beforeEach(() => {
   })
   mockAxiosClient.onGet(url).reply(200, userMock)
   renderWithProviders(
-      <CreateOrEditNote onSubmit={addNewNoteMock} onSubmitLoading={false} />,
-      {
-        preloadedState: appMain
-      }
+    <CreateOrEditNote onSubmit={addNewNoteMock} onSubmitLoading={false} />,
+    {
+      preloadedState: appMain
+    }
   )
 })
 
 describe('CreateOrEditNote component', () => {
   it('should render component', async () => {
     const noteSettings = await screen.findByText(
-        'cooperationsPage.notes.privateSetting'
+      'cooperationsPage.notes.privateSetting'
     )
     expect(noteSettings).toBeInTheDocument()
   })
