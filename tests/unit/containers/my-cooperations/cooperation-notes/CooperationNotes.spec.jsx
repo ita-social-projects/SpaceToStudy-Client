@@ -5,6 +5,7 @@ import {
   mockAxiosClient,
   TestSnackbar
 } from '~tests/test-utils'
+import { vi } from 'vitest'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { URLs } from '~/constants/request'
 import { getFullUrl } from '~/utils/get-full-url'
