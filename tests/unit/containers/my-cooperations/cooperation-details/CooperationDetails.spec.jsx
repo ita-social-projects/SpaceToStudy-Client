@@ -1,7 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import { debug } from 'vitest-preview'
 
 import CooperationDetails from '~/containers/my-cooperations/cooperation-details/CooperationDetails'
 
@@ -98,7 +97,7 @@ const cooperationData = {
             date: null
           },
           completionStatus: 'completed'
-        },
+        }
       ],
       _id: '67d0250ccda203e190670173'
     }
@@ -234,7 +233,9 @@ describe('CooperationDetails', () => {
   })
 
   it('should render progress bar with predefined value', () => {
-    const progressBar = screen.getByText('50% cooperationDetailsPage.progressBar.completed')
+    const progressBar = screen.getByText(
+      '50% cooperationDetailsPage.progressBar.completed'
+    )
     expect(progressBar).toBeInTheDocument()
   })
 })
@@ -301,8 +302,6 @@ describe('AcceptCooperationClosing modal with submitted answer', () => {
     const cooperationClosingModal = screen.getByText(
       'titles.acceptCooperationClosing'
     )
-    debug()
     expect(cooperationClosingModal).toBeInTheDocument()
   })
 })
-
