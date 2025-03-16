@@ -25,7 +25,7 @@ const setEditMode = vi.fn()
 
 describe('CooperationActivitiesView', () => {
   beforeEach(() => {
-    render(<CooperationActivitiesView setEditMode={setEditMode} progress={'50'}/>)
+    render(<CooperationActivitiesView progress={'50'} setEditMode={setEditMode}/>)
   })
 
   it('should render sections correctly', () => {
