@@ -104,7 +104,7 @@ const cooperationData = {
   ],
   createdAt: '2024-01-12T11:28:34.397Z',
   updatedAt: '2024-01-12T11:28:34.397Z',
-  completedResourcesPercentage: '50'
+  completedResourcesPercentage: 50
 }
 
 const OPPOSITE_USER_DECIDED_TO_CLOSE_COOPERATION = {
