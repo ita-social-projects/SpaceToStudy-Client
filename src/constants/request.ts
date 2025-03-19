@@ -40,9 +40,10 @@ export const URLs = {
   },
   courses: {
     get: '/courses',
+    getById: '/courses/:id',
     delete: '/courses',
     create: '/courses',
-    patch: '/courses'
+    patch: '/courses/:id'
   },
   coursesAndCooperations: {
     getByResourceId: '/courses-cooperations/resource/'

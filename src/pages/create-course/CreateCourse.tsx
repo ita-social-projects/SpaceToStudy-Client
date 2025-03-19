@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
 
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -14,15 +13,11 @@ import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 
 import { userService } from '~/services/user-service'
 import { CourseService } from '~/services/course-service'
-import { getErrorMessage } from '~/utils/error-with-message'
-import { getErrorKey } from '~/utils/get-error-key'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { styles } from '~/pages/create-course/CreateCourse.styles'
 import {
   initialValues,
-  defaultResponse,
   validations
 } from '~/pages/create-course/CreateCourse.constants'
 import { snackbarVariants } from '~/constants'
@@ -30,8 +25,6 @@ import {
   ButtonTypeEnum,
   SizeEnum,
   UserRole,
-  UserResponse,
-  ErrorResponse,
   ComponentEnum,
   Course,
   CourseForm,
@@ -45,8 +38,10 @@ import {
 } from '~/types'
 
 import useForm from '~/hooks/use-form'
-import useAxios from '~/hooks/use-axios'
-import { useAppSelector, useAppDispatch } from '~/hooks/use-redux'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import {
   sectionHandlers,
@@ -56,75 +51,57 @@ import {
 
 const CreateCourse = () => {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
   const { t } = useTranslation()
-  const { id } = useParams()
+  const { id = '' } = useParams()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
+  const { handleAlert, handleErrorAlert } = useSnackbarAlert()
 
-  const getUserData = useCallback(
-    () => userService.getUserById(userId, userRole as UserRole),
-    [userId, userRole]
-  )
+  const getUserData = useCallback(() => {
+    return userService.getUserByIdWithBaseService(userId, userRole as UserRole)
+  }, [userId, userRole])
 
-  const { loading: userLoading, response: user } =
-    useAxios<UserResponse | null>({
-      service: getUserData,
-      defaultResponse: null
+  const { data: user = null, isLoading: userLoading } = useQuery({
+    queryKey: ['user', userId],
+    queryFn: getUserData,
+    options: {
+      staleTime: Infinity
+    }
+  })
+
+  const handleResponse = () => {
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: id
+        ? 'myCoursesPage.newCourse.successEditedCourse'
+        : 'myCoursesPage.newCourse.successAddedCourse'
     })
-
-  const onResponseError = (error?: ErrorResponse) => {
-    const errorKey = getErrorKey(error)
-
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: error
-          ? {
-              text: errorKey,
-              options: {
-                message: getErrorMessage(error.message)
-              }
-            }
-          : errorKey
-      })
-    )
-  }
-
-  const onResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: id
-          ? 'myCoursesPage.newCourse.successEditedCourse'
-          : 'myCoursesPage.newCourse.successAddedCourse'
-      })
-    )
     navigate(authRoutes.myCourses.root.path)
   }
 
   const addCourse = useCallback(
-    (data?: CourseForm) => CourseService.addCourse(data),
+    (data: CourseForm) => CourseService.addCourseQuery(data),
     []
   )
 
-  const { fetchData: fetchAddCourse } = useAxios<Course, CourseForm>({
-    service: addCourse,
-    fetchOnMount: false,
-    defaultResponse,
-    onResponse,
-    onResponseError
+  const { mutate: createCourse } = useMutation({
+    queryKey: ['courses'],
+    mutationFn: addCourse,
+    onSuccess: handleResponse,
+    onError: handleErrorAlert
   })
 
-  const editCourse = (): Promise<AxiosResponse> => {
-    return CourseService.editCourse(courseData, id)
-  }
+  const editCourse = useCallback(
+    (data: CourseForm) => {
+      return CourseService.editCourseQuery(id, data)
+    },
+    [id]
+  )
 
-  const { fetchData: fetchEditCourse } = useAxios<null, CourseForm>({
-    service: editCourse,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse,
-    onResponseError
+  const { mutate: updateCourse } = useMutation({
+    queryKeys: [['course', id], ['courses']],
+    mutationFn: editCourse,
+    onSuccess: handleResponse,
+    onError: handleErrorAlert
   })
 
   const {
@@ -137,7 +114,10 @@ const CreateCourse = () => {
   } = useForm<CourseForm>({
     initialValues,
     validations,
-    onSubmit: id ? fetchEditCourse : fetchAddCourse,
+    onSubmit: (data) => {
+      if (!data) return
+      id ? updateCourse(data) : createCourse(data)
+    },
     submitWithData: true
   })
 
@@ -192,46 +172,60 @@ const CreateCourse = () => {
     [sections, setSectionsData, handleSectionChange]
   )
 
-  const handleCourseResponse = (course: CourseForm) => {
-    course.sections.forEach((section) => {
-      section.id = section._id ?? section.id
-      section.resources?.forEach((resource) => {
-        resource.resource.id ||= crypto.randomUUID()
+  const handleCourseResponse = useCallback(
+    (course: Course) => {
+      course.sections.forEach((section) => {
+        section.id = section._id ?? section.id
+        section.resources?.forEach((resource) => {
+          resource.resource.id ||= crypto.randomUUID()
+        })
       })
-    })
-    Object.keys(courseData).forEach((key) => {
-      const validKey = key as keyof CourseForm
-      handleNonInputValueChange(validKey, course[validKey])
-    })
-  }
+      ;(Object.keys(course) as (keyof CourseForm)[]).forEach((key) => {
+        if (key === 'category') {
+          handleNonInputValueChange(key, course.category ?? null)
+        } else if (key === 'subject') {
+          handleNonInputValueChange(key, course.subject ?? null)
+        } else {
+          handleNonInputValueChange(key, course[key])
+        }
+      })
+    },
+    [handleNonInputValueChange]
+  )
 
-  const getCourse = (id?: string): Promise<AxiosResponse> => {
-    return CourseService.getCourse(id)
-  }
+  const getCourse = useCallback(() => {
+    return CourseService.getCourseQuery(id)
+  }, [id])
 
-  const { loading: getCourseLoading, fetchData: fetchCourseData } = useAxios<
-    CourseForm,
-    string
-  >({
-    service: getCourse,
-    fetchOnMount: false,
-    defaultResponse,
-    onResponse: handleCourseResponse,
-    onResponseError
+  const {
+    isLoading: getCourseLoading,
+    data: course,
+    error: courseError
+  } = useQuery({
+    queryKey: ['course', id],
+    queryFn: getCourse,
+    options: {
+      staleTime: Infinity
+    }
   })
 
   useEffect(() => {
-    if (id) {
-      void fetchCourseData(id)
+    if (id && course) {
+      handleCourseResponse(course)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [id, course, handleCourseResponse])
+
+  useEffect(() => {
+    if (courseError) {
+      handleErrorAlert(courseError)
+    }
+  }, [courseError, handleErrorAlert])
 
   if (sections.length === 0) {
     addNewSection({ sections, setSectionsData, handleSectionChange })
   }
 
-  if (getCourseLoading || userLoading) {
+  if (getCourseLoading || userLoading || !course) {
     return <Loader pageLoad />
   }
 

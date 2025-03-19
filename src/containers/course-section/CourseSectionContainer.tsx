@@ -266,7 +266,7 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
             category: null,
             id: crypto.randomUUID()
           })
-          newResources.push(newQuiz.data as Quiz)
+          newResources.push(newQuiz)
         }
       }
     }

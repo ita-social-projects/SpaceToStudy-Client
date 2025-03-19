@@ -211,3 +211,21 @@ export const mockUpdatedCourseData = {
     }
   ]
 }
+
+export const mockUserResponseData = {
+  _id: '6658f73f93885febb491e08b',
+  firstName: 'New',
+  lastName: 'Tutor',
+  role: ['tutor'],
+  lastLoginAs: 'tutor',
+  email: 'mock@example.com',
+  isFirstLogin: false,
+  mainSubjects: {
+    tutor: [
+      {
+        category: { name: 'Science' },
+        subjects: [{ name: 'Physics' }, { name: 'Mathematics' }]
+      }
+    ]
+  }
+}

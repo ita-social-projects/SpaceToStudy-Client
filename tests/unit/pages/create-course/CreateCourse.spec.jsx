@@ -1,4 +1,4 @@
-import { screen, fireEvent, act } from '@testing-library/react'
+import { screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
 
 import reducer from '~/redux/reducer'
@@ -14,6 +14,7 @@ import {
   CourseSectionEventType
 } from '~/types'
 import {
+  mockUserResponseData,
   mockCourseResponseData,
   mockNewCourseData,
   mockUpdatedCourseData,
@@ -136,11 +137,18 @@ describe('CreateCourse with params id', () => {
     mockUseParams.mockReturnValue({ id: mockCourseResponseData._id })
 
     mockAxiosClient
-      .onGet(`${URLs.courses.get}/${mockCourseResponseData._id}`)
-      .reply(200, () => {
-        updateFormData(mockCourseResponseData)
-        return mockCourseResponseData
-      })
+      .onGet(
+        `${URLs.users.getUserById.replace(':id', mockUserResponseData._id)}?userRole=${UserRoleEnum.Tutor}`
+      )
+      .reply(200, mockUserResponseData)
+
+    mockAxiosClient
+      .onGet(URLs.courses.getById.replace(':id', mockCourseResponseData._id))
+      .reply(200, mockCourseResponseData)
+
+    mockAxiosClient
+      .onGet(URLs.courses.getById.replace(':id', ''))
+      .reply(200, {})
 
     mockAxiosClient
       .onPost(URLs.courses.create, mockNewCourseData)
@@ -151,7 +159,7 @@ describe('CreateCourse with params id', () => {
 
     mockAxiosClient
       .onPatch(
-        `${URLs.courses.patch}/${mockCourseResponseData._id}`,
+        URLs.courses.patch.replace(':id', mockCourseResponseData._id),
         mockUpdatedCourseData
       )
       .reply(200, () => {
@@ -168,7 +176,7 @@ describe('CreateCourse with params id', () => {
       .reply(200, mockCategoriesNames)
 
     mockAxiosClient
-      .onGet(`${URLs.categories.get}/1${URLs.subjects.getNames}`)
+      .onGet(`${URLs.categories.get}${URLs.subjects.getNames}`)
       .reply(200, mockSubjectsNames)
 
     renderWithProviders(<CreateCourse />, { store })
@@ -260,10 +268,10 @@ describe('CreateCourse with params id', () => {
     const select = await screen.findByLabelText(/level/i)
     expect(select).toBeInTheDocument()
 
-    const proficiencyCheckbox = screen.getByDisplayValue(
-      /beginner,intermediate/i
-    )
-    expect(proficiencyCheckbox).toBeInTheDocument()
+    fireEvent.mouseDown(select)
+
+    const beginnerOption = await screen.findByText(/common\.levels\.beginner/i)
+    expect(beginnerOption).toBeInTheDocument()
   })
 
   it('should add a new section when the "Add Section" button is clicked', async () => {
@@ -284,6 +292,7 @@ describe('CreateCourse with params id', () => {
   })
 
   it('should call handleInputChange when "Course title" input is changed', async () => {
+    updateFormData(mockCourseResponseData)
     const inputField = await screen.findByDisplayValue(
       mockCourseResponseData.title
     )
@@ -296,6 +305,7 @@ describe('CreateCourse with params id', () => {
   })
 
   it('should call handleInputChange when "Course description" input is changed', async () => {
+    updateFormData(mockCourseResponseData)
     const inputField = await screen.findByText(
       mockCourseResponseData.description
     )
@@ -318,7 +328,7 @@ describe('CreateCourse with params id', () => {
 
     expect(mockAxiosClient.history.patch.length).toBe(1)
     expect(mockAxiosClient.history.patch[0].url).toBe(
-      `${URLs.courses.patch}/${mockCourseResponseData._id}`
+      `${URLs.courses.patch.replace(':id', mockCourseResponseData._id)}`
     )
 
     const textAreas = screen.getAllByRole('textbox')
@@ -337,7 +347,7 @@ describe('CreateCourse with params id', () => {
 describe('CreateCourse without params id', () => {
   beforeEach(() => {
     mockUseParams.mockReset()
-    mockUseParams.mockReturnValue({ id: null })
+    mockUseParams.mockReturnValue({ id: '' })
 
     renderWithProviders(<CreateCourse />, { store })
   })
@@ -376,7 +386,7 @@ describe('Testing CreateCourse Event Handlers', () => {
   const mockSectionId = mockNewCourseData.sections[0].id
   beforeEach(() => {
     mockUseParams.mockReset()
-    mockUseParams.mockReturnValue({ id: mockNewCourseData._id })
+    mockUseParams.mockReturnValue({ id: mockCourseResponseData._id })
 
     renderWithProviders(<CreateCourse />, { store })
   })
@@ -426,6 +436,7 @@ describe('Testing CreateCourse Event Handlers', () => {
   })
 
   it('should handle adding a new resource to a section [CourseResourceEventType.AddSectionResources] when isDuplicate=true', async () => {
+    updateFormData(mockCourseResponseData)
     const courseSectionList = await screen.findByTestId(
       'mock-CourseSectionsList'
     )

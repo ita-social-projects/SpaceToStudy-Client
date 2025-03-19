@@ -49,10 +49,32 @@ export const CourseService = {
   },
   addCourse: async (data?: CourseForm): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.courses.create, data),
-  getCourse: async (id?: string): Promise<AxiosResponse<Course>> =>
-    await axiosClient.get(createUrlPath(URLs.courses.get, id)),
-  editCourse: async (data: CourseForm, id?: string): Promise<AxiosResponse> =>
-    await axiosClient.patch(createUrlPath(URLs.courses.patch, id), data),
+  addCourseQuery: async (data: CourseForm) => {
+    return baseService.request<Course>({
+      method: 'POST',
+      url: URLs.courses.create,
+      data
+    })
+  },
+  getCourseQuery: (id: string) => {
+    return baseService.request<Course>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.courses.getById,
+        parameters: { id }
+      })
+    })
+  },
+  editCourseQuery: async (id: string, data: CourseForm) => {
+    return baseService.request<void>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: URLs.courses.patch,
+        parameters: { id }
+      }),
+      data
+    })
+  },
   deleteCourse: async (id: string): Promise<AxiosResponse<Course>> =>
     await axiosClient.delete(createUrlPath(URLs.courses.delete, id))
 }
