@@ -5,6 +5,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { SortEnum } from '~/types'
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { vi } from 'vitest'
 
 const setCategories = vi.fn()
 const setSearch = vi.fn()
