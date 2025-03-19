@@ -138,7 +138,7 @@ const checkInputValueChange = (fieldKey, name) => {
 describe('CourseToolbar', () => {
   beforeAll(() => {
     mockAxiosClient.onGet(URLs.categories.getNames).reply(200, mockCategories)
-    
+
     mockAxiosClient
       .onGet(URLs.subjects.getNamesByCategoryId.replace(':id', '1'))
       .reply(200, mockSubjects)
@@ -198,7 +198,11 @@ describe('CourseToolbar', () => {
       )
 
       const subjectAutocomplete = screen.getByLabelText(/subject/i)
-      await selectOption(subjectAutocomplete, mockSubjects[0].name, 'findByText')
+      await selectOption(
+        subjectAutocomplete,
+        mockSubjects[0].name,
+        'findByText'
+      )
     })
 
     it('should output error message if category is not selected', () => {

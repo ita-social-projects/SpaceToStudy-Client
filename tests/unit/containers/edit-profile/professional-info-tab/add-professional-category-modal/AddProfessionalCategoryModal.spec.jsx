@@ -78,8 +78,12 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const professionalSubjects = screen.getAllByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
-  
-    await selectOption(categoryAutocomplete, t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }), 'findByText')
+
+    await selectOption(
+      categoryAutocomplete,
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }),
+      'findByText'
+    )
 
     await act(() =>
       fireEvent.change(professionalSubjects[0], {
@@ -269,7 +273,7 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
       t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }),
       'findByDisplayValue'
     )
-    
+
     await act(() =>
       fireEvent.change(professionalSubjects[0], {
         target: { value: 'Gastronomy' }
