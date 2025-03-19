@@ -1,4 +1,4 @@
-import { screen, fireEvent, act, waitFor } from '@testing-library/react'
+import { screen, fireEvent, act} from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
 
 import reducer from '~/redux/reducer'
