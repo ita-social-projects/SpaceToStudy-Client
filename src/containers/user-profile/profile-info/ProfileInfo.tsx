@@ -91,7 +91,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
 
   const accountRating = (
     <AppRatingMobile
-      link={'#'}
+      link='#reviewSection'
       reviewsCount={reviewsCount}
       sx={styles.appRating}
       value={value}
@@ -165,7 +165,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
       >
         {t(
           `userProfilePage.profileInfo.${
-            myRole !== Student ? 'studentRequests' : 'tutorOffers'
+            myRole === Student ? 'studentRequests' : 'tutorOffers'
           }`
         )}
       </Button>

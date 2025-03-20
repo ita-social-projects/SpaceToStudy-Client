@@ -23,6 +23,9 @@ import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import AppCard from '~/components/app-card/AppCard'
 import Loader from '~/components/loader/Loader'
 
+import { ReviewService } from '~/services/review-service'
+import { defaultReviewsResponse } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
+
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
@@ -33,14 +36,11 @@ import {
   StatusEnum,
   ErrorResponse,
   UserRole,
-  UserRoleEnum
+  UserRoleEnum,
+  ReviewsResponse
 } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
-import {
-  responseMock,
-  loadingMock
-} from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import { activeButtonActions } from '~/pages/offer-details/OfferDetails.constants'
 import { useToggleBookmark } from '~/utils/toggle-bookmark'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -62,12 +62,6 @@ const OfferDetails = () => {
 
   const offerDetailsPage = useRef(null)
   const { pageRef } = useOutletContext<OutletContext>()
-  const { items } = responseMock
-
-  const titleKey =
-    userRole === UserRoleEnum.Tutor
-      ? 'userProfilePage.reviews.titleTutor'
-      : 'userProfilePage.reviews.titleStudent'
 
   const getOffer = useCallback(() => OfferService.getOffer(id), [id])
   const responseError = useCallback(
@@ -84,11 +78,31 @@ const OfferDetails = () => {
     onResponseError: responseError
   })
 
+  const titleKey = offerData
+    ? offerData.authorRole === UserRoleEnum.Tutor
+      ? 'titleTutor'
+      : 'titleStudent'
+    : ''
+
   const updateOffer = useCallback(
     (updateData?: Partial<CreateOrUpdateOfferData>) =>
       OfferService.updateOffer(id, updateData),
     [id]
   )
+
+  const getReviews = useCallback(
+    () =>
+      ReviewService.getUserReviews({
+        userId: offerData!.author._id,
+        userRole: offerData!.authorRole
+      }),
+    [offerData]
+  )
+
+  const { response, loading: reviewLoading } = useAxios<ReviewsResponse>({
+    service: getReviews,
+    defaultResponse: defaultReviewsResponse
+  })
 
   const { loading: updateLoading, fetchData: fetchDataUpdateOffer } = useAxios<
     null,
@@ -271,13 +285,15 @@ const OfferDetails = () => {
         </AppCard>
       )}
       <AppCard sx={styles.wrapper}>
-        <CommentsBlock
-          data={items}
-          isExpandable
-          loadMore={() => null}
-          loading={loadingMock}
-          title={t(titleKey)}
-        />
+        {offerData && (
+          <CommentsBlock
+            data={response.reviews}
+            isExpandable
+            loadMore={() => null}
+            loading={reviewLoading}
+            title={t(`userProfilePage.reviews.${titleKey}`)}
+          />
+        )}
       </AppCard>
 
       <OfferCarousel offer={offerData} />

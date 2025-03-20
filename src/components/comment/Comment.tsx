@@ -5,19 +5,34 @@ import Typography from '@mui/material/Typography'
 import AppRating from '~/components/app-rating/AppRating'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 
-import { ReviewInterface } from '~/types'
+import { ReviewResponse, UserRoleEnum } from '~/types'
 import { styles } from '~/components/comment/Comment.styles'
+import { Link } from 'react-router-dom'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 interface CommentProps {
-  review: ReviewInterface
+  review: ReviewResponse
 }
 
 const Comment: FC<CommentProps> = ({ review }) => {
-  const { comment, author, rating, createdAt, offer } = review
+  const {
+    comment,
+    author,
+    rating,
+    createdAt,
+    offer,
+    proficiencyLevel,
+    targetUserRole
+  } = review
   const { firstName, lastName, photo, _id } = author
-  const { category, subject, proficiencyLevel, authorRole } = offer
+  const { category, subject } = offer
 
-  const coopDetails = `${category.name} - ${subject.name} - ${proficiencyLevel[0]}`
+  const authorRole =
+    targetUserRole === UserRoleEnum.Tutor
+      ? UserRoleEnum.Student
+      : UserRoleEnum.Tutor
+
+  const cooperationDetailsText = `${category.name} - ${subject.name} - ${proficiencyLevel}`
 
   return (
     <Box sx={styles.root}>
@@ -31,7 +46,14 @@ const Comment: FC<CommentProps> = ({ review }) => {
         sx={styles.userInfo}
       />
       <Box sx={styles.description}>
-        <Typography sx={styles.coopDetails}>{coopDetails}</Typography>
+        <Link
+          style={{ textDecoration: 'none' }}
+          to={`${authRoutes.offerDetails.path}/${offer._id}`}
+        >
+          <Typography sx={styles.coopDetails}>
+            {cooperationDetailsText}
+          </Typography>
+        </Link>
         <AppRating readOnly showNumber sx={styles.rating} value={rating} />
         <Typography sx={styles.comment}>{comment}</Typography>
       </Box>

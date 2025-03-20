@@ -1,39 +1,34 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import RatingBlock from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock'
 import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock'
 import Loader from '~/components/loader/Loader'
-import { RatingType, SortByEnum, UserRoleEnum } from '~/types'
+import { ReviewsResponse, SortByEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
-import {
-  responseMock,
-  loadingMock,
-  responseMockStudents,
-  MockReview
-} from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
+import { defaultReviewsResponse } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import {
   ListItemText,
   MenuItem,
   Select,
-  SelectChangeEvent
+  SelectChangeEvent,
+  Typography
 } from '@mui/material'
+import { ReviewService } from '~/services/review-service'
+import useAxios from '~/hooks/use-axios'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
-  totalReviews: number
-  reviewsCount: RatingType[]
   labels?: ReadonlyMap<SortByEnum, string>
   userRole: UserRoleEnum
+  userId: string
 }
 
 const CommentsWithRatingBlock = ({
   averageRating,
-  totalReviews,
-  reviewsCount,
   labels,
-  userRole
+  userRole,
+  userId
 }: CommentsWithRatingBlockProps) => {
   const [filter, setFilter] = useState<number | null>(null)
   const [sortBy, setSortBy] = useState<SortByEnum>(SortByEnum.Newest)
@@ -44,10 +39,15 @@ const CommentsWithRatingBlock = ({
       ? 'userProfilePage.reviews.titleTutor'
       : 'userProfilePage.reviews.titleStudent'
 
-  const items: MockReview[] =
-    userRole === UserRoleEnum.Tutor
-      ? [...responseMock.items]
-      : [...responseMockStudents.items]
+  const getReviews = useCallback(
+    () => ReviewService.getUserReviews({ userId: userId, userRole: userRole }),
+    [userId, userRole]
+  )
+
+  const { response, loading } = useAxios<ReviewsResponse>({
+    service: getReviews,
+    defaultResponse: defaultReviewsResponse
+  })
 
   const sortItems = Object.values(SortByEnum)
   const sortMenuItems = sortItems.map((el) => (
@@ -72,7 +72,7 @@ const CommentsWithRatingBlock = ({
     </MenuItem>
   ))
 
-  const filteredItems = items.filter(
+  const filteredItems = response.reviews.filter(
     (item) => filter === null || item.rating === filter
   )
 
@@ -96,9 +96,9 @@ const CommentsWithRatingBlock = ({
     setFilter(event.target.value === '' ? null : Number(event.target.value))
 
   return (
-    <Box sx={styles.root}>
+    <Box id={'reviewSection'} sx={styles.root}>
       <Typography sx={styles.title}>{t(titleKey)}</Typography>
-      {loadingMock && !items.length ? (
+      {loading && !response.count ? (
         <Loader data-testid='loader' />
       ) : (
         <>
@@ -106,9 +106,9 @@ const CommentsWithRatingBlock = ({
             activeFilter={filter}
             averageRating={averageRating}
             data-testid='rating-block'
-            reviewsCount={reviewsCount}
+            reviewCount={response.count}
+            reviews={response.reviews}
             setFilter={setFilter}
-            totalReviews={totalReviews}
           />
           <Box sx={styles.container}>
             <Box sx={styles.innerBox}>
@@ -138,7 +138,7 @@ const CommentsWithRatingBlock = ({
             data-testid='comments-block'
             isExpandable
             loadMore={() => null}
-            loading={loadingMock}
+            loading={loading}
           />
         </>
       )}

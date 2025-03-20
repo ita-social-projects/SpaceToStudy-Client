@@ -84,6 +84,12 @@ const MyCooperationsDetails = () => {
 
   const { offer, price } = cooperationDetails
 
+  const reviewData = {
+    targetUserId: displayedUser._id,
+    targetUserRole: displayedUserRole,
+    offer: cooperationDetails.offer._id
+  }
+
   const CategoryIcon = getCategoryIcon(offer.category.appearance.icon)
   const categoryColor = getValidatedHexColor(offer.category.appearance.color)
 
@@ -210,6 +216,7 @@ const MyCooperationsDetails = () => {
       <CooperationCompletion
         cooperationStatus={cooperationDetails.status}
         onCloseCooperation={handleCloseCooperation}
+        reviewData={reviewData}
         userRole={userRole}
       />
     </Box>
