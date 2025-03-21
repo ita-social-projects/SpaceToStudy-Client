@@ -78,7 +78,9 @@
     "reviewLabel": "Your review",
     "cancel": "Cancel",
     "submit": "Submit",
-    "success": "Your review was submitted successfully"
+    "success": "Your review was submitted successfully",
+    "leaveReviewSubtitle": "Share your feedback about this cooperation. The button will be enabled once the cooperation is closed.",
+    "leaveReviewTitle": "Leave a Review"
   },
   "notes": {
     "noteText": "Note text...",

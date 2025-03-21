@@ -66,7 +66,17 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
         >
           {t('cooperationsPage.cooperationDetails.closeCooperationBtn')}
         </Button>
-        <Button onClick={openAddReviewModal}>Leave review</Button>
+      </SettingItem>
+      <SettingItem
+        subtitle={t('cooperationsPage.cooperationDetails.leaveReviewSubtitle')}
+        title={t('cooperationsPage.cooperationDetails.leaveReviewTitle')}
+      >
+        <Button
+          disabled={cooperationStatus !== StatusEnum.Closed}
+          onClick={openAddReviewModal}
+        >
+          {t('cooperationsPage.cooperationDetails.leaveReviewTitle')}
+        </Button>
       </SettingItem>
       {userRole === UserRoleEnum.Tutor && (
         <SettingItem
