@@ -24,7 +24,6 @@ import AppCard from '~/components/app-card/AppCard'
 import Loader from '~/components/loader/Loader'
 
 import { ReviewService } from '~/services/review-service'
-import { defaultReviewsResponse } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
@@ -47,6 +46,7 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 import { setField, fetchUserById } from '~/redux/features/editProfileSlice'
 import { snackbarVariants } from '~/constants'
 import { getErrorKey } from '~/utils/get-error-key'
+import useQuery from '~/hooks/use-query'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -99,10 +99,15 @@ const OfferDetails = () => {
     [offerData]
   )
 
-  const { response, loading: reviewLoading } = useAxios<ReviewsResponse>({
-    service: getReviews,
-    defaultResponse: defaultReviewsResponse
+  const { data, isLoading } = useQuery<ReviewsResponse>({
+    queryFn: getReviews,
+    queryKey: [['reviews', userId, userRole]],
+    options: {
+      staleTime: Infinity
+    }
   })
+
+  const reviews = data?.reviews || []
 
   const { loading: updateLoading, fetchData: fetchDataUpdateOffer } = useAxios<
     null,
@@ -287,10 +292,10 @@ const OfferDetails = () => {
       <AppCard sx={styles.wrapper}>
         {offerData && (
           <CommentsBlock
-            data={response.reviews}
+            data={reviews}
             isExpandable
             loadMore={() => null}
-            loading={reviewLoading}
+            loading={isLoading}
             title={t(`userProfilePage.reviews.${titleKey}`)}
           />
         )}

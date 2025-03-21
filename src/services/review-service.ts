@@ -1,6 +1,3 @@
-import { AxiosResponse } from 'axios'
-
-import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 import {
   ReviewData,
@@ -8,18 +5,26 @@ import {
   GetReviewsParams,
   ReviewResponse
 } from '~/types'
+import { baseService } from './base-service'
+import { getFullUrl } from '~/utils/get-full-url'
 
 export const ReviewService = {
-  submitReview: (data: ReviewData): Promise<AxiosResponse<ReviewResponse>> => {
-    return axiosClient.post(URLs.reviews.post, data)
+  submitReview: (data: ReviewData) => {
+    return baseService.request<ReviewResponse>({
+      method: 'POST',
+      url: URLs.reviews.post,
+      data
+    })
   },
-  getUserReviews: (
-    params: GetReviewsParams
-  ): Promise<AxiosResponse<ReviewsResponse>> => {
-    return axiosClient.get(
-      `${URLs.reviews.get}?user=${params.userId}&role=${params.userRole}`
-    )
+  getUserReviews: (params: GetReviewsParams): Promise<ReviewsResponse> => {
+    const url = getFullUrl({
+      pathname: URLs.reviews.get,
+      searchParameters: {
+        user: params.userId,
+        role: params.userRole
+      }
+    })
+
+    return baseService.request<ReviewsResponse>({ method: 'GET', url })
   }
 }
-
-// replace with base service

@@ -6,7 +6,6 @@ import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock
 import Loader from '~/components/loader/Loader'
 import { ReviewsResponse, SortByEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
-import { defaultReviewsResponse } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import {
   ListItemText,
   MenuItem,
@@ -15,7 +14,7 @@ import {
   Typography
 } from '@mui/material'
 import { ReviewService } from '~/services/review-service'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
@@ -44,10 +43,16 @@ const CommentsWithRatingBlock = ({
     [userId, userRole]
   )
 
-  const { response, loading } = useAxios<ReviewsResponse>({
-    service: getReviews,
-    defaultResponse: defaultReviewsResponse
+  const { data, isLoading } = useQuery<ReviewsResponse>({
+    queryFn: getReviews,
+    queryKey: [['reviews', userId, userRole]],
+    options: {
+      staleTime: Infinity
+    }
   })
+
+  const reviews = data?.reviews || []
+  const reviewCount = data?.count || 0
 
   const sortItems = Object.values(SortByEnum)
   const sortMenuItems = sortItems.map((el) => (
@@ -72,7 +77,7 @@ const CommentsWithRatingBlock = ({
     </MenuItem>
   ))
 
-  const filteredItems = response.reviews.filter(
+  const filteredItems = reviews.filter(
     (item) => filter === null || item.rating === filter
   )
 
@@ -98,7 +103,7 @@ const CommentsWithRatingBlock = ({
   return (
     <Box id={'reviewSection'} sx={styles.root}>
       <Typography sx={styles.title}>{t(titleKey)}</Typography>
-      {loading && !response.count ? (
+      {isLoading && reviewCount ? (
         <Loader data-testid='loader' />
       ) : (
         <>
@@ -106,8 +111,8 @@ const CommentsWithRatingBlock = ({
             activeFilter={filter}
             averageRating={averageRating}
             data-testid='rating-block'
-            reviewCount={response.count}
-            reviews={response.reviews}
+            reviewCount={reviewCount}
+            reviews={reviews}
             setFilter={setFilter}
           />
           <Box sx={styles.container}>
@@ -138,7 +143,7 @@ const CommentsWithRatingBlock = ({
             data-testid='comments-block'
             isExpandable
             loadMore={() => null}
-            loading={loading}
+            loading={isLoading}
           />
         </>
       )}

@@ -28,6 +28,7 @@ import {
   DataFromCooperation
 } from '~/types'
 import { styles } from '~/containers/my-cooperations/add-review-modal/AddReviewModal.styles'
+import useMutation from '~/hooks/use-mutation'
 
 interface AddReviewModalProps {
   data: ReviewDataFromCooperation
@@ -48,8 +49,9 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
       ...data.dataFromCooperation,
       comment: data.comment,
       rating: data.rating
-    }) // TODO: add useMutation
+    })
   }
+
   const handleResponse = () => {
     dispatch(
       openAlert({
@@ -69,18 +71,18 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
     )
   }
 
-  const handleSubmitReview = async () => {
-    const res = await addReview({
+  const { mutate: submitReview } = useMutation({
+    mutationFn: addReview,
+    onSuccess: handleResponse,
+    onError: handleResponseError
+  })
+
+  const handleSubmitReview = () => {
+    submitReview({
       dataFromCooperation: data,
       comment: reviewData.comment,
       rating: reviewData.rating
     })
-
-    if (res.data) {
-      handleResponse()
-    } else {
-      handleResponseError((res.request as { data: ErrorResponse }).data)
-    }
   }
 
   const {
