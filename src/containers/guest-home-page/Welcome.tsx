@@ -6,9 +6,6 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import HashLink from '~/components/hash-link/HashLink'
 import Button from '~scss-components/button/Button'
 
-import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
-import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
-import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
 import titleMdUk from '~/assets/img/guest-home-page/titleMdUk.svg'
 import titleSmUk from '~/assets/img/guest-home-page/titleSmUk.svg'
 import titleXsUk from '~/assets/img/guest-home-page/titleXsUk.svg'
@@ -25,10 +22,6 @@ const Welcome = () => {
       if (isLaptopAndAbove) return titleMdUk
       if (isTablet) return titleSmUk
       if (isMobile) return titleXsUk
-    } else {
-      if (isLaptopAndAbove) return titleMd
-      if (isTablet) return titleSm
-      if (isMobile) return titleXs
     }
   }
 
