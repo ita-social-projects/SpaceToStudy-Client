@@ -75,10 +75,10 @@
   },
   "notes": {
     "noteText": "Текст нотатки...",
-    "privateSetting": "Зробити приватною",
-    "noteMsg": "Нотатку було успішно створено"
+    "privateSetting": "Зробити приватною"
   },
   "modalMessages": {
+    "successCreation": "Нотатку було успішно створено",
     "successDeletion": "Нотатку успішно видалено",
     "successDuplication": "Нотатку було успішно продубльовано",
     "successUpdating": "Нотатку було успішно оновлено",

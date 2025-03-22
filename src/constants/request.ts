@@ -69,8 +69,8 @@ export const URLs = {
   notes: {
     get: '/notes',
     create: '/notes',
-    update: '/notes',
-    delete: '/notes'
+    update: '/notes/:noteId',
+    delete: '/notes/:noteId'
   },
   chats: {
     get: '/chats',
