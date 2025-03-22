@@ -74,10 +74,10 @@
   },
   "notes": {
     "noteText": "Note text...",
-    "privateSetting": "Make it private",
-    "noteMsg": "Note was successfully created"
+    "privateSetting": "Make it private"
   },
   "modalMessages": {
+    "successCreation": "Note was successfully created",
     "successDeletion": "Note was deleted successfully",
     "successDuplication": "Note was successfully duplicated",
     "successUpdating": "Note was successfully updated",

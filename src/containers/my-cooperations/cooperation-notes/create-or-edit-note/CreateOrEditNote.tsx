@@ -29,7 +29,7 @@ import {
 interface CreateOrEditNoteProps {
   note?: NoteResponse
   onSubmitLoading: boolean
-  onSubmit: (data: CreateOrUpdateNoteParams) => Promise<void>
+  onSubmit: (data: CreateOrUpdateNoteParams) => void
   onCloseNote: () => void
 }
 
@@ -65,8 +65,8 @@ const CreateOrEditNote = ({
       text: note?.text ?? '',
       isPrivate: note?.isPrivate ?? false
     },
-    onSubmit: async () => {
-      await onSubmit(data)
+    onSubmit: () => {
+      onSubmit(data)
     }
   })
 

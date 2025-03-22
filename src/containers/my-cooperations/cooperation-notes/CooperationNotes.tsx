@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
@@ -6,7 +6,6 @@ import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import AddIcon from '@mui/icons-material/Add'
 
-import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
 import { CooperationNotesService } from '~/services/cooperation-service'
 import CreateOrEditNote from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote'
@@ -14,206 +13,140 @@ import NoteView from '~/containers/my-cooperations/cooperation-notes/note-view/N
 import Loader from '~/components/loader/Loader'
 import { noteNotFoundError } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.constants'
 
-import { snackbarVariants, defaultResponses } from '~/constants'
+import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.styles'
-import {
-  CreateOrUpdateNoteParams,
-  PositionEnum,
-  ErrorResponse,
-  NoteResponse
-} from '~/types'
-import { useAppDispatch } from '~/hooks/use-redux'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorMessage } from '~/utils/error-with-message'
-import { getErrorKey } from '~/utils/get-error-key'
+import { CreateOrUpdateNoteParams, PositionEnum, NoteResponse } from '~/types'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
+
+type NoteAction = 'create' | 'delete' | 'update' | 'duplicate'
 
 const CooperationNotes = () => {
   const { t } = useTranslation()
   const { id = '' } = useParams()
-  const dispatch = useAppDispatch()
   const { openDialog } = useConfirm()
   const [open, setOpen] = useState<boolean>(false)
   const [editableItemId, setEditableItemId] = useState<string>('')
+  const { handleAlert, handleErrorAlert } = useSnackbarAlert()
 
-  const onResponseError = useCallback(
-    (error?: ErrorResponse) => {
-      const errorKey = getErrorKey(error)
+  const onSuccessResponse = useCallback(
+    (noteAction: NoteAction) => {
+      let responseMessage = ''
 
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: error
-            ? {
-                text: errorKey,
-                options: {
-                  message: getErrorMessage(error.message)
-                }
-              }
-            : errorKey
-        })
-      )
+      if (noteAction === 'create') {
+        responseMessage = 'cooperationsPage.modalMessages.successCreation'
+        setOpen(false)
+      }
+
+      if (noteAction === 'delete') {
+        responseMessage = 'cooperationsPage.modalMessages.successDeletion'
+      }
+
+      if (noteAction === 'update') {
+        responseMessage = 'cooperationsPage.modalMessages.successUpdating'
+      }
+
+      if (noteAction === 'duplicate') {
+        responseMessage = 'cooperationsPage.modalMessages.successDuplication'
+      }
+
+      handleAlert({
+        severity: snackbarVariants.success,
+        message: responseMessage
+      })
     },
-    [dispatch]
-  )
-
-  const onResponse = useCallback(() => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: 'cooperationsPage.notes.noteMsg'
-      })
-    )
-  }, [dispatch])
-
-  const onDeleteResponse = useCallback(() => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: 'cooperationsPage.modalMessages.successDeletion'
-      })
-    )
-  }, [dispatch])
-
-  const onUpdateResponse = useCallback(() => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: 'cooperationsPage.modalMessages.successUpdating'
-      })
-    )
-  }, [dispatch])
-
-  const getNotes = useCallback(() => CooperationNotesService.getNotes(id), [id])
-
-  const createNoteService = useCallback(
-    (data: CreateOrUpdateNoteParams) =>
-      CooperationNotesService.createNote(id, data),
-    [id]
-  )
-
-  const deleteNote = useCallback(
-    (noteId?: string) =>
-      CooperationNotesService.deleteNote(id ?? '', noteId ?? ''),
-    [id]
-  )
-
-  const updateNoteService = useCallback(
-    (params: { noteId: string; data: CreateOrUpdateNoteParams }) =>
-      CooperationNotesService.updateNote(id, params.noteId, params.data),
-    [id]
+    [handleAlert]
   )
 
   const {
-    response: notes,
-    loading,
-    fetchData
-  } = useAxios<NoteResponse[]>({
-    service: getNotes,
-    defaultResponse: defaultResponses.array,
-    onResponseError
-  })
-
-  const onNoteCreate = useCallback(() => {
-    onResponse()
-    setOpen(false)
-    void fetchData()
-  }, [onResponse, fetchData])
-
-  const { loading: createLoading, fetchData: addNewNote } = useAxios({
-    service: createNoteService,
-    defaultResponse: null,
-    fetchOnMount: false,
-    onResponseError,
-    onResponse: onNoteCreate
-  })
-
-  const { error, fetchData: deleteItem } = useAxios({
-    service: deleteNote,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError,
-    onResponse: onDeleteResponse
-  })
-
-  const {
-    error: updateError,
-    loading: updateLoading,
-    fetchData: updateNote
-  } = useAxios({
-    service: updateNoteService,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError,
-    onResponse: onUpdateResponse
-  })
-
-  const handleDelete = async (id: string, isConfirmed: boolean) => {
-    if (isConfirmed) {
-      await deleteItem(id)
-      if (!error) await fetchData()
+    data: notes,
+    isLoading: isNotesLoading,
+    error: getNotesError
+  } = useQuery({
+    queryKey: ['notes', id],
+    queryFn: () => CooperationNotesService.getNotes(id),
+    options: {
+      staleTime: Infinity
     }
-  }
+  })
+
+  useEffect(() => {
+    if (getNotesError) {
+      handleErrorAlert(getNotesError)
+    }
+  }, [handleErrorAlert, getNotesError])
+
+  const { mutate: addNewNote, isPending: createLoading } = useMutation({
+    mutationFn: (data: CreateOrUpdateNoteParams) =>
+      CooperationNotesService.createNote(id, data),
+    queryKey: ['notes'],
+    onError: handleErrorAlert,
+    onSuccess: () => onSuccessResponse('create')
+  })
+
+  const { mutate: deleteNote } = useMutation({
+    mutationFn: (noteId: string) =>
+      CooperationNotesService.deleteNote(id, noteId),
+    queryKey: ['notes'],
+    onError: handleErrorAlert,
+    onSuccess: () => onSuccessResponse('delete')
+  })
 
   const onDeleteNote = (id: string) => {
     openDialog({
       message: 'cooperationsPage.modalMessages.confirmDeletionMessage',
-      sendConfirm: (isConfirmed: boolean) => void handleDelete(id, isConfirmed),
-      title: `cooperationsPage.modalMessages.confirmDeletionTitle`
+      title: `cooperationsPage.modalMessages.confirmDeletionTitle`,
+      sendConfirm: (isConfirmed: boolean) => {
+        if (isConfirmed) {
+          deleteNote(id)
+        }
+      }
     })
   }
 
-  const duplicateNote = useCallback(
-    (id: string) => {
-      const note = notes.find((item) => item._id === id)
-      if (!note) {
-        return Promise.reject(noteNotFoundError)
-      }
-
-      return createNoteService(note)
-    },
-    [notes, createNoteService]
-  )
-
-  const onDuplicateResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: `cooperationsPage.modalMessages.successDuplication`
-      })
-    )
-  }
-
-  const { error: duplicationError, fetchData: duplicateItem } = useAxios({
-    service: duplicateNote,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError,
-    onResponse: onDuplicateResponse
+  const { mutate: updateNote, isPending: updateNoteLoading } = useMutation({
+    mutationFn: (params: { noteId: string; data: CreateOrUpdateNoteParams }) =>
+      CooperationNotesService.updateNote(id, params.noteId, params.data),
+    queryKey: ['notes'],
+    onError: handleErrorAlert,
+    onSuccess: () => onSuccessResponse('update')
   })
 
-  const handleDuplicate = async (itemId: string) => {
-    await duplicateItem(itemId)
-    if (!duplicationError) await fetchData()
+  const { mutate: duplicateItem } = useMutation({
+    mutationFn: async (noteId: string) => {
+      const note = notes?.find((item) => item._id === noteId)
+      if (!note) {
+        return
+      }
+      return CooperationNotesService.createNote(id, note)
+    },
+    queryKey: ['notes'],
+    onSuccess: () => onSuccessResponse('duplicate'),
+    onError: handleErrorAlert
+  })
+
+  const handleDuplicate = (itemId: string) => {
+    duplicateItem(itemId)
   }
 
-  const handleUpdate = async (data: CreateOrUpdateNoteParams) => {
-    await updateNote({ noteId: editableItemId, data })
+  const handleUpdate = (data: CreateOrUpdateNoteParams) => {
+    updateNote({ noteId: editableItemId, data })
     onCloseEdit()
-    if (!updateError) await fetchData()
   }
 
   const onCloseEdit = () => setEditableItemId('')
   const onCloseNote = () => setOpen(false)
   const onAddNoteOpen = () => setOpen(true)
 
-  const NotesList = notes.map((item: NoteResponse) =>
+  const NotesList = notes?.map((item: NoteResponse) =>
     editableItemId === item._id ? (
       <CreateOrEditNote
         key={item._id}
         note={item}
         onCloseNote={onCloseEdit}
         onSubmit={handleUpdate}
-        onSubmitLoading={updateLoading}
+        onSubmitLoading={updateNoteLoading}
       />
     ) : (
       <NoteView
@@ -241,7 +174,7 @@ const CooperationNotes = () => {
             onSubmitLoading={createLoading}
           />
         )}
-        {loading ? <Loader pageLoad /> : NotesList}
+        {isNotesLoading ? <Loader pageLoad /> : NotesList}
       </Box>
     </Box>
   )
