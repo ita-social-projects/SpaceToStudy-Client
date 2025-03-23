@@ -47,7 +47,7 @@ const CommentsBlock = ({
       onClick={loadMore}
       sx={styles.button}
     >
-      {t('userProfilePage.reviews.buttonTitle')}
+      {t('userProfilePage.reviews.moreReviews')}
     </Button>
   )
 

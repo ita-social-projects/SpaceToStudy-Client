@@ -39,7 +39,7 @@ const CommentsWithRatingBlock = ({
       : 'userProfilePage.reviews.titleStudent'
 
   const getReviews = useCallback(
-    () => ReviewService.getUserReviews({ userId: userId, userRole: userRole }),
+    () => ReviewService.getUserReviews({ userId, userRole }),
     [userId, userRole]
   )
 
@@ -51,8 +51,14 @@ const CommentsWithRatingBlock = ({
     }
   })
 
-  const reviews = data?.reviews || []
-  const reviewCount = data?.count || 0
+  if (isLoading || !data) {
+    return (
+      <Box id={'reviewSection'} sx={styles.root}>
+        <Typography sx={styles.title}>{t(titleKey)}</Typography>
+        <Loader data-testid='loader' />
+      </Box>
+    )
+  }
 
   const sortItems = Object.values(SortByEnum)
   const sortMenuItems = sortItems.map((el) => (
@@ -77,7 +83,7 @@ const CommentsWithRatingBlock = ({
     </MenuItem>
   ))
 
-  const filteredItems = reviews.filter(
+  const filteredItems = data.reviews.filter(
     (item) => filter === null || item.rating === filter
   )
 
@@ -103,50 +109,44 @@ const CommentsWithRatingBlock = ({
   return (
     <Box id={'reviewSection'} sx={styles.root}>
       <Typography sx={styles.title}>{t(titleKey)}</Typography>
-      {isLoading && reviewCount ? (
-        <Loader data-testid='loader' />
-      ) : (
-        <>
-          <RatingBlock
-            activeFilter={filter}
-            averageRating={averageRating}
-            data-testid='rating-block'
-            reviewCount={reviewCount}
-            reviews={reviews}
-            setFilter={setFilter}
-          />
-          <Box sx={styles.container}>
-            <Box sx={styles.innerBox}>
-              <Typography>{t('common.labels.sortBy')}</Typography>
-              <Select
-                data-testid='sort-select'
-                defaultValue={SortByEnum.Newest}
-                onChange={handleSortChange}
-              >
-                {sortMenuItems}
-              </Select>
-            </Box>
-            <Box sx={styles.innerBox}>
-              <Typography>{t('common.labels.filterBy')}</Typography>
-              <Select
-                data-testid='filter-select'
-                defaultValue={5}
-                onChange={handleFilterChange}
-                value={filter ?? 5}
-              >
-                {ratingMenuItems}
-              </Select>
-            </Box>
-          </Box>
-          <CommentsBlock
-            data={sortedItems}
-            data-testid='comments-block'
-            isExpandable
-            loadMore={() => null}
-            loading={isLoading}
-          />
-        </>
-      )}
+      <RatingBlock
+        activeFilter={filter}
+        averageRating={averageRating}
+        data-testid='rating-block'
+        reviewCount={data.count}
+        reviews={data.reviews}
+        setFilter={setFilter}
+      />
+      <Box sx={styles.container}>
+        <Box sx={styles.innerBox}>
+          <Typography>{t('common.labels.sortBy')}</Typography>
+          <Select
+            data-testid='sort-select'
+            defaultValue={SortByEnum.Newest}
+            onChange={handleSortChange}
+          >
+            {sortMenuItems}
+          </Select>
+        </Box>
+        <Box sx={styles.innerBox}>
+          <Typography>{t('common.labels.filterBy')}</Typography>
+          <Select
+            data-testid='filter-select'
+            defaultValue={5}
+            onChange={handleFilterChange}
+            value={filter ?? 5}
+          >
+            {ratingMenuItems}
+          </Select>
+        </Box>
+      </Box>
+      <CommentsBlock
+        data={sortedItems}
+        data-testid='comments-block'
+        isExpandable
+        loadMore={() => null}
+        loading={isLoading}
+      />
     </Box>
   )
 }
