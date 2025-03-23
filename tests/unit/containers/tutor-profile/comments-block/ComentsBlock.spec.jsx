@@ -3,8 +3,6 @@ import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 import { URLs } from '~/constants/request'
 
-import { debug } from 'vitest-preview'
-
 const currentUserId = '67d020fbcda203e190670036'
 const currentUserRole = 'tutor'
 
@@ -70,7 +68,6 @@ describe('CommentsWithRatingBlock', () => {
   })
 
   it('should increase amountToShow by commentsCount.increment when handleShowMoreComments is called', async () => {
-    debug()
     const showMoreButton = await screen.findByText(
       'userProfilePage.reviews.moreReviews'
     )
