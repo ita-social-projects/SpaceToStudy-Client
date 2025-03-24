@@ -32,6 +32,7 @@ export const URLs = {
   offers: {
     create: '/offers',
     update: '/offers',
+    updateById: '/offers/:id',
     get: '/categories/subjects/offers',
     getByCategoryAndSubjectId:
       '/categories/:categoryId/subjects/:subjectId/offers',
