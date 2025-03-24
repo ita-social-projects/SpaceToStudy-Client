@@ -24,17 +24,17 @@ import { snackbarVariants } from '~/constants'
 import {
   ButtonTypeEnum,
   SizeEnum,
-  UserRole,
   ComponentEnum,
-  Course,
-  CourseForm,
-  CourseSection,
-  CourseResource,
-  Resource,
-  ResourceEvent,
-  ResourceEventHandler,
-  SectionEvent,
-  SectionEventHandler
+  type UserRole,
+  type Course,
+  type CourseForm,
+  type CourseSection,
+  type CourseResource,
+  type Resource,
+  type ResourceEvent,
+  type ResourceEventHandler,
+  type SectionEvent,
+  type SectionEventHandler
 } from '~/types'
 
 import useForm from '~/hooks/use-form'
@@ -49,7 +49,7 @@ import {
   addNewSection
 } from '~/pages/create-course/CreateCourse.handlers'
 
-const CreateCourse = () => {
+const CreateCourse: React.FC = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { id = '' } = useParams()
@@ -205,7 +205,8 @@ const CreateCourse = () => {
     queryKey: ['course', id],
     queryFn: getCourse,
     options: {
-      staleTime: Infinity
+      staleTime: Infinity,
+      enabled: Boolean(id)
     }
   })
 
@@ -225,7 +226,7 @@ const CreateCourse = () => {
     addNewSection({ sections, setSectionsData, handleSectionChange })
   }
 
-  if (getCourseLoading || userLoading || !course) {
+  if (getCourseLoading || userLoading) {
     return <Loader pageLoad />
   }
 
