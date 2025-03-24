@@ -6,6 +6,7 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import useQuery from '~/hooks/use-query'
 import { Category, ServiceFunctionNew } from '~/types'
 import { ResponseError } from '~/exceptions'
+import { AutocompleteFreeSoloValueMapping } from '@mui/material'
 
 export interface AsyncAutocompleteProps<
   Response,
@@ -81,8 +82,11 @@ const AsyncAutocomplete = <
   )
 
   const getOptionLabel = useMemo(
-    () => (option: TransformedResponse) =>
-      (labelField ? option[labelField] : option) || '',
+    () =>
+      (option: TransformedResponse | AutocompleteFreeSoloValueMapping<F>) =>
+        typeof option === 'object' && option !== null
+          ? String((labelField ? option[labelField] : option) || '')
+          : '',
     [labelField]
   )
 
