@@ -110,6 +110,7 @@ const CreateCourse: React.FC = () => {
     handleNonInputValueChange,
     handleBlur,
     handleSubmit,
+    handleDataChange,
     errors
   } = useForm<CourseForm>({
     initialValues,
@@ -176,21 +177,15 @@ const CreateCourse: React.FC = () => {
     (course: Course) => {
       course.sections.forEach((section) => {
         section.id = section._id ?? section.id
+
         section.resources?.forEach((resource) => {
           resource.resource.id ||= crypto.randomUUID()
         })
       })
-      ;(Object.keys(course) as (keyof CourseForm)[]).forEach((key) => {
-        if (key === 'category') {
-          handleNonInputValueChange(key, course.category ?? null)
-        } else if (key === 'subject') {
-          handleNonInputValueChange(key, course.subject ?? null)
-        } else {
-          handleNonInputValueChange(key, course[key])
-        }
-      })
+
+      handleDataChange(course)
     },
-    [handleNonInputValueChange]
+    [handleDataChange]
   )
 
   const getCourse = useCallback(() => {

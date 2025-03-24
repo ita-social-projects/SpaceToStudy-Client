@@ -9,7 +9,6 @@ export const sectionInitialData: CourseSection = {
 }
 
 export const initialValues = {
-  id: '',
   title: '',
   description: '',
   author: { _id: '' },

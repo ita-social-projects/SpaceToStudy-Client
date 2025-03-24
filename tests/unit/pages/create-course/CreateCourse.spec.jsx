@@ -79,6 +79,7 @@ vi.mock('~/hooks/use-query', async () => {
 const mockHandleInputChange = vi.fn()
 const mockHandleNonInputValueChange = vi.fn()
 const mockHandleBlur = vi.fn()
+const mockHandleDataChange = vi.fn()
 let mockInitialFormData = {
   title: '',
   description: '',
@@ -112,6 +113,7 @@ const mockUseForm = vi.hoisted(() => {
       handleInputChange: mockHandleInputChange,
       handleNonInputValueChange: mockHandleNonInputValueChange,
       handleBlur: mockHandleBlur,
+      handleDataChange: mockHandleDataChange,
       data: mockInitialFormData,
       errors: {
         category: 'Please select a category',
