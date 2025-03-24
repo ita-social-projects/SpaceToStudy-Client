@@ -10,7 +10,6 @@ import SliderWithInput from '~/components/slider-with-input/SliderWithInput'
 import Button from '~scss-components/button/Button'
 import Loader from '~/components/loader/Loader'
 import useForm from '~/hooks/use-form'
-import useAxios from '~/hooks/use-axios'
 import useMutation from '~/hooks/use-mutation'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
@@ -61,7 +60,9 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
 
   const updateOffer = useCallback(
     () =>
-      OfferService.updateOffer(cooperation.offer._id, { enrolledUsers: [] }),
+      OfferService.updateOfferWithBaseService(cooperation.offer._id, {
+        enrolledUsers: []
+      }),
     [cooperation.offer._id]
   )
 
@@ -92,11 +93,10 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
       onError: onResponseError
     })
 
-  const { loading: updateLoading, fetchData: fetchUpdateOffer } = useAxios({
-    service: updateOffer,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError
+  const { isPending: updateLoading, mutate: fetchUpdateOffer } = useMutation({
+    mutationFn: updateOffer,
+    queryKey: ['cooperations'],
+    onError: onResponseError
   })
 
   const handleAcceptCooperation = useCallback(async () => {
@@ -121,7 +121,7 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
     })
 
     if (confirmed) {
-      await fetchUpdateOffer()
+      fetchUpdateOffer()
       updateCooperation({ status: StatusEnum.Closed })
     }
   }, [checkConfirmation, fetchUpdateOffer, t, updateCooperation])
