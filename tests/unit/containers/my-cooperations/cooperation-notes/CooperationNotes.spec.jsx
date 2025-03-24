@@ -1,29 +1,40 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { afterEach, vi } from 'vitest'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
-import { renderWithProviders, TestSnackbar, mockAxiosClient } from '~tests/test-utils'
+import {
+  renderWithProviders,
+  TestSnackbar,
+  mockAxiosClient
+} from '~tests/test-utils'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { URLs } from '~/constants/request'
-import { mockNotesData, mockUpdatedNotesData, completeNewNote, finishedMockedNotesData, mockUpdatedWithDuplicatedNoteData } from './CooperationNotes.spec.constants'
-import { afterEach } from 'vitest'
+import {
+  mockNotesData,
+  mockUpdatedNotesData,
+  completeNewNote,
+  finishedMockedNotesData,
+  mockUpdatedWithDuplicatedNoteData
+} from './CooperationNotes.spec.constants'
 import * as useQuery from '~/hooks/use-query'
+import { getFullUrl } from '~/utils/get-full-url'
 
 const cooperationId = '675b37915a23a358ab40bf66'
 
 const newNotePayload = {
   text: 'Newly created note',
-  isPrivate: false,
-};
+  isPrivate: false
+}
 
 const updatedNotePayload = {
   text: 'updated note',
-  isPrivate: false,
-};
+  isPrivate: false
+}
 
 const duplicatedNote = {
   ...mockUpdatedNotesData[1],
   _id: '65b03361bf20871d3adead9c',
-  text: mockUpdatedNotesData[1].text 
-};
+  text: mockUpdatedNotesData[1].text
+}
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
@@ -34,6 +45,14 @@ vi.mock('react-router-dom', async () => {
     })
   }
 })
+
+const userMock = {
+  _id: '648850c4fdc2d1a130c24aea',
+  role: 'tutor',
+  firstName: 'Test',
+  lastName: 'User',
+  photo: ''
+}
 
 const appMain = {
   appMain: { userRole: 'tutor', userId: mockNotesData[0].author._id }
@@ -46,15 +65,26 @@ const updateNoteUrl = `${getCooperation}${URLs.notes.update.replace(':noteId', m
 const deleteNoteUrl = `${getCooperation}${URLs.notes.delete.replace(':noteId', mockUpdatedNotesData[0]._id)}`
 const duplicateNoteUrl = `${getCooperation}${URLs.notes.create}`
 
+const url = getFullUrl({
+  parameters: { id: mockNotesData[0].author._id },
+  pathname: URLs.users.getUserById,
+  searchParameters: { userRole: mockNotesData[0].author.role }
+})
+
 describe('CooperationNotes', () => {
   beforeEach(() => {
+    mockAxiosClient.onGet(url).reply(200, userMock)
     mockAxiosClient.onGet(getNotesUrl).replyOnce(200, mockNotesData)
     mockAxiosClient.onPost(createNoteUrl).reply(200, newNotePayload)
-    mockAxiosClient.onGet(getNotesUrl).replyOnce(200, [...mockNotesData, completeNewNote])
+    mockAxiosClient
+      .onGet(getNotesUrl)
+      .replyOnce(200, [...mockNotesData, completeNewNote])
     mockAxiosClient.onPatch(updateNoteUrl).reply(200, updatedNotePayload)
     mockAxiosClient.onGet(getNotesUrl).replyOnce(200, mockUpdatedNotesData)
-    mockAxiosClient.onPost(duplicateNoteUrl).reply(200, duplicatedNote);
-    mockAxiosClient.onGet(getNotesUrl).replyOnce(200, mockUpdatedWithDuplicatedNoteData);
+    mockAxiosClient.onPost(duplicateNoteUrl).reply(200, duplicatedNote)
+    mockAxiosClient
+      .onGet(getNotesUrl)
+      .replyOnce(200, mockUpdatedWithDuplicatedNoteData)
     mockAxiosClient.onDelete(deleteNoteUrl).reply(200, null)
     mockAxiosClient.onGet(getNotesUrl).replyOnce(200, finishedMockedNotesData)
 
@@ -100,7 +130,9 @@ describe('CooperationNotes', () => {
     })
     fireEvent.click(saveButton)
 
-    const snackbar = await screen.findByText('cooperationsPage.modalMessages.successCreation')
+    const snackbar = await screen.findByText(
+      'cooperationsPage.modalMessages.successCreation'
+    )
     expect(snackbar).toBeInTheDocument()
 
     const newNote = screen.getByText(newNoteText)
@@ -134,7 +166,9 @@ describe('CooperationNotes', () => {
     fireEvent.change(noteTextInput, { target: { value: 'updated note' } })
     fireEvent.click(saveButton)
 
-    const snackbar = await screen.findByText('cooperationsPage.modalMessages.successUpdating')
+    const snackbar = await screen.findByText(
+      'cooperationsPage.modalMessages.successUpdating'
+    )
     expect(snackbar).toBeInTheDocument()
 
     const newNote = await screen.findByText('updated note')
@@ -142,27 +176,25 @@ describe('CooperationNotes', () => {
   })
 
   it('should handle duplicate notes', async () => {
-    await waitFor(() => {
-      expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
-    });
+    const noteText = mockUpdatedNotesData[1].text
+    const initialNoteElements = screen.getAllByText(noteText)
 
-    const noteText = mockUpdatedNotesData[1].text;
-    const initialNoteElements = screen.getAllByText(noteText);
+    const menuButtons = screen.getAllByTestId('MoreVertIcon')
+    fireEvent.click(menuButtons[1])
 
-    const menuButtons = screen.getAllByTestId('MoreVertIcon');
-    fireEvent.click(menuButtons[1]);
+    const duplicateButton = screen.getByTestId('ContentCopyIcon')
+    fireEvent.click(duplicateButton)
 
-    const duplicateButton = screen.getByTestId('ContentCopyIcon');
-    fireEvent.click(duplicateButton);
-    
-    const snackbar = await screen.findByText('cooperationsPage.modalMessages.successDuplication');
-    expect(snackbar).toBeInTheDocument();
+    const snackbar = await screen.findByText(
+      'cooperationsPage.modalMessages.successDuplication'
+    )
+    expect(snackbar).toBeInTheDocument()
 
     await waitFor(() => {
-      const updatedNoteElements = screen.getAllByText(noteText);
-      expect(updatedNoteElements.length).toBe(initialNoteElements.length + 1);
-    });
-  });
+      const updatedNoteElements = screen.getAllByText(noteText)
+      expect(updatedNoteElements.length).toBe(initialNoteElements.length + 1)
+    })
+  })
 
   it('should handle delete notes', async () => {
     const menuButtons = screen.getAllByTestId('MoreVertIcon')
@@ -174,13 +206,15 @@ describe('CooperationNotes', () => {
     const confirmButton = screen.getByRole('button', { name: 'common.yes' })
     fireEvent.click(confirmButton)
 
-    const snackbar = await screen.findByText('cooperationsPage.modalMessages.successDeletion')
+    const snackbar = await screen.findByText(
+      'cooperationsPage.modalMessages.successDeletion'
+    )
     expect(snackbar).toBeInTheDocument()
 
-    const noteText = mockUpdatedNotesData[0].text;
+    const noteText = mockUpdatedNotesData[0].text
     await waitFor(() => {
-      expect(screen.queryByText(noteText)).not.toBeInTheDocument();
-    });
+      expect(screen.queryByText(noteText)).not.toBeInTheDocument()
+    })
   })
 })
 
@@ -188,10 +222,10 @@ describe('CooperationNotes with error', () => {
   const fakeError = { code: 'errorCode', message: 'UNKNOWN_ERROR' }
 
   beforeEach(() => {
-    vi.spyOn(useQuery, 'default').mockReturnValue({ 
-      isLoading: false, 
-      error: fakeError, 
-      data: null 
+    vi.spyOn(useQuery, 'default').mockReturnValue({
+      isLoading: false,
+      error: fakeError,
+      data: null
     })
     renderWithProviders(
       <TestSnackbar>

@@ -6,7 +6,8 @@ export const mockNotesData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -20,7 +21,8 @@ export const mockNotesData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -36,7 +38,8 @@ export const completeNewNote = {
     _id: '6565fd508a848ff2202df79c',
     firstName: 'User',
     lastName: 'Test',
-    photo: ''
+    photo: '',
+    role: 'tutor'
   },
   isPrivate: false,
   cooperation: '65afbd053d67b51996a67c4c',
@@ -52,7 +55,8 @@ export const mockUpdatedNotesData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -66,7 +70,8 @@ export const mockUpdatedNotesData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -80,7 +85,8 @@ export const mockUpdatedNotesData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -97,7 +103,8 @@ export const mockUpdatedWithDuplicatedNoteData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -111,7 +118,8 @@ export const mockUpdatedWithDuplicatedNoteData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -125,7 +133,8 @@ export const mockUpdatedWithDuplicatedNoteData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -139,7 +148,8 @@ export const mockUpdatedWithDuplicatedNoteData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -156,7 +166,8 @@ export const finishedMockedNotesData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
@@ -170,7 +181,8 @@ export const finishedMockedNotesData = [
       _id: '6565fd508a848ff2202df79c',
       firstName: 'User',
       lastName: 'Test',
-      photo: ''
+      photo: '',
+      role: 'tutor'
     },
     isPrivate: false,
     cooperation: '65afbd053d67b51996a67c4c',
