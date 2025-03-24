@@ -28,7 +28,7 @@ describe('AcceptCooperationModal component ', () => {
       .reply(200)
 
     mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockedCoop._id}`)
+      .onPatch(URLs.offers.updateById.replace(':id', mockedCoop._id))
       .reply(200, { updateData: null })
 
     renderWithProviders(
