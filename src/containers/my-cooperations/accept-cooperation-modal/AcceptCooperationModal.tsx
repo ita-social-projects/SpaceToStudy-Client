@@ -58,7 +58,7 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
     [cooperation._id]
   )
 
-  const updateOffer = useCallback(
+  const handleUpdateOffer = useCallback(
     () =>
       OfferService.updateOfferWithBaseService(cooperation.offer._id, {
         enrolledUsers: []
@@ -93,8 +93,8 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
       onError: onResponseError
     })
 
-  const { isPending: updateLoading, mutate: fetchUpdateOffer } = useMutation({
-    mutationFn: updateOffer,
+  const { isPending: updateLoading, mutate: updateOffer } = useMutation({
+    mutationFn: handleUpdateOffer,
     queryKey: ['cooperations'],
     onError: onResponseError
   })
@@ -121,10 +121,10 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
     })
 
     if (confirmed) {
-      fetchUpdateOffer()
+      updateOffer()
       updateCooperation({ status: StatusEnum.Closed })
     }
-  }, [checkConfirmation, fetchUpdateOffer, t, updateCooperation])
+  }, [checkConfirmation, updateOffer, t, updateCooperation])
 
   const handleResendCooperation = useCallback(
     async (data?: Record<'price', number>) => {
