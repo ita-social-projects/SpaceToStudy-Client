@@ -2,7 +2,11 @@ import { beforeAll, beforeEach, expect } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import Quiz from '~/pages/quiz/Quiz'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
-import { mockAxiosClient, renderWithProviders, TestSnackbar } from '~tests/test-utils'
+import {
+  mockAxiosClient,
+  renderWithProviders,
+  TestSnackbar
+} from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
 const mockQuizId = '6641388f36ebdb0432a3a2e5'
@@ -63,7 +67,8 @@ describe('QuizPage for student', () => {
     renderWithProviders(
       <TestSnackbar>
         <Quiz />
-      </TestSnackbar>, {
+      </TestSnackbar>,
+      {
         preloadedState: { appMain: { userRole: UserRoleEnum.Student } }
       }
     )
@@ -92,7 +97,9 @@ describe('QuizPage for student', () => {
     const confirmButton = await screen.findByText('quiz.confirm')
     fireEvent.click(confirmButton)
 
-    const successSubmitAlert = await screen.findByText('quiz.successSubmittedQuiz')
+    const successSubmitAlert = await screen.findByText(
+      'quiz.successSubmittedQuiz'
+    )
     expect(successSubmitAlert).toBeInTheDocument()
 
     const correctAnswers = await screen.findByText(
