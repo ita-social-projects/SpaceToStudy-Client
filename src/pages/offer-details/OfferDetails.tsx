@@ -26,13 +26,7 @@ import Loader from '~/components/loader/Loader'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
-import {
-  OutletContext,
-  StatusEnum,
-  ErrorResponse,
-  UserRole,
-  UserRoleEnum
-} from '~/types'
+import { OutletContext, StatusEnum, UserRole, UserRoleEnum } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
 import {
@@ -41,11 +35,9 @@ import {
 } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import { activeButtonActions } from '~/pages/offer-details/OfferDetails.constants'
 import { useToggleBookmark } from '~/utils/toggle-bookmark'
-import { openAlert } from '~/redux/features/snackbarSlice'
 import { setField, fetchUserById } from '~/redux/features/editProfileSlice'
-import { snackbarVariants } from '~/constants'
-import { getErrorKey } from '~/utils/get-error-key'
 import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -58,6 +50,7 @@ const OfferDetails = () => {
   const { checkConfirmation } = useConfirm()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
+  const { handleErrorAlert } = useSnackbarAlert()
 
   const offerDetailsPage = useRef(null)
   const { pageRef } = useOutletContext<OutletContext>()
@@ -102,19 +95,10 @@ const OfferDetails = () => {
     dispatch(setField({ field: 'bookmarkedOffers', value: response }))
   }
 
-  const handleResponseError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
-
   const toggleBookmark = useToggleBookmark(
     userId,
     handleResponse,
-    handleResponseError
+    handleErrorAlert
   )
 
   const isBookmarked = useMemo(
