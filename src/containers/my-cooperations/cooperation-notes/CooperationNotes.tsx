@@ -59,13 +59,17 @@ const CooperationNotes = () => {
     [handleAlert]
   )
 
+  const getNotes = () => {
+    return CooperationNotesService.getNotes(id)
+  }
+
   const {
     data: notes,
     isLoading: isNotesLoading,
     error: getNotesError
   } = useQuery({
     queryKey: ['notes', id],
-    queryFn: () => CooperationNotesService.getNotes(id),
+    queryFn: getNotes,
     options: {
       staleTime: Infinity
     }
@@ -77,17 +81,23 @@ const CooperationNotes = () => {
     }
   }, [handleErrorAlert, getNotesError])
 
+  const createNote = (data: CreateOrUpdateNoteParams) => {
+    return CooperationNotesService.createNote(data, id)
+  }
+
   const { mutate: addNewNote, isPending: createLoading } = useMutation({
-    mutationFn: (data: CreateOrUpdateNoteParams) =>
-      CooperationNotesService.createNote(id, data),
+    mutationFn: createNote,
     queryKey: ['notes'],
     onError: handleErrorAlert,
     onSuccess: () => onSuccessResponse('create')
   })
 
+  const deleteSelectedNote = (noteId: string) => {
+    return CooperationNotesService.deleteNote(id, noteId)
+  }
+
   const { mutate: deleteNote } = useMutation({
-    mutationFn: (noteId: string) =>
-      CooperationNotesService.deleteNote(id, noteId),
+    mutationFn: deleteSelectedNote,
     queryKey: ['notes'],
     onError: handleErrorAlert,
     onSuccess: () => onSuccessResponse('delete')
@@ -105,30 +115,34 @@ const CooperationNotes = () => {
     })
   }
 
+  const updateSelectedNote = (params: {
+    noteId: string
+    data: CreateOrUpdateNoteParams
+  }) => {
+    return CooperationNotesService.updateNote(id, params.noteId, params.data)
+  }
+
   const { mutate: updateNote, isPending: updateNoteLoading } = useMutation({
-    mutationFn: (params: { noteId: string; data: CreateOrUpdateNoteParams }) =>
-      CooperationNotesService.updateNote(id, params.noteId, params.data),
+    mutationFn: updateSelectedNote,
     queryKey: ['notes'],
     onError: handleErrorAlert,
     onSuccess: () => onSuccessResponse('update')
   })
 
+  const duplicateNote = async (noteId: string) => {
+    const note = notes?.find((item) => item._id === noteId)
+    if (!note) {
+      return
+    }
+    return CooperationNotesService.createNote(note, id)
+  }
+
   const { mutate: duplicateItem } = useMutation({
-    mutationFn: async (noteId: string) => {
-      const note = notes?.find((item) => item._id === noteId)
-      if (!note) {
-        return
-      }
-      return CooperationNotesService.createNote(id, note)
-    },
+    mutationFn: duplicateNote,
     queryKey: ['notes'],
     onSuccess: () => onSuccessResponse('duplicate'),
     onError: handleErrorAlert
   })
-
-  const handleDuplicate = (itemId: string) => {
-    duplicateItem(itemId)
-  }
 
   const handleUpdate = (data: CreateOrUpdateNoteParams) => {
     updateNote({ noteId: editableItemId, data })
@@ -151,7 +165,7 @@ const CooperationNotes = () => {
     ) : (
       <NoteView
         deleteItem={onDeleteNote}
-        duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
+        duplicateItem={(itemId: string) => duplicateItem(itemId)}
         key={item._id}
         note={item}
         updateItem={setEditableItemId}
