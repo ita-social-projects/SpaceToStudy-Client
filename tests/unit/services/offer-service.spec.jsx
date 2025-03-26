@@ -110,4 +110,29 @@ describe('offerService getOffers function tests', () => {
       searchParameters: searchParams
     })
   })
+
+  it('should update offer by id with given data', async () => {
+    const offerId = '12345'
+    const updateData = {
+      title: 'Updated Offer Title',
+      price: 99
+    }
+
+    const getFullUrlSpy = vi.spyOn(getFullUrl, 'getFullUrl')
+
+    mockAxiosClient
+      .onPatch(new RegExp(`${URLs.offers.updateById.replace(':id', offerId)}`))
+      .reply(200)
+
+    const result = await OfferService.updateOfferWithBaseService(
+      offerId,
+      updateData
+    )
+
+    expect(result).toBeUndefined()
+    expect(getFullUrlSpy).toHaveBeenCalledWith({
+      pathname: URLs.offers.updateById,
+      parameters: { id: offerId }
+    })
+  })
 })
