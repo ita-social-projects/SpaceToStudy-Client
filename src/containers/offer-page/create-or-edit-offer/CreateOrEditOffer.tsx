@@ -100,7 +100,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     ? [['offers'], ['offer', existingOffer._id]]
     : [['offers']]
 
-  const { isPending: offerPending, mutate: offerMutate } = useMutation({
+  const { isPending: offerPending, mutate: mutateOffer } = useMutation({
     queryKeys: offerQueryKeys,
     mutationFn: service,
     onSuccess: onResponse,
@@ -109,7 +109,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
 
   const handleOfferSubmit = () => {
     if (data) {
-      offerMutate(data)
+      mutateOffer(data)
     }
   }
 
