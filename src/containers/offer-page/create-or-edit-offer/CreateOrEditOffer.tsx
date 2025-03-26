@@ -1,18 +1,20 @@
 import { FC, useEffect, useState, Dispatch, SetStateAction } from 'react'
+import { MutationFunction } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
 import LeakAddSharpIcon from '@mui/icons-material/LeakAddSharp'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
-import useAxios from '~/hooks/use-axios'
+import useMutation from '~/hooks/use-mutation'
 import TeachingBlock from '~/containers/offer-page/teaching-block/TeachingBlock'
 import SpecializationBlock from '~/containers/offer-page/specialization-block/SpecializationBlock'
 import FaqBlock from '~/containers/offer-page/faq-block/FaqBlock'
 import Button from '~scss-components/button/Button'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -27,17 +29,15 @@ import {
   CreateOrUpdateOfferData,
   Offer,
   OfferActionsEnum,
-  ServiceFunction,
   StatusEnum,
   UserRoleEnum
 } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
-import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface CreateOrUpdateOfferProps {
   existingOffer?: Offer | null
   closeDrawer: () => void
-  service: ServiceFunction<Offer | null, CreateOrUpdateOfferData>
+  service: MutationFunction<Offer | null, CreateOrUpdateOfferData>
   updateOffer?: Dispatch<SetStateAction<boolean>>
 }
 
@@ -49,12 +49,12 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
 }) => {
   const { userRole } = useAppSelector((state) => state.appMain)
   const { setNeedConfirmation } = useConfirm()
-  const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { hash } = useLocation()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isDrafting, setIsDrafting] = useState(false)
+  const { handleAlert, handleErrorAlert } = useSnackbarAlert()
 
   const offerAction = existingOffer
     ? OfferActionsEnum.Edit
@@ -63,24 +63,22 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   const onResponse = (response: Offer | null) => {
     const isHash = hash === '#offer'
 
-    dispatch(
-      openAlert(
-        isHash
-          ? {
-              severity: snackbarVariants.success,
-              message: `offerPage.createOffer.extendedSuccessMessage.${userRole}`,
-              duration: 10000,
-              isExtended: true,
-              route:
-                userRole === UserRoleEnum.Tutor
-                  ? authRoutes.myOffers.path
-                  : authRoutes.myRequests.path
-            }
-          : {
-              severity: snackbarVariants.success,
-              message: `offerPage.${offerAction}.successMessage`
-            }
-      )
+    handleAlert(
+      isHash
+        ? {
+            severity: snackbarVariants.success,
+            message: `offerPage.createOffer.extendedSuccessMessage.${userRole}`,
+            duration: 10000,
+            isExtended: true,
+            route:
+              userRole === UserRoleEnum.Tutor
+                ? authRoutes.myOffers.path
+                : authRoutes.myRequests.path
+          }
+        : {
+            severity: snackbarVariants.success,
+            message: `offerPage.${offerAction}.successMessage`
+          }
     )
 
     closeDrawer()
@@ -98,15 +96,20 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     }
   }
 
-  const { loading, fetchData } = useAxios<
-    Offer | null,
-    CreateOrUpdateOfferData
-  >({
-    service,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse
+  const offerQueryKeys = existingOffer
+    ? [['offers'], ['offer', existingOffer._id]]
+    : [['offers']]
+
+  const { isPending: offerPending, mutate: offerMutate } = useMutation({
+    queryKeys: offerQueryKeys,
+    mutationFn: service,
+    onSuccess: onResponse,
+    onError: handleErrorAlert
   })
+
+  const handleOfferSubmit = () => {
+    if (data) offerMutate(data)
+  }
 
   const {
     data,
@@ -119,7 +122,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   } = useForm<CreateOrUpdateOfferData>({
     initialValues: getInitialValues(existingOffer),
     validations,
-    onSubmit: fetchData,
+    onSubmit: handleOfferSubmit,
     submitWithData: true
   })
 
@@ -175,7 +178,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
       />
       <Box sx={styles.buttonBox}>
         <Button
-          loading={loading && isSubmitting}
+          loading={offerPending && isSubmitting}
           onClick={handleSubmitClick}
           size='lg'
           sx={styles.submit}
@@ -185,7 +188,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
         </Button>
         {isMovableToDrafts && (
           <Button
-            loading={loading && isDrafting}
+            loading={offerPending && isDrafting}
             onClick={handleDraftClick}
             size='lg'
             type={ButtonTypeEnum.Submit}
