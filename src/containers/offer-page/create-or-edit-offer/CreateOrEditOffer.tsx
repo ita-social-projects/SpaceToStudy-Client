@@ -24,10 +24,10 @@ import {
   validations
 } from '~/containers/offer-page/create-or-edit-offer/CreateOrEditOffer.constants'
 import {
+  type CreateOrUpdateOfferData,
+  type Offer,
   ButtonTypeEnum,
   ComponentEnum,
-  CreateOrUpdateOfferData,
-  Offer,
   OfferActionsEnum,
   StatusEnum,
   UserRoleEnum
@@ -108,7 +108,9 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   })
 
   const handleOfferSubmit = () => {
-    if (data) offerMutate(data)
+    if (data) {
+      offerMutate(data)
+    }
   }
 
   const {
