@@ -5,12 +5,7 @@ import { useModalContext } from '~/context/modal-context'
 import { useStepContext } from '~/context/step-context'
 import { userService } from '~/services/user-service'
 import { snackbarVariants } from '~/constants'
-import {
-  type EditProfilePhoto,
-  type UpdatedPhoto,
-  type StepData,
-  type UpdateUserParams
-} from '~/types'
+import { type StepData, type UpdateUserParams } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
@@ -79,23 +74,8 @@ const useSteps = ({ steps }: UseSteps) => {
     const { firstName, lastName, country, city, professionalSummary } =
       stepData.generalInfo.data
 
-    let formattedPhoto: EditProfilePhoto | undefined = undefined
-
-    if (stepData.photo && stepData.photo.length > 0) {
-      const firstPhoto = stepData.photo[0]
-
-      if (firstPhoto instanceof File) {
-        formattedPhoto = {
-          src: URL.createObjectURL(firstPhoto),
-          name: firstPhoto.name
-        }
-      } else {
-        formattedPhoto = firstPhoto as UpdatedPhoto
-      }
-    }
-
     const data: UpdateUserParams = {
-      photo: formattedPhoto,
+      photo: stepData.photo[0] ? stepData.photo[0] : '',
       firstName,
       lastName,
       address: {
