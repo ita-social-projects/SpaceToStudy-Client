@@ -11,9 +11,9 @@ import { URLs } from '~/constants/request'
 import {
   mockNotesData,
   mockUpdatedNotesData,
+  mockUpdatedWithDuplicatedNoteData,
   completeNewNote,
-  finishedMockedNotesData,
-  mockUpdatedWithDuplicatedNoteData
+  finishedMockedNotesData
 } from './CooperationNotes.constants'
 import * as useQuery from '~/hooks/use-query'
 import { getFullUrl } from '~/utils/get-full-url'
@@ -59,11 +59,11 @@ const appMain = {
 }
 
 const getCooperationUrl = `${URLs.cooperations.getById.replace(':id', cooperationId)}`
-const getNotesUrl = `${getCooperationUrl}${URLs.notes.get}`
-const createNoteUrl = `${getCooperationUrl}${URLs.notes.create}`
-const updateNoteUrl = `${getCooperationUrl}${URLs.notes.update.replace(':id', mockNotesData[0]._id)}`
-const deleteNoteUrl = `${getCooperationUrl}${URLs.notes.delete.replace(':id', mockUpdatedNotesData[0]._id)}`
-const duplicateNoteUrl = `${getCooperationUrl}${URLs.notes.create}`
+const getNotesUrl = URLs.notes.get.replace(':id', cooperationId)
+const createNoteUrl = URLs.notes.create.replace(':id', cooperationId)
+const updateNoteUrl = `${getCooperationUrl}/notes/${mockNotesData[0]._id}`
+const deleteNoteUrl = `${getCooperationUrl}/notes/${mockUpdatedNotesData[0]._id}`
+const duplicateNoteUrl = URLs.notes.create.replace(':id', cooperationId)
 
 const url = getFullUrl({
   parameters: { id: mockNotesData[0].author._id },
@@ -112,12 +112,14 @@ describe('CooperationNotes', () => {
     const newNoteText = 'Newly created note'
     const addNoteBtn = screen.getByTestId('AddIcon')
     fireEvent.click(addNoteBtn)
+
     await waitFor(() => {
       const noteFormSettings = screen.getByText(
         'cooperationsPage.notes.privateSetting'
       )
       expect(noteFormSettings).toBeInTheDocument()
     })
+
     const noteTextInput = screen.getByLabelText(
       'cooperationsPage.notes.noteText'
     )
