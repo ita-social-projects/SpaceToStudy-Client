@@ -14,7 +14,7 @@ import {
   completeNewNote,
   finishedMockedNotesData,
   mockUpdatedWithDuplicatedNoteData
-} from './CooperationNotes.spec.constants'
+} from './CooperationNotes.constants'
 import * as useQuery from '~/hooks/use-query'
 import { getFullUrl } from '~/utils/get-full-url'
 
@@ -58,12 +58,12 @@ const appMain = {
   appMain: { userRole: 'tutor', userId: mockNotesData[0].author._id }
 }
 
-const getCooperation = `${URLs.cooperations.getById.replace(':id', cooperationId)}`
-const getNotesUrl = `${getCooperation}${URLs.notes.get}`
-const createNoteUrl = `${getCooperation}${URLs.notes.create}`
-const updateNoteUrl = `${getCooperation}${URLs.notes.update.replace(':noteId', mockNotesData[0]._id)}`
-const deleteNoteUrl = `${getCooperation}${URLs.notes.delete.replace(':noteId', mockUpdatedNotesData[0]._id)}`
-const duplicateNoteUrl = `${getCooperation}${URLs.notes.create}`
+const getCooperationUrl = `${URLs.cooperations.getById.replace(':id', cooperationId)}`
+const getNotesUrl = `${getCooperationUrl}${URLs.notes.get}`
+const createNoteUrl = `${getCooperationUrl}${URLs.notes.create}`
+const updateNoteUrl = `${getCooperationUrl}${URLs.notes.update.replace(':id', mockNotesData[0]._id)}`
+const deleteNoteUrl = `${getCooperationUrl}${URLs.notes.delete.replace(':id', mockUpdatedNotesData[0]._id)}`
+const duplicateNoteUrl = `${getCooperationUrl}${URLs.notes.create}`
 
 const url = getFullUrl({
   parameters: { id: mockNotesData[0].author._id },

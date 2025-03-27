@@ -72,10 +72,10 @@ export const URLs = {
     delete: '/cooperations'
   },
   notes: {
-    get: '/notes',
-    create: '/notes',
-    update: '/notes/:noteId',
-    delete: '/notes/:noteId'
+    get: '/cooperations/:id/notes',
+    create: '/cooperations/:id/notes',
+    update: '/cooperations/:id/notes/:noteId',
+    delete: '/cooperations/:id/notes/:noteId'
   },
   chats: {
     get: '/chats',

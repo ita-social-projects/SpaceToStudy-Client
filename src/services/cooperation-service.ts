@@ -80,48 +80,46 @@ export const cooperationService = {
 }
 
 export const CooperationNotesService = {
-  getNotes: (cooperationId: string): Promise<AxiosResponse<NoteResponse[]>> => {
-    return axiosClient.get(
-      getFullUrl({
+  getNotes: (cooperationId: string) => {
+    return baseService.request<NoteResponse[]>({
+      method: 'GET',
+      url: getFullUrl({
         pathname: URLs.notes.get,
         parameters: { id: cooperationId }
       })
-    )
+    })
   },
-  createNote: (
-    cooperationId: string,
-    data?: CreateOrUpdateNoteParams
-  ): Promise<AxiosResponse<NoteResponse>> => {
-    return axiosClient.post(
-      getFullUrl({
+  createNote: (data: CreateOrUpdateNoteParams, cooperationId: string) => {
+    return baseService.request<NoteResponse>({
+      method: 'POST',
+      url: getFullUrl({
         pathname: URLs.notes.create,
         parameters: { id: cooperationId }
       }),
       data
-    )
+  })
   },
   updateNote: (
-    cooperationId: string = '',
-    noteId: string = '',
-    data?: CreateOrUpdateNoteParams
-  ): Promise<AxiosResponse<void>> => {
-    return axiosClient.patch(
-      getFullUrl({
+    cooperationId: string,
+    noteId: string,
+    data: CreateOrUpdateNoteParams
+  ) => {
+    return baseService.request<void>({
+      method: 'PATCH',
+      url: getFullUrl({
         pathname: URLs.notes.update,
         parameters: { id: cooperationId, noteId }
       }),
       data
-    )
+  })
   },
-  deleteNote: (
-    cooperationId: string,
-    noteId: string
-  ): Promise<AxiosResponse<void>> => {
-    return axiosClient.delete(
-      getFullUrl({
+  deleteNote: (cooperationId: string, noteId: string) => {
+    return baseService.request<void>({
+      method: 'DELETE',
+      url: getFullUrl({
         pathname: URLs.notes.delete,
         parameters: { id: cooperationId, noteId }
       })
-    )
+  })
   }
 }

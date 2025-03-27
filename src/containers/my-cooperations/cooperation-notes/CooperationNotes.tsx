@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
@@ -15,16 +15,20 @@ import { noteNotFoundError } from '~/containers/my-cooperations/cooperation-note
 
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.styles'
-import { CreateOrUpdateNoteParams, PositionEnum, NoteResponse } from '~/types'
+import {
+  type CreateOrUpdateNoteParams,
+  PositionEnum,
+  type NoteResponse
+} from '~/types'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import useQuery from '~/hooks/use-query'
 import useMutation from '~/hooks/use-mutation'
 
 type NoteAction = 'create' | 'delete' | 'update' | 'duplicate'
 
-const CooperationNotes = () => {
+const CooperationNotes: React.FC = () => {
   const { t } = useTranslation()
-  const { id = '' } = useParams()
+  const { id: cooperationId = '' } = useParams()
   const { openDialog } = useConfirm()
   const [open, setOpen] = useState<boolean>(false)
   const [editableItemId, setEditableItemId] = useState<string>('')
@@ -59,16 +63,16 @@ const CooperationNotes = () => {
     [handleAlert]
   )
 
-  const getNotes = () => {
-    return CooperationNotesService.getNotes(id)
-  }
+  const getNotes = useCallback(() => {
+    return CooperationNotesService.getNotes(cooperationId)
+  }, [cooperationId])
 
   const {
     data: notes,
     isLoading: isNotesLoading,
     error: getNotesError
   } = useQuery({
-    queryKey: ['notes', id],
+    queryKey: ['notes', cooperationId],
     queryFn: getNotes,
     options: {
       staleTime: Infinity
@@ -81,24 +85,30 @@ const CooperationNotes = () => {
     }
   }, [handleErrorAlert, getNotesError])
 
-  const createNote = (data: CreateOrUpdateNoteParams) => {
-    return CooperationNotesService.createNote(data, id)
-  }
+  const createNote = useCallback(
+    (data: CreateOrUpdateNoteParams) => {
+      return CooperationNotesService.createNote(data, cooperationId)
+    },
+    [cooperationId]
+  )
 
   const { mutate: addNewNote, isPending: createLoading } = useMutation({
     mutationFn: createNote,
-    queryKey: ['notes'],
+    queryKey: ['notes', cooperationId],
     onError: handleErrorAlert,
     onSuccess: () => onSuccessResponse('create')
   })
 
-  const deleteSelectedNote = (noteId: string) => {
-    return CooperationNotesService.deleteNote(id, noteId)
-  }
+  const deleteSelectedNote = useCallback(
+    (noteId: string) => {
+      return CooperationNotesService.deleteNote(cooperationId, noteId)
+    },
+    [cooperationId]
+  )
 
   const { mutate: deleteNote } = useMutation({
     mutationFn: deleteSelectedNote,
-    queryKey: ['notes'],
+    queryKey: ['notes', cooperationId],
     onError: handleErrorAlert,
     onSuccess: () => onSuccessResponse('delete')
   })
@@ -119,27 +129,29 @@ const CooperationNotes = () => {
     noteId: string
     data: CreateOrUpdateNoteParams
   }) => {
-    return CooperationNotesService.updateNote(id, params.noteId, params.data)
+    return CooperationNotesService.updateNote(
+      cooperationId,
+      params.noteId,
+      params.data
+    )
   }
 
   const { mutate: updateNote, isPending: updateNoteLoading } = useMutation({
     mutationFn: updateSelectedNote,
-    queryKey: ['notes'],
+    queryKey: ['notes', cooperationId],
     onError: handleErrorAlert,
     onSuccess: () => onSuccessResponse('update')
   })
 
-  const duplicateNote = async (noteId: string) => {
+  const duplicateNote = (noteId: string) => {
     const note = notes?.find((item) => item._id === noteId)
-    if (!note) {
-      return
-    }
-    return CooperationNotesService.createNote(note, id)
+
+    return CooperationNotesService.createNote(note!, cooperationId)
   }
 
   const { mutate: duplicateItem } = useMutation({
     mutationFn: duplicateNote,
-    queryKey: ['notes'],
+    queryKey: ['notes', cooperationId],
     onSuccess: () => onSuccessResponse('duplicate'),
     onError: handleErrorAlert
   })
@@ -153,7 +165,7 @@ const CooperationNotes = () => {
   const onCloseNote = () => setOpen(false)
   const onAddNoteOpen = () => setOpen(true)
 
-  const NotesList = notes?.map((item: NoteResponse) =>
+  const notesList = notes?.map((item: NoteResponse) =>
     editableItemId === item._id ? (
       <CreateOrEditNote
         key={item._id}
@@ -165,7 +177,7 @@ const CooperationNotes = () => {
     ) : (
       <NoteView
         deleteItem={onDeleteNote}
-        duplicateItem={(itemId: string) => duplicateItem(itemId)}
+        duplicateItem={duplicateItem}
         key={item._id}
         note={item}
         updateItem={setEditableItemId}
@@ -188,7 +200,7 @@ const CooperationNotes = () => {
             onSubmitLoading={createLoading}
           />
         )}
-        {isNotesLoading ? <Loader pageLoad /> : NotesList}
+        {isNotesLoading || !notes ? <Loader pageLoad /> : notesList}
       </Box>
     </Box>
   )
