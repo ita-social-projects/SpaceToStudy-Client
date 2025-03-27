@@ -942,7 +942,7 @@ describe('editProfileSlice test', () => {
 
     mockAxiosClient
       .onPatch(createUrlPath(URLs.users.update, userId), params)
-      .reply(200, { firstName: 'new firstname' })
+      .reply(200)
 
     await store.dispatch(updateUser({ userId, params }))
 
@@ -956,40 +956,23 @@ describe('editProfileSlice test', () => {
   it('updateUser should handle rejected state', async () => {
     const userId = '123'
     const params = { firstName: 'new firstname' }
-    //const error = new Error('Failed to update user')
     const errorCode = 'USER_NOT_FOUND'
-    //error.code = errorCode
-    // const expectedState = createState({
-    //   loading: LoadingStatusEnum.Rejected,
-    //   error: errorCode
-    // })
-
-    //const mockError = { code: 'USER_NOT_FOUND' }
-
-    const mockError = {
-      code: 'USER_NOT_FOUND',
-      message: 'User not found',
-      status: 404
-    }
-
-    mockAxiosClient
-      .onPatch(createUrlPath(URLs.users.update, userId), params)
-      .reply(404, mockError)
 
     const expectedState = createState({
       loading: LoadingStatusEnum.Rejected,
       error: errorCode
     })
 
+    mockAxiosClient
+      .onPatch(createUrlPath(URLs.users.update, userId), params)
+      .reply(404, { code: errorCode, message: 'User has not been found' })
+
     await store.dispatch(updateUser({ userId, params }))
 
     const actualState = store.getState().editProfile
-    console.log(actualState)
-
-    console.log('state:', store.getState())
 
     expect(actualState).toEqual(expectedState)
     expect(actualState.loading).toEqual(LoadingStatusEnum.Rejected)
-    //expect(actualState.error).toEqual(errorCode)
+    expect(actualState.error).toEqual(errorCode)
   })
 })
