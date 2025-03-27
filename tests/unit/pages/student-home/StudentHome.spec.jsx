@@ -18,10 +18,10 @@ const secondLoginState = {
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 
 describe('StudentsHome component', () => {
-  beforeAll( () => {
+  beforeAll(() => {
     mockAxiosClient
-            .onGet(new RegExp(URLs.users.getUserById.replace(':id', userId)))
-            .reply(200, userDataMock)
+      .onGet(new RegExp(URLs.users.getUserById.replace(':id', userId)))
+      .reply(200, userDataMock)
   })
   it('should render modal when logging in for the first time', async () => {
     renderWithProviders(<StudentHome />, {
