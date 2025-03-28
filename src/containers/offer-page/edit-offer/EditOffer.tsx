@@ -13,7 +13,7 @@ interface EditOfferProps {
 
 const EditOffer: FC<EditOfferProps> = ({ offer, closeDrawer }) => {
   const updateOffer = useCallback(
-    async (updateData: CreateOrUpdateOfferData): Promise<Offer | null> => {
+    async (updateData: CreateOrUpdateOfferData) => {
       if (!offer) return null
 
       await OfferService.updateOfferWithBaseService(offer._id, {
