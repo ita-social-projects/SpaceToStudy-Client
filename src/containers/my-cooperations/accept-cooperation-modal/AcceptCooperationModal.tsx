@@ -22,15 +22,12 @@ import {
   ButtonTypeEnum,
   ComponentEnum,
   type Cooperation,
-  type ErrorResponse,
   StatusEnum,
   type UpdateCooperationsParams
 } from '~/types'
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperation.styles'
-import { useAppDispatch } from '~/hooks/use-redux'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
@@ -43,7 +40,7 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
   const { isDesktop } = useBreakpoints()
   const { closeModal } = useModalContext()
   const { checkConfirmation } = useConfirm()
-  const dispatch = useAppDispatch()
+  const { handleAlert, handleErrorAlert } = useSnackbarAlert()
   const [minPrice, maxPrice] = minMaxPrice(cooperation.offer.price, 0.25)
 
   const needAction = cooperation.user.role !== cooperation.needAction.role
@@ -67,22 +64,12 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
   )
 
   const onResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: 'cooperationsPage.acceptModal.successMessage'
-      })
-    )
-    closeModal()
-  }
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: 'cooperationsPage.acceptModal.successMessage'
+    })
 
-  const onResponseError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
+    closeModal()
   }
 
   const { isPending: isUpdateCooperationPending, mutate: updateCooperation } =
@@ -90,13 +77,13 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
       mutationFn: handleUpdateCooperation,
       queryKey: ['cooperations'],
       onSuccess: onResponse,
-      onError: onResponseError
+      onError: handleErrorAlert
     })
 
   const { isPending: updateLoading, mutate: updateOffer } = useMutation({
     mutationFn: handleUpdateOffer,
     queryKey: ['cooperations'],
-    onError: onResponseError
+    onError: handleErrorAlert
   })
 
   const handleAcceptCooperation = useCallback(async () => {
