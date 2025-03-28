@@ -83,9 +83,9 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
 
     closeDrawer()
 
-    if (hash == '#offer' && updateOffer) {
+    if (hash == '#offer') {
       navigate(`${authRoutes.myProfile.path}#complete`)
-      updateOffer(true)
+      updateOffer!(true)
     } else {
       navigate(
         createUrlPath(
