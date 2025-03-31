@@ -45,7 +45,7 @@ export const userService = {
     })
   },
   updateUser: (userId: string, params: UpdateUserParams) => {
-    return baseService.request<null>({
+    return baseService.request<void>({
       method: 'PATCH',
       url: getFullUrl({
         pathname: `${URLs.users.update}/${userId}`
