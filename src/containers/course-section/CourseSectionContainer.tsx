@@ -140,26 +140,33 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
     [sectionData, resourceEventHandler]
   )
 
-  const { mutate: handleDeleteResource } = useMutation<
-    void,
-    Error,
-    { resourceId: string; resource: CourseResource }
-  >({
-    mutationFn: async ({ resourceId, resource }) => {
+  const handleResourceDeletion = useCallback(
+    ({
+      resourceId,
+      resource
+    }: {
+      resourceId: string
+      resource: CourseResource
+    }) => {
       switch (resource.resourceType) {
-        case ResourcesTypesEnum.Lesson: {
+        case ResourcesTypesEnum.Lesson:
           return ResourceService.deleteLesson(resourceId)
-        }
 
-        case ResourcesTypesEnum.Quiz: {
+        case ResourcesTypesEnum.Quiz:
           return ResourceService.deleteQuiz(resourceId)
-        }
 
-        case ResourcesTypesEnum.Attachment: {
+        case ResourcesTypesEnum.Attachment:
           return ResourceService.deleteAttachment(resourceId)
-        }
+
+        default:
+          throw new Error('Unsupported resource type')
       }
-    }
+    },
+    []
+  )
+
+  const { mutate: handleDeleteResource } = useMutation({
+    mutationFn: handleResourceDeletion
   })
 
   const deleteResource = (resource: CourseResource) => {

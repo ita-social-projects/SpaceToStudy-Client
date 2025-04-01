@@ -35,7 +35,7 @@ import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-resources/categories-container/CategoriesContainer.style'
 
-const CategoriesContainer = () => {
+const CategoriesContainer: React.FC = () => {
   const { t } = useTranslation()
   const searchTitle = useRef<string>('')
   const sortOptions = useSort({ initialSort })

@@ -28,7 +28,7 @@ import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
 import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
 
-const QuizzesContainer = () => {
+const QuizzesContainer: React.FC = () => {
   const navigate = useNavigate()
   const { page, handleChangePage } = usePagination()
   const { handleSuccessAlert, handleErrorAlert } = useSnackbarAlert()

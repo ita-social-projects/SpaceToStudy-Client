@@ -27,7 +27,7 @@ import { useModalContext } from '~/context/modal-context'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import { getFullUrl } from '~/utils/get-full-url'
 
-const LessonsContainer = () => {
+const LessonsContainer: React.FC = () => {
   const navigate = useNavigate()
   const { openModal } = useModalContext()
   const { page, handleChangePage } = usePagination()
