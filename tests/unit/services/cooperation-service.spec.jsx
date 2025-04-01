@@ -23,7 +23,7 @@ const updateResourceStatus = {
 
 const noteData = {
   isPrivate: false,
-  text: 'This is  Note'
+  text: 'This is Note'
 }
 
 describe('Cooperation Service tests', () => {
@@ -33,7 +33,7 @@ describe('Cooperation Service tests', () => {
   })
 
   it('should create new cooperation', async () => {
-    mockAxiosClient.onPost(new RegExp(URLs.cooperations.create)).reply(200)
+    mockAxiosClient.onPost(URLs.cooperations.create).reply(200)
 
     await cooperationService.createCooperation(creationData)
 
@@ -46,11 +46,9 @@ describe('Cooperation Service tests', () => {
   it('should update resource completion status', async () => {
     mockAxiosClient
       .onPatch(
-        new RegExp(
-          URLs.cooperations.updateStatusById
-            .replace(':id', id)
-            .replace(':resourceId', lessonId)
-        )
+        URLs.cooperations.updateStatusById
+          .replace(':id', id)
+          .replace(':resourceId', lessonId)
       )
       .reply(200)
 
@@ -64,7 +62,9 @@ describe('Cooperation Service tests', () => {
         .replace(':resourceId', lessonId)
     )
     expect(mockAxiosClient.history.patch[0].data).toEqual(
-      JSON.stringify(updateResourceStatus)
+      JSON.stringify({
+        completionStatus: updateResourceStatus.completionStatus
+      })
     )
   })
 })

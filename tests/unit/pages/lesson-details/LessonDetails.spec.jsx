@@ -86,7 +86,7 @@ describe('LessonDetails', () => {
     renderWithProviders(<LessonDetails />, { preloadedState: mockState })
   })
 
-  it('should render mark button when userRole is student', async () => {
+  it('should render mark button when userRole is student', () => {
     renderWithProviders(<LessonDetails />, {
       preloadedState: mockStudentState
     })
@@ -99,7 +99,7 @@ describe('LessonDetails', () => {
     expect(markBtn).toBeInTheDocument()
   })
 
-  it('mark button should be disabled after click', async () => {
+  it('mark button should be disabled after click', () => {
     renderWithProviders(<LessonDetails />, {
       preloadedState: mockStudentState
     })

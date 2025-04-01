@@ -15,11 +15,12 @@ import Accordions from '~/components/accordion/Accordions'
 import useAccordion from '~/hooks/use-accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import Button from '~scss-components/button/Button'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { useModalContext } from '~/context/modal-context'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import { cooperationService } from '~/services/cooperation-service'
 import useMutation from '~/hooks/use-mutation'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -29,9 +30,12 @@ import {
   TypographyVariantEnum,
   UserRoleEnum
 } from '~/types'
-import { createUrlPath } from '~/utils/helper-functions'
+import { ResponseError } from '~/exceptions'
+import { snackbarVariants } from '~/constants'
+import { getErrorKey } from '~/utils/get-error-key'
+import { getFullUrl } from '~/utils/get-full-url'
 
-const LessonDetails = () => {
+const LessonDetails: React.FC = () => {
   const [completionStatus, setCompletionStatus] = useState<
     CompletionStatusEnum | undefined
   >(CompletionStatusEnum.Completed)
@@ -45,6 +49,7 @@ const LessonDetails = () => {
     multiple: true
   })
   const isStudent = userRole === UserRoleEnum.Student
+  const dispatch = useAppDispatch()
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -79,7 +84,12 @@ const LessonDetails = () => {
         <ChangeResourceConfirmModal
           onConfirm={() =>
             navigate(
-              createUrlPath(authRoutes.myResources.editLesson.path, lessonId)
+              getFullUrl({
+                pathname: authRoutes.myResources.editLesson.route,
+                parameters: {
+                  id: lessonId
+                }
+              })
             )
           }
           resourceId={lessonId}
@@ -101,20 +111,41 @@ const LessonDetails = () => {
   useEffect(() => {
     if (!cooperation?.sections) return
 
-    cooperation?.sections?.some((section) => {
+    cooperation.sections?.forEach((section) => {
       const resource = section.resources?.find(
         (resource) => resource.resource._id === lessonId
       )
 
       if (resource) {
         setCompletionStatus(resource.completionStatus)
-        return true
       }
     })
   }, [cooperation, lessonId, setCompletionStatus])
 
+  const handleResponseError = useCallback(
+    (error: ResponseError) => {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: getErrorKey(error)
+        })
+      )
+    },
+    [dispatch]
+  )
+
+  const handleResponse = () => {
+    setCompletionStatus(CompletionStatusEnum.Completed)
+  }
+
+  const { mutate: updateLessonStatus } = useMutation({
+    mutationFn: cooperationService.updateResourceCompletionStatus,
+    onSuccess: handleResponse,
+    onError: handleResponseError
+  })
+
   const handleUpdateLessonStatus = useCallback(() => {
-    return cooperationService.updateResourceCompletionStatus({
+    updateLessonStatus({
       id,
       resourceId: lessonId,
       completionStatus:
@@ -122,16 +153,7 @@ const LessonDetails = () => {
           ? CompletionStatusEnum.Completed
           : completionStatus
     })
-  }, [id, lessonId, completionStatus])
-
-  const handleResponse = () => {
-    setCompletionStatus(CompletionStatusEnum.Completed)
-  }
-
-  const { mutate: updateLessonStatus } = useMutation({
-    mutationFn: handleUpdateLessonStatus,
-    onSuccess: handleResponse
-  })
+  }, [id, lessonId, completionStatus, updateLessonStatus])
 
   const attachmentsList = data.attachments?.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachment}>
@@ -196,7 +218,7 @@ const LessonDetails = () => {
         {isStudent && (
           <Button
             disabled={completionStatus === CompletionStatusEnum.Completed}
-            onClick={() => updateLessonStatus()}
+            onClick={handleUpdateLessonStatus}
             sx={[styles.button, styles.bottomButton]}
           >
             {t('cooperationDetailsPage.markAsProcessedBtn')}

@@ -64,15 +64,17 @@ export const cooperationService = {
       })
     })
   },
-  updateResourceCompletionStatus: async (
-    data: UpdateResourceCompletionStatusParams
-  ) => {
+  updateResourceCompletionStatus: ({
+    completionStatus,
+    id,
+    resourceId
+  }: UpdateResourceCompletionStatusParams) => {
     return baseService.request<void>({
-      data,
+      data: { completionStatus },
       method: 'PATCH',
       url: getFullUrl({
         pathname: URLs.cooperations.updateStatusById,
-        parameters: { id: data.id, resourceId: data.resourceId }
+        parameters: { id, resourceId }
       })
     })
   }
