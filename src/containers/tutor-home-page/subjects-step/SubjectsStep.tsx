@@ -19,7 +19,7 @@ import { subjectService } from '~/services/subject-service'
 import { CategoryNameInterface, SubjectNameInterface } from '~/types'
 
 interface SubjectsStepProps {
-  btnsBox: JSX.Element
+  btnsBox?: JSX.Element
 }
 
 interface SubjectsType {

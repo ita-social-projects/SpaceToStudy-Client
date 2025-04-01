@@ -29,10 +29,10 @@ const UserStepsWrapper: React.FC<UserStepsWrapperProps> = ({ userRole }) => {
   }, [dispatch])
 
   const childrenArr = [
-    <GeneralInfoStep key='1' />,
-    <SubjectsStep key='2' />,
-    <LanguageStep key='3' />,
-    <AddPhotoStep key='4' />
+    <GeneralInfoStep btnsBox={undefined} key='1' />,
+    <SubjectsStep btnsBox={undefined} key='2' />,
+    <LanguageStep btnsBox={undefined} key='3' />,
+    <AddPhotoStep btnsBox={undefined} key='4' />
   ]
 
   const stepLabels = userRole === student ? studentStepLabels : tutorStepLabels
