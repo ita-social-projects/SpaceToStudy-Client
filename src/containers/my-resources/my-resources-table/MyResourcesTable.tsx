@@ -1,9 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
 import { PaginationProps } from '@mui/material'
 
-import { useAppDispatch } from '~/hooks/use-redux'
-import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
 import { useModalContext } from '~/context/modal-context'
 import AppPagination from '~/components/app-pagination/AppPagination'
@@ -11,92 +8,57 @@ import EnhancedTable, {
   EnhancedTableProps
 } from '~/components/enhanced-table/EnhancedTable'
 
-import { snackbarVariants } from '~/constants'
 import {
-  ErrorResponse,
-  TableItem,
-  ResourcesTableData,
-  TableRowAction,
+  type TableItem,
+  type TableRowAction,
+  type ItemsWithCount,
   ResourcesTabsEnum
 } from '~/types'
 import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 interface MyResourcesTableInterface<T>
   extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
-  resource: ResourcesTabsEnum
+  resourceType: ResourcesTabsEnum
   itemsPerPage: number
-  data: ResourcesTableData<T>
+  resourceItems: ItemsWithCount<T>
   actions: {
     onEdit: (id: string) => void
     onDuplicate?: (id: string) => void
+    onDelete: (id: string) => void
   }
-  services: { deleteService: (id?: string) => Promise<AxiosResponse> }
   pagination: PaginationProps
 }
 
 const MyResourcesTable = <T extends TableItem>({
-  resource,
+  resourceType,
   itemsPerPage,
-  data,
+  resourceItems,
   actions,
-  services,
   pagination,
   ...props
 }: MyResourcesTableInterface<T>) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const { openDialog } = useConfirm()
   const { openModal } = useModalContext()
 
   const { page, onChange } = pagination
-  const { response, getData } = data
-  const { onEdit, onDuplicate } = actions
+  const { onEdit, onDuplicate, onDelete } = actions
 
-  const onDeleteError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
-
-  const onDeleteResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: `myResourcesPage.${resource}.successDeletion`
-      })
-    )
-  }
-
-  const { error, fetchData: deleteItem } = useAxios({
-    service: services.deleteService,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError: onDeleteError,
-    onResponse: onDeleteResponse
-  })
-
-  const handleDelete = async (id: string, isConfirmed: boolean) => {
+  const handleDelete = (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
-      await deleteItem(id)
-      if (!error) await getData()
+      onDelete(id)
     }
   }
 
-  const onDelete = (id: string) => {
-    const currentResource = response.items.find((item) => item._id === id)
+  const handleConfirmDelete = (id: string) => {
+    const currentResource = resourceItems.items.find((item) => item._id === id)
 
     const handleConfirm = () => {
       openDialog({
         message: 'myResourcesPage.confirmDeletionMessage',
-        sendConfirm: (isConfirmed: boolean) =>
-          void handleDelete(id, isConfirmed),
-        title: `myResourcesPage.${resource}.confirmDeletionTitle`
+        sendConfirm: (isConfirmed: boolean) => handleDelete(id, isConfirmed),
+        title: `myResourcesPage.${resourceType}.confirmDeletionTitle`
       })
     }
 
@@ -114,14 +76,14 @@ const MyResourcesTable = <T extends TableItem>({
   const rowActions: TableRowAction[] = [
     {
       label:
-        resource === ResourcesTabsEnum.Categories
+        resourceType === ResourcesTabsEnum.Categories
           ? t('common.rename')
           : t('common.edit'),
       func: onEdit
     },
     {
       label: t('common.delete'),
-      func: onDelete
+      func: handleConfirmDelete
     },
     onDuplicate && {
       label: t('common.duplicate'),
@@ -132,8 +94,8 @@ const MyResourcesTable = <T extends TableItem>({
   return (
     <>
       <EnhancedTable<T>
-        data={{ items: response.items }}
-        emptyTableKey={`myResourcesPage.${resource}.emptyItems`}
+        data={{ items: resourceItems.items }}
+        emptyTableKey={`myResourcesPage.${resourceType}.emptyItems`}
         rowActions={rowActions}
         sx={roundedBorderTable}
         {...props}
@@ -141,7 +103,7 @@ const MyResourcesTable = <T extends TableItem>({
       <AppPagination
         onChange={onChange}
         page={page}
-        pageCount={Math.ceil(response.count / itemsPerPage)}
+        pageCount={Math.ceil(resourceItems.count / itemsPerPage)}
       />
     </>
   )

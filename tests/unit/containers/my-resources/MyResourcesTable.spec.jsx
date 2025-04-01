@@ -47,17 +47,14 @@ const responseItemsMock = Array(10)
   }))
 
 const props = {
-  resource: 'lessons',
+  resourceType: 'lessons',
   pagination: {
     page: 1,
     onChange: vi.fn()
   },
-  data: {
-    response: {
-      items: responseItemsMock,
-      count: 10
-    },
-    getData: vi.fn()
+  resourceItems: {
+    items: responseItemsMock,
+    count: 10
   },
   actions: {
     onEdit: vi.fn(),
