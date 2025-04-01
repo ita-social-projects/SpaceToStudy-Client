@@ -79,8 +79,8 @@ const FilterBarMenu = forwardRef<HTMLDivElement, FilterBarMenuProps>(
         {isLaptopAndAbove ? (
           <AppContentSwitcher
             active={isStudent}
-            checked={isStudent}
             data-testid='switch'
+            defaultChecked={isStudent}
             onChange={onToggleTutorOffers}
             switchOptions={translatedSwitcherOptions}
             typographyVariant='button'
