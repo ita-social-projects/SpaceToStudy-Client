@@ -14,6 +14,7 @@ interface SwitcherProps {
   switchOptions: SwitchOptions
   typographyVariant: TypographyProps['variant']
   styles?: SxProps
+  defaultChecked?: boolean
 }
 
 const AppContentSwitcher: FC<SwitcherProps> = ({
@@ -21,7 +22,8 @@ const AppContentSwitcher: FC<SwitcherProps> = ({
   onChange,
   switchOptions,
   typographyVariant,
-  styles
+  styles,
+  defaultChecked
 }) => {
   const renderBlock = (options: SwitchContent | undefined, active: boolean) =>
     options && (
@@ -38,7 +40,11 @@ const AppContentSwitcher: FC<SwitcherProps> = ({
   return (
     <Stack sx={{ ...defaultStyles.stack, ...styles } as SxProps}>
       {renderBlock(switchOptions.left, active)}
-      <Switch data-testid='switch' onChange={onChange} />
+      <Switch
+        data-testid='switch'
+        defaultChecked={defaultChecked}
+        onChange={onChange}
+      />
       {renderBlock(switchOptions.right, !active)}
     </Stack>
   )
