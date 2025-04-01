@@ -143,10 +143,7 @@ const FindOffers = () => {
 
     if (!items.length) {
       return (
-        <NotFoundResults
-          data
-          description={t('findOffers.notFound.description')}
-        />
+        <NotFoundResults description={t('findOffers.notFound.description')} />
       )
     }
 
