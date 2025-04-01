@@ -30,7 +30,7 @@ const RadioButtonInputs = <T, U>({
       checked={value === radio.value}
       control={<RadioButton label='' />}
       key={String(radio.value)}
-      label={radio.title}
+      label={String(radio.title)}
       sx={styles.radioItems}
       value={radio.value}
     />
