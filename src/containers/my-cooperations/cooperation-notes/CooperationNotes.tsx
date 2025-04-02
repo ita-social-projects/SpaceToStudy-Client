@@ -146,7 +146,11 @@ const CooperationNotes: React.FC = () => {
   const duplicateNote = (noteId: string) => {
     const note = notes?.find((item) => item._id === noteId)
 
-    return CooperationNotesService.createNote(note!, cooperationId)
+    if (!note) {
+      throw new Error('Note with specified ID was not found')
+    }
+
+    return CooperationNotesService.createNote(note, cooperationId)
   }
 
   const { mutate: duplicateItem } = useMutation({
