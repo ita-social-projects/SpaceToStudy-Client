@@ -23,6 +23,7 @@ import {
   UserRoleEnum
 } from '~/types'
 import { userService } from '~/services/user-service'
+import { ResponseError } from '~/exceptions'
 
 export interface EditProfileState {
   firstName: string
@@ -154,10 +155,12 @@ export const updateUser = createAsyncThunk(
   ) => {
     try {
       const response = await userService.updateUser(userId, params)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return response.data
     } catch (e) {
-      const error = e as AxiosError<ErrorResponse>
-      return rejectWithValue(error.response?.data.code)
+      if (e instanceof ResponseError) {
+        return rejectWithValue(e.code)
+      }
     }
   }
 )

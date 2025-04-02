@@ -4,7 +4,7 @@ import { URLs } from '~/constants/request'
 import { createUrlPath } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
 import { baseService } from './base-service'
-import {
+import type {
   GetUsersParams,
   UpdateUserParams,
   UserResponse,
@@ -27,7 +27,6 @@ export const userService = {
       createUrlPath(URLs.users.get, userId, { role: userRole, isEdit })
     )
   },
-
   getUserByIdWithBaseService: (
     id: string,
     userRole: UserRole,
@@ -45,12 +44,14 @@ export const userService = {
       })
     })
   },
-
-  updateUser: (
-    userId: string,
-    params: UpdateUserParams
-  ): Promise<AxiosResponse<null>> => {
-    return axiosClient.patch(createUrlPath(URLs.users.update, userId), params)
+  updateUser: (userId: string, params: UpdateUserParams) => {
+    return baseService.request<void>({
+      method: 'PATCH',
+      url: getFullUrl({
+        pathname: `${URLs.users.update}/${userId}`
+      }),
+      data: params
+    })
   },
   deleteUser: (userId: string): Promise<AxiosResponse<null>> => {
     return axiosClient.delete(createUrlPath(URLs.users.get, userId))
@@ -58,7 +59,6 @@ export const userService = {
   deleteUsers: (userIds: string[]): Promise<AxiosResponse<null>> => {
     return axiosClient.post(URLs.users.delete, userIds)
   },
-
   deactivateUser: (userId: string) => {
     return baseService.request<null>({
       method: 'PATCH',
@@ -67,7 +67,6 @@ export const userService = {
       })
     })
   },
-
   activateUser: (userId: string) => {
     return baseService.request<null>({
       method: 'PATCH',
@@ -76,7 +75,6 @@ export const userService = {
       })
     })
   },
-
   toggleBookmark: (userId: string, offerId: string) => {
     return baseService.request<string[]>({
       method: 'PATCH',
@@ -86,7 +84,6 @@ export const userService = {
       })
     })
   },
-
   getBookmarkedOffers: async (
     userId: string,
     params?: GetOffersParams
