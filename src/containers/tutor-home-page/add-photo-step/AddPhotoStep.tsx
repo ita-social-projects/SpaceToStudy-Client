@@ -14,7 +14,7 @@ import { validationData } from '~/containers/tutor-home-page/add-photo-step/cons
 import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
 
 interface AddPhotoStepProps {
-  btnsBox: ReactNode
+  btnsBox?: ReactNode
 }
 
 const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
