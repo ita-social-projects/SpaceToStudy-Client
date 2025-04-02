@@ -71,7 +71,7 @@ const QuestionsContainer: React.FC = () => {
     mutationFn: ResourceService.deleteQuestion,
     onError: handleErrorAlert,
     onSuccess: () => {
-      handleSuccessAlert(`myResourcesPage.questions.successDeletion`)
+      handleSuccessAlert('myResourcesPage.questions.successDeletion')
     },
     queryKey: ['questions']
   })

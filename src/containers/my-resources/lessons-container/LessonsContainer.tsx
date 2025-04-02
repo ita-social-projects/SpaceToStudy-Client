@@ -59,7 +59,7 @@ const LessonsContainer: React.FC = () => {
     mutationFn: ResourceService.deleteLesson,
     onError: handleErrorAlert,
     onSuccess: () => {
-      handleSuccessAlert(`myResourcesPage.lessons.successDeletion`)
+      handleSuccessAlert('myResourcesPage.lessons.successDeletion')
     },
     queryKey: ['lessons']
   })

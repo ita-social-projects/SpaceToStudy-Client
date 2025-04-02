@@ -63,7 +63,7 @@ const CategoriesContainer: React.FC = () => {
     mutationFn: ResourceService.deleteResourceCategory,
     onError: handleErrorAlert,
     onSuccess: () => {
-      handleSuccessAlert(`myResourcesPage.categories.successDeletion`)
+      handleSuccessAlert('myResourcesPage.categories.successDeletion')
     },
     queryKey: ['categories']
   })
