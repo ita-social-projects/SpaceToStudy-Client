@@ -12,7 +12,7 @@ import img from '~/assets/img/tutor-home-page/become-tutor/languages.svg'
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
 
 interface LanguageStepProps {
-  btnsBox: ReactNode
+  btnsBox?: ReactNode
 }
 
 const LanguageStep: FC<LanguageStepProps> = ({ btnsBox }) => {

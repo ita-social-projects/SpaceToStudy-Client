@@ -19,7 +19,7 @@ import { userService } from '~/services/user-service'
 import { type UserGeneralInfo, type UserRole } from '~/types'
 
 interface GeneralInfoStepProps {
-  btnsBox: React.ReactNode
+  btnsBox?: React.ReactNode
 }
 
 type UserName = { firstName: string; lastName: string }
