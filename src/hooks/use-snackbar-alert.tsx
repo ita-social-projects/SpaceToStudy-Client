@@ -15,15 +15,24 @@ const useSnackbarAlert = () => {
   const handleAlert = useCallback(
     ({
       message,
-      severity
+      severity,
+      duration,
+      isExtended,
+      route
     }: {
       message: SnackbarMessage
       severity: keyof typeof snackbarVariants
+      duration?: number
+      isExtended?: boolean
+      route?: string
     }) => {
       dispatch(
         openAlert({
           severity: snackbarVariants[severity],
-          message: message
+          message: message,
+          ...(duration !== undefined && { duration }),
+          ...(isExtended !== undefined && { isExtended }),
+          ...(route !== undefined && { route })
         })
       )
     },

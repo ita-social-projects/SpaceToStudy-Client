@@ -49,8 +49,13 @@ export const OfferService = {
     })
   },
 
-  createOffer: async (data: CreateOrUpdateOfferData): Promise<AxiosResponse> =>
-    await axiosClient.post(URLs.offers.create, data),
+  createOffer: (data: CreateOrUpdateOfferData) => {
+    return baseService.request<Offer>({
+      method: 'POST',
+      url: URLs.offers.create,
+      data
+    })
+  },
 
   updateOffer: async (
     id: string,

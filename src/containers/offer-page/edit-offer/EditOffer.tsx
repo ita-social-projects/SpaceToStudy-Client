@@ -13,12 +13,17 @@ interface EditOfferProps {
 
 const EditOffer: FC<EditOfferProps> = ({ offer, closeDrawer }) => {
   const updateOffer = useCallback(
-    (updateData: CreateOrUpdateOfferData) =>
-      OfferService.updateOffer(offer?._id ?? '', {
+    async (updateData: CreateOrUpdateOfferData) => {
+      if (!offer) return null
+
+      await OfferService.updateOfferWithBaseService(offer._id, {
         ...updateData,
         FAQ: findFullObjects(updateData.FAQ)
-      }),
-    [offer?._id]
+      })
+
+      return offer
+    },
+    [offer]
   )
 
   return (
