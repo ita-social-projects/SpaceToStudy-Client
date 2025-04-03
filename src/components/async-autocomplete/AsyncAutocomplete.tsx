@@ -83,10 +83,13 @@ const AsyncAutocomplete = <
 
   const getOptionLabel = useMemo(
     () =>
-      (option: TransformedResponse | AutocompleteFreeSoloValueMapping<F>) =>
-        typeof option === 'object' && option !== null
-          ? String((labelField ? option[labelField] : option) || '')
-          : '',
+      (option: TransformedResponse | AutocompleteFreeSoloValueMapping<F>) => {
+        if (typeof option === 'object' && option !== null) {
+          const optionValue = labelField ? option[labelField] : option
+          return String(optionValue ?? '')
+        }
+        return ''
+      },
     [labelField]
   )
 
