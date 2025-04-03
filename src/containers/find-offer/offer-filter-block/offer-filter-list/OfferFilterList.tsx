@@ -117,7 +117,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       {filterTitle(t('findOffers.filterTitles.rating'))}
       <RadioButtonInputs
         items={radioOptions}
-        onChange={handleFilterChange('rating')}
+        onChange={updateFilterByKey('rating')}
         value={Number(filters.rating)}
       />
       {!isLaptopAndAbove && (
