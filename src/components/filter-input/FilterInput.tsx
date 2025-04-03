@@ -7,7 +7,7 @@ import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
 interface FilterInputProps extends Omit<TextFieldProps, 'onChange'> {
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChange: (value: string) => void
   value?: string
 }
 
@@ -16,7 +16,7 @@ const FilterInput: FC<FilterInputProps> = ({ value, onChange, ...props }) => {
     const event = {
       target: { value: '' }
     } as React.ChangeEvent<HTMLInputElement>
-    onChange(event)
+    onChange(event.target.value)
   }
 
   const inputProps = {
@@ -36,7 +36,7 @@ const FilterInput: FC<FilterInputProps> = ({ value, onChange, ...props }) => {
   return (
     <AppTextField
       InputProps={inputProps}
-      onChange={onChange}
+      onChange={(event) => onChange(event.target.value)}
       size='small'
       value={value}
       {...props}

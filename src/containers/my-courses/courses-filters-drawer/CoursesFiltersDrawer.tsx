@@ -1,4 +1,4 @@
-import { FC, ReactNode, useCallback, SyntheticEvent, ChangeEvent } from 'react'
+import { FC, ReactNode, useCallback, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import FilterListIcon from '@mui/icons-material/FilterList'
@@ -81,12 +81,6 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
     onClose()
   }
 
-  const handleFilterChange =
-    <K extends keyof CourseFilters>(key: K) =>
-    (event: ChangeEvent<HTMLInputElement>) => {
-      updateFilterByKey(key)(event.target.value as CourseFilters[K])
-    }
-
   return (
     <AppDrawer anchor={PositionEnum.Left} onClose={onClose} open={isOpen}>
       <Box sx={styles.titleWithIcon}>
@@ -167,7 +161,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         {t('myCoursesPage.coursesFilter.search')}:
       </Typography>
       <FilterInput
-        onChange={handleFilterChange('title')}
+        onChange={updateFilterByKey('title')}
         placeholder={t('common.search')}
         value={filters.title}
       />
