@@ -1,4 +1,4 @@
-import { useCallback, useEffect, ChangeEvent } from 'react'
+import { useCallback, ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography, Box } from '@mui/material'
 
@@ -9,7 +9,8 @@ import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import AddCourseWithInput from '~/containers/my-courses/add-course-with-input/AddCourseWithInput'
 import MyCorsesCardsList from '~/containers/my-courses/my-courses-container/MyCorsesCardsList'
 
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import usePagination from '~/hooks/table/use-pagination'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
@@ -19,33 +20,22 @@ import { useFilterQuery } from '~/hooks/use-filter-query'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 import { countActiveCourseFilters } from '~/utils/count-active-filters'
 import { CourseService } from '~/services/course-service'
-import { useAppDispatch } from '~/hooks/use-redux'
-import {
-  Course,
-  ItemsWithCount,
-  ErrorResponse,
-  CourseForm,
-  GetCoursesParams
-} from '~/types'
+import { type CourseForm } from '~/types'
 import { initialSort } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
-import {
-  defaultResponse,
-  courseItemsLoadLimit
-} from '~/pages/my-courses/MyCourses.constants'
+import { courseItemsLoadLimit } from '~/pages/my-courses/MyCourses.constants'
 import { coursesDefaultFilters } from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal.constants'
-import { snackbarVariants } from '~/constants'
+import { defaultResponses, snackbarVariants } from '~/constants'
 
 import { styles } from '~/pages/my-courses/MyCourses.styles'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const MyCourses = () => {
   const { t } = useTranslation()
   const breakpoints = useBreakpoints()
   const { openDialog } = useConfirm()
-  const dispatch = useAppDispatch()
   const { sort, onRequestSort } = useSort({ initialSort })
   const itemsPerPage = getScreenBasedLimit(breakpoints, courseItemsLoadLimit)
+  const { handleAlert, handleErrorAlert } = useSnackbarAlert()
 
   const { filters, activeFilterCount, searchParams, filterQueryActions } =
     useFilterQuery({
@@ -53,119 +43,85 @@ const MyCourses = () => {
       countActiveFilters: countActiveCourseFilters
     })
 
-  const getCourses = useCallback(
-    (params?: GetCoursesParams) => CourseService.getCourses(params),
-    []
-  )
+  const getCourses = useCallback(() => {
+    return CourseService.getCourses({
+      ...filters,
+      limit: itemsPerPage,
+      skip: (Number(filters.page) - 1) * itemsPerPage,
+      sort
+    })
+  }, [filters, itemsPerPage, sort])
 
   const deleteCourse = useCallback(
     (id?: string) => CourseService.deleteCourse(id ?? ''),
     []
   )
 
-  const {
-    response: coursesResponse,
-    loading: coursesLoading,
-    fetchData
-  } = useAxios<ItemsWithCount<Course>, GetCoursesParams>({
-    service: getCourses,
-    defaultResponse,
-    fetchOnMount: false
+  const { data: courses, isLoading: coursesLoading } = useQuery({
+    queryKey: ['courses', filters, itemsPerPage, sort, searchParams.toString()],
+    queryFn: getCourses,
+    options: {
+      staleTime: Infinity
+    }
   })
-
-  const onResponseError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
 
   const onDeleteResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: `myCoursesPage.modalMessages.successDeletion`
-      })
-    )
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: `myCoursesPage.modalMessages.successDeletion`
+    })
   }
 
-  const { error, fetchData: deleteItem } = useAxios({
-    service: deleteCourse,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError,
-    onResponse: onDeleteResponse
+  const { mutate: deleteItem } = useMutation({
+    queryKey: ['courses'],
+    mutationFn: deleteCourse,
+    onError: handleErrorAlert,
+    onSuccess: onDeleteResponse
   })
 
-  const handleDelete = async (id: string, isConfirmed: boolean) => {
+  const handleDelete = (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
-      await deleteItem(id)
-      if (!error) await fetchData()
+      deleteItem(id)
     }
   }
 
   const onDelete = (id: string) => {
     openDialog({
       message: 'myCoursesPage.modalMessages.confirmDeletionMessage',
-      sendConfirm: (isConfirmed: boolean) => void handleDelete(id, isConfirmed),
+      sendConfirm: (isConfirmed: boolean) => handleDelete(id, isConfirmed),
       title: `myCoursesPage.modalMessages.confirmDeletionTitle`
     })
   }
 
   const duplicateCourse = useCallback(
-    (id?: string) => {
-      const item = coursesResponse.items.find(
+    (id: string) => {
+      const item = courses?.items.find(
         (element) => element._id === id
       ) as CourseForm
 
       return CourseService.addCourse(item)
     },
-    [coursesResponse.items]
+    [courses?.items]
   )
 
   const onDuplicateResponse = () => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: `myCoursesPage.modalMessages.successDuplication`
-      })
-    )
-  }
-
-  const { error: duplicationError, fetchData: duplicateItem } = useAxios({
-    service: duplicateCourse,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError,
-    onResponse: onDuplicateResponse
-  })
-
-  const handleDuplicate = async (itemId: string) => {
-    await duplicateItem(itemId)
-    if (!duplicationError) await fetchData()
-  }
-
-  const updateInfo = useCallback(() => {
-    void fetchData({
-      ...filters,
-      limit: itemsPerPage,
-      skip: (Number(filters.page) - 1) * itemsPerPage,
-      sort
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: `myCoursesPage.modalMessages.successDuplication`
     })
-  }, [fetchData, filters, itemsPerPage, sort])
+  }
 
-  const searchString = searchParams.toString()
-
-  useEffect(() => {
-    updateInfo()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData, searchString, sort])
+  const { mutate: duplicateItem } = useMutation({
+    queryKey: ['courses'],
+    mutationFn: duplicateCourse,
+    onError: handleErrorAlert,
+    onSuccess: onDuplicateResponse
+  })
 
   const defaultParams = { page: coursesDefaultFilters.page }
 
-  const { items: coursesItems, count: coursesCount } = coursesResponse
+  const { items: coursesItems, count: coursesCount } =
+    courses ?? defaultResponses.itemsWithCount
 
   const { pageCount } = usePagination({
     itemsCount: coursesCount,
@@ -182,7 +138,7 @@ const MyCourses = () => {
     <>
       <MyCorsesCardsList
         deleteItem={onDelete}
-        duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
+        duplicateItem={(itemId: string) => duplicateItem(itemId)}
         items={coursesItems}
       />
       <AppPagination
