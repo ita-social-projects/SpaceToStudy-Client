@@ -20,7 +20,10 @@ const mockCoursesData = {
 
 describe('tests for MyCourses page', () => {
   beforeEach(() => {
-    mockAxiosClient.onGet(URLs.courses.get).reply(200, mockCoursesData)
+    mockAxiosClient
+      .onGet(new RegExp(URLs.courses.get))
+      .reply(200, mockCoursesData)
+
     mockAxiosClient.onPost(URLs.courses.create).reply(200, null)
     renderWithProviders(<MyCourses />)
   })

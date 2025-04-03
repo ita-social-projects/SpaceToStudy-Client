@@ -59,21 +59,6 @@ describe('AddCourseTemplateModal test', () => {
     expect(searchInput.value).not.toBe(inputTestValue)
   })
 
-  it('should render not found and click on add new course button', async () => {
-    const searchInput = screen.getByPlaceholderText('common.search')
-
-    fireEvent.click(searchInput)
-    fireEvent.change(searchInput, { target: { value: inputTestValue } })
-
-    expect(searchInput.value).toBe(inputTestValue)
-
-    const button = await screen.findByText('myCoursesPage.buttonLabel +')
-
-    fireEvent.click(button)
-
-    expect(closeModalMock).toHaveBeenCalled()
-  })
-
   it('should render filters button and show additional filters on click', () => {
     const filtersBtn = screen.getByTestId('toggle-button')
 
@@ -111,6 +96,39 @@ describe('AddCourseTemplateModal test', () => {
     expect(closeModalMock).toHaveBeenCalled()
   })
 
+  it('should disable "Add" button when no course is selected', async () => {
+    const addBtn = await screen.findByRole('button', { name: 'common.add' })
+    expect(addBtn).toBeDisabled()
+  })
+})
+
+describe('AddCourseTemplateModal test with no results', () => {
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.courses.get))
+      .reply(200, { items: [], count: 0 })
+    mockAxiosClient
+      .onGet(new RegExp(URLs.users.getUserById.replace(':id', '')))
+      .reply(200, null)
+
+    renderWithProviders(<AddCourseTemplateModal closeModal={closeModalMock} />)
+  })
+
+  it('should render not found and click on add new course button', async () => {
+    const searchInput = screen.getByPlaceholderText('common.search')
+
+    fireEvent.click(searchInput)
+    fireEvent.change(searchInput, { target: { value: inputTestValue } })
+
+    expect(searchInput.value).toBe(inputTestValue)
+
+    const button = await screen.findByText('myCoursesPage.buttonLabel +')
+
+    fireEvent.click(button)
+
+    expect(closeModalMock).toHaveBeenCalled()
+  })
+
   it('should show "No results found" if search value does not match any course', async () => {
     const searchInput = screen.getByPlaceholderText('common.search')
 
@@ -120,9 +138,5 @@ describe('AddCourseTemplateModal test', () => {
       'myCoursesPage.notFound.largeDescription'
     )
     expect(noResults).toBeInTheDocument()
-  })
-  it('should disable "Add" button when no course is selected', async () => {
-    const addBtn = await screen.findByRole('button', { name: 'common.add' })
-    expect(addBtn).toBeDisabled()
   })
 })
