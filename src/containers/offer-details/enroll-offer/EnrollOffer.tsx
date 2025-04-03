@@ -72,13 +72,15 @@ const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
     onSuccess: handleResponse
   })
 
-  const validateAdditionalInfo = (additionalInfoValue: string) => {
-    if (additionalInfoValue.length === 0) {
+  const validateAdditionalInfo = (additionalInfoValue: string | undefined) => {
+    const validate = textField(30, 1000)
+
+    if (!additionalInfoValue) {
       delete data.additionalInfo
+      return
     }
-    if (additionalInfoValue.length < 30 && additionalInfoValue.length !== 0) {
-      return textField(30, 1000)
-    }
+
+    return validate(additionalInfoValue)
   }
 
   const validations = {
