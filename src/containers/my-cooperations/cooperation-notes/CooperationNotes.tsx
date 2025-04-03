@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
@@ -23,8 +23,7 @@ import {
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import useQuery from '~/hooks/use-query'
 import useMutation from '~/hooks/use-mutation'
-
-type NoteAction = 'create' | 'delete' | 'update' | 'duplicate'
+import { noteActionMap, NoteAction } from './constant'
 
 const CooperationNotes: React.FC = () => {
   const { t } = useTranslation()
@@ -36,23 +35,10 @@ const CooperationNotes: React.FC = () => {
 
   const onSuccessResponse = useCallback(
     (noteAction: NoteAction) => {
-      let responseMessage = ''
+      const responseMessage = noteActionMap[noteAction]
 
       if (noteAction === 'create') {
-        responseMessage = 'cooperationsPage.modalMessages.successCreation'
         setOpen(false)
-      }
-
-      if (noteAction === 'delete') {
-        responseMessage = 'cooperationsPage.modalMessages.successDeletion'
-      }
-
-      if (noteAction === 'update') {
-        responseMessage = 'cooperationsPage.modalMessages.successUpdating'
-      }
-
-      if (noteAction === 'duplicate') {
-        responseMessage = 'cooperationsPage.modalMessages.successDuplication'
       }
 
       handleAlert({
@@ -125,16 +111,16 @@ const CooperationNotes: React.FC = () => {
     })
   }
 
-  const updateSelectedNote = (params: {
-    noteId: string
-    data: CreateOrUpdateNoteParams
-  }) => {
-    return CooperationNotesService.updateNote(
-      cooperationId,
-      params.noteId,
-      params.data
-    )
-  }
+  const updateSelectedNote = useCallback(
+    (params: { noteId: string; data: CreateOrUpdateNoteParams }) => {
+      return CooperationNotesService.updateNote(
+        cooperationId,
+        params.noteId,
+        params.data
+      )
+    },
+    [cooperationId]
+  )
 
   const { mutate: updateNote, isPending: updateNoteLoading } = useMutation({
     mutationFn: updateSelectedNote,
@@ -143,15 +129,18 @@ const CooperationNotes: React.FC = () => {
     onSuccess: () => onSuccessResponse('update')
   })
 
-  const duplicateNote = (noteId: string) => {
-    const note = notes?.find((item) => item._id === noteId)
+  const duplicateNote = useCallback(
+    (noteId: string) => {
+      const note = notes?.find((item) => item._id === noteId)
 
-    if (!note) {
-      throw new Error('Note with specified ID was not found')
-    }
+      if (!note) {
+        throw new Error('Note with specified ID was not found')
+      }
 
-    return CooperationNotesService.createNote(note, cooperationId)
-  }
+      return CooperationNotesService.createNote(note, cooperationId)
+    },
+    [cooperationId, notes]
+  )
 
   const { mutate: duplicateItem } = useMutation({
     mutationFn: duplicateNote,

@@ -58,11 +58,14 @@ const appMain = {
   appMain: { userRole: 'tutor', userId: mockNotesData[0].author._id }
 }
 
-const getCooperationUrl = `${URLs.cooperations.getById.replace(':id', cooperationId)}`
 const getNotesUrl = URLs.notes.get.replace(':id', cooperationId)
 const createNoteUrl = URLs.notes.create.replace(':id', cooperationId)
-const updateNoteUrl = `${getCooperationUrl}/notes/${mockNotesData[0]._id}`
-const deleteNoteUrl = `${getCooperationUrl}/notes/${mockUpdatedNotesData[0]._id}`
+const updateNoteUrl = URLs.notes.update
+  .replace(':id', cooperationId)
+  .replace(':noteId', mockNotesData[0]._id)
+const deleteNoteUrl = URLs.notes.delete
+  .replace(':id', cooperationId)
+  .replace(':noteId', mockUpdatedNotesData[0]._id)
 const duplicateNoteUrl = URLs.notes.create.replace(':id', cooperationId)
 
 const url = getFullUrl({
