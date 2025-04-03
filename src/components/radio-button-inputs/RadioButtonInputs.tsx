@@ -7,20 +7,19 @@ import Box from '@mui/material/Box'
 import { RadioButtonType } from '~/types'
 import { styles } from './RadioButtonInputs.styles'
 
-interface RadioButtonInputsProps<T, U>
-  extends Omit<RadioGroupProps, 'onChange'> {
-  items: RadioButtonType<T, U>[]
+interface RadioButtonInputsProps<T> extends Omit<RadioGroupProps, 'onChange'> {
+  items: RadioButtonType<T>[]
   onChange: (value: string) => void
   value: T
   title?: string
 }
 
-const RadioButtonInputs = <T, U>({
+const RadioButtonInputs = <T,>({
   onChange,
   items,
   value,
   title
-}: RadioButtonInputsProps<T, U>) => {
+}: RadioButtonInputsProps<T>) => {
   const handleValueUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value)
   }
@@ -30,7 +29,7 @@ const RadioButtonInputs = <T, U>({
       checked={value === radio.value}
       control={<RadioButton label='' />}
       key={String(radio.value)}
-      label={String(radio.title)}
+      label={radio.title}
       sx={styles.radioItems}
       value={radio.value}
     />

@@ -1,4 +1,6 @@
-export type RadioButtonType<T, U> = {
-  title: U
+import React from 'react'
+
+export type RadioButtonType<T> = {
+  title: React.ReactNode
   value: T
 }
