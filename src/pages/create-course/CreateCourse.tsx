@@ -79,7 +79,7 @@ const CreateCourse: React.FC = () => {
   }
 
   const addCourse = useCallback(
-    (data: CourseForm) => CourseService.addCourseQuery(data),
+    (data: CourseForm) => CourseService.addCourse(data),
     []
   )
 
@@ -92,7 +92,7 @@ const CreateCourse: React.FC = () => {
 
   const editCourse = useCallback(
     (data: CourseForm) => {
-      return CourseService.editCourseQuery(id, data)
+      return CourseService.editCourse(id, data)
     },
     [id]
   )
@@ -189,7 +189,7 @@ const CreateCourse: React.FC = () => {
   )
 
   const getCourse = useCallback(() => {
-    return CourseService.getCourseQuery(id)
+    return CourseService.getCourse(id)
   }, [id])
 
   const {

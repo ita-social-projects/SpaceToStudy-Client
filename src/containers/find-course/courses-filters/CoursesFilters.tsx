@@ -101,7 +101,7 @@ const CoursesFilters = ({
         groupBy={(option) => option.title}
         labelField='name'
         onChange={onSubjectChange}
-        queryOptions={{ type: 'subjects' }}
+        queryOptions={{ type: 'subjects', categoryId: filters.category }}
         service={getSubjectsNames}
         sx={styles.autocomplete}
         textFieldProps={{
