@@ -105,16 +105,28 @@ const AsyncAutocomplete = <
     fetchOnFocus && fetchFocusCondition && void fetchData()
   }
 
+  const { onChange, ...restProps } = props
+
+  const handleChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    value: TransformedResponse | string | null
+  ) => {
+    if (onChange) {
+      onChange(event, value as TransformedResponse, 'selectOption')
+    }
+  }
+
   return (
     <AppAutoComplete
       getOptionLabel={getOptionLabel}
       isOptionEqualToValue={isOptionEqualToValue}
       loading={loading}
+      onChange={handleChange}
       onFocus={handleFocus}
       options={response as TransformedResponse[]}
       textFieldProps={textFieldProps}
       value={valueOption}
-      {...props}
+      {...restProps}
     />
   )
 }
