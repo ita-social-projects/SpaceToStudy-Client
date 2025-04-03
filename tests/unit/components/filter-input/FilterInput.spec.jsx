@@ -27,6 +27,7 @@ describe('FilterInput', () => {
   })
 
   it('clears the input when the clear button is clicked', () => {
+    const handleChange = vi.fn()
     const { getByTestId } = render(
       <FilterInput onChange={handleChange} value='test' />
     )

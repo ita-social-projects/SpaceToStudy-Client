@@ -32,8 +32,8 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
   const { userId } = useAppSelector((state) => state.appMain)
   const { t } = useTranslation()
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value)
+  const handleInputChange = (value: string) => {
+    setSearch(value)
   }
 
   const filteredChats = filterChats(listOfChats, userId, search)
