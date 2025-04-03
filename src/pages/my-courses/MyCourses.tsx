@@ -79,7 +79,7 @@ const MyCourses = () => {
     onSuccess: onDeleteResponse
   })
 
-  const handleDelete = (id: string, isConfirmed: boolean) => {
+  const handleDeleteCourse = (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
       deleteItem(id)
     }
@@ -88,7 +88,8 @@ const MyCourses = () => {
   const onDelete = (id: string) => {
     openDialog({
       message: 'myCoursesPage.modalMessages.confirmDeletionMessage',
-      sendConfirm: (isConfirmed: boolean) => handleDelete(id, isConfirmed),
+      sendConfirm: (isConfirmed: boolean) =>
+        handleDeleteCourse(id, isConfirmed),
       title: `myCoursesPage.modalMessages.confirmDeletionTitle`
     })
   }
@@ -138,7 +139,7 @@ const MyCourses = () => {
     <>
       <MyCorsesCardsList
         deleteItem={onDelete}
-        duplicateItem={(itemId: string) => duplicateItem(itemId)}
+        duplicateItem={duplicateItem}
         items={coursesItems}
       />
       <AppPagination

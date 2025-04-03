@@ -34,7 +34,7 @@ export const CourseService = {
       })
     })
   },
-  addCourse: async (data: CourseForm) => {
+  addCourse: (data: CourseForm) => {
     return baseService.request<Course>({
       method: 'POST',
       url: URLs.courses.create,
@@ -50,7 +50,7 @@ export const CourseService = {
       })
     })
   },
-  editCourse: async (id: string, data: CourseForm) => {
+  editCourse: (id: string, data: CourseForm) => {
     return baseService.request<void>({
       method: 'PATCH',
       url: getFullUrl({

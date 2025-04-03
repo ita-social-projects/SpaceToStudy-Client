@@ -78,14 +78,9 @@ const CreateCourse: React.FC = () => {
     navigate(authRoutes.myCourses.root.path)
   }
 
-  const addCourse = useCallback(
-    (data: CourseForm) => CourseService.addCourse(data),
-    []
-  )
-
   const { mutate: createCourse } = useMutation({
     queryKey: ['courses'],
-    mutationFn: addCourse,
+    mutationFn: CourseService.addCourse,
     onSuccess: handleResponse,
     onError: handleErrorAlert
   })
