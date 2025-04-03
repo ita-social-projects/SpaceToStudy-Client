@@ -1,5 +1,4 @@
 import { useCallback, useRef, useState, useEffect } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -36,7 +35,7 @@ import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-resources/categories-container/CategoriesContainer.style'
 
-const CategoriesContainer = () => {
+const CategoriesContainer: React.FC = () => {
   const { t } = useTranslation()
   const searchTitle = useRef<string>('')
   const sortOptions = useSort({ initialSort })
@@ -45,8 +44,7 @@ const CategoriesContainer = () => {
   const { openModal, closeModal } = useModalContext()
   const [selectedItemId, setSelectedItemId] = useState<string>('')
   const [updateResourceCategory] = useUpdateResourceCategoryMutation()
-  const { handleErrorAlert } = useSnackbarAlert()
-  const queryClient = useQueryClient()
+  const { handleSuccessAlert, handleErrorAlert } = useSnackbarAlert()
   const dispatch = useAppDispatch()
 
   const { sort } = sortOptions
@@ -61,23 +59,24 @@ const CategoriesContainer = () => {
     })
   }, [page, itemsPerPage, sort, searchTitle])
 
-  const deleteCategory = useCallback(
-    (id?: string) => ResourceService.deleteResourceCategory(id ?? ''),
-    []
-  )
+  const { mutate: handleDeleteCategory } = useMutation({
+    mutationFn: ResourceService.deleteResourceCategory,
+    onError: handleErrorAlert,
+    onSuccess: () => {
+      handleSuccessAlert('myResourcesPage.categories.successDeletion')
+    },
+    queryKey: ['categories']
+  })
 
   const {
     error,
     data: categories,
-    isLoading
+    isLoading,
+    refetch: refetchCategories
   } = useQuery({
     queryFn: getCategories,
     queryKey: ['categories', page, itemsPerPage, sort, searchTitle]
   })
-
-  const updateInfo = useCallback(async () => {
-    await queryClient.invalidateQueries({ queryKey: ['categories'] })
-  }, [queryClient])
 
   useEffect(() => {
     if (error) {
@@ -132,7 +131,7 @@ const CategoriesContainer = () => {
   const onSave = async (name: string) => {
     if (name) {
       await updateResourceCategory({ id: selectedItemId, name })
-      await updateInfo()
+      await refetchCategories()
     }
     setSelectedItemId('')
   }
@@ -151,17 +150,13 @@ const CategoriesContainer = () => {
   )
 
   const props = {
-    actions: { onEdit },
+    actions: { onEdit, onDelete: handleDeleteCategory },
     columns: columnsToShow,
-    data: {
-      response: categories ?? defaultResponses.itemsWithCount,
-      getData: updateInfo
-    },
-    services: { deleteService: deleteCategory },
+    resourceItems: categories ?? defaultResponses.itemsWithCount,
     pagination: { page, onChange: handleChangePage },
     sort: sortOptions,
     itemsPerPage,
-    resource: ResourcesTabsEnum.Categories,
+    resourceType: ResourcesTabsEnum.Categories,
     sx: styles.table
   }
 
@@ -174,7 +169,7 @@ const CategoriesContainer = () => {
             {t('myResourcesPage.categories.addBtn')}
           </Button>
         }
-        fetchData={updateInfo}
+        fetchData={refetchCategories}
         placeholder={'myResourcesPage.categories.searchInput'}
         searchRef={searchTitle}
       />

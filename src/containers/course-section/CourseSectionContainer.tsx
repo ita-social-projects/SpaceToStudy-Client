@@ -140,19 +140,38 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
     [sectionData, resourceEventHandler]
   )
 
+  const handleResourceDeletion = useCallback(
+    ({
+      resourceId,
+      resource
+    }: {
+      resourceId: string
+      resource: CourseResource
+    }) => {
+      switch (resource.resourceType) {
+        case ResourcesTypesEnum.Lesson:
+          return ResourceService.deleteLesson(resourceId)
+
+        case ResourcesTypesEnum.Quiz:
+          return ResourceService.deleteQuiz(resourceId)
+
+        case ResourcesTypesEnum.Attachment:
+          return ResourceService.deleteAttachment(resourceId)
+
+        default:
+          throw new Error('Unsupported resource type')
+      }
+    },
+    []
+  )
+
+  const { mutate: handleDeleteResource } = useMutation({
+    mutationFn: handleResourceDeletion
+  })
+
   const deleteResource = (resource: CourseResource) => {
     if (resource.isDuplicate) {
-      if (resource.resourceType === ResourcesTypesEnum.Lesson) {
-        void ResourceService.deleteLesson(resource._id)
-      }
-
-      if (resource.resourceType === ResourcesTypesEnum.Quiz) {
-        void ResourceService.deleteQuiz(resource._id)
-      }
-
-      if (resource.resourceType === ResourcesTypesEnum.Attachment) {
-        void ResourceService.deleteAttachment(resource._id)
-      }
+      handleDeleteResource({ resourceId: resource._id, resource })
     }
     resourceEventHandler?.({
       type: CourseResourceEventType.ResourceRemoved,

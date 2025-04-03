@@ -28,7 +28,6 @@ import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-mod
 import useMutation from '~/hooks/use-mutation'
 import useQuery from '~/hooks/use-query'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
-import { queryClient } from '~/plugins/queryClient'
 
 const AttachmentsContainer: React.FC = () => {
   const { t } = useTranslation()
@@ -39,7 +38,7 @@ const AttachmentsContainer: React.FC = () => {
   const searchFileName = useRef<string>('')
   const [selectedItems, setSelectedItems] = useState<string[]>([])
   const formData = new FormData()
-  const { handleErrorAlert } = useSnackbarAlert()
+  const { handleSuccessAlert, handleErrorAlert } = useSnackbarAlert()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -56,15 +55,20 @@ const AttachmentsContainer: React.FC = () => {
     [itemsPerPage, page, sort, searchFileName, selectedItems]
   )
 
-  const deleteAttachment = useCallback(
-    (id?: string) => ResourceService.deleteAttachment(id ?? ''),
-    []
-  )
+  const { mutate: handleDeleteAttachment } = useMutation({
+    mutationFn: ResourceService.deleteAttachment,
+    onError: handleErrorAlert,
+    onSuccess: () => {
+      handleSuccessAlert('myResourcesPage.attachments.successDeletion')
+    },
+    queryKey: ['attachments']
+  })
 
   const {
     data: loadedAttachments,
     isLoading: isLoadingAttachments,
-    error: attachmentsLoadError
+    error: attachmentsLoadError,
+    refetch: refetchAttachments
   } = useQuery({
     queryKey: ['attachments', page, sort, selectedItems],
     queryFn: getAttachments,
@@ -72,12 +76,6 @@ const AttachmentsContainer: React.FC = () => {
       staleTime: Infinity
     }
   })
-
-  const invalidateAttachments = async () => {
-    await queryClient.invalidateQueries({
-      queryKey: ['attachments']
-    })
-  }
 
   const { mutate: handleUpdateAttachment } = useMutation({
     mutationFn: ResourceService.updateAttachment,
@@ -138,14 +136,10 @@ const AttachmentsContainer: React.FC = () => {
 
   const props = {
     columns: columnsToShow,
-    data: {
-      response: loadedAttachments ?? defaultResponses.itemsWithCount,
-      getData: invalidateAttachments
-    },
-    services: { deleteService: deleteAttachment },
+    resourceItems: loadedAttachments ?? defaultResponses.itemsWithCount,
     itemsPerPage,
-    actions: { onEdit },
-    resource: ResourcesTabsEnum.Attachments,
+    actions: { onEdit, onDelete: handleDeleteAttachment },
+    resourceType: ResourcesTabsEnum.Attachments,
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage },
     sx: styles.table
@@ -163,7 +157,7 @@ const AttachmentsContainer: React.FC = () => {
           sx={styles.addAttachmentBtn}
         />
       }
-      fetchData={invalidateAttachments}
+      fetchData={refetchAttachments}
       placeholder='myResourcesPage.attachments.searchInput'
       searchRef={searchFileName}
       selectedItems={selectedItems}

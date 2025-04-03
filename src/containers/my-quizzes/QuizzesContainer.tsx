@@ -1,8 +1,6 @@
 import { useCallback, useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQueryClient } from '@tanstack/react-query'
 import Box from '@mui/material/Box'
-import { AxiosResponse } from 'axios'
 
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
@@ -11,6 +9,7 @@ import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import usePagination from '~/hooks/table/use-pagination'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -29,11 +28,10 @@ import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { getFullUrl } from '~/utils/get-full-url'
 import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
 
-const QuizzesContainer = () => {
+const QuizzesContainer: React.FC = () => {
   const navigate = useNavigate()
   const { page, handleChangePage } = usePagination()
-  const { handleErrorAlert } = useSnackbarAlert()
-  const queryClient = useQueryClient()
+  const { handleSuccessAlert, handleErrorAlert } = useSnackbarAlert()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef('')
   const breakpoints = useBreakpoints()
@@ -58,14 +56,14 @@ const QuizzesContainer = () => {
     })
   }, [itemsPerPage, sort, searchTitle, page, selectedItems])
 
-  const deleteQuiz = useCallback(
-    async (id?: string): Promise<AxiosResponse<unknown>> => {
-      const response = await ResourceService.deleteQuiz(id ?? '')
-      await queryClient.invalidateQueries({ queryKey: ['quizzes'] })
-      return response
+  const { mutate: handleDeleteQuiz } = useMutation({
+    mutationFn: ResourceService.deleteQuiz,
+    onError: handleErrorAlert,
+    onSuccess: () => {
+      handleSuccessAlert('myResourcesPage.quizzes.successDeletion')
     },
-    [queryClient]
-  )
+    queryKey: ['quizzes']
+  })
 
   const {
     data: quizzes,
@@ -112,14 +110,10 @@ const QuizzesContainer = () => {
 
   const props = {
     columns: columnsToShow,
-    data: {
-      response: quizzes ?? defaultResponses.itemsWithCount,
-      getData: getQuizzes
-    },
-    services: { deleteService: deleteQuiz },
+    resourceItems: quizzes ?? defaultResponses.itemsWithCount,
     itemsPerPage,
-    actions: { onEdit },
-    resource: ResourcesTabsEnum.Quizzes,
+    actions: { onEdit, onDelete: handleDeleteQuiz },
+    resourceType: ResourcesTabsEnum.Quizzes,
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage }
   }
