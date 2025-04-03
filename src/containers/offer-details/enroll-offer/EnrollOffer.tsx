@@ -73,13 +73,14 @@ const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
   })
 
   const validateAdditionalInfo = (additionalInfoValue: string | undefined) => {
-    if (additionalInfoValue === undefined) {
+    const validate = textField(30, 1000)
+
+    if (!additionalInfoValue) {
+      delete data.additionalInfo
       return
     }
-    if (additionalInfoValue.length === 0) {
-      delete data.additionalInfo
-    }
-    return textField(30, 1000)(additionalInfoValue)
+
+    return validate(additionalInfoValue)
   }
 
   const validations = {
