@@ -35,8 +35,7 @@ import {
   StatusEnum,
   ErrorResponse,
   UserRole,
-  UserRoleEnum,
-  ReviewsResponse
+  UserRoleEnum
 } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
@@ -99,7 +98,7 @@ const OfferDetails = () => {
     [offerData]
   )
 
-  const { data, isLoading } = useQuery<ReviewsResponse>({
+  const { data, isLoading } = useQuery({
     queryFn: getReviews,
     queryKey: [['reviews', userId, userRole]],
     options: {

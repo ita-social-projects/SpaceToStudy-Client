@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 import { titleToCamel } from '~/utils/title-to-camel-case'
+import { getFullUrl } from '~/utils/get-full-url'
 
 interface CommentProps {
   review: ReviewResponse
@@ -67,7 +68,10 @@ const Comment: FC<CommentProps> = ({ review }) => {
       <Box sx={styles.description}>
         <Link
           style={{ textDecoration: 'none' }}
-          to={`${authRoutes.offerDetails.path}/${offer._id}`}
+          to={getFullUrl({
+            pathname: `/${authRoutes.offerDetails.route}`,
+            parameters: { id: offer._id }
+          })}
         >
           <Typography sx={styles.coopDetails}>
             {cooperationDetailsText}

@@ -40,18 +40,6 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
   const dispatch = useAppDispatch()
   const { closeModal } = useModalContext()
 
-  const addReview = (data: {
-    dataFromCooperation: DataFromCooperation
-    comment: string
-    rating: number
-  }) => {
-    return ReviewService.submitReview({
-      ...data.dataFromCooperation,
-      comment: data.comment,
-      rating: data.rating
-    })
-  }
-
   const handleResponse = () => {
     dispatch(
       openAlert({
@@ -72,18 +60,20 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
   }
 
   const { mutate: submitReview } = useMutation({
-    mutationFn: addReview,
+    mutationFn: (data: {
+      dataFromCooperation: DataFromCooperation
+      comment: string
+      rating: number
+    }) => {
+      return ReviewService.submitReview({
+        ...data.dataFromCooperation,
+        comment: data.comment,
+        rating: data.rating
+      })
+    },
     onSuccess: handleResponse,
     onError: handleResponseError
   })
-
-  const handleSubmitReview = () => {
-    submitReview({
-      dataFromCooperation: data,
-      comment: reviewData.comment,
-      rating: reviewData.rating
-    })
-  }
 
   const {
     data: reviewData,
@@ -93,7 +83,15 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
   } = useForm<ReviewData>({
     initialValues,
     validations,
-    onSubmit: handleSubmitReview,
+    onSubmit: (reviewData) => {
+      if (reviewData) {
+        submitReview({
+          dataFromCooperation: data,
+          comment: reviewData.comment,
+          rating: reviewData.rating
+        })
+      }
+    },
     submitWithData: true
   })
 

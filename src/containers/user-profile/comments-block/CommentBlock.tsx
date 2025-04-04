@@ -8,7 +8,7 @@ import Comment from '~/components/comment/Comment'
 import Button from '~scss-components/button/Button'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { ReviewResponse } from '~/types'
+import { type ReviewResponse } from '~/types'
 
 import { styles } from '~/containers/user-profile/comments-block/CommentsBlock.styles'
 
@@ -20,13 +20,13 @@ interface CommentsBlockProps {
   isExpandable: boolean
 }
 
-const CommentsBlock = ({
+const CommentsBlock: React.FC<CommentsBlockProps> = ({
   title,
   data,
   loading,
   loadMore,
   isExpandable
-}: CommentsBlockProps) => {
+}) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 

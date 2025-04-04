@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import RatingBlock from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock'
 import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock'
 import Loader from '~/components/loader/Loader'
-import { ReviewsResponse, SortByEnum, UserRoleEnum } from '~/types'
+import { SortByEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
 import {
   ListItemText,
@@ -23,12 +23,12 @@ interface CommentsWithRatingBlockProps {
   userId: string
 }
 
-const CommentsWithRatingBlock = ({
+const CommentsWithRatingBlock: React.FC<CommentsWithRatingBlockProps> = ({
   averageRating,
   labels,
   userRole,
   userId
-}: CommentsWithRatingBlockProps) => {
+}) => {
   const [filter, setFilter] = useState<number | null>(null)
   const [sortBy, setSortBy] = useState<SortByEnum>(SortByEnum.Newest)
   const { t } = useTranslation()
@@ -43,9 +43,9 @@ const CommentsWithRatingBlock = ({
     [userId, userRole]
   )
 
-  const { data, isLoading } = useQuery<ReviewsResponse>({
+  const { data, isLoading } = useQuery({
     queryFn: getReviews,
-    queryKey: [['reviews', userId, userRole]],
+    queryKey: ['reviews', userId, userRole],
     options: {
       staleTime: Infinity
     }
@@ -107,7 +107,7 @@ const CommentsWithRatingBlock = ({
     setFilter(event.target.value === '' ? null : Number(event.target.value))
 
   return (
-    <Box id={'reviewSection'} sx={styles.root}>
+    <Box id='reviewSection' sx={styles.root}>
       <Typography sx={styles.title}>{t(titleKey)}</Typography>
       <RatingBlock
         activeFilter={filter}

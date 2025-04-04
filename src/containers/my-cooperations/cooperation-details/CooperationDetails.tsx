@@ -45,7 +45,7 @@ import {
 import AcceptCooperationClosing from '~/containers/my-cooperations/accept-cooperation-close/AcceptCooperationClosing'
 import CooperationClosureDeclinedBanner from '~/containers/my-cooperations/cooperation-closure-declined-banner/CooperationClosureDeclinedBanner'
 import { useModalContext } from '~/context/modal-context'
-import AddReviewModal from '../add-review-modal/AddReviewModal'
+import AddReviewModal from '~/containers/my-cooperations/add-review-modal/AddReviewModal'
 
 const CooperationDetails = () => {
   const dispatch = useAppDispatch()
@@ -108,24 +108,23 @@ const CooperationDetails = () => {
   }, [dispatch])
 
   const openAddReviewModal = useCallback(() => {
-    if (cooperation && !isLoading) {
-      const displayedUser =
-        cooperation.initiator._id === userId
-          ? cooperation.receiver
-          : cooperation?.initiator
+    if (!cooperation || isLoading) return
+    const displayedUser =
+      cooperation.initiator._id === userId
+        ? cooperation.receiver
+        : cooperation?.initiator
 
-      const [displayedUserRole] = displayedUser.role
+    const [displayedUserRole] = displayedUser.role
 
-      const reviewData = {
-        targetUserId: displayedUser._id,
-        targetUserRole: displayedUserRole,
-        offer: cooperation.offer._id
-      }
-
-      openModal({
-        component: <AddReviewModal data={reviewData} />
-      })
+    const reviewData = {
+      targetUserId: displayedUser._id,
+      targetUserRole: displayedUserRole,
+      offer: cooperation.offer._id
     }
+
+    openModal({
+      component: <AddReviewModal data={reviewData} />
+    })
   }, [cooperation, isLoading, openModal, userId])
 
   const handleCooperationStatusUpdate = useCallback(async () => {

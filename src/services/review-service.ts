@@ -16,7 +16,7 @@ export const ReviewService = {
       data
     })
   },
-  getUserReviews: (params: GetReviewsParams): Promise<ReviewsResponse> => {
+  getUserReviews: (params: GetReviewsParams) => {
     const url = getFullUrl({
       pathname: URLs.reviews.get,
       searchParameters: {
