@@ -937,6 +937,17 @@ describe('editProfileSlice test', () => {
     expect(store.getState().editProfile).toEqual(expectedState)
   })
 
+  it('updateUser should complete without returning anything', async () => {
+    const userId = '123'
+    const params = { firstName: 'new firstname' }
+
+    vi.spyOn(userService, 'updateUser').mockResolvedValueOnce(undefined)
+
+    await store.dispatch(updateUser({ userId, params }))
+
+    expect(userService.updateUser).toHaveBeenCalledWith(userId, params)
+  })
+
   it('updateUser should handle fulfilled state', async () => {
     const userId = '123'
     const params = { firstName: 'new firstname' }
