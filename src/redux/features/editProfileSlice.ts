@@ -154,11 +154,13 @@ export const updateUser = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await userService.updateUser(userId, params)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return response.data
+      await userService.updateUser(userId, params)
+      return true
     } catch (e) {
-      if (e instanceof ResponseError) {
+      const error = e as AxiosError<ErrorResponse>
+      if (error.response?.data?.code) {
+        return rejectWithValue(error.response.data.code)
+      } else if (e instanceof ResponseError) {
         return rejectWithValue(e.code)
       }
     }
@@ -346,6 +348,7 @@ const editProfileSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state) => {
         state.loading = LoadingStatusEnum.Fulfilled
+        state.error = null
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = LoadingStatusEnum.Rejected
