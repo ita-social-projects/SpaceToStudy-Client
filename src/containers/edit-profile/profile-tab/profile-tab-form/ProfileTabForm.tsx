@@ -15,11 +15,9 @@ import FileUploader from '~/components/file-uploader/FileUploader'
 import DragAndDrop from '~/components/drag-and-drop/DragAndDrop'
 
 import {
-  ButtonVariantEnum,
   EditProfileForm,
   FormNonInputValueChange,
   PositionEnum,
-  SizeEnum,
   UploadFileEmitterArgs,
   UseFormErrors,
   UseFormEventHandler
@@ -137,9 +135,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
             <FileUploader
               buttonText={t('editProfilePage.profile.generalTab.uploadTitle')}
               emitter={addPhoto}
-              size={SizeEnum.Large}
               validationData={validationData}
-              variant={ButtonVariantEnum.ContainedLight}
             />
             <Button onClick={handleRemovePhoto} size='md' variant='tonal'>
               {t('common.remove')}
