@@ -157,10 +157,7 @@ export const updateUser = createAsyncThunk(
       await userService.updateUser(userId, params)
       return true
     } catch (e) {
-      const error = e as AxiosError<ErrorResponse>
-      if (error.response?.data?.code) {
-        return rejectWithValue(error.response.data.code)
-      } else if (e instanceof ResponseError) {
+      if (e instanceof ResponseError) {
         return rejectWithValue(e.code)
       }
     }
