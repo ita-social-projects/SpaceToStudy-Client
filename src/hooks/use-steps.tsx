@@ -22,8 +22,8 @@ const useSteps = ({ steps }: UseSteps) => {
   const { handleErrorAlert } = useSnackbarAlert()
 
   const handleUpdateUser = useCallback(
-    (params?: UpdateUserParams) => {
-      return userService.updateUser(userId, params!)
+    (params: UpdateUserParams) => {
+      return userService.updateUser(userId, params)
     },
     [userId]
   )
@@ -74,7 +74,26 @@ const useSteps = ({ steps }: UseSteps) => {
     const { firstName, lastName, country, city, professionalSummary } =
       stepData.generalInfo.data
 
+    // let photoToSend;
+    // if (stepData.photo?.[0]) {
+    //     if (typeof stepData.photo[0] === 'object' && 'src' in stepData.photo[0]) {
+    //       photoToSend = {
+    //         name: stepData.photo[0].name,
+    //         src: stepData.photo[0].src
+    //       }
+    //     }
+    //     else if (typeof stepData.photo[0] === 'string') {
+    //       photoToSend = {
+    //         name: 'profile-photo',
+    //         src: stepData.photo[0]
+    //       }
+    //     }
+    //   } else {
+    //     photoToSend = "";
+    //   }
+
     const data: UpdateUserParams = {
+      // photo: photoToSend,
       photo: stepData.photo[0] ? stepData.photo[0] : '',
       firstName,
       lastName,
