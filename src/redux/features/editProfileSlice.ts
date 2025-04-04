@@ -155,7 +155,6 @@ export const updateUser = createAsyncThunk(
   ) => {
     try {
       await userService.updateUser(userId, params)
-      return
     } catch (e) {
       if (e instanceof ResponseError) {
         return rejectWithValue(e.code)
