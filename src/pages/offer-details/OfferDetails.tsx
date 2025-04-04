@@ -35,8 +35,7 @@ import {
   StatusEnum,
   ErrorResponse,
   UserRole,
-  UserRoleEnum,
-  ReviewsResponse
+  UserRoleEnum
 } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
