@@ -27,7 +27,6 @@ import { initialSort } from '~/containers/find-course/courses-filter-bar/CorseFi
 import { styles } from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal.styles'
 import {
   Course,
-  SortEnum,
   CategoryNameInterface,
   SubjectNameInterface,
   ProficiencyLevelEnum,
@@ -36,6 +35,8 @@ import {
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 import { setIsActivityCreated } from '~/redux/features/cooperationsSlice'
+import { useDebounce } from '~/hooks/use-debounce'
+
 interface AddCourseTemplateModalProps {
   closeModal: () => void
 }
@@ -59,6 +60,13 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
     setSelectedItem(course)
   }
 
+  const getCourses = useCallback(() => {
+    return CourseService.getCourses({
+      ...filters,
+      sort
+    })
+  }, [filters, sort])
+
   const getUserData = useCallback(
     () => userService.getUserByIdWithBaseService(userId, userRole as UserRole),
     [userId, userRole]
@@ -72,9 +80,9 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
     }
   })
 
-  const { data: coursesData, isLoading: coursesLoading } = useQuery({
-    queryFn: CourseService.getCoursesWithBaseService,
-    queryKey: ['courses'],
+  const { data: courses, isLoading: coursesLoading } = useQuery({
+    queryFn: getCourses,
+    queryKey: ['courses', filters, sort],
     options: {
       staleTime: Infinity
     }
@@ -82,12 +90,18 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
 
   const { updateFiltersInQuery, resetFilters } = filterQueryActions
 
+  const debouncedSearchChange = useDebounce((title: string) =>
+    updateFiltersInQuery({ title })
+  )
+
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
+    debouncedSearchChange(e.target.value)
   }
 
   const onSearchReset = () => {
     setSearchValue('')
+    updateFiltersInQuery({ title: '' })
   }
 
   const onCategoryChange = (
@@ -128,33 +142,9 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
     setShowFilters((prevShowFilters) => !prevShowFilters)
   }
 
-  const getItems = () => {
-    if (!coursesData) {
-      return []
-    }
-    return coursesData.items
-      .filter(
-        (item) =>
-          'title' in item &&
-          item.title.toLowerCase().includes(searchValue.toLowerCase()) &&
-          (!filters.category || item.category?._id === filters.category) &&
-          (!filters.subject || item.subject?._id === filters.subject) &&
-          (!filters.proficiencyLevel.length ||
-            filters.proficiencyLevel.some((level) =>
-              item.proficiencyLevel?.includes(level)
-            ))
-      )
-      .sort((a, b) => {
-        const valueA = new Date(a.updatedAt).getTime()
-        const valueB = new Date(b.updatedAt).getTime()
-
-        return sort.order === SortEnum.Asc ? valueA - valueB : valueB - valueA
-      })
-  }
-
-  const scrollableContent = getItems().length ? (
+  const scrollableContent = courses?.items.length ? (
     <MyCorsesCardsList
-      items={getItems()}
+      items={courses.items}
       onCourseSelect={onCourseSelect}
       selectedCourse={selectedItem}
       sx={styles.card}

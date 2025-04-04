@@ -42,7 +42,7 @@ export const URLs = {
   courses: {
     get: '/courses',
     getById: '/courses/:id',
-    delete: '/courses',
+    delete: '/courses/:id',
     create: '/courses',
     patch: '/courses/:id'
   },

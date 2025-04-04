@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from 'react'
+import { FC, ChangeEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AddIcon from '@mui/icons-material/Add'
@@ -18,6 +18,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { CourseFilters, FiltersActions } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
+import { useDebounce } from '~/hooks/use-debounce'
 
 interface AddCoursesWithInputProps {
   additionalParams: Record<string, number | string | undefined>
@@ -39,12 +40,18 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   const { t } = useTranslation()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { isTablet, isMobile } = useBreakpoints()
+  const [searchValue, setSearchValue] = useState<string>(filters.title)
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const debouncedSearchChange = useDebounce((title: string) => {
     filterActions.updateFiltersInQuery({
       ...additionalParams,
-      title: e.target.value
+      title
     })
+  })
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value)
+    debouncedSearchChange(e.target.value)
   }
 
   const onClear = () => {
@@ -52,6 +59,7 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
       ...additionalParams,
       title: ''
     })
+    setSearchValue('')
   }
 
   const handleToggle = () => (isOpen ? closeDrawer() : openDrawer())
@@ -69,7 +77,7 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
         placeholder={t('common.search')}
         search
         sx={styles.input}
-        value={filters.title}
+        value={searchValue}
         variant={InputFieldVariantEnum.Outlined}
       />
     </Box>

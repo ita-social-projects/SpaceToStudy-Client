@@ -1,4 +1,4 @@
-import { fireEvent, screen, act } from '@testing-library/react'
+import { fireEvent, screen, act, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import AddCourseWithInput from '~/containers/my-courses/add-course-with-input/AddCourseWithInput'
 import { vi } from 'vitest'
@@ -28,14 +28,16 @@ describe('AddCourseWithInput test', () => {
     expect(addBtn).toBeInTheDocument()
   })
 
-  it('should change and clear input value', () => {
+  it('should change and clear input value', async () => {
     const input = screen.getByRole('textbox')
 
     expect(input.value).toBe('value')
 
     fireEvent.change(input, { target: { value: 'new value' } })
 
-    expect(mockedFilterActions.updateFiltersInQuery).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(mockedFilterActions.updateFiltersInQuery).toHaveBeenCalled()
+    })
 
     const clearButton = screen.getByTestId('clearIcon')
 
