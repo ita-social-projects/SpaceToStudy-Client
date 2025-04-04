@@ -77,11 +77,14 @@ const OfferDetails = () => {
     onResponseError: responseError
   })
 
-  const titleKey = offerData
-    ? offerData.authorRole === UserRoleEnum.Tutor
-      ? 'titleTutor'
-      : 'titleStudent'
-    : ''
+  let titleKey = ''
+
+  if (offerData) {
+    titleKey =
+      offerData.authorRole === UserRoleEnum.Tutor
+        ? 'titleTutor'
+        : 'titleStudent'
+  }
 
   const updateOffer = useCallback(
     (updateData?: Partial<CreateOrUpdateOfferData>) =>
@@ -106,7 +109,7 @@ const OfferDetails = () => {
     }
   })
 
-  const reviews = data?.reviews || []
+  const reviews = data?.reviews ?? []
 
   const { loading: updateLoading, fetchData: fetchDataUpdateOffer } = useAxios<
     null,

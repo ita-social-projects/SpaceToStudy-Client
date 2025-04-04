@@ -1,7 +1,9 @@
 import { UserRoleEnum } from '~/types/user/user.index'
-import { SubjectInterface } from '~/types/common/common.index'
-import { CategoryInterface } from '~/types/common/common.index'
-import { ProficiencyLevelEnum } from '~/types/common/common.index'
+import {
+  SubjectInterface,
+  CategoryInterface,
+  ProficiencyLevelEnum
+} from '~/types/common/common.index'
 
 export interface ReviewData {
   comment: string
