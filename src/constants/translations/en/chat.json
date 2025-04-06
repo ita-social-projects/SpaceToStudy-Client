@@ -56,5 +56,6 @@
   },
   "creating": "Creating new chat for you, please wait...",
   "deleted": "Chat was deleted",
-  "deletedChip": "{{userName}} deleted this chat, and now it is read-only"
+  "deletedChip": "{{userName}} deleted this chat, and now it is read-only",
+  "permissionError": "You do not have permission to access the chat"
 }

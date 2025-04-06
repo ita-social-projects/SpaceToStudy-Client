@@ -47,7 +47,9 @@ type Properties<
   options?: Pick<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
     OptionalQueryOptions
-  >
+  > & {
+    onSuccess?: (data: TQueryFnData) => void
+  }
 } & RequiredQueryProperties<TQueryFnData, TError, TData, TQueryKey>
 
 type DefaultUseQueryResult<TData, TError> = Pick<
@@ -70,7 +72,9 @@ function useQuery<
     options: Pick<
       DefinedInitialDataOptions<TQueryFnData, TError, TData, TQueryKey>,
       OptionalQueryOptions
-    >
+    > & {
+      onSuccess?: (data: TQueryFnData) => void
+    }
   } & RequiredQueryProperties<TQueryFnData, TError, TData, TQueryKey>
 ): UseQueryResultWithInitialData<TData, TError>
 
@@ -84,7 +88,9 @@ function useQuery<
     options: Pick<
       UndefinedInitialDataOptions<TQueryFnData, TError, TData, TQueryKey>,
       OptionalQueryOptions
-    >
+    > & {
+      onSuccess?: (data: TQueryFnData) => void
+    }
   } & RequiredQueryProperties<TQueryFnData, TError, TData, TQueryKey>
 ): DefaultUseQueryResult<TData, TError>
 

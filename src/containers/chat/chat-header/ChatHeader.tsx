@@ -23,17 +23,13 @@ import ChatMenu from '~/containers/layout/chat-menu/ChatMenu'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import { styles } from '~/containers/chat/chat-header/ChatHeader.styles'
-import {
-  ChatResponse,
-  GetMessagesResponse,
-  MessageInterface,
-  UserResponse
-} from '~/types'
+import { ChatResponse, MessageInterface, UserResponse } from '~/types'
 import { useAppSelector } from '~/hooks/use-redux'
 import { selectIsUserOnline } from '~/redux/selectors/socket-selectors'
-import useAxios from '~/hooks/use-axios'
-import { defaultResponses } from '~/constants'
+import { snackbarVariants } from '~/constants'
 import { messageService } from '~/services/message-service'
+import useQuery from '~/hooks/use-query'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 interface ChatHeaderProps {
   onClick: (e?: MouseEvent<HTMLButtonElement>) => void
@@ -67,6 +63,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const isOnline = useAppSelector(selectIsUserOnline(user._id))
+  const { handleAlert } = useSnackbarAlert()
 
   const openMenu = () => setMenuAnchorEl(anchorRef.current)
   const closeMenu = () => setMenuAnchorEl(null)
@@ -106,24 +103,33 @@ const ChatHeader: FC<ChatHeaderProps> = ({
     [currentChat._id]
   )
 
-  const onAllMessagesResponse = useCallback(
-    (response: GetMessagesResponse) => {
-      const items = response.items ?? []
-      setAllMessages(items)
-    },
-    [setAllMessages]
-  )
+  const handleResponseError = useCallback(() => {
+    handleAlert({
+      severity: snackbarVariants.error,
+      message: t('chatPage.permissionError')
+    })
+  }, [handleAlert, t])
 
-  const { fetchData } = useAxios({
-    service: getAllMessages,
-    onResponse: onAllMessagesResponse,
-    defaultResponse: defaultResponses.itemsWithCount,
-    fetchOnMount: false
+  const { refetch: fetchData, isError } = useQuery({
+    queryFn: getAllMessages,
+    queryKey: ['allMessages', currentChat._id],
+    options: {
+      onSuccess: (response) => {
+        const items = response.data.items ?? []
+        setAllMessages(items)
+      }
+    }
   })
 
   useEffect(() => {
     void fetchData()
   }, [fetchData])
+
+  useEffect(() => {
+    if (isError) {
+      handleResponseError()
+    }
+  }, [isError, handleResponseError])
 
   const status = isOnline ? (
     <>
