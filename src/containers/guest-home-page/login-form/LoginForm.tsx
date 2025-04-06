@@ -71,7 +71,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         onChange={handleChange('email')}
         required
         size='medium'
-        sx={{ mb: '5px' }}
+        sx={styles.input}
         type='email'
         value={data.email}
       />

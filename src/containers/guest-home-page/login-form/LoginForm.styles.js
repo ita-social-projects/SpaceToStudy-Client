@@ -13,7 +13,8 @@ export const styles = {
     mb: '10px'
   },
   input: {
-    maxWidth: '343px'
+    maxWidth: '343px',
+    mb: '5px'
   },
   loginButton: {
     width: '100%',
