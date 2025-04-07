@@ -6,8 +6,9 @@ import OfferFilterList from '~/containers/find-offer/offer-filter-block/offer-fi
 import { ProficiencyLevelEnum, UserRoleEnum } from '~/types'
 import { selectOption, renderWithProviders } from '~tests/test-utils'
 
-const mockUpdateFilterByKey = vi.fn()
 const mockUpdateFiltersInQuery = vi.fn()
+const mockInnerFn = vi.fn()
+const mockUpdateFilterByKey = vi.fn().mockImplementation(() => mockInnerFn)
 
 const defaultFilters = {
   language: null,
@@ -70,11 +71,11 @@ describe('OfferFilterList for Tutor', () => {
   })
 
   it('calls updateFilterByKey when proficiency level is changed', () => {
-    const proficiencyCheckbox = screen.getByLabelText(
-      ProficiencyLevelEnum.Beginner
-    )
-    fireEvent.click(proficiencyCheckbox)
+    const checkbox = screen.getByLabelText(ProficiencyLevelEnum.Beginner)
+    fireEvent.click(checkbox)
+
     expect(mockUpdateFilterByKey).toHaveBeenCalledWith('proficiencyLevel')
+    expect(mockInnerFn).toHaveBeenCalledWith([ProficiencyLevelEnum.Beginner])
   })
 
   it('calls updateFilterByKey when price range is changed', () => {
