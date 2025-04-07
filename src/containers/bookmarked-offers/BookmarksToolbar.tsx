@@ -36,8 +36,8 @@ const BookmarksToolbar = forwardRef<HTMLDivElement, BookmarksToolbarProps>(
     const { t } = useTranslation()
     const { isLaptopAndAbove } = useBreakpoints()
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setTitle(event.target.value)
+    const handleInputChange = (value: string) => {
+      setTitle(value)
     }
 
     const handleInputSubmit = (e: FormEvent<HTMLFormElement>) => {

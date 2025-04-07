@@ -80,6 +80,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
     updateFiltersInQuery(additionalParams)
     onClose()
   }
+
   return (
     <AppDrawer anchor={PositionEnum.Left} onClose={onClose} open={isOpen}>
       <Box sx={styles.titleWithIcon}>

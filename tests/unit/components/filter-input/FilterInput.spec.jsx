@@ -15,14 +15,15 @@ describe('FilterInput', () => {
   })
 
   it('calls the onChange function when text is entered', () => {
-    const { getByRole } = render(<FilterInput onChange={handleChange} />)
+    const { getByRole } = render(
+      <FilterInput onChange={handleChange} value='' />
+    )
 
     const input = getByRole('textbox')
     fireEvent.change(input, { target: { value: 'test' } })
 
-    const [firstArgument] = handleChange.mock.lastCall
-
-    expect(firstArgument.target.value).toBe('test')
+    const firstArgument = handleChange.mock.calls[0][0]
+    expect(firstArgument).toBe('test')
   })
 
   it('clears the input when the clear button is clicked', () => {
@@ -32,7 +33,8 @@ describe('FilterInput', () => {
     )
     const clearButton = getByTestId('clear-button')
     fireEvent.click(clearButton)
+
     expect(handleChange).toHaveBeenCalledTimes(1)
-    expect(handleChange).toHaveBeenCalledWith({ target: { value: '' } })
+    expect(handleChange).toHaveBeenCalledWith('')
   })
 })
