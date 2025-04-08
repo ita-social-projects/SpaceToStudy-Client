@@ -3,16 +3,13 @@ import { Fragment, SyntheticEvent, FocusEvent } from 'react'
 import TextField, { TextFieldProps } from '@mui/material/TextField'
 import Autocomplete, {
   createFilterOptions,
-  AutocompleteProps
+  AutocompleteProps,
+  AutocompleteChangeReason,
+  AutocompleteChangeDetails
 } from '@mui/material/Autocomplete'
 
 import Loader from '~/components/loader/Loader'
 import { ChipTypeMap, FilterOptionsState } from '@mui/material'
-
-import {
-  AutocompleteChangeReason,
-  AutocompleteChangeDetails
-} from '@mui/material/Autocomplete'
 
 const defaultFilterOptions = <T,>(
   options: T[],
