@@ -29,49 +29,52 @@ const RatingBlock: FC<RatingBlockProps> = ({
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
 
-  const ratingCounts = reviews.reduce((counts, review) => {
-    counts[review.rating] += 1
-    return counts
-  }, new Array<number>(6).fill(0))
+  const ratingCounts = Array.from({ length: 6 }, () => 0)
+
+  reviews.forEach(({ rating }) => {
+    ratingCounts[rating] += 1
+  })
 
   const resetFilters = () => setFilter(null)
 
-  const progressBars = ratingCounts
-    .map((rating, idx: number) => {
-      const starPercent = reviewCount ? (rating / reviewCount) * 100 : 0
-      const active = !activeFilter || activeFilter === idx
-      const handleProgressBarClick = () => {
-        if (rating) {
-          setFilter(idx)
-        }
-      }
-      const optionalStyles = {
-        opacity: active ? 1 : '0.5',
-        cursor: rating ? 'pointer' : 'default'
-      }
+  const createProgressBar = (rating: number, idx: number) => {
+    if (idx === 0) return null
 
-      return (
-        idx > 0 && (
-          <Box
-            data-testid={`progress-bar-${idx}`}
-            key={idx}
-            onClick={handleProgressBarClick}
-            sx={[styles.progressBar, optionalStyles]}
-          >
-            <Typography sx={styles.typography}>
-              {t('userProfilePage.reviews.starsCount', { count: idx })}
-            </Typography>
-            <LinearProgress
-              sx={styles.linearProgress}
-              value={starPercent}
-              variant='determinate'
-            />
-            <Typography sx={styles.typography}>{rating}</Typography>
-          </Box>
-        )
-      )
-    })
-    .reverse()
+    const starPercent = reviewCount ? (rating / reviewCount) * 100 : 0
+    const isActive = !activeFilter || activeFilter === idx
+
+    const handleClick = () => {
+      if (rating) {
+        setFilter(idx)
+      }
+    }
+
+    const dynamicStyles = {
+      opacity: isActive ? 1 : 0.5,
+      cursor: rating ? 'pointer' : 'default'
+    }
+
+    return (
+      <Box
+        data-testid={`progress-bar-${idx}`}
+        key={idx}
+        onClick={handleClick}
+        sx={[styles.progressBar, dynamicStyles]}
+      >
+        <Typography sx={styles.typography}>
+          {t('userProfilePage.reviews.starsCount', { count: idx })}
+        </Typography>
+        <LinearProgress
+          sx={styles.linearProgress}
+          value={starPercent}
+          variant='determinate'
+        />
+        <Typography sx={styles.typography}>{rating}</Typography>
+      </Box>
+    )
+  }
+
+  const progressBars = ratingCounts.map(createProgressBar).reverse()
 
   const ratingComponent = isMobile ? (
     <AppRatingMobile reviewsCount={reviewCount} value={averageRating} />
