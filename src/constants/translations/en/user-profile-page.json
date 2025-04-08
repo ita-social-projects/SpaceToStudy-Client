@@ -41,7 +41,8 @@
     "starsCount_one": "{{count}} star",
     "starsCount_other": "{{count}} stars",
     "reviewsCount_one": "{{count}} review",
-    "reviewsCount_other": "{{count}} reviews"
+    "reviewsCount_other": "{{count}} reviews",
+    "buttonTitle": "Show all"
   },
   "sortItems": {
     "Newest": "Newest",

@@ -108,7 +108,10 @@ const CooperationDetails = () => {
   }, [dispatch])
 
   const openAddReviewModal = useCallback(() => {
-    if (!cooperation || isLoading) return
+    if (!cooperation || isLoading) {
+      return
+    }
+
     const displayedUser =
       cooperation.initiator._id === userId
         ? cooperation.receiver

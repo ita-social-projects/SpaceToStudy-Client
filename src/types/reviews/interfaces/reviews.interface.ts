@@ -1,7 +1,7 @@
 import { UserRoleEnum } from '~/types/user/user.index'
 import {
-  SubjectInterface,
-  CategoryInterface,
+  type SubjectInterface,
+  type CategoryInterface,
   ProficiencyLevelEnum
 } from '~/types/common/common.index'
 

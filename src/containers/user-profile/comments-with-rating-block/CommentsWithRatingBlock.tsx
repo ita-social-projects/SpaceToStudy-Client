@@ -38,10 +38,9 @@ const CommentsWithRatingBlock: React.FC<CommentsWithRatingBlockProps> = ({
       ? 'userProfilePage.reviews.titleTutor'
       : 'userProfilePage.reviews.titleStudent'
 
-  const getReviews = useCallback(
-    () => ReviewService.getUserReviews({ userId, userRole }),
-    [userId, userRole]
-  )
+  const getReviews = useCallback(() => {
+    return ReviewService.getUserReviews({ userId, userRole })
+  }, [userId, userRole])
 
   const { data, isLoading } = useQuery({
     queryFn: getReviews,
@@ -53,7 +52,7 @@ const CommentsWithRatingBlock: React.FC<CommentsWithRatingBlockProps> = ({
 
   if (isLoading || !data) {
     return (
-      <Box id={'reviewSection'} sx={styles.root}>
+      <Box id='reviewSection' sx={styles.root}>
         <Typography sx={styles.title}>{t(titleKey)}</Typography>
         <Loader data-testid='loader' />
       </Box>

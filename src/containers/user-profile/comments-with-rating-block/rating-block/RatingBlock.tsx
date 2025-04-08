@@ -38,7 +38,9 @@ const RatingBlock: FC<RatingBlockProps> = ({
   const resetFilters = () => setFilter(null)
 
   const createProgressBar = (rating: number, idx: number) => {
-    if (idx === 0) return null
+    if (idx === 0) {
+      return null
+    }
 
     const starPercent = reviewCount ? (rating / reviewCount) * 100 : 0
     const isActive = !activeFilter || activeFilter === idx

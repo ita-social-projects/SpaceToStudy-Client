@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +17,7 @@ interface CommentProps {
   review: ReviewResponse
 }
 
-const Comment: FC<CommentProps> = ({ review }) => {
+const Comment: React.FC<CommentProps> = ({ review }) => {
   const {
     comment,
     author,
@@ -69,7 +68,7 @@ const Comment: FC<CommentProps> = ({ review }) => {
         <Link
           style={{ textDecoration: 'none' }}
           to={getFullUrl({
-            pathname: `/${authRoutes.offerDetails.route}`,
+            pathname: authRoutes.offerDetails.route,
             parameters: { id: offer._id }
           })}
         >

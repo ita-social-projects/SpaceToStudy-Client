@@ -23,8 +23,8 @@ import {
   ComponentEnum,
   ReviewDataFromCooperation,
   ReviewData,
-  ErrorResponse,
-  DataFromCooperation
+  ErrorResponse
+  // DataFromCooperation
 } from '~/types'
 import { styles } from '~/containers/my-cooperations/add-review-modal/AddReviewModal.styles'
 import useMutation from '~/hooks/use-mutation'
@@ -59,17 +59,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
   }
 
   const { mutate: submitReview } = useMutation({
-    mutationFn: (data: {
-      dataFromCooperation: DataFromCooperation
-      comment: string
-      rating: number
-    }) => {
-      return ReviewService.submitReview({
-        ...data.dataFromCooperation,
-        comment: data.comment,
-        rating: data.rating
-      })
-    },
+    mutationFn: ReviewService.submitReview,
     onSuccess: handleResponse,
     onError: handleResponseError
   })
@@ -85,7 +75,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
     onSubmit: (reviewData) => {
       if (reviewData) {
         submitReview({
-          dataFromCooperation: data,
+          ...data,
           comment: reviewData.comment,
           rating: reviewData.rating
         })

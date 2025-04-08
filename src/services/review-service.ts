@@ -1,5 +1,5 @@
 import { URLs } from '~/constants/request'
-import {
+import type {
   ReviewData,
   ReviewsResponse,
   GetReviewsParams,

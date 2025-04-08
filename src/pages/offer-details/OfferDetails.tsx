@@ -92,14 +92,12 @@ const OfferDetails = () => {
     [id]
   )
 
-  const getReviews = useCallback(
-    () =>
-      ReviewService.getUserReviews({
-        userId: offerData!.author._id,
-        userRole: offerData!.authorRole
-      }),
-    [offerData]
-  )
+  const getReviews = useCallback(() => {
+    return ReviewService.getUserReviews({
+      userId: offerData!.author._id,
+      userRole: offerData!.authorRole
+    })
+  }, [offerData])
 
   const { data, isLoading } = useQuery({
     queryFn: getReviews,
