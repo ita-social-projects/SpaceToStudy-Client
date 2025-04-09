@@ -139,7 +139,9 @@ const CategoryDropdown = ({
             value={t('myResourcesPage.categories.addBtn')}
           />
         }
-        onChange={onCategoryChange}
+        onChange={(event, value) =>
+          onCategoryChange(event, value as CategoryNameInterface | null)
+        }
         options={allCategoriesNames}
         renderOption={(props, option, state) =>
           optionsList(props, option.name, state.index)
