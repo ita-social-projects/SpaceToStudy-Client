@@ -6,7 +6,9 @@ import OfferFilterList from '~/containers/find-offer/offer-filter-block/offer-fi
 import { ProficiencyLevelEnum, UserRoleEnum } from '~/types'
 import { selectOption, renderWithProviders } from '~tests/test-utils'
 
-const mockUpdateFilterByKey = vi.fn()
+const mockUpdateFilterByKey = vi.fn().mockImplementation((key) => (value) => {
+  mockUpdateFiltersInQuery({ [key]: value })
+})
 const mockUpdateFiltersInQuery = vi.fn()
 
 const defaultFilters = {
