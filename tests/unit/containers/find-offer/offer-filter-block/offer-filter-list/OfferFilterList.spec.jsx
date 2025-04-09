@@ -9,6 +9,7 @@ import { selectOption, renderWithProviders } from '~tests/test-utils'
 const mockUpdateFilterByKey = vi.fn().mockImplementation((key) => (value) => {
   mockUpdateFiltersInQuery({ [key]: value })
 })
+
 const mockUpdateFiltersInQuery = vi.fn()
 
 const defaultFilters = {
