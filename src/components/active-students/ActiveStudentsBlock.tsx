@@ -12,10 +12,12 @@ import { styles } from './ActiveStudentsBlock.styles'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { defaultResponses } from '~/constants'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 const ActiveStudentsBlock = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { findOffers, cooperationDetails } = authRoutes
 
   const getMyCooperations = useCallback(
     () => cooperationService.getCooperations({ limit: 3, status: 'active' }),
@@ -39,11 +41,11 @@ const ActiveStudentsBlock = () => {
   }
 
   const onShowMoreClick = () => {
-    navigate('/my-cooperations')
+    navigate(cooperationDetails.path)
   }
 
   const onAddStudentClick = () => {
-    navigate('/categories/subjects/find-offers')
+    navigate(findOffers.path)
   }
 
   if (!data.items.length)

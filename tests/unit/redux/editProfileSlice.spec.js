@@ -18,6 +18,8 @@ import { mockAxiosClient } from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
+import { ResponseError } from '~/exceptions'
+import { userService } from '~/services/user-service'
 
 const userDataMock = {
   firstName: 'John',
@@ -935,6 +937,17 @@ describe('editProfileSlice test', () => {
     expect(store.getState().editProfile).toEqual(expectedState)
   })
 
+  it('updateUser should complete without returning anything', async () => {
+    const userId = '123'
+    const params = { firstName: 'new firstname' }
+
+    vi.spyOn(userService, 'updateUser').mockResolvedValueOnce(undefined)
+
+    await store.dispatch(updateUser({ userId, params }))
+
+    expect(userService.updateUser).toHaveBeenCalledWith(userId, params)
+  })
+
   it('updateUser should handle fulfilled state', async () => {
     const userId = '123'
     const params = { firstName: 'new firstname' }
@@ -963,16 +976,20 @@ describe('editProfileSlice test', () => {
       error: errorCode
     })
 
-    mockAxiosClient
-      .onPatch(createUrlPath(URLs.users.update, userId), params)
-      .reply(404, { code: errorCode, message: 'User has not been found' })
+    vi.spyOn(userService, 'updateUser').mockRejectedValueOnce(
+      new ResponseError({
+        code: errorCode,
+        message: 'User not found',
+        status: 404
+      })
+    )
 
     await store.dispatch(updateUser({ userId, params }))
 
     const actualState = store.getState().editProfile
 
-    expect(actualState).toEqual(expectedState)
     expect(actualState.loading).toEqual(LoadingStatusEnum.Rejected)
     expect(actualState.error).toEqual(errorCode)
+    expect(actualState).toEqual(expectedState)
   })
 })

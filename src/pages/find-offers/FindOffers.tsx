@@ -98,6 +98,10 @@ const FindOffers = () => {
   })
 
   const price = useMemo(() => {
+    if (!items.length) {
+      return { minPrice: 0, maxPrice: 0 }
+    }
+
     const filterItems = items.map((item) => item.price)
     const minPrice = Math.min(...filterItems)
     const maxPrice = Math.max(...filterItems)

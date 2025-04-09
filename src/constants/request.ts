@@ -20,7 +20,7 @@ export const URLs = {
   users: {
     get: '/users',
     getUserById: '/users/:id',
-    update: '/users',
+    update: '/users/:id',
     delete: '/users/delete',
     deactivate: '/users/deactivate',
     activate: '/users/activate',
