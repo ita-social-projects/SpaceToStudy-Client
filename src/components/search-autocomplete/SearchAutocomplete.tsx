@@ -4,7 +4,6 @@ import {
   Dispatch,
   SetStateAction,
   SyntheticEvent,
-  ChangeEvent,
   KeyboardEvent
 } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -32,11 +31,11 @@ import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styl
 import { SizeEnum, VisibilityEnum, TextFieldVariantEnum } from '~/types'
 
 interface SearchAutocompleteProps
-  extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
+  extends Omit<AutocompleteProps<string, false, false, true>, 'renderInput'> {
   search: string
   setSearch: Dispatch<SetStateAction<string>>
   onSearchChange?: () => void
-  textFieldProps: TextFieldProps
+  textFieldProps: TextFieldProps<'standard'>
   renderInput?: (params: AutocompleteRenderInputParams) => ReactNode
 }
 
@@ -60,13 +59,16 @@ const SearchAutocomplete = ({
     return defaultFilterOptions(options, state).slice(0, 6)
   }
 
-  const onInputChange = (_: ChangeEvent<HTMLInputElement>, value: string) => {
+  const onInputChange = (_: SyntheticEvent, value: string) => {
     setSearchInput(value)
   }
 
-  const handleAutoCompleteChange = (_: SyntheticEvent, value: string) => {
+  const handleAutoCompleteChange = (
+    _: SyntheticEvent,
+    value: string | null
+  ) => {
     onSearchChange && onSearchChange()
-    setSearch(value)
+    setSearch(value ?? '')
   }
 
   const onSearch = () => {
@@ -86,7 +88,7 @@ const SearchAutocomplete = ({
 
   const labelStyle = {
     ...styles.inputLabel,
-    visibility: searchInput && VisibilityEnum.Hidden
+    visibility: searchInput ? VisibilityEnum.Hidden : VisibilityEnum.Visible
   }
   const clearIconVisibility = {
     visibility: searchInput ? VisibilityEnum.Visible : VisibilityEnum.Hidden
