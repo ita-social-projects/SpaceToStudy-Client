@@ -57,8 +57,9 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   const handleChecked = (_: SyntheticEvent<Element, Event>, checked: boolean) =>
     updateFiltersInQuery({ native: checked.toString() })
 
-  const handleFilterChange = (key: keyof FindOffersFilters) => () =>
-    updateFilterByKey(key)
+  const handleCheckboxChange =
+    (key: keyof FindOffersFilters) => (newValues?: ProficiencyLevelEnum[]) =>
+      updateFilterByKey(key)(newValues)
 
   const getOptionLabelForLanguage = (option: LanguageFilter | null): string => {
     return option?.trim() ? option : t('common.languages.allLanguages')
@@ -101,7 +102,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       <CheckboxList
         {...checkboxListProps}
         items={levelOptions}
-        onChange={handleFilterChange('proficiencyLevel')}
+        onChange={handleCheckboxChange('proficiencyLevel')}
         value={filters.proficiencyLevel}
         variant={'body2'}
       />
