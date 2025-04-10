@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 import UserProfile from '~/pages/user-profile/UserProfile.tsx'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import {getFullUrl} from '~/utils/get-full-url';
+import { getFullUrl } from '~/utils/get-full-url'
 
 const route = '/tutor/my-profile'
 
