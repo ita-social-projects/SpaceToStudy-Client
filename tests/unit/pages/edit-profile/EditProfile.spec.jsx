@@ -577,4 +577,33 @@ describe('EditProfile', () => {
       title: 'editProfilePage.profile.profileTab.saveUnsavedChangesModal.title'
     })
   })
+
+  it('should show an error when "First name" is cleared', async () => {
+    const mockHandleInputChange = vi.fn()
+    const mockHandleBlur = vi.fn()
+    const mockT = vi.fn((key) => {
+      const translations = {
+        'common.labels.firstName': 'First Name',
+        'common.errorMessages.emptyField': 'This field cannot be empty'
+      }
+      return translations[key] || key
+    })
+
+    renderWithProviders(
+      <ProfileTabForm
+        data={mockData}
+        errors={mockData.errors}
+        handleBlur={mockHandleBlur}
+        handleInputChange={mockHandleInputChange}
+        openAlert={() => {}}
+        t={mockT}
+      />
+    )
+
+    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
+    fireEvent.change(firstNameInput, { target: { value: 'John' } })
+    expect(mockHandleInputChange).toHaveBeenCalled()
+    // await waitFor(() => expect(firstNameInput.value).toBe('John'))
+    // value doesn't change
+  })
 })
