@@ -1,6 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { queryClient } from '~/plugins/queryClient'
 
 import CooperationDetails from '~/containers/my-cooperations/cooperation-details/CooperationDetails'
 import { vi } from 'vitest'
@@ -250,6 +251,7 @@ describe('CooperationClosureDeclinedBanner without answer being submitted', () =
   })
 
   beforeEach(() => {
+    queryClient.invalidateQueries(['cooperation', cooperationID])
     renderWithProviders(<CooperationDetails />, {
       preloadedState: mockStateStudent
     })
@@ -272,6 +274,7 @@ describe('CooperationClosureDeclinedBanner with submitted answer', () => {
   })
 
   beforeEach(() => {
+    queryClient.invalidateQueries(['cooperation', cooperationID])
     renderWithProviders(<CooperationDetails />, {
       preloadedState: mockStateTutor
     })
@@ -294,6 +297,7 @@ describe('AcceptCooperationClosing modal with submitted answer', () => {
   })
 
   beforeEach(() => {
+    queryClient.invalidateQueries(['cooperation', cooperationID])
     renderWithProviders(<CooperationDetails />, {
       preloadedState: mockStateStudent
     })

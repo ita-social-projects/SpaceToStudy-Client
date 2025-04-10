@@ -34,11 +34,11 @@ import { ResponseError } from '~/exceptions'
 import { snackbarVariants } from '~/constants'
 import { getErrorKey } from '~/utils/get-error-key'
 import { getFullUrl } from '~/utils/get-full-url'
+import { queryClient } from '~/plugins/queryClient'
 
 const LessonDetails: React.FC = () => {
-  const [completionStatus, setCompletionStatus] = useState<
-    CompletionStatusEnum | undefined
-  >(CompletionStatusEnum.Completed)
+  const [completionStatus, setCompletionStatus] =
+    useState<CompletionStatusEnum>(CompletionStatusEnum.Completed)
   const { id = '', lessonId = '' } = useParams()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -117,7 +117,9 @@ const LessonDetails: React.FC = () => {
       )
 
       if (resource) {
-        setCompletionStatus(resource.completionStatus)
+        setCompletionStatus(
+          resource.completionStatus ?? CompletionStatusEnum.Completed
+        )
       }
     })
   }, [cooperation, lessonId, setCompletionStatus])
@@ -135,7 +137,8 @@ const LessonDetails: React.FC = () => {
   )
 
   const handleResponse = () => {
-    setCompletionStatus(CompletionStatusEnum.Completed)
+    void queryClient.invalidateQueries({ queryKey: ['lesson', lessonId] })
+    void queryClient.invalidateQueries({ queryKey: ['cooperation', id] })
   }
 
   const { mutate: updateLessonStatus } = useMutation({
