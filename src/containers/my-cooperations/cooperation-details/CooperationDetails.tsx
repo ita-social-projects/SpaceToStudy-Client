@@ -292,7 +292,7 @@ const CooperationDetails = () => {
         <Box sx={styles.pageContent}>
           {activeTab === CooperationTabsEnum.Activities &&
             cooperationClosingModal}
-          <Box sx={styles.pageContent}>{pageContent()}</Box>
+          {pageContent()}
         </Box>
         {!isDesktop && isNotesOpen && (
           <AppDrawer
