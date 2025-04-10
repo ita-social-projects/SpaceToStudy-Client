@@ -60,7 +60,7 @@ const AcceptCooperationClosing: React.FC<AcceptCooperationClosureProps> = ({
           </Typography>
           {t('cooperationDetailsPage.closingMessage2')}
           {message && (
-            <Box component='span' sx={{ ...styles.response, display: 'block' }}>
+            <Box component='span' sx={styles.response}>
               <Typography component='span' sx={styles.boldText}>
                 {t('cooperationDetailsPage.answer')}
                 {user}:

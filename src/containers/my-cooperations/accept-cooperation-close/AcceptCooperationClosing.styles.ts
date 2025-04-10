@@ -3,6 +3,7 @@ export const styles = {
     fontWeight: 500
   },
   response: {
-    paddingTop: '10px'
+    paddingTop: '10px',
+    display: 'block'
   }
 }
