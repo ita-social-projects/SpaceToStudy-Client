@@ -6,6 +6,7 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import useQuery from '~/hooks/use-query'
 import { Category, ServiceFunctionNew } from '~/types'
 import { ResponseError } from '~/exceptions'
+import { AutocompleteFreeSoloValueMapping } from '@mui/material'
 
 export interface AsyncAutocompleteProps<
   Response,
@@ -81,8 +82,14 @@ const AsyncAutocomplete = <
   )
 
   const getOptionLabel = useMemo(
-    () => (option: TransformedResponse) =>
-      (labelField ? option[labelField] : option) || '',
+    () =>
+      (option: TransformedResponse | AutocompleteFreeSoloValueMapping<F>) => {
+        if (typeof option === 'object' && option !== null) {
+          const optionValue = labelField ? option[labelField] : option
+          return String(optionValue ?? '')
+        }
+        return ''
+      },
     [labelField]
   )
 
@@ -101,16 +108,28 @@ const AsyncAutocomplete = <
     fetchOnFocus && fetchFocusCondition && void fetchData()
   }
 
+  const { onChange, ...restProps } = props
+
+  const handleChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    value: TransformedResponse | string | null
+  ) => {
+    if (onChange) {
+      onChange(event, value as TransformedResponse, 'selectOption')
+    }
+  }
+
   return (
     <AppAutoComplete
       getOptionLabel={getOptionLabel}
       isOptionEqualToValue={isOptionEqualToValue}
       loading={loading}
+      onChange={handleChange}
       onFocus={handleFocus}
       options={response as TransformedResponse[]}
       textFieldProps={textFieldProps}
       value={valueOption}
-      {...props}
+      {...restProps}
     />
   )
 }
