@@ -18,7 +18,7 @@ export const styles = {
   },
   root: {
     display: 'flex',
-    gap: '24px',
+    gap: '34px',
     flexDirection: 'column',
     p: '0'
   },
