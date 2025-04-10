@@ -19,7 +19,7 @@ export interface AsyncAutocompleteProps<
   service: ServiceFunctionNew<Response[]>
   valueField?: keyof TransformedResponse
   labelField?: keyof TransformedResponse
-  value: TransformedResponse[keyof TransformedResponse] | null | Category,
+  value: TransformedResponse[keyof TransformedResponse] | null | Category
   queryOptions: Record<string, unknown>
   fetchCondition?: boolean
   textFieldProps?: TextFieldProps
@@ -27,7 +27,8 @@ export interface AsyncAutocompleteProps<
   transform?: (params: Response[]) => TransformedResponse[]
   onResponse?: (responseData: TransformedResponse[]) => Promise<void> | void
   onResponseError?: (error: ResponseError) => void
-}
+  
+  }
 
 const AsyncAutocomplete = <
   Response,
