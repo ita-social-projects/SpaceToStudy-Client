@@ -13,9 +13,9 @@ export interface AsyncAutocompleteProps<
   TransformedResponse,
   F extends boolean | undefined
 > extends Omit<
-  AutocompleteProps<TransformedResponse, undefined, undefined, F>,
-  'value' | 'options' | 'renderInput'
-> {
+    AutocompleteProps<TransformedResponse, undefined, undefined, F>,
+    'value' | 'options' | 'renderInput'
+  > {
   service: ServiceFunctionNew<Response[]>
   valueField?: keyof TransformedResponse
   labelField?: keyof TransformedResponse
