@@ -41,14 +41,23 @@ const DividedDropdownAutocomplete = <Response, TransformedResponse>({
     </Box>
   )
 
+  const { onChange, ...restProps } = props
+  const handleChange = (
+    event: SyntheticEvent,
+    value: TransformedResponse | string | null
+  ) => {
+    onChange(event, value as TransformedResponse)
+  }
+
   return (
-    <AsyncAutocomplete<Response, TransformedResponse>
+    <AsyncAutocomplete<Response, TransformedResponse, boolean | undefined>
       groupBy={groupBy}
+      onChange={handleChange}
       onResponse={onResponse}
       onResponseError={onResponseError}
       renderGroup={optionsList}
       transform={transform}
-      {...props}
+      {...restProps}
     />
   )
 }
