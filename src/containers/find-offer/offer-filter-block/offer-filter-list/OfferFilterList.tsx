@@ -58,8 +58,10 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
     updateFiltersInQuery({ native: checked.toString() })
 
   const handleCheckboxChange =
-    (key: keyof FindOffersFilters) => (newValues?: ProficiencyLevelEnum[]) =>
-      updateFilterByKey(key)(newValues)
+    (key: keyof FindOffersFilters) => (newValues: ProficiencyLevelEnum[]) => {
+      const cleanedValues = newValues.filter((v) => v)
+      updateFilterByKey(key)(cleanedValues)
+    }
 
   const getOptionLabelForLanguage = (option: LanguageFilter | null): string => {
     return option?.trim() ? option : t('common.languages.allLanguages')
