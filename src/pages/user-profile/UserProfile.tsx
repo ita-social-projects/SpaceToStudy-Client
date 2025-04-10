@@ -127,7 +127,6 @@ const UserProfile: React.FC = () => {
         totalReviews={user.reviewStats.totalReviews}
         userRole={preferredRole}
       />
-      )
     </PageWrapper>
   )
 }
