@@ -48,7 +48,7 @@ const CooperationClosureDeclinedBanner: React.FC<
             i18nKey='cooperationDetailsPage.cooperationCloseDeclinedMessage'
             values={{ user: user }}
           />
-          <Typography>{message}</Typography>
+          <Typography component='span'>{message}</Typography>
         </>
       }
       icon={<ErrorOutlineRounded />}
