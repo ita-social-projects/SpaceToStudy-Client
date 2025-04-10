@@ -93,8 +93,6 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
     <Typography sx={styles.title}>{title}</Typography>
   )
 
-  console.log(filters.proficiencyLevel)
-
   const checkboxListProps =
     userRole === UserRoleEnum.Tutor
       ? { fillRange: true }
