@@ -93,10 +93,12 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
     <Typography sx={styles.title}>{title}</Typography>
   )
 
+  console.log(filters.proficiencyLevel)
+
   const checkboxListProps =
     userRole === UserRoleEnum.Tutor
       ? { fillRange: true }
-      : { singleSelect: true }
+      : { singleSelect: false }
 
   return (
     <>
@@ -105,9 +107,10 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
         {...checkboxListProps}
         items={levelOptions}
         onChange={handleCheckboxChange('proficiencyLevel')}
-        value={filters.proficiencyLevel}
+        value={filters.proficiencyLevel || []}
         variant={'body2'}
       />
+
       {filterTitle(t('findOffers.filterTitles.language'))}
       {languagesFilter}
       {filterTitle(t('findOffers.filterTitles.price'))}
