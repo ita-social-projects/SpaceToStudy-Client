@@ -59,7 +59,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
 
   const handleCheckboxChange =
     (key: keyof FindOffersFilters) => (newValues: ProficiencyLevelEnum[]) => {
-      const cleanedValues = newValues.filter((v) => v)
+      const cleanedValues = newValues.filter((value) => value)
       updateFilterByKey(key)(cleanedValues)
     }
 
@@ -105,7 +105,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
         {...checkboxListProps}
         items={levelOptions}
         onChange={handleCheckboxChange('proficiencyLevel')}
-        value={filters.proficiencyLevel || []}
+        value={filters.proficiencyLevel ?? []}
         variant={'body2'}
       />
 
