@@ -1,5 +1,7 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor, act } from '@testing-library/react'
 
+import { getFullUrl } from '~/utils/get-full-url'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { renderWithProviders } from '~tests/test-utils'
 import { ResourceService } from '~/services/resource-service'
 import LessonDetails from '~/pages/lesson-details/LessonDetails'
@@ -26,7 +28,13 @@ vi.mock('react-router-dom', async () => {
 vi.mock(
   '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal',
   () => ({
-    default: () => <div data-testid='testModal' />
+    default: ({ onConfirm }) => (
+      <div data-testid='testModal'>
+        <button data-testid='confirmButton' onClick={onConfirm}>
+          Confirm
+        </button>
+      </div>
+    )
   })
 )
 
@@ -142,7 +150,18 @@ describe('LessonDetails', () => {
     fireEvent.click(editButton)
     const modal = await screen.findByTestId('testModal')
 
+    const confirmButton = await screen.findByTestId('confirmButton')
+    await act(async () => {
+      fireEvent.click(confirmButton)
+    })
+
     expect(modal).toBeInTheDocument()
+    expect(mockNavigate).toHaveBeenCalledWith(
+      getFullUrl({
+        pathname: authRoutes.myResources.editLesson.route,
+        parameters: { id: lessonId }
+      })
+    )
   })
 
   it('should handle opening and closing of multiple accordions', async () => {
