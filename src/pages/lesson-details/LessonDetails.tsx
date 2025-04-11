@@ -105,11 +105,16 @@ const LessonDetails: React.FC = () => {
 
   const { data: cooperation } = useQuery({
     queryFn: getCooperation,
-    queryKey: ['cooperation', id]
+    queryKey: ['cooperation', id],
+    options: {
+      staleTime: Infinity
+    }
   })
 
   useEffect(() => {
-    if (!cooperation?.sections) return
+    if (!cooperation?.sections) {
+      return
+    }
 
     cooperation.sections?.forEach((section) => {
       const resource = section.resources?.find(
