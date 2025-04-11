@@ -113,6 +113,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = (
             {t('cooperationsPage.cooperationDetails.reviewRating')}
           </Typography>
           <Rating
+            data-testid='rating-field'
             onChange={(e, newValue) =>
               handleNonInputValueChange('rating', newValue ?? 0)
             }
