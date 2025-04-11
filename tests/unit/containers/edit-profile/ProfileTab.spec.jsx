@@ -184,22 +184,27 @@ describe('ProfileTab', () => {
     expect(lastNameInput).toHaveFocus()
   })
 
-  it('should not display error message when "First Name" has < 30 chars', () => {
+  it('should not display error message when "First Name" has < 30 chars', async () => {
     renderWithMockData()
     const firstNameInput = screen.getByPlaceholderText('firstName')
 
-    fireEvent.change(firstNameInput, { target: { value: 'John' } })
+    await userEvent.clear(firstNameInput)
+    await userEvent.click(firstNameInput)
+    await userEvent.type(firstNameInput, 'John')
+    fireEvent.blur(firstNameInput)
 
     const errorMessage = screen.queryByText('common.errorMessages.nameLength')
     expect(errorMessage).not.toBeInTheDocument()
     expect(firstNameInput).toHaveValue('John')
   })
 
-  it('should not display error message when "Last Name" has < 30 chars', () => {
+  it('should not display error message when "Last Name" has < 30 chars', async () => {
     renderWithMockData()
     const lastNameInput = screen.getByPlaceholderText('lastName')
 
-    fireEvent.change(lastNameInput, { target: { value: 'Doe' } })
+    await userEvent.clear(lastNameInput)
+    await userEvent.click(lastNameInput)
+    await userEvent.type(lastNameInput, 'Doe')
 
     const errorMessage = screen.queryByText('common.errorMessages.nameLength')
     expect(errorMessage).not.toBeInTheDocument()
@@ -210,11 +215,11 @@ describe('ProfileTab', () => {
     renderWithMockData()
     const firstNameInput = screen.getByPlaceholderText('firstName')
 
-    fireEvent.change(firstNameInput, { target: { value: tooManyCharacters } })
+    await userEvent.clear(firstNameInput)
+    await userEvent.click(firstNameInput)
+    await userEvent.type(firstNameInput, tooManyCharacters)
 
-    const errorMessage = await screen.findByText(
-      'common.errorMessages.nameLength'
-    )
+    const errorMessage = screen.queryByText('common.errorMessages.nameLength')
     expect(errorMessage).toBeInTheDocument()
     expect(firstNameInput).toHaveValue(tooManyCharacters)
   })
@@ -223,7 +228,9 @@ describe('ProfileTab', () => {
     renderWithMockData()
     const lastNameInput = screen.getByPlaceholderText('lastName')
 
-    fireEvent.change(lastNameInput, { target: { value: tooManyCharacters } })
+    await userEvent.clear(lastNameInput)
+    await userEvent.click(lastNameInput)
+    await userEvent.type(lastNameInput, tooManyCharacters)
 
     const errorMessage = await screen.findByText(
       'common.errorMessages.nameLength'
