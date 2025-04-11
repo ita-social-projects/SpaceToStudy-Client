@@ -2,30 +2,30 @@ import { Box, IconButton, Stack } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from '~/containers/quiz/quiz-question/Question.styles'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ResourceService } from '~/services/resource-service'
 import { useParams } from 'react-router-dom'
 import useQuery from '~/hooks/use-query'
 import { ONE_HOUR } from '~/constants'
+import { useMutation } from '@tanstack/react-query'
 
 interface TutorAnswerGradingProps {
-  finishedQuizId: string
-  questionText: string
-  onUpdate: (updatedGrade: number) => void
+  questionText?: string
+  onUpdate?: (isCorrect: boolean) => void
 }
 
 const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
-  finishedQuizId,
   questionText,
   onUpdate
 }) => {
   const { id: cooperationId = '', quizId = '', attemptId = '' } = useParams()
+  const [isCorrect, setIsCorrect] = useState<boolean>(false)
 
   const getFinishedQuizzes = useCallback(() => {
     return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
   }, [cooperationId, quizId])
 
-  const { data: finishedQuizzes = [] } = useQuery({
+  const { data: finishedQuizzes = [], isLoading } = useQuery({
     queryKey: ['finished-quizzes', cooperationId, quizId],
     queryFn: getFinishedQuizzes,
     options: {
@@ -33,36 +33,78 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
     }
   })
 
-  const handleGradeUpdate = (isCorrect: boolean) => {
-    const finishedQuiz = finishedQuizzes.find((quiz) => quiz._id === attemptId)
-
-    if (!finishedQuiz) {
-      return
+  useEffect(() => {
+    if (!isLoading && finishedQuizzes.length > 0 && questionText) {
+      const currentQuiz = finishedQuizzes.find((quiz) => quiz._id === attemptId)
+      if (currentQuiz) {
+        const questionResult = currentQuiz.results.find(
+          (result) => result.question === questionText
+        )
+        if (questionResult && questionResult.answers.length > 0) {
+          const currentIsCorrect = questionResult.answers[0].isCorrect
+          setIsCorrect(currentIsCorrect)
+          onUpdate?.(currentIsCorrect)
+        }
+      }
     }
+  }, [finishedQuizzes, attemptId, questionText, isLoading, onUpdate])
 
-    const updatedResults = finishedQuiz.results.map((result) =>
-      result.question === questionText
-        ? {
-            ...result,
-            answers: result.answers.map((answer) => ({
-              ...answer,
-              isCorrect,
-              isChosen: isCorrect
-            }))
-          }
-        : result
-    )
+  const handleGradeUpdate = useCallback(
+    (newIsCorrect: boolean) => {
+      const finishedQuiz = finishedQuizzes.find(
+        (quiz) => quiz._id === attemptId
+      )
 
-    console.log(updatedResults)
+      if (!finishedQuiz) {
+        return
+      }
+
+      const updatedResults = finishedQuiz.results.map((result) =>
+        result.question === questionText
+          ? {
+              ...result,
+              answers: result.answers.map((answer) => ({
+                ...answer,
+                isCorrect: newIsCorrect,
+                isChosen: true
+              }))
+            }
+          : result
+      )
+      onUpdate?.(isCorrect)
+
+      return { ...finishedQuiz, results: updatedResults }
+    },
+    [finishedQuizzes, onUpdate, isCorrect, attemptId, questionText]
+  )
+
+  const handleUpdateGrade = useCallback(
+    async (newIsCorrect: boolean) => {
+      const updatedQuiz = handleGradeUpdate(newIsCorrect)
+      if (!updatedQuiz) {
+        throw new Error("Couldn't find quiz to update")
+      }
+      return ResourceService.editFinishedQuiz(attemptId, updatedQuiz)
+    },
+    [handleGradeUpdate, attemptId]
+  )
+
+  const { mutate: updateAttempt } = useMutation({
+    mutationFn: handleUpdateGrade
+  })
+
+  const handleCorrectAnswer = (newIsCorrect: boolean) => {
+    setIsCorrect(newIsCorrect)
+    updateAttempt(newIsCorrect)
   }
 
   return (
     <Box>
       <Stack direction='row' spacing={1}>
-        <IconButton color='success' onClick={() => handleGradeUpdate(true)}>
+        <IconButton color='success' onClick={() => handleCorrectAnswer(true)}>
           <CheckIcon sx={styles.check} />
         </IconButton>
-        <IconButton color='error' onClick={() => handleGradeUpdate(false)}>
+        <IconButton color='error' onClick={() => handleCorrectAnswer(false)}>
           <CloseIcon sx={styles.cross} />
         </IconButton>
       </Stack>

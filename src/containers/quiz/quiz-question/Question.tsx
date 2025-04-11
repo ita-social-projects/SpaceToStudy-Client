@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC } from 'react'
+import { ChangeEventHandler, FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -21,6 +21,9 @@ import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types
 import { useAppSelector } from '~/hooks/use-redux'
 
 import TutorAnswerGrading from '~/containers/quiz/quiz-question/TutorAnswerGrading'
+import useQuery from '~/hooks/use-query'
+import { ResourceService } from '~/services/resource-service'
+import { useParams } from 'react-router-dom'
 
 interface QuizQuestionProps {
   question: Question
@@ -51,22 +54,50 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
 }) => {
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
+  const { attemptId = '' } = useParams()
+  const initialIsCorrect = isCorrectAnswer(question, value)
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | undefined>(
+    initialIsCorrect
+  )
+
+  const getFinishedQuiz = () => {
+    return ResourceService.getFinishedQuiz(attemptId)
+  }
+
+  const { data: finishedQuiz, isLoading: isFinishedQuizLoading } = useQuery({
+    queryKey: ['finished-quiz', attemptId],
+    queryFn: getFinishedQuiz
+  })
 
   const { isMultipleChoice, isOpenAnswer } = determineQuestionType(
     question.type
   )
 
+  useEffect(() => {
+    if (isOpenAnswer && finishedQuiz && !isFinishedQuizLoading) {
+      const questionResult = finishedQuiz.results?.find(
+        (result) => result.question === question.text
+      )
+
+      if (questionResult && questionResult.answers.length > 0) {
+        const resultIsCorrect = questionResult.answers[0].isCorrect
+        setIsAnswerCorrect(resultIsCorrect)
+      }
+    }
+  }, [finishedQuiz, isFinishedQuizLoading, isOpenAnswer, question.text])
   const ContainerComponent = shouldUseAppCardWrapper ? AppCard : Box
 
-  const isCorrect = isCorrectAnswer(question, value)
-
   const iconStyles = styles.icon(
-    isCorrect ? AnswerStatusEnum.Correct : AnswerStatusEnum.Incorrect
+    isAnswerCorrect ? AnswerStatusEnum.Correct : AnswerStatusEnum.Incorrect
   )
 
   const correctnessIcon =
     shouldShowAnswersCorrectness &&
-    (isCorrect ? <CheckIcon sx={iconStyles} /> : <CloseIcon sx={iconStyles} />)
+    (isAnswerCorrect ? (
+      <CheckIcon sx={iconStyles} />
+    ) : (
+      <CloseIcon sx={iconStyles} />
+    ))
 
   const correctAnswersList =
     shouldShowCorrectAnswers &&
@@ -93,6 +124,8 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
       <Box sx={styles.correctAnswers.list}>{correctAnswersList}</Box>
     </Box>
   )
+
+  const correctnessColor = isAnswerCorrect ? 'success.50' : 'error.50'
 
   const answersList = question.answers.map((answer) => {
     const formattedValue =
@@ -137,15 +170,14 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     <RadioGroup sx={styles.answersContainer}>{answersList}</RadioGroup>
   )
 
-  console.log(isCorrect)
-
   const answersBlock = isOpenAnswer ? (
     <Answer
-      isCorrect={isCorrect}
+      isCorrect={isAnswerCorrect}
       isEditable={isEditable}
       label={question.text}
       onTextInputChange={handleInputChange}
       shouldShowCorrectness={shouldShowAnswersCorrectness}
+      sx={{ backgroundColor: correctnessColor }}
       text={question.text}
       type={question.type}
       value={value as string}
@@ -154,28 +186,30 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     multipleChoiceAnswersBlock
   )
 
-  console.log(value)
-
   const answersBlockForTutors = isOpenAnswer ? (
     <Box sx={styles.tutorOpenAnswerContainer}>
       <Answer
-        isCorrect={isCorrect}
+        isCorrect={isAnswerCorrect}
         isEditable={isEditable}
         label={question.text}
         onTextInputChange={handleInputChange}
         shouldShowCorrectness={shouldShowAnswersCorrectness}
+        sx={{ backgroundColor: correctnessColor }}
         text={question.text}
         type={question.type}
         value={value as string}
       />
-      <TutorAnswerGrading />
+      <TutorAnswerGrading
+        onUpdate={(isCorrect) => setIsAnswerCorrect(isCorrect)}
+        questionText={question.text}
+      />
     </Box>
   ) : (
     multipleChoiceAnswersBlock
   )
 
   const pointsBlock = shouldShowPoints && (
-    <Typography sx={styles.type}>{Number(isCorrect)}/1</Typography>
+    <Typography sx={styles.type}>{Number(initialIsCorrect)}/1</Typography>
   )
 
   return (
