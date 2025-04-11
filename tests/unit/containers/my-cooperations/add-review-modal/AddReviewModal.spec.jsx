@@ -51,7 +51,6 @@ describe('AddReviewModal', () => {
   it('render test', async () => {
     render(<AddReviewModal {...inputProps} />)
 
-    //Title, description, rating text, closeModal button and Submit button
     expect(
       screen.getByText('cooperationsPage.cooperationDetails.reviewTitle')
     ).toBeInTheDocument()
@@ -70,7 +69,6 @@ describe('AddReviewModal', () => {
       screen.getByText('cooperationsPage.cooperationDetails.submit')
     ).toBeInTheDocument()
 
-    //rating, textField, closeModal and Submit buttons
     expect(screen.getByTestId('rating-field')).toBeInTheDocument()
     expect(
       screen.getByLabelText('cooperationsPage.cooperationDetails.reviewLabel')
