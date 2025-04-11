@@ -4,6 +4,7 @@ import { UserRoleEnum } from '~/types'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { renderWithProviders } from '~tests/test-utils'
 import ProfileTab from '~/containers/edit-profile/profile-tab/ProfileTab'
+import AppTextField from '~/components/app-text-field/AppTextField'
 import { expect, vi } from 'vitest'
 
 vi.mock('~/components/title-with-description/TitleWithDescription', () => ({
@@ -18,16 +19,18 @@ vi.mock('~/components/title-with-description/TitleWithDescription', () => ({
 vi.mock(
   '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm',
   () => ({
-    default: ({ data, handleBlur, handleInputChange }) => (
+    default: ({ data, errors, handleBlur, handleInputChange }) => (
       <div data-testid='form'>
-        <input
+        <AppTextField
+          errorMsg={errors.firstName}
           onBlur={handleBlur('firstName')}
           onChange={handleInputChange('firstName')}
           placeholder={'firstName'}
           required
           value={data.firstName}
         />
-        <input
+        <AppTextField
+          errorMsg={errors.lastName}
           onBlur={handleBlur('lastName')}
           onChange={handleInputChange('lastName')}
           placeholder={'lastName'}
@@ -81,6 +84,7 @@ const mockedUserProfileData = {
     notificationTab: true
   }
 }
+const tooManyCharacters = 'A'.repeat(31)
 
 const renderWithMockData = () => {
   renderWithProviders(<ProfileTab />, {
@@ -95,6 +99,10 @@ const renderWithMockData = () => {
 }
 
 describe('ProfileTab', () => {
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('should render correctly', () => {
     renderWithMockData()
     const title = screen.getByTestId('title')
@@ -174,5 +182,53 @@ describe('ProfileTab', () => {
 
     expect(document.activeElement).toBe(lastNameInput)
     expect(lastNameInput).toHaveFocus()
+  })
+
+  it('should not display error message when "First Name" has < 30 chars', () => {
+    renderWithMockData()
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+
+    fireEvent.change(firstNameInput, { target: { value: 'John' } })
+
+    const errorMessage = screen.queryByText('common.errorMessages.nameLength')
+    expect(errorMessage).not.toBeInTheDocument()
+    expect(firstNameInput).toHaveValue('John')
+  })
+
+  it('should not display error message when "Last Name" has < 30 chars', () => {
+    renderWithMockData()
+    const lastNameInput = screen.getByPlaceholderText('lastName')
+
+    fireEvent.change(lastNameInput, { target: { value: 'Doe' } })
+
+    const errorMessage = screen.queryByText('common.errorMessages.nameLength')
+    expect(errorMessage).not.toBeInTheDocument()
+    expect(lastNameInput).toHaveValue('Doe')
+  })
+
+  it('should display error message when "First Name" has >= 30 chars', async () => {
+    renderWithMockData()
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+
+    fireEvent.change(firstNameInput, { target: { value: tooManyCharacters } })
+
+    const errorMessage = await screen.findByText(
+      'common.errorMessages.nameLength'
+    )
+    expect(errorMessage).toBeInTheDocument()
+    expect(firstNameInput).toHaveValue(tooManyCharacters)
+  })
+
+  it('should display error message when "Last Name" has >= 30 chars', async () => {
+    renderWithMockData()
+    const lastNameInput = screen.getByPlaceholderText('lastName')
+
+    fireEvent.change(lastNameInput, { target: { value: tooManyCharacters } })
+
+    const errorMessage = await screen.findByText(
+      'common.errorMessages.nameLength'
+    )
+    expect(errorMessage).toBeInTheDocument()
+    expect(lastNameInput).toHaveValue(tooManyCharacters)
   })
 })
