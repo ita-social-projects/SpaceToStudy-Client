@@ -234,7 +234,7 @@ describe('ChangePasswordModal', () => {
     })
   })
 
-  it.only('should display an error message for incorrect new password', async () => {
+  it('should display an error message for incorrect new password', async () => {
     const testData = ['A1!', 'ABCDEFGHIJKabcdefghijk1234567890!@#$%^&*()_+?><', 'ABab12!', 'ABCDEFGabcdefg123456!@#$%^'];
     const currentPasswordInput = screen.getByLabelText(
       /editProfilePage.profile.passwordSecurityTab.currentPassword/i
