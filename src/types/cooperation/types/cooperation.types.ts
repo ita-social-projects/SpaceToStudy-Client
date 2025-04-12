@@ -1,4 +1,4 @@
-import { CompletionStatusEnum, Cooperation } from '~/types'
+import type { CompletionStatusEnum, Cooperation } from '~/types'
 
 export type UpdateCooperationsParams = Partial<
   Pick<Cooperation, 'status' | 'price'>
@@ -20,5 +20,5 @@ export type UpdateCooperationsNeedActionMessages = {
 export type UpdateResourceCompletionStatusParams = {
   id: string
   resourceId: string
-  completionStatus: CompletionStatusEnum | undefined
+  completionStatus?: CompletionStatusEnum
 }

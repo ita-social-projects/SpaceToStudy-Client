@@ -34,7 +34,6 @@ import { ResponseError } from '~/exceptions'
 import { snackbarVariants } from '~/constants'
 import { getErrorKey } from '~/utils/get-error-key'
 import { getFullUrl } from '~/utils/get-full-url'
-import { queryClient } from '~/plugins/queryClient'
 
 const LessonDetails: React.FC = () => {
   const [completionStatus, setCompletionStatus] =
@@ -116,7 +115,7 @@ const LessonDetails: React.FC = () => {
       return
     }
 
-    cooperation.sections?.forEach((section) => {
+    cooperation.sections.forEach((section) => {
       const resource = section.resources?.find(
         (resource) => resource.resource._id === lessonId
       )
@@ -141,14 +140,12 @@ const LessonDetails: React.FC = () => {
     [dispatch]
   )
 
-  const handleResponse = () => {
-    void queryClient.invalidateQueries({ queryKey: ['lesson', lessonId] })
-    void queryClient.invalidateQueries({ queryKey: ['cooperation', id] })
-  }
-
   const { mutate: updateLessonStatus } = useMutation({
     mutationFn: cooperationService.updateResourceCompletionStatus,
-    onSuccess: handleResponse,
+    queryKeys: [
+      ['lesson', lessonId],
+      ['cooperation', id]
+    ],
     onError: handleResponseError
   })
 

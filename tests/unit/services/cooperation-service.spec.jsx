@@ -76,26 +76,21 @@ describe('Cooperation Notes Service tests', () => {
   })
 
   it('should get notes', async () => {
-    mockAxiosClient
-      .onGet(new RegExp(`${URLs.cooperations.get}/${id}${URLs.notes.get}`))
-      .reply(200)
-
+    mockAxiosClient.onGet(URLs.notes.get.replace(':id', id)).reply(200)
     await CooperationNotesService.getNotes(id)
 
     expect(mockAxiosClient.history.get[0].url).toBe(
-      `${URLs.cooperations.get}/${id}${URLs.notes.get}`
+      URLs.notes.get.replace(':id', id)
     )
   })
 
   it('should create note', async () => {
-    mockAxiosClient
-      .onPost(new RegExp(`${URLs.cooperations.get}/${id}${URLs.notes.create}`))
-      .reply(200)
+    mockAxiosClient.onPost(URLs.notes.get.replace(':id', id)).reply(200)
 
     await CooperationNotesService.createNote(noteData, id)
 
     expect(mockAxiosClient.history.post[0].url).toBe(
-      `${URLs.cooperations.get}/${id}${URLs.notes.create}`
+      URLs.notes.get.replace(':id', id)
     )
 
     expect(mockAxiosClient.history.post[0].data).toEqual(
@@ -105,17 +100,13 @@ describe('Cooperation Notes Service tests', () => {
 
   it('should update note', async () => {
     mockAxiosClient
-      .onPatch(
-        new RegExp(
-          `${URLs.cooperations.update}/${id}${URLs.notes.update}/${noteId}`
-        )
-      )
+      .onPatch(URLs.notes.update.replace(':id', id).replace(':noteId', noteId))
       .reply(200)
 
     await CooperationNotesService.updateNote(id, noteId, noteData)
 
     expect(mockAxiosClient.history.patch[0].url).toBe(
-      `${URLs.cooperations.update}/${id}${URLs.notes.update}/${noteId}`
+      URLs.notes.update.replace(':id', id).replace(':noteId', noteId)
     )
 
     expect(mockAxiosClient.history.patch[0].data).toEqual(
@@ -125,18 +116,14 @@ describe('Cooperation Notes Service tests', () => {
 
   it('should delete note', async () => {
     mockAxiosClient
-      .onDelete(
-        new RegExp(
-          `${URLs.cooperations.delete}/${id}${URLs.notes.delete}/${noteId}`
-        )
-      )
+      .onDelete(URLs.notes.delete.replace(':id', id).replace(':noteId', noteId))
       .reply(200)
 
     const result = await CooperationNotesService.deleteNote(id, noteId)
 
     expect(mockAxiosClient.history.delete[0].url).toBe(
-      `${URLs.cooperations.delete}/${id}${URLs.notes.delete}/${noteId}`
+      URLs.notes.delete.replace(':id', id).replace(':noteId', noteId)
     )
-    expect(result.data).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 })
