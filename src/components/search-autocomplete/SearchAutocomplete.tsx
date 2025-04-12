@@ -59,8 +59,6 @@ const SearchAutocomplete = ({
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 
-  console.log('options', props.options)
-
   const onInputChange = (_: SyntheticEvent, value: string) => {
     setSearchInput(value)
   }
