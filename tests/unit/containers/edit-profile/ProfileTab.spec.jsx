@@ -189,7 +189,6 @@ describe('ProfileTab', () => {
     const firstNameInput = screen.getByPlaceholderText('firstName')
 
     await userEvent.clear(firstNameInput)
-    await userEvent.click(firstNameInput)
     await userEvent.type(firstNameInput, 'John')
 
     const errorMessage = screen.queryByText('common.errorMessages.nameLength')
@@ -202,7 +201,6 @@ describe('ProfileTab', () => {
     const lastNameInput = screen.getByPlaceholderText('lastName')
 
     await userEvent.clear(lastNameInput)
-    await userEvent.click(lastNameInput)
     await userEvent.type(lastNameInput, 'Doe')
 
     const errorMessage = screen.queryByText('common.errorMessages.nameLength')
@@ -215,7 +213,6 @@ describe('ProfileTab', () => {
     const firstNameInput = screen.getByPlaceholderText('firstName')
 
     await userEvent.clear(firstNameInput)
-    await userEvent.click(firstNameInput)
     await userEvent.type(firstNameInput, tooManyCharacters)
 
     const errorMessage = screen.queryByText('common.errorMessages.nameLength')
@@ -228,7 +225,6 @@ describe('ProfileTab', () => {
     const lastNameInput = screen.getByPlaceholderText('lastName')
 
     await userEvent.clear(lastNameInput)
-    await userEvent.click(lastNameInput)
     await userEvent.type(lastNameInput, tooManyCharacters)
 
     const errorMessage = await screen.findByText(
