@@ -30,8 +30,16 @@ import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styl
 
 import { SizeEnum, VisibilityEnum, TextFieldVariantEnum } from '~/types'
 
+interface Options {
+  displayName: string
+  name: string
+}
+
 interface SearchAutocompleteProps
-  extends Omit<AutocompleteProps<string, false, false, true>, 'renderInput'> {
+  extends Omit<
+    AutocompleteProps<Options | string, false, false, true>,
+    'renderInput'
+  > {
   search: string
   setSearch: Dispatch<SetStateAction<string>>
   onSearchChange?: () => void
@@ -51,25 +59,51 @@ const SearchAutocomplete = ({
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 
-  const filterOptions = (
-    options: string[],
-    state: FilterOptionsState<string>
-  ) => {
-    const defaultFilterOptions = createFilterOptions<string>()
-    return defaultFilterOptions(options, state).slice(0, 6)
-  }
+  console.log('options', props.options)
 
   const onInputChange = (_: SyntheticEvent, value: string) => {
     setSearchInput(value)
   }
 
+  const filterOptions = (
+    options: (string | Options)[],
+    state: FilterOptionsState<string | Options>
+  ) => {
+    const defaultFilterOptions = createFilterOptions<string | Options>({
+      stringify: (option) =>
+        typeof option === 'string' ? option : option.displayName || option.name
+    })
+    return defaultFilterOptions(options, state).slice(0, 6)
+  }
+
   const handleAutoCompleteChange = (
     _: SyntheticEvent,
-    value: string | null
+    value: string | Options | null
   ) => {
     onSearchChange && onSearchChange()
-    setSearch(value ?? '')
+    setSearch(typeof value === 'string' ? value : (value?.name ?? ''))
   }
+
+  const getOptionLabel = (option: string | Options) =>
+    typeof option === 'string' ? option : option.displayName || option.name
+
+  const isOptionEqualToValue = (
+    option: string | Options,
+    value: string | Options
+  ) => {
+    if (typeof option === 'string' && typeof value === 'string') {
+      return option === value
+    }
+    if (typeof option !== 'string' && typeof value !== 'string') {
+      return option.name === value.name
+    }
+    return false
+  }
+
+  const value =
+    props.options.find((item) =>
+      typeof item === 'string' ? item === search : item.name === search
+    ) ?? null
 
   const onSearch = () => {
     onSearchChange && searchInput !== search && onSearchChange()
@@ -102,8 +136,10 @@ const SearchAutocomplete = ({
         ListboxProps={{ style: styles.listBox }}
         filterOptions={filterOptions}
         freeSolo
+        getOptionLabel={getOptionLabel}
         hideClearIcon
         inputValue={searchInput}
+        isOptionEqualToValue={isOptionEqualToValue}
         onChange={handleAutoCompleteChange}
         onInputChange={onInputChange}
         sx={{ flex: 1 }}
@@ -115,6 +151,7 @@ const SearchAutocomplete = ({
           sx: styles.input,
           ...textFieldProps
         }}
+        value={value}
         {...props}
       />
 

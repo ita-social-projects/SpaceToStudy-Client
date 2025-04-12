@@ -18,6 +18,7 @@ import { styles } from '~/containers/find-offer/offer-search-toolbar/OfferSearch
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
+import { translateData } from '~/utils/translate-data'
 
 interface OfferSearchToolbarProps {
   filters: FindOffersFilters
@@ -61,10 +62,38 @@ const OfferSearchToolbar = ({
     updateFiltersInQuery({ ...additionalParams, search: value })
   }
 
+  const translateCategories = useCallback(
+    (data: CategoryNameInterface[]) => {
+      return translateData(data, 'categories', t)
+    },
+    [t]
+  )
+
+  const translateSubjects = useCallback(
+    (data: SubjectNameInterface[]) => {
+      return translateData(data, 'subjects', t)
+    },
+    [t]
+  )
+
   const AppAutoCompleteList = (
     <>
+      {/* <AsyncAutocomplete
+      labelField='displayName'
+      onChange={onCategoryChange}
+      onResponse={onResponseCategory}
+      queryOptions={{ type: 'categories' }}
+      service={categoryService.getCategoriesNames}
+      sx={styles.categoryInput}
+      textFieldProps={{
+        label: t('breadCrumbs.categories')
+      }}
+      transform={translateCategories}
+      value={categoryId}
+      valueField='_id'
+    /> */}
       <AsyncAutocomplete
-        labelField='name'
+        labelField='displayName'
         onChange={onCategoryChange}
         queryOptions={{ type: 'categories' }}
         service={categoryService.getCategoriesNames}
@@ -72,11 +101,12 @@ const OfferSearchToolbar = ({
         textFieldProps={{
           label: t('breadCrumbs.categories')
         }}
+        transform={translateCategories}
         value={filters.categoryId}
         valueField='_id'
       />
       <AsyncAutocomplete
-        labelField='name'
+        labelField='displayName'
         onChange={onSubjectChange}
         queryOptions={{ type: 'subjects', categoryId: filters.categoryId }}
         service={getSubjectsNames}
@@ -84,6 +114,7 @@ const OfferSearchToolbar = ({
         textFieldProps={{
           label: t('breadCrumbs.subjects')
         }}
+        transform={translateSubjects}
         value={filters.subjectId}
         valueField='_id'
       />

@@ -61,6 +61,7 @@ export interface SubjectInterface {
 export interface SubjectNameInterface {
   _id: string
   name: string
+  displayName?: string
 }
 
 export interface ReviewInterface {

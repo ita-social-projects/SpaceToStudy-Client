@@ -23,12 +23,7 @@ import CreateSubjectModal from '~/containers/find-offer/create-new-subject/Creat
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { getSuffixes } from '~/utils/get-translation-suffixes'
 
-import {
-  CategoryInterface,
-  CategoryNameInterface,
-  CategoriesParams,
-  SizeEnum
-} from '~/types'
+import { CategoryInterface, CategoriesParams, SizeEnum } from '~/types'
 import { itemsLoadLimit } from './Categories.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/categories/Categories.styles'
@@ -92,12 +87,6 @@ const Categories = () => {
     [categories, oppositeRole, t]
   )
 
-  const options = useMemo(
-    () =>
-      categoriesNamesItems.map((option: CategoryNameInterface) => option.name),
-    [categoriesNamesItems]
-  )
-
   const getCategoryNames = () =>
     !categoriesNamesItems.length && void fetchData()
 
@@ -124,7 +113,7 @@ const Categories = () => {
           loading={categoriesNamesLoading}
           onFocus={getCategoryNames}
           onSearchChange={resetData}
-          options={options}
+          options={categoriesNamesItems}
           search={match}
           setSearch={setMatch}
           textFieldProps={{
@@ -132,7 +121,6 @@ const Categories = () => {
           }}
         />
       </AppToolbar>
-
       {!categories.length && !categoriesLoading ? (
         <NotFoundResults
           buttonText={t('errorMessages.buttonRequest', {

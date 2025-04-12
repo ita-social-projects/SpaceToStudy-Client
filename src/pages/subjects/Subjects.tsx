@@ -26,15 +26,9 @@ import OfferRequestBlock from '~/containers/find-offer/offer-request-block/Offer
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
-import { mapArrayByField } from '~/utils/map-array-by-field'
 import { getSuffixes } from '~/utils/get-translation-suffixes'
 import { translateData } from '~/utils/translate-data'
-import {
-  CategoryNameInterface,
-  SizeEnum,
-  SubjectInterface,
-  SubjectNameInterface
-} from '~/types'
+import { CategoryNameInterface, SizeEnum, SubjectInterface } from '~/types'
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/subjects/Subjects.styles'
@@ -57,18 +51,12 @@ const Subjects = () => {
 
   const cardsLimit = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const transform = useCallback(
-    (data: SubjectNameInterface[]): string[] => mapArrayByField(data, 'name'),
-    []
-  )
-
   const {
     loading: subjectNamesLoading,
     response: subjectsNamesItems,
     fetchData
   } = useSubjectsNames({
-    category: categoryId,
-    transform
+    category: categoryId
   })
 
   const getSubjectNames = () => {
@@ -165,9 +153,6 @@ const Subjects = () => {
 
   const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
 
-  const getOptionLabel = (option: string | Pick<SubjectInterface, 'name'>) =>
-    typeof option === 'string' ? option : option.name
-
   return (
     <PageWrapper>
       <OfferRequestBlock />
@@ -200,7 +185,6 @@ const Subjects = () => {
       <AppToolbar sx={styles.searchToolbar}>
         {!breakpoints.isMobile && autoCompleteCategories}
         <SearchAutocomplete
-          getOptionLabel={getOptionLabel}
           loading={subjectNamesLoading}
           onFocus={getSubjectNames}
           onSearchChange={resetData}
