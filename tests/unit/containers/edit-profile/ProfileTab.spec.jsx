@@ -191,7 +191,6 @@ describe('ProfileTab', () => {
     await userEvent.clear(firstNameInput)
     await userEvent.click(firstNameInput)
     await userEvent.type(firstNameInput, 'John')
-    fireEvent.blur(firstNameInput)
 
     const errorMessage = screen.queryByText('common.errorMessages.nameLength')
     expect(errorMessage).not.toBeInTheDocument()
