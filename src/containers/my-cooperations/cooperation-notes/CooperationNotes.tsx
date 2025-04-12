@@ -28,7 +28,7 @@ import { getErrorKey } from '~/utils/get-error-key'
 
 const CooperationNotes = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const { id = '' } = useParams()
   const dispatch = useAppDispatch()
   const { openDialog } = useConfirm()
   const [open, setOpen] = useState<boolean>(false)
@@ -85,7 +85,7 @@ const CooperationNotes = () => {
   const getNotes = useCallback(() => CooperationNotesService.getNotes(id), [id])
 
   const createNoteService = useCallback(
-    (data?: CreateOrUpdateNoteParams) =>
+    (data: CreateOrUpdateNoteParams = { isPrivate: false, text: '' }) =>
       CooperationNotesService.createNote(data, id),
     [id]
   )
@@ -97,8 +97,12 @@ const CooperationNotes = () => {
   )
 
   const updateNoteService = useCallback(
-    (params?: { noteId: string; data: CreateOrUpdateNoteParams }) =>
-      CooperationNotesService.updateNote(id, params?.noteId, params?.data),
+    (
+      params: { noteId: string; data: CreateOrUpdateNoteParams } = {
+        noteId: '',
+        data: { isPrivate: false, text: '' }
+      }
+    ) => CooperationNotesService.updateNote(id, params.noteId, params.data),
     [id]
   )
 

@@ -13,6 +13,7 @@ import type {
 } from '~/types'
 import { getFullUrl } from '~/utils/get-full-url'
 import { baseService } from '~/services/base-service'
+import { AxiosResponse } from 'axios'
 
 export const cooperationService = {
   getCooperations: async (params: GetCooperationsParams) => {
@@ -79,7 +80,7 @@ export const cooperationService = {
 
 export const CooperationNotesService = {
   getNotes: (cooperationId: string) => {
-    return baseService.request<NoteResponse[]>({
+    return baseService.request<AxiosResponse<NoteResponse[]>>({
       method: 'GET',
       url: getFullUrl({
         pathname: URLs.notes.get,
@@ -88,7 +89,7 @@ export const CooperationNotesService = {
     })
   },
   createNote: (data: CreateOrUpdateNoteParams, cooperationId: string) => {
-    return baseService.request<NoteResponse>({
+    return baseService.request<AxiosResponse<NoteResponse>>({
       method: 'POST',
       url: getFullUrl({
         pathname: URLs.notes.create,
@@ -102,7 +103,7 @@ export const CooperationNotesService = {
     noteId: string,
     data: CreateOrUpdateNoteParams
   ) => {
-    return baseService.request<void>({
+    return baseService.request<AxiosResponse<void>>({
       method: 'PATCH',
       url: getFullUrl({
         pathname: URLs.notes.update,
@@ -112,7 +113,7 @@ export const CooperationNotesService = {
     })
   },
   deleteNote: (cooperationId: string, noteId: string) => {
-    return baseService.request<void>({
+    return baseService.request<AxiosResponse<void>>({
       method: 'DELETE',
       url: getFullUrl({
         pathname: URLs.notes.delete,
