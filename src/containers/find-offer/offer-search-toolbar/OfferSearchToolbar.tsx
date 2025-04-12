@@ -78,20 +78,6 @@ const OfferSearchToolbar = ({
 
   const AppAutoCompleteList = (
     <>
-      {/* <AsyncAutocomplete
-      labelField='displayName'
-      onChange={onCategoryChange}
-      onResponse={onResponseCategory}
-      queryOptions={{ type: 'categories' }}
-      service={categoryService.getCategoriesNames}
-      sx={styles.categoryInput}
-      textFieldProps={{
-        label: t('breadCrumbs.categories')
-      }}
-      transform={translateCategories}
-      value={categoryId}
-      valueField='_id'
-    /> */}
       <AsyncAutocomplete
         labelField='displayName'
         onChange={onCategoryChange}
