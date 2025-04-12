@@ -142,6 +142,14 @@ const ChangePasswordModal = () => {
   const inputType = (isVisible: boolean) =>
     isVisible ? InputEnum.Text : InputEnum.Password
 
+  const isChangePasswordFormInvalid =
+    !data.password ||
+    !data.confirmPassword ||
+    !data.currentPassword ||
+    Boolean(errors.password) ||
+    Boolean(errors.confirmPassword) ||
+    Boolean(errors.currentPassword)
+
   return (
     <Box sx={styles.modalContainer}>
       <Box sx={styles.container}>
@@ -202,9 +210,7 @@ const ChangePasswordModal = () => {
               {t('common.cancel')}
             </Button>
             <Button
-              disabled={
-                !data.password || !data.confirmPassword || !data.currentPassword
-              }
+              disabled={isChangePasswordFormInvalid}
               size='md'
               sx={styles.saveButton}
               type={ButtonTypeEnum.Submit}
