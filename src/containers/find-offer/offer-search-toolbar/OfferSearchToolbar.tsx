@@ -18,7 +18,7 @@ import { styles } from '~/containers/find-offer/offer-search-toolbar/OfferSearch
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
-import { translateData } from '~/utils/translate-data'
+import useTranslate from '~/hooks/use-translate'
 
 interface OfferSearchToolbarProps {
   filters: FindOffersFilters
@@ -34,6 +34,8 @@ const OfferSearchToolbar = ({
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { updateFiltersInQuery } = filterActions
+  const translateCategories = useTranslate<CategoryNameInterface>('categories')
+  const translateSubjects = useTranslate<SubjectNameInterface>('subjects')
 
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(filters.categoryId),
@@ -61,20 +63,6 @@ const OfferSearchToolbar = ({
   const updateName = (value: string) => {
     updateFiltersInQuery({ ...additionalParams, search: value })
   }
-
-  const translateCategories = useCallback(
-    (data: CategoryNameInterface[]) => {
-      return translateData(data, 'categories', t)
-    },
-    [t]
-  )
-
-  const translateSubjects = useCallback(
-    (data: SubjectNameInterface[]) => {
-      return translateData(data, 'subjects', t)
-    },
-    [t]
-  )
 
   const AppAutoCompleteList = (
     <>

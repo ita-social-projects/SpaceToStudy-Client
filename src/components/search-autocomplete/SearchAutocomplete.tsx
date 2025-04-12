@@ -69,7 +69,9 @@ const SearchAutocomplete = ({
   ) => {
     const defaultFilterOptions = createFilterOptions<string | Options>({
       stringify: (option) =>
-        typeof option === 'string' ? option : option.displayName || option.name
+        typeof option === 'string'
+          ? option
+          : (option.displayName ?? option.name)
     })
     return defaultFilterOptions(options, state).slice(0, 6)
   }
