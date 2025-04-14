@@ -34,6 +34,7 @@ export const styles = {
   },
   clearBtn: {
     mr: '22px',
-    ml: '10px'
+    ml: '10px',
+    minWidth: '100px'
   }
 }
