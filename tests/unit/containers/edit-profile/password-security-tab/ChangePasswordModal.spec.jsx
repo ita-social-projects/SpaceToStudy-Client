@@ -233,4 +233,27 @@ describe('ChangePasswordModal', () => {
       expect(currentPasswordInput).toHaveValue('')
     })
   })
+
+  it('should show error when new password matches current password', () => {
+    const currentPasswordInput = screen.getByLabelText(/currentPassword/i)
+    const passwordInput = screen.getByLabelText(/newPassword/i)
+    const confirmPasswordInput = screen.getByLabelText(/retypePassword/i)
+    const saveButton = screen.getByText(/savePassword/i)
+
+    fireEvent.change(currentPasswordInput, {
+      target: { value: 'samePassword123' }
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: 'samePassword123' }
+    })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: 'samePassword123' }
+    })
+
+    fireEvent.click(saveButton)
+
+    expect(
+      screen.getByText(/common.errorMessages.currentAndNewPasswordsMatch/i)
+    ).toBeInTheDocument()
+  })
 })
