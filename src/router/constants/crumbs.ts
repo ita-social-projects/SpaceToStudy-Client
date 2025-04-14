@@ -1,6 +1,7 @@
 import { authRoutes } from '~/router/constants/authRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { UserResponse } from '~/types'
+import { queryClient } from '~/plugins/queryClient'
 
 export const home = {
   name: 'breadCrumbs.home',
@@ -107,9 +108,15 @@ export const editQuiz = {
   path: authRoutes.myResources.editQuiz.route
 }
 
-export const userProfile = ({ data }: { data: UserResponse }) => ({
-  name: `${data.firstName} ${data.lastName}`
-})
+export const userProfile = (data: Pick<UserResponse, '_id' | 'role'>) => {
+  const userData = queryClient.getQueryData([
+    'user',
+    data._id,
+    data.role
+  ]) as UserResponse
+
+  return { name: `${userData.firstName} ${userData.lastName}` }
+}
 
 export const newQuestion = {
   name: 'breadCrumbs.newQuestion',
