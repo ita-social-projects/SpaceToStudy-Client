@@ -233,4 +233,35 @@ describe('ProfileTab', () => {
     expect(errorMessage).toBeInTheDocument()
     expect(lastNameInput).toHaveValue(tooManyCharacters)
   })
+
+  it('should show an error when "First name" empty', async () => {
+    renderWithMockData()
+
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+
+    await userEvent.clear(firstNameInput)
+    expect(firstNameInput.value).toBe('')
+
+    const errorMessage = await screen.findByText(
+      /common.errorMessages.emptyField/i
+    )
+    expect(errorMessage).toBeInTheDocument()
+    expect(firstNameInput).toHaveAttribute('aria-invalid', 'true')
+  })
+
+  it('should show an error when "First name" contains only spaces', async () => {
+    renderWithMockData()
+
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+
+    await userEvent.clear(firstNameInput)
+    await userEvent.type(firstNameInput, '   ')
+    expect(firstNameInput.value).toBe('   ')
+
+    const errorMessage = await screen.findByText(
+      /common.errorMessages.hasOnlySpaces/i
+    )
+    expect(errorMessage).toBeInTheDocument()
+    expect(firstNameInput).toHaveAttribute('aria-invalid', 'true')
+  })
 })
