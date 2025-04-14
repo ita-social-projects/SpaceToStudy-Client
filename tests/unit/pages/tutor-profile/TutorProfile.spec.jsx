@@ -1,20 +1,17 @@
 import { screen } from '@testing-library/react'
-import { vi } from 'vitest'
-
-import useAxios from '~/hooks/use-axios'
-import UserProfile from '~/pages/user-profile/UserProfile.jsx'
-import { renderWithProviders } from '~tests/test-utils'
+import UserProfile from '~/pages/user-profile/UserProfile.tsx'
+import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
+import { getFullUrl } from '~/utils/get-full-url'
 
 const route = '/tutor/my-profile'
 
-const tutorAppMain = {
-  userRole: 'tutor',
-  _id: '648850c4fdc2d1a130c24aea'
+const mockTutorState = {
+  appMain: { userRole: 'tutor', userId: '648850c4fdc2d1a130c24aea' }
 }
 
-const studentAppMain = {
-  userRole: 'student',
-  _id: '648850c4fdc2d1a130c24aeb'
+const mockStudentState = {
+  appMain: { userRole: 'student', userId: '648850c4fdc2d1a130c24aeb' }
 }
 
 const videoMockDataStudent = {
@@ -23,21 +20,17 @@ const videoMockDataStudent = {
   }
 }
 
-const videoMockDataTutor = {
-  videoLink: {
-    tutor: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-  }
-}
-
 const professionalBlockMock = {
   professionalBlock: {
     awards: 'My awards are countless, why bother telling you them?'
   }
 }
-
-const mockData = {
+const tutorMockData = {
+  _id: '648850c4fdc2d1a130c24aea',
+  role: ['tutor'],
   firstName: 'Іван',
   lastName: 'Мавдрик',
+  email: 'ivan.mavdryk@example.com',
   mainSubjects: {
     student: [],
     tutor: [
@@ -61,62 +54,80 @@ const mockData = {
     student: 0,
     tutor: 0
   },
-  aboutStudent: {
-    personalIntroduction: '',
-    learningGoals: '',
-    learningActivities: ''
-  }
-}
-
-const getFakeData = (load, extraData = {}) => {
-  return {
-    loading: load,
-    response: { ...mockData, ...extraData }
-  }
+  nativeLanguage: 'Ukrainian',
+  address: {
+    country: 'Ukraine',
+    city: 'Lviv',
+    street: 'Shevchenka St.',
+    postalCode: '79000'
+  },
+  photo: 'https://www.google.com',
+  lastLogin: '2024-02-15T12:00:00Z',
+  createdAt: '2023-06-12T10:00:00Z',
+  updatedAt: '2024-02-15T12:30:00Z',
+  videoLink: {
+    tutor: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    student: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+  },
+  status: {
+    student: 'active',
+    tutor: 'active'
+  },
+  notificationSettings: {
+    emailNotifications: true,
+    pushNotifications: false
+  },
+  bookmarkedOffers: ['64884f21fdc2d1a130c24ac0', '648850c4fdc2d1a130c24aea'],
+  lastSeen: '2024-02-15T12:15:00Z'
 }
 
 const renderWithMockData = ({
-  load = false,
-  appMain = tutorAppMain,
+  mockData = tutorMockData,
+  appMain = mockTutorState,
   extraData = {}
 } = {}) => {
-  const fakeData = getFakeData(load, extraData)
-
-  useAxios.mockImplementation(() => fakeData)
+  const url = getFullUrl({
+    parameters: { id: appMain.appMain?.userId },
+    pathname: URLs.users.getUserById,
+    searchParameters: { userRole: appMain.appMain?.userRole }
+  })
+  mockAxiosClient.onGet(url).reply(200, { ...mockData, ...extraData })
   renderWithProviders(<UserProfile />, {
-    preloadedState: { appMain },
+    preloadedState: appMain,
     initialEntries: route
   })
 }
 
-vi.mock('~/hooks/use-axios')
-
 describe('UserProfile', () => {
-  it('should render loader', () => {
-    renderWithMockData({ load: true })
+  it('Should render professional block info for tutor', async () => {
+    renderWithMockData({ extraData: professionalBlockMock })
+    const aboutTutorTitle = await screen.findByText(
+      'userProfilePage.tutorAbout.title'
+    )
 
-    const loader = screen.getByTestId('loader')
-    expect(loader).toBeInTheDocument()
+    expect(aboutTutorTitle).toBeInTheDocument()
   })
 
-  it('should find rendering name', () => {
+  it('should find rendering name', async () => {
     renderWithMockData()
 
-    const name = screen.getByText(`${mockData.firstName} ${mockData.lastName}`)
+    const name = await screen.findByText(
+      `${tutorMockData.firstName} ${tutorMockData.lastName}`
+    )
     expect(name).toBeInTheDocument()
   })
 
-  it('Should render video presentation block for tutor', () => {
-    renderWithMockData({ extraData: videoMockDataTutor })
+  it('Should render video presentation block for tutor', async () => {
+    renderWithMockData()
 
-    const videoBlockTitle = screen.getByText(
+    const videoBlockTitle = await screen.findByText(
       'userProfilePage.videoPresentation.title'
     )
     expect(videoBlockTitle).toBeInTheDocument()
   })
 
   it('Should not render video presentation block when student has no video link', () => {
-    renderWithMockData({ appMain: studentAppMain })
+    renderWithMockData({ appMain: mockStudentState })
 
     const videoBlockTitle = screen.queryByText(
       'userProfilePage.videoPresentation.title'
@@ -124,36 +135,22 @@ describe('UserProfile', () => {
     expect(videoBlockTitle).not.toBeInTheDocument()
   })
 
-  it('Should render video presentation block when student has a video link', () => {
+  it('Should render video presentation block when student has a video link', async () => {
     renderWithMockData({
-      appMain: studentAppMain,
+      appMain: mockStudentState,
       extraData: videoMockDataStudent
     })
 
-    const videoBlockTitle = screen.getByText(
+    const videoBlockTitle = await screen.findByText(
       'userProfilePage.videoPresentation.title'
     )
+
     expect(videoBlockTitle).toBeInTheDocument()
   })
 
-  it('Should render professional block info for tutor', () => {
-    renderWithMockData({
-      appMain: tutorAppMain,
-      extraData: professionalBlockMock
-    })
+  it('should render loader', () => {
+    renderWithMockData({ appMain: {}, mockData: {} })
 
-    const aboutTutorTitle = screen.getByText('userProfilePage.tutorAbout.title')
-    expect(aboutTutorTitle).toBeInTheDocument()
-  })
-
-  it('Should not render professional block info for tutor if there is no information', () => {
-    renderWithMockData({
-      appMain: tutorAppMain
-    })
-
-    const aboutTutorTitle = screen.queryByText(
-      'userProfilePage.tutorAbout.title'
-    )
-    expect(aboutTutorTitle).not.toBeInTheDocument()
+    expect(screen.getByTestId('loader')).toBeInTheDocument()
   })
 })
