@@ -4,7 +4,7 @@ import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import { useMatch } from 'react-router-dom'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import { vi } from 'vitest'
 
 const mockNavigate = vi.fn()
@@ -12,7 +12,7 @@ const mockNavigate = vi.fn()
 vi.mock('~/hooks/use-breakpoints')
 
 const mockSetChatInfo = vi.fn()
-const mockFetchData = vi.fn()
+const mockRefetch = vi.fn()
 
 vi.mock('~/context/chat-context', () => ({
   useChatContext: () => ({
@@ -20,12 +20,9 @@ vi.mock('~/context/chat-context', () => ({
   })
 }))
 
-vi.mock('~/hooks/use-axios', () => ({
-  default: vi.fn(() => ({
-    response: [],
-    loading: false,
-    fetchData: vi.fn()
-  }))
+vi.mock('~/hooks/use-query', () => ({
+  __esModule: true,
+  default: vi.fn()
 }))
 
 vi.mock('react-router-dom', async () => {
@@ -107,7 +104,12 @@ function renderWithBreakpoints(data, role = 'student') {
 
 describe('ProfileInfo component tests', () => {
   beforeEach(() => {
-    vi.resetModules()
+    vi.resetAllMocks()
+    useQuery.mockReturnValue({
+      data: [],
+      isLoading: false,
+      refetch: mockRefetch
+    })
   })
 
   describe('when profile is not own and on laptop', () => {
@@ -147,9 +149,9 @@ describe('ProfileInfo component tests', () => {
       renderWithBreakpoints(mobileData, 'tutor')
     })
 
-    it('should copy link to profile', () => {
+    it('should copy link to profile', async () => {
       const iconBtn = screen.getByTestId('icon-btn')
-      fireEvent.click(iconBtn)
+      await act(() => fireEvent.click(iconBtn))
 
       expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
     })
@@ -203,13 +205,12 @@ describe('onSendMessageClick tests', () => {
     vi.resetAllMocks()
   })
 
-  it('should set chat info for an existing chat', () => {
-    useAxios.mockImplementation(() => ({
-      default: vi.fn(),
-      response: chatResponse,
-      loading: false,
-      fetchData: mockFetchData
-    }))
+  it('should set chat info for an existing chat', async () => {
+    useQuery.mockReturnValue({
+      data: chatResponse,
+      isLoading: false,
+      refetch: mockRefetch
+    })
 
     useMatch.mockImplementation(() => false)
     renderWithBreakpoints(laptopData, 'student')
@@ -217,7 +218,7 @@ describe('onSendMessageClick tests', () => {
     const sendMessageBtn = screen.getByText(
       /userProfilePage.profileInfo.sendMessage/i
     )
-    fireEvent.click(sendMessageBtn)
+    await act(() => fireEvent.click(sendMessageBtn))
 
     expect(mockSetChatInfo).toHaveBeenCalledWith({
       author: userData,
@@ -226,16 +227,15 @@ describe('onSendMessageClick tests', () => {
       updateInfo: expect.any(Function)
     })
 
-    expect(mockFetchData).not.toHaveBeenCalled()
+    expect(mockRefetch).not.toHaveBeenCalled()
   })
 
-  it('should trigger fetchData when no existing chat is found', () => {
-    useAxios.mockImplementation(() => ({
-      default: vi.fn(),
-      response: [],
-      loading: false,
-      fetchData: mockFetchData
-    }))
+  it('should trigger refetch when no existing chat is found', async () => {
+    useQuery.mockReturnValue({
+      data: [],
+      isLoading: false,
+      refetch: mockRefetch
+    })
 
     useMatch.mockImplementation(() => false)
     renderWithBreakpoints(laptopData, 'student')
@@ -243,7 +243,7 @@ describe('onSendMessageClick tests', () => {
     const sendMessageBtn = screen.getByText(
       /userProfilePage.profileInfo.sendMessage/i
     )
-    fireEvent.click(sendMessageBtn)
+    await act(() => fireEvent.click(sendMessageBtn))
 
     expect(mockSetChatInfo).toHaveBeenCalledWith({
       author: userData,
@@ -252,6 +252,6 @@ describe('onSendMessageClick tests', () => {
       updateInfo: expect.any(Function)
     })
 
-    expect(mockFetchData).toHaveBeenCalled()
+    expect(mockRefetch).toHaveBeenCalled()
   })
 })

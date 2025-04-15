@@ -24,7 +24,7 @@ import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { useChatContext } from '~/context/chat-context'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import { chatService } from '~/services/chat-service'
 import { DoneItem } from './ProfileInfo.constants'
 
@@ -131,19 +131,27 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
         description: `${userData.address.city}, ${userData.address.country}`
       }
   ].filter((item): item is DoneItem => !!item)
+
   const {
-    response: listOfChats,
-    loading: isChatsLoading,
-    fetchData
-  } = useAxios<ChatResponse[]>({
-    service: chatService.getChats,
-    defaultResponse: defaultResponses.array
+    data: listOfChats,
+    isLoading: isChatsLoading,
+    refetch
+  } = useQuery<ChatResponse[]>({
+    queryKey: ['chats'],
+    queryFn: async () => {
+      const res = await chatService.getChats()
+      return res.data
+    },
+    options: {
+      staleTime: Infinity,
+      initialData: defaultResponses.array
+    }
   })
 
-  const onSendMessageClick = () => {
-    const existedChat = listOfChats.find((chat) => {
-      return chat.members.some((member) => member.user._id == userData._id)
-    })
+  const onSendMessageClick = async () => {
+    const existedChat = listOfChats.find((chat) =>
+      chat.members.some((member) => member.user._id === userData._id)
+    )
 
     setChatInfo({
       author: userData,
@@ -153,7 +161,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
     })
 
     if (!existedChat?._id) {
-      void fetchData()
+      await refetch()
     }
   }
   const buttonGroup = !isMyProfile && (
@@ -173,7 +181,9 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
       <Button
         disabled={isChatsLoading}
         fullWidth
-        onClick={onSendMessageClick}
+        onClick={() => {
+          void onSendMessageClick()
+        }}
         size={isLaptopAndAbove ? 'lg' : 'md'}
       >
         {t('userProfilePage.profileInfo.sendMessage')}
