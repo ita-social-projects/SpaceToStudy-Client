@@ -186,6 +186,68 @@ describe('AddProfessionalCategoryModal without initial value', () => {
 
     expect(submitButton).toBeDisabled()
   })
+  it('should allow to select and delete subject, disable save button, and clear field', async () => {
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    await selectOption(
+      categoryAutocomplete,
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }),
+      'findByText'
+    )
+    expect(categoryAutocomplete).toHaveValue('Cooking')
+
+    const button = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/
+    )
+    fireEvent.click(button)
+
+    await act(() =>
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: 'Gastronomy' }
+      })
+    )
+    expect(professionalSubjects[0].value).toBe('Gastronomy')
+
+    const deleteIcons = screen.getAllByTestId('DeleteIcon')
+    await act(() => fireEvent.click(deleteIcons[0]))
+
+    expect(screen.queryByDisplayValue('Gastronomy')).not.toBeInTheDocument()
+
+    const submitButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    ).parentNode
+    expect(submitButton).toBeDisabled()
+
+    await selectOption(
+      categoryAutocomplete,
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }),
+      'findByDisplayValue'
+    )
+
+    await act(() =>
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: 'Updated Gastronomy' }
+      })
+    )
+    expect(professionalSubjects[0].value).toBe('Updated Gastronomy')
+
+    const clearButton = screen.getByLabelText('Clear')
+    fireEvent.click(clearButton)
+
+    fireEvent.click(button)
+
+    const updatedProfessionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+    expect(updatedProfessionalSubjects[0].value).toBe('')
+
+    expect(submitButton).toBeDisabled()
+  })
 
   it('subject field should be disabled if category is disabled', async () => {
     const subjectAutocomplete = screen.getByLabelText(
