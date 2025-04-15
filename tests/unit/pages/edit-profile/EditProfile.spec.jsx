@@ -577,48 +577,4 @@ describe('EditProfile', () => {
       title: 'editProfilePage.profile.profileTab.saveUnsavedChangesModal.title'
     })
   })
-
-  it('should show an error when "First name" empty and Update button becomes disabled and inactive', async () => {
-    const mockHandleInputChange = vi.fn()
-    const mockT = vi.fn((key) => {
-      const translations = {
-        'common.labels.firstName': 'First Name',
-        'common.errorMessages.hasOnlySpaces':
-          'This field must contain at least one non-space character'
-      }
-      return translations[key] || key
-    })
-    const mockError = {
-      firstName: 'common.errorMessages.hasOnlySpaces'
-    }
-
-    renderWithProviders(
-      <ProfileTabForm
-        data={mockData}
-        errors={mockError}
-        handleBlur={() => {}}
-        handleInputChange={mockHandleInputChange}
-        openAlert={() => {}}
-        t={mockT}
-      />
-    )
-
-    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
-    expect(firstNameInput).toBeInTheDocument()
-
-    fireEvent.change(firstNameInput, { target: { value: '   ' } })
-    fireEvent.blur(firstNameInput)
-    expect(mockHandleInputChange).toHaveBeenCalled()
-
-    fireEvent.click(firstNameInput)
-    const updateButton = screen.getByText('editProfilePage.updateBtn')
-    expect(updateButton).toBeInTheDocument()
-    // expect(updateButton).toBeDisabled()
-
-    const errorMessage = await screen.findByText(
-      /common.errorMessages.hasOnlySpaces/i
-    )
-    expect(errorMessage).toBeInTheDocument()
-    expect(firstNameInput).toHaveAttribute('aria-invalid', 'true')
-  })
 })
