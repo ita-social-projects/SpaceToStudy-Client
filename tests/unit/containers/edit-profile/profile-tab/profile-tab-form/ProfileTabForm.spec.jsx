@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import { imageResize } from '~/utils/image-resize'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
@@ -26,10 +26,15 @@ const props = {
 describe('ProfileTabForm', () => {
   URL.createObjectURL = vi.fn().mockReturnValue('photo')
 
+  const initialLanguage = 'English'
+  const propsWithInitialLanguage = {
+    ...props,
+    data: { ...formDataMock, nativeLanguage: initialLanguage }
+  }
   beforeEach(() => {
     renderWithProviders(
       <TestSnackbar>
-        <ProfileTabForm {...props} />
+        <ProfileTabForm {...propsWithInitialLanguage} />
       </TestSnackbar>
     )
   })
@@ -55,6 +60,38 @@ describe('ProfileTabForm', () => {
     fireEvent.click(option)
 
     expect(languageField.value).toBe(newLanguageValue)
+  })
+
+  it('should allow changing the native language', async () => {
+    const newLanguage = 'German'
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
+    expect(languageField.value).toBe(initialLanguage)
+
+    fireEvent.mouseDown(languageField)
+    await waitFor(() => {
+      const options = [
+        'English',
+        'Ukrainian',
+        'Polish',
+        'German',
+        'French',
+        'Spanish',
+        'Arabic'
+      ]
+      options.forEach(async (lang) => {
+        const option = await within(document.body).findByText(lang)
+        expect(option).toBeInTheDocument()
+      })
+    })
+
+    fireEvent.click(languageField)
+    fireEvent.change(languageField, { target: { value: newLanguage } })
+    const germanOption = screen.getByText(newLanguage)
+    fireEvent.click(germanOption)
+
+    expect(languageField.value).toBe(newLanguage)
   })
 
   it('should clear the selected native language and change the value', async () => {
