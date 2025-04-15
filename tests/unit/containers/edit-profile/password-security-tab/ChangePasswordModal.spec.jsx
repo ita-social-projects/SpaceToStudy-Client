@@ -290,4 +290,5 @@ describe('ChangePasswordModal', () => {
         expect(screen.getByText(/common.errorMessages/i)).toBeInTheDocument()
       })
     }
+  })
 })
