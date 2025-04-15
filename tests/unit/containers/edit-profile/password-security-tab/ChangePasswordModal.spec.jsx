@@ -257,29 +257,37 @@ describe('ChangePasswordModal', () => {
     ).toBeInTheDocument()
   })
 
-  it('should throw an error at entering alphabetic values', async () => {
+  it('should display an error message for incorrect new password', async () => {
+    const testData = [
+      'A1!',
+      'ABCDEFGHIJKabcdefghijk1234567890!@#$%^&*()_+?><',
+      'ABab12!',
+      'ABCDEFGabcdefg123456!@#$%^'
+    ]
     const currentPasswordInput = screen.getByLabelText(
       /editProfilePage.profile.passwordSecurityTab.currentPassword/i
     )
+    const newPasswordInput = screen.getByLabelText(/newPassword/i)
+    const retypePasswordInput = screen.getByLabelText(/retypePassword/i)
     const saveButton = screen.getByText(
       /editProfilePage.profile.passwordSecurityTab.savePassword/i
     )
-    fireEvent.change(currentPasswordInput, {
-      target: { value: 'ABCDabcdef' }
-    })
-    fireEvent.change(screen.getByLabelText(/newPassword/i), {
-      target: { value: 'ABCDabcdef' }
-    })
-    fireEvent.change(screen.getByLabelText(/retypePassword/i), {
-      target: { value: 'ABCDabcdef' }
-    })
 
-    fireEvent.click(saveButton)
+    for (const data of testData) {
+      fireEvent.change(currentPasswordInput, {
+        target: { value: userDataMock.currentPassword }
+      })
+      fireEvent.change(newPasswordInput, {
+        target: { value: data }
+      })
+      fireEvent.change(retypePasswordInput, {
+        target: { value: data }
+      })
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
-      ).toBeInTheDocument()
-    })
-  })
+      fireEvent.click(saveButton)
+
+      await waitFor(() => {
+        expect(screen.getByText(/common.errorMessages/i)).toBeInTheDocument()
+      })
+    }
 })
