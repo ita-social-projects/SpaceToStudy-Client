@@ -22,21 +22,22 @@ import VideoPresentation from '~/containers/user-profile/video-presentation/Vide
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 
 import { UserRoleEnum } from '~/types'
-import { defaultResponses } from '~/constants'
 
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import { userService } from '~/services/user-service'
 import videoImgProfile from '~/assets/img/user-profile-page/presentationVideoImg.png'
 
 import { responseMock } from '~/pages/user-profile/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { scrollToHash } from '~/utils/hash-scroll'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
-const UserProfile = () => {
+const UserProfile: React.FC = () => {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
-  const paramsRole = searchParams.get('role')
+  const paramsRole = searchParams.get('role') as UserRoleEnum
+  const { handleErrorAlert } = useSnackbarAlert()
   const { user } = responseMock
   const { reviews } = user.reviewStats || {}
 
@@ -53,40 +54,44 @@ const UserProfile = () => {
   const isMyProfile = useMatch(authRoutes.myProfile.path)
 
   const getUserData = useCallback(
-    () => userService.getUserById(preferredId, preferredRole),
+    () => userService.getUserByIdWithBaseService(preferredId, preferredRole),
     [preferredId, preferredRole]
   )
 
-  const { loading, response } = useAxios({
-    service: getUserData,
-    fetchOnMount: true,
-    defaultResponse: defaultResponses.array
+  const {
+    isLoading: userLoading,
+    data: userResponse,
+    error: fetchUserError
+  } = useQuery({
+    queryFn: getUserData,
+    queryKey: ['user', preferredId, preferredRole],
+    options: {
+      staleTime: Infinity
+    }
   })
 
-  if (loading) {
-    return <Loader pageLoad size={70} />
-  }
+  useEffect(() => {
+    if (fetchUserError) {
+      handleErrorAlert(fetchUserError)
+    }
+  }, [handleErrorAlert, fetchUserError])
 
   const isTutor = preferredRole === UserRoleEnum.Tutor
 
   const shouldShowPresentation =
     (isTutor && isMyProfile) ||
-    (!isTutor && response.videoLink?.student) ||
-    (!isMyProfile && response.videoLink?.tutor)
-  const VideoPresentationComponent = (
-    <VideoPresentation
-      video={response?.videoLink?.[preferredRole]}
-      videoMock={videoImgProfile}
-      videoPreview={loading || !response?.videoLink?.[preferredRole]}
-    />
-  )
+    (!isTutor && userResponse?.videoLink?.student) ||
+    (!isMyProfile && userResponse?.videoLink?.tutor)
 
+  if (userLoading || !userResponse) {
+    return <Loader size={70} />
+  }
   return (
     <PageWrapper>
-      <ProfileInfo myRole={userRole} userData={response} />
+      {userRole && <ProfileInfo myRole={userRole} userData={userResponse} />}
       {isMyProfile && (
         <CompleteProfileBlock
-          data={response}
+          data={userResponse}
           openAccordion={!!hash}
           profileItems={
             preferredRole === UserRoleEnum.Student
@@ -95,13 +100,27 @@ const UserProfile = () => {
           }
         />
       )}
-      {response.professionalBlock && (
-        <AboutTutorBlock data={response.professionalBlock} />
+      {userResponse?.professionalBlock && (
+        <AboutTutorBlock data={userResponse?.professionalBlock} />
       )}
-      {response.aboutStudent && (
-        <AboutStudentBlock data={response.aboutStudent} />
+      {userResponse?.aboutStudent && (
+        <AboutStudentBlock data={userResponse?.aboutStudent} />
       )}
-      {shouldShowPresentation && VideoPresentationComponent}
+      {shouldShowPresentation && (
+        <VideoPresentation
+          video={
+            userResponse?.videoLink?.[
+              preferredRole as UserRoleEnum.Tutor | UserRoleEnum.Student
+            ]
+          }
+          videoMock={videoImgProfile}
+          videoPreview={
+            !userResponse?.videoLink?.[
+              preferredRole as UserRoleEnum.Tutor | UserRoleEnum.Student
+            ]
+          }
+        />
+      )}
       <CommentsWithRatingBlock
         averageRating={user.reviewStats.averageRating}
         reviewsCount={reviews}

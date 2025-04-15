@@ -1,4 +1,5 @@
 import { screen, fireEvent } from '@testing-library/react'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 import { renderWithProviders } from '~tests/test-utils'
 import ActiveStudentsBlock from '~/components/active-students/ActiveStudentsBlock'
@@ -121,7 +122,9 @@ describe('ActiveStudentsBlock', () => {
     const showMoreButton = screen.getByTestId('showMore')
     fireEvent.click(showMoreButton)
 
-    expect(navigateMock).toHaveBeenCalledWith('/my-cooperations')
+    expect(navigateMock).toHaveBeenCalledWith(
+      authRoutes.cooperationDetails.path
+    )
   })
 
   it('should render Loader when loading', () => {
@@ -145,9 +148,7 @@ describe('ActiveStudentsBlock', () => {
     const showMoreButton = screen.getByTestId('addStudent')
     fireEvent.click(showMoreButton)
 
-    expect(navigateMock).toHaveBeenCalledWith(
-      '/categories/subjects/find-offers'
-    )
+    expect(navigateMock).toHaveBeenCalledWith(authRoutes.findOffers.path)
   })
 
   it('should not render on error', () => {
