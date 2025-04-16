@@ -106,7 +106,6 @@ const CreateSubjectModal = () => {
       </Box>
       <Box
         component={ComponentEnum.Form}
-        data-testid='create-subject-form'
         onSubmit={handleSubmit}
         sx={styles.formWrapper}
       >
