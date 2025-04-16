@@ -233,4 +233,32 @@ describe('ProfileTab', () => {
     expect(errorMessage).toBeInTheDocument()
     expect(lastNameInput).toHaveValue(tooManyCharacters)
   })
+
+  it('should display error message when "First Name" includes non-alphabetic characters', async () => {
+    renderWithMockData()
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+
+    await userEvent.clear(firstNameInput)
+    fireEvent.change(firstNameInput, { target: { value: 'John123' } })
+
+    const errorMessage = screen.getByText(
+      /common.errorMessages.nameCharacters/i
+    )
+    expect(errorMessage).toBeInTheDocument()
+    expect(firstNameInput).toHaveValue('John')
+  })
+
+  it('should display error message when "Last Name" includes non-alphabetic characters', async () => {
+    renderWithMockData()
+    const lastNameInput = screen.getByPlaceholderText('lastName')
+
+    await userEvent.clear(lastNameInput)
+    fireEvent.change(lastNameInput, { target: { value: 'Doe123' } })
+
+    const errorMessage = screen.getByText(
+      /common.errorMessages.nameCharacters/i
+    )
+    expect(errorMessage).toBeInTheDocument()
+    expect(lastNameInput).toHaveValue('Doe')
+  })
 })
