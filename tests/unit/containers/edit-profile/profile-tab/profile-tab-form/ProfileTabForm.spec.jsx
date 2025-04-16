@@ -47,7 +47,7 @@ describe('ProfileTabForm', () => {
     URL.createObjectURL.mockReset()
   })
 
-  it('should handle the language input change', () => {
+  it('should update the native language after typing and selecting an option', () => {
     const newLanguageValue = 'Ukrainian'
     const languageField = screen.getByLabelText(
       'becomeTutor.languages.autocompleteLabel'
@@ -62,36 +62,34 @@ describe('ProfileTabForm', () => {
     expect(languageField.value).toBe(newLanguageValue)
   })
 
-  it('should allow changing the native language', async () => {
-    const newLanguage = 'German'
+  it('should display the initial native language value', () => {
     const languageField = screen.getByLabelText(
       'becomeTutor.languages.autocompleteLabel'
     )
+
     expect(languageField.value).toBe(initialLanguage)
+  })
 
+  it('should open the dropdown with all language options', async () => {
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
     fireEvent.mouseDown(languageField)
-    await waitFor(() => {
-      const options = [
-        'English',
-        'Ukrainian',
-        'Polish',
-        'German',
-        'French',
-        'Spanish',
-        'Arabic'
-      ]
-      options.forEach(async (lang) => {
-        const option = await within(document.body).findByText(lang)
-        expect(option).toBeInTheDocument()
-      })
-    })
 
-    fireEvent.click(languageField)
-    fireEvent.change(languageField, { target: { value: newLanguage } })
-    const germanOption = screen.getByText(newLanguage)
-    fireEvent.click(germanOption)
+    const options = [
+      'English',
+      'Ukrainian',
+      'Polish',
+      'German',
+      'French',
+      'Spanish',
+      'Arabic'
+    ]
 
-    expect(languageField.value).toBe(newLanguage)
+    for (const lang of options) {
+      const option = await within(document.body).findByText(lang)
+      expect(option).toBeInTheDocument()
+    }
   })
 
   it('should clear the selected native language and change the value', async () => {
