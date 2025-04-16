@@ -141,7 +141,7 @@ const CreateSubjectModal = () => {
           textFieldProps={{
             label: t('offerPage.labels.category'),
             error: Boolean(errors.category),
-            helperText: t(errors.category) || ' '
+            helperText: t(errors.category) ?? ' '
           }}
           value={data.category}
           valueField='name'
