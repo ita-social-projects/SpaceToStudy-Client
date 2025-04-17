@@ -1,7 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { describe, it, beforeEach, vi } from 'vitest'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import CreateSubjectModal from '../../../../../src/containers/find-offer/create-subject/CreateSubject'
+import CreateSubjectModal from '~/containers/find-offer/create-subject/CreateSubject'
 import { categoryService } from '~/services/category-service'
 import { TestSnackbar, renderWithProviders } from '~tests/test-utils'
 
@@ -40,7 +40,7 @@ describe('CreateSubjectModal container', () => {
     expect(categoryInput.value).toBe('')
   })
 
-  it('should submit form with correct values', async () => {
+  it('should submit form with correct values', () => {
     const nameInput = screen.getByLabelText(
       'categoriesPage.newSubject.labels.subject'
     )

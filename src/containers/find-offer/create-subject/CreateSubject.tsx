@@ -18,8 +18,10 @@ import {
   ButtonTypeEnum,
   CategoryNameInterface,
   ComponentEnum,
-  ErrorResponse
+  ErrorResponse,
+  CreateSubjectParams
 } from '~/types'
+
 import { snackbarVariants } from '~/constants'
 import { categoryService } from '~/services/category-service'
 import { validations } from '~/containers/find-offer/create-subject/CreateSubject.constants'
@@ -27,8 +29,8 @@ import { styles } from '~/containers/find-offer/create-subject/CreateSubject.sty
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 import { subjectService } from '~/services/subject-service'
-import { CreateSubjectParams } from '~/types/subject/interfaces/subject.interface'
 import useMutation from '~/hooks/use-mutation'
+import { initialSubjectValue } from '~/containers/find-offer/constants'
 
 const CreateSubjectModal = () => {
   const { closeModal } = useModalContext()
@@ -57,7 +59,6 @@ const CreateSubjectModal = () => {
 
   const { isPending, mutate: createSubject } = useMutation({
     mutationFn: subjectService.createSubject,
-    queryKey: ['createSubject'],
     onError: handleResponseError,
     onSuccess: handleResponse
   })
@@ -71,10 +72,7 @@ const CreateSubjectModal = () => {
     handleNonInputValueChange,
     handleSubmit
   } = useForm<CreateSubjectParams>({
-    initialValues: {
-      name: '',
-      category: ''
-    },
+    initialValues: initialSubjectValue,
     validations,
     submitWithData: true,
     onSubmit: (data) => {

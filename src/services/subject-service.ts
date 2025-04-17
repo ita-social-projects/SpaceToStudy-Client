@@ -1,15 +1,16 @@
 import { URLs } from '~/constants/request'
-import { ItemsWithCount, SubjectNameInterface } from '~/types'
+import type {
+  ItemsWithCount,
+  SubjectNameInterface,
+  CreateSubjectParams,
+  CreateSubjectInterface
+} from '~/types'
 import { baseService } from '~/services/base-service'
 import { getFullUrl } from '~/utils/get-full-url'
-import type {
-  CreateSubjectParams,
-  SubjectInterface
-} from '~/types/subject/interfaces/subject.interface'
 
 export const subjectService = {
   getSubjects: (
-    params: Pick<SubjectInterface, 'name'> & Record<'categoryId', string>
+    params: Pick<CreateSubjectInterface, 'name'> & Record<'categoryId', string>
   ) => {
     const { categoryId, ...restParams } = params
 
@@ -26,7 +27,7 @@ export const subjectService = {
       })
     }
 
-    return baseService.request<ItemsWithCount<SubjectInterface>>({
+    return baseService.request<ItemsWithCount<CreateSubjectInterface>>({
       method: 'GET',
       url: resultUrl
     })
@@ -49,7 +50,7 @@ export const subjectService = {
     })
   },
   createSubject: (data: CreateSubjectParams) => {
-    return baseService.request<SubjectInterface>({
+    return baseService.request<CreateSubjectInterface>({
       method: 'POST',
       url: URLs.subjects.create,
       data

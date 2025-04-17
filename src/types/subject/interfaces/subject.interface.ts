@@ -3,7 +3,7 @@ export interface CreateSubjectParams {
   category: string
 }
 
-export interface SubjectInterface {
+export interface CreateSubjectInterface {
   id: string
   name: string
   category: string
