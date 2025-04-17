@@ -26,15 +26,10 @@ const props = {
 describe('ProfileTabForm', () => {
   URL.createObjectURL = vi.fn().mockReturnValue('photo')
 
-  const initialLanguage = 'English'
-  const propsWithInitialLanguage = {
-    ...props,
-    data: { ...formDataMock, nativeLanguage: initialLanguage }
-  }
   beforeEach(() => {
     renderWithProviders(
       <TestSnackbar>
-        <ProfileTabForm {...propsWithInitialLanguage} />
+        <ProfileTabForm {...props} />
       </TestSnackbar>
     )
   })
@@ -67,7 +62,7 @@ describe('ProfileTabForm', () => {
       'becomeTutor.languages.autocompleteLabel'
     )
 
-    expect(languageField.value).toBe(initialLanguage)
+    expect(languageField.value).toBe(formDataMock.nativeLanguage)
   })
 
   it('should open the dropdown with all language options', async () => {
