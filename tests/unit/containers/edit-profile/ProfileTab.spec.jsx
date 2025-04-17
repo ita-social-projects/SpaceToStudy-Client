@@ -248,17 +248,17 @@ describe('ProfileTab', () => {
     expect(firstNameInput).toHaveValue('John')
   })
 
-  it('should display error message when "Last Name" includes non-alphabetic characters', async () => {
+  it('shouldn\'t display error message when "First Name" includes valid characters', async () => {
     renderWithMockData()
-    const lastNameInput = screen.getByPlaceholderText('lastName')
+    const firstNameInput = screen.getByPlaceholderText('firstName')
 
-    await userEvent.clear(lastNameInput)
-    fireEvent.change(lastNameInput, { target: { value: 'Doe123' } })
+    await userEvent.clear(firstNameInput)
+    fireEvent.change(firstNameInput, { target: { value: "John-doe's dog" } })
 
-    const errorMessage = screen.getByText(
+    const errorMessage = screen.queryByText(
       /common.errorMessages.nameCharacters/i
     )
-    expect(errorMessage).toBeInTheDocument()
-    expect(lastNameInput).toHaveValue('Doe')
+    expect(errorMessage).not.toBeInTheDocument()
+    expect(firstNameInput).toHaveValue("John-doe's dog")
   })
 })
