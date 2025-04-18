@@ -20,7 +20,7 @@ export interface LocalStorage {
   cookieConsent?: boolean
 }
 
-export interface GetUsersParams extends RequestParams {
+export type GetUsersParams = RequestParams & {
   createdAt: CreatedAt
   email: string
   lastLogin: LastLogin
