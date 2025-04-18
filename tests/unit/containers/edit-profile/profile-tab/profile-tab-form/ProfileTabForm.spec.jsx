@@ -54,6 +54,21 @@ describe('ProfileTabForm', () => {
     expect(languageField.value).toBe(newLanguageValue)
   })
 
+  it('should clear the selected native language and change the value', async () => {
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
+    const clearButton = screen.getByLabelText('Clear')
+    await userEvent.click(clearButton)
+    expect(languageField).toHaveValue('')
+
+    await userEvent.click(languageField)
+    const arabicOption = await screen.findByText('Arabic')
+    await userEvent.click(arabicOption)
+
+    expect(languageField).toHaveValue('Arabic')
+  })
+
   it('should add only one language to "Your native language" field', () => {
     const languages = [
       'English',
