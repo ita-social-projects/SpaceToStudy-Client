@@ -4,6 +4,8 @@ import { render, screen } from '@testing-library/react'
 import { UserRoleEnum } from '~/types/user/user.index'
 import userEvent from '@testing-library/user-event'
 
+import AddReviewModal from '~/containers/my-cooperations/add-review-modal/AddReviewModal'
+
 const callbackMocks = {
   dispatch: vi.fn(),
   closeModal: vi.fn()
@@ -22,17 +24,20 @@ vi.mock('react-i18next', () => ({
     t: (key) => key
   })
 }))
+
 vi.mock('~/hooks/use-redux', () => ({
   useAppSelector: () => ({
     userRole: UserRoleEnum.Tutor
   }),
   useAppDispatch: () => callbackMocks.dispatch
 }))
+
 vi.mock('~/context/modal-context', () => ({
   useModalContext: () => ({
     closeModal: callbackMocks.closeModal
   })
 }))
+
 vi.mock('~/hooks/use-mutation', () => ({
   default: ({ onSuccess, onError }) => ({
     mutate: (ReviewData) => {
@@ -45,10 +50,8 @@ vi.mock('~/hooks/use-mutation', () => ({
   })
 }))
 
-import AddReviewModal from '~/containers/my-cooperations/add-review-modal/AddReviewModal'
-
-describe('AddReviewModal', () => {
-  it('render test', async () => {
+describe('AddReviewModal component', () => {
+  it('should render title, description, rating input, textfield, close modal button, submit button', async () => {
     render(<AddReviewModal {...inputProps} />)
 
     expect(
@@ -70,12 +73,13 @@ describe('AddReviewModal', () => {
     ).toBeInTheDocument()
 
     expect(screen.getByTestId('rating-field')).toBeInTheDocument()
+
     expect(
       screen.getByLabelText('cooperationsPage.cooperationDetails.reviewLabel')
     ).toBeInTheDocument()
   })
 
-  it('use dispatch and closeModal on successful submit', async () => {
+  it('should use dispatch and closeModal on successful submit', async () => {
     render(<AddReviewModal {...inputProps} />)
 
     const rating = screen.getByTestId('rating-field')
@@ -92,10 +96,11 @@ describe('AddReviewModal', () => {
     await userEvent.click(submitButton)
 
     expect(callbackMocks.dispatch).toHaveBeenCalled()
+
     expect(callbackMocks.closeModal).toHaveBeenCalled()
   })
 
-  it('use dispatch on failed submit', async () => {
+  it('should use dispatch on failed submit', async () => {
     render(<AddReviewModal {...inputProps} />)
 
     const rating = screen.getByTestId('rating-field')
@@ -114,7 +119,7 @@ describe('AddReviewModal', () => {
     expect(callbackMocks.dispatch).toHaveBeenCalled()
   })
 
-  it('call closeModal on close modal button click', async () => {
+  it('should call closeModal on close modal button click', async () => {
     render(<AddReviewModal {...inputProps} />)
 
     const closeButton = screen.getByText(
