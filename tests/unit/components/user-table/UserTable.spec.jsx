@@ -63,6 +63,7 @@ describe('UserTable', () => {
   it('should change tab', () => {
     const tab = screen.getByText('userTable.active')
 
+    expect(tab).toBeInTheDocument()
     fireEvent.click(tab)
   })
 
