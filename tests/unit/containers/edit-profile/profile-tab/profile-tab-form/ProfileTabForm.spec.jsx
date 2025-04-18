@@ -13,7 +13,10 @@ const handleNonInputValueChange = vi.fn()
 const handleBlur = vi.fn()
 
 const props = {
-  data: formDataMock,
+  data: {
+    ...formDataMock,
+    nativeLanguage: 'English'
+  },
   errors: [],
   handleInputChange,
   handleNonInputValueChange,
