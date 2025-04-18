@@ -1,11 +1,12 @@
-import { useState, useCallback, useLayoutEffect } from 'react'
+import { useState, useCallback, useLayoutEffect, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import { userService } from '~/services/user-service'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
+import useMutation from '~/hooks/use-mutation'
 import useSort from '~/hooks/table/use-sort'
 import useFilter from '~/hooks/table/use-filter'
 import useSelect from '~/hooks/table/use-select'
@@ -15,7 +16,8 @@ import EnhancedTableToolbar from '~/components/enhanced-table/enhanced-table-too
 import EnhancedTablePagination from '~/components/enhanced-table/enhanced-table-pagination/EnhancedTablePagination'
 
 import { styles } from '~/components/user-table/UserTable.styles'
-import { VisibilityEnum, GetUsersParams, Sort } from '~/types'
+import { VisibilityEnum, GetUsersParams, Sort, UserResponse } from '~/types'
+import { defaultResponses } from '~/constants'
 
 interface UserTableProps {
   columns: unknown[]
@@ -31,12 +33,6 @@ interface UserTableProps {
       component: (props: unknown) => JSX.Element
     }
   >
-}
-
-interface User {
-  id: string
-  name: string
-  status: Record<string, string>
 }
 
 const UserTable: React.FC<UserTableProps> = ({
@@ -70,10 +66,20 @@ const UserTable: React.FC<UserTableProps> = ({
     setItemsCount(response.count)
   }, [])
 
-  const getUsers = useCallback(
-    (params: GetUsersParams) => userService.getUsers(params),
-    []
-  )
+  const getUsers = useCallback(() => {
+    const status =
+      externalFilter.status !== 'all' ? externalFilter.status : undefined
+    clearSelected()
+
+    return userService.getUsers({
+      skip: (page - 1) * rowsPerPage,
+      limit: rowsPerPage,
+      sort: sortParams,
+      ...filters,
+      ...externalFilter,
+      status: status ?? filters.status
+    } as GetUsersParams)
+  }, [filters, externalFilter, page, rowsPerPage, sortParams, clearSelected])
 
   const deleteFunction = useCallback(
     (userId: string) => userService.deleteUser(userId),
@@ -86,58 +92,39 @@ const UserTable: React.FC<UserTableProps> = ({
     []
   )
 
-  const { loading, response, fetchData } = useAxios({
-    service: getUsers,
-    fetchOnMount: false,
-    defaultResponse: { items: [], count: 0 },
-    onResponse: setItemsResponse
+  const {
+    isLoading,
+    data: users = defaultResponses.itemsWithCount,
+    refetch: fetchUsers
+  } = useQuery({
+    queryKey: ['users', filters, externalFilter, sort, page, rowsPerPage],
+    queryFn: getUsers,
+    options: {
+      staleTime: Infinity
+    }
   })
 
-  const items = response.items.map((item: User) => ({
+  useEffect(() => {
+    if (users) setItemsResponse(users)
+  }, [users, setItemsResponse])
+
+  const items = users.items.map((item: UserResponse) => ({
     ...item,
-    status: item.status[role]
+    status: item.status[role as keyof typeof item.status]
   }))
-
-  const getData = useCallback(async () => {
-    const status =
-      externalFilter.status !== 'all' ? externalFilter.status : undefined
-    clearSelected()
-    await fetchData({
-      skip: (page - 1) * rowsPerPage,
-      limit: rowsPerPage,
-      sort: sortParams,
-      ...filters,
-      ...externalFilter,
-      status: status ?? filters.status
-    } as GetUsersParams)
-  }, [
-    fetchData,
-    externalFilter,
-    page,
-    sortParams,
-    rowsPerPage,
-    filters,
-    clearSelected
-  ])
-
-  useLayoutEffect(() => {
-    void getData()
-  }, [getData])
 
   useLayoutEffect(() => {
     clearPage()
   }, [filters, rowsPerPage, clearPage, externalFilter])
 
-  const { fetchData: deleteUser } = useAxios({
-    service: deleteFunction,
-    fetchOnMount: false,
-    defaultResponse: null
+  const { mutate: deleteUser } = useMutation({
+    queryKey: ['users'],
+    mutationFn: deleteFunction
   })
 
-  const { fetchData: deleteUsers } = useAxios({
-    service: deleteAllFunction,
-    fetchOnMount: false,
-    defaultResponse: null
+  const { mutate: deleteUsers } = useMutation({
+    queryKey: ['users'],
+    mutationFn: deleteAllFunction
   })
 
   const rowActions = [
@@ -184,7 +171,7 @@ const UserTable: React.FC<UserTableProps> = ({
     filter,
     sort,
     rowsPerPage,
-    data: { ...response, items, loading, getData }
+    data: { ...users, items, isLoading }
   }
 
   const toolbarVisibility =
@@ -195,7 +182,7 @@ const UserTable: React.FC<UserTableProps> = ({
   }
 
   const handleRefetchData = () => {
-    void getData()
+    void fetchUsers()
   }
 
   return (
@@ -210,7 +197,7 @@ const UserTable: React.FC<UserTableProps> = ({
         />
       </Box>
       {tabsInfo[externalFilter.status].component(props)}
-      {!loading && !!items.length && (
+      {!isLoading && !!items.length && (
         <EnhancedTablePagination
           pagination={{ ...pagination, handleChangePage }}
         />
