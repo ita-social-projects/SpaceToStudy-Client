@@ -119,9 +119,13 @@ const UserProfile: React.FC = () => {
         />
       )}
       <CommentsWithRatingBlock
-        averageRating={response.averageRating[preferredRole]}
-        userRole={preferredRole}
+        averageRating={
+          userResponse.averageRating[
+            preferredRole as UserRoleEnum.Student | UserRoleEnum.Tutor
+          ]
+        }
         userId={preferredId}
+        userRole={preferredRole}
       />
     </PageWrapper>
   )
