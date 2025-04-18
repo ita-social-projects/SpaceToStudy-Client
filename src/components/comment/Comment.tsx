@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import AppRating from '~/components/app-rating/AppRating'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 
-import { ReviewResponse, UserRoleEnum } from '~/types'
+import { type ReviewResponse, UserRoleEnum } from '~/types'
 import { styles } from '~/components/comment/Comment.styles'
 import { Link } from 'react-router-dom'
 import { authRoutes } from '~/router/constants/authRoutes'

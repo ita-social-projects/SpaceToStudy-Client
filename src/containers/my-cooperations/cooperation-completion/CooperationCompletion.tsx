@@ -16,7 +16,7 @@ import {
   CooperationMaterialsAccessEnum,
   UserRoleEnum,
   StatusEnum,
-  ReviewDataFromCooperation
+  type ReviewDataFromCooperation
 } from '~/types'
 
 interface CooperationCompletionProps {

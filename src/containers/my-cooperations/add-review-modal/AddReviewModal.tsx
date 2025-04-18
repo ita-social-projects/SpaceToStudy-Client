@@ -21,10 +21,9 @@ import {
 
 import {
   ComponentEnum,
-  ReviewDataFromCooperation,
-  ReviewData,
-  ErrorResponse
-  // DataFromCooperation
+  type ReviewDataFromCooperation,
+  type ReviewData,
+  type ErrorResponse
 } from '~/types'
 import { styles } from '~/containers/my-cooperations/add-review-modal/AddReviewModal.styles'
 import useMutation from '~/hooks/use-mutation'
