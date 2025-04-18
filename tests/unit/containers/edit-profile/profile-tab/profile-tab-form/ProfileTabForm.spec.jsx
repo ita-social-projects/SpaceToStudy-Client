@@ -62,7 +62,7 @@ describe('ProfileTabForm', () => {
       'becomeTutor.languages.autocompleteLabel'
     )
 
-    expect(languageField.value).toBe(formDataMock.nativeLanguage)
+    expect(languageField.value).toBe('English')
   })
 
   it('should open the dropdown with all language options', async () => {

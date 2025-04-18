@@ -16,7 +16,7 @@ export const formDataMock = {
   firstName: '',
   lastName: '',
   mainSubjects: [],
-  nativeLanguage: 'English',
+  nativeLanguage: null,
   country: null,
   city: null,
   photo: 'photo.png',
