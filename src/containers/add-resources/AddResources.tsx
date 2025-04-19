@@ -51,7 +51,7 @@ const AddResources = <T extends CourseResource | Question>({
   const { ...select } = useSelect({ initialSelect })
   const sortOptions = useSort({ initialSort })
   const { sort } = sortOptions
-  const {handleSelectClick, clearSelected, setSelected, selected} = select
+  const { handleSelectClick, clearSelected, setSelected, selected } = select
 
   const columnsToShow = adjustColumns<T>(
     breakpoints,
@@ -83,9 +83,7 @@ const AddResources = <T extends CourseResource | Question>({
     }
   }, [error, dispatch])
 
-  const selectedRows = data.items.filter((item) =>
-    selected.includes(item._id)
-  )
+  const selectedRows = data.items.filter((item) => selected.includes(item._id))
 
   const onRowClick = useCallback(
     (item: T) => {
@@ -143,7 +141,7 @@ const AddResources = <T extends CourseResource | Question>({
     columns: columnsToShow,
     sort: sortOptions,
     select,
-    selectedRows, 
+    selectedRows,
     initialSelectedRows: resources,
     isSelection: true,
     onAddItems,
