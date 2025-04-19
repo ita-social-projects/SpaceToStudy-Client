@@ -46,17 +46,12 @@ const AddResources = <T extends CourseResource | Question>({
   const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
   const { closeModal } = useModalContext()
-
-  const [selectedRows, setSelectedRows] = useState<T[]>(resources)
-  const [initialSelectedRows, setInitialSelectedRows] = useState<T[]>(resources)
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false)
-
   const initialSelect = resources.map((resource) => resource._id)
-  const { clearSelected, ...select } = useSelect({ initialSelect })
+  const { ...select } = useSelect({ initialSelect })
   const sortOptions = useSort({ initialSort })
-
   const { sort } = sortOptions
-  const { handleSelectClick } = select
+  const {handleSelectClick, clearSelected, setSelected, selected} = select
 
   const columnsToShow = adjustColumns<T>(
     breakpoints,
@@ -88,16 +83,15 @@ const AddResources = <T extends CourseResource | Question>({
     }
   }, [error, dispatch])
 
+  const selectedRows = data.items.filter((item) =>
+    selected.includes(item._id)
+  )
+
   const onRowClick = useCallback(
     (item: T) => {
-      setSelectedRows((selectedRows) =>
-        selectedRows.find((resource) => resource._id === item._id)
-          ? selectedRows.filter((resource) => resource._id !== item._id)
-          : [...selectedRows, item]
-      )
       handleSelectClick(item._id)
     },
-    [handleSelectClick]
+    [select]
   )
 
   const onAddItems = useCallback(() => {
@@ -109,16 +103,12 @@ const AddResources = <T extends CourseResource | Question>({
     (value: boolean) => {
       setIsDuplicate(value)
       if (value) {
-        setSelectedRows([])
-        setInitialSelectedRows([])
         clearSelected()
       } else {
-        setSelectedRows(resources)
-        setInitialSelectedRows(resources)
-        select.setSelected(resources.map((item) => item._id))
+        setSelected(resources.map((item) => item._id))
       }
     },
-    [resources, clearSelected, select]
+    [resources, clearSelected, setSelected]
   )
 
   const getItems = useCallback(
@@ -153,8 +143,8 @@ const AddResources = <T extends CourseResource | Question>({
     columns: columnsToShow,
     sort: sortOptions,
     select,
-    selectedRows,
-    initialSelectedRows,
+    selectedRows, 
+    initialSelectedRows: resources,
     isSelection: true,
     onAddItems,
     onCreateResourceCopy,
