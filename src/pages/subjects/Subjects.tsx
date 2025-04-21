@@ -180,7 +180,8 @@ const Subjects = () => {
             ? t(`categories.${titleToCamel(categoryName)}`, {
                 defaultValue: categoryName
               })
-            : categoryName
+            : categoryName,
+            interpolation: { escapeValue: false }
         })}
       />
 
