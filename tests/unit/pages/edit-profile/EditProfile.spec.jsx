@@ -465,7 +465,7 @@ describe('EditProfile', () => {
     expect(dataToUpdate).toHaveProperty('videoLink', '')
   })
 
-  it('should replace the existing text in the "First name" field with test data and Update button becomes anable and active', () => {
+  it('should replace the existing text in the "First name" field with test data and Update button becomes enabled and active', () => {
     const testData = ["O'braian", "Мар'яна", 'Анна-Марія', 'Анна Марія']
 
     const mockT = vi.fn((key) => {
@@ -500,7 +500,7 @@ describe('EditProfile', () => {
     }
   })
 
-  it('should replace the existing text in the "Last name" field with test data and Update button becomes anable and active', () => {
+  it('should replace the existing text in the "Last name" field with test data and Update button becomes enabled and active', () => {
     const testData = ["Mc'Neil", "O'Neill-Johnson", 'Van Gogh']
 
     const mockT = vi.fn((key) => {
@@ -576,5 +576,42 @@ describe('EditProfile', () => {
       sendConfirm: expect.any(Function),
       title: 'editProfilePage.profile.profileTab.saveUnsavedChangesModal.title'
     })
+  })
+
+  it('should enable Update button when name is less than 30 characters', async () => {
+    renderWithProviders(
+      <ProfileTabForm
+        data={mockData}
+        errors={mockData.errors}
+        handleBlur={() => {}}
+        handleInputChange={() => {}}
+        openAlert={openAlert}
+      />
+    )
+
+    const lastNameInput = screen.getByLabelText(/common.labels.lastName/i)
+    expect(lastNameInput).toBeInTheDocument()
+
+    const testData = ['Y', 'Yurii', 'YuuuuuuuuUuuuuuuuuuUuuuuuuuuuU']
+
+    for (const newLastName of testData) {
+      fireEvent.change(lastNameInput, {
+        target: { value: newLastName }
+      })
+
+      const updateBtn = screen.getByText(/editProfilePage.updateBtn/i)
+      expect(updateBtn).not.toBeDisabled()
+
+      fireEvent.click(updateBtn)
+
+      await waitFor(() => {
+        expect(openAlert).toHaveBeenCalledWith({
+          severity: snackbarVariants.success,
+          message: 'editProfilePage.profile.successMessage'
+        })
+      })
+
+      openAlert.mockClear()
+    }
   })
 })
