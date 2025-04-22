@@ -17,6 +17,7 @@ import Loader from '~/components/loader/Loader'
 import { styles } from '~/components/enhanced-table/EnhancedTable.styles'
 import { spliceSx } from '~/utils/helper-functions'
 import {
+  StatusEnum,
   TableColumn,
   TableData,
   TableFilter,
@@ -66,37 +67,43 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
   const { t } = useTranslation()
   const { items, loading, getData } = data
 
-  const rows = useMemo(
-    () =>
-      items.map((item) => (
-        <EnhancedTableRow
-          columns={columns}
-          initialSelectedRows={initialSelectedRows}
-          isDisableRow={disableInitialSelectedRows}
-          isSelection={isSelection}
-          item={item}
-          key={item._id}
-          onRowClick={onRowClick}
-          refetchData={getData}
-          rowActions={rowActions}
-          select={select}
-          selectedRows={selectedRows}
-        />
-      )),
-    [
-      items,
-      columns,
-      initialSelectedRows,
-      disableInitialSelectedRows,
-      isSelection,
-      onRowClick,
-      getData,
-      rowActions,
-      select,
-      selectedRows
-    ]
-  )
+  const rows = useMemo(() => {
+    const getRowActions = (item: I) => {
+      const isClosed = item.status === StatusEnum.Closed
+      const actions = rowActions?.filter((action) => {
+        return isClosed ? action.label === t('common.labels.viewDetails') : true
+      })
 
+      return actions || []
+    }
+    return items.map((item) => (
+      <EnhancedTableRow
+        columns={columns}
+        initialSelectedRows={initialSelectedRows}
+        isDisableRow={disableInitialSelectedRows}
+        isSelection={isSelection}
+        item={item}
+        key={item._id}
+        onRowClick={onRowClick}
+        refetchData={getData}
+        rowActions={getRowActions(item)}
+        select={select}
+        selectedRows={selectedRows}
+      />
+    ))
+  }, [
+    items,
+    columns,
+    initialSelectedRows,
+    disableInitialSelectedRows,
+    isSelection,
+    onRowClick,
+    getData,
+    rowActions,
+    select,
+    selectedRows,
+    t
+  ])
   const tableBody = (
     <TableContainer
       data-testid='enhance-table-container'
