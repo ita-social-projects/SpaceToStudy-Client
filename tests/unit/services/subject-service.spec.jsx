@@ -1,6 +1,7 @@
 import { mockAxiosClient } from '~tests/test-utils'
 import { subjectService } from '~/services/subject-service'
 import { URLs } from '~/constants/request'
+import { vi } from 'vitest'
 import * as getFullUrl from '~/utils/get-full-url'
 
 const mockCategoryId = '64884fedfdc2d1a130c24ade'

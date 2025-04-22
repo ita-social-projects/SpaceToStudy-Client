@@ -3,6 +3,7 @@ import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import CreateSubjectModal from '~/containers/find-offer/create-subject/CreateSubject'
 import { categoryService } from '~/services/category-service'
 import { TestSnackbar, renderWithProviders } from '~tests/test-utils'
+import { vi } from 'vitest'
 
 vi.mock('~/services/category-service')
 
