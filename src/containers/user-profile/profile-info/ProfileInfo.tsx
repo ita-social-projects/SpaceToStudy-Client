@@ -48,8 +48,6 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
   const targetRole = userData.role[0] as
     | UserRoleEnum.Student
     | UserRoleEnum.Tutor
-  console.log('Target role', targetRole)
-  console.log('UserData role', userData.role[0])
 
   const copyProfileLink = async () => {
     await navigator.clipboard.writeText(window.location.href)
