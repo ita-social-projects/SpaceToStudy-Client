@@ -22,12 +22,13 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'https://localhost:8080',
         changeOrigin: true,
+        secure: false,
         rewrite: (path) => path.replace(/^\/api/, '')
       },
       '/socket.io': {
-        target: 'ws://localhost:8080',
+        target: 'wss://localhost:8080',
         ws: true
       }
     }

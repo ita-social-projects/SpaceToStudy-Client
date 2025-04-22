@@ -4,11 +4,16 @@ export interface SocketInterface {
   socket: Socket
 }
 
+const url = import.meta.env.VITE_SOCKET_URL as string | undefined
+
 class SocketConnection implements SocketInterface {
   public socket: Socket
 
   constructor() {
-    this.socket = io({ withCredentials: true })
+    this.socket = io(url, {
+      withCredentials: true,
+      transports: ['websocket']
+    })
   }
 }
 
