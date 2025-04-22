@@ -1,5 +1,6 @@
 import { renderWithProviders } from '~tests/test-utils'
 import { fireEvent, screen } from '@testing-library/react'
+import { ResourcesTypesEnum } from '~/types'
 
 import {
   mockedLessonDataOriginal,
@@ -214,13 +215,13 @@ describe('ResourceItem tests when resourceType attachment', () => {
   beforeEach(() => {
     windowOpenMock = vi.spyOn(window, 'open').mockImplementation(() => {})
 
-    renderWithProviders(
-      <ResourceItem
-        availability={mockAvailabilityOpen}
-        isView
-        resource={mockedAttachmentDataOriginal}
-      />
-    )
+    // renderWithProviders(
+    //   <ResourceItem
+    //     availability={mockAvailabilityOpen}
+    //     isView
+    //     resource={mockedAttachmentDataOriginal}
+    //   />
+    // )
   })
 
   afterEach(() => {
@@ -228,11 +229,27 @@ describe('ResourceItem tests when resourceType attachment', () => {
   })
 
   it('should properly display attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataOriginal}
+      />
+    )
+
     const attachmentItem = screen.getByText(/png/)
     expect(attachmentItem).toBeInTheDocument()
   })
 
   it('should download attachment when clicked', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataOriginal}
+      />
+    )
+
     const attachmentItem = screen.getByText(/png/)
 
     fireEvent.click(attachmentItem)
@@ -242,7 +259,7 @@ describe('ResourceItem tests when resourceType attachment', () => {
     )
   })
 
-  it('should not download anything if resourceType is not Attachment', () => {
+  it('should not download anything if resource.resourceType is not Attachment', () => {
     renderWithProviders(
       <ResourceItem
         availability={mockAvailabilityOpen}
@@ -253,6 +270,22 @@ describe('ResourceItem tests when resourceType attachment', () => {
     const nonAttachmentItem = screen.getByText(mockedLessonDataOriginal.title)
 
     fireEvent.click(nonAttachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalled()
+  })
+
+  it('should not download anything if resourceType is not Attachment but resource.resourceType IS an Attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataOriginal}
+        resourceType={ResourcesTypesEnum.Quiz}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
     expect(windowOpenMock).not.toHaveBeenCalled()
   })
 })
