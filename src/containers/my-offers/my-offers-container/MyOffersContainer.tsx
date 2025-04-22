@@ -25,7 +25,8 @@ import {
   Offer,
   SizeEnum,
   TableActionFunc,
-  TableRowAction
+  TableRowAction,
+  StatusEnum
 } from '~/types'
 import { useAppSelector } from '~/hooks/use-redux'
 
@@ -59,22 +60,31 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     openDrawer()
   }
 
-  const createButtonActions = (id: string) => [
-    {
-      label: t(`myOffersPage.editButton.${userRole}`),
-      buttonProps: {
-        variant: ButtonVariantEnum.Tonal,
-        onClick: () => handleOpenDrawer(id)
-      }
-    },
-    {
+  const createButtonActions = (id: string) => {
+    const offer = items.find((item) => item._id === id)
+    if (!offer) return []
+
+    const viewDetailsAction = {
       label: t('common.labels.viewDetails'),
       buttonProps: {
         component: Link,
         to: createUrlPath(authRoutes.offerDetails.path, id)
       }
     }
-  ]
+
+    return offer.status === StatusEnum.Closed
+      ? [viewDetailsAction]
+      : [
+          {
+            label: t(`myOffersPage.editButton.${userRole}`),
+            buttonProps: {
+              variant: ButtonVariantEnum.Tonal,
+              onClick: () => handleOpenDrawer(id)
+            }
+          },
+          viewDetailsAction
+        ]
+  }
 
   const editOffer: TableActionFunc = (id) => {
     handleOpenDrawer(id as string)
