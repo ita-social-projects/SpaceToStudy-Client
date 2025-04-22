@@ -1,5 +1,6 @@
 import { useMatch, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useCallback } from 'react'
 
 import Box from '@mui/material/Box'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
@@ -132,16 +133,15 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
       }
   ].filter((item): item is DoneItem => !!item)
 
+  const getAllChats = useCallback(() => chatService.getAllChats(), [])
+
   const {
     data: listOfChats,
     isLoading: isChatsLoading,
     refetch
   } = useQuery<ChatResponse[]>({
     queryKey: ['chats'],
-    queryFn: async () => {
-      const res = await chatService.getChats()
-      return res.data
-    },
+    queryFn: getAllChats,
     options: {
       staleTime: Infinity,
       initialData: defaultResponses.array
