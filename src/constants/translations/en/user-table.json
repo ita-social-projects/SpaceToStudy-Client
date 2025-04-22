@@ -11,5 +11,7 @@
   "all": "All",
   "active": "Active",
   "blocked": "Blocked",
-  "invited": "Invited"
+  "invited": "Invited",
+  "deleteUserSuccess": "User successfully deleted.",
+  "deleteUsersSuccess": "Selected users successfully deleted."
 }

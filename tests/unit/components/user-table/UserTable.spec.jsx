@@ -9,6 +9,7 @@ import {
   tabsInfo
 } from '~/pages/tutor-table/constants'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { userService } from '~/services/user-service'
 import { URLs } from '~/constants/request'
 
 const userRole = 'tutor'
@@ -61,10 +62,12 @@ describe('UserTable', () => {
   })
 
   it('should change tab', () => {
+    const getUsersSpy = vi.spyOn(userService, 'getUsers')
     const tab = screen.getByText('userTable.active')
-
     expect(tab).toBeInTheDocument()
+
     fireEvent.click(tab)
+    expect(getUsersSpy).toHaveBeenCalled()
   })
 
   it('should select all items after clicking on checkbox', () => {

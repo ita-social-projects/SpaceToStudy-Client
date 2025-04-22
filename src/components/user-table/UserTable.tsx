@@ -18,6 +18,7 @@ import EnhancedTablePagination from '~/components/enhanced-table/enhanced-table-
 import { styles } from '~/components/user-table/UserTable.styles'
 import { VisibilityEnum, GetUsersParams, Sort, UserResponse } from '~/types'
 import { defaultResponses } from '~/constants'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 interface UserTableProps {
   columns: unknown[]
@@ -61,6 +62,7 @@ const UserTable: React.FC<UserTableProps> = ({
   const { filters, clearFilters } = filter
   const { sort: sortParams } = sort
   const { page, rowsPerPage, clearPage } = pagination
+  const { handleSuccessAlert, handleErrorAlert } = useSnackbarAlert()
 
   const setItemsResponse = useCallback((response: { count: number }) => {
     setItemsCount(response.count)
@@ -119,12 +121,16 @@ const UserTable: React.FC<UserTableProps> = ({
 
   const { mutate: deleteUser } = useMutation({
     queryKey: ['users'],
-    mutationFn: deleteFunction
+    mutationFn: deleteFunction,
+    onSuccess: () => handleSuccessAlert(t(`userTable.deleteUserSuccess`)),
+    onError: handleErrorAlert
   })
 
   const { mutate: deleteUsers } = useMutation({
     queryKey: ['users'],
-    mutationFn: deleteAllFunction
+    mutationFn: deleteAllFunction,
+    onSuccess: () => handleSuccessAlert(t(`userTable.deleteUsersSuccess`)),
+    onError: handleErrorAlert
   })
 
   const rowActions = [
