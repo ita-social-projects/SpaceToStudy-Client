@@ -181,7 +181,7 @@ const Subjects = () => {
                 defaultValue: categoryName
               })
             : categoryName,
-            interpolation: { escapeValue: false }
+          interpolation: { escapeValue: false }
         })}
       />
 
