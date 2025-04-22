@@ -47,6 +47,8 @@ const QuizAttemptsPage: React.FC = () => {
     items
   } = quiz ?? defaultQuizResponse
 
+  const isTimeLimitNeeded = timeLimit != 'No limit'
+
   const getFinishedQuizzes = useCallback(() => {
     return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
   }, [cooperationId, quizId])
@@ -121,19 +123,21 @@ const QuizAttemptsPage: React.FC = () => {
       />
       <StartViewQuizInfo
         attempts={attemptLimit}
-        onStart={openModal}
+        onStart={isTimeLimitNeeded ? openModal : handleStart}
         questionsAmount={items.length}
         timeLimit={timeLimit}
         usedAttempts={finishedQuizzes.length}
       />
       <Divider sx={styles.divider} />
       {attemptsList}
-      <TimeLimitReminder
-        onClose={handleClose}
-        onStart={handleStart}
-        open={isOpen}
-        timeLimit={timeLimit}
-      />
+      {isTimeLimitNeeded && (
+        <TimeLimitReminder
+          onClose={handleClose}
+          onStart={handleStart}
+          open={isOpen}
+          timeLimit={timeLimit}
+        />
+      )}
     </PageWrapper>
   )
 }
