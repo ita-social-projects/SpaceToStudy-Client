@@ -47,7 +47,7 @@ const QuizAttemptsPage: React.FC = () => {
     items
   } = quiz ?? defaultQuizResponse
 
-  const isTimeLimitNeeded = timeLimit != 'No limit'
+  const isTimeLimitNeeded = timeLimit as string != 'No limit'
 
   const getFinishedQuizzes = useCallback(() => {
     return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
