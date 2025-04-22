@@ -11,7 +11,7 @@ import {
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
-import { vi } from 'vitest'
+import { expect, vi } from 'vitest'
 
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
@@ -209,7 +209,11 @@ describe('ResourceItem tests when isDuplicate=true and resourceType quiz', () =>
 })
 
 describe('ResourceItem tests when resourceType attachment', () => {
+  let windowOpenMock
+
   beforeEach(() => {
+    windowOpenMock = vi.spyOn(window, 'open').mockImplementation(() => {})
+
     renderWithProviders(
       <ResourceItem
         availability={mockAvailabilityOpen}
@@ -219,16 +223,36 @@ describe('ResourceItem tests when resourceType attachment', () => {
     )
   })
 
+  afterEach(() => {
+    windowOpenMock.mockRestore()
+  })
+
   it('should properly display attachment', () => {
     const attachmentItem = screen.getByText(/png/)
     expect(attachmentItem).toBeInTheDocument()
   })
 
   it('should download attachment when clicked', () => {
-    const windowOpenMock = vi.spyOn(window, 'open').mockImplementation(() => {})
     const attachmentItem = screen.getByText(/png/)
 
     fireEvent.click(attachmentItem)
-    expect(windowOpenMock).toHaveBeenCalled()
+    expect(windowOpenMock).toHaveBeenCalledWith(
+      '1723236050559-Exploring Systems of Linear Equations.png',
+      '_blank'
+    )
+  })
+
+  it('should not download anything if resourceType is not Attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedLessonDataOriginal}
+      />
+    )
+    const nonAttachmentItem = screen.getByText(mockedLessonDataOriginal.title)
+
+    fireEvent.click(nonAttachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalled()
   })
 })
