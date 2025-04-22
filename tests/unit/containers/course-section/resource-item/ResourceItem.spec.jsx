@@ -213,17 +213,22 @@ describe('ResourceItem tests when resourceType attachment', () => {
     renderWithProviders(
       <ResourceItem
         availability={mockAvailabilityOpen}
-        deleteResource={mockDeleteResource}
-        editResource={mockEditResource}
+        isView
         resource={mockedAttachmentDataOriginal}
-        updateAvailability={mockUpdateAvailability}
       />
     )
   })
 
   it('should properly display attachment', () => {
     const attachmentItem = screen.getByText(/png/)
-
     expect(attachmentItem).toBeInTheDocument()
+  })
+
+  it('should download attachment when clicked', () => {
+    const windowOpenMock = vi.spyOn(window, 'open').mockImplementation(() => {})
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).toHaveBeenCalled()
   })
 })
