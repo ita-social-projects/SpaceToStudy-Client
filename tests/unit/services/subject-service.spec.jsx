@@ -87,11 +87,7 @@ describe('subjectService getSubjects function tests', () => {
     const getFullUrlSpy = vi.spyOn(getFullUrl, 'getFullUrl')
 
     mockAxiosClient
-      .onGet(
-        new RegExp(
-          URLs.subjects.getNamesByCategoryId.replace(':id', mockCategoryId)
-        )
-      )
+      .onGet(URLs.subjects.getNamesByCategoryId.replace(':id', mockCategoryId))
       .reply(200, mockSubjects)
 
     const result = await subjectService.getSubjectsNames(mockCategoryId)

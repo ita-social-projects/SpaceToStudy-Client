@@ -1,5 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
-import { describe, it, beforeEach, vi } from 'vitest'
+import { vi } from 'vitest'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import CreateSubjectModal from '~/containers/find-offer/create-subject/CreateSubject'
 import { categoryService } from '~/services/category-service'
