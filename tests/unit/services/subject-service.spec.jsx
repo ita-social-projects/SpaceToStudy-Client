@@ -1,4 +1,4 @@
-import { afterEach, vi } from 'vitest'
+import { vi } from 'vitest'
 import { mockAxiosClient } from '~tests/test-utils'
 import { subjectService } from '~/services/subject-service'
 import { URLs } from '~/constants/request'
