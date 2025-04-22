@@ -11,7 +11,6 @@ import DoneIcon from '@mui/icons-material/Done'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import IconTitleDescription from '~/components/icon-title-description/IconTitleDescription'
 import AppCard from '~/components/app-card/AppCard'
-import StudyMaterials from '~/containers/my-cooperations/cooperation-completion/StudyMaterials'
 
 import { styles } from '~/containers/offer-details/offer-general-info/OfferGeneralInfo.styles'
 import { Offer, SizeEnum } from '~/types'
@@ -75,10 +74,7 @@ const OfferGeneralInfo: FC<OfferGeneralInfo> = ({ offer }) => {
         {t('offerDetailsPage.generalInfo.title')}
       </Typography>
 
-      <Box sx={styles.cardsContainer}>
-        {generalInfoCards}
-        <StudyMaterials />
-      </Box>
+      <Box sx={styles.cardsContainer}>{generalInfoCards}</Box>
     </Box>
   )
 }
