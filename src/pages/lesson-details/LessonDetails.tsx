@@ -15,12 +15,11 @@ import Accordions from '~/components/accordion/Accordions'
 import useAccordion from '~/hooks/use-accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import Button from '~scss-components/button/Button'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { useAppSelector } from '~/hooks/use-redux'
 import { useModalContext } from '~/context/modal-context'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import { cooperationService } from '~/services/cooperation-service'
 import useMutation from '~/hooks/use-mutation'
-import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -30,10 +29,8 @@ import {
   TypographyVariantEnum,
   UserRoleEnum
 } from '~/types'
-import { ResponseError } from '~/exceptions'
-import { snackbarVariants } from '~/constants'
-import { getErrorKey } from '~/utils/get-error-key'
 import { getFullUrl } from '~/utils/get-full-url'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const LessonDetails: React.FC = () => {
   const [completionStatus, setCompletionStatus] =
@@ -48,7 +45,7 @@ const LessonDetails: React.FC = () => {
     multiple: true
   })
   const isStudent = userRole === UserRoleEnum.Student
-  const dispatch = useAppDispatch()
+  const { handleErrorAlert } = useSnackbarAlert()
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -128,25 +125,13 @@ const LessonDetails: React.FC = () => {
     })
   }, [cooperation, lessonId, setCompletionStatus])
 
-  const handleResponseError = useCallback(
-    (error: ResponseError) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: getErrorKey(error)
-        })
-      )
-    },
-    [dispatch]
-  )
-
   const { mutate: updateLessonStatus } = useMutation({
     mutationFn: cooperationService.updateResourceCompletionStatus,
     queryKeys: [
       ['lesson', lessonId],
       ['cooperation', id]
     ],
-    onError: handleResponseError
+    onError: handleErrorAlert
   })
 
   const handleUpdateLessonStatus = useCallback(() => {

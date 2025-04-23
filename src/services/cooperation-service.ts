@@ -14,6 +14,7 @@ import type {
 import { getFullUrl } from '~/utils/get-full-url'
 import { baseService } from '~/services/base-service'
 import { AxiosResponse } from 'axios'
+import { createUrlPath } from '~/utils/helper-functions'
 
 export const cooperationService = {
   getCooperations: async (params: GetCooperationsParams) => {
@@ -82,10 +83,7 @@ export const CooperationNotesService = {
   getNotes: (cooperationId: string) => {
     return baseService.request<AxiosResponse<NoteResponse[]>>({
       method: 'GET',
-      url: getFullUrl({
-        pathname: URLs.notes.get,
-        parameters: { id: cooperationId }
-      })
+      url: createUrlPath(URLs.notes.get, cooperationId)
     })
   },
   createNote: (data: CreateOrUpdateNoteParams, cooperationId: string) => {

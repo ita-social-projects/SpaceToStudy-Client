@@ -25,6 +25,7 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorMessage } from '~/utils/error-with-message'
 import { getErrorKey } from '~/utils/get-error-key'
+import { ResponseError } from '~/exceptions'
 
 const CooperationNotes = () => {
   const { t } = useTranslation()
@@ -85,7 +86,7 @@ const CooperationNotes = () => {
   const getNotes = useCallback(() => CooperationNotesService.getNotes(id), [id])
 
   const createNoteService = useCallback(
-    (data: CreateOrUpdateNoteParams = { isPrivate: false, text: '' }) =>
+    (data: CreateOrUpdateNoteParams) =>
       CooperationNotesService.createNote(data, id),
     [id]
   )
@@ -97,12 +98,8 @@ const CooperationNotes = () => {
   )
 
   const updateNoteService = useCallback(
-    (
-      params: { noteId: string; data: CreateOrUpdateNoteParams } = {
-        noteId: '',
-        data: { isPrivate: false, text: '' }
-      }
-    ) => CooperationNotesService.updateNote(id, params.noteId, params.data),
+    (params: { noteId: string; data: CreateOrUpdateNoteParams }) =>
+      CooperationNotesService.updateNote(id, params.noteId, params.data),
     [id]
   )
 
@@ -165,9 +162,21 @@ const CooperationNotes = () => {
     })
   }
 
+  const createNoteNotFoundError = () => {
+    return new ResponseError({
+      message: 'Note not found',
+      status: 404,
+      code: 'NOTE_NOT_FOUND'
+    })
+  }
+
   const duplicateNote = useCallback(
-    (id?: string) => {
+    (id: string) => {
       const note = notes.find((item) => item._id === id)
+      if (!note) {
+        return Promise.reject(createNoteNotFoundError())
+      }
+
       return createNoteService(note)
     },
     [notes, createNoteService]
