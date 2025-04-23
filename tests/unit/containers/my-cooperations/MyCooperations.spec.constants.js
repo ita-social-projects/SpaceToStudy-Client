@@ -81,7 +81,7 @@ export const mockedCoop = {
       city: 'Lviv'
     },
     photo: '',
-    professionalSummary: 'jfhskfhgjdfhjgdhfkjghdjfgdfghdkjfg'
+    professionalSummary: ''
   },
   initiatorRole: 'student',
   receiver: {
