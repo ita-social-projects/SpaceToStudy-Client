@@ -5,32 +5,7 @@ import MyCooperationsDetails from '~/containers/my-cooperations/my-cooperations-
 import { screen, fireEvent } from '@testing-library/react'
 import { vi } from 'vitest'
 
-const mockedOffer = {
-  initiator: { _id: 'initiatorId', role: ['tutor'] },
-  receiver: { _id: 'receiverId', role: ['student'] },
-  offer: {
-    title: 'Title',
-    description: 'Description',
-    languages: ['Ukrainian', 'English'],
-    author: {
-      firstName: 'Michael',
-      lastName: 'Scarn',
-      photo: '1701182621626.jpg',
-      professionalSummary: 'Agent'
-    },
-    subject: {
-      name: 'Algebra'
-    },
-    category: {
-      name: 'Mathematics',
-      appearance: {
-        color: '#1234'
-      }
-    },
-    proficiencyLevel: ['INTERMEDIATE']
-  },
-  price: 100
-}
+import { mockedCoop } from '~tests/unit/containers/my-cooperations/MyCooperations.spec.constants'
 
 const mockChatContext = {
   setChatInfo: vi.fn()
@@ -44,7 +19,7 @@ describe('MyCooperationsDetails component', () => {
   beforeEach(() => {
     mockAxiosClient
       .onGet(URLs.cooperations.getById.replace(':id', ''))
-      .reply(200, mockedOffer)
+      .reply(200, mockedCoop)
 
     renderWithProviders(<MyCooperationsDetails />)
   })
@@ -81,7 +56,7 @@ describe('MyCooperationsDetails component', () => {
 
     expect(profileButton).toBeInTheDocument()
     expect(profileButton.parentElement.href).toContain(
-      `/user/${mockedOffer.initiator._id}?role=${mockedOffer.initiator.role[0]}`
+      `/user/${mockedCoop.initiator._id}?role=${mockedCoop.initiator.role[0]}`
     )
   })
 })
