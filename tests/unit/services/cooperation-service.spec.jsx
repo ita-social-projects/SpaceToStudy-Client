@@ -4,6 +4,7 @@ import {
 } from '~/services/cooperation-service'
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { createUrlPath } from '~/utils/helper-functions'
 
 const id = '64kf41f7806a06c65338c509'
 const lessonId = '64ef41f7806a06c65338c433'
@@ -76,12 +77,11 @@ describe('Cooperation Notes Service tests', () => {
   })
 
   it('should get notes', async () => {
-    mockAxiosClient.onGet(URLs.notes.get.replace(':id', id)).reply(200)
+    const expectedUrl = createUrlPath(URLs.notes.get, id)
+    mockAxiosClient.onGet(expectedUrl).reply(200)
     await CooperationNotesService.getNotes(id)
 
-    expect(mockAxiosClient.history.get[0].url).toBe(
-      URLs.notes.get.replace(':id', id)
-    )
+    expect(mockAxiosClient.history.get[0].url).toBe(expectedUrl)
   })
 
   it('should create note', async () => {
