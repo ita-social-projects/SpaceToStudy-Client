@@ -35,6 +35,12 @@ const CooperationNotes = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [editableItemId, setEditableItemId] = useState<string>('')
 
+  const noteNotFoundError = new ResponseError({
+    message: 'Note not found',
+    status: 404,
+    code: 'NOTE_NOT_FOUND'
+  })
+
   const onResponseError = useCallback(
     (error?: ErrorResponse) => {
       const errorKey = getErrorKey(error)
@@ -162,19 +168,11 @@ const CooperationNotes = () => {
     })
   }
 
-  const createNoteNotFoundError = () => {
-    return new ResponseError({
-      message: 'Note not found',
-      status: 404,
-      code: 'NOTE_NOT_FOUND'
-    })
-  }
-
   const duplicateNote = useCallback(
     (id: string) => {
       const note = notes.find((item) => item._id === id)
       if (!note) {
-        return Promise.reject(createNoteNotFoundError())
+        return Promise.reject(noteNotFoundError)
       }
 
       return createNoteService(note)
