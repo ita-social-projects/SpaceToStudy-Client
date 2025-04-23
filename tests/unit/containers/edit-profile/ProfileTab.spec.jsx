@@ -234,7 +234,7 @@ describe('ProfileTab', () => {
     expect(lastNameInput).toHaveValue(tooManyCharacters)
   })
 
-   it('should show an error when "First name" empty', async () => {
+  it('should show an error when "First name" empty', async () => {
     renderWithMockData()
 
     const firstNameInput = screen.getByPlaceholderText('firstName')
