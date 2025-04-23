@@ -2,7 +2,7 @@
   "subject": "предмет",
   "subjects": {
     "title": "{{category}} Предмети",
-    "description": "Досліджуйте предметами, якими ви захоплюєтеся.",
+    "description": "Досліджуйте предмети, якими ви захоплюєтеся.",
     "showAllOffers": "Показати пропозиції",
     "backToAllCategories": "До категорій",
     "searchLabel": "Чого б ви хотіли навчитися?",
