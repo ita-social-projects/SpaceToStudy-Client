@@ -1,6 +1,5 @@
 import { useMatch, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useCallback } from 'react'
 
 import Box from '@mui/material/Box'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
@@ -18,9 +17,9 @@ import ProfileContainerMobile from '~/containers/user-profile/profile-info/Profi
 import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
 
 import { authRoutes } from '~/router/constants/authRoutes'
-import { defaultResponses, snackbarVariants } from '~/constants'
+import { snackbarVariants } from '~/constants'
 
-import { UserRoleEnum, UserResponse, ChatResponse } from '~/types'
+import { UserRoleEnum, UserResponse } from '~/types'
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -133,22 +132,21 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
       }
   ].filter((item): item is DoneItem => !!item)
 
-  const getAllChats = useCallback(() => chatService.getAllChats(), [])
-
   const {
     data: listOfChats,
     isLoading: isChatsLoading,
     refetch
-  } = useQuery<ChatResponse[]>({
+  } = useQuery({
     queryKey: ['chats'],
-    queryFn: getAllChats,
+    queryFn: chatService.getAllChats,
     options: {
-      staleTime: Infinity,
-      initialData: defaultResponses.array
+      staleTime: Infinity
     }
   })
 
   const onSendMessageClick = async () => {
+    if (!listOfChats) return
+
     const existedChat = listOfChats.find((chat) =>
       chat.members.some((member) => member.user._id === userData._id)
     )
@@ -164,6 +162,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
       await refetch()
     }
   }
+
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
       <Button
