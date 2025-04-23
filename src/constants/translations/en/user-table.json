@@ -12,6 +12,6 @@
   "active": "Active",
   "blocked": "Blocked",
   "invited": "Invited",
-  "deleteUserSuccess": "User successfully deleted.",
-  "deleteUsersSuccess": "Selected users successfully deleted."
+  "deleteUserSuccess": "User successfully deleted",
+  "deleteUsersSuccess": "Selected users successfully deleted"
 }

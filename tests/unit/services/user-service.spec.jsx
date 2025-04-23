@@ -1,7 +1,7 @@
 import { URLs } from '~/constants/request'
 import { mockAxiosClient } from '~tests/test-utils'
 import { userService } from '~/services/user-service'
-import { afterEach, vi } from 'vitest'
+import { vi } from 'vitest'
 
 const userId = '6255bc080a75adf9223df444'
 const userRole = 'admin'
