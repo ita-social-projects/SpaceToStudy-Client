@@ -48,7 +48,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
     closeModal()
   }
 
-  const handleResponseError = (error?: ErrorResponse) => {
+  const handleResponseError = (error: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
