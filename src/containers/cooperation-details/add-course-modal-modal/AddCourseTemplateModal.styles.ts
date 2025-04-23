@@ -34,6 +34,7 @@ export const styles = {
   searchInput: {
     width: '100%',
     maxWidth: { md: '350px', xs: '220px' },
+    padding: '12px 0',
     border: `1px solid ${palette.primary[400]}`,
     borderRadius: '6px'
   },
