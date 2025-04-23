@@ -214,6 +214,7 @@ const MyCooperationsDetails = () => {
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
       <CooperationCompletion
+        cooperationNeedActionRole={cooperationDetails.needAction.role}
         cooperationStatus={cooperationDetails.status}
         onCloseCooperation={handleCloseCooperation}
         reviewData={reviewData}

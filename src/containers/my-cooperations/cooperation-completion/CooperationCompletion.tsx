@@ -20,6 +20,7 @@ import {
 } from '~/types'
 
 interface CooperationCompletionProps {
+  cooperationNeedActionRole: UserRoleEnum
   cooperationStatus: StatusEnum
   onCloseCooperation: () => void
   userRole: UserRoleEnum | ''
@@ -27,6 +28,7 @@ interface CooperationCompletionProps {
 }
 
 const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
+  cooperationNeedActionRole,
   cooperationStatus,
   onCloseCooperation,
   userRole,
@@ -72,7 +74,10 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
         title={t('cooperationsPage.cooperationDetails.leaveReviewTitle')}
       >
         <Button
-          disabled={cooperationStatus !== StatusEnum.Closed}
+          disabled={
+            cooperationStatus !== StatusEnum.Closed ||
+            cooperationNeedActionRole === userRole
+          }
           onClick={openAddReviewModal}
         >
           {t('cooperationsPage.cooperationDetails.leaveReviewTitle')}
