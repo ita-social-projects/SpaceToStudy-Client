@@ -12,11 +12,20 @@ import {
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
-import { expect, vi } from 'vitest'
+import { afterEach, expect, vi } from 'vitest'
 
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
 const mockUpdateAvailability = vi.fn()
+const mockNavigate = vi.fn()
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate
+  }
+})
 
 vi.mock('@mui/x-date-pickers/LocalizationProvider', async () => {
   const actual = await vi.importActual(
@@ -308,5 +317,45 @@ describe('ResourceItem tests when resourceType attachment', () => {
     const attachmentItem = screen.getByText(/png/)
     fireEvent.click(attachmentItem)
     expect(windowOpenMock).not.toHaveBeenCalled()
+  })
+})
+
+describe('ResourceItem navigation', () => {
+  afterEach(() => {
+    mockNavigate.mockReset()
+  })
+
+  it('should navigate to lesson page when resourceType is Lesson', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedLessonDataOriginal}
+      />
+    )
+
+    const lessonItem = screen.getByText(mockedLessonDataOriginal.title)
+    fireEvent.click(lessonItem)
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `lesson-details/${mockedLessonDataOriginal._id}`
+    )
+  })
+
+  it('should navigate to quiz attempts page when resourceType is Quiz', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedQuizDataDuplicate}
+      />
+    )
+
+    const quizItem = screen.getByText(mockedQuizDataDuplicate.title)
+    fireEvent.click(quizItem)
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `quizzes/${mockedQuizDataDuplicate._id}/attempts`
+    )
   })
 })
