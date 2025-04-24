@@ -12,6 +12,7 @@ import useSubjectsNames from '~/hooks/use-subjects-names'
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
 import { useModalContext } from '~/context/modal-context'
+import useTranslate from '~/hooks/use-translate'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
@@ -27,7 +28,6 @@ import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { getSuffixes } from '~/utils/get-translation-suffixes'
-import { translateData } from '~/utils/translate-data'
 import { CategoryNameInterface, SizeEnum, SubjectInterface } from '~/types'
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -39,6 +39,7 @@ const Subjects = () => {
   const [categoryName, setCategoryName] = useState<string>('')
   const [isFetched, setIsFetched] = useState<boolean>(false)
   const params = useMemo(() => ({ name: match }), [match])
+  const translateCategories = useTranslate<CategoryNameInterface>('categories')
 
   const { t, i18n } = useTranslation()
   const nameOfSearchContent = t('subjectsPage.subject')
@@ -126,13 +127,6 @@ const Subjects = () => {
     const category = response.find((option) => option._id === categoryId)
     setCategoryName(category?.name ?? '')
   }
-
-  const translateCategories = useCallback(
-    (data: CategoryNameInterface[]) => {
-      return translateData(data, 'categories', t)
-    },
-    [t]
-  )
 
   const autoCompleteCategories = (
     <AsyncAutocomplete

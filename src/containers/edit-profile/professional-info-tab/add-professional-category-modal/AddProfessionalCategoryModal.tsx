@@ -21,6 +21,7 @@ import { categoryService } from '~/services/category-service'
 import { isSubmitDisabled } from '~/utils/is-submit-disabled'
 import useForm from '~/hooks/use-form'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import useTranslate from '~/hooks/use-translate'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import Button from '~scss-components/button/Button'
@@ -116,6 +117,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { userRole } = useAppSelector((state) => state.appMain)
+  const translateCategories = useTranslate<CategoryNameInterface>('categories')
 
   const initialFormValues = initialValuesFromProps || userMainSubjectTemplate
 
@@ -219,13 +221,6 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     )
     return isBlocked && isCurrent
   }
-
-  const translateCategories = useCallback(
-    (data: CategoryNameInterface[]) => {
-      return translateData(data, 'categories', t)
-    },
-    [t]
-  )
 
   const SubjectsGroup = data.subjects.map((subject, index) => (
     <SubjectGroup
