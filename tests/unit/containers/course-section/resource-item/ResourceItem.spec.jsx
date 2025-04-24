@@ -273,6 +273,21 @@ describe('ResourceItem tests when resourceType attachment', () => {
     expect(windowOpenMock).not.toHaveBeenCalled()
   })
 
+  it('should not download anything if resource.resourceType is not Attachment but resourceType IS an attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedLessonDataOriginal}
+        resourceType={ResourcesTypesEnum.Attachment}
+      />
+    )
+    const nonAttachmentItem = screen.getByText(mockedLessonDataOriginal.title)
+
+    fireEvent.click(nonAttachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalled()
+  })
+
   it('should not download anything if resourceType is not Attachment but resource.resourceType IS an Attachment', () => {
     renderWithProviders(
       <ResourceItem
