@@ -214,14 +214,6 @@ describe('ResourceItem tests when resourceType attachment', () => {
 
   beforeEach(() => {
     windowOpenMock = vi.spyOn(window, 'open').mockImplementation(() => {})
-
-    // renderWithProviders(
-    //   <ResourceItem
-    //     availability={mockAvailabilityOpen}
-    //     isView
-    //     resource={mockedAttachmentDataOriginal}
-    //   />
-    // )
   })
 
   afterEach(() => {
@@ -300,6 +292,20 @@ describe('ResourceItem tests when resourceType attachment', () => {
 
     const attachmentItem = screen.getByText(/png/)
 
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalled()
+  })
+
+  it('should not download attachment if isView is false', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        resource={mockedAttachmentDataOriginal}
+        resourceType={ResourcesTypesEnum.Attachment}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
     fireEvent.click(attachmentItem)
     expect(windowOpenMock).not.toHaveBeenCalled()
   })
