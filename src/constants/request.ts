@@ -47,7 +47,7 @@ export const URLs = {
     patch: '/courses/:id'
   },
   coursesAndCooperations: {
-    getByResourceId: '/courses-cooperations/resource/'
+    getByResourceId: '/courses-cooperations/resource/:resourceId'
   },
   categories: {
     get: '/categories',
