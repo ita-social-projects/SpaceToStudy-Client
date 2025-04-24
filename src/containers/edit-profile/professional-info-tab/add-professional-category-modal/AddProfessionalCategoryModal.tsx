@@ -33,7 +33,6 @@ import {
 } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
-import { translateData } from '~/utils/translate-data'
 import { titleToCamel } from '~/utils/title-to-camel-case'
 
 interface SubjectGroupProps {
@@ -52,17 +51,11 @@ function SubjectGroup({
   handleSubjectDelete
 }: Readonly<SubjectGroupProps>) {
   const { t } = useTranslation()
+  const translateSubjects = useTranslate<SubjectNameInterface>('subjects')
 
   const getSubjectsNames = useCallback(() => {
     return subjectService.getSubjectsNames(selectedCategory)
   }, [selectedCategory])
-
-  const translateSubjects = useCallback(
-    (data: SubjectNameInterface[]) => {
-      return translateData(data, 'subjects', t)
-    },
-    [t]
-  )
 
   const handleDisableOptions = (option: Partial<SubjectInterface>) => {
     return disableOptions.some((subject) => subject._id === option._id)
