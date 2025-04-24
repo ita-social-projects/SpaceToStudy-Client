@@ -1,10 +1,11 @@
 import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
+import userEvent from '@testing-library/user-event'
 import { renderWithProviders, selectOption } from '~tests/test-utils'
 import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import { professionalSubjectTemplate } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import { vi } from 'vitest'
+import { describe, expect, vi } from 'vitest'
 import { useTranslation } from 'react-i18next'
 import { titleToCamel } from '~/utils/title-to-camel-case'
 const { t } = useTranslation()
@@ -401,5 +402,92 @@ describe('AddProfessionalCategoryModal when clearing categories and subjects', (
       fireEvent.change(categoryAutocomplete, { target: { value: '' } })
     )
     expect(categoryAutocomplete.value).toBe('')
+  })
+})
+
+describe('AddProfessionalCategoryModal My Full Flow Replication', () => {
+  let categoryAutocomplete
+  let professionalSubjects
+
+  beforeEach(() => {
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={mockedBlockedCategory}
+        closeModal={mockCloseModal}
+        initialValues={initialValues}
+        isEdit
+      />
+    )
+
+    categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+    professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+  })
+
+  it('should allow selecting a main category, adding subjects, and submitting the modal', async () => {
+    expect(
+      screen.getByText(
+        /editProfilePage.profile.professionalTab.addCategoryModal.title/i
+      )
+    ).toBeInTheDocument()
+
+    await selectOption(
+      categoryAutocomplete,
+      t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }),
+      'findByDisplayValue'
+    )
+
+    const addSubjectBtn = screen.getByRole('button', {
+      name: /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/i
+    })
+    expect(addSubjectBtn).toBeEnabled()
+
+    const submitBtn = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    )
+    expect(submitBtn).toBeEnabled()
+
+    expect(professionalSubjects[0]).toHaveValue('Gastronomy')
+    await selectOption(
+      professionalSubjects[0],
+      t(`subjects.${titleToCamel('Gastronomy')}`, {
+        defaultValue: 'Gastronomy'
+      }),
+      'findByDisplayValue'
+    )
+
+    await waitFor(() => {
+      expect(submitBtn).toBeEnabled()
+    })
+
+    userEvent.click(addSubjectBtn)
+    const subjectFieldsAfterSecondAdd =
+      await screen.findAllByTestId('subjectField')
+    expect(subjectFieldsAfterSecondAdd.length).toBe(2)
+
+    expect(professionalSubjects[1]).toHaveValue('Varenychky')
+    userEvent.click(professionalSubjects[1])
+    const disabledOption = await screen.findByText('Gastronomy')
+    expect(disabledOption).toHaveAttribute('aria-disabled', 'true')
+
+    await selectOption(
+      professionalSubjects[1],
+      t(`subjects.${titleToCamel('Varenychky')}`, {
+        defaultValue: 'Varenychky'
+      }),
+      'findByDisplayValue'
+    )
+
+    await waitFor(() => {
+      expect(submitBtn).toBeEnabled()
+    })
+
+    fireEvent.click(submitBtn)
+    await waitFor(() => {
+      expect(mockCloseModal).toHaveBeenCalled()
+    })
   })
 })

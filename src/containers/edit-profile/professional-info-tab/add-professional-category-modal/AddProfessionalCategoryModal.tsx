@@ -90,7 +90,7 @@ function SubjectGroup({
             label: `${t('editProfilePage.profile.professionalTab.subject')}*`
           }}
           transform={translateSubjects}
-          value={subject._id}
+          value={subject._id ?? ''}
           valueField='_id'
         />
       </Box>
