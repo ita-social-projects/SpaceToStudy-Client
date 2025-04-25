@@ -9,8 +9,8 @@ export const chatService = {
   getChats: (): Promise<AxiosResponse<ChatResponse[]>> => {
     return axiosClient.get(URLs.chats.get)
   },
-  getAllChats: async (): Promise<ChatResponse[]> => {
-    return await baseService.request<ChatResponse[]>({
+  getAllChats: () => {
+    return baseService.request<ChatResponse[]>({
       method: 'GET',
       url: URLs.chats.get
     })
