@@ -12,6 +12,7 @@ import { CooperationNotesService } from '~/services/cooperation-service'
 import CreateOrEditNote from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote'
 import NoteView from '~/containers/my-cooperations/cooperation-notes/note-view/NoteView'
 import Loader from '~/components/loader/Loader'
+import { noteNotFoundError } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.consts'
 
 import { snackbarVariants, defaultResponses } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.styles'
@@ -25,7 +26,6 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorMessage } from '~/utils/error-with-message'
 import { getErrorKey } from '~/utils/get-error-key'
-import { ResponseError } from '~/exceptions'
 
 const CooperationNotes = () => {
   const { t } = useTranslation()
@@ -34,12 +34,6 @@ const CooperationNotes = () => {
   const { openDialog } = useConfirm()
   const [open, setOpen] = useState<boolean>(false)
   const [editableItemId, setEditableItemId] = useState<string>('')
-
-  const noteNotFoundError = new ResponseError({
-    message: 'Note not found',
-    status: 404,
-    code: 'NOTE_NOT_FOUND'
-  })
 
   const onResponseError = useCallback(
     (error?: ErrorResponse) => {
