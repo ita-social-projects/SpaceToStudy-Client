@@ -59,7 +59,8 @@ export const URLs = {
     get: '/subjects',
     getByCategoryId: '/categories/:id/subjects',
     getNames: '/subjects/names',
-    getNamesByCategoryId: '/categories/:id/subjects/names'
+    getNamesByCategoryId: '/categories/:id/subjects/names',
+    create: '/subjects'
   },
   cooperations: {
     get: '/cooperations',
