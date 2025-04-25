@@ -383,7 +383,7 @@ describe('EditProfile', () => {
     })
   })
 
-  it('should verify that user can save first name with Cyrillic and Latin characters', async () => {
+  it('should verify that user can save first name and last name with Cyrillic and Latin characters', async () => {
     const testData = ['Yurii', 'Юрій']
     let formData = { ...mockData, firstName: 'John', lastName: 'Doe' }
 
