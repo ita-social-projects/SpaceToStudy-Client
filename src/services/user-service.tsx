@@ -9,14 +9,19 @@ import type {
   UpdateUserParams,
   UserResponse,
   UserRole,
-  GetOffersParams
+  GetOffersParams,
+  ItemsWithCount
 } from '~/types'
 
 export const userService = {
-  getUsers: async (
-    params: GetUsersParams
-  ): Promise<AxiosResponse<UserResponse[]>> => {
-    return await axiosClient.get(URLs.users.get, { params })
+  getUsers: (params: GetUsersParams) => {
+    return baseService.request<ItemsWithCount<UserResponse>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.users.get,
+        searchParameters: params
+      })
+    })
   },
   getUserById: (
     userId: string,
@@ -54,11 +59,23 @@ export const userService = {
       data: params
     })
   },
-  deleteUser: (userId: string): Promise<AxiosResponse<null>> => {
-    return axiosClient.delete(createUrlPath(URLs.users.get, userId))
+  deleteUser: (userId: string) => {
+    return baseService.request<null>({
+      method: 'DELETE',
+      url: getFullUrl({
+        pathname: URLs.users.delete,
+        parameters: { id: userId }
+      })
+    })
   },
-  deleteUsers: (userIds: string[]): Promise<AxiosResponse<null>> => {
-    return axiosClient.post(URLs.users.delete, userIds)
+  deleteUsers: (userIds: string[]) => {
+    return baseService.request<null>({
+      method: 'POST',
+      url: getFullUrl({
+        pathname: URLs.users.deleteMany
+      }),
+      data: userIds
+    })
   },
   deactivateUser: (userId: string) => {
     return baseService.request<null>({
