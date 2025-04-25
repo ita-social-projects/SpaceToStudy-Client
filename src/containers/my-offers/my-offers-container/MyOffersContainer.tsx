@@ -72,18 +72,20 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
       }
     }
 
-    return offer.status === StatusEnum.Closed
-      ? [viewDetailsAction]
-      : [
-          {
-            label: t(`myOffersPage.editButton.${userRole}`),
-            buttonProps: {
-              variant: ButtonVariantEnum.Tonal,
-              onClick: () => handleOpenDrawer(id)
-            }
-          },
-          viewDetailsAction
-        ]
+    if (offer.status === StatusEnum.Closed) {
+      return [viewDetailsAction]
+    }
+
+    return [
+      {
+        label: t(`myOffersPage.editButton.${userRole}`),
+        buttonProps: {
+          variant: ButtonVariantEnum.Tonal,
+          onClick: () => handleOpenDrawer(id)
+        }
+      },
+      viewDetailsAction
+    ]
   }
 
   const editOffer: TableActionFunc = (id) => {
