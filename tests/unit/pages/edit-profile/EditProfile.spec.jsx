@@ -385,7 +385,7 @@ describe('EditProfile', () => {
 
   it('should verify that user can save first name with Cyrillic and Latin characters', async () => {
     const testData = ['Yurii', 'Юрій']
-    let formData = { ...mockData, firstName: 'John' }
+    let formData = { ...mockData, firstName: 'John', lastName: 'Doe' }
 
     const mockHandleInputChange = vi.fn((field) => (e) => {
       formData = { ...formData, [field]: e.target.value }
@@ -406,12 +406,15 @@ describe('EditProfile', () => {
 
     const { rerender } = renderForm()
     const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
+    const lastNameInput = screen.getByLabelText(/common.labels.lastName/i)
     const updateButton = screen.getByText('editProfilePage.updateBtn')
 
     for (const data of testData) {
       fireEvent.change(firstNameInput, { target: { value: data } })
+      fireEvent.change(lastNameInput, { target: { value: data } })
 
       expect(formData.firstName).toBe(data)
+      expect(formData.lastName).toBe(data)
 
       rerender(
         <ProfileTabForm
@@ -424,7 +427,8 @@ describe('EditProfile', () => {
         />
       )
 
-      expect(screen.getByDisplayValue(data)).toBeInTheDocument()
+      expect(firstNameInput).toHaveValue(data)
+      expect(lastNameInput).toHaveValue(data)
 
       expect(updateButton).not.toBeDisabled()
 
