@@ -206,7 +206,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
       target: { value: 'Invalid Subject' }
     })
 
-    expect(professionalSubjects[0].value).not.toBe('Invalid Subject')
+    expect(professionalSubjects[0]).not.toHaveValue('Invalid Subject')
 
     const option = screen.queryByText('Invalid Subject')
     expect(option).not.toBeInTheDocument()
