@@ -475,7 +475,6 @@ describe('AddProfessionalCategoryModal My Full Flow Replication', () => {
       .getAllByLabelText(/editProfilePage.profile.professionalTab.subject/i)
       .map((el) => el.closest('input'))
       .filter((el) => el !== null)
-    console.log(document.documentElement.outerHTML)
 
     expect(professionalSubjects).toHaveLength(2)
 
@@ -492,7 +491,6 @@ describe('AddProfessionalCategoryModal My Full Flow Replication', () => {
 })
 
 describe('Additional Coverage Tests for Uncovered Branches in AddProfessionalCategoryModal', () => {
-  // Test branch: value={subject._id ?? ''} (line ~93)
   it('should render a subject field with an empty value when subject._id is falsy (using null)', async () => {
     const initialValuesNullSubject = {
       _id: 'testId',
@@ -500,7 +498,7 @@ describe('Additional Coverage Tests for Uncovered Branches in AddProfessionalCat
       category: { _id: '1', name: 'Cooking' },
       subjects: [
         {
-          _id: null, // Falsy value; should fall back to ''
+          _id: null,
           name: 'Test Subject'
         }
       ]
@@ -518,11 +516,9 @@ describe('Additional Coverage Tests for Uncovered Branches in AddProfessionalCat
     const subjectFieldContainer = await screen.findByTestId('subjectField')
     const inputElement = subjectFieldContainer.querySelector('input')
     expect(inputElement).toBeInTheDocument()
-    // Expect fallback: subject._id ?? '' yields an empty string.
     expect(inputElement).toHaveValue('')
   })
 
-  // Test branch: _id ?? '' : crypto.randomUUID() (line ~146)
   it('should assign a new _id using crypto.randomUUID when not in edit mode and no initial _id is provided', async () => {
     const fakeUUID = 'fake-uuid-1234'
     vi.spyOn(crypto, 'randomUUID').mockReturnValue(fakeUUID)
@@ -532,7 +528,7 @@ describe('Additional Coverage Tests for Uncovered Branches in AddProfessionalCat
       category: { _id: '1', name: 'Cooking' },
       subjects: [
         {
-          _id: '', // falsy value so that fallback is used
+          _id: '',
           name: 'Test Subject'
         }
       ]
@@ -542,11 +538,10 @@ describe('Additional Coverage Tests for Uncovered Branches in AddProfessionalCat
         blockedCategoriesOptions={[]}
         closeModal={mockCloseModal}
         initialValues={initialValuesNoId}
-        isEdit={false} // create mode: should use crypto.randomUUID()
+        isEdit={false}
       />
     )
 
-    // Submit the form (using a form element or a test id if available)
     const submitBtn = screen.getByText(
       /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/i
     ).parentNode
@@ -554,49 +549,37 @@ describe('Additional Coverage Tests for Uncovered Branches in AddProfessionalCat
 
     await act(() => userEvent.click(submitBtn))
 
-    // In non-edit mode, after submission, closeModal is called.
     expect(mockCloseModal).toHaveBeenCalled()
     vi.restoreAllMocks()
   })
 
-  // Test branch: handleMainStudyCategoryChange using value ? { ...value, _id: value._id || '' } (line ~176)
   it('should update the main category and use empty string for category._id when it is falsy', async () => {
-    // Create a dummy category without an _id
     const testCategory = { _id: undefined, name: 'Cooking' }
     renderWithProviders(
       <AddProfessionalCategoryModal
         blockedCategoriesOptions={[]}
         closeModal={mockCloseModal}
-        initialValues={initialValues} // existing initialValues can be used
+        initialValues={initialValues}
         isEdit
       />
     )
     const categoryAutocomplete = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
-    // Simulate a change event that provides a category with an undefined _id.
     fireEvent.change(categoryAutocomplete, {
       target: { value: testCategory.name }
     })
-    // Depending on your component wiring, the updated value should reflect the input text.
     expect(categoryAutocomplete.value).toBe(testCategory.name)
-    // (Internally, handleMainStudyCategoryChange will set category: { ...value, _id: '' } )
   })
 
-  // Test branch: .category?._id === o (line ~218) and isBlocked && isCurrent (line ~220)
   it('should mark an option as disabled when the option matches a blocked category', async () => {
-    // In your AsyncAutocomplete for main category options, getOptionDisabled likely checks if:
-    // option._id === blockedCategory._id (or option._id === blockedCategory.category?._id)
     const blockedCategoryOption = { _id: '4', name: 'Music' }
     const currentOption = { _id: '4', name: 'Music' }
-    // Simulate the logic: option is disabled if its _id matches and some "isBlocked" flag is true.
-    const isBlocked = true // assume the option is blocked (simulated)
+    const isBlocked = true
     const isCurrent = currentOption._id === blockedCategoryOption._id
     expect(isBlocked && isCurrent).toBe(true)
-    // (This test simulates the condition; if your getOptionDisabled is exposed, you could call it directly.)
   })
 
-  // Test branch: _id || ''(line ~234) in SubjectGroup fallback for subject
   it('should render subject field with empty value using fallback when subject._id is undefined', async () => {
     const initialValuesUndefinedSubject = {
       _id: 'testId',
@@ -604,7 +587,6 @@ describe('Additional Coverage Tests for Uncovered Branches in AddProfessionalCat
       category: { _id: '1', name: 'Cooking' },
       subjects: [
         {
-          // _id is undefined here
           name: 'Test Subject'
         }
       ]
@@ -620,7 +602,6 @@ describe('Additional Coverage Tests for Uncovered Branches in AddProfessionalCat
     const subjectFieldContainer = await screen.findByTestId('subjectField')
     const inputElement = subjectFieldContainer.querySelector('input')
     expect(inputElement).toBeInTheDocument()
-    // Expect fallback: _id || '' yields ''.
     expect(inputElement).toHaveValue('')
   })
 })
