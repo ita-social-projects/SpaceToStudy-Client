@@ -1,9 +1,13 @@
+import React from 'react'
 import { screen, waitFor, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import EditProfile from '~/pages/edit-profile/EditProfile'
+import AppTextField from '~/components/app-text-field/AppTextField'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
+import useForm from '~/hooks/use-form'
 import { expect, vi } from 'vitest'
 import { snackbarVariants } from '~/constants'
 import { useAppSelector } from '~/hooks/use-redux'
@@ -161,6 +165,32 @@ vi.mock(
   })
 )
 
+vi.mock(
+  '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm',
+  () => ({
+    default: ({ data, errors, handleBlur, handleInputChange }) => (
+      <div data-testid='form'>
+        <AppTextField
+          errorMsg={errors.firstName}
+          onBlur={handleBlur('firstName')}
+          onChange={handleInputChange('firstName')}
+          placeholder={'firstName'}
+          required
+          value={data.firstName}
+        />
+        <AppTextField
+          errorMsg={errors.lastName}
+          onBlur={handleBlur('lastName')}
+          onChange={handleInputChange('lastName')}
+          placeholder={'lastName'}
+          required
+          value={data.lastName}
+        />
+      </div>
+    )
+  })
+)
+
 vi.mock('AppTextField', () => ({
   __esModule: true,
   default: ({
@@ -183,6 +213,41 @@ vi.mock('AppTextField', () => ({
     />
   )
 }))
+
+const TestProfileTabFormWrapper = () => {
+  const initialValues = {
+    firstName: 'John',
+    lastName: '',
+    videoLink: ''
+  }
+  const validations = {
+    lastName: (value) => (value.length > 30 ? 'Last name is too long' : '')
+  }
+
+  const mockOpenAlert = vi.fn()
+
+  const { data, errors, handleInputChange, handleBlur } = useForm({
+    initialValues,
+    validations,
+    onSubmit: () =>
+      mockOpenAlert({
+        severity: snackbarVariants.success,
+        message: 'Success! Your data has been updated.'
+      })
+  })
+
+  return (
+    <div>
+      <ProfileTabForm
+        data={data}
+        errors={errors}
+        handleBlur={handleBlur}
+        handleInputChange={handleInputChange}
+        openAlert={mockOpenAlert}
+      />
+    </div>
+  )
+}
 
 describe('EditProfile', () => {
   beforeEach(async () => {
@@ -465,7 +530,7 @@ describe('EditProfile', () => {
     expect(dataToUpdate).toHaveProperty('videoLink', '')
   })
 
-  it('should replace the existing text in the "First name" field with test data and Update button becomes anable and active', () => {
+  it('should replace the existing text in the "First name" field with test data and Update button becomes enabled and active', () => {
     const testData = ["O'braian", "Мар'яна", 'Анна-Марія', 'Анна Марія']
 
     const mockT = vi.fn((key) => {
@@ -489,7 +554,7 @@ describe('EditProfile', () => {
       />
     )
 
-    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
+    const firstNameInput = screen.getByPlaceholderText('firstName')
     expect(firstNameInput).toBeInTheDocument()
 
     for (const data of testData) {
@@ -500,7 +565,7 @@ describe('EditProfile', () => {
     }
   })
 
-  it('should replace the existing text in the "Last name" field with test data and Update button becomes anable and active', () => {
+  it('should replace the existing text in the "Last name" field with test data and Update button becomes enabled and active', () => {
     const testData = ["Mc'Neil", "O'Neill-Johnson", 'Van Gogh']
 
     const mockT = vi.fn((key) => {
@@ -524,7 +589,7 @@ describe('EditProfile', () => {
       />
     )
 
-    const lastNameInput = screen.getByLabelText(/common.labels.lastName/i)
+    const lastNameInput = screen.getByPlaceholderText('lastName')
     expect(lastNameInput).toBeInTheDocument()
 
     for (const data of testData) {
@@ -559,7 +624,7 @@ describe('EditProfile', () => {
       />
     )
 
-    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
+    const firstNameInput = screen.getByPlaceholderText('firstName')
     expect(firstNameInput).toBeInTheDocument()
 
     fireEvent.change(firstNameInput, { target: { value: 'Jack' } })
@@ -576,5 +641,34 @@ describe('EditProfile', () => {
       sendConfirm: expect.any(Function),
       title: 'editProfilePage.profile.profileTab.saveUnsavedChangesModal.title'
     })
+  })
+
+  it('should enable Update button when name is less than 30 characters', async () => {
+    renderWithProviders(<TestProfileTabFormWrapper />)
+
+    const lastNameInput = screen.getByPlaceholderText('lastName')
+    expect(lastNameInput).toBeInTheDocument()
+
+    const newLastName = 'Y'.repeat(30)
+
+    await userEvent.clear(lastNameInput)
+    await userEvent.type(lastNameInput, newLastName)
+    expect(lastNameInput).toHaveValue(newLastName)
+
+    const spanElem = screen.getByText(/editProfilePage.updateBtn/i)
+    const updateBtn = spanElem.closest('a')
+
+    expect(updateBtn).not.toBeDisabled()
+
+    fireEvent.click(updateBtn)
+
+    await waitFor(() => {
+      expect(openAlert).toHaveBeenCalledWith({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    })
+
+    openAlert.mockClear()
   })
 })
