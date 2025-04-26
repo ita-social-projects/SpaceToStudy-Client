@@ -2,18 +2,16 @@ import { fireEvent, screen } from '@testing-library/react'
 import { expect, vi } from 'vitest'
 
 import UserTable from '~/components/user-table/UserTable'
-import useAxios from '~/hooks/use-axios'
 import {
   columns,
   initialFilters,
   initialSort,
   tabsInfo
 } from '~/pages/tutor-table/constants'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { userService } from '~/services/user-service'
+import { URLs } from '~/constants/request'
 
-vi.mock('~/hooks/use-axios')
-
-const fetchDataMock = vi.fn()
 const userRole = 'tutor'
 
 const userDataMock = {
@@ -40,16 +38,12 @@ const userDataArray = Array(10)
     _id: `${index}`
   }))
 
-const fakeData = {
-  loading: false,
-  response: { items: userDataArray, count: 0 },
-  fetchData: fetchDataMock
-}
-
 describe('UserTable', () => {
-  useAxios.mockImplementation(() => fakeData)
-
   beforeEach(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.users.get))
+      .reply(200, { items: userDataArray, count: userDataArray.length })
+
     renderWithProviders(
       <UserTable
         columns={columns}
@@ -68,11 +62,12 @@ describe('UserTable', () => {
   })
 
   it('should change tab', () => {
+    const getUsersSpy = vi.spyOn(userService, 'getUsers')
     const tab = screen.getByText('userTable.active')
+    expect(tab).toBeInTheDocument()
 
     fireEvent.click(tab)
-
-    expect(fetchDataMock).toHaveBeenCalled()
+    expect(getUsersSpy).toHaveBeenCalled()
   })
 
   it('should select all items after clicking on checkbox', () => {
@@ -86,11 +81,9 @@ describe('UserTable', () => {
     expect(amountOfSelected).toHaveTextContent(
       `${userDataArray.length} table.selected`
     )
-
-    expect(fetchDataMock).toHaveBeenCalled()
   })
 
-  it('should change page from 1 to 2', () => {
+  it('should change page from 1 to 2', async () => {
     const inputField = screen.getByTestId('pagination-page-input')
 
     expect(inputField.value).toBe('1')
@@ -103,7 +96,7 @@ describe('UserTable', () => {
 
     fireEvent.click(button)
 
-    const secondPageRows = screen.getByText(
+    const secondPageRows = await screen.findByText(
       `6-10 table.of ${userDataArray.length}`
     )
 

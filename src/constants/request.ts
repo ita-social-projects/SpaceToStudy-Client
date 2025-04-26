@@ -21,7 +21,8 @@ export const URLs = {
     get: '/users',
     getUserById: '/users/:id',
     update: '/users/:id',
-    delete: '/users/delete',
+    delete: '/users/:id',
+    deleteMany: '/users/delete',
     deactivate: '/users/deactivate',
     activate: '/users/activate',
     myProfile: '/users/myProfile',
@@ -58,7 +59,8 @@ export const URLs = {
     get: '/subjects',
     getByCategoryId: '/categories/:id/subjects',
     getNames: '/subjects/names',
-    getNamesByCategoryId: '/categories/:id/subjects/names'
+    getNamesByCategoryId: '/categories/:id/subjects/names',
+    create: '/subjects'
   },
   cooperations: {
     get: '/cooperations',
