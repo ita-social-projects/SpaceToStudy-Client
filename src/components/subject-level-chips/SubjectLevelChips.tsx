@@ -19,7 +19,8 @@ interface SubjectLevelChipsProps {
 const SubjectLevelChips: FC<SubjectLevelChipsProps> = ({
   proficiencyLevel,
   subject,
-  sx
+  sx,
+  color
 }) => {
   const proficiencyLevelText = useMemo(() => {
     if (!Array.isArray(proficiencyLevel)) return proficiencyLevel
@@ -32,6 +33,7 @@ const SubjectLevelChips: FC<SubjectLevelChipsProps> = ({
   return (
     <Box sx={spliceSx(styles.chips, sx)}>
       <Chip
+        color={color}
         detail={proficiencyLevelText}
         label={subject ?? ''}
         size='sm'
