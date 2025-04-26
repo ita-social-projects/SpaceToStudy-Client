@@ -86,8 +86,7 @@ describe('Cooperation Notes Service tests', () => {
 
   it('should create note', async () => {
     mockAxiosClient.onPost(URLs.notes.get.replace(':id', id)).reply(200)
-
-    await CooperationNotesService.createNote(noteData, id)
+    await CooperationNotesService.createNote(id, noteData)
 
     expect(mockAxiosClient.history.post[0].url).toBe(
       URLs.notes.get.replace(':id', id)
@@ -124,6 +123,7 @@ describe('Cooperation Notes Service tests', () => {
     expect(mockAxiosClient.history.delete[0].url).toBe(
       URLs.notes.delete.replace(':id', id).replace(':noteId', noteId)
     )
-    expect(result).toBeUndefined()
+    expect(result.data).toBeUndefined()
+    expect(result.status).toBe(200)
   })
 })
