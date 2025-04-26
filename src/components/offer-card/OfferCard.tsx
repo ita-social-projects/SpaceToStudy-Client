@@ -14,6 +14,7 @@ interface OfferCardProps {
   onBookmarkClick: (id: string) => void
   buttonActions: (ButtonActions | null)[]
   isBookmarked: boolean
+  isDetails?: boolean
 }
 
 const OfferCard: FC<OfferCardProps> = ({
@@ -21,7 +22,8 @@ const OfferCard: FC<OfferCardProps> = ({
   offer,
   onBookmarkClick,
   buttonActions,
-  isBookmarked
+  isBookmarked,
+  isDetails
 }) => {
   const {
     _id,
@@ -41,6 +43,7 @@ const OfferCard: FC<OfferCardProps> = ({
       <UserProfileInfo
         _id={author._id}
         firstName={author.firstName}
+        isDetails={isDetails}
         lastName={`${author.lastName[0]}.`}
         photo={author.photo}
         rating={author.averageRating[authorRole]}

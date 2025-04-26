@@ -22,13 +22,15 @@ interface OfferCardSquareProps {
   offer: Offer
   onBookmarkClick?: (id: string) => void
   isBookmarked: boolean
+  isDetails?: boolean
 }
 
 const OfferCardSquare: FC<OfferCardSquareProps> = ({
   buttonActions,
   offer,
   onBookmarkClick,
-  isBookmarked
+  isBookmarked,
+  isDetails
 }) => {
   const { t } = useTranslation()
 
@@ -67,6 +69,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
         <UserProfileInfo
           _id={author._id}
           firstName={author.firstName}
+          isDetails={isDetails}
           languages={languages}
           lastName={author.lastName}
           photo={author.photo}
