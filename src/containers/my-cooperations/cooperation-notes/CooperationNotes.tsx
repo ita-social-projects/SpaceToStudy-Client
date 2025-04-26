@@ -87,7 +87,7 @@ const CooperationNotes = () => {
 
   const createNoteService = useCallback(
     (data: CreateOrUpdateNoteParams) =>
-      CooperationNotesService.createNote(data, id),
+      CooperationNotesService.createNote(id, data),
     [id]
   )
 
