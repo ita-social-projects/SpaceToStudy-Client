@@ -199,11 +199,11 @@ const EditProfile = () => {
       dataToUpdate.mainSubjects = categories
     }
 
-    if (typeof photo === 'object' || photo === '') {
-      dataToUpdate.photo = photo
-    }
-
     const dataWithoutEmptyStrings = replaceEmptyStringsWithNull(dataToUpdate)
+
+    if (typeof photo === 'object' || photo === '') {
+      dataWithoutEmptyStrings.photo = photo
+    }
 
     await dispatch(
       updateUser({
