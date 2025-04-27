@@ -256,4 +256,29 @@ describe('ChangePasswordModal', () => {
       screen.getByText(/common.errorMessages.currentAndNewPasswordsMatch/i)
     ).toBeInTheDocument()
   })
+  it('should throw an error at entering alphabetic values', async () => {
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const saveButton = screen.getByText(
+      /editProfilePage.profile.passwordSecurityTab.savePassword/i
+    )
+    fireEvent.change(currentPasswordInput, {
+      target: { value: 'ABCDabcdef' }
+    })
+    fireEvent.change(screen.getByLabelText(/newPassword/i), {
+      target: { value: 'ABCDabcdef' }
+    })
+    fireEvent.change(screen.getByLabelText(/retypePassword/i), {
+      target: { value: 'ABCDabcdef' }
+    })
+
+    fireEvent.click(saveButton)
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
+      ).toBeInTheDocument()
+    })
+  })
 })
