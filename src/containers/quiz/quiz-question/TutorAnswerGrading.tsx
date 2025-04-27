@@ -25,7 +25,11 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
     return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
   }, [cooperationId, quizId])
 
-  const { data: finishedQuizzes = [], isLoading } = useQuery({
+  const {
+    data: finishedQuizzes = [],
+    isLoading,
+    refetch
+  } = useQuery({
     queryKey: ['finished-quizzes', cooperationId, quizId],
     queryFn: getFinishedQuizzes,
     options: {
@@ -90,11 +94,17 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
   )
 
   const { mutate: updateAttempt } = useMutation({
-    mutationFn: handleUpdateGrade
+    mutationFn: handleUpdateGrade,
+    onError: () => {
+      setIsCorrect((prev) => !prev)
+    },
+    onSuccess: async () => {
+      await refetch()
+    }
   })
-
   const handleCorrectAnswer = (newIsCorrect: boolean) => {
     setIsCorrect(newIsCorrect)
+    onUpdate?.(newIsCorrect)
     updateAttempt(newIsCorrect)
   }
 

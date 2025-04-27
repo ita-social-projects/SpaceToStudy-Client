@@ -100,7 +100,7 @@ const FinishedQuizInfo: React.FC<FinishedQuizInfoProps> = ({
       />
       <QuizInfoSection
         firstColumn={`${formatTime(createdAt)} - ${formatTime(updatedAt)}`}
-        secondColumn={`${formatTimeDifference(updatedAt, createdAt) + ' ' + t('quiz.min')}`}
+        secondColumn={`${Math.abs(formatTimeDifference(updatedAt, createdAt)) + ' ' + t('quiz.min')}`}
         title={t('quiz.duration')}
       />
       <Divider
@@ -110,7 +110,7 @@ const FinishedQuizInfo: React.FC<FinishedQuizInfoProps> = ({
         variant='middle'
       />
       <QuizInfoSection
-        firstColumn={`${points}/${totalPoints}`}
+        firstColumn={`${totalPoints}/${points}`}
         title={t('quiz.points')}
       />
     </Box>

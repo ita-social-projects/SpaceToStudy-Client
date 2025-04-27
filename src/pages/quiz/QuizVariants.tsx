@@ -276,6 +276,19 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     queryFn: getFinishedQuiz
   })
 
+  const calculateTotalPoints = (
+    results: { answers?: { isCorrect: boolean }[] }[] = []
+  ) => {
+    return results.reduce((total, result) => {
+      const correctAnswers =
+        result.answers?.filter((answer) => answer.isCorrect).length || 0
+      return total + correctAnswers
+    }, 0)
+  }
+  const totalPoints = useMemo(() => {
+    return calculateTotalPoints(finishedQuiz?.results)
+  }, [finishedQuiz?.results])
+
   const { quiz, isLoading: isQuizLoading } = useQuizQuery(quizId)
 
   const {
@@ -289,6 +302,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
 
   const mappedResults = useMemo(() => {
     const result: Record<string, string | string[]> = {}
+
     finishedQuiz?.results?.forEach(({ question, answers }) => {
       const quizQuestion = quiz?.items.find((item) => item.text === question)
       const quizQuestionId = quizQuestion?._id
@@ -299,7 +313,8 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
           (chosenAnswer) => chosenAnswer.text
         )
 
-        result[quizQuestionId] = textAnswers
+        result[quizQuestionId] =
+          textAnswers.length === 1 ? textAnswers[0] : textAnswers
       }
     })
 
@@ -341,7 +356,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
           description={description}
           points={items.length}
           title={title}
-          totalPoints={finishedQuiz.results?.length}
+          totalPoints={totalPoints}
           type='finished'
           updatedAt={finishedQuiz.updatedAt}
         />

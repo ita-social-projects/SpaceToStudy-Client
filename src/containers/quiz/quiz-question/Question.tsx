@@ -209,9 +209,8 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   )
 
   const pointsBlock = shouldShowPoints && (
-    <Typography sx={styles.type}>{Number(initialIsCorrect)}/1</Typography>
+    <Typography sx={styles.type}>{Number(isAnswerCorrect)}/1</Typography>
   )
-
   return (
     <ContainerComponent sx={spliceSx(styles.root, sx)}>
       <Box sx={styles.typeContainer}>
