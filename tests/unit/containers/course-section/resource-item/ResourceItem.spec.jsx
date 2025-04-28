@@ -358,4 +358,19 @@ describe('ResourceItem navigation', () => {
       `quizzes/${mockedQuizDataDuplicate._id}/attempts`
     )
   })
+
+  it('should not call navigate if resource is an attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataOriginal}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+    fireEvent.click(attachmentItem)
+
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
 })
