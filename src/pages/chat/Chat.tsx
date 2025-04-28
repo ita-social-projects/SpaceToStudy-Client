@@ -1,4 +1,10 @@
-import { useState, useCallback, useEffect, useMemo, MouseEvent } from 'react'
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+  MouseEvent
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Allotment } from 'allotment'
 import Box from '@mui/material/Box'
@@ -198,20 +204,21 @@ const Chat = () => {
     return <Loader size={100} />
   }
 
-  const aboutChatSidebar = selectedChat && (
-    <AppDrawer
-      PaperProps={{ sx: styles.sidebarPaper }}
-      anchor={PositionEnum.Right}
-      onClose={() => onSidebarHandler(false)}
-      open={isSidebarOpen}
-      sx={styles.sidebar}
-      variant={isDesktop ? Persistent : Temporary}
-    >
-      {userToSpeak && (
-        <AboutChatSidebar links={mockLinks} member={userToSpeak} />
-      )}
-    </AppDrawer>
-  )
+  const aboutChatSidebar =
+    selectedChat && isSidebarOpen ? (
+      <AppDrawer
+        PaperProps={{ sx: styles.sidebarPaper }}
+        anchor={PositionEnum.Right}
+        onClose={() => onSidebarHandler(false)}
+        open={isSidebarOpen}
+        sx={styles.sidebar}
+        variant={isDesktop ? Persistent : Temporary}
+      >
+        {userToSpeak && (
+          <AboutChatSidebar links={mockLinks} member={userToSpeak} />
+        )}
+      </AppDrawer>
+    ) : null
 
   const selectChatChip = (
     <AppChip labelSx={styles.chipLabel(false)} sx={styles.chip}>
@@ -266,6 +273,7 @@ const Chat = () => {
   const handleChatSelection = (chat: ChatResponse) => {
     setSkip(0)
     setSelectedChat(chat)
+    setIsSidebarOpen(false)
   }
 
   return (
@@ -305,7 +313,7 @@ const Chat = () => {
                     currentChat={selectedChat}
                     messages={messages}
                     onClick={(event?: MouseEvent<HTMLButtonElement>) =>
-                      onSidebarHandler(true, event)
+                      onSidebarHandler(false, event)
                     }
                     onFilteredIndexChange={hadleIndexMessage}
                     onFilteredMessagesChange={handleFilteredMessage}

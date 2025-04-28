@@ -43,6 +43,8 @@ const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
   const { t } = useTranslation()
 
   const anchorRef = useRef<HTMLDivElement | null>(null)
+  const accountMenuAnchor = accountMenuAnchorEl as HTMLElement | null
+  const notificationsAnchorEl = notificationsAnchor as HTMLElement | null
 
   const icons = userIcons.map(
     (item) =>
@@ -83,9 +85,9 @@ const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
         onClose={closeLanguageMenu}
       />
       <AccountIcon openMenu={openAccountMenu} />
-      <AccountMenu anchorEl={accountMenuAnchorEl} onClose={closeAccountMenu} />
+      <AccountMenu anchorEl={accountMenuAnchor} onClose={closeAccountMenu} />
       <NotificationsMenu
-        anchorEl={notificationsAnchor}
+        anchorEl={notificationsAnchorEl}
         items={notificationItems}
         onClear={handleClearNotifications}
         onClose={closeNotifications}

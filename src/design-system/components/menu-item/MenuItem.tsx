@@ -13,6 +13,7 @@ interface MenuItemProps extends CommonMenuItemProps {
   density?: 1 | 2
   isToggled?: boolean
   onRemove?: () => void
+  sx?: object
   variant?: MenuItemVariant
 }
 
@@ -31,6 +32,7 @@ const MenuItem = forwardRef<HTMLLIElement, MenuItemProps>(
       isDisabled,
       onClick,
       onRemove,
+      sx,
       variant = MenuItemVariant.Default
     },
     ref
@@ -55,6 +57,7 @@ const MenuItem = forwardRef<HTMLLIElement, MenuItemProps>(
         disabled={isDisabled}
         onClick={onClick}
         ref={ref}
+        sx={sx}
       >
         <div className='s2s-item__main-info-box'>
           {graphics && <div className='s2s-item__graphics'>{graphics}</div>}

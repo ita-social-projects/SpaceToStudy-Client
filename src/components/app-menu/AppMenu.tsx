@@ -1,38 +1,34 @@
-import { FC } from 'react'
+import Menu from '~/design-system/components/menu/Menu'
 
-import Menu, { MenuProps } from '@mui/material/Menu'
-
-import { spliceSx } from '~/utils/helper-functions'
-
-import { PositionEnum } from '~/types'
-import { styles } from '~/components/app-menu/AppMenu.styles'
-
-interface AppMenuProps extends MenuProps {
+interface AppMenuProps {
+  anchorEl: HTMLElement | null
+  menuList: {
+    title: string
+    onClick: () => void
+    graphics?: JSX.Element
+    sx?: object
+    isDisabled?: boolean
+  }[]
+  onClose: () => void
+  open?: boolean
+  sx?: object
   maxHeight?: number
-  menuList: JSX.Element | JSX.Element[]
 }
 
-const AppMenu: FC<AppMenuProps> = ({ maxHeight, menuList, sx, ...props }) => {
+const AppMenu = ({ anchorEl, menuList, onClose }: AppMenuProps) => {
   return (
     <Menu
-      PaperProps={{
-        style: {
-          maxHeight
-        }
-      }}
-      anchorOrigin={{
-        vertical: PositionEnum.Bottom,
-        horizontal: PositionEnum.Right
-      }}
-      sx={spliceSx(styles.menu, sx)}
-      transformOrigin={{
-        vertical: PositionEnum.Top,
-        horizontal: PositionEnum.Right
-      }}
-      {...props}
-    >
-      {menuList}
-    </Menu>
+      anchorEl={anchorEl}
+      maxHeight={400}
+      menuItems={menuList.map((item) => ({
+        ...item,
+        sx: item.sx,
+        disabled: item.isDisabled
+      }))}
+      minWidth={200}
+      removeAllItemsTitle='Remove All'
+      setAnchorEl={onClose}
+    />
   )
 }
 

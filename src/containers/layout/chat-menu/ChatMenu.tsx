@@ -1,30 +1,25 @@
-import { FC, MouseEvent, useCallback } from 'react'
+import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
-import MenuItem from '@mui/material/MenuItem'
 import UpdateDisabledIcon from '@mui/icons-material/UpdateDisabled'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 
 import AppMenu from '~/components/app-menu/AppMenu'
 import useConfirm from '~/hooks/use-confirm'
-import useAxios from '~/hooks/use-axios'
 import { chatService } from '~/services/chat-service'
 import { messageService } from '~/services/message-service'
 
 import { styles } from '~/containers/layout/chat-menu/ChatMenu.styles'
-import { ChatResponse, ComponentEnum, ErrorResponse } from '~/types'
-import { defaultResponses, snackbarVariants } from '~/constants'
-import { useAppDispatch } from '~/hooks/use-redux'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
+import { ChatResponse } from '~/types'
 
 interface ChatMenuProps {
-  anchorEl: Element | null
+  anchorEl: HTMLElement | null
   currentChat: ChatResponse
   messagesLength: number
   onClose: () => void
   updateChats: () => Promise<void>
   updateMessages: () => Promise<void>
+  isHistoryCleared: boolean
+  setIsHistoryCleared: (value: boolean) => void
 }
 
 const ChatMenu: FC<ChatMenuProps> = ({
@@ -33,120 +28,52 @@ const ChatMenu: FC<ChatMenuProps> = ({
   messagesLength,
   onClose,
   updateChats,
-  updateMessages
+  updateMessages,
+  setIsHistoryCleared
 }) => {
   const { t } = useTranslation()
   const { openDialog } = useConfirm()
-  const dispatch = useAppDispatch()
 
-  const onResponse = useCallback(
-    (isDeleting = true) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.success,
-          message: isDeleting
-            ? 'chatPage.chatMenu.deleteSuccess'
-            : 'chatPage.chatMenu.historyClearSuccess'
-        })
-      )
-    },
-    [dispatch]
-  )
+  useEffect(() => {
+    setIsHistoryCleared(messagesLength === 0)
+  }, [messagesLength, setIsHistoryCleared])
 
-  const onResponseError = useCallback(
-    (error?: ErrorResponse) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: getErrorKey(error)
-        })
-      )
-    },
-    [dispatch]
-  )
-
-  const markAsDeletedService = useCallback(
-    (id?: string): Promise<AxiosResponse> =>
-      chatService.markChatAsDeleted(id ?? ''),
-    []
-  )
-
-  const deleteChatService = useCallback(
-    (id?: string): Promise<AxiosResponse> => chatService.deleteChat(id ?? ''),
-    []
-  )
-
-  const deleteMessagesService = useCallback(
-    (id?: string): Promise<AxiosResponse> =>
-      messageService.deleteMessagesFromChat(id ?? ''),
-    []
-  )
-
-  const clearHistoryService = useCallback(
-    (id?: string): Promise<AxiosResponse> =>
-      messageService.clearChatHistory(id ?? ''),
-    []
-  )
-
-  const { fetchData: markAsDeleted } = useAxios({
-    service: markAsDeletedService,
-    defaultResponse: defaultResponses.object,
-    onResponse,
-    onResponseError,
-    fetchOnMount: false
-  })
-
-  const { fetchData: deleteChat } = useAxios({
-    service: deleteChatService,
-    defaultResponse: null,
-    onResponse,
-    onResponseError,
-    fetchOnMount: false
-  })
-
-  const { fetchData: deleteMessages } = useAxios({
-    service: deleteMessagesService,
-    defaultResponse: null,
-    onResponse,
-    onResponseError,
-    fetchOnMount: false
-  })
-
-  const { fetchData: clearHistory } = useAxios({
-    service: clearHistoryService,
-    defaultResponse: defaultResponses.object,
-    onResponse: () => onResponse(false),
-    onResponseError,
-    fetchOnMount: false
-  })
+  const handleClearChat = async (id: string, isConfirmed: boolean) => {
+    if (!isConfirmed) return
+    try {
+      await messageService.clearChatHistory(id)
+      await updateMessages()
+      await updateChats()
+      setIsHistoryCleared(true)
+    } catch (error) {
+      console.error('Error during clearing chat history:', error)
+    } finally {
+      onClose()
+    }
+  }
 
   const handleDeletion = async (
     id: string,
     isConfirmed: boolean,
     deletingFully: boolean
   ) => {
-    if (isConfirmed) {
+    if (!isConfirmed) return
+    try {
       if (deletingFully) {
-        await deleteMessages(id)
-        await deleteChat(id)
-      } else await markAsDeleted(id)
-
+        await messageService.deleteMessagesFromChat(id)
+        await chatService.deleteChat(id)
+      } else {
+        await chatService.markChatAsDeleted(id)
+      }
       await updateChats()
+    } catch (error) {
+      console.error('Error during deletion:', error)
+    } finally {
+      onClose()
     }
   }
 
-  const handleClearChat = async (id: string, isConfirmed: boolean) => {
-    if (isConfirmed) {
-      await clearHistory(id)
-      await updateMessages()
-      await updateChats()
-    }
-  }
-
-  const onClearHistory = (e: MouseEvent<HTMLButtonElement>, id: string) => {
-    e.stopPropagation()
-    onClose()
-
+  const onClearHistory = (id: string) => {
     openDialog({
       message: 'chatPage.chatMenu.clearHistoryWarning',
       sendConfirm: (isConfirmed: boolean) =>
@@ -155,11 +82,9 @@ const ChatMenu: FC<ChatMenuProps> = ({
     })
   }
 
-  const onDelete = (e: MouseEvent<HTMLButtonElement>, id: string) => {
-    e.stopPropagation()
+  const onDelete = (id: string) => {
     onClose()
     const deletingFully = currentChat.deletedFor.length > 0
-
     openDialog({
       message: deletingFully
         ? 'chatPage.chatMenu.fullDeleteWarning'
@@ -172,43 +97,28 @@ const ChatMenu: FC<ChatMenuProps> = ({
     })
   }
 
-  const menuButtons = [
+  const menuList = [
     {
-      _id: 1,
-      icon: <UpdateDisabledIcon />,
-      isAvailable: !!messagesLength,
-      name: t('chatPage.chatMenu.clearHistory'),
-      handleOnClick: (e: MouseEvent<HTMLButtonElement>) =>
-        onClearHistory(e, currentChat._id)
+      title: t('chatPage.chatMenu.clearHistory'),
+      onClick: () => onClearHistory(currentChat._id),
+      graphics: <UpdateDisabledIcon />,
+      sx: styles.menuItem(false),
+      isDisabled: messagesLength === 0
     },
     {
-      _id: 2,
-      icon: <DeleteOutlineIcon />,
-      isAvailable: !!currentChat,
-      name: t('chatPage.chatMenu.deleteChat'),
-      handleOnClick: (e: MouseEvent<HTMLButtonElement>) =>
-        onDelete(e, currentChat._id),
-      isDangerous: true
+      title: t('chatPage.chatMenu.deleteChat'),
+      onClick: () => onDelete(currentChat._id),
+      graphics: <DeleteOutlineIcon />,
+      sx: styles.menuItem(true),
+      isDisabled: false
     }
   ]
-
-  const menuItems = menuButtons.map((item) => (
-    <MenuItem
-      component={ComponentEnum.Button}
-      disabled={!item.isAvailable}
-      key={item._id}
-      onClick={item.handleOnClick}
-      sx={styles.menuItem(!!item.isDangerous)}
-    >
-      {item.icon}
-      {item.name}
-    </MenuItem>
-  ))
 
   return (
     <AppMenu
       anchorEl={anchorEl}
-      menuList={menuItems}
+      key={messagesLength}
+      menuList={menuList}
       onClose={onClose}
       open={Boolean(anchorEl)}
     />

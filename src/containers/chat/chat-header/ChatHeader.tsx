@@ -63,6 +63,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
   const [allMessages, setAllMessages] = useState<MessageInterface[]>([])
+  const [isHistoryCleared, setIsHistoryCleared] = useState(false)
   const anchorRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
@@ -74,26 +75,6 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   const handleSearch = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     setIsSearchOpen(!isSearchOpen)
-  }
-
-  const handleMenu = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    openMenu()
-  }
-
-  const iconButtons = [
-    { _id: 1, icon: <SearchIcon />, handleOnClick: handleSearch },
-    { _id: 2, icon: <MoreVertIcon />, handleOnClick: handleMenu }
-  ]
-
-  const icons = iconButtons.map(({ _id, icon, handleOnClick }) => (
-    <IconButton key={_id} onClick={handleOnClick} sx={styles.icon}>
-      {icon}
-    </IconButton>
-  ))
-
-  const closeSearch = () => {
-    setIsSearchOpen(false)
   }
 
   const getAllMessages = useCallback(
@@ -139,8 +120,10 @@ const ChatHeader: FC<ChatHeaderProps> = ({
       <ChatMenu
         anchorEl={menuAnchorEl}
         currentChat={currentChat}
+        isHistoryCleared={isHistoryCleared}
         messagesLength={messages.length}
         onClose={closeMenu}
+        setIsHistoryCleared={setIsHistoryCleared}
         updateChats={updateChats}
         updateMessages={updateMessages}
       />
@@ -155,13 +138,18 @@ const ChatHeader: FC<ChatHeaderProps> = ({
         title={`${user.firstName} ${user.lastName}`}
       />
       <Box ref={anchorRef} sx={styles.actions}>
-        {icons}
+        <IconButton onClick={handleSearch} sx={styles.icon}>
+          <SearchIcon />
+        </IconButton>
+        <IconButton onClick={openMenu} sx={styles.icon}>
+          <MoreVertIcon />
+        </IconButton>
       </Box>
       {isSearchOpen && (
         <Box sx={styles.searchContainer}>
           <SearchByMessage
             allMessages={allMessages}
-            isCloseSearch={closeSearch}
+            isCloseSearch={() => setIsSearchOpen(false)}
             onFilteredIndexChange={onFilteredIndexChange}
             onFilteredMessagesChange={onFilteredMessagesChange}
             setLimit={setLimit}
