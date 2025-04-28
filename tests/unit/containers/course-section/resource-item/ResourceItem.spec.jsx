@@ -6,13 +6,16 @@ import {
   mockedLessonDataOriginal,
   mockedQuizDataDuplicate,
   mockedAttachmentDataOriginal,
+  mockedAttachmentDataDuplicate,
   mockAvailabilityForLesson,
   mockAvailabilityForQuizDataDuplicate,
-  mockAvailabilityOpen
+  mockAvailabilityOpen,
+  mockAvailabilityOpenFrom,
+  mockAvailabilityClosed
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
-import { afterEach, expect, vi } from 'vitest'
+import { afterEach, expect, it, vi } from 'vitest'
 
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
@@ -258,6 +261,54 @@ describe('ResourceItem tests when resourceType attachment', () => {
       '1723236050559-Exploring Systems of Linear Equations.png',
       '_blank'
     )
+  })
+
+  it('should download attachment when isDuplicate is true', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataDuplicate}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).toHaveBeenCalledWith(
+      '1723236050559-Exploring Systems of Linear Equations.png',
+      '_blank'
+    )
+  })
+
+  it('should not download attachment when its availability is set to open from', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpenFrom}
+        isView
+        resource={mockedAttachmentDataDuplicate}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalledWith()
+  })
+
+  it('should not download attachment when its availability is set to closed', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityClosed}
+        isView
+        resource={mockedAttachmentDataDuplicate}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalledWith()
   })
 
   it('should not download anything if resource.resourceType is not Attachment', () => {
