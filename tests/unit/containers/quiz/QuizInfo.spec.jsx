@@ -40,7 +40,7 @@ describe('StartViewQuizInfo', () => {
     expect(
       screen.getByText('myResourcesPage.quizzes.types.minute30')
     ).toBeInTheDocument()
-    expect(screen.getByText('quiz.startQuiz')).toBeInTheDocument()
+    expect(screen.getByTestId('startButton')).toBeInTheDocument()
   })
 
   it('should call handleStartButton on start button click', () => {
@@ -52,7 +52,7 @@ describe('StartViewQuizInfo', () => {
       />
     )
 
-    const button = screen.getByText('quiz.startQuiz')
+    const button = screen.getByTestId('startButton')
     fireEvent.click(button)
 
     expect(mockHandleStart).toHaveBeenCalledOnce()
