@@ -120,7 +120,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     expect(professionalSubjects).toHaveLength(3)
   })
 
-  it('should update professional category value in autocomplete and load subjects', async () => {
+  it('should update professional category value in autocomplete,load subjects and allow clearing the field ', async () => {
     const categoryAutocomplete = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
@@ -137,7 +137,18 @@ describe('AddProfessionalCategoryModal without initial value', () => {
         target: { value: 'Varenychky' }
       })
     )
+    const button = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/
+    )
     expect(professionalSubjects.value).toBe('Varenychky')
+    const clearButton = screen.getByLabelText('Clear')
+    fireEvent.click(clearButton)
+    fireEvent.click(button)
+
+    const updatedProfessionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+    expect(updatedProfessionalSubjects[0].value).toBe('')
   })
 
   it('should update only the subject with matching index and not others', async () => {
@@ -185,6 +196,13 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     )
 
     expect(submitButton).toBeDisabled()
+  })
+
+  it('should remove a subject from the list', async () => {
+    const deleteIcons = screen.getAllByTestId('DeleteIcon')
+    await act(() => fireEvent.click(deleteIcons[0]))
+
+    expect(screen.queryByDisplayValue('Gastronomy')).not.toBeInTheDocument()
   })
 
   it('subject field should be disabled if category is disabled', async () => {
