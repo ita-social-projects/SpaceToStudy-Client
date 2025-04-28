@@ -138,7 +138,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
     refetch
   } = useQuery({
     queryKey: ['chats'],
-    queryFn: chatService.getAllChats,
+    queryFn: chatService.getChats,
     options: {
       staleTime: Infinity
     }

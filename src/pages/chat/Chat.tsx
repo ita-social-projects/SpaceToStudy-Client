@@ -8,6 +8,7 @@ import { chatService } from '~/services/chat-service'
 import { messageService } from '~/services/message-service'
 import { useDrawer } from '~/hooks/use-drawer'
 import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
@@ -142,12 +143,12 @@ const Chat = () => {
   )
 
   const {
-    fetchData: updateChats,
-    response: listOfChats,
-    loading
-  } = useAxios({
-    service: getChats,
-    defaultResponse: defaultResponses.array
+    data: listOfChats,
+    isLoading: loading,
+    refetch: updateChats
+  } = useQuery({
+    queryKey: ['chats'],
+    queryFn: getChats
   })
 
   const { fetchData, loading: isMessagesLoading } = useAxios({
@@ -178,7 +179,7 @@ const Chat = () => {
     const currentChatId = localStorage.getItem('currentChatId')
 
     if (currentChatId && !selectedChat) {
-      const foundChat = listOfChats.find(
+      const foundChat = (listOfChats ?? []).find(
         (chat: ChatResponse) => chat._id === currentChatId
       )
 
@@ -274,7 +275,7 @@ const Chat = () => {
         >
           <ListOfUsersWithSearch
             closeDrawer={closeDrawer}
-            listOfChats={listOfChats}
+            listOfChats={listOfChats ?? []}
             selectedChat={selectedChat}
             setSelectedChat={handleChatSelection}
           />
@@ -284,7 +285,7 @@ const Chat = () => {
         {!isMobile && (
           <Allotment.Pane minSize={250} preferredSize={350}>
             <ListOfUsersWithSearch
-              listOfChats={listOfChats}
+              listOfChats={listOfChats ?? []}
               selectedChat={selectedChat}
               setSelectedChat={handleChatSelection}
             />

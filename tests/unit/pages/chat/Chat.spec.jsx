@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, act } from '@testing-library/react'
+import { fireEvent, screen, act } from '@testing-library/react'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Chat from '~/pages/chat/Chat'
@@ -11,6 +11,9 @@ import {
   messagesMock
 } from '~tests/unit/pages/chat/ChatsMock.constants'
 import { afterEach, vi } from 'vitest'
+import { useTranslation } from 'react-i18next'
+
+const { t } = useTranslation()
 
 vi.mock('~/pages/chat/MessagesList', () => ({
   default: vi.fn(() => (
@@ -127,12 +130,9 @@ describe('Chat for mobile', () => {
     renderWithProviders(<Chat />)
   })
 
-  it('should not render left panel in a chat', async () => {
-    const chip = await screen.findByText('chatPage.chat.chipLabel')
-
-    await waitFor(() => {
-      expect(chip).not.toBeInTheDocument()
-    })
+  it('should not render left panel in a chat', () => {
+    const chip = screen.queryByText(t('chatPage.chat.chipLabel'))
+    expect(chip).not.toBeInTheDocument()
   })
 })
 

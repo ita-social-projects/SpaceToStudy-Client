@@ -13,6 +13,7 @@ import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 import { useChatContext } from '~/context/chat-context'
 import { useAppDispatch } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import AppChip from '~/components/app-chip/AppChip'
 import Message from '~/components/message/Message'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
@@ -113,9 +114,12 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     [chatInfo.author._id, chatInfo.authorRole]
   )
 
-  const { response: listOfChats, loading: isChatsLoading } = useAxios({
-    service: getChats,
-    defaultResponse: defaultResponses.array
+  const { data: listOfChats, isLoading: isChatsLoading } = useQuery({
+    queryKey: ['chats'],
+    queryFn: getChats,
+    options: {
+      staleTime: Infinity
+    }
   })
 
   const {
@@ -184,7 +188,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
 
   useEffect(() => {
     if (!isChatsLoading && !messagesLoad) {
-      const thisChat: ChatResponse | undefined = listOfChats.find(
+      const thisChat: ChatResponse | undefined = (listOfChats ?? []).find(
         (chat: ChatResponse) => chat._id === chatInfo.chatId
       ) as unknown as ChatResponse
 

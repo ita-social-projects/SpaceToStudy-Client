@@ -6,10 +6,7 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { baseService } from './base-service'
 
 export const chatService = {
-  getChats: (): Promise<AxiosResponse<ChatResponse[]>> => {
-    return axiosClient.get(URLs.chats.get)
-  },
-  getAllChats: () => {
+  getChats: () => {
     return baseService.request<ChatResponse[]>({
       method: 'GET',
       url: URLs.chats.get

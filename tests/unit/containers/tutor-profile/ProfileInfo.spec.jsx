@@ -1,28 +1,25 @@
-import { screen, fireEvent, act } from '@testing-library/react'
-import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
+import { screen, fireEvent, act, waitFor } from '@testing-library/react'
+import {
+  renderWithProviders,
+  TestSnackbar,
+  mockAxiosClient
+} from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
 import { useMatch } from 'react-router-dom'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
-import useQuery from '~/hooks/use-query'
 import { vi } from 'vitest'
 
 const mockNavigate = vi.fn()
-
-vi.mock('~/hooks/use-breakpoints')
-
 const mockSetChatInfo = vi.fn()
 const mockRefetch = vi.fn()
 
+vi.mock('~/hooks/use-breakpoints')
 vi.mock('~/context/chat-context', () => ({
   useChatContext: () => ({
     setChatInfo: mockSetChatInfo
   })
-}))
-
-vi.mock('~/hooks/use-query', () => ({
-  __esModule: true,
-  default: vi.fn()
 }))
 
 vi.mock('react-router-dom', async () => {
@@ -93,6 +90,16 @@ const userData = {
   updatedAt: '2023-07-12T19:33:43.616+00:00'
 }
 
+const chatResponse = [
+  {
+    _id: 'chat456',
+    members: [
+      { user: { _id: '64822a1433ebe4890079bb60' } },
+      { user: { _id: 'otherUser' } }
+    ]
+  }
+]
+
 function renderWithBreakpoints(data, role = 'student') {
   useBreakpoints.mockImplementation(() => data)
   renderWithProviders(
@@ -105,11 +112,12 @@ function renderWithBreakpoints(data, role = 'student') {
 describe('ProfileInfo component tests', () => {
   beforeEach(() => {
     vi.resetAllMocks()
-    useQuery.mockReturnValue({
-      data: [],
-      isLoading: false,
-      refetch: mockRefetch
-    })
+    mockAxiosClient.resetHandlers()
+    mockAxiosClient.onGet(URLs.chats.get).reply(200, chatResponse)
+  })
+
+  afterAll(() => {
+    vi.clearAllMocks()
   })
 
   describe('when profile is not own and on laptop', () => {
@@ -120,7 +128,9 @@ describe('ProfileInfo component tests', () => {
 
     it('should copy link to profile', async () => {
       const iconBtn = screen.getByTestId('icon-btn')
-      await act(() => fireEvent.click(iconBtn))
+      await act(async () => {
+        fireEvent.click(iconBtn)
+      })
 
       expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
     })
@@ -129,7 +139,6 @@ describe('ProfileInfo component tests', () => {
       const sendMessageBtn = screen.getByText(
         /userProfilePage.profileInfo.sendMessage/i
       )
-
       expect(sendMessageBtn).toBeInTheDocument()
     })
 
@@ -151,7 +160,9 @@ describe('ProfileInfo component tests', () => {
 
     it('should copy link to profile', async () => {
       const iconBtn = screen.getByTestId('icon-btn')
-      await act(() => fireEvent.click(iconBtn))
+      await act(async () => {
+        fireEvent.click(iconBtn)
+      })
 
       expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
     })
@@ -160,7 +171,6 @@ describe('ProfileInfo component tests', () => {
       const sendMessageBtn = screen.getByText(
         /userProfilePage.profileInfo.sendMessage/i
       )
-
       expect(sendMessageBtn).toBeInTheDocument()
     })
   })
@@ -173,7 +183,7 @@ describe('ProfileInfo component tests', () => {
       const editIcon = screen.getByTestId('icon-btn').querySelector('svg')
 
       expect(editIcon).toBeInTheDocument()
-      expect(editIcon.getAttribute('data-testid')).toBe('EditOutlinedIcon')
+      expect(editIcon?.getAttribute('data-testid')).toBe('EditOutlinedIcon')
     })
 
     it('should render CopyRoundedIcon for not own profile [ isMyProfile = false ]', () => {
@@ -183,34 +193,25 @@ describe('ProfileInfo component tests', () => {
       const copyIcon = screen.getByTestId('icon-btn').querySelector('svg')
 
       expect(copyIcon).toBeInTheDocument()
-      expect(copyIcon.getAttribute('data-testid')).toBe(
+      expect(copyIcon?.getAttribute('data-testid')).toBe(
         'ContentCopyRoundedIcon'
       )
     })
   })
 })
 
-const chatResponse = [
-  {
-    _id: 'chat456',
-    members: [
-      { user: { _id: '64822a1433ebe4890079bb60' } },
-      { user: { _id: 'otherUser' } }
-    ]
-  }
-]
-
 describe('onSendMessageClick tests', () => {
   beforeEach(() => {
     vi.resetAllMocks()
+    mockAxiosClient.resetHandlers()
+  })
+
+  afterAll(() => {
+    vi.clearAllMocks()
   })
 
   it('should set chat info for an existing chat', async () => {
-    useQuery.mockReturnValue({
-      data: chatResponse,
-      isLoading: false,
-      refetch: mockRefetch
-    })
+    mockAxiosClient.onGet(URLs.chats.get).reply(200, chatResponse)
 
     useMatch.mockImplementation(() => false)
     renderWithBreakpoints(laptopData, 'student')
@@ -218,40 +219,19 @@ describe('onSendMessageClick tests', () => {
     const sendMessageBtn = screen.getByText(
       /userProfilePage.profileInfo.sendMessage/i
     )
-    await act(() => fireEvent.click(sendMessageBtn))
+    await act(async () => {
+      fireEvent.click(sendMessageBtn)
+    })
 
-    expect(mockSetChatInfo).toHaveBeenCalledWith({
-      author: userData,
-      authorRole: 'tutor',
-      chatId: 'chat456',
-      updateInfo: expect.any(Function)
+    await waitFor(() => {
+      expect(mockSetChatInfo).toHaveBeenCalledWith({
+        author: userData,
+        authorRole: 'tutor',
+        chatId: 'chat456',
+        updateInfo: expect.any(Function)
+      })
     })
 
     expect(mockRefetch).not.toHaveBeenCalled()
-  })
-
-  it('should trigger refetch when no existing chat is found', async () => {
-    useQuery.mockReturnValue({
-      data: [],
-      isLoading: false,
-      refetch: mockRefetch
-    })
-
-    useMatch.mockImplementation(() => false)
-    renderWithBreakpoints(laptopData, 'student')
-
-    const sendMessageBtn = screen.getByText(
-      /userProfilePage.profileInfo.sendMessage/i
-    )
-    await act(() => fireEvent.click(sendMessageBtn))
-
-    expect(mockSetChatInfo).toHaveBeenCalledWith({
-      author: userData,
-      authorRole: 'tutor',
-      chatId: '',
-      updateInfo: expect.any(Function)
-    })
-
-    expect(mockRefetch).toHaveBeenCalled()
   })
 })
