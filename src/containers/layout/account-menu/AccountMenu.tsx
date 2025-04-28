@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -16,11 +16,9 @@ interface AccountMenuProps {
 }
 
 const AccountMenu: FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { userRole } = useAppSelector((state) => state.appMain)
-
-  const [menuKey, setMenuKey] = useState(0)
 
   const menuList = (() => {
     const routes = Object.values(
@@ -55,21 +53,9 @@ const AccountMenu: FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
     ]
   })()
 
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setMenuKey((prevKey) => prevKey + 1)
-    }
-
-    i18n.on('languageChanged', handleLanguageChange)
-    return () => {
-      i18n.off('languageChanged', handleLanguageChange)
-    }
-  }, [i18n])
-
   return (
     <AppMenu
       anchorEl={anchorEl}
-      key={menuKey}
       menuList={menuList}
       onClose={onClose}
       open={Boolean(anchorEl)}
