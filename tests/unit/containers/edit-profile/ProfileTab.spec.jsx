@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { UserRoleEnum } from '~/types'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
@@ -182,6 +182,36 @@ describe('ProfileTab', () => {
 
     expect(document.activeElement).toBe(lastNameInput)
     expect(lastNameInput).toHaveFocus()
+  })
+
+  it('should focus on the "Last name" field when clicked, show an error for invalid last name values and prevent form submission', async () => {
+    renderWithMockData()
+    const invalidLastNames = ['Yurii21', 'Yuri*', 'Vital.', '@vital.', 'AA_+']
+
+    const lastNameInput = screen.getByPlaceholderText('lastName')
+    expect(lastNameInput).toBeInTheDocument()
+
+    await userEvent.click(lastNameInput)
+
+    await waitFor(() => {
+      expect(document.activeElement).toBe(lastNameInput)
+    })
+
+    for (const invalidValue of invalidLastNames) {
+      await userEvent.clear(lastNameInput)
+      await userEvent.type(lastNameInput, invalidValue)
+      await userEvent.tab()
+      await userEvent.type(lastNameInput, invalidValue)
+
+      const errorMessage = await screen.findByLabelText(
+        /common.errorMessages.nameCharacters/i
+      )
+
+      await waitFor(() => {
+        expect(errorMessage).toBeInTheDocument()
+      })
+      expect(lastNameInput).toHaveAttribute('aria-invalid', 'true')
+    }
   })
 
   it('should not display error message when "First Name" has < 30 chars', async () => {
