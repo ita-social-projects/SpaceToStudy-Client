@@ -470,8 +470,8 @@ describe('EditProfile', () => {
     }
 
     const { rerender } = renderForm()
-    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
-    const lastNameInput = screen.getByLabelText(/common.labels.lastName/i)
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+    const lastNameInput = screen.getByPlaceholderText('lastName')
     const updateButton = screen.getByText('editProfilePage.updateBtn')
 
     for (const data of testData) {
