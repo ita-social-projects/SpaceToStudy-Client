@@ -8,7 +8,8 @@ import type {
   UpdateCooperationsNeedActionMessages,
   Cooperation,
   ItemsWithCount,
-  UpdateResourceCompletionStatusParams
+  UpdateResourceCompletionStatusParams,
+  NoteResponse
 } from '~/types'
 import { getFullUrl } from '~/utils/get-full-url'
 import { baseService } from '~/services/base-service'
@@ -79,7 +80,7 @@ export const cooperationService = {
 }
 
 export const CooperationNotesService = {
-  getNotes: (cooperationId: string): Promise<AxiosResponse> => {
+  getNotes: (cooperationId: string): Promise<AxiosResponse<NoteResponse[]>> => {
     return axiosClient.get(
       getFullUrl({
         pathname: URLs.notes.get,
@@ -90,7 +91,7 @@ export const CooperationNotesService = {
   createNote: (
     cooperationId: string,
     data?: CreateOrUpdateNoteParams
-  ): Promise<AxiosResponse> => {
+  ): Promise<AxiosResponse<NoteResponse>> => {
     return axiosClient.post(
       getFullUrl({
         pathname: URLs.notes.create,
@@ -103,7 +104,7 @@ export const CooperationNotesService = {
     cooperationId: string = '',
     noteId: string = '',
     data?: CreateOrUpdateNoteParams
-  ): Promise<AxiosResponse> => {
+  ): Promise<AxiosResponse<void>> => {
     return axiosClient.patch(
       getFullUrl({
         pathname: URLs.notes.update,
@@ -115,7 +116,7 @@ export const CooperationNotesService = {
   deleteNote: (
     cooperationId: string,
     noteId: string
-  ): Promise<AxiosResponse> => {
+  ): Promise<AxiosResponse<void>> => {
     return axiosClient.delete(
       getFullUrl({
         pathname: URLs.notes.delete,
