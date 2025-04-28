@@ -264,6 +264,34 @@ describe('ProfileTab', () => {
     expect(lastNameInput).toHaveValue(tooManyCharacters)
   })
 
+  it('should display error message when "First Name" includes non-alphabetic characters', async () => {
+    renderWithMockData()
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+
+    await userEvent.clear(firstNameInput)
+    fireEvent.change(firstNameInput, { target: { value: 'John123' } })
+
+    const errorMessage = screen.getByText(
+      /common.errorMessages.nameCharacters/i
+    )
+    expect(errorMessage).toBeInTheDocument()
+    expect(firstNameInput).toHaveValue('John')
+  })
+
+  it('shouldn\'t display error message when "First Name" includes valid characters', async () => {
+    renderWithMockData()
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+
+    await userEvent.clear(firstNameInput)
+    fireEvent.change(firstNameInput, { target: { value: "John-doe's dog" } })
+
+    const errorMessage = screen.queryByText(
+      /common.errorMessages.nameCharacters/i
+    )
+    expect(errorMessage).not.toBeInTheDocument()
+    expect(firstNameInput).toHaveValue("John-doe's dog")
+  })
+
   it('should show an error when "First name" empty', async () => {
     renderWithMockData()
 
