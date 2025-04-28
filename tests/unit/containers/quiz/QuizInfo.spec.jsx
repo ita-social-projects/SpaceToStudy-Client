@@ -65,7 +65,14 @@ describe('StartViewQuizInfo', () => {
         attempts={QuizAttempt.Attempt3}
         timeLimit={QuizTimeLimit.NoLimit}
         usedAttempts={2}
-      />
+      />,
+      {
+        preloadedState: {
+          appMain: {
+            userRole: 'student'
+          }
+        }
+      }
     )
 
     expect(screen.getByText('quiz.tryAgain')).toBeInTheDocument()
