@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -29,16 +29,7 @@ const NotificationsMenu: FC<NotificationsMenuProps> = ({
   onDelete,
   onClose
 }) => {
-  const { t, i18n } = useTranslation()
-  const [currentLanguage, setCurrentLanguage] = useState(i18n.language)
-
-  useEffect(() => {
-    const handleLanguageChange = () => setCurrentLanguage(i18n.language)
-    i18n.on('languageChanged', handleLanguageChange)
-    return () => {
-      i18n.off('languageChanged', handleLanguageChange)
-    }
-  }, [i18n])
+  const { t } = useTranslation()
 
   const handleLinkClick = (item: Notification) => {
     onClose()
@@ -88,49 +79,9 @@ const NotificationsMenu: FC<NotificationsMenuProps> = ({
     sx: styles.empty
   }
 
-  // const menuItems = items.map((item) => ({
-  //   title: (
-  //     <Typography sx={styles.menuWrapper}>
-  //       <Link
-  //         component={RouterLink}
-  //         onClick={() => handleLinkClick(item)}
-  //         sx={styles.link}
-  //         to={liksByType[item.type]}
-  //       >
-  //         {t(`header.notifications.messages.${item.type}`)}
-  //       </Link>
-  //       <IconButton onClick={() => onDelete(item)}>
-  //         <CloseRoundedIcon fontSize={SizeEnum.Small} sx={styles.closeIcon} />
-  //       </IconButton>
-  //     </Typography>
-  //   ),
-  //   onClick: () => {},
-  //   sx: styles.menuItem,
-  // }))
-
-  // const menuList = [
-  //   ...menuItems,
-  //   {
-  //     title: (
-  //       <Button fullWidth onClick={onClear} variant="text-secondary" >
-  //         {t('header.notifications.clearAll')}
-  //       </Button>
-  //     ),
-  //     onClick: () => {},
-  //     sx: styles.clearButton,
-  //   },
-  // ]
-
-  // const emptyNotifications = {
-  //   title: t('header.notifications.emptyNotifications'),
-  //   onClick: () => {},
-  //   sx: styles.empty,
-  // }
-
   return (
     <AppMenu
       anchorEl={anchorEl}
-      key={`${items.length}-${currentLanguage}`}
       maxHeight={264}
       menuList={items.length ? menuList : [emptyNotifications]}
       onClose={onClose}
