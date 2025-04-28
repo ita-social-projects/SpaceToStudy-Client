@@ -214,8 +214,10 @@ const MyCooperationsDetails = () => {
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
       <CooperationCompletion
+        cooperationId={cooperationDetails._id}
         cooperationNeedActionRole={cooperationDetails.needAction.role}
         cooperationStatus={cooperationDetails.status}
+        isAbleToSendReview={cooperationDetails.isAbleToSendReview}
         onCloseCooperation={handleCloseCooperation}
         reviewData={reviewData}
         userRole={userRole}

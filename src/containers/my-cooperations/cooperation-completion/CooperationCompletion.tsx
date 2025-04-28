@@ -20,16 +20,20 @@ import {
 } from '~/types'
 
 interface CooperationCompletionProps {
+  cooperationId: string
   cooperationNeedActionRole: UserRoleEnum
   cooperationStatus: StatusEnum
+  isAbleToSendReview: boolean
   onCloseCooperation: () => void
   userRole: UserRoleEnum | ''
   reviewData: ReviewDataFromCooperation
 }
 
 const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
+  cooperationId,
   cooperationNeedActionRole,
   cooperationStatus,
+  isAbleToSendReview,
   onCloseCooperation,
   userRole,
   reviewData
@@ -43,7 +47,9 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
 
   const openAddReviewModal = () => {
     openModal({
-      component: <AddReviewModal data={reviewData} />
+      component: (
+        <AddReviewModal cooperationId={cooperationId} data={reviewData} />
+      )
     })
   }
 
@@ -76,7 +82,8 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
         <Button
           disabled={
             cooperationStatus !== StatusEnum.Closed ||
-            cooperationNeedActionRole === userRole
+            cooperationNeedActionRole === userRole ||
+            !isAbleToSendReview
           }
           onClick={openAddReviewModal}
         >

@@ -126,7 +126,9 @@ const CooperationDetails = () => {
     }
 
     openModal({
-      component: <AddReviewModal data={reviewData} />
+      component: (
+        <AddReviewModal cooperationId={cooperation._id} data={reviewData} />
+      )
     })
   }, [cooperation, isLoading, openModal, userId])
 

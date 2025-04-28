@@ -30,9 +30,13 @@ import useMutation from '~/hooks/use-mutation'
 
 interface AddReviewModalProps {
   data: ReviewDataFromCooperation
+  cooperationId: string
 }
 
-const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
+const AddReviewModal: React.FC<AddReviewModalProps> = (
+  { data },
+  cooperationId
+) => {
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
   const dispatch = useAppDispatch()
@@ -58,6 +62,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ data }) => {
   }
 
   const { mutate: submitReview } = useMutation({
+    queryKey: ['cooperation-details', cooperationId],
     mutationFn: ReviewService.submitReview,
     onSuccess: handleResponse,
     onError: handleResponseError
