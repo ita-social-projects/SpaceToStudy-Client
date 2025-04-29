@@ -7,7 +7,7 @@ export const CoursesAndCooperationsService = {
   getByResourceId: (resourceId: string) => {
     const url = getFullUrl({
       pathname: URLs.coursesAndCooperations.getByResourceId,
-      searchParameters: { resourceId }
+      parameters: { resourceId }
     })
 
     return baseService.request<CourseCooperationResponse>({
