@@ -125,11 +125,10 @@ describe('ProfileInfo component tests', () => {
       renderWithBreakpoints(laptopData, 'student')
     })
 
-    it('should copy link to profile', async () => {
+    it('should copy link to profile', () => {
       const iconBtn = screen.getByTestId('icon-btn')
-      await act(async () => {
-        fireEvent.click(iconBtn)
-      })
+
+      fireEvent.click(iconBtn)
 
       expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
     })
@@ -157,12 +156,9 @@ describe('ProfileInfo component tests', () => {
       renderWithBreakpoints(mobileData, 'tutor')
     })
 
-    it('should copy link to profile', async () => {
+    it('should copy link to profile', () => {
       const iconBtn = screen.getByTestId('icon-btn')
-      await act(async () => {
-        fireEvent.click(iconBtn)
-      })
-
+      fireEvent.click(iconBtn)
       expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
     })
 
