@@ -9,7 +9,6 @@ import { URLs } from '~/constants/request'
 import { useMatch } from 'react-router-dom'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
-import { chatService } from '~/services/chat-service'
 import { vi } from 'vitest'
 
 const mockNavigate = vi.fn()
@@ -211,10 +210,6 @@ describe('onSendMessageClick tests', () => {
   })
 
   it('should set chat info for an existing chat', async () => {
-    const getChatsSpy = vi
-      .spyOn(chatService, 'getChats')
-      .mockResolvedValue(chatResponse)
-
     useMatch.mockImplementation(() => false)
     renderWithBreakpoints(laptopData, 'student')
 
@@ -233,7 +228,5 @@ describe('onSendMessageClick tests', () => {
         updateInfo: expect.any(Function)
       })
     })
-
-    getChatsSpy.mockRestore()
   })
 })
