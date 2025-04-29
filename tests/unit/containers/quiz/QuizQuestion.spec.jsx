@@ -46,7 +46,6 @@ const renderWithProps = (props = {}) =>
 describe('Quiz Question tests', () => {
   it('should render QuizQuestion', () => {
     renderWithProps()
-
     const element = screen.getByText(mockQuestion.text)
     expect(element).toBeInTheDocument()
   })
@@ -60,7 +59,6 @@ describe('Quiz Question tests', () => {
 
   it('should render points', () => {
     renderWithProps({ shouldShowPoints: true })
-
     const element = screen.getByText('0/1')
     expect(element).toBeInTheDocument()
   })
@@ -88,8 +86,30 @@ describe('Quiz Question tests', () => {
 
   it('should not render points when shouldShowPoints is false', () => {
     renderWithProps({ shouldShowPoints: false })
-
     const pointsText = screen.queryByText('0/1')
     expect(pointsText).not.toBeInTheDocument()
+  })
+
+  it('should render CheckIcon if open answer is correct and correctness is enabled', () => {
+    const mockFinishedQuiz = {
+      results: [
+        {
+          question: mockQuestion.text,
+          answers: [{ isCorrect: true }]
+        }
+      ]
+    }
+
+    renderWithProps({
+      question: openAnswerQuestion,
+      shouldShowAnswersCorrectness: true,
+      isOpenAnswer: true,
+      finishedQuiz: mockFinishedQuiz,
+      isFinishedQuizLoading: false,
+      value: 'Correct answer'
+    })
+
+    const checkIcon = screen.getByTestId('CheckIcon')
+    expect(checkIcon).toBeInTheDocument()
   })
 })

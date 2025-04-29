@@ -281,7 +281,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
   ) => {
     return results.reduce((total, result) => {
       const correctAnswers =
-        result.answers?.filter((answer) => answer.isCorrect).length || 0
+        result.answers?.filter((answer) => answer.isCorrect).length ?? 0
       return total + correctAnswers
     }, 0)
   }

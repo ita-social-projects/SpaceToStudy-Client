@@ -5,7 +5,7 @@ import {
   TutorQuizInfo,
   StartViewQuizInfo
 } from '~/containers/quiz/quiz-info/QuizInfo'
-
+import { FinishedQuizInfo } from '~/containers/quiz/quiz-info/QuizInfo'
 import { QuizAttempt, QuizTimeLimit } from '~/types'
 
 describe('TutorQuizInfo', () => {
@@ -97,5 +97,52 @@ describe('StartViewQuizInfo', () => {
     const startButton = screen.getByTestId('startButton')
     expect(startButton).toBeDisabled()
     expect(screen.getByText('quiz.reachedAttemptLimit')).toBeInTheDocument()
+  })
+  it('should render correctly with no limits on attempts and time', () => {
+    renderWithProviders(
+      <StartViewQuizInfo
+        attempts={QuizAttempt.NoLimit}
+        onStart={vi.fn()}
+        questionsAmount={5}
+        timeLimit={QuizTimeLimit.NoLimit}
+        usedAttempts={0}
+      />,
+      {
+        preloadedState: {
+          appMain: {
+            userRole: 'student'
+          }
+        }
+      }
+    )
+
+    expect(screen.getByText('5')).toBeInTheDocument()
+    expect(screen.queryByText('quiz.attemptLimit:')).not.toBeInTheDocument()
+    expect(screen.queryByText('quiz.timeLimit:')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('quiz.reachedAttemptLimit')
+    ).not.toBeInTheDocument()
+  })
+  it('should show 0 points if points prop is undefined', () => {
+    renderWithProviders(<TutorQuizInfo points={undefined} totalPoints={10} />)
+
+    expect(screen.getByText('0/10')).toBeInTheDocument()
+  })
+})
+
+describe('FinishedQuizInfo', () => {
+  it('renders quiz information correctly', () => {
+    renderWithProviders(
+      <FinishedQuizInfo
+        createdAt='2024-01-01T10:00:00Z'
+        points={8}
+        totalPoints={10}
+        updatedAt='2024-01-01T10:10:00Z'
+      />
+    )
+
+    expect(screen.getByText(/quiz.attemptFinished/i)).toBeInTheDocument()
+    expect(screen.getByText(/quiz.duration/i)).toBeInTheDocument()
+    expect(screen.getByText(/quiz.points/i)).toBeInTheDocument()
   })
 })
