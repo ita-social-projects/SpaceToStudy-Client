@@ -51,7 +51,7 @@ vi.mock('~/hooks/use-mutation', () => ({
 }))
 
 describe('AddReviewModal component', () => {
-  it('should render title, description, rating input, textfield, close modal button, submit button', async () => {
+  it('should render title, description, rating input, textfield, close modal button, submit button', () => {
     render(<AddReviewModal {...inputProps} />)
 
     expect(
