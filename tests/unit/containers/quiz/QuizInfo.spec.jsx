@@ -9,13 +9,12 @@ import {
 import { QuizAttempt, QuizTimeLimit } from '~/types'
 
 describe('TutorQuizInfo', () => {
-  beforeEach(() => {
-    renderWithProviders(<TutorQuizInfo />)
-  })
+  it('should render graded quiz info with proper content', () => {
+    renderWithProviders(<TutorQuizInfo points={8} totalPoints={10} />)
 
-  it('should render graded quiz info with a proper content', () => {
     expect(screen.getByText('quiz.points')).toBeInTheDocument()
     expect(screen.getByText('quiz.save')).toBeInTheDocument()
+    expect(screen.getByText('8/10')).toBeInTheDocument()
   })
 })
 
@@ -76,5 +75,27 @@ describe('StartViewQuizInfo', () => {
     )
 
     expect(screen.getByText('quiz.tryAgain')).toBeInTheDocument()
+  })
+
+  it('should disable start button and show alert if attempt limit reached', () => {
+    renderWithProviders(
+      <StartViewQuizInfo
+        {...defaultProps}
+        attempts={QuizAttempt.Attempt1}
+        timeLimit={QuizTimeLimit.Minute10}
+        usedAttempts={1}
+      />,
+      {
+        preloadedState: {
+          appMain: {
+            userRole: 'student'
+          }
+        }
+      }
+    )
+
+    const startButton = screen.getByTestId('startButton')
+    expect(startButton).toBeDisabled()
+    expect(screen.getByText('quiz.reachedAttemptLimit')).toBeInTheDocument()
   })
 })

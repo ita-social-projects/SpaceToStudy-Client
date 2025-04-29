@@ -85,4 +85,11 @@ describe('Quiz Question tests', () => {
     fireEvent.change(input, { target: { value: 'Correct answer' } })
     expect(input).toHaveValue('Correct answer')
   })
+
+  it('should not render points when shouldShowPoints is false', () => {
+    renderWithProps({ shouldShowPoints: false })
+
+    const pointsText = screen.queryByText('0/1')
+    expect(pointsText).not.toBeInTheDocument()
+  })
 })
