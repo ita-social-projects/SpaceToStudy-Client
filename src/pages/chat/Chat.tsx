@@ -148,7 +148,10 @@ const Chat = () => {
     refetch: updateChats
   } = useQuery({
     queryKey: ['chats'],
-    queryFn: getChats
+    queryFn: getChats,
+    options: {
+      staleTime: Infinity
+    }
   })
 
   const { fetchData, loading: isMessagesLoading } = useAxios({
