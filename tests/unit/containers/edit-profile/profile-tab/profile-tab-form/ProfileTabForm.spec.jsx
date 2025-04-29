@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import { imageResize } from '~/utils/image-resize'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
@@ -82,7 +82,7 @@ describe('ProfileTabForm', () => {
     ]
 
     for (const lang of options) {
-      const option = await within(document.body).findByText(lang)
+      const option = await screen.findByText(lang)
       expect(option).toBeInTheDocument()
     }
   })
