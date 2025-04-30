@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material'
 
-import Chip from '~scss-components/chip/Chip'
+import Chip, { ChipColor } from '~scss-components/chip/Chip'
 import { spliceSx } from '~/utils/helper-functions'
 
 import { ProficiencyLevelEnum } from '~/types'
@@ -33,7 +33,7 @@ const SubjectLevelChips: FC<SubjectLevelChipsProps> = ({
   return (
     <Box sx={spliceSx(styles.chips, sx)}>
       <Chip
-        color={color}
+        color={color as ChipColor | `#${string}`}
         detail={proficiencyLevelText}
         label={subject ?? ''}
         size='sm'
