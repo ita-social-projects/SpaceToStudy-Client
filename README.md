@@ -1,11 +1,13 @@
-<a href="https://softserve.academy/"><img src="../main/photo2.jpg" title="SoftServe IT Academy" alt="SoftServe IT Academy"></a>
+# SpaceToStudy-Client
+
+<a href="https://softserve.academy/"><img src="./spacetostudy-thumbnail.jpg" title="SoftServe IT Academy" alt="SoftServe IT Academy"></a>
 
 # SpaceToStudy project
 
 SpaceToStudy project is a platform where experts in various fields share their knowledge and students can learn from the best. Here you can find the proper training course, find a tutor, or find students and receive feedback from them.
 
-[![GitHub issues](insert your link here)]
-[![Pending Pull-Requests](insert your link here)]
+[![GitHub issues](https://github.com/ita-social-projects/SpaceToStudy-Client/issues)]
+[![Pending Pull-Requests](https://github.com/ita-social-projects/SpaceToStudy-Client/pulls)]
 [![GitHub license](insert your link here)]
 
 ---
