@@ -280,6 +280,7 @@ Only the release should merge into the main branch!!!
 [![@nebby2105](https://avatars.githubusercontent.com/u/154923065?v=4)](https://github.com/nebby2105)
 [![@SofiiaYevush](https://avatars.githubusercontent.com/u/142519729?v=4)](https://github.com/SofiiaYevush)
 [![@ArtemHolikov](https://avatars.githubusercontent.com/u/102384883?v=4)](https://github.com/ArtemHolikov)
+[![@markgol777](https://avatars.githubusercontent.com/u/66869816?v=4)](https://github.com/markgol777)
 [![@yur4uwe](https://avatars.githubusercontent.com/u/157615455?v=4)](https://github.com/yur4uwe)
 [![@uliaescha](https://avatars.githubusercontent.com/u/136600464?v=4)](https://github.com/uliaescha)
 [![@Iarynovskyi](https://avatars.githubusercontent.com/u/164883382?v=4)](https://github.com/Iarynovskyi)
@@ -299,13 +300,6 @@ Only the release should merge into the main branch!!!
 
 [![@Nastia197](https://avatars.githubusercontent.com/u/76164279?v=4)](https://github.com/Nastia197)
 [![@a-humanenko](https://avatars.githubusercontent.com/u/192996565?v=4)](https://github.com/a-humanenko)
-
----
-
-## FAQ
-
-- **How do I do _specifically_ so and so?**
-  - No problem! Just do this.
 
 ---
 
