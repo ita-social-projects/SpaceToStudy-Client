@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react'
-import { afterAll, beforeAll, beforeEach, expect, vi } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, vi } from 'vitest'
+import userEvent from '@testing-library/user-event'
 import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
 import { URLs } from '~/constants/request'
 import {
@@ -69,6 +70,7 @@ describe('LocationSelectionInputs', () => {
     expect(onDataChangeMock).toHaveBeenCalledWith('country', 'Ukraine')
 
     const cityOption = screen.getByLabelText('common.labels.city')
+    expect(cityOption).not.toBeDisabled()
     await selectOption(cityOption, newCity)
 
     expect(onDataChangeMock).toHaveBeenCalledWith('city', 'City1')
@@ -82,5 +84,21 @@ describe('LocationSelectionInputs', () => {
     expect(cityOption).not.toBeDisabled()
 
     expect(onDataChangeMock).toHaveBeenCalledWith('country', 'Ukraine')
+  })
+
+  it('should allow to save new city after clearing', async () => {
+    const cityOption = screen.getByLabelText('common.labels.city')
+    expect(cityOption).not.toBeDisabled()
+    expect(cityOption).toHaveValue(initialData.city)
+
+    await userEvent.clear(cityOption)
+
+    expect(onDataChangeMock).toHaveBeenCalledWith('city', null)
+    expect(cityOption).toHaveValue('')
+
+    await selectOption(cityOption, mockCities[1])
+
+    expect(onDataChangeMock).toHaveBeenCalledWith('city', mockCities[1])
+    expect(cityOption).toHaveValue(mockCities[1])
   })
 })
