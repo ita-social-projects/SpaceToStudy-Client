@@ -235,6 +235,7 @@ const OfferDetails = () => {
           <OfferCardSquare
             buttonActions={buttonActions}
             isBookmarked={isBookmarked}
+            isDetails
             offer={offerData}
             onBookmarkClick={onBookmarkClick}
           />
@@ -244,6 +245,7 @@ const OfferDetails = () => {
           <OfferCard
             buttonActions={buttonActions}
             isBookmarked={isBookmarked}
+            isDetails
             isHideField
             offer={offerData}
             onBookmarkClick={onBookmarkClick}
