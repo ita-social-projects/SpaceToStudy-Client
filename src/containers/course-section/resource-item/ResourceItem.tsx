@@ -191,15 +191,21 @@ const ResourceItem: FC<ResourceItemProps> = ({
     </Box>
   )
 
-  const isAttachment = (resource: CourseResource): resource is Attachment => {
-    return resource.resourceType === ResourceType.Attachment
+  const isAttachment = (
+    resource: CourseResource,
+    type: ResourceType
+  ): resource is Attachment => {
+    return (
+      resource.resourceType === ResourceType.Attachment &&
+      type === ResourceType.Attachment
+    )
   }
 
   const onResourceItemClick = () => {
     if (!isView || status !== ResourceAvailabilityStatusEnum.Open) return
     const type = resourceType ?? resource.resourceType
 
-    if (type === ResourceType.Attachment && isAttachment(resource)) {
+    if (isAttachment(resource, type)) {
       window.open(resource.link, '_blank')
       return
     }

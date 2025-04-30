@@ -7,7 +7,8 @@ export const styles = {
     p: '16px 24px',
     display: 'flex',
     justifyContent: 'space-between',
-    ml: isView ? '15px' : '38px'
+    ml: isView ? '15px' : '38px',
+    cursor: 'pointer'
   }),
   availabilitySelectionContainer: {
     display: 'flex',
