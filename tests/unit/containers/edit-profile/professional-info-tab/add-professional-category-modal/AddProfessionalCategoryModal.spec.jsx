@@ -5,7 +5,7 @@ import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import { professionalSubjectTemplate } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import { describe, expect, vi } from 'vitest'
+import { vi } from 'vitest'
 import { useTranslation } from 'react-i18next'
 import { titleToCamel } from '~/utils/title-to-camel-case'
 const { t } = useTranslation()
