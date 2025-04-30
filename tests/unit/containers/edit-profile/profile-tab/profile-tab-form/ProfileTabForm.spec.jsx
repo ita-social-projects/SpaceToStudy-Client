@@ -54,6 +54,32 @@ describe('ProfileTabForm', () => {
     expect(languageField.value).toBe(newLanguageValue)
   })
 
+  it('should add only one language to "Your native language" field', () => {
+    const languages = [
+      'English',
+      'Ukrainian',
+      'Polish',
+      'German',
+      'French',
+      'Spanish',
+      'Arabic'
+    ]
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
+    expect(languageField).toBeInTheDocument()
+
+    fireEvent.click(languageField)
+
+    for (const lang of languages) {
+      fireEvent.change(languageField, { target: { value: lang } })
+      const option = screen.getByText(lang)
+      fireEvent.click(option, { ctrlKey: true })
+    }
+
+    expect(languageField).toHaveValue('Arabic')
+  })
+
   it('should not allow typing more than 200 characters in "Professional headline"', async () => {
     const longText = 'a'.repeat(250)
     const input = screen
