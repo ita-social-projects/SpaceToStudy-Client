@@ -65,6 +65,22 @@ describe('ProfileTabForm', () => {
     expect(input).toHaveValue('a'.repeat(200))
   })
 
+  it('should not allow saving an invalid native language input', async () => {
+    const invalidLanguage = 'Elvish'
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
+
+    await userEvent.type(languageField, invalidLanguage)
+
+    fireEvent.blur(languageField)
+
+    expect(handleNonInputValueChange).not.toHaveBeenCalledWith(
+      'nativeLanguage',
+      invalidLanguage
+    )
+  })
+
   it('should handle photo deletion', () => {
     const removePhotoBtn = screen.getByRole('button', { name: 'common.remove' })
     fireEvent.click(removePhotoBtn)
