@@ -54,6 +54,17 @@ describe('ProfileTabForm', () => {
     expect(languageField.value).toBe(newLanguageValue)
   })
 
+  it('should not allow typing more than 200 characters in "Professional headline"', async () => {
+    const longText = 'a'.repeat(250)
+    const input = screen
+      .getAllByRole('textbox')
+      .find((el) => el.getAttribute('maxlength') === '200')
+
+    await userEvent.type(input, longText)
+
+    expect(input).toHaveValue('a'.repeat(200))
+  })
+
   it('should handle photo deletion', () => {
     const removePhotoBtn = screen.getByRole('button', { name: 'common.remove' })
     fireEvent.click(removePhotoBtn)
