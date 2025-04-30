@@ -65,6 +65,27 @@ describe('ProfileTabForm', () => {
     expect(input).toHaveValue('a'.repeat(200))
   })
 
+  it("should allow searching for native language in the 'Your native language' field", () => {
+    const partialInput = 'Ukra'
+    const expectedLanguage = 'Ukrainian'
+
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
+
+    fireEvent.click(languageField)
+    fireEvent.change(languageField, { target: { value: partialInput } })
+
+    const filteredOption = screen.getByText(expectedLanguage)
+    expect(filteredOption).toBeInTheDocument()
+
+    fireEvent.click(filteredOption)
+    expect(handleNonInputValueChange).toHaveBeenCalledWith(
+      'nativeLanguage',
+      expectedLanguage
+    )
+  })
+
   it('should handle photo deletion', () => {
     const removePhotoBtn = screen.getByRole('button', { name: 'common.remove' })
     fireEvent.click(removePhotoBtn)
