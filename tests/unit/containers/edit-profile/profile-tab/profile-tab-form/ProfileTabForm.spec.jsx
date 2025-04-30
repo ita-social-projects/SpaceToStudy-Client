@@ -65,6 +65,27 @@ describe('ProfileTabForm', () => {
     expect(input).toHaveValue('a'.repeat(200))
   })
 
+  it("should allow searching for native language in the 'Your native language' field", () => {
+    const partialInput = 'Ukra'
+    const expectedLanguage = 'Ukrainian'
+
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
+
+    fireEvent.click(languageField)
+    fireEvent.change(languageField, { target: { value: partialInput } })
+
+    const filteredOption = screen.getByText(expectedLanguage)
+    expect(filteredOption).toBeInTheDocument()
+
+    fireEvent.click(filteredOption)
+    expect(handleNonInputValueChange).toHaveBeenCalledWith(
+      'nativeLanguage',
+      expectedLanguage
+    )
+  })
+
   it('should not allow saving an invalid native language input', async () => {
     const invalidLanguage = 'Elvish'
     const languageField = screen.getByLabelText(
@@ -72,7 +93,6 @@ describe('ProfileTabForm', () => {
     )
 
     await userEvent.type(languageField, invalidLanguage)
-
     fireEvent.blur(languageField)
 
     expect(handleNonInputValueChange).not.toHaveBeenCalledWith(
