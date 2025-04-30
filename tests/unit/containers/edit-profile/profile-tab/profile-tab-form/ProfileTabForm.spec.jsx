@@ -4,6 +4,7 @@ import { imageResize } from '~/utils/image-resize'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
 import { formDataMock } from '~tests/unit/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.spec.constants'
 import { vi } from 'vitest'
+import userEvent from '@testing-library/user-event'
 
 vi.mock('~/utils/image-resize')
 
@@ -104,6 +105,29 @@ describe('ProfileTabForm', () => {
 
     const resizeError = await screen.findByText('becomeTutor.photo.resizeImage')
     expect(resizeError).toBeInTheDocument()
+  })
+
+  it('should throw an error when invalid domain name is provided', () => {
+    const testData = [
+      'https://www.tiktok.com/@anatoliyvolodumur3/video/7434608027925335351',
+      'https://www.youtube.co/shorts/7fTHD07Q9Pw',
+      'https://ww.youtube.com/shorts/7fTHD07Q9Pw',
+      'https://www.yutube.com/shorts/7fTHD07Q9Pw'
+    ]
+
+    const find = screen.getByPlaceholderText('youtube.com/my-video')
+
+    expect(find).toBeInTheDocument()
+
+    testData.forEach(async (item) => {
+      await userEvent.clear(find)
+      await userEvent.type(find, item)
+      await waitFor(() => {
+        expect(
+          screen.getByText(/common.errorMessages.youtubeLink/i)
+        ).toBeInTheDocument()
+      })
+    })
   })
 })
 
