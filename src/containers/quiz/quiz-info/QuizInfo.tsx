@@ -227,6 +227,12 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
   const noAttemptsAlert = !hasAttempts && (
     <Alert severity='info'>{t('quiz.reachedAttemptLimit')}</Alert>
   )
+  const quizButtonLabel =
+    userRole === UserRoleEnum.Student
+      ? usedAttempts === 0
+        ? t('quiz.startQuiz')
+        : t('quiz.tryAgain')
+      : t('quiz.viewQuiz')
 
   return (
     <>
@@ -246,11 +252,7 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
             onClick={onStart}
             size='sm'
           >
-            {userRole === UserRoleEnum.Student
-              ? usedAttempts === 0
-                ? t('quiz.startQuiz')
-                : t('quiz.tryAgain')
-              : t('quiz.viewQuiz')}
+            {quizButtonLabel}
           </Button>
         </Box>
       </Box>

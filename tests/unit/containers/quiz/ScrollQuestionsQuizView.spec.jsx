@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react'
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
+import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestionQuizView'
 import { renderWithProviders } from '~tests/test-utils'
 
 const mockedQuestion = [
@@ -34,19 +35,27 @@ const mockedProps = {
 }
 
 describe('Tests scroll view quiz page', () => {
-  beforeEach(() => {
-    renderWithProviders(<ScrollQuestionsQuizView {...mockedProps} />)
-  })
+  it('should render SelectableQuestionQuizView when isStepper is true', () => {
+    const propsWithStepper = { ...mockedProps, isStepper: true }
+    renderWithProviders(<SelectableQuestionQuizView {...propsWithStepper} />)
 
-  it('should render first quiz question', () => {
     const quizQuestionText = screen.getByText(mockedQuestion[0].text)
-
     expect(quizQuestionText).toBeInTheDocument()
   })
 
-  it('should render second quiz question', () => {
-    const quizQuestionText = screen.getByText(mockedQuestion[1].text)
+  it('should render ScrollQuestionsQuizView when isStepper is false', () => {
+    const propsWithoutStepper = { ...mockedProps, isStepper: false }
+    renderWithProviders(<ScrollQuestionsQuizView {...propsWithoutStepper} />)
 
+    const quizQuestionText = screen.getByText(mockedQuestion[0].text)
+    expect(quizQuestionText).toBeInTheDocument()
+  })
+
+  it('should render second quiz question in ScrollQuestionsQuizView', () => {
+    const propsWithoutStepper = { ...mockedProps, isStepper: false }
+    renderWithProviders(<ScrollQuestionsQuizView {...propsWithoutStepper} />)
+
+    const quizQuestionText = screen.getByText(mockedQuestion[1].text)
     expect(quizQuestionText).toBeInTheDocument()
   })
 })
