@@ -212,6 +212,23 @@ describe('AddProfessionalCategoryModal without initial value', () => {
 
     expect(subjectAutocomplete).toBeDisabled()
   })
+
+  it('should prevent Tutor and Student from selecting invalid subjects', async () => {
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    expect(professionalSubjects.length).toBeGreaterThan(0)
+
+    fireEvent.change(professionalSubjects[0], {
+      target: { value: 'Invalid Subject' }
+    })
+
+    expect(professionalSubjects[0]).not.toHaveValue('Invalid Subject')
+
+    const option = screen.queryByText('Invalid Subject')
+    expect(option).not.toBeInTheDocument()
+  })
 })
 
 describe('AddProfessionalCategoryModal with initial value', () => {
