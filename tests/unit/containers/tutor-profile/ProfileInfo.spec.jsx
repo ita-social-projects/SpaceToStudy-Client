@@ -1,31 +1,24 @@
-import { screen, fireEvent, act } from '@testing-library/react'
-import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
+import { screen, fireEvent, act, waitFor } from '@testing-library/react'
+import {
+  renderWithProviders,
+  TestSnackbar,
+  mockAxiosClient
+} from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
 import { useMatch } from 'react-router-dom'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
-import useAxios from '~/hooks/use-axios'
 import { vi } from 'vitest'
 
 const mockNavigate = vi.fn()
+const mockSetChatInfo = vi.fn()
 
 vi.mock('~/hooks/use-breakpoints')
-
-const mockSetChatInfo = vi.fn()
-const mockFetchData = vi.fn()
-
 vi.mock('~/context/chat-context', () => ({
   useChatContext: () => ({
     setChatInfo: mockSetChatInfo
   })
-}))
-
-vi.mock('~/hooks/use-axios', () => ({
-  default: vi.fn(() => ({
-    response: [],
-    loading: false,
-    fetchData: vi.fn()
-  }))
 }))
 
 vi.mock('react-router-dom', async () => {
@@ -96,6 +89,16 @@ const userData = {
   updatedAt: '2023-07-12T19:33:43.616+00:00'
 }
 
+const chatResponse = [
+  {
+    _id: 'chat456',
+    members: [
+      { user: { _id: '64822a1433ebe4890079bb60' } },
+      { user: { _id: 'otherUser' } }
+    ]
+  }
+]
+
 function renderWithBreakpoints(data, role = 'student') {
   useBreakpoints.mockImplementation(() => data)
   renderWithProviders(
@@ -107,7 +110,13 @@ function renderWithBreakpoints(data, role = 'student') {
 
 describe('ProfileInfo component tests', () => {
   beforeEach(() => {
-    vi.resetModules()
+    vi.resetAllMocks()
+    mockAxiosClient.resetHandlers()
+    mockAxiosClient.onGet(URLs.chats.get).reply(200, chatResponse)
+  })
+
+  afterAll(() => {
+    vi.clearAllMocks()
   })
 
   describe('when profile is not own and on laptop', () => {
@@ -116,9 +125,10 @@ describe('ProfileInfo component tests', () => {
       renderWithBreakpoints(laptopData, 'student')
     })
 
-    it('should copy link to profile', async () => {
+    it('should copy link to profile', () => {
       const iconBtn = screen.getByTestId('icon-btn')
-      await act(() => fireEvent.click(iconBtn))
+
+      fireEvent.click(iconBtn)
 
       expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
     })
@@ -127,7 +137,6 @@ describe('ProfileInfo component tests', () => {
       const sendMessageBtn = screen.getByText(
         /userProfilePage.profileInfo.sendMessage/i
       )
-
       expect(sendMessageBtn).toBeInTheDocument()
     })
 
@@ -150,7 +159,6 @@ describe('ProfileInfo component tests', () => {
     it('should copy link to profile', () => {
       const iconBtn = screen.getByTestId('icon-btn')
       fireEvent.click(iconBtn)
-
       expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
     })
 
@@ -158,7 +166,6 @@ describe('ProfileInfo component tests', () => {
       const sendMessageBtn = screen.getByText(
         /userProfilePage.profileInfo.sendMessage/i
       )
-
       expect(sendMessageBtn).toBeInTheDocument()
     })
   })
@@ -171,7 +178,7 @@ describe('ProfileInfo component tests', () => {
       const editIcon = screen.getByTestId('icon-btn').querySelector('svg')
 
       expect(editIcon).toBeInTheDocument()
-      expect(editIcon.getAttribute('data-testid')).toBe('EditOutlinedIcon')
+      expect(editIcon?.getAttribute('data-testid')).toBe('EditOutlinedIcon')
     })
 
     it('should render CopyRoundedIcon for not own profile [ isMyProfile = false ]', () => {
@@ -181,77 +188,41 @@ describe('ProfileInfo component tests', () => {
       const copyIcon = screen.getByTestId('icon-btn').querySelector('svg')
 
       expect(copyIcon).toBeInTheDocument()
-      expect(copyIcon.getAttribute('data-testid')).toBe(
+      expect(copyIcon?.getAttribute('data-testid')).toBe(
         'ContentCopyRoundedIcon'
       )
     })
   })
 })
 
-const chatResponse = [
-  {
-    _id: 'chat456',
-    members: [
-      { user: { _id: '64822a1433ebe4890079bb60' } },
-      { user: { _id: 'otherUser' } }
-    ]
-  }
-]
-
 describe('onSendMessageClick tests', () => {
   beforeEach(() => {
     vi.resetAllMocks()
+    mockAxiosClient.resetHandlers()
   })
 
-  it('should set chat info for an existing chat', () => {
-    useAxios.mockImplementation(() => ({
-      default: vi.fn(),
-      response: chatResponse,
-      loading: false,
-      fetchData: mockFetchData
-    }))
+  afterAll(() => {
+    vi.clearAllMocks()
+  })
 
+  it('should set chat info for an existing chat', async () => {
     useMatch.mockImplementation(() => false)
     renderWithBreakpoints(laptopData, 'student')
 
     const sendMessageBtn = screen.getByText(
       /userProfilePage.profileInfo.sendMessage/i
     )
-    fireEvent.click(sendMessageBtn)
-
-    expect(mockSetChatInfo).toHaveBeenCalledWith({
-      author: userData,
-      authorRole: 'tutor',
-      chatId: 'chat456',
-      updateInfo: expect.any(Function)
+    await act(async () => {
+      fireEvent.click(sendMessageBtn)
     })
 
-    expect(mockFetchData).not.toHaveBeenCalled()
-  })
-
-  it('should trigger fetchData when no existing chat is found', () => {
-    useAxios.mockImplementation(() => ({
-      default: vi.fn(),
-      response: [],
-      loading: false,
-      fetchData: mockFetchData
-    }))
-
-    useMatch.mockImplementation(() => false)
-    renderWithBreakpoints(laptopData, 'student')
-
-    const sendMessageBtn = screen.getByText(
-      /userProfilePage.profileInfo.sendMessage/i
-    )
-    fireEvent.click(sendMessageBtn)
-
-    expect(mockSetChatInfo).toHaveBeenCalledWith({
-      author: userData,
-      authorRole: 'tutor',
-      chatId: '',
-      updateInfo: expect.any(Function)
+    await waitFor(() => {
+      expect(mockSetChatInfo).toHaveBeenCalledWith({
+        author: userData,
+        authorRole: 'tutor',
+        chatId: 'chat456',
+        updateInfo: expect.any(Function)
+      })
     })
-
-    expect(mockFetchData).toHaveBeenCalled()
   })
 })

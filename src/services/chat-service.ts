@@ -3,10 +3,14 @@ import { URLs } from '~/constants/request'
 import { axiosClient } from '~/plugins/axiosClient'
 import { BasicChat, ChatResponse } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
+import { baseService } from './base-service'
 
 export const chatService = {
-  getChats: (): Promise<AxiosResponse<ChatResponse[]>> => {
-    return axiosClient.get(URLs.chats.get)
+  getChats: () => {
+    return baseService.request<ChatResponse[]>({
+      method: 'GET',
+      url: URLs.chats.get
+    })
   },
   createChat: (
     chatData: BasicChat

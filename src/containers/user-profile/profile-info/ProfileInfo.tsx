@@ -17,14 +17,14 @@ import ProfileContainerMobile from '~/containers/user-profile/profile-info/Profi
 import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
 
 import { authRoutes } from '~/router/constants/authRoutes'
-import { defaultResponses, snackbarVariants } from '~/constants'
+import { snackbarVariants } from '~/constants'
 
-import { UserRoleEnum, UserResponse, ChatResponse } from '~/types'
+import { UserRoleEnum, UserResponse } from '~/types'
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { useChatContext } from '~/context/chat-context'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import { chatService } from '~/services/chat-service'
 import { DoneItem } from './ProfileInfo.constants'
 
@@ -131,19 +131,25 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
         description: `${userData.address.city}, ${userData.address.country}`
       }
   ].filter((item): item is DoneItem => !!item)
+
   const {
-    response: listOfChats,
-    loading: isChatsLoading,
-    fetchData
-  } = useAxios<ChatResponse[]>({
-    service: chatService.getChats,
-    defaultResponse: defaultResponses.array
+    data: listOfChats,
+    isLoading: isChatsLoading,
+    refetch
+  } = useQuery({
+    queryKey: ['chats'],
+    queryFn: chatService.getChats,
+    options: {
+      staleTime: Infinity
+    }
   })
 
-  const onSendMessageClick = () => {
-    const existedChat = listOfChats.find((chat) => {
-      return chat.members.some((member) => member.user._id == userData._id)
-    })
+  const onSendMessageClick = async () => {
+    if (!listOfChats) return
+
+    const existedChat = listOfChats.find((chat) =>
+      chat.members.some((member) => member.user._id === userData._id)
+    )
 
     setChatInfo({
       author: userData,
@@ -153,9 +159,10 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
     })
 
     if (!existedChat?._id) {
-      void fetchData()
+      await refetch()
     }
   }
+
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
       <Button
@@ -173,7 +180,9 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
       <Button
         disabled={isChatsLoading}
         fullWidth
-        onClick={onSendMessageClick}
+        onClick={() => {
+          void onSendMessageClick()
+        }}
         size={isLaptopAndAbove ? 'lg' : 'md'}
       >
         {t('userProfilePage.profileInfo.sendMessage')}
