@@ -71,6 +71,52 @@ To run unit test open terminal and run `npm run test` in it.
 
 ## Documentation
 
+### Project structure
+
+<ul>
+    <li>App-Folder
+        <ul>
+            <li>
+             /src - project source code folder
+                <ul>
+                    <li>
+                        /assets - for assets ('.svg', '.ico'...)
+                    </li>
+                    <li>
+                        /components - for shared basic components
+                    </li>
+                    <li>
+                        /constants - for general constants
+                    </li>
+                    <li>
+                        /containers - for complex components
+                    </li>
+                    <li>
+                        /pages - for project pages
+                    </li>
+                    <li>
+                        /plugins - for plugins
+                    </li>
+                    <li>
+                        /styles - for general styles and style variables
+                    </li>
+                </ul>
+            </li>
+            <li>
+                /test - project tests folder
+                <ul>
+                    <li>
+                        /coverage - coverage store
+                    </li>
+                    <li>
+                        /unit - unit tests, should duplicate project structure
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+
 ### Rules and guidelines
 
 - Redux
