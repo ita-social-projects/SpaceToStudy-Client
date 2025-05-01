@@ -13,7 +13,7 @@ const StudyMaterials = () => {
 
   const [materialsAccess, setMaterialsAccess] =
     useState<CooperationMaterialsAccessEnum>(
-      CooperationMaterialsAccessEnum.OneMonthAccess
+      CooperationMaterialsAccessEnum.PermanentAccess
     )
 
   return (
