@@ -112,4 +112,14 @@ describe('Quiz Question tests', () => {
     const checkIcon = screen.getByTestId('CheckIcon')
     expect(checkIcon).toBeInTheDocument()
   })
+  it('shouldn"t render correctness icon if shouldShowAnswersCorrectness is false', () => {
+    renderWithProps({
+      shouldShowPoints: false,
+      shouldShowCorrectAnswers: false,
+      shouldShowAnswersCorrectness: false
+    })
+
+    const correctAnswer = screen.queryByText('Correct answer')
+    expect(correctAnswer).not.toBeInTheDocument()
+  })
 })
