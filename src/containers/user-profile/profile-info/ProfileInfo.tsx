@@ -44,7 +44,10 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
     new Date(userData.createdAt),
     new Date()
   )
-  const { Student, Tutor } = UserRoleEnum
+  const { Student } = UserRoleEnum
+  const targetRole = userData.role[0] as
+    | UserRoleEnum.Student
+    | UserRoleEnum.Tutor
 
   const copyProfileLink = async () => {
     await navigator.clipboard.writeText(window.location.href)
@@ -62,7 +65,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
       createUrlPath(authRoutes.findOffers.path, undefined, {
         search: `${userData.firstName} ${userData.lastName}`,
         page: 1,
-        authorRole: myRole !== Student ? Student : Tutor
+        authorRole: targetRole
       })
     )
   }
@@ -153,7 +156,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
 
     setChatInfo({
       author: userData,
-      authorRole: userData.role[0] as UserRoleEnum.Student | UserRoleEnum.Tutor,
+      authorRole: targetRole,
       chatId: existedChat?._id ?? '',
       updateInfo: () => {}
     })
@@ -172,7 +175,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
       >
         {t(
           `userProfilePage.profileInfo.${
-            myRole !== Student ? 'studentRequests' : 'tutorOffers'
+            targetRole === Student ? 'studentRequests' : 'tutorOffers'
           }`
         )}
       </Button>
