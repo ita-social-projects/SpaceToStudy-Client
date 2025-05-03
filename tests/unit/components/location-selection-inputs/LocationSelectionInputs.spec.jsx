@@ -90,8 +90,6 @@ describe('LocationSelectionInputs', () => {
     const countryOption = screen.getByLabelText('common.labels.country')
     await userEvent.click(countryOption)
 
-    console.log(document.body.outerHTML)
-
     const countryOptions = screen.getAllByRole('option')
     expect(countryOptions).not.toHaveLength(0)
 
