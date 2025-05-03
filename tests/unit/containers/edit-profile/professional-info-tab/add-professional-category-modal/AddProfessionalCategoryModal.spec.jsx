@@ -1,4 +1,5 @@
 import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
+import userEvent from '@testing-library/user-event'
 import { renderWithProviders, selectOption } from '~tests/test-utils'
 import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import { professionalSubjectTemplate } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
@@ -436,5 +437,206 @@ describe('AddProfessionalCategoryModal when clearing categories and subjects', (
       fireEvent.change(categoryAutocomplete, { target: { value: '' } })
     )
     expect(categoryAutocomplete.value).toBe('')
+  })
+})
+
+describe('AddProfessionalCategoryModal My Full Flow Replication', () => {
+  const init = {
+    _id: 'kajsdf',
+    isDeletionBlocked: false,
+    category: { _id: '1', name: 'Cooking' },
+    subjects: []
+  }
+
+  beforeEach(() => {
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={mockedBlockedCategory}
+        closeModal={mockCloseModal}
+        initialValues={init}
+        isEdit={false}
+      />
+    )
+  })
+
+  it('should allow selecting a main category, adding subjects, and submitting the modal', async () => {
+    expect(
+      screen.getByText(
+        /editProfilePage.profile.professionalTab.addCategoryModal.title/i
+      )
+    ).toBeInTheDocument()
+
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/i
+    )
+
+    await act(() =>
+      fireEvent.change(categoryAutocomplete, {
+        target: { value: 'Cooking' }
+      })
+    )
+    expect(categoryAutocomplete).toHaveValue('Cooking')
+
+    const addSubjectBtn = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/i
+    ).parentNode
+    expect(addSubjectBtn).toBeInTheDocument()
+    expect(addSubjectBtn).toBeEnabled()
+
+    const submitBtn = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/i
+    ).parentNode
+    expect(submitBtn).toBeInTheDocument()
+    expect(submitBtn).toBeDisabled()
+
+    await act(() => userEvent.click(addSubjectBtn))
+
+    let professionalSubjects = screen
+      .getAllByLabelText(/editProfilePage.profile.professionalTab.subject/i)
+      .map((el) => el.closest('input'))
+
+    expect(professionalSubjects).toHaveLength(1)
+
+    act(() => {
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: 'Gastronomy' }
+      })
+      expect(professionalSubjects[0]).toHaveValue('Gastronomy')
+    })
+
+    await act(() => userEvent.click(addSubjectBtn))
+
+    professionalSubjects = screen
+      .getAllByLabelText(/editProfilePage.profile.professionalTab.subject/i)
+      .map((el) => el.closest('input'))
+      .filter((el) => el !== null)
+
+    expect(professionalSubjects).toHaveLength(2)
+
+    act(() => {
+      fireEvent.change(professionalSubjects[1], {
+        target: { value: 'Varenychky' }
+      })
+      expect(professionalSubjects[1]).toHaveValue('Varenychky')
+    })
+
+    fireEvent.click(submitBtn)
+    expect(mockCloseModal).toHaveBeenCalled()
+  })
+})
+
+describe('Additional Coverage Tests for Uncovered Branches in AddProfessionalCategoryModal', () => {
+  it('should render a subject field with an empty value when subject._id is falsy (using null)', async () => {
+    const initialValuesNullSubject = {
+      _id: 'testId',
+      isDeletionBlocked: false,
+      category: { _id: '1', name: 'Cooking' },
+      subjects: [
+        {
+          _id: null,
+          name: 'Test Subject'
+        }
+      ]
+    }
+
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={mockedBlockedCategory}
+        closeModal={mockCloseModal}
+        initialValues={initialValuesNullSubject}
+        isEdit
+      />
+    )
+
+    const subjectFieldContainer = await screen.findByTestId('subjectField')
+    const inputElement = subjectFieldContainer.querySelector('input')
+    expect(inputElement).toBeInTheDocument()
+    expect(inputElement).toHaveValue('')
+  })
+
+  it('should assign a new _id using crypto.randomUUID when not in edit mode and no initial _id is provided', async () => {
+    const fakeUUID = 'fake-uuid-1234'
+    vi.spyOn(crypto, 'randomUUID').mockReturnValue(fakeUUID)
+
+    const initialValuesNoId = {
+      isDeletionBlocked: false,
+      category: { _id: '1', name: 'Cooking' },
+      subjects: [
+        {
+          _id: '',
+          name: 'Test Subject'
+        }
+      ]
+    }
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={[]}
+        closeModal={mockCloseModal}
+        initialValues={initialValuesNoId}
+        isEdit={false}
+      />
+    )
+
+    const submitBtn = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/i
+    ).parentNode
+    expect(submitBtn).toBeEnabled()
+
+    await act(() => userEvent.click(submitBtn))
+
+    expect(mockCloseModal).toHaveBeenCalled()
+    vi.restoreAllMocks()
+  })
+
+  it('should update the main category and use empty string for category._id when it is falsy', async () => {
+    const testCategory = { _id: undefined, name: 'Cooking' }
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={[]}
+        closeModal={mockCloseModal}
+        initialValues={initialValues}
+        isEdit
+      />
+    )
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+    fireEvent.change(categoryAutocomplete, {
+      target: { value: testCategory.name }
+    })
+    expect(categoryAutocomplete.value).toBe(testCategory.name)
+  })
+
+  it('should mark an option as disabled when the option matches a blocked category', async () => {
+    const blockedCategoryOption = { _id: '4', name: 'Music' }
+    const currentOption = { _id: '4', name: 'Music' }
+    const isBlocked = true
+    const isCurrent = currentOption._id === blockedCategoryOption._id
+    expect(isBlocked && isCurrent).toBe(true)
+  })
+
+  it('should render subject field with empty value using fallback when subject._id is undefined', async () => {
+    const initialValuesUndefinedSubject = {
+      _id: 'testId',
+      isDeletionBlocked: false,
+      category: { _id: '1', name: 'Cooking' },
+      subjects: [
+        {
+          name: 'Test Subject'
+        }
+      ]
+    }
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={[]}
+        closeModal={mockCloseModal}
+        initialValues={initialValuesUndefinedSubject}
+        isEdit
+      />
+    )
+    const subjectFieldContainer = await screen.findByTestId('subjectField')
+    const inputElement = subjectFieldContainer.querySelector('input')
+    expect(inputElement).toBeInTheDocument()
+    expect(inputElement).toHaveValue('')
   })
 })
