@@ -7,8 +7,9 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 import EditProfile from '~/pages/edit-profile/EditProfile'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
+import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
 import useForm from '~/hooks/use-form'
-import { expect, vi } from 'vitest'
+import { beforeEach, describe, expect, vi } from 'vitest'
 import { snackbarVariants } from '~/constants'
 import { useAppSelector } from '~/hooks/use-redux'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
@@ -220,15 +221,11 @@ const TestProfileTabFormWrapper = () => {
     lastName: '',
     videoLink: ''
   }
-  const validations = {
-    lastName: (value) => (value.length > 30 ? 'Last name is too long' : '')
-  }
-
   const mockOpenAlert = vi.fn()
 
   const { data, errors, handleInputChange, handleBlur } = useForm({
     initialValues,
-    validations,
+    validations: {},
     onSubmit: () =>
       mockOpenAlert({
         severity: snackbarVariants.success,
@@ -718,6 +715,80 @@ describe('EditProfile', () => {
 
     const spanElem = screen.getByText(/editProfilePage.updateBtn/i)
     const updateBtn = spanElem.closest('a')
+
+    expect(updateBtn).not.toBeDisabled()
+
+    fireEvent.click(updateBtn)
+
+    await waitFor(() => {
+      expect(openAlert).toHaveBeenCalledWith({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    })
+
+    openAlert.mockClear()
+  })
+})
+
+const mockCities = ['City1', 'City2', 'City3']
+const mockCountries = [
+  { name: 'Ukraine', iso2: 'UA' },
+  { name: 'Country1', iso2: 'C1' },
+  { name: 'Country2', iso2: 'C2' },
+  { name: 'Country3', iso2: 'C3' }
+]
+
+describe('EditProfile - LocationSelectionInputs', () => {
+  beforeEach(() => {
+    renderWithProviders(<EditProfile />, {
+      preloadedState: mockState
+    })
+    renderWithProviders(
+      <LocationSelectionInputs
+        data={{ country: 'USA', city: 'New York' }}
+        onDataChange={() => {}}
+      />
+    )
+  })
+
+  beforeEach(() => {
+    mockAxiosClient.onGet(URLs.location.getCountries).reply(200, mockCountries)
+    mockAxiosClient
+      .onGet(
+        new RegExp(
+          URLs.location.getCitiesByCountryName.replace(':countryName', '')
+        )
+      )
+      .reply(200, mockCities)
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should enable Update button when Country or City is retyped', async () => {
+    const countryInput = screen.getByLabelText('common.labels.country')
+    const cityInput = screen.getByLabelText('common.labels.city')
+
+    expect(countryInput).toBeInTheDocument()
+    expect(cityInput).toBeInTheDocument()
+
+    await userEvent.clear(countryInput)
+    await userEvent.type(countryInput, 'England')
+    expect(countryInput).toHaveValue('England')
+
+    let spanElem = screen.getByText(/editProfilePage.updateBtn/i)
+    let updateBtn = spanElem.closest('a')
+
+    expect(updateBtn).not.toBeDisabled()
+
+    await userEvent.clear(cityInput)
+    await userEvent.type(cityInput, 'York')
+    expect(cityInput).toHaveValue('York')
+
+    spanElem = screen.getByText(/editProfilePage.updateBtn/i)
+    updateBtn = spanElem.closest('a')
 
     expect(updateBtn).not.toBeDisabled()
 
