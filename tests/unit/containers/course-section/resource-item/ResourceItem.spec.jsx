@@ -1,7 +1,6 @@
 import { renderWithProviders } from '~tests/test-utils'
-import { fireEvent, screen } from '@testing-library/react'
 import { ResourcesTypesEnum } from '~/types'
-
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import {
   ResourceAvailabilityStatusEnum,
   ResourcesTypesEnum as ResourceType
@@ -461,7 +460,7 @@ describe('ResourceItem component', () => {
   })
 
   it('does not navigate or download if isView is false', () => {
-    renderWithProviders(<ResourceItem resource={mockResource} isView={false} />)
+    renderWithProviders(<ResourceItem isView={false} resource={mockResource} />)
 
     fireEvent.click(screen.getByTestId('resourceItem'))
     expect(mockNavigate).not.toHaveBeenCalled()
@@ -471,9 +470,9 @@ describe('ResourceItem component', () => {
   it('does not navigate or download if resource is not open', () => {
     renderWithProviders(
       <ResourceItem
-        resource={mockResource}
-        isView={true}
         availability={{ status: ResourceAvailabilityStatusEnum.Closed }}
+        isView
+        resource={mockResource}
       />
     )
 
@@ -482,49 +481,49 @@ describe('ResourceItem component', () => {
     expect(ResourceService.downloadAttachment).not.toHaveBeenCalled()
   })
 
-  it('navigates to lesson-details if resource type is Lesson and isView is true', () => {
+  it('navigates to lesson-details if resource type is Lesson and isView is true', async () => {
     renderWithProviders(
       <ResourceItem
+        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
+        isView
         resource={mockResource}
         resourceType={ResourceType.Lesson}
-        isView={true}
-        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
       />
     )
 
     fireEvent.click(screen.getByTestId('resourceItem'))
-    waitFor(()=> {
-      expect(mockNavigate).toHaveBeenCalledWith('lesson-details/123')
+    await waitFor(() => {
+      expect(navigateMock).toHaveBeenCalledWith('lesson-details/123')
     })
   })
 
-  it('navigates to quiz if resource type is Quiz and isView is true', () => {
+  it('navigates to quiz if resource type is Quiz and isView is true', async () => {
     renderWithProviders(
       <ResourceItem
+        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
+        isView
         resource={{ ...mockResource, resourceType: ResourceType.Quiz }}
         resourceType={ResourceType.Quiz}
-        isView={true}
-        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
       />
     )
 
     fireEvent.click(screen.getByTestId('resourceItem'))
-    waitFor(()=> {
-      expect(mockNavigate).toHaveBeenCalledWith('quiz/123')
+    await waitFor(() => {
+      expect(navigateMock).toHaveBeenCalledWith('quizzes/123/attempts')
     })
   })
 
   it('calls downloadFile if resource type is Attachment', () => {
     renderWithProviders(
       <ResourceItem
+        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
+        isView
         resource={{
           ...mockResource,
           resourceType: ResourceType.Attachment,
           fileName: 'example.png'
         }}
         resourceType={ResourceType.Attachment}
-        isView={true}
-        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
       />
     )
 
