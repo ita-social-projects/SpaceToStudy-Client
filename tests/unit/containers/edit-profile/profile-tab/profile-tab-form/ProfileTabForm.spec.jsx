@@ -88,7 +88,7 @@ describe('ProfileTabForm', () => {
     expect(languageField).toBeInTheDocument()
 
     fireEvent.click(languageField)
-
+    fireEvent.change(languageField, { target: { value: '' } })
     for (const lang of languages) {
       fireEvent.change(languageField, { target: { value: lang } })
       const option = screen.getByText(lang)
