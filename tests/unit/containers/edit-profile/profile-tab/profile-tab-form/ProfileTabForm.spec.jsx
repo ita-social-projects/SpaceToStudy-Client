@@ -13,7 +13,10 @@ const handleNonInputValueChange = vi.fn()
 const handleBlur = vi.fn()
 
 const props = {
-  data: formDataMock,
+  data: {
+    ...formDataMock,
+    nativeLanguage: 'English'
+  },
   errors: [],
   handleInputChange,
   handleNonInputValueChange,
@@ -54,6 +57,21 @@ describe('ProfileTabForm', () => {
     expect(languageField.value).toBe(newLanguageValue)
   })
 
+  it('should clear the selected native language and change the value', async () => {
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
+    const clearButton = screen.getByLabelText('Clear')
+    await userEvent.click(clearButton)
+    expect(languageField).toHaveValue('')
+
+    await userEvent.click(languageField)
+    const arabicOption = await screen.findByText('Arabic')
+    await userEvent.click(arabicOption)
+
+    expect(languageField).toHaveValue('Arabic')
+  })
+
   it('should add only one language to "Your native language" field', () => {
     const languages = [
       'English',
@@ -70,7 +88,7 @@ describe('ProfileTabForm', () => {
     expect(languageField).toBeInTheDocument()
 
     fireEvent.click(languageField)
-
+    fireEvent.change(languageField, { target: { value: '' } })
     for (const lang of languages) {
       fireEvent.change(languageField, { target: { value: lang } })
       const option = screen.getByText(lang)
