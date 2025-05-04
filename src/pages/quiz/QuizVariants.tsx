@@ -276,19 +276,6 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     queryFn: getFinishedQuiz
   })
 
-  const calculateTotalPoints = (
-    results: { answers?: { isCorrect: boolean }[] }[] = []
-  ) => {
-    return results.reduce((total, result) => {
-      const correctAnswers =
-        result.answers?.filter((answer) => answer.isCorrect).length ?? 0
-      return total + correctAnswers
-    }, 0)
-  }
-  const totalPoints = useMemo(() => {
-    return calculateTotalPoints(finishedQuiz?.results)
-  }, [finishedQuiz?.results])
-
   const { quiz, isLoading: isQuizLoading } = useQuizQuery(quizId)
 
   const {
@@ -321,6 +308,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     return result
   }, [finishedQuiz?.results, quiz?.items])
 
+  const totalPoints = countPoints(items, mappedResults)
   const questionsBlock = isStepper ? (
     <SelectableQuestionQuizView
       answers={mappedResults}
