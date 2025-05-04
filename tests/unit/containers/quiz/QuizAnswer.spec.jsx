@@ -15,7 +15,7 @@ const renderWithProps = (props = {}) =>
 
 describe('Test answer component', () => {
   it('should render answer component with one answer', () => {
-    renderWithProps()
+    renderWithProps({ isChoosen: false })
 
     const answerInput = screen.getByRole('radio')
     expect(answerInput).toBeInTheDocument()
@@ -30,6 +30,12 @@ describe('Test answer component', () => {
 
   it('should render answer component with open answer', () => {
     renderWithProps({ type: 'openAnswer' })
+
+    const answerInput = screen.getByRole('textbox')
+    expect(answerInput).toBeInTheDocument()
+  })
+  it('should render answer component with open answer', () => {
+    renderWithProps({ type: 'openAnswer', isCorrect: false, isChoosen: true })
 
     const answerInput = screen.getByRole('textbox')
     expect(answerInput).toBeInTheDocument()
