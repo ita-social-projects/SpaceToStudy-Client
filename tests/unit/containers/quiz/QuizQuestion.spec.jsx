@@ -2,6 +2,7 @@ import { fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import QuizQuestion from '~/containers/quiz/quiz-question/Question.tsx'
 import { renderWithProviders } from '~tests/test-utils'
+import { ResourceService } from '~/services/resource-service'
 
 const mockQuestion = {
   _id: '665e1f1a9946b3dbb292339f',
@@ -11,6 +12,10 @@ const mockQuestion = {
     {
       text: 'Correct answer',
       isCorrect: true
+    },
+    {
+      text: 'Incorrect answer',
+      isCorrect: false
     }
   ],
   type: 'oneAnswer'
@@ -112,7 +117,8 @@ describe('Quiz Question tests', () => {
     const checkIcon = screen.getByTestId('CheckIcon')
     expect(checkIcon).toBeInTheDocument()
   })
-  it('shouldn"t render correctness icon if shouldShowAnswersCorrectness is false', () => {
+
+  it("shouldn't render correctness icon if shouldShowAnswersCorrectness is false", () => {
     renderWithProps({
       shouldShowPoints: false,
       shouldShowCorrectAnswers: false,
@@ -121,5 +127,31 @@ describe('Quiz Question tests', () => {
 
     const correctAnswer = screen.queryByText('Correct answer')
     expect(correctAnswer).not.toBeInTheDocument()
+  })
+
+  it('should update correctness icon when quiz results are fetched', async () => {
+    const mockFinishedQuiz = {
+      results: [
+        {
+          question: mockQuestion.text,
+          answers: [{ isCorrect: true }]
+        }
+      ]
+    }
+
+    vi.spyOn(ResourceService, 'getFinishedQuiz').mockResolvedValue(
+      mockFinishedQuiz
+    )
+
+    renderWithProps({
+      question: openAnswerQuestion,
+      shouldShowAnswersCorrectness: true,
+      isOpenAnswer: true,
+      value: 'Correct answer',
+      isFinishedQuizLoading: false
+    })
+
+    await screen.findByTestId('CheckIcon')
+    expect(screen.getByTestId('CheckIcon')).toBeInTheDocument()
   })
 })

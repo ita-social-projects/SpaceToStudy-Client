@@ -163,29 +163,9 @@ describe('TutorAnswerGrading', () => {
   it('updates results and calls onUpdate when finishedQuiz is found', () => {
     const mockOnUpdate = vi.fn()
     const questionText = 'Sample question'
-    const finishedQuizzes = [
-      {
-        _id: 'quiz123',
-        results: [
-          {
-            question: questionText,
-            answers: [
-              { text: 'A', isCorrect: false, isChosen: false },
-              { text: 'B', isCorrect: false, isChosen: false }
-            ]
-          }
-        ]
-      }
-    ]
 
     renderWithProviders(
-      <TutorAnswerGrading
-        attemptId='quiz123'
-        finishedQuizzes={finishedQuizzes}
-        newIsCorrect
-        onUpdate={mockOnUpdate}
-        questionText={questionText}
-      />
+      <TutorAnswerGrading onUpdate={mockOnUpdate} questionText={questionText} />
     )
 
     fireEvent.click(screen.getByTestId('CheckIcon'))

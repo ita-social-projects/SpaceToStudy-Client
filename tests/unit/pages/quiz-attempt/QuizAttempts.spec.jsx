@@ -16,8 +16,6 @@ const createTestQueryClient = () =>
     }
   })
 
-const queryClient = createTestQueryClient()
-
 const mockQuiz = {
   _id: mockQuizId,
   title: 'JS Quiz',
@@ -44,10 +42,7 @@ const mockQuiz = {
   },
   createdAt: '2024-05-12T21:45:51.693Z',
   updatedAt: '2024-06-07T07:05:33.052Z',
-  availability: {
-    status: 'open',
-    date: null
-  },
+  availability: { status: 'open', date: null },
   description: 'Js'
 }
 
@@ -83,53 +78,52 @@ vi.mock('react-router-dom', async () => {
   }
 })
 
-describe('QuizPage for student', () => {
-  beforeEach(() => {
-    mockUseParams.mockReturnValue({
-      id: mockCooperationId,
-      quizId: mockQuizId
-    })
+const queryClient = createTestQueryClient()
 
-    renderWithProviders(
-      <QueryClientProvider client={queryClient}>
-        <QuizAttemptsPage />
-      </QueryClientProvider>,
-      {
-        appMain: { userRole: UserRoleEnum.Student }
-      }
+const setupMockAxios = (withAttempts = true) => {
+  mockAxiosClient
+    .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
+    .reply(200, mockQuiz)
+
+  mockAxiosClient
+    .onGet(
+      URLs.finishedQuizzes.getByQuizId
+        .replace(':cooperationId', mockCooperationId)
+        .replace(':quizId', mockQuizId)
     )
-  })
+    .reply(200, withAttempts ? mockFinishedQuizzes : [])
+}
 
+const renderPage = (role) => {
+  renderWithProviders(
+    <QueryClientProvider client={queryClient}>
+      <QuizAttemptsPage />
+    </QueryClientProvider>,
+    {
+      preloadedState: {
+        appMain: { userRole: role }
+      }
+    }
+  )
+}
+
+describe('QuizAttemptsPage - Student role', () => {
   beforeAll(() => {
-    mockAxiosClient
-      .onGet(URLs.quizzes.getById.replace(':id', ''))
-      .reply(200, mockQuiz)
-    mockAxiosClient
-      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
-      .reply(200, mockQuiz)
-    mockAxiosClient
-      .onGet(URLs.finishedQuizzes.getById.replace(':id', ''))
-      .reply(200, mockQuiz)
-    mockAxiosClient
-      .onGet(
-        new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
-      )
-      .reply(200, mockQuiz)
-    mockAxiosClient
-      .onGet(
-        URLs.finishedQuizzes.getByQuizId
-          .replace(':cooperationId', mockCooperationId)
-          .replace(':quizId', mockQuizId)
-      )
-      .reply(200, mockFinishedQuizzes)
+    setupMockAxios(true)
   })
 
-  it('should render quiz preview page with data', async () => {
-    const quizTitle = await screen.findByText('JS Quiz')
-    expect(quizTitle).toBeInTheDocument()
+  beforeEach(() => {
+    mockUseParams.mockReturnValue({ id: mockCooperationId, quizId: mockQuizId })
+    queryClient.clear()
+    renderPage(UserRoleEnum.Student)
   })
 
-  it('should render Quiz review after review button is clicked', async () => {
+  it('renders quiz preview with title', async () => {
+    const title = await screen.findByText('JS Quiz')
+    expect(title).toBeInTheDocument()
+  })
+
+  it('shows review view after clicking "reviewAttempt"', async () => {
     const reviewButton = await screen.findByText('quiz.reviewAttempt')
     fireEvent.click(reviewButton)
 
@@ -137,7 +131,24 @@ describe('QuizPage for student', () => {
     expect(quizTitle).toBeInTheDocument()
   })
 
-  it('should start quiz when confirm in modal (handleStart)', async () => {
+  it('opens start modal on click', async () => {
+    const startButton = await screen.findByTestId('startButton')
+    fireEvent.click(startButton)
+
+    const modalTitle = await screen.findByText('quiz.start')
+    expect(modalTitle).toBeInTheDocument()
+  })
+})
+
+describe('QuizAttemptsPage - Tutor role', () => {
+  beforeEach(() => {
+    setupMockAxios(true)
+    mockUseParams.mockReturnValue({ id: mockCooperationId, quizId: mockQuizId })
+    queryClient.clear()
+    renderPage(UserRoleEnum.Tutor)
+  })
+
+  it('navigates to quiz editor on confirm start', async () => {
     const startButton = await screen.findByTestId('startButton')
     fireEvent.click(startButton)
 
@@ -147,39 +158,16 @@ describe('QuizPage for student', () => {
   })
 })
 
-describe('QuizPage without finished attempts', () => {
+describe('QuizAttemptsPage - No finished attempts', () => {
   beforeEach(() => {
+    setupMockAxios(false)
+    mockUseParams.mockReturnValue({ id: mockCooperationId, quizId: mockQuizId })
     queryClient.clear()
-
-    mockUseParams.mockReturnValue({
-      id: mockCooperationId,
-      quizId: mockQuizId
-    })
-
-    mockAxiosClient
-      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
-      .reply(200, mockQuiz)
-
-    mockAxiosClient
-      .onGet(
-        URLs.finishedQuizzes.getByQuizId
-          .replace(':cooperationId', mockCooperationId)
-          .replace(':quizId', mockQuizId)
-      )
-      .reply(200, [])
-
-    renderWithProviders(
-      <QueryClientProvider client={queryClient}>
-        <QuizAttemptsPage />
-      </QueryClientProvider>,
-      {
-        appMain: { userRole: UserRoleEnum.Student }
-      }
-    )
+    renderPage(UserRoleEnum.Student)
   })
 
-  it('should render message when there are no finished quiz attempts', async () => {
-    const noAttemptsMessage = await screen.findByText('quiz.noUsedAttempts')
-    expect(noAttemptsMessage).toBeInTheDocument()
+  it('shows message about no attempts', async () => {
+    const noAttempts = await screen.findByText('quiz.noUsedAttempts')
+    expect(noAttempts).toBeInTheDocument()
   })
 })

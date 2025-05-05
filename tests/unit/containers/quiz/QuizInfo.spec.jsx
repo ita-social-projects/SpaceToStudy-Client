@@ -135,8 +135,8 @@ describe('FinishedQuizInfo', () => {
     renderWithProviders(
       <FinishedQuizInfo
         createdAt='2024-01-01T10:00:00Z'
-        points={8}
-        totalPoints={10}
+        points={10}
+        totalPoints={8}
         updatedAt='2024-01-01T10:10:00Z'
       />
     )
