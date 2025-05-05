@@ -1,5 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-import { expect, vi } from 'vitest'
+import { vi } from 'vitest'
+import userEvent from '@testing-library/user-event'
 import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPassword'
 import {
   renderWithProviders,
@@ -31,7 +32,9 @@ describe('ResetPassword test', () => {
     const button = screen.getByText('login.savePassword')
 
     fireEvent.change(passwordInput, { target: { value: '12345qwertY!' } })
-    fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY!' } })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: '12345qwertY!' }
+    })
 
     fireEvent.click(button)
 
@@ -56,7 +59,9 @@ describe('ResetPassword test', () => {
     const button = screen.getByText('login.savePassword')
 
     fireEvent.change(passwordInput, { target: { value: '12345qwertY!' } })
-    fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY!' } })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: '12345qwertY!' }
+    })
     fireEvent.click(button)
 
     const snackbar = await screen.findByText('errors.BAD_RESET_TOKEN')
@@ -85,11 +90,16 @@ describe('ResetPassword test', () => {
     )
     const button = screen.getByText('login.savePassword')
 
-    fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })
-    fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY' } })
-    fireEvent.click(button)
+    fireEvent.change(passwordInput, { target: { value: '12345qwertY!' } })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: '12345qwertY!' }
+    })
 
-    expect(mutateFunction).toHaveBeenCalledWith('12345qwertY')
+    await userEvent.click(button)
+
+    await waitFor(() => {
+      expect(mutateFunction).toHaveBeenCalledWith('12345qwertY!')
+    })
 
     useMutationSpy.mockReturnValue({
       isPending: true
