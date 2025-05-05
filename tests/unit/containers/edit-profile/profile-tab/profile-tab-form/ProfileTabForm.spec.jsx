@@ -42,7 +42,7 @@ describe('ProfileTabForm', () => {
     URL.createObjectURL.mockReset()
   })
 
-  it('should handle the language input change', () => {
+  it('should update the native language after typing and selecting an option', () => {
     const newLanguageValue = 'Ukrainian'
     const languageField = screen.getByLabelText(
       'becomeTutor.languages.autocompleteLabel'
@@ -55,6 +55,36 @@ describe('ProfileTabForm', () => {
     fireEvent.click(option)
 
     expect(languageField.value).toBe(newLanguageValue)
+  })
+
+  it('should display the initial native language value', () => {
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
+
+    expect(languageField.value).toBe('English')
+  })
+
+  it('should open the dropdown with all language options', async () => {
+    const languageField = screen.getByLabelText(
+      'becomeTutor.languages.autocompleteLabel'
+    )
+    fireEvent.mouseDown(languageField)
+
+    const options = [
+      'English',
+      'Ukrainian',
+      'Polish',
+      'German',
+      'French',
+      'Spanish',
+      'Arabic'
+    ]
+
+    for (const lang of options) {
+      const option = await screen.findByText(lang)
+      expect(option).toBeInTheDocument()
+    }
   })
 
   it('should clear the selected native language and change the value', async () => {
