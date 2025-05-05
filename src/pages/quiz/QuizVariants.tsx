@@ -22,7 +22,7 @@ import useQuizQuery from '~/hooks/query/use-quiz-query'
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
 import styles from '~/pages/quiz/Quiz.styles'
-import { defaultResponses } from '~/constants'
+import { defaultResponses, snackbarVariants } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
 
 import {
@@ -106,7 +106,7 @@ const ActiveQuiz: React.FC = () => {
     })
   }, [cooperationId, grade, mappedResults, quizId])
 
-  const { handleErrorAlert } = useSnackbarAlert()
+  const { handleErrorAlert, handleAlert } = useSnackbarAlert()
 
   const { mutateAsync: createFinishedQuiz } = useMutation({
     mutationFn: addFinishedQuiz,
@@ -168,6 +168,11 @@ const ActiveQuiz: React.FC = () => {
     updateFinishedQuiz()
     setIsOpen(false)
 
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: 'quiz.successSubmittedQuiz'
+    })
+
     if (scoredResponses) {
       navigate(
         getFullUrl({
@@ -183,6 +188,7 @@ const ActiveQuiz: React.FC = () => {
     cooperationId,
     quizId,
     finishedQuizId,
+    handleAlert,
     navigate,
     updateFinishedQuiz
   ])

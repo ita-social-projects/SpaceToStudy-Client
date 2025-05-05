@@ -28,5 +28,6 @@
   "timeLimit": "Time limit",
   "reachedAttemptLimit": "Attempt limit reached.",
   "noUsedAttempts": "No attempts have been made yet",
-  "questionsAmount": "Questions amount"
+  "questionsAmount": "Questions amount",
+  "successSubmittedQuiz": "The quiz has been successfully finished!"
 }
