@@ -68,13 +68,14 @@ export const URLs = {
     create: '/cooperations',
     update: '/cooperations',
     updateById: '/cooperations/:id',
+    updateStatusById: '/cooperations/:id/:resourceId/completionStatus',
     delete: '/cooperations'
   },
   notes: {
-    get: '/notes',
-    create: '/notes',
-    update: '/notes',
-    delete: '/notes'
+    get: '/cooperations/:id/notes',
+    create: '/cooperations/:id/notes',
+    update: '/cooperations/:id/notes/:noteId',
+    delete: '/cooperations/:id/notes/:noteId'
   },
   chats: {
     get: '/chats',

@@ -45,5 +45,6 @@
   "submittedReason": "Submitted reason: ",
   "cooperationCloseDeclinedMessage": "<userWrapper>{{user}}</userWrapper> declined to close the cooperation due to the following reason:",
   "resendRequestBtn": "Resend request",
-  "answer": "Response from "
+  "answer": "Response from ",
+  "markAsProcessedBtn": "Mark as Processed"
 }

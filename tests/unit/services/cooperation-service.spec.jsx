@@ -1,0 +1,129 @@
+import {
+  cooperationService,
+  CooperationNotesService
+} from '~/services/cooperation-service'
+import { mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
+
+const id = '64kf41f7806a06c65338c509'
+const lessonId = '64ef41f7806a06c65338c433'
+const noteId = '64dc92f7806a06c65338b712'
+
+const creationData = {
+  offer: '64ef92a7806a06c65338d123',
+  receiver: '64bf81c7806a06c65338f456',
+  receiverRole: 'tutor'
+}
+
+const updateResourceStatus = {
+  id,
+  resourceId: lessonId,
+  completionStatus: 'completed'
+}
+
+const noteData = {
+  isPrivate: false,
+  text: 'This is Note'
+}
+
+describe('Cooperation Service tests', () => {
+  afterEach(() => {
+    mockAxiosClient.resetHistory()
+    mockAxiosClient.reset()
+  })
+
+  it('should create new cooperation', async () => {
+    mockAxiosClient.onPost(URLs.cooperations.create).reply(200)
+
+    await cooperationService.createCooperation(creationData)
+
+    expect(mockAxiosClient.history.post[0].url).toBe(URLs.cooperations.create)
+    expect(mockAxiosClient.history.post[0].data).toBe(
+      JSON.stringify(creationData)
+    )
+  })
+
+  it('should update resource completion status', async () => {
+    mockAxiosClient
+      .onPatch(
+        URLs.cooperations.updateStatusById
+          .replace(':id', id)
+          .replace(':resourceId', lessonId)
+      )
+      .reply(200)
+
+    await cooperationService.updateResourceCompletionStatus(
+      updateResourceStatus
+    )
+
+    expect(mockAxiosClient.history.patch[0].url).toBe(
+      URLs.cooperations.updateStatusById
+        .replace(':id', id)
+        .replace(':resourceId', lessonId)
+    )
+    expect(mockAxiosClient.history.patch[0].data).toEqual(
+      JSON.stringify({
+        completionStatus: updateResourceStatus.completionStatus
+      })
+    )
+  })
+})
+
+describe('Cooperation Notes Service tests', () => {
+  afterEach(() => {
+    mockAxiosClient.resetHistory()
+    mockAxiosClient.reset()
+  })
+
+  it('should get notes', async () => {
+    mockAxiosClient.onGet(URLs.notes.get.replace(':id', id)).reply(200)
+    await CooperationNotesService.getNotes(id)
+
+    expect(mockAxiosClient.history.get[0].url).toBe(
+      URLs.notes.get.replace(':id', id)
+    )
+  })
+
+  it('should create note', async () => {
+    mockAxiosClient.onPost(URLs.notes.get.replace(':id', id)).reply(200)
+    await CooperationNotesService.createNote(id, noteData)
+
+    expect(mockAxiosClient.history.post[0].url).toBe(
+      URLs.notes.get.replace(':id', id)
+    )
+
+    expect(mockAxiosClient.history.post[0].data).toEqual(
+      JSON.stringify(noteData)
+    )
+  })
+
+  it('should update note', async () => {
+    mockAxiosClient
+      .onPatch(URLs.notes.update.replace(':id', id).replace(':noteId', noteId))
+      .reply(200)
+
+    await CooperationNotesService.updateNote(id, noteId, noteData)
+
+    expect(mockAxiosClient.history.patch[0].url).toBe(
+      URLs.notes.update.replace(':id', id).replace(':noteId', noteId)
+    )
+
+    expect(mockAxiosClient.history.patch[0].data).toEqual(
+      JSON.stringify(noteData)
+    )
+  })
+
+  it('should delete note', async () => {
+    mockAxiosClient
+      .onDelete(URLs.notes.delete.replace(':id', id).replace(':noteId', noteId))
+      .reply(200)
+
+    const result = await CooperationNotesService.deleteNote(id, noteId)
+
+    expect(mockAxiosClient.history.delete[0].url).toBe(
+      URLs.notes.delete.replace(':id', id).replace(':noteId', noteId)
+    )
+    expect(result.data).toBeUndefined()
+    expect(result.status).toBe(200)
+  })
+})
