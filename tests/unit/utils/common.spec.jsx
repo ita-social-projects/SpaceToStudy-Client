@@ -11,7 +11,7 @@ const mockedValues = {
   nameWithNumbers: 'name2',
   tooLongName: 'vvvveeeerrrryyyylllloooonnnnggggnnnnaaaammmmeeee',
   invalidNumber: '8w5',
-  validNumber: "123",
+  validNumber: '123',
   negativeNumber: '-5',
   shortPassword: '111a?',
   longPassword: '1!vvvveeeerrrryyyylllloooonnnnggggppaasswwooorrddd',
@@ -41,8 +41,7 @@ const errorMessages = {
   numbersOnly: 'common.errorMessages.numbersOnly',
   positiveNumbersOnly: 'common.errorMessages.positiveNumbersOnly',
   passwordLength: 'common.errorMessages.passwordLength',
-  passwordComplex:
-    'common.errorMessages.passwordComplex',
+  passwordComplex: 'common.errorMessages.passwordComplex',
   passwordValidSymbols: 'common.errorMessages.passwordValidSymbols',
   emailValid: 'common.errorMessages.emailValid',
   shortText: 'common.errorMessages.shortText',
@@ -123,7 +122,7 @@ describe('commonValidation', () => {
   })
 
   it('Should pass for valid number input', () => {
-    const result = numberField(mockedValues.validNumber) 
+    const result = numberField(mockedValues.validNumber)
     expect(result).toBe('')
   })
 
@@ -131,13 +130,13 @@ describe('commonValidation', () => {
     const result = passwordField(mockedValues.emptyField)
     expect(result).toBe(errorMessages.emptyField)
   })
-  
+
   it('Should return error that password cannot be shorter than 8 and longer than 25 characters', () => {
-    const shortPasswordResult = passwordField(mockedValues.shortPassword);
-    const longPasswordResult = passwordField(mockedValues.longPassword);
-  
-    expect(shortPasswordResult).toBe(errorMessages.passwordLength);
-    expect(longPasswordResult).toBe(errorMessages.passwordLength);
+    const shortPasswordResult = passwordField(mockedValues.shortPassword)
+    const longPasswordResult = passwordField(mockedValues.longPassword)
+
+    expect(shortPasswordResult).toBe(errorMessages.passwordLength)
+    expect(longPasswordResult).toBe(errorMessages.passwordLength)
   })
 
   it('Should return error that password must contain at least one alphabetic, one numeric and one special character', () => {
@@ -154,21 +153,21 @@ describe('commonValidation', () => {
     const result = passwordField(mockedValues.passwordWithInvalidSymbol)
     expect(result).toBe(errorMessages.passwordValidSymbols)
   })
-  
+
   it('Should skip passwordComplex if the password meets the regex', () => {
-    const result = passwordField(mockedValues.validPassword);
-    expect(result).not.toBe(errorMessages.passwordComplex);
-  });
+    const result = passwordField(mockedValues.validPassword)
+    expect(result).not.toBe(errorMessages.passwordComplex)
+  })
 
   it('Should skip passwordValidSymbols if the password contains only valid symbols', () => {
-    const result = passwordField(mockedValues.validPassword);
-    expect(result).not.toBe(errorMessages.passwordValidSymbols);
-  });
-  
+    const result = passwordField(mockedValues.validPassword)
+    expect(result).not.toBe(errorMessages.passwordValidSymbols)
+  })
+
   it('Should skip passwordLength if the password length is within range', () => {
-    const result = passwordField(mockedValues.validPassword);
-    expect(result).not.toBe(errorMessages.passwordLength);
-  });
+    const result = passwordField(mockedValues.validPassword)
+    expect(result).not.toBe(errorMessages.passwordLength)
+  })
 
   it('Should pass for valid password', () => {
     const result = passwordField(mockedValues.validPassword)
