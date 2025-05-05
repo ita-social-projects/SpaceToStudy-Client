@@ -12,10 +12,8 @@ describe('downloadFile', () => {
   })
 
   it('should download a file with the correct filename', async () => {
-    const mockData = 'test file content'
-    const mockResponse = Promise.resolve({
-      data: mockData
-    })
+    const mockData = new Blob(['test file content'], { type: 'text/plain' })
+    const mockResponse = Promise.resolve(mockData)
 
     const mockUrl = 'blob:http://localhost/test-url'
     const createObjectURLMock = vi
@@ -41,7 +39,7 @@ describe('downloadFile', () => {
     await downloadFile(mockResponse, fileName)
 
     expect(createObjectURLMock).toHaveBeenCalledOnce()
-    expect(createObjectURLMock).toHaveBeenCalledWith(new Blob([mockData]))
+    expect(createObjectURLMock).toHaveBeenCalledWith(mockData)
     expect(link.setAttribute).toHaveBeenCalledWith('download', fileName)
     expect(link.click).toHaveBeenCalledOnce()
     expect(appendChildMock).toHaveBeenCalledWith(link)

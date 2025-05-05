@@ -1,11 +1,6 @@
-import { AxiosResponse } from 'axios'
-
-export async function downloadFile(
-  response: Promise<AxiosResponse>,
-  fileName: string
-) {
+export async function downloadFile(response: Promise<Blob>, fileName: string) {
   const blobResponse = await response
-  const url = window.URL.createObjectURL(new Blob([blobResponse.data]))
+  const url = window.URL.createObjectURL(blobResponse)
   const link = document.createElement('a')
   link.href = url
   link.setAttribute('download', fileName)

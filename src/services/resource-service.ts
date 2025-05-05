@@ -104,12 +104,6 @@ export const ResourceService = {
       })
     })
   },
-  downloadAttachment: async (id: string) => {
-    return axiosClient.get(
-      createUrlPath(URLs.resources.attachments.download, id),
-      { responseType: 'blob' }
-    )
-  },
   addQuiz: (data: CreateQuizParams) => {
     return baseService.request<Quiz>({
       method: 'POST',
@@ -210,7 +204,13 @@ export const ResourceService = {
       data
     })
   },
-
+  downloadAttachment: (id: string) => {
+    return baseService.request<Blob>({
+      method: 'GET',
+      url: createUrlPath(URLs.resources.attachments.download, id),
+      responseType: 'blob'
+    })
+  },
   getQuestions: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Question>>({
       method: 'GET',
