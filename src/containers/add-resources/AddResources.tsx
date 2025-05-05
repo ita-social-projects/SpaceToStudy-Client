@@ -89,7 +89,7 @@ const AddResources = <T extends CourseResource | Question>({
     (item: T) => {
       handleSelectClick(item._id)
     },
-    [select]
+    [handleSelectClick]
   )
 
   const onAddItems = useCallback(() => {
