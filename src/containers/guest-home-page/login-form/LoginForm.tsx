@@ -84,6 +84,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         onBlur={handleBlur('password')}
         onChange={handleChange('password')}
         required
+        sx={styles.input}
         type={showPassword ? 'text' : 'password'}
         value={data.password}
       />
