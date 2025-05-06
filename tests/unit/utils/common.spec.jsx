@@ -139,15 +139,26 @@ describe('commonValidation', () => {
     expect(longPasswordResult).toBe(errorMessages.passwordLength)
   })
 
-  it('Should return error that password must contain at least one alphabetic, one numeric and one special character', () => {
-    const result1 = passwordField(mockedValues.passwordWithoutLetters)
-    const result2 = passwordField(mockedValues.passwordWithoutNumbers)
-    const result3 = passwordField(mockedValues.passwordWithoutSpecialChar)
-
-    expect(result1).toBe(errorMessages.passwordComplex)
-    expect(result2).toBe(errorMessages.passwordComplex)
-    expect(result3).toBe(errorMessages.passwordComplex)
-  })
+  it.each([
+    {
+      input: mockedValues.passwordWithoutLetters,
+      expected: errorMessages.passwordComplex
+    },
+    {
+      input: mockedValues.passwordWithoutNumbers,
+      expected: errorMessages.passwordComplex
+    },
+    {
+      input: mockedValues.passwordWithoutSpecialChar,
+      expected: errorMessages.passwordComplex
+    }
+  ])(
+    'Should return error that password must contain at least one alphabetic, one numeric and one special character',
+    ({ input, expected }) => {
+      const result = passwordField(input)
+      expect(result).toBe(expected)
+    }
+  )
 
   it('Should return error that password must contain only valid symbols', () => {
     const result = passwordField(mockedValues.passwordWithInvalidSymbol)
@@ -202,5 +213,87 @@ describe('commonValidation', () => {
   it('Should return error that value must have non-space values', () => {
     const result = emptyField({ value: mockedValues.spaceField })
     expect(result).toBe(errorMessages.hasOnlySpaces)
+  })
+})
+
+describe('Coverage for common.ts validations', () => {
+  it('should return nameLength error if name is longer than 30 characters', () => {
+    const longName = 'a'.repeat(31)
+    const result = nameField(longName)
+    expect(result).toBe(errorMessages.nameLength)
+  })
+
+  it('should return nameCharacters error if name contains invalid characters', () => {
+    const invalidName = 'John123'
+    const result = nameField(invalidName)
+    expect(result).toBe(errorMessages.nameCharacters)
+  })
+
+  it('should return empty string for a valid name', () => {
+    const validName = "John O'Connor"
+    const result = nameField(validName)
+    expect(result).toBe('')
+  })
+
+  it('should return numbersOnly error if non-numeric input is provided', () => {
+    const result = numberField('abc', '')
+    expect(result).toBe(errorMessages.numbersOnly)
+  })
+
+  it('should return positiveNumbersOnly error if a negative number is provided', () => {
+    const result = numberField('-5', '')
+    expect(result).toBe(errorMessages.positiveNumbersOnly)
+  })
+
+  it('should return empty string for a valid number', () => {
+    const result = numberField('123', '')
+    expect(result).toBe('')
+  })
+
+  it('should return passwordComplex error if password fails complexity test', () => {
+    const simplePwd = 'simplepwd'
+    const result = passwordField(simplePwd)
+    expect(result).toBe(errorMessages.passwordComplex)
+  })
+
+  it('should return passwordValidSymbols error if password has invalid symbols', () => {
+    const pwdWithBadSymbol = 'Valid123! '
+    const result = passwordField(pwdWithBadSymbol)
+    expect(result).toBe(errorMessages.passwordValidSymbols)
+  })
+
+  it('should return passwordLength error if password length is out of bounds', () => {
+    const shortPwd = 'Val1!'
+    const longPwd = 'A'.repeat(26) + '1!'
+    const resultShort = passwordField(shortPwd)
+    const resultLong = passwordField(longPwd)
+    expect(resultShort).toBe(errorMessages.passwordLength)
+    expect(resultLong).toBe(errorMessages.passwordLength)
+  })
+
+  it('should return empty string for a valid password', () => {
+    const validPwd = 'Valid123!'
+    const result = passwordField(validPwd)
+    expect(result).toBe('')
+  })
+
+  const textValidator = textField(5, 10)
+
+  it('should return shortText error if text is shorter than minimum length', () => {
+    const shortText = 'abcd'
+    const result = textValidator(shortText)
+    expect(result).toBe(errorMessages.shortText)
+  })
+
+  it('should return longText error if text is longer than maximum length', () => {
+    const longText = 'abcdefghijk'
+    const result = textValidator(longText)
+    expect(result).toBe(errorMessages.longText)
+  })
+
+  it('should return undefined if text length is within valid range', () => {
+    const validText = 'abcdef'
+    const result = textValidator(validText)
+    expect(result).toBeUndefined()
   })
 })
