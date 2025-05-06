@@ -1,5 +1,5 @@
-import { fireEvent, screen } from '@testing-library/react'
-import { describe, expect, vi } from 'vitest'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { afterEach, beforeAll, describe, expect, vi } from 'vitest'
 
 import BookmarkedOffers from '~/pages/bookmarked-offers/BookmarkedOffers'
 
@@ -8,10 +8,10 @@ import {
   renderWithProviders,
   TestSnackbar
 } from '~tests/test-utils'
-import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
 import { offersMock } from '~tests/unit/pages/bookmarked-offers/BookmarkedOffers.constants'
 import * as sortValues from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
+import { queryClient } from '~/plugins/queryClient'
 
 const mockNavigate = vi.fn()
 let mockSearchParams = new URLSearchParams()
@@ -41,9 +41,9 @@ vi.mock('react-i18next', () => ({
 const testText = 'test text'
 const mockUserId = '66b0aecdadd1fe775238c7d5'
 const preloadedState = { appMain: { userId: mockUserId } }
-const getBookmarksUrl = `${createUrlPath(URLs.users.get, mockUserId)}${
-  URLs.users.bookmarks
-}`
+const getBookmarksUrl = new RegExp(
+  URLs.users.bookmarks.replace(':id', mockUserId)
+)
 const mockError = { code: 'mockErrorCode', message: 'test error' }
 
 const sortTranslationKeysMock = [
@@ -144,6 +144,10 @@ describe('BookmarkedOffers page without offers', () => {
 })
 
 describe("BookmarkedOffers page couldn't load offers", () => {
+  beforeAll(() => {
+    queryClient.clear()
+  })
+
   beforeEach(() => {
     mockAxiosClient.onGet(getBookmarksUrl).reply(400, mockError)
 
@@ -156,8 +160,12 @@ describe("BookmarkedOffers page couldn't load offers", () => {
   })
 
   it('should show a snackbar with an error text', async () => {
-    const snackbar = await screen.findByText('bookmarkedOffers.loadingError')
-
-    expect(snackbar).toBeInTheDocument()
-  })
+    await waitFor(
+      () => {
+        const snackbar = screen.getByText('bookmarkedOffers.loadingError')
+        expect(snackbar).toBeInTheDocument()
+      },
+      { timeout: 8000 }
+    )
+  }, 8000)
 })

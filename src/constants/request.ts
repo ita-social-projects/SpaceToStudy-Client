@@ -26,7 +26,7 @@ export const URLs = {
     deactivate: '/users/deactivate',
     activate: '/users/activate',
     myProfile: '/users/myProfile',
-    bookmarks: '/bookmarks/offers',
+    bookmarks: '/users/:id/bookmarks/offers',
     updateBookmarks: '/users/:userId/bookmarks/offers/:offerId',
     offers: '/users/:id/offers'
   },
