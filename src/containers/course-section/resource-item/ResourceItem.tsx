@@ -33,7 +33,8 @@ import {
 import { getFormattedDate } from '~/utils/helper-functions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { downloadFile } from '~/utils/download-file'
-import DownloadButton from '~/components/download-button/DownloadButton'
+// import DownloadButton from '~/components/download-button/DownloadButton'
+import ResourceActionContainer from '~/containers/course-section/resource-item/ResourceAction/ResourceAction'
 
 interface ResourceItemProps {
   resource: CourseResource
@@ -45,6 +46,7 @@ interface ResourceItemProps {
     resource: CourseResource,
     availability: ResourceAvailability
   ) => void
+  isStudent?: boolean
   isView?: boolean
   isCooperation?: boolean
   isDone?: boolean
@@ -57,13 +59,13 @@ const ResourceItem: FC<ResourceItemProps> = ({
   deleteResource,
   editResource,
   updateAvailability,
+  isStudent,
   isView = false,
   isCooperation = false
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isDuplicate } = resource
-
   const routeMap = {
     [ResourceType.Lesson]: 'lesson-details/',
     [ResourceType.Quiz]: 'quizzes/'
@@ -213,7 +215,12 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }
 
   const onResourceItemClick = () => {
-    if (!isView || status !== ResourceAvailabilityStatusEnum.Open) return
+    if (
+      !isView ||
+      status !== ResourceAvailabilityStatusEnum.Open ||
+      resource.resourceType === ResourceType.Attachment
+    )
+      return
     const type = resourceType ?? resource.resourceType
 
     if (isAttachment(resource, type)) {
@@ -248,12 +255,15 @@ const ResourceItem: FC<ResourceItemProps> = ({
           title={resource.resourceType}
         />
       </Box>
-      {resource.resourceType === ResourceType.Attachment && isView && (
-        <DownloadButton onDownload={handleDownloadAttachment} />
-      )}
-      <Box sx={styles.resourceActions}>
-        {isView ? status && availabilityStatus : actionButtons}
-      </Box>
+      <ResourceActionContainer
+        actionButtons={actionButtons}
+        availabilityStatus={availabilityStatus}
+        handleDownloadAttachment={handleDownloadAttachment}
+        isStudent={isStudent ?? false}
+        isView={isView}
+        resource={resource}
+        status={status}
+      />
     </Box>
   )
 }

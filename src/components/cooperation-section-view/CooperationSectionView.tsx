@@ -10,7 +10,8 @@ import { styles } from '~/components/cooperation-section-view/CooperationSection
 import {
   CourseSection,
   ResourcesTypesEnum,
-  TextFieldVariantEnum
+  TextFieldVariantEnum,
+  UserRoleEnum
 } from '~/types'
 
 import {
@@ -21,6 +22,7 @@ import {
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 import { Typography } from '@mui/material'
 import Divider from '@mui/material/Divider'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface CooperationSectionViewProps {
   item: CourseSection
@@ -29,19 +31,22 @@ interface CooperationSectionViewProps {
 const CooperationSectionView: FC<CooperationSectionViewProps> = ({ item }) => {
   const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState<boolean>(true)
+  const { userRole } = useAppSelector((state) => state.appMain)
+  const isStudent = userRole === UserRoleEnum.Student
 
   const resources = useMemo<undefined | ReactNode[]>(
     () =>
       item.resources?.map(({ availability, resource, resourceType }) => (
         <ResourceItem
           availability={availability}
+          isStudent={isStudent}
           isView
           key={resource.id}
           resource={resource}
           resourceType={resourceType}
         />
       )),
-    [item.resources]
+    [item.resources, isStudent]
   )
 
   const renderResource = (IconComponent: SvgIconComponent, text: string) => {
