@@ -33,6 +33,7 @@ import {
 import { getFormattedDate } from '~/utils/helper-functions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { downloadFile } from '~/utils/download-file'
+import DownloadButton from '~/components/download-button/DownloadButton'
 
 interface ResourceItemProps {
   resource: CourseResource
@@ -191,6 +192,15 @@ const ResourceItem: FC<ResourceItemProps> = ({
       </IconButton>
     </Box>
   )
+  const handleDownloadAttachment = useCallback(async () => {
+    if (resource.resourceType !== ResourceType.Attachment) return
+
+    const fileName = (resource as Attachment).fileName
+    await downloadFile(
+      ResourceService.downloadAttachment(resource._id),
+      fileName
+    )
+  }, [resource])
 
   const isAttachment = (
     resource: CourseResource,
@@ -208,15 +218,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
     if (isAttachment(resource, type)) {
         window.open(resource.link, '_blank')
-    }
-
-    if (type === ResourceType.Attachment) {
-      const fileName = (resource as Attachment).fileName
-      void downloadFile(
-        ResourceService.downloadAttachment(resource._id),
-        fileName
-      )
-      return
     }
 
     if (type === ResourceType.Lesson || type === ResourceType.Quiz) {
@@ -247,7 +248,9 @@ const ResourceItem: FC<ResourceItemProps> = ({
           title={resource.resourceType}
         />
       </Box>
-
+      {resource.resourceType === ResourceType.Attachment && isView && (
+        <DownloadButton onDownload={handleDownloadAttachment} />
+      )}
       <Box sx={styles.resourceActions}>
         {isView ? status && availabilityStatus : actionButtons}
       </Box>
