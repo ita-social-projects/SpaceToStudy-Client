@@ -1,21 +1,34 @@
 import { renderWithProviders } from '~tests/test-utils'
 import { fireEvent, screen } from '@testing-library/react'
+import { ResourcesTypesEnum } from '~/types'
 
 import {
   mockedLessonDataOriginal,
   mockedQuizDataDuplicate,
   mockedAttachmentDataOriginal,
+  mockedAttachmentDataDuplicate,
   mockAvailabilityForLesson,
   mockAvailabilityForQuizDataDuplicate,
-  mockAvailabilityOpen
+  mockAvailabilityOpen,
+  mockAvailabilityOpenFrom,
+  mockAvailabilityClosed
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
-import { vi } from 'vitest'
+import { afterEach, expect, it, vi } from 'vitest'
 
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
 const mockUpdateAvailability = vi.fn()
+const mockNavigate = vi.fn()
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate
+  }
+})
 
 vi.mock('@mui/x-date-pickers/LocalizationProvider', async () => {
   const actual = await vi.importActual(
@@ -209,21 +222,206 @@ describe('ResourceItem tests when isDuplicate=true and resourceType quiz', () =>
 })
 
 describe('ResourceItem tests when resourceType attachment', () => {
+  let windowOpenMock
+
   beforeEach(() => {
-    renderWithProviders(
-      <ResourceItem
-        availability={mockAvailabilityOpen}
-        deleteResource={mockDeleteResource}
-        editResource={mockEditResource}
-        resource={mockedAttachmentDataOriginal}
-        updateAvailability={mockUpdateAvailability}
-      />
-    )
+    windowOpenMock = vi.spyOn(window, 'open').mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    windowOpenMock.mockRestore()
   })
 
   it('should properly display attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataOriginal}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+    expect(attachmentItem).toBeInTheDocument()
+  })
+
+  it('should download attachment when clicked', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataOriginal}
+      />
+    )
+
     const attachmentItem = screen.getByText(/png/)
 
-    expect(attachmentItem).toBeInTheDocument()
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).toHaveBeenCalledWith(
+      '1723236050559-Exploring Systems of Linear Equations.png',
+      '_blank'
+    )
+  })
+
+  it('should download attachment when isDuplicate is true', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataDuplicate}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).toHaveBeenCalledWith(
+      '1723236050559-Exploring Systems of Linear Equations.png',
+      '_blank'
+    )
+  })
+
+  it('should not download attachment when its availability is set to open from', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpenFrom}
+        isView
+        resource={mockedAttachmentDataDuplicate}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalledWith()
+  })
+
+  it('should not download attachment when its availability is set to closed', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityClosed}
+        isView
+        resource={mockedAttachmentDataDuplicate}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalledWith()
+  })
+
+  it('should not download anything if resource.resourceType is not Attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedLessonDataOriginal}
+      />
+    )
+    const nonAttachmentItem = screen.getByText(mockedLessonDataOriginal.title)
+
+    fireEvent.click(nonAttachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalled()
+  })
+
+  it('should not download anything if resource.resourceType is not Attachment but resourceType IS an attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedLessonDataOriginal}
+        resourceType={ResourcesTypesEnum.Attachment}
+      />
+    )
+    const nonAttachmentItem = screen.getByText(mockedLessonDataOriginal.title)
+
+    fireEvent.click(nonAttachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalled()
+  })
+
+  it('should not download anything if resourceType is not Attachment but resource.resourceType IS an Attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataOriginal}
+        resourceType={ResourcesTypesEnum.Quiz}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalled()
+  })
+
+  it('should not download attachment if isView is false', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        resource={mockedAttachmentDataOriginal}
+        resourceType={ResourcesTypesEnum.Attachment}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalled()
+  })
+})
+
+describe('ResourceItem navigation', () => {
+  afterEach(() => {
+    mockNavigate.mockReset()
+  })
+
+  it('should navigate to lesson page when resourceType is Lesson', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedLessonDataOriginal}
+      />
+    )
+
+    const lessonItem = screen.getByText(mockedLessonDataOriginal.title)
+    fireEvent.click(lessonItem)
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `lesson-details/${mockedLessonDataOriginal._id}`
+    )
+  })
+
+  it('should navigate to quiz attempts page when resourceType is Quiz', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedQuizDataDuplicate}
+      />
+    )
+
+    const quizItem = screen.getByText(mockedQuizDataDuplicate.title)
+    fireEvent.click(quizItem)
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `quizzes/${mockedQuizDataDuplicate._id}/attempts`
+    )
+  })
+
+  it('should not call navigate if resource is an attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpen}
+        isView
+        resource={mockedAttachmentDataOriginal}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+    fireEvent.click(attachmentItem)
+
+    expect(mockNavigate).not.toHaveBeenCalled()
   })
 })
