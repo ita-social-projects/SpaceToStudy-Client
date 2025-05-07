@@ -22,12 +22,12 @@ import {
 } from '~/containers/course-section/resource-item/ResourceItem.constants'
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
 import {
-    Attachment,
-    CourseResource,
-    ResourceAvailability,
-    ResourceAvailabilityStatusEnum,
-    ResourcesTypesEnum as ResourceType,
-    SizeEnum
+  Attachment,
+  CourseResource,
+  ResourceAvailability,
+  ResourceAvailabilityStatusEnum,
+  ResourcesTypesEnum as ResourceType,
+  SizeEnum
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -203,15 +203,12 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }
 
   const onResourceItemClick = () => {
-    if (
-      !isView ||
-      status !== ResourceAvailabilityStatusEnum.Open
-    ) return
+    if (!isView || status !== ResourceAvailabilityStatusEnum.Open) return
 
     const type = resourceType ?? resource.resourceType
 
     if (isAttachment(resource, type)) {
-        window.open(resource.link, '_blank')
+      window.open(resource.link, '_blank')
     }
 
     if (type === ResourceType.Lesson || type === ResourceType.Quiz) {
