@@ -7,7 +7,7 @@ interface Validations {
   email: (value: string) => string
 }
 
-const validations: Validations = {
+export const validations: Validations = {
   nameField: (value) => {
     if (value.length > 30) {
       return 'common.errorMessages.nameLength'
