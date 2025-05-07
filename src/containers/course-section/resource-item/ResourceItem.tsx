@@ -202,20 +202,29 @@ const ResourceItem: FC<ResourceItemProps> = ({
     )
   }
 
-  const onResourceItemClick = () => {
-    if (!isView || status !== ResourceAvailabilityStatusEnum.Open) return
+  const isNotViewableOrClosed =
+    !isView || status !== ResourceAvailabilityStatusEnum.Open
+  const resolvedResourceType = resourceType ?? resource.resourceType
 
-    const type = resourceType ?? resource.resourceType
+  const onAttachmentNameClick = () => {
+    if (isNotViewableOrClosed) return
 
-    if (isAttachment(resource, type)) {
+    if (isAttachment(resource, resolvedResourceType)) {
       window.open(resource.link, '_blank')
     }
+  }
 
-    if (type === ResourceType.Lesson || type === ResourceType.Quiz) {
+  const onResourceItemClick = () => {
+    if (isNotViewableOrClosed) return
+
+    if (
+      resolvedResourceType === ResourceType.Lesson ||
+      resolvedResourceType === ResourceType.Quiz
+    ) {
       navigate(
-        `${routeMap[type]}${
+        `${routeMap[resolvedResourceType]}${
           resource._id
-        }${type === ResourceType.Quiz ? '/attempts' : ''}`
+        }${resolvedResourceType === ResourceType.Quiz ? '/attempts' : ''}`
       )
     }
   }
@@ -227,6 +236,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
       sx={styles.container(isView)}
     >
       <Box
+        onClick={onAttachmentNameClick}
         sx={{
           ...styles.titleWithDescriptionWrapper,
           opacity: status !== ResourceAvailabilityStatusEnum.Open ? '60%' : ''
