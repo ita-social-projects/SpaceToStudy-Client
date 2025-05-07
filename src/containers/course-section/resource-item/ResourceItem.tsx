@@ -31,7 +31,7 @@ import {
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import ResourceActionContainer from '~/containers/course-section/resource-item/ResourceAction/ResourceAction'
+import ResourceActionContainer from '~/containers/course-section/resource-item/resource-action/ResourceAction'
 
 interface ResourceItemProps {
   resource: CourseResource

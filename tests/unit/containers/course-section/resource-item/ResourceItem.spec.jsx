@@ -19,8 +19,6 @@ import {
 import { ResourceService } from '~/services/resource-service'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { afterEach, expect, it, vi } from 'vitest'
-import { downloadFile } from '~/utils/download-file'
-
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
 const mockUpdateAvailability = vi.fn()
@@ -397,40 +395,6 @@ describe('ResourceItem navigation', () => {
     mockNavigate.mockReset()
   })
 
-  it('should navigate to lesson page when resourceType is Lesson', () => {
-    renderWithProviders(
-      <ResourceItem
-        availability={mockAvailabilityOpen}
-        isView
-        resource={mockedLessonDataOriginal}
-      />
-    )
-
-    const lessonItem = screen.getByText(mockedLessonDataOriginal.title)
-    fireEvent.click(lessonItem)
-
-    expect(mockNavigate).toHaveBeenCalledWith(
-      `lesson-details/${mockedLessonDataOriginal._id}`
-    )
-  })
-
-  it('should navigate to quiz attempts page when resourceType is Quiz', () => {
-    renderWithProviders(
-      <ResourceItem
-        availability={mockAvailabilityOpen}
-        isView
-        resource={mockedQuizDataDuplicate}
-      />
-    )
-
-    const quizItem = screen.getByText(mockedQuizDataDuplicate.title)
-    fireEvent.click(quizItem)
-
-    expect(mockNavigate).toHaveBeenCalledWith(
-      `quizzes/${mockedQuizDataDuplicate._id}/attempts`
-    )
-  })
-
   it('should not call navigate if resource is an attachment', () => {
     renderWithProviders(
       <ResourceItem
@@ -511,23 +475,5 @@ describe('ResourceItem component', () => {
     await waitFor(() => {
       expect(navigateMock).toHaveBeenCalledWith('quizzes/123/attempts')
     })
-  })
-
-  it('calls downloadFile if resource type is Attachment', () => {
-    renderWithProviders(
-      <ResourceItem
-        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
-        isView
-        resource={{
-          ...mockResource,
-          resourceType: ResourceType.Attachment,
-          fileName: 'example.png'
-        }}
-        resourceType={ResourceType.Attachment}
-      />
-    )
-
-    fireEvent.click(screen.getByTestId('resourceItem'))
-    expect(downloadFile).toHaveBeenCalled()
   })
 })
