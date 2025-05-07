@@ -8,16 +8,14 @@ interface ResourceActionProps {
   resource: CourseResource
   isView: boolean
   isStudent: boolean
-  handleDownloadAttachment: () => Promise<void>
-  status: string
-  availabilityStatus: JSX.Element
-  actionButtons: JSX.Element
+  status?: string
+  availabilityStatus?: JSX.Element
+  actionButtons?: JSX.Element
 }
 const ResourceActionContainer: FC<ResourceActionProps> = ({
   resource,
   isView,
   isStudent,
-  handleDownloadAttachment,
   status,
   availabilityStatus,
   actionButtons
@@ -29,7 +27,7 @@ const ResourceActionContainer: FC<ResourceActionProps> = ({
     return (
       <Box sx={styles.resourceActions}>
         {isAttachmentAndViewable ? (
-          <DownloadButton onDownload={handleDownloadAttachment} />
+          <DownloadButton resource={resource} />
         ) : (
           status && availabilityStatus
         )}

@@ -15,20 +15,21 @@ import Accordions from '~/components/accordion/Accordions'
 import useAccordion from '~/hooks/use-accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import Button from '~scss-components/button/Button'
-import { useAppSelector } from '~/hooks/use-redux'
-import { useModalContext } from '~/context/modal-context'
-import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import { cooperationService } from '~/services/cooperation-service'
 import useMutation from '~/hooks/use-mutation'
-
-import { errorRoutes } from '~/router/constants/errorRoutes'
-import { authRoutes } from '~/router/constants/authRoutes'
-import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
 import {
   CompletionStatusEnum,
+  ResourcesTypesEnum as ResourceType,
   TypographyVariantEnum,
   UserRoleEnum
 } from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
+import { useModalContext } from '~/context/modal-context'
+import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
+import ResourceActionContainer from '~/containers/course-section/resource-item/ResourceAction/ResourceAction'
+import { errorRoutes } from '~/router/constants/errorRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
 import { getFullUrl } from '~/utils/get-full-url'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
@@ -151,6 +152,13 @@ const LessonDetails: React.FC = () => {
         size={attachment.size}
         title={attachment.fileName}
       />
+      {attachment.resourceType === ResourceType.Attachment && (
+        <ResourceActionContainer
+          isStudent={isStudent}
+          isView
+          resource={attachment}
+        />
+      )}
     </Box>
   ))
 
@@ -170,7 +178,7 @@ const LessonDetails: React.FC = () => {
       ? [
           {
             title: 'lesson.attachments',
-            content: <Box sx={styles.attachmentList}>{attachmentsList}</Box>
+            content: <Box sx={styles.attachmentList}>{attachmentsList} </Box>
           }
         ]
       : [])

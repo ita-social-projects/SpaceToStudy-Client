@@ -21,19 +21,16 @@ import {
   selectionFields
 } from '~/containers/course-section/resource-item/ResourceItem.constants'
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
-import { ResourceService } from '~/services/resource-service'
 import {
-  Attachment,
-  CourseResource,
-  ResourceAvailability,
-  ResourceAvailabilityStatusEnum,
-  ResourcesTypesEnum as ResourceType,
-  SizeEnum
+    Attachment,
+    CourseResource,
+    ResourceAvailability,
+    ResourceAvailabilityStatusEnum,
+    ResourcesTypesEnum as ResourceType,
+    SizeEnum
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { downloadFile } from '~/utils/download-file'
-// import DownloadButton from '~/components/download-button/DownloadButton'
 import ResourceActionContainer from '~/containers/course-section/resource-item/ResourceAction/ResourceAction'
 
 interface ResourceItemProps {
@@ -194,15 +191,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
       </IconButton>
     </Box>
   )
-  const handleDownloadAttachment = useCallback(async () => {
-    if (resource.resourceType !== ResourceType.Attachment) return
-
-    const fileName = (resource as Attachment).fileName
-    await downloadFile(
-      ResourceService.downloadAttachment(resource._id),
-      fileName
-    )
-  }, [resource])
 
   const isAttachment = (
     resource: CourseResource,
@@ -217,10 +205,9 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const onResourceItemClick = () => {
     if (
       !isView ||
-      status !== ResourceAvailabilityStatusEnum.Open ||
-      resource.resourceType === ResourceType.Attachment
-    )
-      return
+      status !== ResourceAvailabilityStatusEnum.Open
+    ) return
+
     const type = resourceType ?? resource.resourceType
 
     if (isAttachment(resource, type)) {
@@ -258,7 +245,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
       <ResourceActionContainer
         actionButtons={actionButtons}
         availabilityStatus={availabilityStatus}
-        handleDownloadAttachment={handleDownloadAttachment}
         isStudent={isStudent ?? false}
         isView={isView}
         resource={resource}
