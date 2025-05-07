@@ -100,7 +100,9 @@
     "successDuplication": "Question was successfully duplicated",
     "successEditedQuestion": "Question was successfully edited",
     "successAddedQuestion": "Question was successfully added",
-    "searchInput": "Search a question"
+    "searchInput": "Search a question",
+    "reviewMessage": "The tutor will review your answer soon",
+    "teacherMessage": "It's your time to shine, decide whether this answer is correct"
   },
   "categories": {
     "category": "Category",

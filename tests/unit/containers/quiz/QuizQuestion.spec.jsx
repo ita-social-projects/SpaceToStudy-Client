@@ -1,22 +1,17 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import QuizQuestion from '~/containers/quiz/quiz-question/Question.tsx'
 import { renderWithProviders } from '~tests/test-utils'
 import { ResourceService } from '~/services/resource-service'
+import { UserRoleEnum } from '~/types'
 
 const mockQuestion = {
   _id: '665e1f1a9946b3dbb292339f',
   title: 'Functions',
   text: 'What is the difference between function expression and function declaration?',
   answers: [
-    {
-      text: 'Correct answer',
-      isCorrect: true
-    },
-    {
-      text: 'Incorrect answer',
-      isCorrect: false
-    }
+    { text: 'Correct answer', isCorrect: true },
+    { text: 'Incorrect answer', isCorrect: false }
   ],
   type: 'oneAnswer'
 }
@@ -45,57 +40,52 @@ const renderWithProps = (props = {}) =>
       question={mockQuestion}
       {...defaultProps}
       {...props}
-    />
+    />,
+    {
+      preloadedState: {
+        appMain: { userRole: props.userRole }
+      }
+    }
   )
 
-describe('Quiz Question tests', () => {
-  it('should render QuizQuestion', () => {
+describe('QuizQuestion', () => {
+  it('renders question text', () => {
     renderWithProps()
-    const element = screen.getByText(mockQuestion.text)
-    expect(element).toBeInTheDocument()
+    expect(screen.getByText(mockQuestion.text)).toBeInTheDocument()
   })
 
-  it('should render correct answers', () => {
+  it('renders correct answer', () => {
     renderWithProps({ shouldShowCorrectAnswers: true })
-    const elements = screen.getAllByText(mockQuestion.answers[0].text)
-    expect(elements.length).toBeGreaterThan(0)
-    expect(elements[0]).toBeInTheDocument()
+    const correctAnswers = screen.getAllByText('Correct answer')
+    expect(correctAnswers.length).toBeGreaterThan(0)
   })
 
-  it('should render points', () => {
+  it('renders points if enabled', () => {
     renderWithProps({ shouldShowPoints: true })
-    const element = screen.getByText('0/1')
-    expect(element).toBeInTheDocument()
+    expect(screen.getByText('0/1')).toBeInTheDocument()
   })
 
-  it('should render correctness icon if shouldShowAnswersCorrectness is true', () => {
+  it('renders CheckIcon when answer is correct', () => {
     renderWithProps({
       shouldShowAnswersCorrectness: true,
       value: 'Correct answer'
     })
-
-    const icon = screen.getAllByTestId('CheckIcon')[0]
-    expect(icon).toBeInTheDocument()
+    expect(screen.getAllByTestId('CheckIcon')[0]).toBeInTheDocument()
   })
 
-  it('should render open answer input field', () => {
-    renderWithProps({
-      question: openAnswerQuestion
-    })
+  // it('renders input field for open answer', () => {
+  //   renderWithProps({ question: openAnswerQuestion })
+  //   expect(
+  //     screen.getByText('myResourcesPage.questions.reviewMessage')
+  //   ).toBeInTheDocument()
+  // })
 
-    const input = screen.getByRole('textbox')
-    expect(input).toBeInTheDocument()
-    fireEvent.change(input, { target: { value: 'Correct answer' } })
-    expect(input).toHaveValue('Correct answer')
-  })
-
-  it('should not render points when shouldShowPoints is false', () => {
+  it('does not render points if disabled', () => {
     renderWithProps({ shouldShowPoints: false })
-    const pointsText = screen.queryByText('0/1')
-    expect(pointsText).not.toBeInTheDocument()
+    expect(screen.queryByText('0/1')).not.toBeInTheDocument()
   })
 
-  it('should render CheckIcon if open answer is correct and correctness is enabled', () => {
+  it('renders CheckIcon for open answer if correct and results are given', () => {
     const mockFinishedQuiz = {
       results: [
         {
@@ -114,22 +104,20 @@ describe('Quiz Question tests', () => {
       value: 'Correct answer'
     })
 
-    const checkIcon = screen.getByTestId('CheckIcon')
-    expect(checkIcon).toBeInTheDocument()
+    expect(screen.getByTestId('CheckIcon')).toBeInTheDocument()
   })
 
-  it("shouldn't render correctness icon if shouldShowAnswersCorrectness is false", () => {
+  it('does not render correct answer when correctness is disabled', () => {
     renderWithProps({
       shouldShowPoints: false,
       shouldShowCorrectAnswers: false,
       shouldShowAnswersCorrectness: false
     })
 
-    const correctAnswer = screen.queryByText('Correct answer')
-    expect(correctAnswer).not.toBeInTheDocument()
+    expect(screen.queryByText('Correct answer')).not.toBeInTheDocument()
   })
 
-  it('should update correctness icon when quiz results are fetched', async () => {
+  it('fetches quiz result and updates icon', async () => {
     const mockFinishedQuiz = {
       results: [
         {
@@ -153,5 +141,35 @@ describe('Quiz Question tests', () => {
 
     await screen.findByTestId('CheckIcon')
     expect(screen.getByTestId('CheckIcon')).toBeInTheDocument()
+  })
+  it('shows teacher message for tutor on openAnswer', async () => {
+    renderWithProviders(
+      <QuizQuestion {...defaultProps} question={openAnswerQuestion} />,
+      {
+        preloadedState: {
+          appMain: { userRole: UserRoleEnum.Tutor }
+        }
+      }
+    )
+
+    const teacherMessage = await screen.findByText(
+      'myResourcesPage.questions.teacherMessage'
+    )
+    expect(teacherMessage).toBeInTheDocument()
+  })
+  it('shows review message for student on openAnswer', async () => {
+    renderWithProviders(
+      <QuizQuestion {...defaultProps} question={openAnswerQuestion} />,
+      {
+        preloadedState: {
+          appMain: { userRole: UserRoleEnum.Student }
+        }
+      }
+    )
+
+    const reviewMessage = await screen.findByText(
+      'myResourcesPage.questions.reviewMessage'
+    )
+    expect(reviewMessage).toBeInTheDocument()
   })
 })

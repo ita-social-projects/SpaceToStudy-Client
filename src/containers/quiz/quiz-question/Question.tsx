@@ -121,7 +121,19 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
       <Typography sx={styles.correctAnswers.title}>
         {t('myResourcesPage.quizzes.correctAnswers')}
       </Typography>
-      <Box sx={styles.correctAnswers.list}>{correctAnswersList}</Box>
+      <Box sx={styles.correctAnswers.list}>
+        {isOpenAnswer ? (
+          <Typography sx={{ color: 'text.secondary' }}>
+            {t(
+              userRole === UserRoleEnum.Student
+                ? 'myResourcesPage.questions.reviewMessage'
+                : 'myResourcesPage.questions.teacherMessage'
+            )}
+          </Typography>
+        ) : (
+          correctAnswersList
+        )}
+      </Box>
     </Box>
   )
 
