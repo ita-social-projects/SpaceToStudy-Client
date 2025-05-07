@@ -219,19 +219,16 @@ describe('commonValidation', () => {
 
 describe('Validations Object - Direct Access', () => {
   describe('validations.nameField', () => {
-    // Line 24: Name too long returns nameLength error.
     it('should return nameLength error for a too long name', () => {
       const result = validations.nameField(mockedValues.tooLongName)
       expect(result).toBe(errorMessages.nameLength)
     })
 
-    // Line 30: Name with invalid characters (e.g. digits) returns nameCharacters error.
     it('should return nameCharacters error for a name with invalid characters', () => {
       const result = validations.nameField(mockedValues.nameWithNumbers)
       expect(result).toBe(errorMessages.nameCharacters)
     })
 
-    // Line 33: Valid name returns empty string.
     it('should return empty string for a valid name', () => {
       const result = validations.nameField(
         mockedValues.firstNameWithApostropheEn
@@ -241,13 +238,11 @@ describe('Validations Object - Direct Access', () => {
   })
 
   describe('validations.numberField', () => {
-    // Line 36: Non-numeric input.
     it('should return numbersOnly error for invalid number input', () => {
       const result = validations.numberField(mockedValues.invalidNumber)
       expect(result).toBe(errorMessages.numbersOnly)
     })
 
-    // Line 42: Negative number.
     it('should return positiveNumbersOnly error for a negative number', () => {
       const result = validations.numberField(mockedValues.negativeNumber)
       expect(result).toBe(errorMessages.positiveNumbersOnly)
@@ -260,13 +255,11 @@ describe('Validations Object - Direct Access', () => {
   })
 
   describe('validations.password', () => {
-    // Line 60: Password fails complexity test.
     it('should return passwordComplex error if password fails complexity test', () => {
       const result = validations.password(mockedValues.shortPassword)
       expect(result).toBe(errorMessages.passwordLength)
     })
 
-    // Line 63: Password contains an invalid symbol.
     it('should return passwordValidSymbols error if password contains an invalid symbol', () => {
       const result = validations.password(
         mockedValues.passwordWithInvalidSymbol
@@ -274,19 +267,16 @@ describe('Validations Object - Direct Access', () => {
       expect(result).toBe(errorMessages.passwordValidSymbols)
     })
 
-    // Test for password length error: too short.
     it('should return passwordLength error if password is too short', () => {
       const result = validations.password(mockedValues.shortPassword)
       expect(result).toBe(errorMessages.passwordLength)
     })
 
-    // Test for password length error: too long.
     it('should return passwordLength error if password is too long', () => {
       const result = validations.password(mockedValues.longPassword)
       expect(result).toBe(errorMessages.passwordLength)
     })
 
-    // Valid password returns empty string.
     it('should return empty string for a valid password', () => {
       const result = validations.password(mockedValues.validPassword)
       expect(result).toBe('')
@@ -306,23 +296,20 @@ describe('Validations Object - Direct Access', () => {
   })
 
   describe('textField validation', () => {
-    const textValidator = textField(5, 10) // min: 5, max: 10
+    const textValidator = textField(5, 10)
 
-    // Line 80: Text too short returns shortText error (if non-empty).
     it('should return shortText error when text is too short', () => {
       const result = textValidator(mockedValues.shortText)
       expect(result).toBe(errorMessages.shortText)
     })
 
-    // Line 82: Text too long returns longText error.
     it('should return longText error when text is too long', () => {
       const result = textValidator(mockedValues.longText)
       expect(result).toBe(errorMessages.longText)
     })
 
-    // Line 83: Valid text returns undefined.
     it('should return undefined when text length is within valid range', () => {
-      const validText = 'abcdef' // length 6 is valid
+      const validText = 'abcdef'
       const result = textValidator(validText)
       expect(result).toBeUndefined()
     })
