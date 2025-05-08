@@ -38,7 +38,7 @@ const DownloadButton: FC<DownLoadButtonProps> = ({ resource }) => {
     <Button
       onClick={(e) => {
         e.stopPropagation()
-        void handleDownloadAttachment()
+        handleDownloadAttachment().catch(console.error)
       }}
       sx={styles.downloadIcon(loading)}
     >

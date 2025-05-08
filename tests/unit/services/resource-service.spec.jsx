@@ -331,6 +331,18 @@ describe('resourseService tests', () => {
       URLs.resources.attachments.delete.replace(':id', attachmentId)
     )
   })
+  it('should download an attachment', async () => {
+    const blobData = new Blob(['test content'], { type: 'application/pdf' })
+    const blobId = 'test-id'
+
+    mockAxiosClient
+      .onGet(URLs.resources.attachments.download.replace(':id', blobId))
+      .reply(200, blobData)
+
+    const result = await ResourceService.downloadAttachment(blobId)
+
+    expect(result instanceof Blob).toBe(true)
+  })
 
   it('should delete a question', async () => {
     const questionId = '6255bc080a75adf9223df444'

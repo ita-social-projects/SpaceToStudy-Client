@@ -25,7 +25,7 @@ import {
 import { useAppSelector } from '~/hooks/use-redux'
 import { useModalContext } from '~/context/modal-context'
 import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
-import ResourceActionContainer from '~/containers/course-section/resource-item/resource-action/ResourceAction'
+import ResourceAction from '~/containers/course-section/resource-item/resource-action/ResourceAction'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
@@ -152,11 +152,7 @@ const LessonDetails: React.FC = () => {
         title={attachment.fileName}
       />
       {attachment.resourceType === ResourceType.Attachment && (
-        <ResourceActionContainer
-          isStudent={isStudent}
-          isView
-          resource={attachment}
-        />
+        <ResourceAction isStudent={isStudent} isView resource={attachment} />
       )}
     </Box>
   ))

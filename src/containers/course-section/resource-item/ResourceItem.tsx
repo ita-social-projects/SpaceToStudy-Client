@@ -31,7 +31,7 @@ import {
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import ResourceActionContainer from '~/containers/course-section/resource-item/resource-action/ResourceAction'
+import ResourceAction from '~/containers/course-section/resource-item/resource-action/ResourceAction'
 
 interface ResourceItemProps {
   resource: CourseResource
@@ -207,7 +207,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const resolvedResourceType = resourceType ?? resource.resourceType
 
   const onAttachmentNameClick = () => {
-    if (isNotViewableOrClosed) return
+    if (isNotViewableOrClosed || !isStudent) return
 
     if (isAttachment(resource, resolvedResourceType)) {
       window.open(resource.link, '_blank')
@@ -249,7 +249,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
           title={resource.resourceType}
         />
       </Box>
-      <ResourceActionContainer
+      <ResourceAction
         actionButtons={actionButtons}
         availabilityStatus={availabilityStatus}
         isStudent={isStudent ?? false}

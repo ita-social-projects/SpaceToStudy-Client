@@ -207,7 +207,10 @@ export const ResourceService = {
   downloadAttachment: (id: string) => {
     return baseService.request<Blob>({
       method: 'GET',
-      url: createUrlPath(URLs.resources.attachments.download, id),
+      url: getFullUrl({
+        pathname: URLs.resources.attachments.download,
+        parameters: { id }
+      }),
       responseType: 'blob'
     })
   },

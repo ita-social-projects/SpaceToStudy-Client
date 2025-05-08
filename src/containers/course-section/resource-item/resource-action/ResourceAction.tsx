@@ -6,13 +6,13 @@ import DownloadButton from '~/components/download-button/DownloadButton'
 
 interface ResourceActionProps {
   resource: CourseResource
-  isView: boolean
+  isView?: boolean
   isStudent: boolean
   status?: string
   availabilityStatus?: JSX.Element
   actionButtons?: JSX.Element
 }
-const ResourceActionContainer: FC<ResourceActionProps> = ({
+const ResourceAction: FC<ResourceActionProps> = ({
   resource,
   isView,
   isStudent,
@@ -42,4 +42,4 @@ const ResourceActionContainer: FC<ResourceActionProps> = ({
   )
 }
 
-export default ResourceActionContainer
+export default ResourceAction
