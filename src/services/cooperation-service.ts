@@ -13,8 +13,6 @@ import type {
 } from '~/types'
 import { getFullUrl } from '~/utils/get-full-url'
 import { baseService } from '~/services/base-service'
-import { AxiosResponse } from 'axios'
-import { axiosClient } from '~/plugins/axiosClient'
 
 export const cooperationService = {
   getCooperations: async (params: GetCooperationsParams) => {

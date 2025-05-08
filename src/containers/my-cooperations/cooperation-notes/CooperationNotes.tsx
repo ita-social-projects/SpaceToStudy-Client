@@ -11,7 +11,6 @@ import { CooperationNotesService } from '~/services/cooperation-service'
 import CreateOrEditNote from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote'
 import NoteView from '~/containers/my-cooperations/cooperation-notes/note-view/NoteView'
 import Loader from '~/components/loader/Loader'
-import { noteNotFoundError } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.constants'
 
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.styles'
