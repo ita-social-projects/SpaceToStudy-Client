@@ -72,7 +72,7 @@ const CooperationNotes: React.FC = () => {
 
   const createNote = useCallback(
     (data: CreateOrUpdateNoteParams) => {
-      return CooperationNotesService.createNote(data, cooperationId)
+      return CooperationNotesService.createNote(cooperationId, data)
     },
     [cooperationId]
   )
@@ -130,13 +130,13 @@ const CooperationNotes: React.FC = () => {
 
   const duplicateNote = useCallback(
     (noteId: string) => {
-      const note = notes?.find((item) => item._id === noteId)
+      const note = notes?.data.find((item) => item._id === noteId)
 
       if (!note) {
         throw new Error('Note with specified ID was not found')
       }
 
-      return CooperationNotesService.createNote(note, cooperationId)
+      return CooperationNotesService.createNote(cooperationId, note)
     },
     [cooperationId, notes]
   )
@@ -157,7 +157,7 @@ const CooperationNotes: React.FC = () => {
   const onCloseNote = () => setOpen(false)
   const onAddNoteOpen = () => setOpen(true)
 
-  const notesList = notes?.map((item: NoteResponse) =>
+  const notesList = notes?.data.map((item: NoteResponse) =>
     editableItemId === item._id ? (
       <CreateOrEditNote
         key={item._id}
