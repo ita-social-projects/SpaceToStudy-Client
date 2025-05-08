@@ -106,11 +106,13 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
       ? {}
       : { backgroundColor: isAnswerCorrect ? 'success.50' : 'error.50' }
 
-  const formattedValue = Array.isArray(value)
-    ? value.map((v) => v.toLowerCase())
-    : typeof value === 'string'
-      ? [value.toLowerCase()]
-      : []
+  let formattedValue: string[] = []
+
+  if (Array.isArray(value)) {
+    formattedValue = value.map((v) => v.toLowerCase())
+  } else if (typeof value === 'string') {
+    formattedValue = [value.toLowerCase()]
+  }
 
   const answersList = question.answers.map((answer) => {
     const isChecked = formattedValue.includes(answer.text.toLowerCase())
@@ -144,23 +146,31 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     )
   })
 
-  const answersBlock = isOpenAnswer ? (
-    <Answer
-      isCorrect={isAnswerCorrect}
-      isEditable={isEditable}
-      label={question.text}
-      onTextInputChange={handleInputChange}
-      shouldShowCorrectness={shouldShowAnswersCorrectness}
-      sx={answerSx}
-      text={question.text}
-      type={question.type}
-      value={typeof value === 'string' ? value : ''}
-    />
-  ) : isMultipleChoice ? (
-    <FormGroup sx={styles.answersContainer}>{answersList}</FormGroup>
-  ) : (
-    <RadioGroup sx={styles.answersContainer}>{answersList}</RadioGroup>
-  )
+  let answersBlock
+
+  if (isOpenAnswer) {
+    answersBlock = (
+      <Answer
+        isCorrect={isAnswerCorrect}
+        isEditable={isEditable}
+        label={question.text}
+        onTextInputChange={handleInputChange}
+        shouldShowCorrectness={shouldShowAnswersCorrectness}
+        sx={answerSx}
+        text={question.text}
+        type={question.type}
+        value={typeof value === 'string' ? value : ''}
+      />
+    )
+  } else if (isMultipleChoice) {
+    answersBlock = (
+      <FormGroup sx={styles.answersContainer}>{answersList}</FormGroup>
+    )
+  } else {
+    answersBlock = (
+      <RadioGroup sx={styles.answersContainer}>{answersList}</RadioGroup>
+    )
+  }
 
   const answersBlockForTutors = isOpenAnswer ? (
     <Box sx={styles.tutorOpenAnswerContainer}>
@@ -222,14 +232,16 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     </Box>
   )
 
-  const correctnessIcon =
-    shouldShowAnswersCorrectness && isAnswerCorrect !== undefined ? (
-      isAnswerCorrect ? (
-        <CheckIcon sx={styles.icon(AnswerStatusEnum.Correct)} />
-      ) : (
+  let correctnessIcon = null
+  if (shouldShowAnswersCorrectness && isAnswerCorrect !== undefined) {
+    if (isAnswerCorrect) {
+      correctnessIcon = <CheckIcon sx={styles.icon(AnswerStatusEnum.Correct)} />
+    } else {
+      correctnessIcon = (
         <CloseIcon sx={styles.icon(AnswerStatusEnum.Incorrect)} />
       )
-    ) : null
+    }
+  }
 
   const pointsBlock =
     shouldShowPoints && isAnswerCorrect !== undefined ? (
