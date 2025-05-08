@@ -268,6 +268,7 @@ describe('ResourceItem tests when resourceType attachment', () => {
     renderWithProviders(
       <ResourceItem
         availability={mockAvailabilityOpen}
+        isStudent
         isView
         resource={mockedAttachmentDataOriginal}
       />
@@ -286,6 +287,7 @@ describe('ResourceItem tests when resourceType attachment', () => {
     renderWithProviders(
       <ResourceItem
         availability={mockAvailabilityOpen}
+        isStudent
         isView
         resource={mockedAttachmentDataDuplicate}
       />
@@ -298,6 +300,22 @@ describe('ResourceItem tests when resourceType attachment', () => {
       '1723236050559-Exploring Systems of Linear Equations.png',
       '_blank'
     )
+  })
+
+  it('should not download attachment when its not a student', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpenFrom}
+        isStudent={false}
+        isView
+        resource={mockedAttachmentDataDuplicate}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalledWith()
   })
 
   it('should not download attachment when its availability is set to open from', () => {
