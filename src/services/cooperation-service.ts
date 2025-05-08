@@ -95,7 +95,7 @@ export const CooperationNotesService = {
         parameters: { id: cooperationId }
       }),
       data
-  })
+    })
   },
   updateNote: (
     cooperationId: string,
@@ -109,7 +109,7 @@ export const CooperationNotesService = {
         parameters: { id: cooperationId, noteId }
       }),
       data
-  })
+    })
   },
   deleteNote: (cooperationId: string, noteId: string) => {
     return baseService.request<void>({
@@ -118,6 +118,6 @@ export const CooperationNotesService = {
         pathname: URLs.notes.delete,
         parameters: { id: cooperationId, noteId }
       })
-  })
+    })
   }
 }
