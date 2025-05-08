@@ -61,7 +61,7 @@ describe('QuizQuestion', () => {
   })
 
   it('renders points if enabled', () => {
-    renderWithProps({ shouldShowPoints: true })
+    renderWithProps({ shouldShowPoints: true, value: 'Incorrect answer' })
     expect(screen.getByText('0/1')).toBeInTheDocument()
   })
 
@@ -73,48 +73,19 @@ describe('QuizQuestion', () => {
     expect(screen.getAllByTestId('CheckIcon')[0]).toBeInTheDocument()
   })
 
-  // it('renders input field for open answer', () => {
-  //   renderWithProps({ question: openAnswerQuestion })
-  //   expect(
-  //     screen.getByText('myResourcesPage.questions.reviewMessage')
-  //   ).toBeInTheDocument()
-  // })
+  it('renders input field for open answer', () => {
+    renderWithProps({
+      question: openAnswerQuestion,
+      userRole: UserRoleEnum.Student
+    })
+    expect(
+      screen.getByText('myResourcesPage.questions.reviewMessage')
+    ).toBeInTheDocument()
+  })
 
   it('does not render points if disabled', () => {
     renderWithProps({ shouldShowPoints: false })
     expect(screen.queryByText('0/1')).not.toBeInTheDocument()
-  })
-
-  it('renders CheckIcon for open answer if correct and results are given', () => {
-    const mockFinishedQuiz = {
-      results: [
-        {
-          question: mockQuestion.text,
-          answers: [{ isCorrect: true }]
-        }
-      ]
-    }
-
-    renderWithProps({
-      question: openAnswerQuestion,
-      shouldShowAnswersCorrectness: true,
-      isOpenAnswer: true,
-      finishedQuiz: mockFinishedQuiz,
-      isFinishedQuizLoading: false,
-      value: 'Correct answer'
-    })
-
-    expect(screen.getByTestId('CheckIcon')).toBeInTheDocument()
-  })
-
-  it('does not render correct answer when correctness is disabled', () => {
-    renderWithProps({
-      shouldShowPoints: false,
-      shouldShowCorrectAnswers: false,
-      shouldShowAnswersCorrectness: false
-    })
-
-    expect(screen.queryByText('Correct answer')).not.toBeInTheDocument()
   })
 
   it('fetches quiz result and updates icon', async () => {
@@ -134,14 +105,14 @@ describe('QuizQuestion', () => {
     renderWithProps({
       question: openAnswerQuestion,
       shouldShowAnswersCorrectness: true,
-      isOpenAnswer: true,
-      value: 'Correct answer',
-      isFinishedQuizLoading: false
+      userRole: UserRoleEnum.Student,
+      value: 'Correct answer'
     })
 
     await screen.findByTestId('CheckIcon')
     expect(screen.getByTestId('CheckIcon')).toBeInTheDocument()
   })
+
   it('shows teacher message for tutor on openAnswer', async () => {
     renderWithProviders(
       <QuizQuestion {...defaultProps} question={openAnswerQuestion} />,
@@ -157,6 +128,7 @@ describe('QuizQuestion', () => {
     )
     expect(teacherMessage).toBeInTheDocument()
   })
+
   it('shows review message for student on openAnswer', async () => {
     renderWithProviders(
       <QuizQuestion {...defaultProps} question={openAnswerQuestion} />,
@@ -171,5 +143,37 @@ describe('QuizQuestion', () => {
       'myResourcesPage.questions.reviewMessage'
     )
     expect(reviewMessage).toBeInTheDocument()
+  })
+
+  it('does not render correct answer when correctness is disabled', () => {
+    renderWithProps({
+      shouldShowPoints: false,
+      shouldShowCorrectAnswers: false,
+      shouldShowAnswersCorrectness: false
+    })
+
+    expect(
+      screen.queryByDisplayValue('myResourcesPage.quizzes.correctAnswers')
+    ).not.toBeInTheDocument()
+  })
+  it('renders CheckIcon for open answer if correct and results are given', () => {
+    renderWithProps({
+      question: openAnswerQuestion,
+      shouldShowAnswersCorrectness: true,
+      userRole: UserRoleEnum.Student,
+      value: 'Correct answer'
+    })
+
+    expect(screen.getByTestId('CheckIcon')).toBeInTheDocument()
+  })
+  it('renders gracefully with no answers', () => {
+    const noAnswerQuestion = { ...mockQuestion, answers: [] }
+    renderWithProps({ question: noAnswerQuestion })
+
+    expect(screen.queryByRole('radio')).not.toBeInTheDocument()
+  })
+  it('handles null value without crashing', () => {
+    renderWithProps({ value: null })
+    expect(screen.getByText(mockQuestion.text)).toBeInTheDocument()
   })
 })

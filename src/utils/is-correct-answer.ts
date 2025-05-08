@@ -8,31 +8,36 @@ export const isCorrectAnswer = (
   const { isMultipleChoice, isSingleChoice, isOpenAnswer } =
     determineQuestionType(question.type)
 
+  const normalize = (str: string) => str.trim().toLowerCase()
+
   const isUnanswered =
     !userAnswer || (Array.isArray(userAnswer) && !userAnswer.length)
   if (isUnanswered) return false
 
   if (isOpenAnswer) {
+    const normalizedUserAnswer = normalize(String(userAnswer))
     return question.answers.some(
-      (answer) => answer.text.trim() === String(userAnswer).trim()
+      (answer) => normalize(answer.text) === normalizedUserAnswer
     )
   }
 
-  if (isSingleChoice) {
+  if (isSingleChoice && typeof userAnswer === 'string') {
     const correctAnswer = question.answers.find((item) => item.isCorrect)
-    return correctAnswer?.text === userAnswer[0]
+    return normalize(correctAnswer?.text || '') === normalize(userAnswer)
   }
 
   if (isMultipleChoice && Array.isArray(userAnswer)) {
-    const correctAnswers = question.answers.filter((item) => item.isCorrect)
+    const correctAnswers = question.answers
+      .filter((item) => item.isCorrect)
+      .map((item) => normalize(item.text))
+
+    const userAnswersNormalized = userAnswer.map(normalize)
 
     return (
-      userAnswer.length === correctAnswers.length &&
-      userAnswer.every(
-        (item) =>
-          question.answers.find((answerItem) => answerItem.text === item)
-            ?.isCorrect
-      )
+      userAnswersNormalized.length === correctAnswers.length &&
+      userAnswersNormalized.every((item) => correctAnswers.includes(item))
     )
   }
+
+  return false
 }
