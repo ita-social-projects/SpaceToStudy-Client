@@ -316,4 +316,30 @@ describe('ChangePasswordModal', () => {
       })
     }
   })
+  it('should display an error message at entering ONLY special characters', async () => {
+    const testData = [
+      '!@#$%^&*()',
+      '********__)))))))))))*&^%$$'
+    ]
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const newPasswordInput = screen.getByLabelText(/newPassword/i)
+    for (const data of testData) {
+      fireEvent.change(currentPasswordInput, {
+        target: { value: data }
+      })
+      fireEvent.blur(currentPasswordInput)
+      fireEvent.change(newPasswordInput, {
+        target: { value: data }
+      })
+      fireEvent.blur(newPasswordInput)
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
+        ).toBeInTheDocument()
+      })
+    }
+  })
 })
