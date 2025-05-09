@@ -17,61 +17,58 @@ import { styles } from '~/containers/my-cooperations/cooperation-card/Cooperatio
 import { useAppSelector } from '~/hooks/use-redux'
 
 interface CooperationCardProps {
-    cooperation: Cooperation
-    onClick?: () => void
-    sx?: SxProps
+  cooperation: Cooperation
+  onClick?: () => void
+  sx?: SxProps
 }
 
 const CooperationCard: FC<CooperationCardProps> = ({
-    cooperation,
-    onClick,
-    sx
+  cooperation,
+  onClick,
+  sx
 }) => {
-    const { t } = useTranslation()
-    const { user, offer, updatedAt, proficiencyLevel, price } = cooperation
+  const { t } = useTranslation()
+  const { user, updatedAt, proficiencyLevel, price, status, needAction } =
+    cooperation
 
-    const { userRole } = useAppSelector((state) => state.appMain)
+  const { userRole } = useAppSelector((state) => state.appMain)
 
-    const roleBasedStatus =
-        cooperation.needAction.role === userRole
-            ? StatusEnum.NeedAction
-            : StatusEnum.RequestToClose
+  const roleBasedStatus =
+    needAction === userRole ? StatusEnum.NeedAction : StatusEnum.RequestToClose
 
-    const cooperationStatus =
-        cooperation.status === StatusEnum.RequestToClose
-            ? roleBasedStatus
-            : cooperation.status
+  const cooperationStatus =
+    status === StatusEnum.RequestToClose ? roleBasedStatus : cooperation.status
 
-    return (
-        <AppCard onClick={onClick} sx={spliceSx(styles.root, sx)}>
-            <Box sx={styles.userInfo}>
-                <UserProfileInfo
-                    _id={cooperation.user._id}
-                    date={updatedAt}
-                    firstName={user.firstName}
-                    lastName={user.lastName}
-                    photo={user.photo}
-                    role={user.role}
-                    sx={styles.userProfileInfo}
-                />
-                <Box sx={styles.priceWithStatus}>
-                    <StatusChip status={cooperationStatus} />
-                    <TitleWithDescription
-                        description={`/ ${t('common.hour')}`}
-                        style={styles.price}
-                        title={`${price} ${t('common.uah')}`}
-                    />
-                </Box>
-            </Box>
-            <SubjectLevelChips
-                color={offer.category.appearance.color}
-                proficiencyLevel={proficiencyLevel}
-                subject={offer.subject.name}
-                sx={styles.chipBox}
-            />
-            <Typography sx={styles.title}>{cooperation.title}</Typography>
-        </AppCard>
-    )
+  return (
+    <AppCard onClick={onClick} sx={spliceSx(styles.root, sx)}>
+      <Box sx={styles.userInfo}>
+        <UserProfileInfo
+          _id={cooperation.user._id}
+          date={updatedAt}
+          firstName={user.firstName}
+          lastName={user.lastName}
+          photo={user.photo}
+          role={user.role}
+          sx={styles.userProfileInfo}
+        />
+        <Box sx={styles.priceWithStatus}>
+          <StatusChip status={cooperationStatus} />
+          <TitleWithDescription
+            description={`/ ${t('common.hour')}`}
+            style={styles.price}
+            title={`${price} ${t('common.uah')}`}
+          />
+        </Box>
+      </Box>
+      <SubjectLevelChips
+        color={cooperation.category.appearance.color}
+        proficiencyLevel={proficiencyLevel}
+        subject={cooperation.subject.name}
+        sx={styles.chipBox}
+      />
+      <Typography sx={styles.title}>{cooperation.title}</Typography>
+    </AppCard>
+  )
 }
 
 export default CooperationCard

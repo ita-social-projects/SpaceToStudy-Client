@@ -5,64 +5,36 @@ import { URLs } from '~/constants/request'
 
 import MyCooperations from '~/pages/my-cooperations/MyCooperations'
 
-const MOCK_RESPONSE = {
-    items: [
-        {
-            _id: 'id',
-            offer: {
-                description:
-                    'Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... ',
-                subject: { _id: 'id', name: 'Quantum Mechanics' }
-            },
-            user: {
-                firstName: 'Kathryn',
-                lastName: 'Murphy',
-                photo:
-                    'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-            },
-            price: 1800,
-            proficiencyLevel: 'Beginner',
-            status: 'pending',
-            needAction: {
-                role: 'student',
-                type: 'price',
-                messages: []
-            }
-        }
-    ],
-    count: 0
-}
-
 describe('MyCooperations', () => {
-    beforeAll(() => {
-        mockAxiosClient
-            .onGet(new RegExp(URLs.cooperations.get))
-            .reply(200, MOCK_RESPONSE)
-    })
+  beforeAll(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.cooperations.get))
+      .reply(200, mockedCooperations)
+  })
 
-    beforeEach(() => {
-        renderWithProviders(<MyCooperations />)
-    })
+  beforeEach(() => {
+    renderWithProviders(<MyCooperations />)
+  })
 
-    it('should render title on page', async () => {
-        const title = screen.getByText('cooperationsPage.title')
+  it('should render title on page', async () => {
+    const title = screen.getByText('cooperationsPage.title')
 
-        expect(title).toBeInTheDocument()
-    })
+    expect(title).toBeInTheDocument()
+  })
 
-    it('should render opposite user name on cooperation card', async () => {
-        const activeTab = screen.queryByText('Kathryn Murphy')
+  it('should render opposite user name on cooperation card', async () => {
+    const activeTab = screen.getByText('Jane Doe')
 
-        expect(activeTab).toBeInTheDocument()
-    })
+    expect(activeTab).toBeInTheDocument()
+  })
 
-    it('should change tab', () => {
-        const activeTab = screen.getByText('cooperationsPage.tabs.active')
+  it('should change tab', () => {
+    const activeTab = screen.getByText('cooperationsPage.tabs.active')
 
-        fireEvent.click(activeTab)
+    fireEvent.click(activeTab)
 
-        const coopCard = screen.queryAllByText('Beginner')
+    const coopCard = screen.queryAllByText('Beginner')
 
-        expect(coopCard.length).toBe(0)
-    })
+    expect(coopCard.length).toBe(0)
+  })
 })

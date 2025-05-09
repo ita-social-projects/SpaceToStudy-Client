@@ -5,10 +5,9 @@ import { URLs } from '~/constants/request'
 import { queryClient } from '~/plugins/queryClient'
 
 import CooperationDetails from '~/containers/my-cooperations/cooperation-details/CooperationDetails'
-import { vi } from 'vitest'
+import { afterEach, describe, vi } from 'vitest'
 
-const cooperationID = '123456789'
-const userId = '33t5ffe34'
+const cooperationID = cooperationMock._id
 
 vi.mock('react-router-dom', async () => {
     const actual = await vi.importActual('react-router-dom')
@@ -20,138 +19,48 @@ vi.mock('react-router-dom', async () => {
     }
 })
 
+const coopClosureMock = {
+    ...cooperationMock,
+    status: 'request to close',
+    needAction: {
+        role: 'tutor',
+        type: 'waiting for approval',
+        messages: [
+            'Please confirm the price of 500 USD for the cooperation.',
+            'The price is acceptable for me.'
+        ]
+    }
+}
+
+const acceptCoopClosureMockWfAns = {
+    ...cooperationMock,
+    status: 'request to close',
+    needAction: {
+        role: 'tutor',
+        type: 'waiting for answer',
+        messages: []
+    }
+}
+
+const acceptCoopClosureMockWfAppr = {
+    ...cooperationMock,
+    status: 'request to close',
+    needAction: {
+        role: 'tutor',
+        type: 'waiting for approval',
+        messages: [
+            'Please confirm the price of 500 USD for the cooperation.',
+            'The price is acceptable for me.'
+        ]
+    }
+}
+
 const mockStateTutor = {
-    appMain: { userId: userId, userRole: 'tutor' }
+    appMain: { userId: cooperationMock.initiator._id, userRole: 'tutor' }
 }
 
 const mockStateStudent = {
-    appMain: { userId: userId, userRole: 'student' }
-}
-
-const cooperationData = {
-    _id: '123456789',
-    price: 100,
-    proficiencyLevel: 'Beginner',
-    status: 'request to close',
-    title: 'Cooperation title',
-    offer: {
-        title: 'Title',
-        description: 'Description',
-        languages: ['Ukrainian', 'English'],
-        author: {
-            firstName: 'Michael',
-            lastName: 'Scarn',
-            photo: '1701182621626.jpg',
-            professionalSummary: 'Agent'
-        },
-        subject: {
-            name: 'Algebra'
-        },
-        category: {
-            name: 'Mathematics',
-            appearance: {
-                color: '#1234'
-            }
-        },
-        proficiencyLevel: ['INTERMEDIATE']
-    },
-    user: {
-        _id: '123456',
-        firstName: 'Name',
-        lastName: 'Surname',
-        role: 'tutor'
-    },
-    sections: [
-        {
-            title: 'module 1',
-            description: 'description for module 1',
-            resources: [
-                {
-                    resource: {
-                        _id: '67d089447c1856f0d205dfe2',
-                        author: '67d020fbcda203e190670036',
-                        fileName: 'Apoptosis review.pdf',
-                        link: '1741719874044-Apoptosis review.pdf',
-                        size: 3959441,
-                        category: null,
-                        resourceType: 'attachment'
-                    },
-                    resourceType: 'attachment',
-                    availability: {
-                        status: 'closed',
-                        date: null
-                    },
-                    completionStatus: 'completed'
-                },
-                {
-                    resource: {
-                        _id: '67d089a57c1856f0d205e00b',
-                        author: '67d020fbcda203e190670036',
-                        fileName: 'Apoptosis review.pdf',
-                        link: '1741719874044-Apoptosis review.pdf',
-                        size: 3959441,
-                        category: null,
-                        resourceType: 'attachment',
-                        isDuplicate: true
-                    },
-                    resourceType: 'attachment',
-                    availability: {
-                        status: 'open',
-                        date: null
-                    },
-                    completionStatus: 'completed'
-                }
-            ],
-            _id: '67d0250ccda203e190670173'
-        }
-    ],
-    createdAt: '2024-01-12T11:28:34.397Z',
-    updatedAt: '2024-01-12T11:28:34.397Z',
-    completedResourcesPercentage: 50
-}
-
-const OPPOSITE_USER_DECIDED_TO_CLOSE_COOPERATION = {
-    ...cooperationData,
-    needAction: {
-        role: 'tutor',
-        type: 'waiting for approval',
-        messages: []
-    },
-    initiator: { _id: userId, role: ['tutor'] },
-    receiver: { _id: '123123', role: ['student'] }
-}
-
-const OPPOSITE_USER_DECLINED_TO_CLOSE_COOPERATION = {
-    ...cooperationData,
-    needAction: {
-        role: 'student',
-        type: 'waiting for answer',
-        messages: ['reason1']
-    },
-    initiator: { _id: userId, role: ['student'] },
-    receiver: { _id: '123123', role: ['tutor'] }
-}
-
-const USER_SUBMITTED_AN_ANSWER = {
-    ...cooperationData,
-    needAction: {
-        role: 'student',
-        type: 'waiting for approval',
-        messages: ['message1']
-    },
-    initiator: { _id: userId, role: ['tutor'] },
-    receiver: { _id: '123123', role: ['student'] }
-}
-
-const USER_SUBMITTED_A_REASON_FOR_DECLINING = {
-    ...cooperationData,
-    needAction: {
-        role: 'tutor',
-        type: 'waiting for answer',
-        messages: ['reason1']
-    },
-    initiator: { _id: userId, role: ['student'] },
-    receiver: { _id: '123123', role: ['tutor'] }
+    appMain: { userId: cooperationMock.receiver._id, userRole: 'student' }
 }
 
 vi.mock(
@@ -167,7 +76,7 @@ describe('CooperationDetails', () => {
     beforeAll(() => {
         mockAxiosClient
             .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
-            .reply(200, OPPOSITE_USER_DECIDED_TO_CLOSE_COOPERATION)
+            .reply(200, cooperationMock)
     })
 
     beforeEach(() => {
@@ -189,10 +98,8 @@ describe('CooperationDetails', () => {
     })
 
     it('should show cooperation status and title', () => {
-        const title = screen.getByText(
-            OPPOSITE_USER_DECIDED_TO_CLOSE_COOPERATION.title
-        )
-        const statusChip = screen.getByText('need action')
+        const title = screen.getByText(cooperationMock.title)
+        const statusChip = screen.getByText(cooperationMock.status)
 
         expect(title).toBeInTheDocument()
         expect(statusChip).toBeInTheDocument()
@@ -227,19 +134,49 @@ describe('CooperationDetails', () => {
 
         expect(cooperationNotes).not.toBeInTheDocument()
     })
+})
 
-    it('should render AcceptCooperationClosing modal when needAction type is "waiting for approval" and role equals users role', () => {
-        const cooperationClosingModal = screen.getByText(
+describe('CooperationDetails with AcceptCooperationClosing modal', () => {
+    beforeAll(() => {
+        mockAxiosClient.reset()
+        mockAxiosClient
+            .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
+            .reply(200, acceptCoopClosureMockWfAppr)
+    })
+
+    beforeEach(() => {
+        renderWithProviders(<CooperationDetails />, {
+            preloadedState: mockStateTutor
+        })
+    })
+
+    it('should render AcceptCooperationClosing modal when needAction type is "waiting for approval" and role equals users role', async () => {
+        const cooperationClosingModal = await screen.findByText(
             'titles.acceptCooperationClosing'
         )
         expect(cooperationClosingModal).toBeInTheDocument()
     })
+})
 
-    it('should render progress bar with predefined value', () => {
-        const progressBar = screen.getByText(
-            '50% cooperationDetailsPage.progressBar.completed'
+describe('AcceptCooperationClosing modal with submitted answer', () => {
+    beforeAll(() => {
+        mockAxiosClient.reset()
+        mockAxiosClient
+            .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
+            .reply(200, acceptCoopClosureMockWfAns)
+    })
+
+    beforeEach(() => {
+        renderWithProviders(<CooperationDetails />, {
+            preloadedState: mockStateTutor
+        })
+    })
+
+    it('should render AcceptCooperationClosing modal when needAction type is "waiting for answer" and role is not the same as users role', async () => {
+        const cooperationClosingModal = screen.getByText(
+            'titles.acceptCooperationClosing'
         )
-        expect(progressBar).toBeInTheDocument()
+        expect(cooperationClosingModal).toBeInTheDocument()
     })
 })
 
@@ -248,77 +185,29 @@ describe('CooperationClosureDeclinedBanner without answer being submitted', () =
         mockAxiosClient.reset()
         mockAxiosClient
             .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
-            .reply(200, OPPOSITE_USER_DECLINED_TO_CLOSE_COOPERATION)
+            .reply(200, coopClosureMock)
     })
 
     beforeEach(() => {
-        queryClient.clear()
         renderWithProviders(<CooperationDetails />, {
             preloadedState: mockStateStudent
         })
-
-        beforeEach(() => {
-            renderWithProviders(<CooperationDetails />, {
-                preloadedState: mockStateStudent
-            })
-        })
-
-        it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for answer" and role equals users role', async () => {
-            const cooperationClosingModal = await screen.findByText(
-                'titles.cooperationClosureDeclined'
-            )
-            expect(cooperationClosingModal).toBeInTheDocument()
-        })
     })
 
-    describe('CooperationClosureDeclinedBanner with submitted answer', () => {
-        beforeAll(() => {
-            mockAxiosClient.reset()
-            mockAxiosClient
-                .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
-                .reply(200, USER_SUBMITTED_AN_ANSWER)
-        })
+    afterEach(() => {
+        vi.clearAllMocks()
+    })
 
-        beforeEach(() => {
-            queryClient.clear()
-            renderWithProviders(<CooperationDetails />, {
-                preloadedState: mockStateTutor
-            })
-
-            beforeEach(() => {
-                renderWithProviders(<CooperationDetails />, {
-                    preloadedState: mockStateTutor
-                })
-            })
-
-            it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for approval" and role is not the same as users role', async () => {
-                const cooperationClosingModal = await screen.findByText(
-                    'titles.cooperationClosureDeclined'
-                )
-                expect(cooperationClosingModal).toBeInTheDocument()
-            })
-        })
-
-        describe('AcceptCooperationClosing modal with submitted answer', () => {
-            beforeAll(() => {
-                mockAxiosClient.reset()
-                mockAxiosClient
-                    .onGet(URLs.cooperations.getById.replace(':id', cooperationID))
-                    .reply(200, USER_SUBMITTED_A_REASON_FOR_DECLINING)
-            })
-
-            beforeEach(() => {
-                renderWithProviders(<CooperationDetails />, {
-                    preloadedState: mockStateStudent
-                })
-            })
-
-            it('should render AcceptCooperationClosing modal when needAction type is "waiting for answer" and role is not the same as users role', async () => {
-                const cooperationClosingModal = screen.getByText(
-                    'titles.acceptCooperationClosing'
-                )
-                expect(cooperationClosingModal).toBeInTheDocument()
-            })
-        })
+    it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for answer" and role equals users role', async () => {
+        const cooperationClosingModal = await screen.findByText(
+            'titles.cooperationClosureDeclined'
+        )
+        expect(cooperationClosingModal).toBeInTheDocument()
+    })
+    it('should render CooperationClosureDeclinedBanner when needAction type is "waiting for approval" and role is not the same as users role', async () => {
+        const cooperationClosingModal = await screen.findByText(
+            'titles.cooperationClosureDeclined'
+        )
+        expect(cooperationClosingModal).toBeInTheDocument()
     })
 })

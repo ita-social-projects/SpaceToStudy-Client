@@ -15,89 +15,100 @@ import { defaultResponses } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 const ActiveStudentsBlock = () => {
-    const { t } = useTranslation()
-    const navigate = useNavigate()
-    const { findOffers, cooperationDetails } = authRoutes
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const { findOffers, cooperationDetails } = authRoutes
 
-    const getMyCooperations = useCallback(
-        () => cooperationService.getCooperations({ limit: 3, status: 'active' }),
-        []
-    )
+  const getMyCooperations = useCallback(
+    () => cooperationService.getCooperations({ limit: 3, status: 'active' }),
+    []
+  )
 
-    const { isLoading, data, error } = useQuery({
-        queryKey: ['cooperations'],
-        queryFn: getMyCooperations,
-        options: {
-            initialData: defaultResponses.itemsWithCount
-        }
-    })
-
-    if (isLoading) {
-        return <Loader pageLoad size={50} />
+  const { isLoading, data, error } = useQuery({
+    queryKey: ['cooperations'],
+    queryFn: getMyCooperations,
+    options: {
+      initialData: defaultResponses.itemsWithCount
     }
+  })
 
-    if (error) {
-        return null
-    }
+  const activeStudents = data?.items.map((cooperation) => (
+    <ActiveStudent
+      cooperationId={cooperation._id}
+      firstName={cooperation.user.firstName}
+      key={cooperation._id}
+      lastName={cooperation.user.lastName}
+      photo={cooperation.user.photo}
+      subjectName={cooperation.subject.name}
+    />
+  ))
 
-    const onShowMoreClick = () => {
-        navigate(cooperationDetails.path)
-    }
+  if (isLoading) {
+    return <Loader pageLoad size={50} />
+  }
 
-    const onAddStudentClick = () => {
-        navigate(findOffers.path)
-    }
+  if (error) {
+    return null
+  }
 
-    if (!data.items.length)
-        return (
-            <>
-                <Typography sx={styles.title}>{t('activeStudents.title')}</Typography>
-                <Box sx={styles.noStudentsWrapper}>
-                    <Typography sx={styles.title}>
-                        {t('activeStudents.noStudentsYet')}
-                    </Typography>
-                    <Box
-                        data-testid='addStudent'
-                        onClick={onAddStudentClick}
-                        sx={styles.showMoreWrapper}
-                    >
-                        <AppIconButton isToggled size='lg' toggleAble>
-                            <Add />
-                        </AppIconButton>
-                        <Typography>{t('activeStudents.addStudent')}</Typography>
-                    </Box>
-                </Box>
-            </>
-        )
+  const onShowMoreClick = () => {
+    navigate(cooperationDetails.path)
+  }
 
-    const activeStudents = data.items.map((cooperation) => (
-        <ActiveStudent
-            cooperationId={cooperation._id}
-            firstName={cooperation.user.firstName}
-            key={cooperation._id}
-            lastName={cooperation.user.lastName}
-            photo={cooperation.user.photo}
-            subjectName={cooperation.offer.subject.name}
-        />
-    ))
+  const onAddStudentClick = () => {
+    navigate(findOffers.path)
+  }
+
+  if (!data.items.length)
     return (
-        <>
-            <Typography sx={styles.title}>{t('activeStudents.title')}</Typography>
-            <Box sx={styles.activeStudentsWrapper}>
-                {activeStudents}
-                <Box
-                    data-testid='showMore'
-                    onClick={onShowMoreClick}
-                    sx={styles.showMoreWrapper}
-                >
-                    <AppIconButton isToggled size='lg' toggleAble>
-                        <MoreHoriz />
-                    </AppIconButton>
-                    <Typography>{t('activeStudents.showMore')}</Typography>
-                </Box>
-            </Box>
-        </>
+      <>
+        <Typography sx={styles.title}>{t('activeStudents.title')}</Typography>
+        <Box sx={styles.noStudentsWrapper}>
+          <Typography sx={styles.title}>
+            {t('activeStudents.noStudentsYet')}
+          </Typography>
+          <Box
+            data-testid='addStudent'
+            onClick={onAddStudentClick}
+            sx={styles.showMoreWrapper}
+          >
+            <AppIconButton isToggled size='lg' toggleAble>
+              <Add />
+            </AppIconButton>
+            <Typography>{t('activeStudents.addStudent')}</Typography>
+          </Box>
+        </Box>
+      </>
     )
+
+  // const activeStudents = data.items.map((cooperation) => (
+  //     <ActiveStudent
+  //         cooperationId={cooperation._id}
+  //         firstName={cooperation.user.firstName}
+  //         key={cooperation._id}
+  //         lastName={cooperation.user.lastName}
+  //         photo={cooperation.user.photo}
+  //         subjectName={cooperation.offer.subject.name}
+  //     />
+  // ))
+  return (
+    <>
+      <Typography sx={styles.title}>{t('activeStudents.title')}</Typography>
+      <Box sx={styles.activeStudentsWrapper}>
+        {activeStudents}
+        <Box
+          data-testid='showMore'
+          onClick={onShowMoreClick}
+          sx={styles.showMoreWrapper}
+        >
+          <AppIconButton isToggled size='lg' toggleAble>
+            <MoreHoriz />
+          </AppIconButton>
+          <Typography>{t('activeStudents.showMore')}</Typography>
+        </Box>
+      </Box>
+    </>
+  )
 }
 
 export default ActiveStudentsBlock

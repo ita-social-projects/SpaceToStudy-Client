@@ -78,14 +78,24 @@ describe('OfferDetails on desktop', () => {
     const {
       description,
       proficiencyLevel,
-      author: { firstName, lastName }
+      title,
+      author: { firstName, lastName, averageRating }
     } = mockOffer
     const descriptionElement = await screen.findByText(description)
     const nameElement = screen.getByText(`${firstName} ${lastName[0]}.`)
-    const proficiency = screen.getByText(proficiencyLevel[2])
 
+    const authorAvgRatingElement = screen.getByText(
+      averageRating.tutor.toString()
+    )
+    const titleElement = screen.getByText(title)
+
+    proficiencyLevel.forEach((level) => {
+      const proficiency = screen.getByText(level)
+      expect(proficiency).toBeInTheDocument()
+    })
+    expect(authorAvgRatingElement).toBeInTheDocument()
+    expect(titleElement).toBeInTheDocument()
     expect(descriptionElement).toBeInTheDocument()
-    expect(proficiency).toBeInTheDocument()
     expect(nameElement).toBeInTheDocument()
   })
 
@@ -243,20 +253,6 @@ describe('OfferDetails on mobile', () => {
     renderWithProviders(<OfferDetails />, {
       preloadedState: mockState
     })
-  })
-
-  it('should display the offer details correctly', async () => {
-    const authorAvgRating = await screen.findByText(
-      mockOffer.author.averageRating.tutor
-    )
-    const title = screen.getByText(mockOffer.title)
-    const name = screen.getByText(
-      `${mockOffer.author.firstName} ${mockOffer.author.lastName}`
-    )
-
-    expect(authorAvgRating).toBeInTheDocument()
-    expect(title).toBeInTheDocument()
-    expect(name).toBeInTheDocument()
   })
 })
 

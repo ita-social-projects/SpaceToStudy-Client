@@ -20,11 +20,11 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { minMaxPrice } from '~/utils/range-filter'
 
 import {
-    ComponentEnum,
-    type Offer,
-    type EnrollOfferForm,
-    ButtonTypeEnum,
-    TypographyVariantEnum
+  ComponentEnum,
+  type Offer,
+  type EnrollOfferForm,
+  ButtonTypeEnum,
+  TypographyVariantEnum
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
@@ -33,164 +33,181 @@ import { Typography } from '@mui/material'
 import { type ResponseError } from '~/exceptions'
 
 interface EnrollOfferProps {
-    offer: Offer
-    enrollOffer: () => Promise<void>
+  offer: Offer
+  enrollOffer: () => Promise<void>
 }
 
 const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
-    const { isLaptopAndAbove } = useBreakpoints()
-    const { closeModal } = useModalContext()
-    const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
-    const dispatch = useAppDispatch()
-    const { t } = useTranslation()
+  const { isLaptopAndAbove } = useBreakpoints()
+  const { closeModal } = useModalContext()
+  const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
+  const dispatch = useAppDispatch()
+  const { t } = useTranslation()
 
-    const [minPrice, maxPrice] = minMaxPrice(offer.price, 0.25)
+  const [minPrice, maxPrice] = minMaxPrice(offer.price, 0.25)
 
-    const handleResponseError = (error: ResponseError) => {
-        dispatch(
-            openAlert({
-                severity: snackbarVariants.error,
-                message: getErrorKey(error)
-            })
-        )
-    }
-    const handleResponse = () => {
-        dispatch(
-            openAlert({
-                severity: snackbarVariants.success,
-                message: 'offerDetailsPage.enrollOffer.successMessage'
-            })
-        )
-        closeModal()
-        void enrollOffer()
-    }
-
-    const { isPending, mutate: createCooperation } = useMutation({
-        mutationFn: cooperationService.createCooperation,
-        queryKey: ['cooperations'],
-        onError: handleResponseError,
-        onSuccess: handleResponse
-    })
-
-    const validateAdditionalInfo = (additionalInfoValue: string | undefined) => {
-        const validate = textField(30, 1000)
-
-        if (!additionalInfoValue) {
-            delete data.additionalInfo
-            return
-        }
-
-        return validate(additionalInfoValue)
-    }
-
-    const validations = {
-        additionalInfo: validateAdditionalInfo
-    }
-
-    const {
-        data,
-        errors,
-        handleInputChange,
-        handleNonInputValueChange,
-        handleSubmit
-    } = useForm<EnrollOfferForm>({
-        initialValues: {
-            proficiencyLevel: offer.proficiencyLevel[0],
-            price: offer.price,
-            additionalInfo: '',
-            title: offer.title
-        },
-        validations: validations,
-        submitWithData: true,
-        onSubmit: (data) => {
-            if (data) {
-                createCooperation({
-                    ...data,
-                    receiver: offer.author._id,
-                    receiverRole: offer.authorRole,
-                    offer: offer._id
-                })
-            }
-        }
-    })
-
-    const levelOptions = offer.proficiencyLevel.map((level) => ({
-        title: level,
-        value: level
-    }))
-
-    const handleFieldChange =
-        <K extends keyof EnrollOfferForm>(key: K) =>
-            (value: EnrollOfferForm[K]) => {
-                handleNonInputValueChange(key, value)
-            }
-
-    const isBookmarked = bookmarkedOffers.includes(offer._id)
-
-    return (
-        <Box sx={styles.root}>
-            {isLaptopAndAbove && (
-                <AppCard sx={styles.offerCard}>
-                    <OfferCardSquare isBookmarked={isBookmarked} offer={offer} />
-                </AppCard>
-            )}
-            <Box
-                component={ComponentEnum.Form}
-                onSubmit={handleSubmit}
-                sx={styles.form}
-            >
-                <TitleWithDescription
-                    description={t('offerDetailsPage.enrollOffer.description')}
-                    style={styles.titleDescription}
-                    title={t('offerDetailsPage.enrollOffer.title')}
-                />
-                <AppSelect
-                    fields={levelOptions}
-                    fullWidth
-                    label={t('offerDetailsPage.enrollOffer.labels.level')}
-                    selectTitle={t('offerDetailsPage.enrollOffer.inputs.level')}
-                    setValue={handleFieldChange('proficiencyLevel')}
-                    sx={styles.select}
-                    value={data.proficiencyLevel}
-                />
-                <SliderWithInput
-                    defaultValue={offer.price}
-                    max={maxPrice}
-                    min={minPrice}
-                    onChange={handleFieldChange('price')}
-                    title={t('offerDetailsPage.enrollOffer.labels.preferredPrice')}
-                />
-                <Box>
-                    <AppTextArea
-                        fullWidth
-                        label={t('offerDetailsPage.enrollOffer.labels.info')}
-                        maxLength={1000}
-                        minLength={30}
-                        onChange={handleInputChange('additionalInfo')}
-                        sx={styles.textArea}
-                        title={t('offerDetailsPage.enrollOffer.inputs.info')}
-                        value={data.additionalInfo}
-                    />
-                    {errors.additionalInfo && (
-                        <Typography
-                            color='error'
-                            sx={styles.errorText}
-                            variant={TypographyVariantEnum.Caption}
-                        >
-                            {t('offerDetailsPage.errors.additionalInfo')}
-                        </Typography>
-                    )}
-                </Box>
-                <Button
-                    loading={isPending}
-                    sx={styles.button}
-                    type={ButtonTypeEnum.Submit}
-                >
-                    {t('button.createCooperation')}
-                </Button>
-            </Box>
-        </Box>
+  const handleResponseError = (error?: ResponseError) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
     )
+  }
+  const handleResponse = () => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'offerDetailsPage.enrollOffer.successMessage'
+      })
+    )
+    closeModal()
+    void enrollOffer()
+  }
+
+  // const postOffer = () => {
+  //     return cooperationService.createCooperation({
+  //         ...data,
+  //         receiver: offer.author._id,
+  //         receiverRole: offer.authorRole,
+  //         offer: offer._id,
+  //         subject: offer.subject._id,
+  //         category: offer.category._id,
+  //         description: offer.description,
+  //         languages: offer.languages
+  //     })
+  // }
+
+  const { isPending, mutate: createCooperation } = useMutation({
+    mutationFn: cooperationService.createCooperation,
+    queryKey: ['cooperations'],
+    onError: handleResponseError,
+    onSuccess: handleResponse
+  })
+
+  const validateAdditionalInfo = (additionalInfoValue: string | undefined) => {
+    const validate = textField(30, 1000)
+
+    if (!additionalInfoValue) {
+      delete data.additionalInfo
+      return
+    }
+
+    return validate(additionalInfoValue)
+  }
+
+  const validations = {
+    additionalInfo: validateAdditionalInfo
+  }
+
+  const {
+    data,
+    errors,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleSubmit
+  } = useForm<EnrollOfferForm>({
+    initialValues: {
+      proficiencyLevel: offer.proficiencyLevel,
+      price: offer.price,
+      additionalInfo: '',
+      title: offer.title
+    },
+    validations: validations,
+    submitWithData: true,
+    onSubmit: (data) => {
+      if (data) {
+        createCooperation({
+          ...data,
+          receiver: offer.author._id,
+          receiverRole: offer.authorRole,
+          offer: offer._id,
+          subject: offer.subject._id,
+          category: offer.category._id,
+          description: offer.description,
+          languages: offer.languages
+        })
+      }
+    }
+  })
+
+  const levelOptions = offer.proficiencyLevel.map((level) => ({
+    title: level,
+    value: [level]
+  }))
+
+  const handleFieldChange =
+    <K extends keyof EnrollOfferForm>(key: K) =>
+    (value: EnrollOfferForm[K]) => {
+      handleNonInputValueChange(key, value)
+    }
+
+  const isBookmarked = bookmarkedOffers.includes(offer._id)
+
+  return (
+    <Box sx={styles.root}>
+      {isLaptopAndAbove && (
+        <AppCard sx={styles.offerCard}>
+          <OfferCardSquare isBookmarked={isBookmarked} offer={offer} />
+        </AppCard>
+      )}
+      <Box
+        component={ComponentEnum.Form}
+        onSubmit={handleSubmit}
+        sx={styles.form}
+      >
+        <TitleWithDescription
+          description={t('offerDetailsPage.enrollOffer.description')}
+          style={styles.titleDescription}
+          title={t('offerDetailsPage.enrollOffer.title')}
+        />
+        <AppSelect
+          fields={levelOptions}
+          fullWidth
+          label={t('offerDetailsPage.enrollOffer.labels.level')}
+          selectTitle={t('offerDetailsPage.enrollOffer.inputs.level')}
+          setValue={handleFieldChange('proficiencyLevel')}
+          sx={styles.select}
+          value={data.proficiencyLevel}
+        />
+        <SliderWithInput
+          defaultValue={offer.price}
+          max={maxPrice}
+          min={minPrice}
+          onChange={handleFieldChange('price')}
+          title={t('offerDetailsPage.enrollOffer.labels.preferredPrice')}
+        />
+        <Box>
+          <AppTextArea
+            fullWidth
+            label={t('offerDetailsPage.enrollOffer.labels.additionalInfo')}
+            maxLength={1000}
+            minLength={30}
+            onChange={handleInputChange('additionalInfo')}
+            sx={styles.textArea}
+            title={t('offerDetailsPage.enrollOffer.inputs.additionalInfo')}
+            value={data.additionalInfo}
+          />
+          {errors.additionalInfo && (
+            <Typography
+              color='error'
+              sx={styles.errorText}
+              variant={TypographyVariantEnum.Caption}
+            >
+              {t('offerDetailsPage.errors.additionalInfo')}
+            </Typography>
+          )}
+        </Box>
+        <Button
+          loading={isPending}
+          sx={styles.button}
+          type={ButtonTypeEnum.Submit}
+        >
+          {t('button.createCooperation')}
+        </Button>
+      </Box>
+    </Box>
+  )
 }
 
 export default EnrollOffer

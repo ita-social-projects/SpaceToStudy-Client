@@ -5,7 +5,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { mockedCooperations as testCooperations } from '~tests/test-constants'
 import ActiveStudentsBlock from '~/components/active-students/ActiveStudentsBlock'
 import useQuery from '~/hooks/use-query'
-import { vi } from 'vitest'
+import { describe, vi } from 'vitest'
 
 vi.mock('~/hooks/use-query')
 
@@ -63,7 +63,7 @@ const mockedData = {
 
 const mockedLoading = {
   isLoading: true,
-  response: null,
+  data: null,
   refetch: vi.fn()
 }
 
@@ -91,12 +91,48 @@ const errorCooperationsMock = {
   refetch: vi.fn()
 }
 
-describe('ActiveStudentsBlock', () => {
-  useQuery.mockImplementation(() => mockedData)
-
-  it('should render active students', () => {
+describe('ActiveStudentsBlock Loader', () => {
+  it('should render Loader when loading', () => {
+    useQuery.mockImplementation(() => mockedLoading)
     renderWithProviders(<ActiveStudentsBlock />)
 
+    expect(screen.getByTestId('loader')).toBeInTheDocument()
+  })
+})
+
+describe('ActiveStudentsBlock with No Cooperations', () => {
+  beforeEach(() => {
+    useQuery.mockImplementation(() => noCooperationsMock)
+    renderWithProviders(<ActiveStudentsBlock />)
+  })
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should render add student button when no active cooperations available', () => {
+    const addStudent = screen.getByTestId('addStudent')
+    expect(addStudent).toBeInTheDocument()
+  })
+
+  it('should navigate to /categories/subjects/find-offers on add student button click', () => {
+    const showMoreButton = screen.getByTestId('addStudent')
+    fireEvent.click(showMoreButton)
+
+    expect(navigateMock).toHaveBeenCalledWith(authRoutes.findOffers.path)
+  })
+})
+
+describe('ActiveStudentsBlock with Mocked Cooperations', () => {
+  beforeEach(() => {
+    useQuery.mockImplementation(() => mockedData)
+    renderWithProviders(<ActiveStudentsBlock />)
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should render active students', () => {
     for (const cooperation of mockedCooperations) {
       const fullName = screen.getByText(
         `${cooperation.user.firstName} ${cooperation.user.lastName}`
@@ -109,8 +145,6 @@ describe('ActiveStudentsBlock', () => {
   })
 
   it('should navigate to /my-cooperations on Show More button click', () => {
-    renderWithProviders(<ActiveStudentsBlock />)
-
     const showMoreButton = screen.getByTestId('showMore')
     fireEvent.click(showMoreButton)
 
@@ -118,35 +152,19 @@ describe('ActiveStudentsBlock', () => {
       authRoutes.cooperationDetails.path
     )
   })
+})
 
-  it('should render Loader when loading', () => {
-    useQuery.mockImplementation(() => mockedLoading)
+describe('ActiveStudentsBlock with No Cooperations Error', () => {
+  beforeEach(() => {
+    useQuery.mockImplementation(() => errorCooperationsMock)
     renderWithProviders(<ActiveStudentsBlock />)
-
-    expect(screen.getByTestId('loader')).toBeInTheDocument()
   })
 
-  it('should render add student button when no active cooperations available', () => {
-    useQuery.mockImplementation(() => noCooperationsMock)
-    renderWithProviders(<ActiveStudentsBlock />)
-    const addStudent = screen.getByTestId('addStudent')
-    expect(addStudent).toBeInTheDocument()
-  })
-
-  it('should navigate to /categories/subjects/find-offers on add student button click', () => {
-    useQuery.mockImplementation(() => noCooperationsMock)
-    renderWithProviders(<ActiveStudentsBlock />)
-
-    const showMoreButton = screen.getByTestId('addStudent')
-    fireEvent.click(showMoreButton)
-
-    expect(navigateMock).toHaveBeenCalledWith(authRoutes.findOffers.path)
+  afterEach(() => {
+    vi.clearAllMocks()
   })
 
   it('should not render on error', () => {
-    useQuery.mockImplementation(() => errorCooperationsMock)
-    renderWithProviders(<ActiveStudentsBlock />)
-
     expect(screen.queryByText('activeStudents.title')).not.toBeInTheDocument()
   })
 })

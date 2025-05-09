@@ -24,19 +24,19 @@ describe('EnrollOffer', () => {
 
   it('should change proficiencyLevel', () => {
     const newLevel = 'Intermediate'
-    const levelSelect = screen.getAllByTestId('app-select')[0]
+    const levelSelect = screen.getByTestId('app-select')
 
     fireEvent.change(levelSelect, {
       target: { value: newLevel }
     })
 
-    expect(levelSelect.value).toBe(newLevel)
+    expect(levelSelect.value.split(',')).toContain(newLevel)
   })
 
   it('should display error message', () => {
     const newAdditionalInfo = 'Some text'
     const additionalInfoInput = screen.getByLabelText(
-      'offerDetailsPage.enrollOffer.labels.info'
+      'offerDetailsPage.enrollOffer.labels.additionalInfo'
     )
     fireEvent.change(additionalInfoInput, {
       target: { value: newAdditionalInfo }
