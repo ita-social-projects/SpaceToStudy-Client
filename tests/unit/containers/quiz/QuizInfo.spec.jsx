@@ -117,8 +117,8 @@ describe('StartViewQuizInfo', () => {
     )
 
     expect(screen.getByText('5')).toBeInTheDocument()
-    expect(screen.queryByText('quiz.attemptLimit:')).not.toBeInTheDocument()
-    expect(screen.queryByText('quiz.timeLimit:')).not.toBeInTheDocument()
+    expect(screen.queryByText('quiz.attemptLimit')).not.toBeInTheDocument()
+    expect(screen.queryByText('quiz.timeLimit')).not.toBeInTheDocument()
     expect(
       screen.queryByText('quiz.reachedAttemptLimit')
     ).not.toBeInTheDocument()
