@@ -317,10 +317,7 @@ describe('ChangePasswordModal', () => {
     }
   })
   it('should display an error message at entering ONLY special characters', async () => {
-    const testData = [
-      '!@#$%^&*()',
-      '********__)))))))))))*&^%$$'
-    ]
+    const testData = ['!@#$%^&*()', '********__)))))))))))*&^%$$']
     const currentPasswordInput = screen.getByLabelText(
       /editProfilePage.profile.passwordSecurityTab.currentPassword/i
     )
