@@ -10,6 +10,7 @@ import LanguagesListWithIcon from '~/components/languages-list-with-icon/Languag
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import { useAppSelector } from '~/hooks/use-redux'
 import { selectIsUserOnline } from '~/redux/selectors/socket-selectors'
+import AppChip from '~/components/app-chip/AppChip'
 
 import {
   createUrlPath,
@@ -38,6 +39,7 @@ interface UserProfileInfoProps
   sx?: UserProfileInfoSx
   role: UserRole
   renderAdditionalInfo?: boolean
+  isDetails?: boolean
 }
 
 const UserProfileInfo: FC<UserProfileInfoProps> = ({
@@ -51,7 +53,8 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   sx = {},
   _id,
   role,
-  renderAdditionalInfo = true
+  renderAdditionalInfo = true,
+  isDetails
 }) => {
   const { t } = useTranslation()
   const isOnline = useAppSelector(selectIsUserOnline(_id))
@@ -107,6 +110,11 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
             {renderAdditionalInfo ? name : t('chatPage.message.you')}
           </Typography>
         </Link>
+        {isDetails && (
+          <AppChip labelSx={styles.roleChipLabel} sx={styles.roleChip}>
+            {t(`offerDetailsPage.${role}`)}
+          </AppChip>
+        )}
         {!isNaN(Number(rating)) && (
           <AppRating
             readOnly

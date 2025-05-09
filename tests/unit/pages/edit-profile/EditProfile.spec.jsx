@@ -1,10 +1,15 @@
+import React from 'react'
 import { screen, waitFor, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import EditProfile from '~/pages/edit-profile/EditProfile'
+import AppTextField from '~/components/app-text-field/AppTextField'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
-import { expect, vi } from 'vitest'
+import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
+import useForm from '~/hooks/use-form'
+import { vi } from 'vitest'
 import { snackbarVariants } from '~/constants'
 import { useAppSelector } from '~/hooks/use-redux'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
@@ -161,6 +166,32 @@ vi.mock(
   })
 )
 
+vi.mock(
+  '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm',
+  () => ({
+    default: ({ data, errors, handleBlur, handleInputChange }) => (
+      <div data-testid='form'>
+        <AppTextField
+          errorMsg={errors.firstName}
+          onBlur={handleBlur('firstName')}
+          onChange={handleInputChange('firstName')}
+          placeholder={'firstName'}
+          required
+          value={data.firstName}
+        />
+        <AppTextField
+          errorMsg={errors.lastName}
+          onBlur={handleBlur('lastName')}
+          onChange={handleInputChange('lastName')}
+          placeholder={'lastName'}
+          required
+          value={data.lastName}
+        />
+      </div>
+    )
+  })
+)
+
 vi.mock('AppTextField', () => ({
   __esModule: true,
   default: ({
@@ -183,6 +214,37 @@ vi.mock('AppTextField', () => ({
     />
   )
 }))
+
+const TestProfileTabFormWrapper = () => {
+  const initialValues = {
+    firstName: 'John',
+    lastName: '',
+    videoLink: ''
+  }
+  const mockOpenAlert = vi.fn()
+
+  const { data, errors, handleInputChange, handleBlur } = useForm({
+    initialValues,
+    validations: {},
+    onSubmit: () =>
+      mockOpenAlert({
+        severity: snackbarVariants.success,
+        message: 'Success! Your data has been updated.'
+      })
+  })
+
+  return (
+    <div>
+      <ProfileTabForm
+        data={data}
+        errors={errors}
+        handleBlur={handleBlur}
+        handleInputChange={handleInputChange}
+        openAlert={mockOpenAlert}
+      />
+    </div>
+  )
+}
 
 describe('EditProfile', () => {
   beforeEach(async () => {
@@ -383,6 +445,67 @@ describe('EditProfile', () => {
     })
   })
 
+  it('should verify that user can save first name and last name with Cyrillic and Latin characters', async () => {
+    const testData = ['Yurii', 'Юрій']
+    let formData = { ...mockData, firstName: 'John', lastName: 'Doe' }
+
+    const mockHandleInputChange = vi.fn((field) => (e) => {
+      formData = { ...formData, [field]: e.target.value }
+    })
+
+    const renderForm = () => {
+      return renderWithProviders(
+        <ProfileTabForm
+          data={formData}
+          errors={mockData.errors}
+          handleBlur={() => {}}
+          handleInputChange={mockHandleInputChange}
+          openAlert={openAlert}
+          t={(key) => key}
+        />
+      )
+    }
+
+    const { rerender } = renderForm()
+    const firstNameInput = screen.getByPlaceholderText('firstName')
+    const lastNameInput = screen.getByPlaceholderText('lastName')
+    const updateButton = screen.getByText('editProfilePage.updateBtn')
+
+    for (const data of testData) {
+      fireEvent.change(firstNameInput, { target: { value: data } })
+      fireEvent.change(lastNameInput, { target: { value: data } })
+
+      expect(formData.firstName).toBe(data)
+      expect(formData.lastName).toBe(data)
+
+      rerender(
+        <ProfileTabForm
+          data={formData}
+          errors={mockData.errors}
+          handleBlur={() => {}}
+          handleInputChange={mockHandleInputChange}
+          openAlert={openAlert}
+          t={(key) => key}
+        />
+      )
+
+      expect(firstNameInput).toHaveValue(data)
+      expect(lastNameInput).toHaveValue(data)
+
+      expect(updateButton).not.toBeDisabled()
+
+      fireEvent.click(updateButton)
+
+      await waitFor(() => {
+        expect(openAlert).toHaveBeenCalledWith({
+          severity: snackbarVariants.success,
+          message: 'editProfilePage.profile.successMessage'
+        })
+      })
+
+      vi.clearAllMocks()
+    }
+  })
   it('should render component with header, description and menu-tabs', async () => {
     const editProfileHeader = await screen.findByText('editProfilePage.title')
     expect(editProfileHeader).toBeInTheDocument()
@@ -465,7 +588,7 @@ describe('EditProfile', () => {
     expect(dataToUpdate).toHaveProperty('videoLink', '')
   })
 
-  it('should replace the existing text in the "First name" field with test data and Update button becomes anable and active', () => {
+  it('should replace the existing text in the "First name" field with test data and Update button becomes enabled and active', () => {
     const testData = ["O'braian", "Мар'яна", 'Анна-Марія', 'Анна Марія']
 
     const mockT = vi.fn((key) => {
@@ -489,7 +612,7 @@ describe('EditProfile', () => {
       />
     )
 
-    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
+    const firstNameInput = screen.getByPlaceholderText('firstName')
     expect(firstNameInput).toBeInTheDocument()
 
     for (const data of testData) {
@@ -500,7 +623,7 @@ describe('EditProfile', () => {
     }
   })
 
-  it('should replace the existing text in the "Last name" field with test data and Update button becomes anable and active', () => {
+  it('should replace the existing text in the "Last name" field with test data and Update button becomes enabled and active', () => {
     const testData = ["Mc'Neil", "O'Neill-Johnson", 'Van Gogh']
 
     const mockT = vi.fn((key) => {
@@ -524,7 +647,7 @@ describe('EditProfile', () => {
       />
     )
 
-    const lastNameInput = screen.getByLabelText(/common.labels.lastName/i)
+    const lastNameInput = screen.getByPlaceholderText('lastName')
     expect(lastNameInput).toBeInTheDocument()
 
     for (const data of testData) {
@@ -559,7 +682,7 @@ describe('EditProfile', () => {
       />
     )
 
-    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
+    const firstNameInput = screen.getByPlaceholderText('firstName')
     expect(firstNameInput).toBeInTheDocument()
 
     fireEvent.change(firstNameInput, { target: { value: 'Jack' } })
@@ -576,5 +699,108 @@ describe('EditProfile', () => {
       sendConfirm: expect.any(Function),
       title: 'editProfilePage.profile.profileTab.saveUnsavedChangesModal.title'
     })
+  })
+
+  it('should enable Update button when name is less than 30 characters', async () => {
+    renderWithProviders(<TestProfileTabFormWrapper />)
+
+    const lastNameInput = screen.getByPlaceholderText('lastName')
+    expect(lastNameInput).toBeInTheDocument()
+
+    const newLastName = 'Y'.repeat(30)
+
+    await userEvent.clear(lastNameInput)
+    await userEvent.type(lastNameInput, newLastName)
+    expect(lastNameInput).toHaveValue(newLastName)
+
+    const spanElem = screen.getByText(/editProfilePage.updateBtn/i)
+    const updateBtn = spanElem.closest('a')
+
+    expect(updateBtn).not.toBeDisabled()
+
+    fireEvent.click(updateBtn)
+
+    await waitFor(() => {
+      expect(openAlert).toHaveBeenCalledWith({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    })
+
+    openAlert.mockClear()
+  })
+})
+
+const mockCities = ['City1', 'City2', 'City3']
+const mockCountries = [
+  { name: 'Ukraine', iso2: 'UA' },
+  { name: 'Country1', iso2: 'C1' },
+  { name: 'Country2', iso2: 'C2' },
+  { name: 'Country3', iso2: 'C3' }
+]
+
+describe('EditProfile - LocationSelectionInputs', () => {
+  beforeEach(() => {
+    renderWithProviders(<EditProfile />, {
+      preloadedState: mockState
+    })
+    renderWithProviders(
+      <LocationSelectionInputs
+        data={{ country: 'USA', city: 'New York' }}
+        onDataChange={() => {}}
+      />
+    )
+  })
+
+  beforeEach(() => {
+    mockAxiosClient.onGet(URLs.location.getCountries).reply(200, mockCountries)
+    mockAxiosClient
+      .onGet(
+        new RegExp(
+          URLs.location.getCitiesByCountryName.replace(':countryName', '')
+        )
+      )
+      .reply(200, mockCities)
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should enable Update button when Country or City is retyped', async () => {
+    const countryInput = screen.getByLabelText('common.labels.country')
+    const cityInput = screen.getByLabelText('common.labels.city')
+
+    expect(countryInput).toBeInTheDocument()
+    expect(cityInput).toBeInTheDocument()
+
+    await userEvent.clear(countryInput)
+    await userEvent.type(countryInput, 'England')
+    expect(countryInput).toHaveValue('England')
+
+    let spanElem = screen.getByText(/editProfilePage.updateBtn/i)
+    let updateBtn = spanElem.closest('a')
+
+    expect(updateBtn).not.toBeDisabled()
+
+    await userEvent.clear(cityInput)
+    await userEvent.type(cityInput, 'York')
+    expect(cityInput).toHaveValue('York')
+
+    spanElem = screen.getByText(/editProfilePage.updateBtn/i)
+    updateBtn = spanElem.closest('a')
+
+    expect(updateBtn).not.toBeDisabled()
+
+    fireEvent.click(updateBtn)
+
+    await waitFor(() => {
+      expect(openAlert).toHaveBeenCalledWith({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    })
+
+    openAlert.mockClear()
   })
 })

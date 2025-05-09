@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, act } from '@testing-library/react'
+import { fireEvent, screen, act, waitFor } from '@testing-library/react'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Chat from '~/pages/chat/Chat'
@@ -128,10 +128,10 @@ describe('Chat for mobile', () => {
   })
 
   it('should not render left panel in a chat', async () => {
-    const chip = await screen.findByText('chatPage.chat.chipLabel')
-
     await waitFor(() => {
-      expect(chip).not.toBeInTheDocument()
+      expect(
+        screen.queryByText('chatPage.chat.chipLabel')
+      ).not.toBeInTheDocument()
     })
   })
 })

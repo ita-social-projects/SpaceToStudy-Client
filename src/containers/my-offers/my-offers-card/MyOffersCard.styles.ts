@@ -35,8 +35,10 @@ export const styles = {
     }
   },
   buttonContainer: {
+    minHeight: '105px',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'flex-end',
     gap: '9px',
     width: '100%'
   }

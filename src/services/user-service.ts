@@ -9,14 +9,20 @@ import type {
   UpdateUserParams,
   UserResponse,
   UserRole,
-  GetOffersParams
+  GetOffersParams,
+  ItemsWithCount,
+  Offer
 } from '~/types'
 
 export const userService = {
-  getUsers: async (
-    params: GetUsersParams
-  ): Promise<AxiosResponse<UserResponse[]>> => {
-    return await axiosClient.get(URLs.users.get, { params })
+  getUsers: (params: GetUsersParams) => {
+    return baseService.request<ItemsWithCount<UserResponse>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.users.get,
+        searchParameters: params
+      })
+    })
   },
   getUserById: (
     userId: string,
@@ -54,11 +60,23 @@ export const userService = {
       data: params
     })
   },
-  deleteUser: (userId: string): Promise<AxiosResponse<null>> => {
-    return axiosClient.delete(createUrlPath(URLs.users.get, userId))
+  deleteUser: (userId: string) => {
+    return baseService.request<null>({
+      method: 'DELETE',
+      url: getFullUrl({
+        pathname: URLs.users.delete,
+        parameters: { id: userId }
+      })
+    })
   },
-  deleteUsers: (userIds: string[]): Promise<AxiosResponse<null>> => {
-    return axiosClient.post(URLs.users.delete, userIds)
+  deleteUsers: (userIds: string[]) => {
+    return baseService.request<null>({
+      method: 'POST',
+      url: getFullUrl({
+        pathname: URLs.users.deleteMany
+      }),
+      data: userIds
+    })
   },
   deactivateUser: (userId: string) => {
     return baseService.request<null>({
@@ -85,14 +103,14 @@ export const userService = {
       })
     })
   },
-  getBookmarkedOffers: async (
-    userId: string,
-    params?: GetOffersParams
-  ): Promise<AxiosResponse> => {
-    const userPath = createUrlPath(URLs.users.get, userId)
-
-    return await axiosClient.get(`${userPath}${URLs.users.bookmarks}`, {
-      params
+  getBookmarkedOffers: (userId: string, params?: GetOffersParams) => {
+    return baseService.request<ItemsWithCount<Offer>>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.users.bookmarks,
+        parameters: { id: userId },
+        searchParameters: params
+      })
     })
   }
 }

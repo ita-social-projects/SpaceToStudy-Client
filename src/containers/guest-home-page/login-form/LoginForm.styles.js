@@ -2,6 +2,7 @@ export const styles = {
   form: {
     display: 'flex',
     flexDirection: 'column',
+    rowGap: '26px',
     minWidth: { sm: '340px' }
   },
   loginOptionsContainer: {
@@ -13,8 +14,7 @@ export const styles = {
     mb: '10px'
   },
   input: {
-    maxWidth: '343px',
-    mb: '5px'
+    maxWidth: '343px'
   },
   loginButton: {
     width: '100%',

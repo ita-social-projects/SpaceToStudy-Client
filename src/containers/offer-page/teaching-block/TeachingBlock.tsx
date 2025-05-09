@@ -53,7 +53,7 @@ const TeachingBlock = <T extends CreateOrUpdateOfferData>({
     }
   }
 
-  const studyMaterials = userRole === UserRoleEnum.Student && <StudyMaterials />
+  const studyMaterials = userRole === UserRoleEnum.Tutor && <StudyMaterials />
 
   return (
     <OrderedListItem

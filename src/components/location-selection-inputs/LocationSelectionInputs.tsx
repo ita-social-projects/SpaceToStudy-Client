@@ -84,7 +84,9 @@ const LocationSelectionInputs: React.FC<LocationSelectionInputsProps> = ({
   }
 
   const countriesNames = useMemo(() => {
-    return countries.map((country) => country.name)
+    return countries
+      .map((country) => country.name)
+      .sort((a, b) => a.localeCompare(b))
   }, [countries])
 
   return (

@@ -3,3 +3,8 @@ export enum CooperationTabsEnum {
   Activities = 'activities',
   Details = 'details'
 }
+
+export enum CompletionStatusEnum {
+  Active = 'active',
+  Completed = 'completed'
+}

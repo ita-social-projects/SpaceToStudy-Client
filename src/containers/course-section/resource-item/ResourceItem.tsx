@@ -23,6 +23,7 @@ import {
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
 
 import {
+  Attachment,
   CourseResource,
   ResourceAvailability,
   ResourceAvailabilityStatusEnum,
@@ -190,20 +191,32 @@ const ResourceItem: FC<ResourceItemProps> = ({
     </Box>
   )
 
+  const isAttachment = (
+    resource: CourseResource,
+    type: ResourceType
+  ): resource is Attachment => {
+    return (
+      resource.resourceType === ResourceType.Attachment &&
+      type === ResourceType.Attachment
+    )
+  }
+
   const onResourceItemClick = () => {
     if (!isView || status !== ResourceAvailabilityStatusEnum.Open) return
     const type = resourceType ?? resource.resourceType
 
-    if (type === ResourceType.Attachment) {
-      console.log('download the attachment / go to the attachment view')
+    if (isAttachment(resource, type)) {
+      window.open(resource.link, '_blank')
       return
     }
 
-    navigate(
-      `${routeMap[type as ResourceType.Lesson | ResourceType.Quiz]}${
-        resource._id
-      }${type === ResourceType.Quiz ? '/attempts' : ''}`
-    )
+    if (type === ResourceType.Lesson || type === ResourceType.Quiz) {
+      navigate(
+        `${routeMap[type]}${
+          resource._id
+        }${type === ResourceType.Quiz ? '/attempts' : ''}`
+      )
+    }
   }
 
   return (

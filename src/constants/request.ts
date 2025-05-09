@@ -21,11 +21,12 @@ export const URLs = {
     get: '/users',
     getUserById: '/users/:id',
     update: '/users/:id',
-    delete: '/users/delete',
+    delete: '/users/:id',
+    deleteMany: '/users/delete',
     deactivate: '/users/deactivate',
     activate: '/users/activate',
     myProfile: '/users/myProfile',
-    bookmarks: '/bookmarks/offers',
+    bookmarks: '/users/:id/bookmarks/offers',
     updateBookmarks: '/users/:userId/bookmarks/offers/:offerId',
     offers: '/users/:id/offers'
   },
@@ -47,7 +48,7 @@ export const URLs = {
     patch: '/courses/:id'
   },
   coursesAndCooperations: {
-    getByResourceId: '/courses-cooperations/resource/'
+    getByResourceId: '/courses-cooperations/resource/:resourceId'
   },
   categories: {
     get: '/categories',
@@ -58,7 +59,8 @@ export const URLs = {
     get: '/subjects',
     getByCategoryId: '/categories/:id/subjects',
     getNames: '/subjects/names',
-    getNamesByCategoryId: '/categories/:id/subjects/names'
+    getNamesByCategoryId: '/categories/:id/subjects/names',
+    create: '/subjects'
   },
   cooperations: {
     get: '/cooperations',
@@ -66,13 +68,14 @@ export const URLs = {
     create: '/cooperations',
     update: '/cooperations',
     updateById: '/cooperations/:id',
+    updateStatusById: '/cooperations/:id/:resourceId/completionStatus',
     delete: '/cooperations'
   },
   notes: {
-    get: '/notes',
-    create: '/notes',
-    update: '/notes',
-    delete: '/notes'
+    get: '/cooperations/:id/notes',
+    create: '/cooperations/:id/notes',
+    update: '/cooperations/:id/notes/:noteId',
+    delete: '/cooperations/:id/notes/:noteId'
   },
   chats: {
     get: '/chats',

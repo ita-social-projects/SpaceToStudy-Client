@@ -19,7 +19,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
-import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
+import CreateSubjectModal from '~/containers/find-offer/create-subject/CreateSubject'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { getSuffixes } from '~/utils/get-translation-suffixes'
 

@@ -1,7 +1,7 @@
-import { afterEach, vi } from 'vitest'
 import { mockAxiosClient } from '~tests/test-utils'
 import { subjectService } from '~/services/subject-service'
 import { URLs } from '~/constants/request'
+import { vi } from 'vitest'
 import * as getFullUrl from '~/utils/get-full-url'
 
 const mockCategoryId = '64884fedfdc2d1a130c24ade'
@@ -15,16 +15,9 @@ const mockSubjects = {
       category: {
         _id: mockCategoryId
       }
-    },
-    {
-      _id: '2',
-      name: 'Software Design',
-      category: {
-        _id: '64884fedfdc2d1a130c24adb'
-      }
     }
   ],
-  count: 2
+  count: 1
 }
 
 const mockSubjectsByCategoryId = {
@@ -32,6 +25,19 @@ const mockSubjectsByCategoryId = {
     (item) => item.category._id === mockCategoryId
   ),
   count: 1
+}
+
+const mockSubjectData = {
+  name: 'New Networking',
+  category: mockCategoryId
+}
+
+const mockCreatedSubject = {
+  _id: '10',
+  name: 'New Networking',
+  category: {
+    _id: mockCategoryId
+  }
 }
 
 describe('subjectService getSubjects function tests', () => {
@@ -75,5 +81,32 @@ describe('subjectService getSubjects function tests', () => {
       pathname: URLs.subjects.get,
       searchParameters: mockParams
     })
+  })
+
+  it('should fetch subject names by categoryId', async () => {
+    const getFullUrlSpy = vi.spyOn(getFullUrl, 'getFullUrl')
+
+    mockAxiosClient
+      .onGet(URLs.subjects.getNamesByCategoryId.replace(':id', mockCategoryId))
+      .reply(200, mockSubjects)
+
+    const result = await subjectService.getSubjectsNames(mockCategoryId)
+
+    expect(result).toEqual(mockSubjects)
+    expect(getFullUrlSpy).toHaveBeenCalledWith({
+      pathname: URLs.subjects.getNamesByCategoryId,
+      parameters: { id: mockCategoryId }
+    })
+  })
+
+  it('should create a new subject successfully', async () => {
+    mockAxiosClient.onPost(URLs.subjects.create).reply(201, mockCreatedSubject)
+
+    const result = await subjectService.createSubject(mockSubjectData)
+
+    expect(result).toEqual(mockCreatedSubject)
+    expect(JSON.parse(mockAxiosClient.history.post[0].data)).toEqual(
+      mockSubjectData
+    )
   })
 })

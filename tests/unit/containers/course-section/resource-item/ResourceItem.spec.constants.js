@@ -48,7 +48,28 @@ export const mockedAttachmentDataOriginal = {
   resourceType: ResourceType.Attachment
 }
 
+export const mockedAttachmentDataDuplicate = {
+  _id: '66b67eafb58ba31be667ee83',
+  author: '6658f73f93885febb491e08b',
+  fileName: 'Exploring Systems of Linear Equations.png',
+  link: '1723236050559-Exploring Systems of Linear Equations.png',
+  size: 39340,
+  category: '6684175179e5232bce4579ed',
+  resourceType: ResourceType.Attachment,
+  isDuplicate: true
+}
+
 export const mockAvailabilityOpen = {
   status: 'open',
+  date: null
+}
+
+export const mockAvailabilityOpenFrom = {
+  status: 'openFrom',
+  date: '9999-12-28T21:00:00.000Z'
+}
+
+export const mockAvailabilityClosed = {
+  status: 'closed',
   date: null
 }

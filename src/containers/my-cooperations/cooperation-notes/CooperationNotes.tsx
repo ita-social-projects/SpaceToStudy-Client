@@ -12,6 +12,7 @@ import { CooperationNotesService } from '~/services/cooperation-service'
 import CreateOrEditNote from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote'
 import NoteView from '~/containers/my-cooperations/cooperation-notes/note-view/NoteView'
 import Loader from '~/components/loader/Loader'
+import { noteNotFoundError } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.constants'
 
 import { snackbarVariants, defaultResponses } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.styles'
@@ -28,7 +29,7 @@ import { getErrorKey } from '~/utils/get-error-key'
 
 const CooperationNotes = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const { id = '' } = useParams()
   const dispatch = useAppDispatch()
   const { openDialog } = useConfirm()
   const [open, setOpen] = useState<boolean>(false)
@@ -85,8 +86,8 @@ const CooperationNotes = () => {
   const getNotes = useCallback(() => CooperationNotesService.getNotes(id), [id])
 
   const createNoteService = useCallback(
-    (data?: CreateOrUpdateNoteParams) =>
-      CooperationNotesService.createNote(data, id),
+    (data: CreateOrUpdateNoteParams) =>
+      CooperationNotesService.createNote(id, data),
     [id]
   )
 
@@ -97,8 +98,8 @@ const CooperationNotes = () => {
   )
 
   const updateNoteService = useCallback(
-    (params?: { noteId: string; data: CreateOrUpdateNoteParams }) =>
-      CooperationNotesService.updateNote(id, params?.noteId, params?.data),
+    (params: { noteId: string; data: CreateOrUpdateNoteParams }) =>
+      CooperationNotesService.updateNote(id, params.noteId, params.data),
     [id]
   )
 
@@ -162,8 +163,12 @@ const CooperationNotes = () => {
   }
 
   const duplicateNote = useCallback(
-    (id?: string) => {
+    (id: string) => {
       const note = notes.find((item) => item._id === id)
+      if (!note) {
+        return Promise.reject(noteNotFoundError)
+      }
+
       return createNoteService(note)
     },
     [notes, createNoteService]

@@ -1,17 +1,14 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AxiosResponse } from 'axios'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import { useModalContext } from '~/context/modal-context'
 import { useAppDispatch } from '~/hooks/use-redux'
 import Image from '~/assets/img/signup-dialog/student.svg'
-import AppTextArea from '~/components/app-text-area/AppTextArea'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -21,14 +18,19 @@ import {
   ButtonTypeEnum,
   CategoryNameInterface,
   ComponentEnum,
-  ErrorResponse
+  ErrorResponse,
+  CreateSubjectParams
 } from '~/types'
+
 import { snackbarVariants } from '~/constants'
 import { categoryService } from '~/services/category-service'
-import { validations } from '~/containers/find-offer/create-new-subject/CreateNewSubject.constants'
-import { styles } from '~/containers/find-offer/create-new-subject/CreateNewSubject.styles'
+import { validations } from '~/containers/find-offer/create-subject/CreateSubject.constants'
+import { styles } from '~/containers/find-offer/create-subject/CreateSubject.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import { subjectService } from '~/services/subject-service'
+import useMutation from '~/hooks/use-mutation'
+import { initialSubjectValue } from '~/containers/find-offer/constants'
 
 const CreateSubjectModal = () => {
   const { closeModal } = useModalContext()
@@ -55,14 +57,10 @@ const CreateSubjectModal = () => {
     closeModal()
   }
 
-  const sendSubjectRequest = (): Promise<AxiosResponse> => null
-
-  const { loading, fetchData } = useAxios({
-    service: sendSubjectRequest,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
+  const { isPending, mutate: createSubject } = useMutation({
+    mutationFn: subjectService.createSubject,
+    onError: handleResponseError,
+    onSuccess: handleResponse
   })
 
   const {
@@ -73,14 +71,15 @@ const CreateSubjectModal = () => {
     handleBlur,
     handleNonInputValueChange,
     handleSubmit
-  } = useForm({
-    initialValues: {
-      subject: '',
-      category: '',
-      info: ''
-    },
-    onSubmit: fetchData,
-    validations
+  } = useForm<CreateSubjectParams>({
+    initialValues: initialSubjectValue,
+    validations,
+    submitWithData: true,
+    onSubmit: (data) => {
+      if (data) {
+        createSubject(data)
+      }
+    }
   })
 
   useEffect(() => {
@@ -92,7 +91,7 @@ const CreateSubjectModal = () => {
     value: CategoryNameInterface | null | string
   ) => {
     if (typeof value === 'object') {
-      handleNonInputValueChange('category', value?.name ?? '')
+      handleNonInputValueChange('category', value?._id ?? '')
     } else {
       handleNonInputValueChange('category', value)
     }
@@ -117,17 +116,17 @@ const CreateSubjectModal = () => {
           {t('categoriesPage.newSubject.subject')}
         </Typography>
         <AppTextField
-          errorMsg={t(errors.subject)}
+          errorMsg={t(errors.name)}
           fullWidth
           label={t('categoriesPage.newSubject.labels.subject')}
-          onBlur={handleBlur('subject')}
-          onChange={handleInputChange('subject')}
-          value={data.subject}
+          onBlur={handleBlur('name')}
+          onChange={handleInputChange('name')}
+          value={data.name}
         />
         <Typography sx={styles.inputTitle}>
           {t('categoriesPage.newSubject.category')}
         </Typography>
-        <AsyncAutocomplete
+        <AsyncAutocomplete<CategoryNameInterface, CategoryNameInterface, true>
           fetchOnFocus
           freeSolo
           labelField='name'
@@ -139,24 +138,13 @@ const CreateSubjectModal = () => {
           textFieldProps={{
             label: t('offerPage.labels.category'),
             error: Boolean(errors.category),
-            helperText: t(errors.category) || ' '
+            helperText: t(errors.category) ?? ' '
           }}
           value={data.category}
           valueField='name'
         />
-        <AppTextArea
-          errorMsg={t(errors.info)}
-          fullWidth
-          label={t('offerDetailsPage.enrollOffer.labels.info')}
-          maxLength={1000}
-          onBlur={handleBlur('info')}
-          onChange={handleInputChange('info')}
-          sx={styles.textArea}
-          title={t('categoriesPage.newSubject.info')}
-          value={data.info}
-        />
         <Button
-          loading={loading}
+          loading={isPending}
           sx={styles.button}
           type={ButtonTypeEnum.Submit}
         >

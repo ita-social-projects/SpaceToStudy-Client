@@ -37,7 +37,8 @@ export const styles = {
     '&:hover': {
       textDecoration: 'underline',
       textDecorationColor: palette.primary[300]
-    }
+    },
+    ml: '3px'
   },
   rating: {
     backgroundColor: 'primary.50'
@@ -50,5 +51,18 @@ export const styles = {
     typography: TypographyVariantEnum.Body2,
     color: 'primary.400'
   },
-  link: { textDecoration: 'none' }
+  link: { textDecoration: 'none' },
+  roleChip: {
+    backgroundColor: 'inherit',
+    border: `2px solid ${palette.basic.turquoiseDark}`,
+    borderRadius: '50px',
+    '& .MuiChip-label': { p: '0px 8px' },
+    my: '1px',
+    maxWidth: 'fit-content'
+  },
+  roleChipLabel: {
+    typography: TypographyVariantEnum.Caption,
+    fontWeight: 500,
+    color: 'basic.turquoiseDark'
+  }
 }
