@@ -57,7 +57,8 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
 
   const handleUpdateOffer = useCallback(
     () =>
-      OfferService.updateOfferWithBaseService(cooperation.offer._id, {
+      OfferService.updateOffer({
+        id: cooperation.offer._id,
         enrolledUsers: []
       }),
     [cooperation.offer._id]

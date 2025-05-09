@@ -87,7 +87,7 @@ const OfferDetails = () => {
 
   const { mutate: updateOfferDetails, isPending: updateLoading } = useMutation({
     queryKeys: [['offers'], ['offer', id]],
-    mutationFn: OfferService.updateOfferWithBaseService,
+    mutationFn: OfferService.updateOffer,
     onError: responseError
   })
 

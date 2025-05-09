@@ -57,25 +57,13 @@ export const OfferService = {
     })
   },
 
-  updateOffer: async (
-    id: string,
-    updateData?: Partial<CreateOrUpdateOfferData>
-  ): Promise<AxiosResponse> =>
-    await axiosClient.patch(
-      getFullUrl({
-        pathname: URLs.offers.update,
-        parameters: { id }
-      }),
-      updateData
-    ),
-
-  updateOfferWithBaseService: (
+  updateOffer: (
     updateData: Partial<CreateOrUpdateOfferData> & Record<'id', string>
   ) => {
     const { id, ...dataToUpdate } = updateData
 
     const resultUrl = getFullUrl({
-      pathname: URLs.offers.update,
+      pathname: URLs.offers.updateById,
       parameters: { id }
     })
 
