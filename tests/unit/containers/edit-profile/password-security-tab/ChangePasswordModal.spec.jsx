@@ -342,7 +342,9 @@ describe('ChangePasswordModal', () => {
           screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
         ).toBeInTheDocument()
       })
-      expect(currentPasswordInput.parentElement.className).toMatch(/\bMui-error\b/)
+      expect(currentPasswordInput.parentElement.className).toMatch(
+        /\bMui-error\b/
+      )
     }
   })
 })
