@@ -8,7 +8,7 @@ import { ResourceService } from '~/services/resource-service'
 import { useParams } from 'react-router-dom'
 import useQuery from '~/hooks/use-query'
 import { ONE_HOUR, snackbarVariants } from '~/constants'
-import { useMutation } from '@tanstack/react-query'
+import useMutation from '~/hooks/use-mutation'
 import { type ErrorResponse } from '~/types'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -32,11 +32,7 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
     return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
   }, [cooperationId, quizId])
 
-  const {
-    data: finishedQuizzes = [],
-    isLoading,
-    refetch
-  } = useQuery({
+  const { data: finishedQuizzes = [], isLoading } = useQuery({
     queryKey: ['finished-quizzes', cooperationId, quizId],
     queryFn: getFinishedQuizzes,
     options: {
@@ -109,6 +105,7 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
       })
     )
   }
+
   const handleUpdateGrade = useCallback(
     async (newIsCorrect: boolean) => {
       const updatedQuiz = handleGradeUpdate(newIsCorrect)
@@ -123,16 +120,17 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
   const { mutate: updateAttempt } = useMutation({
     mutationFn: handleUpdateGrade,
     onError: onResponseError,
-    onSuccess: async () => {
-      await refetch()
+    onSuccess: () => {
       dispatch(
         openAlert({
           severity: snackbarVariants.success,
           message: t('quiz.answerUpdatedSuccessfully')
         })
       )
-    }
+    },
+    queryKey: ['finished-quizzes', attemptId]
   })
+
   const handleCorrectAnswer = (newIsCorrect: boolean) => {
     setIsCorrect(newIsCorrect)
     onUpdate?.(newIsCorrect)
