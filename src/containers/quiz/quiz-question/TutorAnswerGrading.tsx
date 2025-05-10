@@ -82,9 +82,21 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
             }
           : result
       )
+
+      const totalQuestions = updatedResults.length
+      const correctAnswers = updatedResults.reduce((total, result) => {
+        const isCorrect = result.answers.some((answer) => answer.isCorrect)
+        return total + (isCorrect ? 1 : 0)
+      }, 0)
+      const newGrade = Math.round((correctAnswers / totalQuestions) * 100)
+
       onUpdate?.(isCorrect)
 
-      return { ...finishedQuiz, results: updatedResults }
+      return {
+        ...finishedQuiz,
+        results: updatedResults,
+        grade: newGrade
+      }
     },
     [finishedQuizzes, onUpdate, isCorrect, attemptId, questionText]
   )

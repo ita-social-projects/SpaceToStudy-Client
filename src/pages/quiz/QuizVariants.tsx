@@ -21,6 +21,7 @@ import useQuizQuery from '~/hooks/query/use-quiz-query'
 
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
+import { calculateTotalPoints } from '~/utils/calculate-total-points'
 import styles from '~/pages/quiz/Quiz.styles'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
@@ -287,6 +288,10 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
 
   const isStepper = view === QuizViewEnum.Stepper
 
+  const totalPoints = useMemo(() => {
+    return calculateTotalPoints(finishedQuiz?.results)
+  }, [finishedQuiz?.results])
+
   const mappedResults = useMemo(() => {
     const result: Record<string, string | string[]> = {}
 
@@ -308,7 +313,6 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     return result
   }, [finishedQuiz?.results, quiz?.items])
 
-  const totalPoints = countPoints(items, mappedResults)
   const questionsBlock = isStepper ? (
     <SelectableQuestionQuizView
       answers={mappedResults}
