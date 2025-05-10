@@ -256,6 +256,31 @@ describe('ChangePasswordModal', () => {
       screen.getByText(/common.errorMessages.currentAndNewPasswordsMatch/i)
     ).toBeInTheDocument()
   })
+  it('should show error when new password does not match re-typed password', () => {
+    const currentPasswordInput = screen.getByLabelText(/currentPassword/i)
+    const passwordInput = screen.getByLabelText(/newPassword/i)
+    const confirmPasswordInput = screen.getByLabelText(/retypePassword/i)
+    const saveButton = screen.getByText(/savePassword/i)
+
+    fireEvent.change(currentPasswordInput, {
+      target: { value: 'qww9876*0-' }
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: 'ABCabc123' }
+    })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: 'ABCabc1234' }
+    })
+
+    fireEvent.click(saveButton)
+
+    expect(
+      screen.getByText(/common.errorMessages.passwordsDontMatch/i)
+    ).toBeInTheDocument()
+    expect(confirmPasswordInput.parentElement.className).toMatch(
+      /\bMui-error\b/
+    )
+  })
   it('should throw an error at entering alphabetic values', async () => {
     const currentPasswordInput = screen.getByLabelText(
       /editProfilePage.profile.passwordSecurityTab.currentPassword/i
@@ -337,14 +362,10 @@ describe('ChangePasswordModal', () => {
           screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
         ).toBeInTheDocument()
       })
-      await waitFor(() => {
-        expect(
-          screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
-        ).toBeInTheDocument()
-      })
       expect(currentPasswordInput.parentElement.className).toMatch(
         /\bMui-error\b/
       )
+      expect(newPasswordInput.parentElement.className).toMatch(/\bMui-error\b/)
     }
   })
   it('should display an error message at entering ONLY numeric values', async () => {
@@ -368,14 +389,42 @@ describe('ChangePasswordModal', () => {
           screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
         ).toBeInTheDocument()
       })
-      await waitFor(() => {
-        expect(
-          screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
-        ).toBeInTheDocument()
-      })
       expect(currentPasswordInput.parentElement.className).toMatch(
         /\bMui-error\b/
       )
+      expect(newPasswordInput.parentElement.className).toMatch(/\bMui-error\b/)
     }
+  })
+  it('should display an error message at leaving fields empty', async () => {
+    const testData = ''
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const newPasswordInput = screen.getByLabelText(/newPassword/i)
+    fireEvent.change(currentPasswordInput, {
+      target: { value: testData }
+    })
+    fireEvent.blur(currentPasswordInput)
+    fireEvent.change(newPasswordInput, {
+      target: { value: testData }
+    })
+    fireEvent.blur(newPasswordInput)
+
+    await waitFor(() => {
+      const errorMessage = screen.getAllByText(
+        /common.errorMessages.emptyField/i
+      )
+      expect(errorMessage[0]).toBeInTheDocument()
+    })
+    await waitFor(() => {
+      const errorMessage = screen.getAllByText(
+        /common.errorMessages.emptyField/i
+      )
+      expect(errorMessage[1]).toBeInTheDocument()
+    })
+    expect(currentPasswordInput.parentElement.className).toMatch(
+      /\bMui-error\b/
+    )
+    expect(newPasswordInput.parentElement.className).toMatch(/\bMui-error\b/)
   })
 })
