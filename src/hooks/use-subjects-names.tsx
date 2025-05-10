@@ -1,27 +1,17 @@
-import { QueryObserverResult } from '@tanstack/react-query'
 import { useCallback } from 'react'
-import { ResponseError } from '~/exceptions'
 
 import useQuery from '~/hooks/use-query'
 import { subjectService } from '~/services/subject-service'
-import { type SubjectNameInterface } from '~/types'
+import { SubjectNameInterface } from '~/types'
+import useTranslate from './use-translate'
 
-interface UseSubjectsNamesProps<T> {
+interface UseSubjectsNamesProps {
   category: string | null
-  transform?: (data: SubjectNameInterface[]) => T[]
 }
 
-interface UseSubjectsNamesResult<T> {
-  loading: boolean
-  response: T[]
-  fetchData: () => Promise<QueryObserverResult<T[]>>
-  error: ResponseError | null
-}
+const useSubjectsNames = ({ category }: UseSubjectsNamesProps) => {
+  const translateSubjects = useTranslate<SubjectNameInterface>('subjects')
 
-const useSubjectsNames = <T = SubjectNameInterface,>({
-  category,
-  transform
-}: UseSubjectsNamesProps<T>): UseSubjectsNamesResult<T> => {
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(category),
     [category]
@@ -37,7 +27,7 @@ const useSubjectsNames = <T = SubjectNameInterface,>({
     queryFn: getSubjectsNames,
     options: {
       staleTime: Infinity,
-      select: transform
+      select: translateSubjects
     }
   })
 

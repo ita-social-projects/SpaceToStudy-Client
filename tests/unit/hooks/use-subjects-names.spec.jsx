@@ -6,6 +6,10 @@ import QueryProvider from '~/QueryProvider'
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
+vi.mock('~/hooks/use-translate', () => ({
+  default: () => (data) => data
+}))
+
 const mockSubjectsNames = [
   { _id: '1', name: 'Subject 1' },
   { _id: '2', name: 'Subject 2' }
