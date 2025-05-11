@@ -204,14 +204,16 @@ const CategoryChip = forwardRef<HTMLDivElement, CategoryChipProps>(
     { color = 'blue-gray', detail, disabled, label, size = 'md', type },
     reference
   ) => {
+    const isHexColor = color.includes('#')
+
     const labelStyle = {
-      '--chip-bg-color': `var(--s2s-${color}-300)`,
-      '--chip-text-color': `var(--s2s-${color}-900)`
+      '--chip-bg-color': isHexColor ? color : `var(--s2s-${color}-300)`,
+      '--chip-text-color': isHexColor ? 'blue-gray' : `var(--s2s-${color}-900)`
     } as CSSProperties
 
     const detailStyle = {
-      '--chip-bg-color': `var(--s2s-${color}-100)`,
-      '--chip-text-color': `var(--s2s-${color}-900)`
+      '--chip-bg-color': isHexColor ? color : `var(--s2s-${color}-100)`,
+      '--chip-text-color': isHexColor ? 'blue-gray' : `var(--s2s-${color}-900)`
     } as CSSProperties
 
     return (
@@ -251,10 +253,12 @@ const StateChip = forwardRef<HTMLDivElement, StateChipProps>(
     },
     reference
   ) => {
+    const isHexColor = color.includes('#')
+
     const style = {
-      '--chip-bg-color': `var(--s2s-${color}-100)`,
-      '--chip-border-color': `var(--s2s-${color}-700)`,
-      '--chip-text-color': `var(--s2s-${color}-700)`
+      '--chip-bg-color': isHexColor ? color : `var(--s2s-${color}-100)`,
+      '--chip-border-color': isHexColor ? color : `var(--s2s-${color}-700)`,
+      '--chip-text-color': isHexColor ? 'blue-gray' : `var(--s2s-${color}-700)`
     } as CSSProperties
 
     return (
