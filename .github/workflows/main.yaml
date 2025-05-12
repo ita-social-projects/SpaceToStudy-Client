@@ -22,7 +22,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependency
-        run: npm install
+        run: npm ci
 
       - name: Run linter
         run: npm run lint:check
