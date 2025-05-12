@@ -170,6 +170,12 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
   const hasAttempts =
     limits.isNoLimitAttempt || usedAttempts < limits.maxAttempts
 
+  let quizButtonLabel = t('quiz.viewQuiz')
+  if (userRole === UserRoleEnum.Student) {
+    quizButtonLabel =
+      usedAttempts === 0 ? t('quiz.startQuiz') : t('quiz.tryAgain')
+  }
+
   const typographyStyle = (subType: number) => {
     return spliceSx(
       styles[`subtitle${subType}` as keyof typeof styles],
@@ -227,12 +233,6 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
   const noAttemptsAlert = !hasAttempts && (
     <Alert severity='info'>{t('quiz.reachedAttemptLimit')}</Alert>
   )
-  const quizButtonLabel =
-    userRole === UserRoleEnum.Student
-      ? usedAttempts === 0
-        ? t('quiz.startQuiz')
-        : t('quiz.tryAgain')
-      : t('quiz.viewQuiz')
 
   return (
     <>

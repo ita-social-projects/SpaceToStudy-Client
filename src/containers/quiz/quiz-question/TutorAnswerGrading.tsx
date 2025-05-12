@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from '~/containers/quiz/quiz-question/Question.styles'
-import { useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { ResourceService } from '~/services/resource-service'
 import { useParams } from 'react-router-dom'
 import useQuery from '~/hooks/use-query'
@@ -19,7 +19,7 @@ interface TutorAnswerGradingProps {
   onUpdate?: (isCorrect: boolean) => void
 }
 
-const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
+const TutorAnswerGrading: FC<TutorAnswerGradingProps> = ({
   questionText,
   onUpdate
 }) => {
@@ -106,6 +106,15 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
     )
   }
 
+  const onResponseSuccess = () => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: t('quiz.answerUpdatedSuccessfully')
+      })
+    )
+  }
+
   const handleUpdateGrade = useCallback(
     async (newIsCorrect: boolean) => {
       const updatedQuiz = handleGradeUpdate(newIsCorrect)
@@ -120,14 +129,7 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
   const { mutate: updateAttempt } = useMutation({
     mutationFn: handleUpdateGrade,
     onError: onResponseError,
-    onSuccess: () => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.success,
-          message: t('quiz.answerUpdatedSuccessfully')
-        })
-      )
-    },
+    onSuccess: onResponseSuccess,
     queryKey: ['finished-quizzes', attemptId]
   })
 

@@ -27,11 +27,13 @@ const QuestionAnswersBlock: FC<Props> = ({
 }) => {
   const { type, answers } = question
 
-  const formattedValue = Array.isArray(value)
-    ? value.map((v) => v.toLowerCase())
-    : typeof value === 'string'
-      ? [value.toLowerCase()]
-      : []
+  let formattedValue: string[] = []
+
+  if (Array.isArray(value)) {
+    formattedValue = value.map((v) => v.toLowerCase())
+  } else if (typeof value === 'string') {
+    formattedValue = [value.toLowerCase()]
+  }
 
   const { isMultipleChoice, isOpenAnswer } = determineQuestionType(type)
 

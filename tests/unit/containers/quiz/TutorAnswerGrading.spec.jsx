@@ -1,5 +1,5 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { vi } from 'vitest'
 import TutorAnswerGrading from '~/containers/quiz/quiz-question/TutorAnswerGrading'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { openAlert } from '~/redux/features/snackbarSlice'

@@ -62,11 +62,14 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   const ContainerComponent = shouldUseAppCardWrapper ? AppCard : Box
 
   const { data: finishedQuiz, isLoading: isFinishedQuizLoading } = useQuery({
-    queryKey: ['finished-quiz', attemptId],
+    queryKey: ['finished-quizzes', attemptId],
     queryFn: getFinishedQuiz
   })
 
   const { isOpenAnswer } = determineQuestionType(question.type)
+
+  const CORRECT_ANSWER_POINTS = '1/1'
+  const INCORRECT_ANSWER_POINTS = '0/1'
 
   let correctnessIcon
   useEffect(() => {
@@ -133,7 +136,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   const pointsBlock =
     shouldShowPoints && isAnswerCorrect !== undefined ? (
       <Typography sx={styles.type}>
-        {isAnswerCorrect ? '1/1' : '0/1'}
+        {isAnswerCorrect ? CORRECT_ANSWER_POINTS : INCORRECT_ANSWER_POINTS}
       </Typography>
     ) : null
 

@@ -1,4 +1,4 @@
-import { beforeAll, beforeEach, expect, vi } from 'vitest'
+import { vi } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import QuizAttemptsPage from '~/pages/quiz-attempts/QuizAttempts'
