@@ -26,7 +26,12 @@ import Loader from '~/components/loader/Loader'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
-import { type OutletContext, type UserRole, StatusEnum, UserRoleEnum } from '~/types'
+import {
+  type OutletContext,
+  type UserRole,
+  StatusEnum,
+  UserRoleEnum
+} from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
 import {
