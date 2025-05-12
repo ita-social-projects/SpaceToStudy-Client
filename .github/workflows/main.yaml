@@ -45,7 +45,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependency
-        run: npm install
+        run: npm ci
 
       - name: Test
         run: npx cross-env CI=true vitest --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
