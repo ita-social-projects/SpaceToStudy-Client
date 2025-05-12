@@ -5,7 +5,8 @@ import {
   addSectionResources,
   updateResource,
   deleteResource,
-  updateResourcesOrder
+  updateResourcesOrder,
+  updateResourceAvailability
 } from '~/pages/create-course/CreateCourse.handlers'
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import { isValidUUID } from '~tests/test-utils'
@@ -125,6 +126,35 @@ describe('Test CreateCourse handlers:', () => {
     expect(handleSectionChange).toHaveBeenCalledWith('section-1', 'resources', [
       {
         resource: { id: 'resource-1', resourceType: 'type' },
+        resourceType: 'type'
+      }
+    ])
+  })
+
+  it('updateResourceAvailability: should update availability of a resource in a section', () => {
+    const sections = [
+      {
+        id: 'section-1',
+        resources: [
+          {
+            resource: { id: 'resource-1', availability: 'Available' },
+            resourceType: 'type'
+          }
+        ]
+      }
+    ]
+    const handleSectionChange = vi.fn()
+    const ctx = { sections, handleSectionChange }
+    const newAvailability = 'Unavailable'
+
+    updateResourceAvailability(ctx, 'section-1', 'resource-1', newAvailability)
+
+    expect(handleSectionChange).toHaveBeenCalledWith('section-1', 'resources', [
+      {
+        resource: {
+          id: 'resource-1',
+          availability: newAvailability
+        },
         resourceType: 'type'
       }
     ])
