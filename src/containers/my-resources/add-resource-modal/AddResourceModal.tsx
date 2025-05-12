@@ -16,7 +16,12 @@ import AddDocuments from '~/containers/add-documents/AddDocuments'
 import { styles } from '~/containers/my-resources/add-resource-modal/AddResourceModal.styles'
 import { ResourceService } from '~/services/resource-service'
 import { useModalContext } from '~/context/modal-context'
-import { CategoryNameInterface, ResourcesTabsEnum, TableItem } from '~/types'
+import {
+  CategoryNameInterface,
+  ResourcesTabsEnum,
+  TableItem,
+  TableSelect
+} from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 interface AddResourceModalProps<T>
@@ -25,24 +30,24 @@ interface AddResourceModalProps<T>
     loading: boolean
     getItems: (title: string, selectedItems: string[]) => T[]
   }
-  selectedRows: T[]
   initialSelectedRows: T[]
   onAddItems: () => void
   onCreateResourceCopy?: (value: boolean) => void
   uploadItem?: (data: FormData) => Promise<void>
   resourceTab: ResourcesTabsEnum
   showCheckboxWithTooltip?: boolean
+  select: TableSelect<T>
 }
 
 const AddResourceModal = <T extends TableItem>({
   data,
-  selectedRows,
   initialSelectedRows,
   onAddItems,
   onCreateResourceCopy,
   uploadItem,
   resourceTab,
   showCheckboxWithTooltip = false,
+  select,
   ...props
 }: AddResourceModalProps<T>) => {
   const { t } = useTranslation()
@@ -97,7 +102,7 @@ const AddResourceModal = <T extends TableItem>({
         disableInitialSelectedRows
         emptyTableKey={`myResourcesPage.${resourceTab}.emptyItems`}
         initialSelectedRows={initialSelectedRows}
-        selectedRows={selectedRows}
+        select={select}
         stickyHeader
         style={styles.tableWrapper(!!items.length)}
         sx={styles.table}
@@ -122,8 +127,8 @@ const AddResourceModal = <T extends TableItem>({
           </Button>
           <Button
             disabled={
-              !selectedRows.length ||
-              initialSelectedRows.length === selectedRows.length
+              !select.selected.length ||
+              initialSelectedRows.length === select.selected.length
             }
             onClick={onAddItems}
             sx={styles.addButton}
