@@ -23,7 +23,13 @@ vi.mock('~/context/modal-context', async () => {
 vi.mock(
   '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList',
   () => ({
-    default: () => <div>Professional Category List</div>
+    default: ({ openProfessionalCategoryModal }) => (
+      <div>
+        <button onClick={() => openProfessionalCategoryModal({}, true)}>
+          Edit category
+        </button>
+      </div>
+    )
   })
 )
 
@@ -137,5 +143,14 @@ describe('ProfessionalInfoTab for tutor', () => {
     )
 
     expect(aboutTutorTitle).toBeInTheDocument()
+  })
+  it('should open edit category modal when an edit button is clicked for a category', () => {
+    const editButton = screen.getByRole('button', {
+      name: /edit category/i
+    })
+
+    fireEvent.click(editButton)
+
+    expect(mockOpenModal).toHaveBeenCalled()
   })
 })
