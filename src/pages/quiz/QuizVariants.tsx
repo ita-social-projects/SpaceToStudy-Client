@@ -30,7 +30,8 @@ import {
   ComponentEnum,
   QuestionTypesEnum,
   QuizTimeLimit,
-  QuizViewEnum
+  QuizViewEnum,
+  Answer
 } from '~/types'
 import { getTime } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -84,18 +85,37 @@ const ActiveQuiz: React.FC = () => {
   const grade = Math.round((points / items.length) * 100)
 
   const mappedResults = useMemo(() => {
-    return items.map(({ text, answers, _id }) => {
-      const isOpenAnswer = !Array.isArray(data[_id])
+    const getOpenAnswer = (_id: string) => {
+      const value = Array.isArray(data[_id]) ? data[_id][0] : data[_id]
+      return value
+        ? [
+            {
+              text: value,
+              isCorrect: false,
+              isChosen: true
+            }
+          ]
+        : []
+    }
 
-      return {
-        question: text,
-        answers: answers.map(({ text, isCorrect }) => ({
-          text,
-          isCorrect,
-          isChosen: isOpenAnswer || (data[_id]?.includes(text) ?? false)
-        }))
-      }
-    })
+    const getClosedAnswers = (_id: string, answers: Answer[]) => {
+      const answerValue = data[_id]
+      return answers.map(({ text, isCorrect }) => ({
+        text,
+        isCorrect,
+        isChosen: Array.isArray(answerValue)
+          ? answerValue.includes(text)
+          : answerValue === text
+      }))
+    }
+
+    return items.map(({ text, answers, _id, type }) => ({
+      question: text,
+      answers:
+        type === QuestionTypesEnum.OpenAnswer
+          ? getOpenAnswer(_id)
+          : getClosedAnswers(_id, answers)
+    }))
   }, [data, items])
 
   const addFinishedQuiz = useCallback(() => {
@@ -116,29 +136,39 @@ const ActiveQuiz: React.FC = () => {
   })
 
   const editFinishedQuiz = useCallback(() => {
+    const getOpenAnswer = (_id: string) => {
+      const value = Array.isArray(data[_id]) ? data[_id][0] : data[_id]
+      return value
+        ? [
+            {
+              text: value,
+              isCorrect: false,
+              isChosen: true
+            }
+          ]
+        : []
+    }
+
+    const getClosedAnswers = (_id: string, answers: Answer[]) => {
+      const answerValue = data[_id]
+      return answers.map(({ text, isCorrect }) => ({
+        text,
+        isCorrect,
+        isChosen: Array.isArray(answerValue)
+          ? answerValue.includes(text)
+          : answerValue === text
+      }))
+    }
+
     return ResourceService.editFinishedQuiz(finishedQuizId, {
       grade,
-      results: items.map(({ text, answers, _id, type }) => {
-        return {
-          question: text,
-          answers:
-            type === QuestionTypesEnum.OpenAnswer
-              ? [
-                  {
-                    text: Array.isArray(data[_id]) ? data[_id][0] : data[_id],
-                    isCorrect: false,
-                    isChosen: true
-                  }
-                ]
-              : answers.map(({ text, isCorrect }) => {
-                  return {
-                    text,
-                    isCorrect,
-                    isChosen: data[_id]?.includes(text) ?? false
-                  }
-                })
-        }
-      })
+      results: items.map(({ text, answers, _id, type }) => ({
+        question: text,
+        answers:
+          type === QuestionTypesEnum.OpenAnswer
+            ? getOpenAnswer(_id)
+            : getClosedAnswers(_id, answers)
+      }))
     })
   }, [data, finishedQuizId, grade, items])
 
