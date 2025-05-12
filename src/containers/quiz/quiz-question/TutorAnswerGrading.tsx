@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from '~/containers/quiz/quiz-question/Question.styles'
-import { FC, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ResourceService } from '~/services/resource-service'
 import { useParams } from 'react-router-dom'
 import useQuery from '~/hooks/use-query'
@@ -19,7 +19,7 @@ interface TutorAnswerGradingProps {
   onUpdate?: (isCorrect: boolean) => void
 }
 
-const TutorAnswerGrading: FC<TutorAnswerGradingProps> = ({
+const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
   questionText,
   onUpdate
 }) => {
