@@ -171,4 +171,40 @@ describe('PasswordSecurityTab', () => {
       })
     })
   })
+  it('should appear success message after clicking the Activate button', async () => {
+    mockAxiosClient
+      .onPatch(`${URLs.users.activate}/${userDataMock._id}`)
+      .reply(200)
+
+    renderWithProviders(
+      <TestSnackbar>
+        <PasswordSecurityTab />
+      </TestSnackbar>,
+      {
+        preloadedState: {
+          appMain: {
+            userId: userDataMock._id,
+            userStatus: 'inactive'
+          }
+        }
+      }
+    )
+
+    const activateAccountButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.activateAccount'
+    )
+    fireEvent.click(activateAccountButton)
+
+    const activateButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.activateBtn'
+    )
+    fireEvent.click(activateButton)
+
+    await waitFor(() => {
+      expect(openAlert).toHaveBeenCalledWith({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    })
+  })
 })
