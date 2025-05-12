@@ -21,6 +21,7 @@ import useQuizQuery from '~/hooks/query/use-quiz-query'
 
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
+import { formatQuizResults } from '~/utils/format-answer'
 import { calculateTotalPoints } from '~/utils/calculate-total-points'
 import styles from '~/pages/quiz/Quiz.styles'
 import { defaultResponses, snackbarVariants } from '~/constants'
@@ -30,8 +31,7 @@ import {
   ComponentEnum,
   QuestionTypesEnum,
   QuizTimeLimit,
-  QuizViewEnum,
-  Answer
+  QuizViewEnum
 } from '~/types'
 import { getTime } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -84,39 +84,10 @@ const ActiveQuiz: React.FC = () => {
 
   const grade = Math.round((points / items.length) * 100)
 
-  const mappedResults = useMemo(() => {
-    const getOpenAnswer = (_id: string) => {
-      const value = Array.isArray(data[_id]) ? data[_id][0] : data[_id]
-      return value
-        ? [
-            {
-              text: value,
-              isCorrect: false,
-              isChosen: true
-            }
-          ]
-        : []
-    }
-
-    const getClosedAnswers = (_id: string, answers: Answer[]) => {
-      const answerValue = data[_id]
-      return answers.map(({ text, isCorrect }) => ({
-        text,
-        isCorrect,
-        isChosen: Array.isArray(answerValue)
-          ? answerValue.includes(text)
-          : answerValue === text
-      }))
-    }
-
-    return items.map(({ text, answers, _id, type }) => ({
-      question: text,
-      answers:
-        type === QuestionTypesEnum.OpenAnswer
-          ? getOpenAnswer(_id)
-          : getClosedAnswers(_id, answers)
-    }))
-  }, [data, items])
+  const mappedResults = useMemo(
+    () => formatQuizResults(data, items),
+    [data, items]
+  )
 
   const addFinishedQuiz = useCallback(() => {
     return ResourceService.addFinishedQuiz({
@@ -136,39 +107,9 @@ const ActiveQuiz: React.FC = () => {
   })
 
   const editFinishedQuiz = useCallback(() => {
-    const getOpenAnswer = (_id: string) => {
-      const value = Array.isArray(data[_id]) ? data[_id][0] : data[_id]
-      return value
-        ? [
-            {
-              text: value,
-              isCorrect: false,
-              isChosen: true
-            }
-          ]
-        : []
-    }
-
-    const getClosedAnswers = (_id: string, answers: Answer[]) => {
-      const answerValue = data[_id]
-      return answers.map(({ text, isCorrect }) => ({
-        text,
-        isCorrect,
-        isChosen: Array.isArray(answerValue)
-          ? answerValue.includes(text)
-          : answerValue === text
-      }))
-    }
-
     return ResourceService.editFinishedQuiz(finishedQuizId, {
       grade,
-      results: items.map(({ text, answers, _id, type }) => ({
-        question: text,
-        answers:
-          type === QuestionTypesEnum.OpenAnswer
-            ? getOpenAnswer(_id)
-            : getClosedAnswers(_id, answers)
-      }))
+      results: formatQuizResults(data, items)
     })
   }, [data, finishedQuizId, grade, items])
 
