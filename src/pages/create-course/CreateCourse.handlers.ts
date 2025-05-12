@@ -10,7 +10,9 @@ import {
   AddSectionResourcesEvent,
   ResourceUpdatedEvent,
   ResourceRemovedEvent,
-  ResourcesOrderChangeEvent
+  ResourcesOrderChangeEvent,
+  ResourceUpdateAvailabilityEvent,
+  ResourceAvailability
 } from '~/types'
 
 const getSectionById = (
@@ -82,7 +84,17 @@ export const resourceHandlers = {
   [CourseResourceEventType.ResourcesOrderChange]: (
     ctx: CreateCourseContext,
     event: ResourcesOrderChangeEvent
-  ) => updateResourcesOrder(ctx, event.sectionId, event.resources)
+  ) => updateResourcesOrder(ctx, event.sectionId, event.resources),
+  [CourseResourceEventType.ResourceUpdateAvailability]: (
+    ctx: CreateCourseContext,
+    event: ResourceUpdateAvailabilityEvent
+  ) =>
+    updateResourceAvailability(
+      ctx,
+      event.sectionId,
+      event.resourceId,
+      event.availability
+    )
 }
 
 export const addSectionResources = (
@@ -164,4 +176,28 @@ export const updateResourcesOrder = (
     resourceType: resource.resourceType
   }))
   handleSectionChange(sectionId, 'resources', newSectionResources)
+}
+
+export const updateResourceAvailability = (
+  { sections, handleSectionChange }: CreateCourseContext,
+  sectionId: CourseSection['id'],
+  resourceId: CourseResource['id'],
+  availability: ResourceAvailability
+): void => {
+  const section = getSectionById(sections, sectionId)
+  if (!section) return
+
+  const updatedResources = section.resources.map((item) =>
+    item.resource.id === resourceId
+      ? {
+          ...item,
+          resource: {
+            ...item.resource,
+            availability
+          }
+        }
+      : item
+  )
+
+  handleSectionChange(sectionId, 'resources', updatedResources)
 }
