@@ -6,8 +6,10 @@ import {
   updateResource,
   deleteResource,
   updateResourcesOrder,
-  updateResourceAvailability
+  updateResourceAvailability,
+  resourceHandlers
 } from '~/pages/create-course/CreateCourse.handlers'
+import { CourseResourceEventType } from '~/types'
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import { isValidUUID } from '~tests/test-utils'
 import { vi } from 'vitest'
@@ -154,6 +156,61 @@ describe('Test CreateCourse handlers:', () => {
         resource: {
           id: 'resource-1',
           availability: newAvailability
+        },
+        resourceType: 'type'
+      }
+    ])
+  })
+
+  it('updateResourceAvailability: should return nothing if section is not found', () => {
+    const sections = []
+    const handleSectionChange = vi.fn()
+    const ctx = { sections, handleSectionChange }
+
+    updateResourceAvailability(
+      ctx,
+      'non-existent-section',
+      'resource-1',
+      'Unavailable'
+    )
+
+    expect(handleSectionChange).not.toHaveBeenCalled()
+  })
+
+  it('resourceHandlers.ResourceUpdateAvailability: should update availability through handler', () => {
+    const handleSectionChange = vi.fn()
+    const ctx = {
+      sections: [
+        {
+          id: 'section-1',
+          resources: [
+            {
+              resource: { id: 'resource-1', availability: 'Available' },
+              resourceType: 'type'
+            }
+          ]
+        }
+      ],
+      handleSectionChange
+    }
+
+    const event = {
+      type: CourseResourceEventType.ResourceUpdateAvailability,
+      sectionId: 'section-1',
+      resourceId: 'resource-1',
+      availability: 'Unavailable'
+    }
+
+    resourceHandlers[CourseResourceEventType.ResourceUpdateAvailability](
+      ctx,
+      event
+    )
+
+    expect(handleSectionChange).toHaveBeenCalledWith('section-1', 'resources', [
+      {
+        resource: {
+          id: 'resource-1',
+          availability: 'Unavailable'
         },
         resourceType: 'type'
       }
