@@ -73,7 +73,7 @@ mockAxiosClient
   .reply(200, mockOffer)
 
 mockAxiosClient
-  .onPatch(URLs.offers.update.replace(':id', mockOffer._id))
+  .onPatch(URLs.offers.updateById.replace(':id', mockOffer._id))
   .reply(204, null)
 
 mockAxiosClient.onGet(URLs.offers.get).reply(200, { offers: [], count: 0 })
