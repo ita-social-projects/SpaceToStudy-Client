@@ -30,22 +30,22 @@ const EnhancedTableHead = <I extends TableItem>({
   columns,
   data,
   isSelection,
-  rowsPerPage,
   rowActions,
   select = {} as TableSelect<I>,
   sort
 }: EnhancedTableHeadProps<I>) => {
   const { t } = useTranslation()
   const { selected, createSelectAllHandler } = select
-  const { items, count: itemsCount = 0 } = data
+  const { items, count } = data
+  const itemsCount = count ?? items.length
 
   const checkboxCell = isSelection && (
     <TableCell padding='checkbox'>
       <Checkbox
-        checked={itemsCount > 0 && selected.length === rowsPerPage}
+        checked={itemsCount > 0 && selected.length === itemsCount}
         color='primary'
         indeterminate={
-          selected.length > 0 && selected.length < (rowsPerPage ?? 0)
+          selected.length > 0 && selected.length < (itemsCount ?? 0)
         }
         onChange={createSelectAllHandler(items)}
       />
