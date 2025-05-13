@@ -8,10 +8,16 @@ import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
-import { CourseResource, ResourceAvailability, Resource } from '~/types'
+import {
+  CourseResource,
+  ResourceAvailability,
+  Resource,
+  UserRoleEnum
+} from '~/types'
 
 import useDroppable from '~/hooks/use-droppable'
 import useDndSensor from '~/hooks/use-dnd-sensor'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface ResourcesListProps {
   cooperationData?: Resource[]
@@ -33,6 +39,9 @@ const ResourcesList: FC<ResourcesListProps> = ({
   updateAvailability,
   isCooperation = false
 }) => {
+  const { userRole } = useAppSelector((state) => state.appMain)
+  const isStudent = userRole === UserRoleEnum.Student
+
   const { enabled } = useDroppable()
   const itemsForSort = cooperationData.map((item) => {
     return {
@@ -75,6 +84,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
         deleteResource={deleteResource}
         editResource={editResource}
         isCooperation={isCooperation}
+        isStudent={isStudent}
         key={item.id}
         resource={item}
         updateAvailability={updateAvailability}

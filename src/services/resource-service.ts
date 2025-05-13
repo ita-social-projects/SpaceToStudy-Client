@@ -204,7 +204,16 @@ export const ResourceService = {
       data
     })
   },
-
+  downloadAttachment: (id: string) => {
+    return baseService.request<Blob>({
+      method: 'GET',
+      url: getFullUrl({
+        pathname: URLs.resources.attachments.download,
+        parameters: { id }
+      }),
+      responseType: 'blob'
+    })
+  },
   getQuestions: (params?: GetResourcesParams) => {
     return baseService.request<ItemsWithCount<Question>>({
       method: 'GET',

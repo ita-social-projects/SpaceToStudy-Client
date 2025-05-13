@@ -21,7 +21,6 @@ import {
   selectionFields
 } from '~/containers/course-section/resource-item/ResourceItem.constants'
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
-
 import {
   Attachment,
   CourseResource,
@@ -32,6 +31,7 @@ import {
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import ResourceAction from '~/containers/course-section/resource-item/resource-action/ResourceAction'
 
 interface ResourceItemProps {
   resource: CourseResource
@@ -43,6 +43,7 @@ interface ResourceItemProps {
     resource: CourseResource,
     availability: ResourceAvailability
   ) => void
+  isStudent?: boolean
   isView?: boolean
   isCooperation?: boolean
   isDone?: boolean
@@ -55,13 +56,13 @@ const ResourceItem: FC<ResourceItemProps> = ({
   deleteResource,
   editResource,
   updateAvailability,
+  isStudent,
   isView = false,
   isCooperation = false
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isDuplicate } = resource
-
   const routeMap = {
     [ResourceType.Lesson]: 'lesson-details/',
     [ResourceType.Quiz]: 'quizzes/'
@@ -201,27 +202,41 @@ const ResourceItem: FC<ResourceItemProps> = ({
     )
   }
 
-  const onResourceItemClick = () => {
-    if (!isView || status !== ResourceAvailabilityStatusEnum.Open) return
-    const type = resourceType ?? resource.resourceType
+  const isNotViewableOrClosed =
+    !isView || status !== ResourceAvailabilityStatusEnum.Open
+  const resolvedResourceType = resourceType ?? resource.resourceType
 
-    if (isAttachment(resource, type)) {
+  const onAttachmentNameClick = () => {
+    if (isNotViewableOrClosed || !isStudent) return
+
+    if (isAttachment(resource, resolvedResourceType)) {
       window.open(resource.link, '_blank')
-      return
     }
+  }
 
-    if (type === ResourceType.Lesson || type === ResourceType.Quiz) {
+  const onResourceItemClick = () => {
+    if (isNotViewableOrClosed) return
+
+    if (
+      resolvedResourceType === ResourceType.Lesson ||
+      resolvedResourceType === ResourceType.Quiz
+    ) {
       navigate(
-        `${routeMap[type]}${
+        `${routeMap[resolvedResourceType]}${
           resource._id
-        }${type === ResourceType.Quiz ? '/attempts' : ''}`
+        }${resolvedResourceType === ResourceType.Quiz ? '/attempts' : ''}`
       )
     }
   }
 
   return (
-    <Box onClick={onResourceItemClick} sx={styles.container(isView)}>
+    <Box
+      data-testid='resourceItem'
+      onClick={onResourceItemClick}
+      sx={styles.container(isView)}
+    >
       <Box
+        onClick={onAttachmentNameClick}
         sx={{
           ...styles.titleWithDescriptionWrapper,
           opacity: status !== ResourceAvailabilityStatusEnum.Open ? '60%' : ''
@@ -234,10 +249,14 @@ const ResourceItem: FC<ResourceItemProps> = ({
           title={resource.resourceType}
         />
       </Box>
-
-      <Box sx={styles.resourceActions}>
-        {isView ? status && availabilityStatus : actionButtons}
-      </Box>
+      <ResourceAction
+        actionButtons={actionButtons}
+        availabilityStatus={availabilityStatus}
+        isStudent={isStudent ?? false}
+        isView={isView}
+        resource={resource}
+        status={status}
+      />
     </Box>
   )
 }

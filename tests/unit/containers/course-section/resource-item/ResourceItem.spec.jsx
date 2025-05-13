@@ -1,7 +1,10 @@
 import { renderWithProviders } from '~tests/test-utils'
-import { fireEvent, screen } from '@testing-library/react'
 import { ResourcesTypesEnum } from '~/types'
-
+import { fireEvent, screen, waitFor } from '@testing-library/react'
+import {
+  ResourceAvailabilityStatusEnum,
+  ResourcesTypesEnum as ResourceType
+} from '~/types'
 import {
   mockedLessonDataOriginal,
   mockedQuizDataDuplicate,
@@ -13,10 +16,9 @@ import {
   mockAvailabilityOpenFrom,
   mockAvailabilityClosed
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
-
+import { ResourceService } from '~/services/resource-service'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { afterEach, expect, it, vi } from 'vitest'
-
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
 const mockUpdateAvailability = vi.fn()
@@ -29,6 +31,10 @@ vi.mock('react-router-dom', async () => {
     useNavigate: () => mockNavigate
   }
 })
+
+vi.mock('~/utils/download-file', () => ({
+  downloadFile: vi.fn()
+}))
 
 vi.mock('@mui/x-date-pickers/LocalizationProvider', async () => {
   const actual = await vi.importActual(
@@ -54,6 +60,19 @@ vi.mock('@mui/x-date-pickers/DatePicker', () => ({
       type='date'
     />
   )
+}))
+
+const navigateMock = vi.fn()
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useNavigate: () => navigateMock
+}))
+
+vi.mock('~/services/resource-service', () => ({
+  ResourceService: {
+    downloadAttachment: vi.fn()
+  }
 }))
 
 describe('ResourceItem tests', () => {
@@ -249,6 +268,7 @@ describe('ResourceItem tests when resourceType attachment', () => {
     renderWithProviders(
       <ResourceItem
         availability={mockAvailabilityOpen}
+        isStudent
         isView
         resource={mockedAttachmentDataOriginal}
       />
@@ -267,6 +287,7 @@ describe('ResourceItem tests when resourceType attachment', () => {
     renderWithProviders(
       <ResourceItem
         availability={mockAvailabilityOpen}
+        isStudent
         isView
         resource={mockedAttachmentDataDuplicate}
       />
@@ -279,6 +300,22 @@ describe('ResourceItem tests when resourceType attachment', () => {
       '1723236050559-Exploring Systems of Linear Equations.png',
       '_blank'
     )
+  })
+
+  it('should not download attachment when its not a student', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={mockAvailabilityOpenFrom}
+        isStudent={false}
+        isView
+        resource={mockedAttachmentDataDuplicate}
+      />
+    )
+
+    const attachmentItem = screen.getByText(/png/)
+
+    fireEvent.click(attachmentItem)
+    expect(windowOpenMock).not.toHaveBeenCalledWith()
   })
 
   it('should not download attachment when its availability is set to open from', () => {
@@ -376,40 +413,6 @@ describe('ResourceItem navigation', () => {
     mockNavigate.mockReset()
   })
 
-  it('should navigate to lesson page when resourceType is Lesson', () => {
-    renderWithProviders(
-      <ResourceItem
-        availability={mockAvailabilityOpen}
-        isView
-        resource={mockedLessonDataOriginal}
-      />
-    )
-
-    const lessonItem = screen.getByText(mockedLessonDataOriginal.title)
-    fireEvent.click(lessonItem)
-
-    expect(mockNavigate).toHaveBeenCalledWith(
-      `lesson-details/${mockedLessonDataOriginal._id}`
-    )
-  })
-
-  it('should navigate to quiz attempts page when resourceType is Quiz', () => {
-    renderWithProviders(
-      <ResourceItem
-        availability={mockAvailabilityOpen}
-        isView
-        resource={mockedQuizDataDuplicate}
-      />
-    )
-
-    const quizItem = screen.getByText(mockedQuizDataDuplicate.title)
-    fireEvent.click(quizItem)
-
-    expect(mockNavigate).toHaveBeenCalledWith(
-      `quizzes/${mockedQuizDataDuplicate._id}/attempts`
-    )
-  })
-
   it('should not call navigate if resource is an attachment', () => {
     renderWithProviders(
       <ResourceItem
@@ -423,5 +426,72 @@ describe('ResourceItem navigation', () => {
     fireEvent.click(attachmentItem)
 
     expect(mockNavigate).not.toHaveBeenCalled()
+  })
+})
+
+describe('ResourceItem component', () => {
+  const mockNavigate = vi.fn()
+  const mockResource = {
+    _id: '123',
+    resourceType: ResourceType.Lesson
+  }
+
+  it('renders the button', () => {
+    renderWithProviders(<ResourceItem resource={mockResource} />)
+    expect(screen.getByTestId('resourceItem')).toBeInTheDocument()
+  })
+
+  it('does not navigate or download if isView is false', () => {
+    renderWithProviders(<ResourceItem isView={false} resource={mockResource} />)
+
+    fireEvent.click(screen.getByTestId('resourceItem'))
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(ResourceService.downloadAttachment).not.toHaveBeenCalled()
+  })
+
+  it('does not navigate or download if resource is not open', () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={{ status: ResourceAvailabilityStatusEnum.Closed }}
+        isView
+        resource={mockResource}
+      />
+    )
+
+    fireEvent.click(screen.getByTestId('resourceItem'))
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(ResourceService.downloadAttachment).not.toHaveBeenCalled()
+  })
+
+  it('navigates to lesson-details if resource type is Lesson and isView is true', async () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
+        isView
+        resource={mockResource}
+        resourceType={ResourceType.Lesson}
+      />
+    )
+
+    fireEvent.click(screen.getByTestId('resourceItem'))
+    await waitFor(() => {
+      expect(navigateMock).toHaveBeenCalledWith('lesson-details/123')
+    })
+  })
+
+  it('navigates to quiz if resource type is Quiz and isView is true', async () => {
+    renderWithProviders(
+      <ResourceItem
+        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
+        isView
+        resource={{ ...mockResource, resourceType: ResourceType.Quiz }}
+        resourceType={ResourceType.Quiz}
+      />
+    )
+
+    fireEvent.click(screen.getByTestId('resourceItem'))
+    await waitFor(() => {
+      expect(navigateMock).toHaveBeenCalledWith('quizzes/123/attempts')
+    })
   })
 })

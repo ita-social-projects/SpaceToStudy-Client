@@ -70,7 +70,8 @@ const lessonMock = {
       link: '1692187436676-1366_2000.jpeg',
       size: 104764,
       createdAt: '2023-08-16T12:03:56.773Z',
-      updatedAt: '2023-08-16T12:03:56.773Z'
+      updatedAt: '2023-08-16T12:03:56.773Z',
+      resourceType: 'attachment'
     }
   ]
 }

@@ -11,5 +11,7 @@
     "tutor": "View my offers",
     "student": "View my requests"
   },
-  "newLesson": "New lesson"
+  "newLesson": "New lesson",
+  "download": "Download",
+  "downloading": "Downloading..."
 }

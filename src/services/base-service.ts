@@ -1,4 +1,8 @@
-import { isAxiosError, type RawAxiosRequestHeaders } from 'axios'
+import {
+  isAxiosError,
+  type RawAxiosRequestHeaders,
+  type AxiosRequestConfig
+} from 'axios'
 import { ResponseError } from '~/exceptions'
 import { axiosClient } from '~/plugins/axiosClient'
 import { type ErrorResponse, type HttpMethod } from '~/types'
@@ -9,6 +13,7 @@ type RequestParams = {
   method: HttpMethod
   timeout?: number
   url: string
+  responseType?: AxiosRequestConfig['responseType']
 }
 
 export const baseService = {
@@ -17,7 +22,8 @@ export const baseService = {
     headers,
     method,
     timeout,
-    url
+    url,
+    responseType
   }: RequestParams) => {
     try {
       const response = await axiosClient.request<T>({
@@ -25,7 +31,8 @@ export const baseService = {
         headers,
         method,
         timeout,
-        url
+        url,
+        responseType
       })
 
       return response.data
@@ -35,7 +42,6 @@ export const baseService = {
 
         throw new ResponseError(serverError)
       }
-
       throw new ResponseError({
         code: 'UNKNOWN_ERROR',
         message: 'UNKNOWN_ERROR_MESSAGE'
