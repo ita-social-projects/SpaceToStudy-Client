@@ -383,7 +383,6 @@ describe('ChangePasswordModal', () => {
         target: { value: data }
       })
       fireEvent.blur(newPasswordInput)
-
       await waitFor(() => {
         expect(
           screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
