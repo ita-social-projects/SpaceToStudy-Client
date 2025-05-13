@@ -21,6 +21,7 @@ import { categoryService } from '~/services/category-service'
 import { isSubmitDisabled } from '~/utils/is-submit-disabled'
 import useForm from '~/hooks/use-form'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import useTranslate from '~/hooks/use-translate'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import Button from '~scss-components/button/Button'
@@ -32,7 +33,6 @@ import {
 } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
-import { translateData } from '~/utils/translate-data'
 import { titleToCamel } from '~/utils/title-to-camel-case'
 
 interface SubjectGroupProps {
@@ -51,17 +51,11 @@ function SubjectGroup({
   handleSubjectDelete
 }: Readonly<SubjectGroupProps>) {
   const { t } = useTranslation()
+  const translateSubjects = useTranslate<SubjectNameInterface>('subjects')
 
   const getSubjectsNames = useCallback(() => {
     return subjectService.getSubjectsNames(selectedCategory)
   }, [selectedCategory])
-
-  const translateSubjects = useCallback(
-    (data: SubjectNameInterface[]) => {
-      return translateData(data, 'subjects', t)
-    },
-    [t]
-  )
 
   const handleDisableOptions = (option: Partial<SubjectInterface>) => {
     return disableOptions.some((subject) => subject._id === option._id)
@@ -116,6 +110,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { userRole } = useAppSelector((state) => state.appMain)
+  const translateCategories = useTranslate<CategoryNameInterface>('categories')
 
   const initialFormValues = initialValuesFromProps || userMainSubjectTemplate
 
@@ -219,13 +214,6 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     )
     return isBlocked && isCurrent
   }
-
-  const translateCategories = useCallback(
-    (data: CategoryNameInterface[]) => {
-      return translateData(data, 'categories', t)
-    },
-    [t]
-  )
 
   const SubjectsGroup = data.subjects.map((subject, index) => (
     <SubjectGroup
