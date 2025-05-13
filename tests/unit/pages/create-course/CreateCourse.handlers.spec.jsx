@@ -5,8 +5,11 @@ import {
   addSectionResources,
   updateResource,
   deleteResource,
-  updateResourcesOrder
+  updateResourcesOrder,
+  updateResourceAvailability,
+  resourceHandlers
 } from '~/pages/create-course/CreateCourse.handlers'
+import { CourseResourceEventType } from '~/types'
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import { isValidUUID } from '~tests/test-utils'
 import { vi } from 'vitest'
@@ -125,6 +128,90 @@ describe('Test CreateCourse handlers:', () => {
     expect(handleSectionChange).toHaveBeenCalledWith('section-1', 'resources', [
       {
         resource: { id: 'resource-1', resourceType: 'type' },
+        resourceType: 'type'
+      }
+    ])
+  })
+
+  it('updateResourceAvailability: should update availability of a resource in a section', () => {
+    const sections = [
+      {
+        id: 'section-1',
+        resources: [
+          {
+            resource: { id: 'resource-1', availability: 'Available' },
+            resourceType: 'type'
+          }
+        ]
+      }
+    ]
+    const handleSectionChange = vi.fn()
+    const ctx = { sections, handleSectionChange }
+    const newAvailability = 'Unavailable'
+
+    updateResourceAvailability(ctx, 'section-1', 'resource-1', newAvailability)
+
+    expect(handleSectionChange).toHaveBeenCalledWith('section-1', 'resources', [
+      {
+        resource: {
+          id: 'resource-1',
+          availability: newAvailability
+        },
+        resourceType: 'type'
+      }
+    ])
+  })
+
+  it('updateResourceAvailability: should return nothing if section is not found', () => {
+    const sections = []
+    const handleSectionChange = vi.fn()
+    const ctx = { sections, handleSectionChange }
+
+    updateResourceAvailability(
+      ctx,
+      'non-existent-section',
+      'resource-1',
+      'Unavailable'
+    )
+
+    expect(handleSectionChange).not.toHaveBeenCalled()
+  })
+
+  it('resourceHandlers.ResourceUpdateAvailability: should update availability through handler', () => {
+    const handleSectionChange = vi.fn()
+    const ctx = {
+      sections: [
+        {
+          id: 'section-1',
+          resources: [
+            {
+              resource: { id: 'resource-1', availability: 'Available' },
+              resourceType: 'type'
+            }
+          ]
+        }
+      ],
+      handleSectionChange
+    }
+
+    const event = {
+      type: CourseResourceEventType.ResourceUpdateAvailability,
+      sectionId: 'section-1',
+      resourceId: 'resource-1',
+      availability: 'Unavailable'
+    }
+
+    resourceHandlers[CourseResourceEventType.ResourceUpdateAvailability](
+      ctx,
+      event
+    )
+
+    expect(handleSectionChange).toHaveBeenCalledWith('section-1', 'resources', [
+      {
+        resource: {
+          id: 'resource-1',
+          availability: 'Unavailable'
+        },
         resourceType: 'type'
       }
     ])
