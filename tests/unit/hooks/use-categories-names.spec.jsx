@@ -7,6 +7,10 @@ import { queryClient } from '~/plugins/queryClient'
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
+vi.mock('~/hooks/use-translate', () => ({
+  default: () => (data) => data
+}))
+
 const mockCategoriesNames = [
   { _id: '1', name: 'Category 1' },
   { _id: '2', name: 'Category 2' }

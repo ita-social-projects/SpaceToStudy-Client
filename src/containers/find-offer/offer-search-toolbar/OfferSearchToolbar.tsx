@@ -18,6 +18,7 @@ import { styles } from '~/containers/find-offer/offer-search-toolbar/OfferSearch
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
+import useTranslate from '~/hooks/use-translate'
 
 interface OfferSearchToolbarProps {
   filters: FindOffersFilters
@@ -33,6 +34,8 @@ const OfferSearchToolbar = ({
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { updateFiltersInQuery } = filterActions
+  const translateCategories = useTranslate<CategoryNameInterface>('categories')
+  const translateSubjects = useTranslate<SubjectNameInterface>('subjects')
 
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(filters.categoryId),
@@ -64,7 +67,7 @@ const OfferSearchToolbar = ({
   const AppAutoCompleteList = (
     <>
       <AsyncAutocomplete
-        labelField='name'
+        labelField='displayName'
         onChange={onCategoryChange}
         queryOptions={{ type: 'categories' }}
         service={categoryService.getCategoriesNames}
@@ -72,11 +75,12 @@ const OfferSearchToolbar = ({
         textFieldProps={{
           label: t('breadCrumbs.categories')
         }}
+        transform={translateCategories}
         value={filters.categoryId}
         valueField='_id'
       />
       <AsyncAutocomplete
-        labelField='name'
+        labelField='displayName'
         onChange={onSubjectChange}
         queryOptions={{ type: 'subjects', categoryId: filters.categoryId }}
         service={getSubjectsNames}
@@ -84,6 +88,7 @@ const OfferSearchToolbar = ({
         textFieldProps={{
           label: t('breadCrumbs.subjects')
         }}
+        transform={translateSubjects}
         value={filters.subjectId}
         valueField='_id'
       />

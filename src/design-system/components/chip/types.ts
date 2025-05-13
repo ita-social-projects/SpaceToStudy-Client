@@ -47,9 +47,11 @@ type InputChipProps = CommonChipProps<'input'> &
     variant?: 'filled' | 'outlined' | 'filled-outlined'
   }
 
+type HexColor = `#${string}`
+
 type CategoryChipProps = CommonChipProps<'category'> &
   ChipWithLabel & {
-    color?: ChipColor
+    color?: ChipColor | HexColor
     detail: string
   }
 

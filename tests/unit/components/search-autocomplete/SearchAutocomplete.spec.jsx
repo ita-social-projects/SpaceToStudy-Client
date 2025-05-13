@@ -5,6 +5,10 @@ import userEvent from '@testing-library/user-event'
 
 const options = ['Finland', 'France', 'Italy', 'Germany']
 const setSearch = vi.fn()
+const objOptions = [
+  { name: 'Option1', displayName: 'Option 1' },
+  { name: 'Option2', displayName: 'Option 2' }
+]
 
 describe('SearchAutocomplete', () => {
   beforeEach(() => {
@@ -72,5 +76,47 @@ describe('SearchAutocomplete test', () => {
     const searchBtn = screen.getByRole('button', { name: 'common.search' })
     fireEvent.click(searchBtn)
     expect(setSearch).toHaveBeenCalledWith('France')
+  })
+})
+
+describe('SearchAutocomplete', () => {
+  it('should handle object options', () => {
+    render(
+      <SearchAutocomplete
+        options={objOptions}
+        search='Option1'
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
+      />
+    )
+
+    const input = screen.getByLabelText('Search')
+    fireEvent.mouseDown(input)
+
+    const option1 = screen.getByText('Option 1')
+    const option2 = screen.getByText('Option 2')
+
+    expect(option1).toHaveAttribute('aria-selected', 'true')
+    expect(option2).toHaveAttribute('aria-selected', 'false')
+  })
+
+  it('should handle mixed options', () => {
+    render(
+      <SearchAutocomplete
+        options={[...objOptions, 'Option3']}
+        search='Option3'
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
+      />
+    )
+
+    const input = screen.getByLabelText('Search')
+    fireEvent.mouseDown(input)
+
+    const option3 = screen.getByText('Option3')
+    const option1 = screen.getByText('Option 1')
+
+    expect(option3).toHaveAttribute('aria-selected', 'true')
+    expect(option1).toHaveAttribute('aria-selected', 'false')
   })
 })

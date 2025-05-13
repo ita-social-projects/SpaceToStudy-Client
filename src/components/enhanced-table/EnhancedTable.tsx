@@ -39,7 +39,6 @@ export interface EnhancedTableProps<I, F> extends Omit<TableProps, 'style'> {
   data: TableData<I>
   disableInitialSelectedRows?: boolean
   emptyTableKey?: string
-  selectedRows?: I[]
   initialSelectedRows?: I[]
   style?: {
     root?: SxProps
@@ -59,7 +58,6 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
   data,
   disableInitialSelectedRows = false,
   emptyTableKey = 'table.noExactMatches',
-  selectedRows = [],
   initialSelectedRows = [],
   style = {},
   ...props
@@ -88,7 +86,9 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
         refetchData={getData}
         rowActions={getRowActions(item)}
         select={select}
-        selectedRows={selectedRows}
+        selectedRows={items.filter((item) =>
+          select?.selected.includes(item._id)
+        )}
       />
     ))
   }, [
@@ -101,7 +101,6 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
     getData,
     rowActions,
     select,
-    selectedRows,
     t
   ])
   const tableBody = (

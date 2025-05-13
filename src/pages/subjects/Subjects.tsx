@@ -12,6 +12,7 @@ import useSubjectsNames from '~/hooks/use-subjects-names'
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
 import { useModalContext } from '~/context/modal-context'
+import useTranslate from '~/hooks/use-translate'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
@@ -26,15 +27,8 @@ import OfferRequestBlock from '~/containers/find-offer/offer-request-block/Offer
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
-import { mapArrayByField } from '~/utils/map-array-by-field'
 import { getSuffixes } from '~/utils/get-translation-suffixes'
-import { translateData } from '~/utils/translate-data'
-import {
-  CategoryNameInterface,
-  SizeEnum,
-  SubjectInterface,
-  SubjectNameInterface
-} from '~/types'
+import { CategoryNameInterface, SizeEnum, SubjectInterface } from '~/types'
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/subjects/Subjects.styles'
@@ -45,6 +39,7 @@ const Subjects = () => {
   const [categoryName, setCategoryName] = useState<string>('')
   const [isFetched, setIsFetched] = useState<boolean>(false)
   const params = useMemo(() => ({ name: match }), [match])
+  const translateCategories = useTranslate<CategoryNameInterface>('categories')
 
   const { t, i18n } = useTranslation()
   const nameOfSearchContent = t('subjectsPage.subject')
@@ -57,18 +52,12 @@ const Subjects = () => {
 
   const cardsLimit = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const transform = useCallback(
-    (data: SubjectNameInterface[]): string[] => mapArrayByField(data, 'name'),
-    []
-  )
-
   const {
     loading: subjectNamesLoading,
     response: subjectsNamesItems,
     fetchData
   } = useSubjectsNames({
-    category: categoryId,
-    transform
+    category: categoryId
   })
 
   const getSubjectNames = () => {
@@ -139,13 +128,6 @@ const Subjects = () => {
     setCategoryName(category?.name ?? '')
   }
 
-  const translateCategories = useCallback(
-    (data: CategoryNameInterface[]) => {
-      return translateData(data, 'categories', t)
-    },
-    [t]
-  )
-
   const autoCompleteCategories = (
     <AsyncAutocomplete
       labelField='displayName'
@@ -164,9 +146,6 @@ const Subjects = () => {
   )
 
   const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
-
-  const getOptionLabel = (option: string | Pick<SubjectInterface, 'name'>) =>
-    typeof option === 'string' ? option : option.name
 
   return (
     <PageWrapper>
@@ -200,7 +179,6 @@ const Subjects = () => {
       <AppToolbar sx={styles.searchToolbar}>
         {!breakpoints.isMobile && autoCompleteCategories}
         <SearchAutocomplete
-          getOptionLabel={getOptionLabel}
           loading={subjectNamesLoading}
           onFocus={getSubjectNames}
           onSearchChange={resetData}
