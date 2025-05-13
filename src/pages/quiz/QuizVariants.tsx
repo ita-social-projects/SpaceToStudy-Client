@@ -84,10 +84,9 @@ const ActiveQuiz: React.FC = () => {
 
   const grade = Math.round((points / items.length) * 100)
 
-  const mappedResults = useMemo(
-    () => formatQuizResults(data, items),
-    [data, items]
-  )
+  const mappedResults = useMemo(() => {
+    return formatQuizResults(data, items)
+  }, [data, items])
 
   const addFinishedQuiz = useCallback(() => {
     return ResourceService.addFinishedQuiz({
@@ -109,9 +108,9 @@ const ActiveQuiz: React.FC = () => {
   const editFinishedQuiz = useCallback(() => {
     return ResourceService.editFinishedQuiz(finishedQuizId, {
       grade,
-      results: formatQuizResults(data, items)
+      results: mappedResults
     })
-  }, [data, finishedQuizId, grade, items])
+  }, [finishedQuizId, grade, mappedResults])
 
   const { mutate: updateFinishedQuiz } = useMutation({
     mutationFn: editFinishedQuiz,

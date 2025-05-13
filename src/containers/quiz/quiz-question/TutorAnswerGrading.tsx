@@ -13,6 +13,7 @@ import { type ErrorResponse } from '~/types'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import { QuizErrors } from './Question.constants'
 
 interface TutorAnswerGradingProps {
   questionText?: string
@@ -43,16 +44,18 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
   useEffect(() => {
     if (!isLoading && finishedQuizzes.length > 0 && questionText) {
       const currentQuiz = finishedQuizzes.find((quiz) => quiz._id === attemptId)
-      if (currentQuiz) {
-        const questionResult = currentQuiz.results.find(
-          (result) => result.question === questionText
-        )
-        if (questionResult && questionResult.answers.length > 0) {
-          const currentIsCorrect = questionResult.answers[0].isCorrect
-          setIsCorrect(currentIsCorrect)
-          onUpdate?.(currentIsCorrect)
-        }
+      if (!currentQuiz) {
+        return
       }
+      const questionResult = currentQuiz.results.find(
+        (result) => result.question === questionText
+      )
+      if (!questionResult) {
+        return
+      }
+      const currentIsCorrect = questionResult.answers[0].isCorrect
+      setIsCorrect(currentIsCorrect)
+      onUpdate?.(currentIsCorrect)
     }
   }, [finishedQuizzes, attemptId, questionText, isLoading, onUpdate])
 
@@ -119,11 +122,11 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
     async (newIsCorrect: boolean) => {
       const updatedQuiz = handleGradeUpdate(newIsCorrect)
       if (!updatedQuiz) {
-        throw new Error(t('errorMessages.quizNotFoundToUpdate'))
+        throw QuizErrors.QUIZ_NOT_FOUND_TO_UPDATE
       }
       return ResourceService.editFinishedQuiz(attemptId, updatedQuiz)
     },
-    [handleGradeUpdate, attemptId, t]
+    [handleGradeUpdate, attemptId]
   )
 
   const { mutate: updateAttempt } = useMutation({

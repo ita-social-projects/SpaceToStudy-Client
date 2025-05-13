@@ -1,4 +1,4 @@
-import { FC, ChangeEventHandler } from 'react'
+import { type ChangeEventHandler } from 'react'
 import Box from '@mui/material/Box'
 
 import TutorAnswerGrading from './TutorAnswerGrading'
@@ -18,7 +18,7 @@ interface Props {
   onGradeChange: (isCorrect: boolean) => void
 }
 
-const AnswerBlockForTutor: FC<Props> = ({
+const AnswerBlockForTutor: React.FC<Props> = ({
   question,
   value,
   isEditable,

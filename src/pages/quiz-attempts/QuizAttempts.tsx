@@ -40,8 +40,9 @@ const QuizAttemptsPage: React.FC = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const openModal = useCallback(() => {
-    if (userRole === UserRoleEnum.Student) setIsOpen(true)
-    else {
+    if (userRole === UserRoleEnum.Student) {
+      setIsOpen(true)
+    } else {
       navigate(
         getFullUrl({
           pathname: authRoutes.myResources.editQuiz.route,

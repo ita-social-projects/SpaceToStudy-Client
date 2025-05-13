@@ -118,12 +118,12 @@ describe('QuizAttemptsPage - Student role', () => {
     renderPage(UserRoleEnum.Student)
   })
 
-  it('renders quiz preview with title', async () => {
+  it('should render quiz preview with title after clicking "reviewAttempt"', async () => {
     const title = await screen.findByText('JS Quiz')
     expect(title).toBeInTheDocument()
   })
 
-  it('shows review view after clicking "reviewAttempt"', async () => {
+  it('should show review view after clicking "reviewAttempt"', async () => {
     const reviewButton = await screen.findByText('quiz.reviewAttempt')
     fireEvent.click(reviewButton)
 
@@ -131,7 +131,7 @@ describe('QuizAttemptsPage - Student role', () => {
     expect(quizTitle).toBeInTheDocument()
   })
 
-  it('opens start modal on click', async () => {
+  it('should open start modal on click', async () => {
     const startButton = await screen.findByTestId('startButton')
     fireEvent.click(startButton)
 
@@ -148,7 +148,7 @@ describe('QuizAttemptsPage - Tutor role', () => {
     renderPage(UserRoleEnum.Tutor)
   })
 
-  it('navigates to quiz editor on confirm start', async () => {
+  it('should navigate to quiz editor on confirm start', async () => {
     const startButton = await screen.findByTestId('startButton')
     fireEvent.click(startButton)
 
@@ -166,7 +166,7 @@ describe('QuizAttemptsPage - No finished attempts', () => {
     renderPage(UserRoleEnum.Student)
   })
 
-  it('shows message about no attempts', async () => {
+  it('should show message about no attempts', async () => {
     const noAttempts = await screen.findByText('quiz.noUsedAttempts')
     expect(noAttempts).toBeInTheDocument()
   })

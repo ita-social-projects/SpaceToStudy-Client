@@ -30,19 +30,19 @@ describe('SelectableQuestion component test', () => {
     renderWithProviders(<SelectableQuestionQuizView {...mockedProps} />)
   })
 
-  it('renders the component with question', () => {
+  it('should render the component with question', () => {
     const text = screen.getByText(questionsMock[0].text)
 
     expect(text).toBeInTheDocument()
   })
 
-  it('renders component with checkbox', () => {
+  it('should render component with checkbox', () => {
     expect(
       screen.getByText('questionPage.questionType.multipleChoice')
     ).toBeInTheDocument()
   })
 
-  it('redirects to the next or previous question when you click on the Next or Back button', () => {
+  it('should redirect to the next or previous question when you click on the Next or Back button', () => {
     const nextButton = screen.getByText('common.next')
     fireEvent.click(nextButton)
 

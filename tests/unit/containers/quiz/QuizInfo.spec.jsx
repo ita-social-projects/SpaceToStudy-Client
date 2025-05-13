@@ -131,7 +131,7 @@ describe('StartViewQuizInfo', () => {
 })
 
 describe('FinishedQuizInfo', () => {
-  it('renders quiz information correctly', () => {
+  it('should render quiz information correctly', () => {
     renderWithProviders(
       <FinishedQuizInfo
         createdAt='2024-01-01T10:00:00Z'

@@ -1,9 +1,10 @@
-import { FC, ChangeEventHandler } from 'react'
+import { type ChangeEventHandler } from 'react'
 import FormGroup from '@mui/material/FormGroup'
 import RadioGroup from '@mui/material/RadioGroup'
 import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 import Answer from '~/containers/quiz/question-answer/Answer'
 import { styles } from './Question.styles'
+import { toLowerArray } from '~/utils/to-lower-array'
 import { type Question } from '~/types'
 
 interface Props {
@@ -15,8 +16,7 @@ interface Props {
   handleInputChange: ChangeEventHandler
   handleNonInputValueChange: (value: string | string[]) => void
 }
-
-const QuestionAnswersBlock: FC<Props> = ({
+const QuestionAnswersBlock: React.FC<Props> = ({
   question,
   value,
   isEditable,
@@ -27,13 +27,7 @@ const QuestionAnswersBlock: FC<Props> = ({
 }) => {
   const { type, answers } = question
 
-  let formattedValue: string[] = []
-
-  if (Array.isArray(value)) {
-    formattedValue = value.map((v) => v.toLowerCase())
-  } else if (typeof value === 'string') {
-    formattedValue = [value.toLowerCase()]
-  }
+  const formattedValue = toLowerArray(value)
 
   const { isMultipleChoice, isOpenAnswer } = determineQuestionType(type)
 
@@ -58,15 +52,15 @@ const QuestionAnswersBlock: FC<Props> = ({
     )
   }
 
-  const answersList = answers.map((answer) => {
+  const answersList = answers.map((answer, index) => {
     const isChecked = formattedValue.includes(answer.text.toLowerCase())
 
     const handleChange = () => {
       if (isMultipleChoice) {
-        const prev = (value as string[]) ?? []
-        const newValue = prev.includes(answer.text)
-          ? prev.filter((item) => item !== answer.text)
-          : [...prev, answer.text]
+        const selectedAnswer = (value as string[]) ?? []
+        const newValue = selectedAnswer.includes(answer.text)
+          ? selectedAnswer.filter((item) => item !== answer.text)
+          : [...selectedAnswer, answer.text]
 
         handleNonInputValueChange(newValue)
       } else {
@@ -79,7 +73,7 @@ const QuestionAnswersBlock: FC<Props> = ({
         checked={isChecked}
         isCorrect={answer.isCorrect}
         isEditable={isEditable}
-        key={answer.text}
+        key={`${answer.text}-${index}`}
         label={answer.text}
         onCheckboxChange={handleChange}
         shouldShowCorrectness={shouldShowAnswersCorrectness}

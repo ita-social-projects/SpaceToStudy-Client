@@ -61,7 +61,7 @@ describe('TutorAnswerGrading', () => {
     vi.clearAllMocks()
   })
 
-  it('calls onUpdate with correct values when buttons clicked', async () => {
+  it('should call onUpdate with correct values when buttons clicked', async () => {
     const onUpdate = vi.fn()
     renderWithProviders(
       <TutorAnswerGrading onUpdate={onUpdate} questionText='Test question' />
@@ -82,7 +82,7 @@ describe('TutorAnswerGrading', () => {
     })
   })
 
-  it('does not crash if finishedQuizzes is empty', async () => {
+  it('should not crash if finishedQuizzes is empty', async () => {
     mockAxiosClient.resetHandlers()
     mockAxiosClient
       .onGet(
@@ -99,7 +99,7 @@ describe('TutorAnswerGrading', () => {
     )
   })
 
-  it('handles error on PATCH and displays alert', async () => {
+  it('should handle error on PATCH and displays alert', async () => {
     mockAxiosClient.resetHandlers()
 
     mockAxiosClient
@@ -130,7 +130,7 @@ describe('TutorAnswerGrading', () => {
     })
   })
 
-  it('does not call onUpdate if questionText is missing', async () => {
+  it('should not call onUpdate if questionText is missing', async () => {
     const onUpdate = vi.fn()
     renderWithProviders(<TutorAnswerGrading onUpdate={onUpdate} />)
 

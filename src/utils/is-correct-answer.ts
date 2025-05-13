@@ -1,37 +1,38 @@
 import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 import { Question } from '~/types'
+import { normalizeString } from './normalize-string'
 
-export const isCorrectAnswer = (
+export const checkAnswerCorrectness = (
   question: Question,
   userAnswer: null | string | string[]
 ) => {
   const { isMultipleChoice, isSingleChoice, isOpenAnswer } =
     determineQuestionType(question.type)
 
-  const normalize = (str: string) => str.trim().toLowerCase()
-
   const isUnanswered =
     !userAnswer || (Array.isArray(userAnswer) && !userAnswer.length)
   if (isUnanswered) return false
 
   if (isOpenAnswer) {
-    const normalizedUserAnswer = normalize(String(userAnswer))
+    const normalizedUserAnswer = normalizeString(String(userAnswer))
     return question.answers.some(
-      (answer) => normalize(answer.text) === normalizedUserAnswer
+      (answer) => normalizeString(answer.text) === normalizedUserAnswer
     )
   }
 
   if (isSingleChoice && typeof userAnswer === 'string') {
     const correctAnswer = question.answers.find((item) => item.isCorrect)
-    return normalize(correctAnswer?.text ?? '') === normalize(userAnswer)
+    return (
+      normalizeString(correctAnswer?.text ?? '') === normalizeString(userAnswer)
+    )
   }
 
   if (isMultipleChoice && Array.isArray(userAnswer)) {
     const correctAnswers = question.answers
       .filter((item) => item.isCorrect)
-      .map((item) => normalize(item.text))
+      .map((item) => normalizeString(item.text))
 
-    const userAnswersNormalized = userAnswer.map(normalize)
+    const userAnswersNormalized = userAnswer.map(normalizeString)
 
     return (
       userAnswersNormalized.length === correctAnswers.length &&

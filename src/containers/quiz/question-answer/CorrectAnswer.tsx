@@ -1,9 +1,8 @@
-import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
 import Answer from '~/containers/quiz/question-answer/Answer'
-import { Question, UserRoleEnum } from '~/types'
+import { type Question, UserRoleEnum } from '~/types'
 import { styles } from '~/containers/quiz/quiz-question/Question.styles'
 
 interface CorrectAnswersProps {
@@ -12,7 +11,7 @@ interface CorrectAnswersProps {
   isOpenAnswer: boolean
 }
 
-const CorrectAnswers: FC<CorrectAnswersProps> = ({
+const CorrectAnswers: React.FC<CorrectAnswersProps> = ({
   question,
   userRole,
   isOpenAnswer
@@ -31,12 +30,12 @@ const CorrectAnswers: FC<CorrectAnswersProps> = ({
 
   const correctAnswers = question.answers
     .filter((answer) => answer.isCorrect)
-    .map((answer) => (
+    .map((answer, index) => (
       <Answer
         checked
         isCorrect
         isEditable={false}
-        key={answer.text}
+        key={`${answer.text}-${index}`}
         label={answer.text}
         shouldShowCorrectness
         text={answer.text}
