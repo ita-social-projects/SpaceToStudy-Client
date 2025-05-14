@@ -13,6 +13,8 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 
 import useConfirm from '~/hooks/use-confirm'
+import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -27,13 +29,12 @@ import {
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 import {
   fetchUserById,
-  updateUser,
   EditProfileState
 } from '~/redux/features/editProfileSlice'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
-import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { userService } from '~/services/user-service'
 
 import { styles } from '~/pages/edit-profile/EditProfile.styles'
 import { getChangedFields } from '~/utils/get-changed-fields'
@@ -53,6 +54,8 @@ const EditProfile = () => {
   const activeTab = searchParams.get('tab') as UserProfileTabsEnum
 
   const { t } = useTranslation()
+
+  const { handleAlert, handleErrorAlert } = useSnackbarAlert()
 
   const dispatch = useAppDispatch()
 
@@ -163,6 +166,25 @@ const EditProfile = () => {
   const { hash, search, pathname } = useLocation()
   const navigate = useNavigate()
 
+  const updateUserProfile = useCallback(
+    (params: UpdateUserParams) => userService.updateUser(userId, params),
+    [userId]
+  )
+
+  const onUpdateUserSuccess = () => {
+    handleAlert({
+      severity: snackbarVariants.success,
+      message: 'editProfilePage.profile.successMessage'
+    })
+  }
+
+  const { mutateAsync: updateUser } = useMutation({
+    mutationFn: updateUserProfile,
+    queryKey: ['user', userId, userRole],
+    onSuccess: onUpdateUserSuccess,
+    onError: handleErrorAlert
+  })
+
   const handleUpdateUser = useCallback(async (): Promise<void> => {
     const { country, city } = profileState
     const {
@@ -205,25 +227,14 @@ const EditProfile = () => {
       dataWithoutEmptyStrings.photo = photo
     }
 
-    await dispatch(
-      updateUser({
-        userId,
-        params: dataWithoutEmptyStrings
-      })
-    )
-
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: 'editProfilePage.profile.successMessage'
-      })
-    )
+    await updateUser(dataWithoutEmptyStrings)
+    setIsModalConfirmed(true)
     setInitialEditProfileState(structuredClone(profileState))
 
     if (hash) {
       navigate(`${authRoutes.myProfile.path}#complete`)
     }
-  }, [profileState, changedFields, dispatch, userId, hash, userRole, navigate])
+  }, [profileState, changedFields, userRole, hash, navigate, updateUser])
 
   const blocker = useBlocker(getProfileTabChangedFields)
   const { openDialog } = useConfirm()
@@ -268,6 +279,8 @@ const EditProfile = () => {
       }
 
       openAffirmativeModal(hasPathnameChanged)
+    } else if (isModalConfirmed && blocker) {
+      blocker.proceed?.()
     }
   }, [
     blocker,
