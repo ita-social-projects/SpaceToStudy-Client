@@ -53,14 +53,12 @@ describe('QuizPage for student', () => {
       .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
     mockAxiosClient
-      .onGet(new RegExp(URLs.finishedQuizzes.getById.replace(':id', '')))
+      .onGet(new RegExp(URLs.attempts.getById.replace(':id', '')))
       .reply(200, mockQuiz)
     mockAxiosClient
-      .onGet(
-        new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
-      )
+      .onGet(new RegExp(URLs.attempts.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
-    mockAxiosClient.onPost(URLs.finishedQuizzes.add).reply(204, mockQuiz)
+    mockAxiosClient.onPost(URLs.attempts.add).reply(204, mockQuiz)
   })
 
   beforeEach(() => {
@@ -129,7 +127,7 @@ describe('Quiz tutor variant for tutor', () => {
     mockAxiosClient
       .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
-    mockAxiosClient.onPost(URLs.finishedQuizzes.add).reply(204, mockQuiz)
+    mockAxiosClient.onPost(URLs.attempts.add).reply(204, mockQuiz)
   })
 
   beforeEach(() => {

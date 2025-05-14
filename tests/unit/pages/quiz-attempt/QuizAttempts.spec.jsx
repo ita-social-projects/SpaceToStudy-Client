@@ -41,7 +41,7 @@ const mockQuiz = {
   description: 'Js'
 }
 
-const mockFinishedQuizzes = [
+const mockAttempts = [
   {
     _id: '67ba3be14ab9fe9998c7cacb',
     quiz: '67ba3bb14ab9fe9998c7ca7d',
@@ -95,21 +95,19 @@ describe('QuizPage for student', () => {
       .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
     mockAxiosClient
-      .onGet(URLs.finishedQuizzes.getById.replace(':id', ''))
+      .onGet(URLs.attempts.getById.replace(':id', ''))
       .reply(200, mockQuiz)
     mockAxiosClient
-      .onGet(
-        new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
-      )
+      .onGet(new RegExp(URLs.attempts.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
 
     mockAxiosClient
       .onGet(
-        URLs.finishedQuizzes.getByQuizId
+        URLs.attempts.getByQuizId
           .replace(':cooperationId', mockCooperationId)
           .replace(':quizId', mockQuizId)
       )
-      .reply(200, mockFinishedQuizzes)
+      .reply(200, mockAttempts)
   })
 
   beforeEach(() => {

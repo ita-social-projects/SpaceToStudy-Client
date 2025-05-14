@@ -49,13 +49,13 @@ const QuizAttemptsPage: React.FC = () => {
 
   const isTimeLimitNeeded = (timeLimit as string) != 'No limit'
 
-  const getFinishedQuizzes = useCallback(() => {
-    return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
+  const getAttempts = useCallback(() => {
+    return ResourceService.getAttemptByQuizId(cooperationId, quizId)
   }, [cooperationId, quizId])
 
-  const { data: finishedQuizzes = [] } = useQuery({
-    queryKey: ['finished-quizzes', cooperationId, quizId],
-    queryFn: getFinishedQuizzes,
+  const { data: attempts = [] } = useQuery({
+    queryKey: ['attempts', cooperationId, quizId],
+    queryFn: getAttempts,
     options: {
       staleTime: ONE_HOUR
     }
@@ -88,8 +88,8 @@ const QuizAttemptsPage: React.FC = () => {
   }
 
   const attemptsList =
-    finishedQuizzes.length !== 0 ? (
-      finishedQuizzes.map((item) => {
+    attempts.length !== 0 ? (
+      attempts.map((item) => {
         return (
           <Box key={item._id} sx={styles.attemptWrapper}>
             <QuizInfoSection
@@ -126,7 +126,7 @@ const QuizAttemptsPage: React.FC = () => {
         onStart={isTimeLimitNeeded ? openModal : handleStart}
         questionsAmount={items.length}
         timeLimit={timeLimit}
-        usedAttempts={finishedQuizzes.length}
+        usedAttempts={attempts.length}
       />
       <Divider sx={styles.divider} />
       {attemptsList}

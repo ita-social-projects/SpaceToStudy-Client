@@ -42,7 +42,7 @@ const ActiveQuiz: React.FC = () => {
   const { t } = useTranslation()
 
   const [isOpen, setIsOpen] = useState(false)
-  const [finishedQuizId, setFinishedQuizId] = useState('')
+  const [attemptId, setAttemptId] = useState('')
 
   const { handleInputChange, handleNonInputValueChange, data } = useForm<
     Record<string, string | string[]>
@@ -97,8 +97,8 @@ const ActiveQuiz: React.FC = () => {
     })
   }, [data, items])
 
-  const addFinishedQuiz = useCallback(() => {
-    return ResourceService.addFinishedQuiz({
+  const addAttempt = useCallback(() => {
+    return ResourceService.addAttempt({
       cooperation: cooperationId,
       quiz: quizId,
       grade,
@@ -108,14 +108,14 @@ const ActiveQuiz: React.FC = () => {
 
   const { handleErrorAlert, handleAlert } = useSnackbarAlert()
 
-  const { mutateAsync: createFinishedQuiz } = useMutation({
-    mutationFn: addFinishedQuiz,
-    queryKey: ['finished-quizzes'],
+  const { mutateAsync: createAttempt } = useMutation({
+    mutationFn: addAttempt,
+    queryKey: ['attempts'],
     onError: handleErrorAlert
   })
 
-  const editFinishedQuiz = useCallback(() => {
-    return ResourceService.editFinishedQuiz(finishedQuizId, {
+  const editAttempt = useCallback(() => {
+    return ResourceService.editAttempt(attemptId, {
       grade,
       results: items.map(({ text, answers, _id }) => {
         return {
@@ -130,11 +130,11 @@ const ActiveQuiz: React.FC = () => {
         }
       })
     })
-  }, [data, finishedQuizId, grade, items])
+  }, [data, attemptId, grade, items])
 
-  const { mutate: updateFinishedQuiz } = useMutation({
-    mutationFn: editFinishedQuiz,
-    queryKey: ['finished-quizzes'],
+  const { mutate: updateAttempt } = useMutation({
+    mutationFn: editAttempt,
+    queryKey: ['attempts'],
     onError: handleErrorAlert
   })
 
@@ -146,7 +146,7 @@ const ActiveQuiz: React.FC = () => {
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       isEditable
-      onNextButtonClick={updateFinishedQuiz}
+      onNextButtonClick={updateAttempt}
       questions={items}
       sx={styles.selectableQuestionQuizWrapper}
     />
@@ -165,7 +165,7 @@ const ActiveQuiz: React.FC = () => {
   }, [])
 
   const handleFinish = useCallback(() => {
-    updateFinishedQuiz()
+    updateAttempt()
     setIsOpen(false)
 
     handleAlert({
@@ -177,7 +177,7 @@ const ActiveQuiz: React.FC = () => {
       navigate(
         getFullUrl({
           pathname: authRoutes.cooperationQuizReview.route,
-          parameters: { id: cooperationId, quizId, attemptId: finishedQuizId }
+          parameters: { id: cooperationId, quizId, attemptId: attemptId }
         })
       )
     } else {
@@ -187,22 +187,22 @@ const ActiveQuiz: React.FC = () => {
     scoredResponses,
     cooperationId,
     quizId,
-    finishedQuizId,
+    attemptId,
     handleAlert,
     navigate,
-    updateFinishedQuiz
+    updateAttempt
   ])
 
   const questionsAnswered = Object.keys(data).length
 
   useEffect(() => {
-    const postFinishedQuiz = async () => {
-      const finishedQuiz = await createFinishedQuiz()
-      setFinishedQuizId(finishedQuiz?._id)
+    const postAttempt = async () => {
+      const attempt = await createAttempt()
+      setAttemptId(attempt?._id)
     }
 
-    void postFinishedQuiz()
-  }, [createFinishedQuiz])
+    void postAttempt()
+  }, [createAttempt])
 
   if (isLoading || !quiz) {
     return <Loader pageLoad />
@@ -241,16 +241,16 @@ const ActiveQuiz: React.FC = () => {
   )
 }
 
-type FinishedQuizProps = {
-  finishedQuizId: string
+type AttemptProps = {
+  attemptId: string
 }
 
-const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
+const Attempt: React.FC<AttemptProps> = ({ attemptId }) => {
   const { quizId = '' } = useParams()
 
-  const getFinishedQuiz = useCallback(() => {
-    return ResourceService.getFinishedQuiz(finishedQuizId)
-  }, [finishedQuizId])
+  const getAttempt = useCallback(() => {
+    return ResourceService.getAttempt(attemptId)
+  }, [attemptId])
 
   const { handleInputChange, handleNonInputValueChange } = useForm<
     Record<string, string | string[]>
@@ -262,9 +262,9 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     handleNonInputValueChange(key, value)
   }
 
-  const { data: finishedQuiz, isLoading: isFinishedQuizLoading } = useQuery({
-    queryKey: ['finished-quizzes', finishedQuizId],
-    queryFn: getFinishedQuiz
+  const { data: attempt, isLoading: isAttemptLoading } = useQuery({
+    queryKey: ['attempts', attemptId],
+    queryFn: getAttempt
   })
 
   const { quiz, isLoading: isQuizLoading } = useQuizQuery(quizId)
@@ -280,7 +280,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
 
   const mappedResults = useMemo(() => {
     const result: Record<string, string | string[]> = {}
-    finishedQuiz?.results?.forEach(({ question, answers }) => {
+    attempt?.results?.forEach(({ question, answers }) => {
       const quizQuestion = quiz?.items.find((item) => item.text === question)
       const quizQuestionId = quizQuestion?._id
 
@@ -294,7 +294,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     })
 
     return result
-  }, [finishedQuiz?.results, quiz?.items])
+  }, [attempt?.results, quiz?.items])
 
   const questionsBlock = isStepper ? (
     <SelectableQuestionQuizView
@@ -319,7 +319,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     />
   )
 
-  if (isFinishedQuizLoading || !finishedQuiz || isQuizLoading) {
+  if (isAttemptLoading || !attempt || isQuizLoading) {
     return <Loader pageLoad />
   }
 
@@ -327,13 +327,13 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
     <PageWrapper sx={styles.quizzesWrapper}>
       <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
         <QuizHeader
-          createdAt={finishedQuiz.createdAt}
+          createdAt={attempt.createdAt}
           description={description}
           points={items.length}
           title={title}
-          totalPoints={finishedQuiz.results?.length}
+          totalPoints={attempt.results?.length}
           type='finished'
-          updatedAt={finishedQuiz.updatedAt}
+          updatedAt={attempt.updatedAt}
         />
         <Divider sx={styles.divider} />
         {questionsBlock}
@@ -405,4 +405,4 @@ const TutorQuiz: React.FC = () => {
   )
 }
 
-export { ActiveQuiz, FinishedQuiz, TutorQuiz }
+export { ActiveQuiz, Attempt, TutorQuiz }
