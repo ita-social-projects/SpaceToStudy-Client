@@ -163,7 +163,7 @@ const EditProfile = () => {
     }
   }
 
-  const { search, pathname } = useLocation()
+  const { hash, search, pathname } = useLocation()
   const navigate = useNavigate()
 
   const updateUserProfile = useCallback(
@@ -231,10 +231,10 @@ const EditProfile = () => {
     setIsModalConfirmed(true)
     setInitialEditProfileState(structuredClone(profileState))
 
-    navigate(`${authRoutes.myProfile.path}#complete`, {
-      state: { refresh: true }
-    })
-  }, [profileState, changedFields, userRole, navigate, updateUser])
+    if (hash) {
+      navigate(`${authRoutes.myProfile.path}#complete`)
+    }
+  }, [profileState, changedFields, userRole, hash, navigate, updateUser])
 
   const blocker = useBlocker(getProfileTabChangedFields)
   const { openDialog } = useConfirm()
