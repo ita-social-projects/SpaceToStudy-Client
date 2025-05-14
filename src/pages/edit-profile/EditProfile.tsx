@@ -164,7 +164,6 @@ const EditProfile = () => {
   const navigate = useNavigate()
 
   const handleUpdateUser = useCallback(async (): Promise<void> => {
-    const { country, city } = profileState
     const {
       videoLink,
       notificationSettings,
@@ -172,12 +171,18 @@ const EditProfile = () => {
       aboutStudent,
       categories,
       photo,
+      country,
+      city,
       ...rest
     } = changedFields
 
     const dataToUpdate: UpdateUserParams = rest
 
-    if (city && country) dataToUpdate.address = { city, country }
+    if (city || country)
+      dataToUpdate.address = {
+        city: city ?? '',
+        country: country ?? ''
+      }
 
     if (videoLink) {
       const updatedVideolink = videoLink[userRole as keyof DataByRole<string>]
@@ -205,20 +210,29 @@ const EditProfile = () => {
       dataWithoutEmptyStrings.photo = photo
     }
 
-    await dispatch(
+    const updateUserResult = await dispatch(
       updateUser({
         userId,
         params: dataWithoutEmptyStrings
       })
     )
 
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: 'editProfilePage.profile.successMessage'
-      })
-    )
-    setInitialEditProfileState(structuredClone(profileState))
+    if (updateUserResult.meta.requestStatus === 'fulfilled') {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: 'editProfilePage.profile.successMessage'
+        })
+      )
+      setInitialEditProfileState(structuredClone(profileState))
+    } else {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: 'editProfilePage.profile.generalTab.errorTooltip'
+        })
+      )
+    }
 
     if (hash) {
       navigate(`${authRoutes.myProfile.path}#complete`)

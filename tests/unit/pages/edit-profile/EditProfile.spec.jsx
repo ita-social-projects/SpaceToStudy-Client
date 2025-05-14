@@ -250,6 +250,10 @@ describe('EditProfile', () => {
   beforeEach(async () => {
     useAppSelector.mockImplementation((selector) => selector(mockState))
 
+    mockDispatch.mockResolvedValue({
+      meta: { requestStatus: 'fulfilled' }
+    })
+
     mockAxiosClient
       .onGet(`${URLs.users.get}/${userId}?role=${userRole}&isEdit=true`)
       .reply(200, userMock)
@@ -441,6 +445,32 @@ describe('EditProfile', () => {
       expect(openAlert).toHaveBeenCalledWith({
         severity: snackbarVariants.success,
         message: 'editProfilePage.profile.successMessage'
+      })
+    })
+  })
+
+  it('should display an error alert on the Update click and unsuccessful update of the profile data', async () => {
+    useAppSelector.mockImplementation((selector) =>
+      selector({
+        ...mockState,
+        editProfile: {
+          ...mockState.editProfile,
+          profileState: { ...userMock, lastName: 'Cena' },
+          loading: LoadingStatusEnum.Fulfilled
+        }
+      })
+    )
+
+    mockDispatch.mockResolvedValue({
+      meta: { requestStatus: 'rejected' }
+    })
+    const updateBtn = screen.getByText('editProfilePage.updateBtn')
+    fireEvent.click(updateBtn)
+
+    await waitFor(() => {
+      expect(openAlert).toHaveBeenCalledWith({
+        severity: snackbarVariants.error,
+        message: 'editProfilePage.profile.generalTab.errorTooltip'
       })
     })
   })
