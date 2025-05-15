@@ -1,15 +1,15 @@
 import { describe, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+import { renderWithProviders } from '~tests/test-utils'
 
 import { UserRoleEnum } from '~/types/user/user.index'
-import userEvent from '@testing-library/user-event'
 
 import AddReviewModal from '~/containers/my-cooperations/add-review-modal/AddReviewModal'
 
-const callbackMocks = {
-  dispatch: vi.fn(),
-  closeModal: vi.fn()
-}
+const dispatchMock = vi.fn()
+const closeModalMock = vi.fn()
 
 const inputProps = {
   data: {
@@ -29,31 +29,39 @@ vi.mock('~/hooks/use-redux', () => ({
   useAppSelector: () => ({
     userRole: UserRoleEnum.Tutor
   }),
-  useAppDispatch: () => callbackMocks.dispatch
+  useAppDispatch: () => dispatchMock
 }))
 
-vi.mock('~/context/modal-context', () => ({
-  useModalContext: () => ({
-    closeModal: callbackMocks.closeModal
-  })
-}))
+vi.mock('~/context/modal-context', async () => {
+  const actual = await vi.importActual('~/context/modal-context')
+  return {
+    ...actual,
+    useModalContext: () => ({
+      closeModal: closeModalMock
+    })
+  }
+})
 
 vi.mock('~/hooks/use-mutation', () => ({
   default: ({ onSuccess, onError }) => ({
-    mutate: (ReviewData) => {
-      if (ReviewData.comment != 'error-trigger') {
-        onSuccess()
-      } else {
+    mutate: (reviewData) => {
+      if (reviewData.comment === 'error-trigger') {
         onError()
+      } else {
+        onSuccess()
       }
     }
   })
 }))
 
 describe('AddReviewModal component', () => {
-  it('should render title, description, rating input, textfield, close modal button, submit button', () => {
-    render(<AddReviewModal {...inputProps} />)
+  beforeEach(() => {
+    renderWithProviders(<AddReviewModal {...inputProps} />)
 
+    vi.clearAllMocks()
+  })
+
+  it('should render title, description, rating input, textfield, close modal button, submit button', () => {
     expect(
       screen.getByText('cooperationsPage.cooperationDetails.reviewTitle')
     ).toBeInTheDocument()
@@ -84,8 +92,6 @@ describe('AddReviewModal component', () => {
   })
 
   it('should use dispatch and closeModal on successful submit', async () => {
-    render(<AddReviewModal {...inputProps} />)
-
     const rating = screen.getByTestId('rating-field')
     await userEvent.click(rating.querySelectorAll('input')[3])
 
@@ -99,14 +105,12 @@ describe('AddReviewModal component', () => {
     )
     await userEvent.click(submitButton)
 
-    expect(callbackMocks.dispatch).toHaveBeenCalled()
+    expect(dispatchMock).toHaveBeenCalled()
 
-    expect(callbackMocks.closeModal).toHaveBeenCalled()
+    expect(closeModalMock).toHaveBeenCalled()
   })
 
   it('should use dispatch on failed submit', async () => {
-    render(<AddReviewModal {...inputProps} />)
-
     const rating = screen.getByTestId('rating-field')
     await userEvent.click(rating.querySelectorAll('input')[3])
 
@@ -120,17 +124,15 @@ describe('AddReviewModal component', () => {
     )
     await userEvent.click(submitButton)
 
-    expect(callbackMocks.dispatch).toHaveBeenCalled()
+    expect(dispatchMock).toHaveBeenCalled()
   })
 
   it('should call closeModal on close modal button click', async () => {
-    render(<AddReviewModal {...inputProps} />)
-
     const closeButton = screen.getByText(
       'cooperationsPage.cooperationDetails.cancel'
     )
     await userEvent.click(closeButton)
 
-    expect(callbackMocks.closeModal).toHaveBeenCalled()
+    expect(closeModalMock).toHaveBeenCalled()
   })
 })
