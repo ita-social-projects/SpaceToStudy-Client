@@ -119,6 +119,25 @@ describe('ProfessionalInfoTab', () => {
 
     expect(mockOpenModal).toHaveBeenCalled()
   })
+  it('should properly render Ukrainian translation keys for student', () => {
+    const categoriesTitle = screen.getByText(
+      'editProfilePage.profile.professionalTab.categoriesTitle'
+    )
+    expect(categoriesTitle).toBeInTheDocument()
+
+    const studentAboutTitle = screen.getByText(
+      'editProfilePage.profile.professionalTab.studentAboutTitle'
+    )
+    expect(studentAboutTitle).toBeInTheDocument()
+
+    const addCategoryButton = screen.getByText(
+      'editProfilePage.profile.professionalTab.addCategoryBtn'
+    )
+    expect(addCategoryButton).toBeInTheDocument()
+
+    fireEvent.click(addCategoryButton)
+    expect(mockOpenModal).toHaveBeenCalled()
+  })
 })
 
 describe('ProfessionalInfoTab for tutor', () => {
@@ -151,6 +170,30 @@ describe('ProfessionalInfoTab for tutor', () => {
 
     fireEvent.click(editButton)
 
+    expect(mockOpenModal).toHaveBeenCalled()
+  })
+  it('should properly render Ukrainian translation keys for tutor', () => {
+    const categoriesTitle = screen.getByText(
+      'editProfilePage.profile.professionalTab.categoriesTitle'
+    )
+    expect(categoriesTitle).toBeInTheDocument()
+
+    const tutorAboutTitle = screen.getByText(
+      'editProfilePage.profile.professionalTab.tutorAboutTitle'
+    )
+    expect(tutorAboutTitle).toBeInTheDocument()
+
+    const tutorAboutDescription = screen.getByText(
+      'editProfilePage.profile.professionalTab.tutorAboutDescription'
+    )
+    expect(tutorAboutDescription).toBeInTheDocument()
+
+    const addCategoryButton = screen.getByText(
+      'editProfilePage.profile.professionalTab.addCategoryBtn'
+    )
+    expect(addCategoryButton).toBeInTheDocument()
+
+    fireEvent.click(addCategoryButton)
     expect(mockOpenModal).toHaveBeenCalled()
   })
 })
