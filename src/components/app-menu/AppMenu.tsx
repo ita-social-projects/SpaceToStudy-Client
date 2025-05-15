@@ -1,4 +1,5 @@
 import Menu from '~/design-system/components/menu/Menu'
+import { MenuItemColorVariant } from '~/design-system/components/menu-item/MenuItem.constants'
 
 interface AppMenuProps {
   anchorEl: HTMLElement | null
@@ -8,24 +9,30 @@ interface AppMenuProps {
     graphics?: JSX.Element
     sx?: object
     isDisabled?: boolean
+    colorVariant?: MenuItemColorVariant
+    density?: 1 | 2
   }[]
   onClose: () => void
-  open?: boolean
-  sx?: object
   maxHeight?: number
+  minWidth?: number
 }
 
-const AppMenu = ({ anchorEl, menuList, onClose }: AppMenuProps) => {
+const AppMenu = ({
+  anchorEl,
+  menuList,
+  onClose,
+  minWidth = 200,
+  maxHeight = 400
+}: AppMenuProps) => {
   return (
     <Menu
       anchorEl={anchorEl}
-      maxHeight={400}
+      maxHeight={maxHeight}
       menuItems={menuList.map((item) => ({
         ...item,
-        sx: item.sx,
         disabled: item.isDisabled
       }))}
-      minWidth={200}
+      minWidth={minWidth}
       removeAllItemsTitle='Remove All'
       setAnchorEl={onClose}
     />

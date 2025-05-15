@@ -36,6 +36,7 @@ const AccountMenu: FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
           navigate(item.path)
           onClose()
         },
+        density: 2 as const,
         sx: styles.menuItem
       })),
       {
@@ -53,14 +54,7 @@ const AccountMenu: FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
     ]
   })()
 
-  return (
-    <AppMenu
-      anchorEl={anchorEl}
-      menuList={menuList}
-      onClose={onClose}
-      open={Boolean(anchorEl)}
-    />
-  )
+  return <AppMenu anchorEl={anchorEl} menuList={menuList} onClose={onClose} />
 }
 
 export default AccountMenu

@@ -85,7 +85,7 @@ const NotificationsMenu: FC<NotificationsMenuProps> = ({
       maxHeight={264}
       menuList={items.length ? menuList : [emptyNotifications]}
       onClose={onClose}
-      open={Boolean(anchorEl)}
+      // open={Boolean(anchorEl)}
     />
   )
 }

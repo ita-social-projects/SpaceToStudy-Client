@@ -10,6 +10,10 @@ import { messageService } from '~/services/message-service'
 
 import { styles } from '~/containers/layout/chat-menu/ChatMenu.styles'
 import { ChatResponse } from '~/types'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { snackbarVariants } from '~/constants'
+import { MenuItemColorVariant } from '~/design-system/components/menu-item/MenuItem.constants'
 
 interface ChatMenuProps {
   anchorEl: HTMLElement | null
@@ -18,7 +22,6 @@ interface ChatMenuProps {
   onClose: () => void
   updateChats: () => Promise<void>
   updateMessages: () => Promise<void>
-  isHistoryCleared: boolean
   setIsHistoryCleared: (value: boolean) => void
 }
 
@@ -33,6 +36,7 @@ const ChatMenu: FC<ChatMenuProps> = ({
 }) => {
   const { t } = useTranslation()
   const { openDialog } = useConfirm()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     setIsHistoryCleared(messagesLength === 0)
@@ -46,7 +50,12 @@ const ChatMenu: FC<ChatMenuProps> = ({
       await updateChats()
       setIsHistoryCleared(true)
     } catch (error) {
-      console.error('Error during clearing chat history:', error)
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: t('Error during deletion:')
+        })
+      )
     } finally {
       onClose()
     }
@@ -67,7 +76,12 @@ const ChatMenu: FC<ChatMenuProps> = ({
       }
       await updateChats()
     } catch (error) {
-      console.error('Error during deletion:', error)
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: t('Error during deletion:')
+        })
+      )
     } finally {
       onClose()
     }
@@ -103,14 +117,17 @@ const ChatMenu: FC<ChatMenuProps> = ({
       onClick: () => onClearHistory(currentChat._id),
       graphics: <UpdateDisabledIcon />,
       sx: styles.menuItem(false),
-      isDisabled: messagesLength === 0
+      isDisabled: messagesLength === 0,
+      density: 2 as const
     },
     {
       title: t('chatPage.chatMenu.deleteChat'),
       onClick: () => onDelete(currentChat._id),
       graphics: <DeleteOutlineIcon />,
       sx: styles.menuItem(true),
-      isDisabled: false
+      isDisabled: false,
+      density: 2 as const,
+      colorVariant: 'danger' as MenuItemColorVariant
     }
   ]
 
@@ -120,7 +137,6 @@ const ChatMenu: FC<ChatMenuProps> = ({
       key={messagesLength}
       menuList={menuList}
       onClose={onClose}
-      open={Boolean(anchorEl)}
     />
   )
 }
