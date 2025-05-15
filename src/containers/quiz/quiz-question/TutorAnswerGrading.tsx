@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from '~/containers/quiz/quiz-question/Question.styles'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { ResourceService } from '~/services/resource-service'
 import { useParams } from 'react-router-dom'
 import useQuery from '~/hooks/use-query'
@@ -26,7 +26,6 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
 }) => {
   const { t } = useTranslation()
   const { id: cooperationId = '', quizId = '', attemptId = '' } = useParams()
-  const [isCorrect, setIsCorrect] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
   const getFinishedQuizzes = useCallback(() => {
@@ -53,52 +52,15 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
       if (!questionResult) {
         return
       }
+
+      if (questionResult.answers.length === 0) {
+        onUpdate?.(false)
+        return
+      }
       const currentIsCorrect = questionResult.answers[0].isCorrect
-      setIsCorrect(currentIsCorrect)
       onUpdate?.(currentIsCorrect)
     }
   }, [finishedQuizzes, attemptId, questionText, isLoading, onUpdate])
-
-  const handleGradeUpdate = useCallback(
-    (newIsCorrect: boolean) => {
-      const finishedQuiz = finishedQuizzes.find(
-        (quiz) => quiz._id === attemptId
-      )
-
-      if (!finishedQuiz) {
-        return
-      }
-
-      const updatedResults = finishedQuiz.results.map((result) =>
-        result.question === questionText
-          ? {
-              ...result,
-              answers: result.answers.map((answer) => ({
-                ...answer,
-                isCorrect: newIsCorrect,
-                isChosen: true
-              }))
-            }
-          : result
-      )
-
-      const totalQuestions = updatedResults.length
-      const correctAnswers = updatedResults.reduce((total, result) => {
-        const isCorrect = result.answers.some((answer) => answer.isCorrect)
-        return total + (isCorrect ? 1 : 0)
-      }, 0)
-      const newGrade = Math.round((correctAnswers / totalQuestions) * 100)
-
-      onUpdate?.(isCorrect)
-
-      return {
-        ...finishedQuiz,
-        results: updatedResults,
-        grade: newGrade
-      }
-    },
-    [finishedQuizzes, onUpdate, isCorrect, attemptId, questionText]
-  )
 
   const onResponseError = (error?: ErrorResponse) => {
     dispatch(
@@ -118,26 +80,33 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
     )
   }
 
-  const handleUpdateGrade = useCallback(
-    async (newIsCorrect: boolean) => {
-      const updatedQuiz = handleGradeUpdate(newIsCorrect)
-      if (!updatedQuiz) {
-        throw QuizErrors.QUIZ_NOT_FOUND_TO_UPDATE
-      }
-      return ResourceService.editFinishedQuiz(attemptId, updatedQuiz)
-    },
-    [handleGradeUpdate, attemptId]
-  )
+  const updateFinishedQuizAttempt = async (
+    attemptId: string,
+    questionText?: string,
+    newIsCorrect?: boolean
+  ) => {
+    if (!attemptId || !questionText || newIsCorrect === undefined) {
+      throw QuizErrors.QUIZ_NOT_FOUND_TO_UPDATE
+    }
+
+    return ResourceService.editFinishedQuiz(attemptId, {
+      questionText,
+      newIsCorrect
+    })
+  }
 
   const { mutate: updateAttempt } = useMutation({
-    mutationFn: handleUpdateGrade,
+    mutationFn: (newIsCorrect: boolean) =>
+      updateFinishedQuizAttempt(attemptId, questionText, newIsCorrect),
     onError: onResponseError,
     onSuccess: onResponseSuccess,
-    queryKey: ['finished-quizzes', attemptId]
+    queryKeys: [
+      ['finished-quizzes', cooperationId, quizId],
+      ['finished-quizzes', attemptId]
+    ]
   })
 
   const handleCorrectAnswer = (newIsCorrect: boolean) => {
-    setIsCorrect(newIsCorrect)
     onUpdate?.(newIsCorrect)
     updateAttempt(newIsCorrect)
   }

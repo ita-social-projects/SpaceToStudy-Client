@@ -10,7 +10,7 @@ interface Props {
 }
 
 const AnswerCorrectnessIcon: React.FC<Props> = ({ isCorrect, shouldShow }) => {
-  if (!shouldShow || isCorrect === null) return null
+  if (!shouldShow || isCorrect == null) return null
 
   return isCorrect ? (
     <CheckIcon sx={styles.icon(AnswerStatusEnum.Correct)} />
