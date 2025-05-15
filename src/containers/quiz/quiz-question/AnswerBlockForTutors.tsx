@@ -12,7 +12,7 @@ interface Props {
   value: string | string[] | null
   isEditable?: boolean
   shouldShowAnswersCorrectness?: boolean
-  isAnswerCorrect?: boolean
+  isAnswerCorrect?: boolean | null
   handleInputChange: ChangeEventHandler
   handleNonInputValueChange: (value: string | string[]) => void
   onGradeChange: (isCorrect: boolean) => void

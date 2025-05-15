@@ -22,7 +22,7 @@ import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types
 
 interface AnswerProps {
   text: string
-  isCorrect?: boolean
+  isCorrect?: boolean | null
   value?: string
   label?: string
   checked?: boolean

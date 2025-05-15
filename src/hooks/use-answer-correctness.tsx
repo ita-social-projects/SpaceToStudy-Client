@@ -14,9 +14,7 @@ export function useAnswerCorrectness(
   const initialIsCorrect = checkAnswerCorrectness(question, value)
   const { isOpenAnswer } = determineQuestionType(question.type)
 
-  const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | undefined>(
-    undefined
-  )
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null)
 
   const getFinishedQuiz = () => {
     return ResourceService.getFinishedQuiz(attemptId)

@@ -81,7 +81,7 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
   )
 
   const pointsBlock =
-    shouldShowPoints && isAnswerCorrect !== undefined ? (
+    shouldShowPoints && isAnswerCorrect !== null ? (
       <Typography sx={styles.type}>
         {isAnswerCorrect ? CORRECT_ANSWER_POINTS : INCORRECT_ANSWER_POINTS}
       </Typography>

@@ -12,7 +12,7 @@ interface Props {
   value: string | string[] | null
   isEditable?: boolean
   shouldShowAnswersCorrectness?: boolean
-  isAnswerCorrect?: boolean
+  isAnswerCorrect?: boolean | null
   handleInputChange: ChangeEventHandler
   handleNonInputValueChange: (value: string | string[]) => void
 }
@@ -32,7 +32,7 @@ const QuestionAnswersBlock: React.FC<Props> = ({
   const { isMultipleChoice, isOpenAnswer } = determineQuestionType(type)
 
   const answerSx =
-    isAnswerCorrect === undefined
+    isAnswerCorrect === null
       ? {}
       : { backgroundColor: isAnswerCorrect ? 'success.50' : 'error.50' }
 
