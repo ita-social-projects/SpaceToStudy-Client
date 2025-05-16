@@ -69,14 +69,14 @@ const ActiveQuizInfo: React.FC<ActiveQuizInfoProps> = ({
   )
 }
 
-type FinishedQuizInfoProps = {
+type AttemptInfoProps = {
   points: number
   totalPoints: number
   createdAt: string
   updatedAt: string
 }
 
-const FinishedQuizInfo: React.FC<FinishedQuizInfoProps> = ({
+const AttemptInfo: React.FC<AttemptInfoProps> = ({
   points,
   totalPoints,
   createdAt,
@@ -254,4 +254,4 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
   )
 }
 
-export { ActiveQuizInfo, FinishedQuizInfo, TutorQuizInfo, StartViewQuizInfo }
+export { ActiveQuizInfo, AttemptInfo, TutorQuizInfo, StartViewQuizInfo }

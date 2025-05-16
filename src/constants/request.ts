@@ -126,12 +126,12 @@ export const URLs = {
     patch: '/quizzes/:id',
     delete: '/quizzes/:id'
   },
-  finishedQuizzes: {
-    add: '/finished-quizzes',
-    patch: '/finished-quizzes/:id',
-    get: '/finished-quizzes',
-    getById: '/finished-quizzes/:id',
-    getByQuizId: '/finished-quizzes/:cooperationId/:quizId'
+  attempts: {
+    add: '/quizzes/attempts',
+    patch: '/quizzes/attempts/:id',
+    get: '/quizzes/attempts',
+    getById: '/quizzes/attempts/:id',
+    getByQuizId: '/quizzes/attempts/:cooperationId/:quizId'
   },
   attachments: {
     post: '/attachments'

@@ -1,12 +1,14 @@
 import { beforeAll, beforeEach, expect, vi } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import QuizAttemptsPage from '~/pages/quiz-attempts/QuizAttempts'
+import { Attempt } from '~/pages/quiz/QuizVariants'
 import { ResourcesTypesEnum as ResourceType, UserRoleEnum } from '~/types'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
 const mockQuizId = '6641388f36ebdb0432a3a2e5'
 const mockCooperationId = '67ba3b3e4ab9fe9998c7ca2b'
+const mockAttemptId = '67ba3be14ab9fe9998c7cacb'
 
 const mockQuiz = {
   _id: mockQuizId,
@@ -41,15 +43,16 @@ const mockQuiz = {
   description: 'Js'
 }
 
-const mockFinishedQuizzes = [
+const mockAttempts = [
   {
-    _id: '67ba3be14ab9fe9998c7cacb',
-    quiz: '67ba3bb14ab9fe9998c7ca7d',
+    _id: mockAttemptId,
+    quiz: mockQuizId,
     cooperation: mockCooperationId,
     grade: 100,
     results: [
       {
-        question: 'Question 1',
+        question:
+          'What is the difference between function expression and function declaration?',
         answers: [
           {
             text: 'Correct',
@@ -95,21 +98,19 @@ describe('QuizPage for student', () => {
       .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
     mockAxiosClient
-      .onGet(URLs.finishedQuizzes.getById.replace(':id', ''))
+      .onGet(URLs.attempts.getById.replace(':id', ''))
       .reply(200, mockQuiz)
     mockAxiosClient
-      .onGet(
-        new RegExp(URLs.finishedQuizzes.getById.replace(':id', mockQuizId))
-      )
+      .onGet(new RegExp(URLs.attempts.getById.replace(':id', mockQuizId)))
       .reply(200, mockQuiz)
 
     mockAxiosClient
       .onGet(
-        URLs.finishedQuizzes.getByQuizId
+        URLs.attempts.getByQuizId
           .replace(':cooperationId', mockCooperationId)
           .replace(':quizId', mockQuizId)
       )
-      .reply(200, mockFinishedQuizzes)
+      .reply(200, mockAttempts)
   })
 
   beforeEach(() => {
@@ -130,5 +131,40 @@ describe('QuizPage for student', () => {
 
     const quizTitle = await screen.findByText('JS Quiz')
     expect(quizTitle).toBeInTheDocument()
+  })
+})
+
+describe('Attempt page', () => {
+  beforeEach(() => {
+    mockUseParams.mockReturnValue({
+      id: mockCooperationId,
+      quizId: mockQuizId
+    })
+  })
+
+  beforeAll(() => {
+    mockAxiosClient
+      .onGet(new RegExp(URLs.attempts.getById.replace(':id', mockAttemptId)))
+      .reply(200, mockQuiz)
+
+    mockAxiosClient
+      .onGet(new RegExp(URLs.quizzes.getById.replace(':id', mockQuizId)))
+      .reply(200, mockQuiz)
+  })
+
+  beforeEach(() => {
+    renderWithProviders(<Attempt attemptId={mockAttemptId} />)
+  })
+
+  it('should render quiz title and description after loading', async () => {
+    const quizTitle = await screen.findByText('JS Quiz')
+    expect(quizTitle).toBeInTheDocument()
+  })
+
+  it('should render quiz attempt question', async () => {
+    const quizQuestion = await screen.findByText(
+      'What is the difference between function expression and function declaration?'
+    )
+    expect(quizQuestion).toBeInTheDocument()
   })
 })

@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 
 import {
   ActiveQuizInfo,
-  FinishedQuizInfo,
+  AttemptInfo,
   TutorQuizInfo
 } from '~/containers/quiz/quiz-info/QuizInfo'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -51,7 +51,7 @@ const QuizHeader: React.FC<QuizHeaderProps> = ({
 
     if (type === 'finished') {
       return (
-        <FinishedQuizInfo
+        <AttemptInfo
           createdAt={createdAt}
           points={points}
           totalPoints={totalPoints}

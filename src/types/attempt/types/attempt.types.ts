@@ -11,16 +11,16 @@ export type Result = {
   answers: Answer[]
 }
 
-export type CreateFinishedQuizParams = {
+export type CreateAttemptParams = {
   quiz: string
   cooperation: string
   grade: number
   results: Result[]
 }
 
-export type UpdateFinishedQuizParams = {
+export type UpdateAttemptParams = {
   grade: number
   results: Result[]
 }
 
-export type FinishedQuiz = CreateFinishedQuizParams & CommonEntityFields
+export type Attempt = CreateAttemptParams & CommonEntityFields

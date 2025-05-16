@@ -20,13 +20,13 @@ import {
   CreateCategoriesParams,
   UpdateQuestionParams,
   CreateQuizParams,
-  type CreateFinishedQuizParams,
-  type UpdateFinishedQuizParams,
+  type CreateAttemptParams,
+  type UpdateAttemptParams,
   Quiz,
   UpdateQuizParams,
   ApiMethodEnum,
   GetQuestion,
-  type FinishedQuiz,
+  type Attempt,
   type FinishedAttempts
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
@@ -132,37 +132,37 @@ export const ResourceService = {
       })
     })
   },
-  addFinishedQuiz: async (data: CreateFinishedQuizParams) => {
-    return baseService.request<FinishedQuiz>({
+  addAttempt: async (data: CreateAttemptParams) => {
+    return baseService.request<Attempt>({
       method: 'POST',
-      url: URLs.finishedQuizzes.add,
+      url: URLs.attempts.add,
       data
     })
   },
-  editFinishedQuiz: (id: string, data: UpdateFinishedQuizParams) => {
+  editAttempt: (id: string, data: UpdateAttemptParams) => {
     return baseService.request<void>({
       method: 'PATCH',
       url: getFullUrl({
-        pathname: URLs.finishedQuizzes.patch,
+        pathname: URLs.attempts.patch,
         parameters: { id }
       }),
       data
     })
   },
-  getFinishedQuiz: async (id: string) => {
-    return baseService.request<FinishedQuiz>({
+  getAttempt: async (id: string) => {
+    return baseService.request<Attempt>({
       method: 'GET',
       url: getFullUrl({
-        pathname: URLs.finishedQuizzes.getById,
+        pathname: URLs.attempts.getById,
         parameters: { id }
       })
     })
   },
-  getFinishedQuizzesByQuizId: (cooperationId: string, quizId: string) => {
+  getAttemptByQuizId: (cooperationId: string, quizId: string) => {
     return baseService.request<FinishedAttempts>({
       method: 'GET',
       url: getFullUrl({
-        pathname: URLs.finishedQuizzes.getByQuizId,
+        pathname: URLs.attempts.getByQuizId,
         parameters: { cooperationId, quizId }
       })
     })

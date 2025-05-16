@@ -1,4 +1,4 @@
-import { type FinishedQuiz } from '~/types/finished-quizzes/types/finishedQuizzes.types'
+import { type Attempt } from '~/types/attempt/types/attempt.types'
 import {
   CommonEntityFields,
   UserResponse,
@@ -40,4 +40,4 @@ export interface UpdateQuizParams
   id: string
 }
 
-export type FinishedAttempts = FinishedQuiz[]
+export type FinishedAttempts = Attempt[]
