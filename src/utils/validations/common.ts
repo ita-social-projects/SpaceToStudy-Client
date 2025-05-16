@@ -7,7 +7,7 @@ interface Validations {
   email: (value: string) => string
 }
 
-const validations: Validations = {
+export const validations: Validations = {
   nameField: (value) => {
     if (value.length > 30) {
       return 'common.errorMessages.nameLength'
@@ -27,8 +27,8 @@ const validations: Validations = {
     return ''
   },
   password: (value) => {
-    if (!validationPatterns.passwordAlphabeticAndNumeric.test(value)) {
-      return 'common.errorMessages.passwordAlphabeticAndNumeric'
+    if (!validationPatterns.passwordComplex.test(value)) {
+      return 'common.errorMessages.passwordComplex'
     }
     if (!validationPatterns.passwordValid.test(value)) {
       return 'common.errorMessages.passwordValidSymbols'

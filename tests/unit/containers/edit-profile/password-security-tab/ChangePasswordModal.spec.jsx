@@ -1,4 +1,4 @@
-import { vi } from 'vitest'
+import { it, vi } from 'vitest'
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import {
   renderWithProviders,
@@ -10,7 +10,11 @@ import { AuthService } from '~/services/auth-service'
 import { URLs } from '~/constants/request'
 const userDataMock = {
   _id: 123456,
-  currentPassword: '12345qwert'
+  currentPassword: '12345qwert!',
+  anotherPassword: '12345qwertY!',
+  shortPassword: '1q!',
+  longPassword:
+    '2231234123434324refsdfdsa32@!3245gdfg2231234123434324refsdfdsa32@!3245gdfg'
 }
 
 const handleSubmit = vi.fn()
@@ -57,13 +61,13 @@ describe('ChangePasswordModal', () => {
     )
 
     fireEvent.change(currentPasswordInput, {
-      target: { value: '12345qwert' }
+      target: { value: userDataMock.currentPassword }
     })
     fireEvent.change(passwordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: userDataMock.anotherPassword }
     })
     fireEvent.change(confirmPasswordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: userDataMock.anotherPassword }
     })
 
     fireEvent.click(saveButton)
@@ -75,8 +79,8 @@ describe('ChangePasswordModal', () => {
       expect(AuthService.changePassword).toHaveBeenCalledWith(
         userDataMock._id,
         {
-          password: '12345qwertY',
-          currentPassword: '12345qwert'
+          currentPassword: userDataMock.currentPassword,
+          password: userDataMock.anotherPassword
         }
       )
     })
@@ -103,13 +107,13 @@ describe('ChangePasswordModal', () => {
     )
 
     fireEvent.change(currentPasswordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: userDataMock.currentPassword }
     })
     fireEvent.change(passwordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: userDataMock.currentPassword }
     })
     fireEvent.change(confirmPasswordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: userDataMock.currentPassword }
     })
 
     fireEvent.click(saveButton)
@@ -188,20 +192,18 @@ describe('ChangePasswordModal', () => {
     fireEvent.change(currentPasswordInput, { target: { value: 'oldPassword' } })
     expect(currentPasswordInput).toHaveValue('oldPassword')
   })
+
   it('should display an error message for incorrect current password', async () => {
-    AuthService.changePassword.mockImplementation((_id, data) => {
-      if (data.currentPassword !== userDataMock.currentPassword) {
-        return Promise.reject({
-          response: {
-            status: 400,
-            data: {
-              code: 'WRONG_CURRENT_PASSWORD',
-              message: 'Wrong current password'
-            }
+    AuthService.changePassword.mockImplementation(() => {
+      return Promise.reject({
+        response: {
+          status: 400,
+          data: {
+            code: 'WRONG_CURRENT_PASSWORD',
+            message: 'Wrong current password'
           }
-        })
-      }
-      return Promise.resolve()
+        }
+      })
     })
 
     const currentPasswordInput = screen.getByLabelText(
@@ -211,13 +213,13 @@ describe('ChangePasswordModal', () => {
       /editProfilePage.profile.passwordSecurityTab.savePassword/i
     )
     fireEvent.change(currentPasswordInput, {
-      target: { value: 'wrongPassword1' }
+      target: { value: 'wrongPassword1!' }
     })
     fireEvent.change(screen.getByLabelText(/newPassword/i), {
-      target: { value: '12345qwertY' }
+      target: { value: userDataMock.anotherPassword }
     })
     fireEvent.change(screen.getByLabelText(/retypePassword/i), {
-      target: { value: '12345qwertY' }
+      target: { value: userDataMock.anotherPassword }
     })
 
     fireEvent.click(saveButton)
@@ -241,13 +243,13 @@ describe('ChangePasswordModal', () => {
     const saveButton = screen.getByText(/savePassword/i)
 
     fireEvent.change(currentPasswordInput, {
-      target: { value: 'samePassword123' }
+      target: { value: userDataMock.currentPassword }
     })
     fireEvent.change(passwordInput, {
-      target: { value: 'samePassword123' }
+      target: { value: userDataMock.currentPassword }
     })
     fireEvent.change(confirmPasswordInput, {
-      target: { value: 'samePassword123' }
+      target: { value: userDataMock.currentPassword }
     })
 
     fireEvent.click(saveButton)
@@ -256,6 +258,7 @@ describe('ChangePasswordModal', () => {
       screen.getByText(/common.errorMessages.currentAndNewPasswordsMatch/i)
     ).toBeInTheDocument()
   })
+
   it('should show error when new password does not match re-typed password', () => {
     const currentPasswordInput = screen.getByLabelText(/currentPassword/i)
     const passwordInput = screen.getByLabelText(/newPassword/i)
@@ -281,20 +284,28 @@ describe('ChangePasswordModal', () => {
       /\bMui-error\b/
     )
   })
-  it('should throw an error at entering alphabetic values', async () => {
+
+  it('should throw an error when password is too weak', async () => {
     const currentPasswordInput = screen.getByLabelText(
       /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const passwordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.newPassword/i
+    )
+    const confirmPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
     )
     const saveButton = screen.getByText(
       /editProfilePage.profile.passwordSecurityTab.savePassword/i
     )
+
     fireEvent.change(currentPasswordInput, {
       target: { value: 'ABCDabcdef' }
     })
-    fireEvent.change(screen.getByLabelText(/newPassword/i), {
+    fireEvent.change(passwordInput, {
       target: { value: 'ABCDabcdef' }
     })
-    fireEvent.change(screen.getByLabelText(/retypePassword/i), {
+    fireEvent.change(confirmPasswordInput, {
       target: { value: 'ABCDabcdef' }
     })
 
@@ -302,44 +313,71 @@ describe('ChangePasswordModal', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
+        screen.getByText(/common.errorMessages.passwordComplex/i)
       ).toBeInTheDocument()
     })
   })
 
-  it('should display an error message for incorrect new password', async () => {
-    const testData = [
-      'A1!',
-      'ABCDEFGHIJKabcdefghijk1234567890!@#$%^&*()_+?><',
-      'ABab12!',
-      'ABCDEFGabcdefg123456!@#$%^'
-    ]
+  it('should show error when new password is too short', () => {
     const currentPasswordInput = screen.getByLabelText(
       /editProfilePage.profile.passwordSecurityTab.currentPassword/i
     )
-    const newPasswordInput = screen.getByLabelText(/newPassword/i)
-    const retypePasswordInput = screen.getByLabelText(/retypePassword/i)
+    const passwordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.newPassword/i
+    )
+    const confirmPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
+    )
     const saveButton = screen.getByText(
       /editProfilePage.profile.passwordSecurityTab.savePassword/i
     )
 
-    for (const data of testData) {
-      fireEvent.change(currentPasswordInput, {
-        target: { value: userDataMock.currentPassword }
-      })
-      fireEvent.change(newPasswordInput, {
-        target: { value: data }
-      })
-      fireEvent.change(retypePasswordInput, {
-        target: { value: data }
-      })
+    fireEvent.change(currentPasswordInput, {
+      target: { value: userDataMock.currentPassword }
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: userDataMock.shortPassword }
+    })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: userDataMock.shortPassword }
+    })
 
-      fireEvent.click(saveButton)
+    fireEvent.click(saveButton)
 
-      await waitFor(() => {
-        expect(screen.getByText(/common.errorMessages/i)).toBeInTheDocument()
-      })
-    }
+    expect(
+      screen.getByText(/common.errorMessages.passwordLength/i)
+    ).toBeInTheDocument()
+  })
+
+  it('should show error when new password is too long', () => {
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const passwordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.newPassword/i
+    )
+    const confirmPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
+    )
+    const saveButton = screen.getByText(
+      /editProfilePage.profile.passwordSecurityTab.savePassword/i
+    )
+
+    fireEvent.change(currentPasswordInput, {
+      target: { value: userDataMock.currentPassword }
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: userDataMock.longPassword }
+    })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: userDataMock.longPassword }
+    })
+
+    fireEvent.click(saveButton)
+
+    expect(
+      screen.getByText(/common.errorMessages.passwordLength/i)
+    ).toBeInTheDocument()
   })
   it('should display an error message at entering ONLY special characters', async () => {
     const testData = ['!@#$%^&*()', '********__)))))))))))*&^%$$']
@@ -359,7 +397,7 @@ describe('ChangePasswordModal', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
+          screen.getByText(/common.errorMessages.passwordComplex/i)
         ).toBeInTheDocument()
       })
       expect(currentPasswordInput.parentElement.className).toMatch(
@@ -385,7 +423,7 @@ describe('ChangePasswordModal', () => {
       fireEvent.blur(newPasswordInput)
       await waitFor(() => {
         expect(
-          screen.getByText(/common.errorMessages.passwordAlphabeticAndNumeric/i)
+          screen.getByText(/common.errorMessages.passwordComplex/i)
         ).toBeInTheDocument()
       })
       expect(currentPasswordInput.parentElement.className).toMatch(

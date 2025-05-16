@@ -114,10 +114,27 @@ vi.mock('~/redux/features/editProfileSlice', async () => {
   const actual = await vi.importActual('~/redux/features/editProfileSlice')
   return {
     ...actual,
-    updateUser: vi.fn(),
     fetchUserById: vi.fn()
   }
 })
+
+const mockMutateAsync = vi.fn()
+
+vi.mock('~/hooks/use-mutation', () => ({
+  __esModule: true,
+  default: ({ onSuccess, onError }) => {
+    return {
+      mutateAsync: async (params) => {
+        try {
+          await mockMutateAsync(params)
+          onSuccess?.()
+        } catch (error) {
+          onError?.(error)
+        }
+      }
+    }
+  }
+}))
 
 vi.mock('~/redux/features/snackbarSlice', async () => {
   const actual = await vi.importActual('~/redux/features/snackbarSlice')
