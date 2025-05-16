@@ -11,7 +11,6 @@ import { URLs } from '~/constants/request'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 
-
 const userDataMock = {
   _id: 123456,
   currentPassword: '12345qwert!',
@@ -97,7 +96,10 @@ describe('ChangePasswordModal', () => {
         })
       )
     }
-    const success = { code: 204, message: 'editProfilePage.profile.successMessage' }
+    const success = {
+      code: 204,
+      message: 'editProfilePage.profile.successMessage'
+    }
 
     handleResponse(success)
 
