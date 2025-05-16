@@ -1,0 +1,92 @@
+[33mab4a8422[m[33m ([m[1;36mHEAD -> [m[1;32mtest/2768/change-password-with-valid-data[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{0}: checkout: moving from develop to test/2768/change-password-with-valid-data
+[33mab4a8422[m[33m ([m[1;36mHEAD -> [m[1;32mtest/2768/change-password-with-valid-data[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{1}: rebase: checkout develop
+[33mab4a8422[m[33m ([m[1;36mHEAD -> [m[1;32mtest/2768/change-password-with-valid-data[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{2}: checkout: moving from develop to test/2768/change-password-with-valid-data
+[33mab4a8422[m[33m ([m[1;36mHEAD -> [m[1;32mtest/2768/change-password-with-valid-data[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{3}: pull origin develop: Fast-forward
+[33m83b0bb4f[m HEAD@{4}: pull origin develop: Fast-forward
+[33m3817a2b5[m HEAD@{5}: checkout: moving from test/2776/no-only-special-symbols to develop
+[33m7be0e230[m[33m ([m[1;31morigin/tests/change-password-modal[m[33m, [m[1;31morigin/test/2776/no-only-special-symbols[m[33m, [m[1;32mtests/change-password-modal[m[33m, [m[1;32mtest/2776/no-only-special-symbols[m[33m)[m HEAD@{6}: reset: moving to HEAD
+[33m7be0e230[m[33m ([m[1;31morigin/tests/change-password-modal[m[33m, [m[1;31morigin/test/2776/no-only-special-symbols[m[33m, [m[1;32mtests/change-password-modal[m[33m, [m[1;32mtest/2776/no-only-special-symbols[m[33m)[m HEAD@{7}: checkout: moving from tests/change-password-modal to test/2776/no-only-special-symbols
+[33m7be0e230[m[33m ([m[1;31morigin/tests/change-password-modal[m[33m, [m[1;31morigin/test/2776/no-only-special-symbols[m[33m, [m[1;32mtests/change-password-modal[m[33m, [m[1;32mtest/2776/no-only-special-symbols[m[33m)[m HEAD@{8}: commit: added tests for checking error with empty field and when new password doesnt match retyped password
+[33md967ea92[m HEAD@{9}: Branch: renamed refs/heads/test/2776/no-only-special-symbols to refs/heads/tests/change-password-modal
+[33md967ea92[m HEAD@{11}: commit (merge): Resolve merge conflicts
+[33m15bf0c9d[m HEAD@{12}: checkout: moving from test/2775/no-only-numeric-values to test/2776/no-only-special-symbols
+[33m10a19dfe[m[33m ([m[1;31morigin/test/2775/no-only-numeric-values[m[33m, [m[1;32mtest/2775/no-only-numeric-values[m[33m)[m HEAD@{13}: commit: test with numeric values only
+[33m3817a2b5[m HEAD@{14}: checkout: moving from develop to test/2775/no-only-numeric-values
+[33m3817a2b5[m HEAD@{15}: checkout: moving from test/2776/no-only-special-symbols to develop
+[33m15bf0c9d[m HEAD@{16}: commit: lint fix
+[33m221a563c[m HEAD@{17}: commit: check if input field gets highlighted in red color
+[33m98111320[m HEAD@{18}: commit: lint fix
+[33ma26462ad[m HEAD@{19}: commit: added testing for symbols
+[33m3817a2b5[m HEAD@{20}: checkout: moving from develop to test/2776/no-only-special-symbols
+[33m3817a2b5[m HEAD@{21}: checkout: moving from test/2776/no-only-special-symbols to develop
+[33m3817a2b5[m HEAD@{22}: reset: moving to HEAD
+[33m3817a2b5[m HEAD@{23}: checkout: moving from develop to test/2776/no-only-special-symbols
+[33m3817a2b5[m HEAD@{24}: pull origin develop: Fast-forward
+[33m6a434e04[m HEAD@{25}: pull origin develop: Fast-forward
+[33m2caf79f9[m HEAD@{26}: checkout: moving from feature/3139/set-permanent-access to develop
+[33mfb539073[m[33m ([m[1;31morigin/feature/3139/set-permanent-access[m[33m, [m[1;32mfeature/3139/set-permanent-access[m[33m)[m HEAD@{27}: commit: modified use state
+[33m2caf79f9[m HEAD@{28}: checkout: moving from develop to feature/3139/set-permanent-access
+[33m2caf79f9[m HEAD@{29}: pull origin develop: Fast-forward
+[33m2d1f0805[m HEAD@{30}: checkout: moving from bug/3067/remove-redudant-field to develop
+[33m2d1f0805[m HEAD@{31}: checkout: moving from develop to bug/3067/remove-redudant-field
+[33m2d1f0805[m HEAD@{32}: pull origin develop: Fast-forward
+[33m47244494[m HEAD@{33}: checkout: moving from dependencies/3334/fix-vulnerabilities to develop
+[33m6499b6d9[m[33m ([m[1;31morigin/dependencies/3334/fix-vulnerabilities[m[33m, [m[1;32mdependencies/3334/fix-vulnerabilities[m[33m)[m HEAD@{34}: commit: updated axios to 1.8.3
+[33mb2159643[m HEAD@{35}: checkout: moving from feature/3373/add-alies-to-validation to dependencies/3334/fix-vulnerabilities
+[33m08611e38[m[33m ([m[1;31morigin/feature/3373/add-alies-to-validation[m[33m, [m[1;32mfeature/3373/add-alies-to-validation[m[33m)[m HEAD@{36}: commit: lint fix
+[33me0744e50[m HEAD@{37}: commit: modified regex
+[33m4220f7b8[m HEAD@{38}: checkout: moving from develop to feature/3373/add-alies-to-validation
+[33m47244494[m HEAD@{39}: pull origin develop: Fast-forward
+[33m4220f7b8[m HEAD@{40}: checkout: moving from feature/3373/add-alies-to-validation to develop
+[33m4220f7b8[m HEAD@{41}: checkout: moving from develop to feature/3373/add-alies-to-validation
+[33m4220f7b8[m HEAD@{42}: pull origin develop: Fast-forward
+[33m053da2a4[m HEAD@{43}: checkout: moving from bug/3342/fix-translation to develop
+[33m9d4ed7c3[m[33m ([m[1;31morigin/bug/3342/fix-translation[m[33m, [m[1;32mbug/3342/fix-translation[m[33m)[m HEAD@{44}: commit: fix ukranian spelling
+[33m570c4a11[m HEAD@{45}: commit: fix linter
+[33mc847f783[m HEAD@{46}: checkout: moving from develop to bug/3342/fix-translation
+[33m053da2a4[m HEAD@{47}: checkout: moving from bug/3342/fix-translation to develop
+[33mc847f783[m HEAD@{48}: commit: removed env
+[33m3227438f[m HEAD@{49}: commit: added field into tr
+[33m053da2a4[m HEAD@{50}: checkout: moving from develop to bug/3342/fix-translation
+[33m053da2a4[m HEAD@{51}: checkout: moving from bug/3342/fix-translation to develop
+[33m053da2a4[m HEAD@{52}: checkout: moving from develop to bug/3342/fix-translation
+[33m053da2a4[m HEAD@{53}: pull origin develop: Fast-forward
+[33m2751fd3c[m HEAD@{54}: checkout: moving from dependencies/3334/fix-vulnerabilities to develop
+[33mb2159643[m HEAD@{55}: rebase (finish): returning to refs/heads/dependencies/3334/fix-vulnerabilities
+[33mb2159643[m HEAD@{56}: rebase (pick): upgraded certain packages
+[33m2751fd3c[m HEAD@{57}: rebase (start): checkout develop
+[33m65069900[m HEAD@{58}: checkout: moving from develop to dependencies/3334/fix-vulnerabilities
+[33m2751fd3c[m HEAD@{59}: checkout: moving from dependencies/3334/fix-vulnerabilities to develop
+[33m65069900[m HEAD@{60}: commit: upgraded certain packages
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{61}: checkout: moving from develop to dependencies/3334/fix-vulnerabilities
+[33m2751fd3c[m HEAD@{62}: pull origin: Fast-forward
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{63}: checkout: moving from dependencies/3334/fix-vulnerabilities to develop
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{64}: checkout: moving from develop to dependencies/3334/fix-vulnerabilities
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{65}: checkout: moving from dependencies/3334/align-dependencies-versions to develop
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{66}: checkout: moving from develop to dependencies/3334/align-dependencies-versions
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{67}: checkout: moving from bugfix/3117/fix-autocomplete to develop
+[33m99f76f4a[m[33m ([m[1;31morigin/bugfix/3117/fix-autocomplete[m[33m, [m[1;32mbugfix/3117/fix-autocomplete[m[33m)[m HEAD@{68}: commit: fixed vite version
+[33mb402a134[m HEAD@{69}: checkout: moving from develop to bugfix/3117/fix-autocomplete
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{70}: checkout: moving from bugfix/3117/fix-autocomplete to develop
+[33mb402a134[m HEAD@{71}: commit: fixed vite version
+[33m205b3291[m HEAD@{72}: commit: fix: format code with Prettier
+[33m3b8472a5[m HEAD@{73}: checkout: moving from develop to bugfix/3117/fix-autocomplete
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{74}: checkout: moving from bugfix/3117/fix-autocomplete to develop
+[33m3b8472a5[m HEAD@{75}: commit: fixed linter error
+[33m68a2b8ab[m HEAD@{76}: rebase (finish): returning to refs/heads/bugfix/3117/fix-autocomplete
+[33m68a2b8ab[m HEAD@{77}: rebase (pick): fixed linter error
+[33m3d58aa23[m HEAD@{78}: rebase (pick): fixed issue with props types in asyncAutoComplete
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{79}: rebase (start): checkout develop
+[33me550d995[m HEAD@{80}: checkout: moving from develop to bugfix/3117/fix-autocomplete
+[33m28ea24b1[m[33m ([m[1;31morigin/bugfix/2797/edit-profile-password-security[m[33m, [m[1;32mdependencies/3334/align-dependencies-versions[m[33m)[m HEAD@{81}: pull origin: Fast-forward
+[33me43710fa[m HEAD@{82}: checkout: moving from bugfix/3117/fix-autocomplete to develop
+[33me550d995[m HEAD@{83}: commit: fixed linter error
+[33mb699605c[m HEAD@{84}: checkout: moving from develop to bugfix/3117/fix-autocomplete
+[33me43710fa[m HEAD@{85}: checkout: moving from bugfix/3117/fix-autocomplete to develop
+[33mb699605c[m HEAD@{86}: commit: fixed issue with props types in asyncAutoComplete
+[33me43710fa[m HEAD@{87}: checkout: moving from develop to bugfix/3117/fix-autocomplete
+[33me43710fa[m HEAD@{88}: pull origin: Fast-forward
+[33m3faca4f4[m HEAD@{89}: checkout: moving from bugfix/3117/fix-autocomplete to develop
+[33me43710fa[m HEAD@{90}: pull origin develop: Fast-forward
+[33m3faca4f4[m HEAD@{91}: checkout: moving from develop to bugfix/3117/fix-autocomplete
+[33m3faca4f4[m HEAD@{92}: clone: from https://github.com/ita-social-projects/SpaceToStudy-Client.git

@@ -8,6 +8,10 @@ import {
 import ChangePasswordModal from '~/containers/edit-profile/password-security-tab/change-password-modal/ChangePasswordModal'
 import { AuthService } from '~/services/auth-service'
 import { URLs } from '~/constants/request'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
+
+
 const userDataMock = {
   _id: 123456,
   currentPassword: '12345qwert!',
@@ -18,6 +22,7 @@ const userDataMock = {
 }
 
 const handleSubmit = vi.fn()
+const dispatch = vi.fn()
 
 vi.mock('~/services/auth-service', () => ({
   AuthService: {
@@ -42,7 +47,7 @@ describe('ChangePasswordModal', () => {
     )
   })
 
-  it('should save data after positive response', async () => {
+  it('should save data after positive response and display success message', async () => {
     mockAxiosClient
       .onPatch(`${URLs.auth.changePassword}/${userDataMock._id}`)
       .reply(200)
@@ -84,6 +89,24 @@ describe('ChangePasswordModal', () => {
         }
       )
     })
+    const handleResponse = () => {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: 'editProfilePage.profile.successMessage'
+        })
+      )
+    }
+    const success = { code: 204, message: 'editProfilePage.profile.successMessage' }
+
+    handleResponse(success)
+
+    expect(dispatch).toHaveBeenCalledWith(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    )
   })
 
   it('should not save data after negative response', () => {
