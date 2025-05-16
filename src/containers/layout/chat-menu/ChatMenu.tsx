@@ -53,7 +53,7 @@ const ChatMenu: FC<ChatMenuProps> = ({
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: t('Error during deletion:')
+          message: `${t('Error during deletion:')} ${String(error)}`
         })
       )
     } finally {
@@ -79,7 +79,7 @@ const ChatMenu: FC<ChatMenuProps> = ({
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: t('Error during deletion:')
+          message: `${t('Error during deletion:')} ${String(error)}`
         })
       )
     } finally {
