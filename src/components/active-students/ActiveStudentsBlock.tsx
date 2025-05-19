@@ -81,16 +81,6 @@ const ActiveStudentsBlock = () => {
       </>
     )
 
-  // const activeStudents = data.items.map((cooperation) => (
-  //     <ActiveStudent
-  //         cooperationId={cooperation._id}
-  //         firstName={cooperation.user.firstName}
-  //         key={cooperation._id}
-  //         lastName={cooperation.user.lastName}
-  //         photo={cooperation.user.photo}
-  //         subjectName={cooperation.offer.subject.name}
-  //     />
-  // ))
   return (
     <>
       <Typography sx={styles.title}>{t('activeStudents.title')}</Typography>

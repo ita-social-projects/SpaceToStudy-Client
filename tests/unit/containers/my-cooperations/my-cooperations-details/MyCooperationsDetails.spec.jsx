@@ -4,7 +4,7 @@ import { URLs } from '~/constants/request'
 import MyCooperationsDetails from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.tsx'
 
 import { screen, fireEvent } from '@testing-library/react'
-import { vi } from 'vitest'
+import { expect, vi } from 'vitest'
 
 const mockedCooperation = { ...getCooperationByIdMockResponse }
 mockedCooperation.languages = ['Ukrainian', 'English']
@@ -38,13 +38,11 @@ describe('MyCooperationsDetails component', () => {
   })
 
   it('should render languages', async () => {
-    const language1 = await screen.findAllByText('Ukrainian')
-    expect(language1).toHaveLength(2)
-    expect(...language1).toBeInTheDocument()
+    const language1 = await screen.findByText('Ukrainian')
+    expect(language1).toBeInTheDocument()
 
-    const language2 = await screen.findAllByText('English')
-    expect(language2).toHaveLength(2)
-    expect(...language2).toBeInTheDocument()
+    const language2 = await screen.findByText('English')
+    expect(language2).toBeInTheDocument()
   })
 
   it('should open chat after clicking on chat-button', async () => {

@@ -65,19 +65,6 @@ const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
     void enrollOffer()
   }
 
-  // const postOffer = () => {
-  //     return cooperationService.createCooperation({
-  //         ...data,
-  //         receiver: offer.author._id,
-  //         receiverRole: offer.authorRole,
-  //         offer: offer._id,
-  //         subject: offer.subject._id,
-  //         category: offer.category._id,
-  //         description: offer.description,
-  //         languages: offer.languages
-  //     })
-  // }
-
   const { isPending, mutate: createCooperation } = useMutation({
     mutationFn: cooperationService.createCooperation,
     queryKey: ['cooperations'],
@@ -108,7 +95,7 @@ const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
     handleSubmit
   } = useForm<EnrollOfferForm>({
     initialValues: {
-      proficiencyLevel: offer.proficiencyLevel,
+      proficiencyLevel: offer.proficiencyLevel[0],
       price: offer.price,
       additionalInfo: '',
       title: offer.title
@@ -133,7 +120,7 @@ const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
 
   const levelOptions = offer.proficiencyLevel.map((level) => ({
     title: level,
-    value: [level]
+    value: level
   }))
 
   const handleFieldChange =

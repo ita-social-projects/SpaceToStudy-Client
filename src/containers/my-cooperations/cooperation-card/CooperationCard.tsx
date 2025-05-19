@@ -34,7 +34,9 @@ const CooperationCard: FC<CooperationCardProps> = ({
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const roleBasedStatus =
-    needAction === userRole ? StatusEnum.NeedAction : StatusEnum.RequestToClose
+    needAction.role === userRole
+      ? StatusEnum.NeedAction
+      : StatusEnum.RequestToClose
 
   const cooperationStatus =
     status === StatusEnum.RequestToClose ? roleBasedStatus : cooperation.status
@@ -48,7 +50,7 @@ const CooperationCard: FC<CooperationCardProps> = ({
           firstName={user.firstName}
           lastName={user.lastName}
           photo={user.photo}
-          role={user.role}
+          role={user.role[0]}
           sx={styles.userProfileInfo}
         />
         <Box sx={styles.priceWithStatus}>

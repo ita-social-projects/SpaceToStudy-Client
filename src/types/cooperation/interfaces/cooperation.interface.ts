@@ -77,7 +77,7 @@ export interface CreateCooperationsParams extends EnrollOfferForm {
   receiverRole: UserRoleEnum
   subject: string
   category: string
-  proficiencyLevel: ProficiencyLevelEnum[]
+  proficiencyLevel: ProficiencyLevelEnum
   description: string
   languages: LanguagesEnum[]
 }

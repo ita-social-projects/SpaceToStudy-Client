@@ -105,10 +105,14 @@ const MyCooperationsDetails = () => {
     </Box>
   ))
 
+  const userImageSrc = import.meta.env
+    .VITE_APP_IMG_USER_URL as `${string}/:fileName`
+
   const avatarSrc =
     displayedUser.photo &&
+    userImageSrc &&
     getFullUrl({
-      pathname: import.meta.env.VITE_APP_IMG_USER_URL as `${string}/:fileName`,
+      pathname: userImageSrc,
       parameters: {
         fileName: displayedUser.photo
       }
@@ -232,46 +236,9 @@ const MyCooperationsDetails = () => {
             </Typography>
             <Typography>{`${cooperationDetails.price} UAH/hour`}</Typography>
           </Box>
-          <CooperationCompletion
-            cooperationStatus={cooperationDetails.status}
-            onCloseCooperation={handleCloseCooperation}
-            userRole={userRole}
-          />
+          {cooperationCompletion}
         </Box>
-        <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.tutoringSubject')}
-        </Typography>
-        <Box sx={style.subjectContainer}>
-          <Box sx={style.categoryContainer}>
-            <CategoryIcon sx={style.iconColor(categoryColor)} />
-            <Typography>{cooperationDetails.category.name}</Typography>
-          </Box>
-          <SubjectLevelChips
-            color={cooperationDetails.category.appearance.color}
-            proficiencyLevel={cooperationDetails.proficiencyLevel}
-            subject={cooperationDetails.subject.name}
-          />
-        </Box>
-        <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.aboutCooperation')}
-        </Typography>
-        <ShowMoreCollapse
-          collapsedSize={28}
-          collapsedTextLength={100}
-          description={cooperationDetails.description}
-          sx={style.aboutCooperation}
-          withoutTitle
-        />
-        <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.tutoringLanguages')}
-        </Typography>
-        <Box sx={style.languageContainer}>{languages}</Box>
-        <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.pricing')}
-        </Typography>
-        <Typography>{`${cooperationDetails.price} UAH/hour`}</Typography>
       </Box>
-      {cooperationCompletion}
     </Box>
   )
 }

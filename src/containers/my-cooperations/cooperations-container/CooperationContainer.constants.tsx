@@ -25,7 +25,7 @@ export const columns: TableColumn<Cooperation>[] = [
           firstName={item.user.firstName}
           lastName={item.user.lastName}
           photo={item.user.photo}
-          role={item.user.role}
+          role={item.user.role[0]}
           sx={styles.profileInfo}
         />
       )
@@ -63,45 +63,7 @@ export const columns: TableColumn<Cooperation>[] = [
     label: 'cooperationsPage.tableHeaders.status',
     calculatedCellValue: ({ user, needAction, status }: Cooperation) => {
       const cooperationStatus =
-        user.role !== needAction && status === StatusEnum.Pending
-          ? StatusEnum.NeedAction
-          : status
-      return <StatusChip status={cooperationStatus} />
-    }
-  },
-  {
-    label: 'cooperationsPage.tableHeaders.title',
-    calculatedCellValue: (item: Cooperation) => (
-      <Typography sx={styles.title}>{item.title}</Typography>
-    )
-  },
-  {
-    label: 'cooperationsPage.tableHeaders.subject',
-    calculatedCellValue: (item: Cooperation) => (
-      <SubjectLevelChips
-        proficiencyLevel={item.proficiencyLevel}
-        subject={item.subject.name}
-        sx={styles.chips}
-      />
-    )
-  },
-  {
-    label: 'cooperationsPage.tableHeaders.price',
-    field: 'price',
-    calculatedCellValue: (item: Cooperation, { t }: AdditionalPropsInterface) =>
-      `${item.price} ${t('common.uah')}`
-  },
-  {
-    label: 'cooperationsPage.tableHeaders.updated',
-    field: 'updatedAt',
-    calculatedCellValue: (item: Cooperation) =>
-      getFormattedDate({ date: item.updatedAt })
-  },
-  {
-    label: 'cooperationsPage.tableHeaders.status',
-    calculatedCellValue: ({ user, needAction, status }: Cooperation) => {
-      const cooperationStatus =
-        user.role !== needAction && status === StatusEnum.Pending
+        user.role[0] !== needAction.role && status === StatusEnum.Pending
           ? StatusEnum.NeedAction
           : status
       return <StatusChip status={cooperationStatus} />
