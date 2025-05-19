@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -15,7 +14,7 @@ interface AccountMenuProps {
   onClose: () => void
 }
 
-const AccountMenu: FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
+const AccountMenu: React.FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { userRole } = useAppSelector((state) => state.appMain)

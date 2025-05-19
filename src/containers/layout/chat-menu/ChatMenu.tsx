@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import UpdateDisabledIcon from '@mui/icons-material/UpdateDisabled'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
@@ -25,7 +25,7 @@ interface ChatMenuProps {
   setIsHistoryCleared: (value: boolean) => void
 }
 
-const ChatMenu: FC<ChatMenuProps> = ({
+const ChatMenu: React.FC<ChatMenuProps> = ({
   anchorEl,
   currentChat,
   messagesLength,
