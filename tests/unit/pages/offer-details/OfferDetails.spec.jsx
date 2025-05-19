@@ -242,20 +242,6 @@ describe('Offer details with student role', () => {
   })
 })
 
-describe('OfferDetails on mobile', () => {
-  const mobileData = {
-    isLaptopAndAbove: false,
-    isMobile: true,
-    isTablet: false
-  }
-  beforeEach(() => {
-    useBreakpoints.mockImplementation(() => mobileData)
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
-    })
-  })
-})
-
 describe('Offer details with student role', () => {
   beforeEach(() => {
     renderWithProviders(<OfferDetails />, {

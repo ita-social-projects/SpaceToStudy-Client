@@ -28,6 +28,7 @@ import {
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperation.styles'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
@@ -42,8 +43,9 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
   const { checkConfirmation } = useConfirm()
   const { handleAlert, handleErrorAlert } = useSnackbarAlert()
   const [minPrice, maxPrice] = minMaxPrice(cooperation.price, 0.25)
+  const { userRole } = useAppSelector((state) => state.appMain)
 
-  const needAction = cooperation.user.role !== cooperation.needAction
+  const needAction = userRole !== cooperation.needAction.role
 
   const handleUpdateCooperation = (
     params?: Omit<UpdateCooperationsParams, '_id'>

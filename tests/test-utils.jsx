@@ -40,7 +40,7 @@ export const renderWithProviders = (
       <MemoryRouter initialEntries={[initialEntries]}>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
-            <QueryProvider>
+            <QueryProvider testMode>
               <PopupsProvider>{children}</PopupsProvider>
             </QueryProvider>
           </ThemeProvider>

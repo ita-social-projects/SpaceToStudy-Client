@@ -82,10 +82,7 @@ const CooperationDetails = () => {
     isError
   } = useQuery({
     queryFn: getCooperation,
-    queryKey: ['cooperation', id],
-    options: {
-      staleTime: Infinity
-    }
+    queryKey: ['cooperation', id]
   })
 
   useEffect(() => {
