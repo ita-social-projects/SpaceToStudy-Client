@@ -62,8 +62,6 @@ describe('MyCooperationsDetails component', () => {
   it('should render link to user profile with correct url', () => {
     const profileButton = screen.queryByText('cooperationDetailsPage.profile')
 
-    console.log()
-
     expect(profileButton).toBeInTheDocument()
     expect(profileButton.parentElement.href).toContain(
       `/user/${mockedCooperation.initiator._id}?role=${mockedCooperation.initiator.role[0]}`

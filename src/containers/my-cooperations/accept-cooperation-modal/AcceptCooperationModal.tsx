@@ -45,7 +45,7 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
   const [minPrice, maxPrice] = minMaxPrice(cooperation.price, 0.25)
   const { userRole } = useAppSelector((state) => state.appMain)
 
-  const needAction = userRole !== cooperation.needAction.role
+  const needAction = userRole === cooperation.needAction.role
 
   const handleUpdateCooperation = (
     params?: Omit<UpdateCooperationsParams, '_id'>
@@ -54,11 +54,6 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
       _id: cooperation._id,
       ...params
     })
-
-  // const updateOffer = useCallback(
-  //     () => OfferService.updateOffer(cooperation.offer, { enrolledUsers: [] }),
-  //     [cooperation.offer]
-  // )
 
   const handleUpdateOffer = useCallback(
     () =>

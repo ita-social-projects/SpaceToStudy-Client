@@ -18,7 +18,7 @@ vi.mock('~/hooks/use-breakpoints')
 useBreakpoints.mockImplementation(() => ({ isDesktop: true }))
 
 const preloadedState = {
-  appMain: { userRole: 'tutor' }
+  appMain: { userRole: 'student' }
 }
 
 const mockedCoop = mockedCooperations.items[0]
