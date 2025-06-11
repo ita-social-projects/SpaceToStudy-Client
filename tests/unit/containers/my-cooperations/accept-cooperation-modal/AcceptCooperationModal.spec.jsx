@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { fireEvent, screen } from '@testing-library/react'
 import AcceptCooperationModal from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperationModal'
 import {
@@ -7,8 +8,7 @@ import {
 } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { mockedCoop } from '~tests/unit/containers/my-cooperations/MyCooperations.spec.constants'
-import { vi } from 'vitest'
+import { mockedCooperations } from '~tests/test-constants'
 
 vi.mock('~/hooks/use-debounce', () => ({
   useDebounce: (callback) => callback
@@ -18,8 +18,10 @@ vi.mock('~/hooks/use-breakpoints')
 useBreakpoints.mockImplementation(() => ({ isDesktop: true }))
 
 const preloadedState = {
-  appMain: { userRole: 'tutor' }
+  appMain: { userRole: 'student' }
 }
+
+const mockedCoop = mockedCooperations.items[0]
 
 describe('AcceptCooperationModal component ', () => {
   beforeEach(() => {

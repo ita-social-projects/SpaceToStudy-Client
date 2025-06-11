@@ -25,7 +25,7 @@ export const columns: TableColumn<Cooperation>[] = [
           firstName={item.user.firstName}
           lastName={item.user.lastName}
           photo={item.user.photo}
-          role={item.user.role}
+          role={item.user.role[0]}
           sx={styles.profileInfo}
         />
       )
@@ -34,7 +34,7 @@ export const columns: TableColumn<Cooperation>[] = [
   {
     label: 'cooperationsPage.tableHeaders.title',
     calculatedCellValue: (item: Cooperation) => (
-      <Typography sx={styles.title}>{item.offer.title}</Typography>
+      <Typography sx={styles.title}>{item.title}</Typography>
     )
   },
   {
@@ -42,7 +42,7 @@ export const columns: TableColumn<Cooperation>[] = [
     calculatedCellValue: (item: Cooperation) => (
       <SubjectLevelChips
         proficiencyLevel={item.proficiencyLevel}
-        subject={item.offer.subject.name}
+        subject={item.subject.name}
         sx={styles.chips}
       />
     )
@@ -63,7 +63,7 @@ export const columns: TableColumn<Cooperation>[] = [
     label: 'cooperationsPage.tableHeaders.status',
     calculatedCellValue: ({ user, needAction, status }: Cooperation) => {
       const cooperationStatus =
-        user.role !== needAction?.role && status === StatusEnum.Pending
+        user.role[0] !== needAction.role && status === StatusEnum.Pending
           ? StatusEnum.NeedAction
           : status
       return <StatusChip status={cooperationStatus} />

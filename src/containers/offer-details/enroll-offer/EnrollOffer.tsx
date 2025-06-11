@@ -46,7 +46,7 @@ const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
 
   const [minPrice, maxPrice] = minMaxPrice(offer.price, 0.25)
 
-  const handleResponseError = (error: ResponseError) => {
+  const handleResponseError = (error?: ResponseError) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
@@ -108,7 +108,11 @@ const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
           ...data,
           receiver: offer.author._id,
           receiverRole: offer.authorRole,
-          offer: offer._id
+          offer: offer._id,
+          subject: offer.subject._id,
+          category: offer.category._id,
+          description: offer.description,
+          languages: offer.languages
         })
       }
     }
@@ -163,12 +167,12 @@ const EnrollOffer: React.FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
         <Box>
           <AppTextArea
             fullWidth
-            label={t('offerDetailsPage.enrollOffer.labels.info')}
+            label={t('offerDetailsPage.enrollOffer.labels.additionalInfo')}
             maxLength={1000}
             minLength={30}
             onChange={handleInputChange('additionalInfo')}
             sx={styles.textArea}
-            title={t('offerDetailsPage.enrollOffer.inputs.info')}
+            title={t('offerDetailsPage.enrollOffer.inputs.additionalInfo')}
             value={data.additionalInfo}
           />
           {errors.additionalInfo && (

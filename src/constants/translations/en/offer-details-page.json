@@ -4,12 +4,12 @@
     "description": "Send a Request to Create a Cooperation",
     "inputs": {
       "level": "Choose the appropriate level of tutoring you require.",
-      "info": "Ask the questions you have, describe your learning needs or specify your preferred teaching approach."
+      "additionalInfo": "Ask the questions you have, describe your learning needs or specify your preferred teaching approach."
     },
     "labels": {
       "level": "Your required level",
       "preferredPrice": "Set your preferred price for the lesson. Keep in mind that choosing a lower or higher price may affect tutor availability.",
-      "info": "Additional information"
+      "additionalInfo": "Additional information"
     },
     "successMessage": "Request for cooperation sent successfully"
   },
@@ -18,7 +18,6 @@
       "student": "Offer details",
       "tutor": "Offer details"
     },
-
     "description": {
       "student": "Here, you can access all the essential details about the offer you've selected. This page includes details about the chosen offer. Take a moment to review this information and make an informed decision about your tutoring needs.",
       "tutor": "Here, you can access all the essential details about the offer you've selected. This page includes details about the chosen offer. Take a moment to review this information and make an informed decision about your tutoring needs."

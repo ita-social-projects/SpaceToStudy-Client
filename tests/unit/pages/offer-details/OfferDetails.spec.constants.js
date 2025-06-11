@@ -1,13 +1,7 @@
 export const mockOffer = {
   _id: '6480c14f5ca047c53c2ab784',
   price: 55,
-  proficiencyLevel: [
-    'Beginner',
-    'Intermediate',
-    'Advanced',
-    'Test Preparation',
-    'Professional'
-  ],
+  proficiencyLevel: ['Beginner', 'Intermediate'],
   title: 'test',
   description: 'testtesttesttesttesttesttesttest',
   languages: ['Ukrainian'],

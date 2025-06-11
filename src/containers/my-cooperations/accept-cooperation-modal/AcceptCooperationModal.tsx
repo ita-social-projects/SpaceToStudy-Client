@@ -28,6 +28,7 @@ import {
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperation.styles'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
@@ -41,26 +42,25 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
   const { closeModal } = useModalContext()
   const { checkConfirmation } = useConfirm()
   const { handleAlert, handleErrorAlert } = useSnackbarAlert()
-  const [minPrice, maxPrice] = minMaxPrice(cooperation.offer.price, 0.25)
+  const [minPrice, maxPrice] = minMaxPrice(cooperation.price, 0.25)
+  const { userRole } = useAppSelector((state) => state.appMain)
 
-  const needAction = cooperation.user.role !== cooperation.needAction.role
+  const needAction = userRole === cooperation.needAction.role
 
-  const handleUpdateCooperation = useCallback(
-    (params: Omit<UpdateCooperationsParams, '_id'>) => {
-      return cooperationService.updateCooperation({
-        _id: cooperation._id,
-        ...params
-      })
-    },
-    [cooperation._id]
-  )
+  const handleUpdateCooperation = (
+    params?: Omit<UpdateCooperationsParams, '_id'>
+  ) =>
+    cooperationService.updateCooperation({
+      _id: cooperation._id,
+      ...params
+    })
 
   const handleUpdateOffer = useCallback(
     () =>
-      OfferService.updateOfferWithBaseService(cooperation.offer._id, {
+      OfferService.updateOfferWithBaseService(cooperation.offer, {
         enrolledUsers: []
       }),
-    [cooperation.offer._id]
+    [cooperation.offer]
   )
 
   const onResponse = () => {
@@ -193,7 +193,7 @@ const AcceptCooperationModal: React.FC<AcceptCooperationModalProps> = ({
           title={t('cooperationsPage.acceptModal.level')}
         />
         <TitleWithDescription
-          description={`${cooperation.offer.price} ${t('common.uah')}`}
+          description={`${cooperation.price} ${t('common.uah')}`}
           style={styles.titleDescription}
           title={t('cooperationsPage.acceptModal.price')}
         />

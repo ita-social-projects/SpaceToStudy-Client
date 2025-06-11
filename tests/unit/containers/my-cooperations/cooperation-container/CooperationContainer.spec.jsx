@@ -1,10 +1,12 @@
+import { vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import CooperationContainer from '~/containers/my-cooperations/cooperations-container/CooperationContainer'
-import { mockedCoop } from '~tests/unit/containers/my-cooperations/MyCooperations.spec.constants'
-import { afterEach, vi } from 'vitest'
-import userEvent from '@testing-library/user-event'
 import { StatusEnum } from '~/types'
+import userEvent from '@testing-library/user-event'
+import { mockedCooperations } from '~tests/test-constants'
+
+const mockedCoop = mockedCooperations.items[0]
 
 const filterOptionsMock = {
   filters: {
@@ -70,7 +72,7 @@ describe('CooperationContainer component ', () => {
       { preloadedState }
     )
 
-    const card = screen.getByText(activeCoop.offer.subject.name)
+    const card = screen.getByText(activeCoop.subject.name)
     await userEvent.click(card)
 
     expect(navigateMock).toHaveBeenCalledWith(`./${activeCoop._id}`)
@@ -86,7 +88,7 @@ describe('CooperationContainer component ', () => {
       { preloadedState }
     )
 
-    const card = screen.getByText(activeCoop.offer.subject.name)
+    const card = screen.getByText(activeCoop.subject.name)
     await userEvent.click(card)
 
     expect(navigateMock).toHaveBeenCalledWith(`./${activeCoop._id}`)
@@ -103,7 +105,7 @@ describe('CooperationContainer component ', () => {
       { preloadedState }
     )
 
-    const card = screen.getByText(pendingCoop.offer.subject.name)
+    const card = screen.getByText(pendingCoop.subject.name)
     await userEvent.click(card)
 
     expect(mockOpenModal).toHaveBeenCalled()

@@ -76,42 +76,55 @@ const MyCooperationsDetails = () => {
   }
 
   const displayedUser =
-    cooperationDetails.initiator._id === userId
+    cooperationDetails.user._id === userId
       ? cooperationDetails.receiver
       : cooperationDetails.initiator
+  const isTutor = displayedUser.role[0] === UserRoleEnum.Tutor
 
-  const [displayedUserRole] = displayedUser.role
-
-  const { offer, price } = cooperationDetails
-
-  const CategoryIcon = getCategoryIcon(offer.category.appearance.icon)
-  const categoryColor = getValidatedHexColor(offer.category.appearance.color)
+  const CategoryIcon = getCategoryIcon(
+    cooperationDetails.category.appearance.icon
+  )
+  const categoryColor = getValidatedHexColor(
+    cooperationDetails.category.appearance.color
+  )
 
   const onClickOpenChat = () =>
     setChatInfo({
       author: displayedUser,
-      authorRole: displayedUserRole as
+      authorRole: displayedUser.role[0] as
         | UserRoleEnum.Student
         | UserRoleEnum.Tutor,
-      chatId: offer.chatId,
+      chatId: cooperationDetails.chatId,
       updateInfo: () => {}
     })
 
-  const languages = offer.languages?.map((item: string) => (
+  const languages = cooperationDetails.languages?.map((item: string) => (
     <Box key={item} sx={style.languageItem}>
       <DoneIcon color='success' />
       <Typography>{item}</Typography>
     </Box>
   ))
 
+  const userImageSrc = import.meta.env
+    .VITE_APP_IMG_USER_URL as `${string}/:fileName`
+
   const avatarSrc =
     displayedUser.photo &&
+    userImageSrc &&
     getFullUrl({
-      pathname: import.meta.env.VITE_APP_IMG_USER_URL as `${string}/:fileName`,
+      pathname: userImageSrc,
       parameters: {
         fileName: displayedUser.photo
       }
     })
+
+  const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
+    <CooperationCompletion
+      cooperationStatus={cooperationDetails.status}
+      onCloseCooperation={handleCloseCooperation}
+      userRole={userRole}
+    />
+  )
 
   return (
     <Box>
@@ -122,96 +135,110 @@ const MyCooperationsDetails = () => {
         <Typography sx={style.titles}>
           {t('cooperationDetailsPage.title')}
         </Typography>
-        <Typography sx={style.title}>{offer.title}</Typography>
+        <Typography sx={style.title}>{cooperationDetails.title}</Typography>
         <Typography sx={style.titles}>
           {t(
-            displayedUserRole === UserRoleEnum.Tutor
+            isTutor
               ? 'cooperationDetailsPage.tutor'
               : 'cooperationDetailsPage.student'
           )}
         </Typography>
         <Box>
-          <Box sx={style.profileContainer}>
-            <AvatarIcon
-              firstName={offer.author.firstName}
-              lastName={offer.author.lastName}
-              photo={avatarSrc}
+          <Typography sx={style.header}>
+            {t('cooperationDetailsPage.details')}
+          </Typography>
+          <Box sx={style.container}>
+            <Typography sx={style.titles}>
+              {t('cooperationDetailsPage.title')}
+            </Typography>
+            <Typography sx={style.title}>{cooperationDetails.title}</Typography>
+            <Typography sx={style.titles}>
+              {t(
+                displayedUser.role[0] === UserRoleEnum.Tutor
+                  ? 'cooperationDetailsPage.tutor'
+                  : 'cooperationDetailsPage.student'
+              )}
+            </Typography>
+            <Box>
+              <Box sx={style.profileContainer}>
+                <AvatarIcon
+                  firstName={displayedUser.firstName}
+                  lastName={displayedUser.lastName}
+                  photo={avatarSrc}
+                />
+                <Typography sx={style.profileName}>
+                  {displayedUser.firstName} {displayedUser.lastName}
+                </Typography>
+                <Typography sx={style.profileDescription}>
+                  {displayedUser.professionalSummary}
+                </Typography>
+              </Box>
+              <Box sx={style.userButtons}>
+                <Button
+                  onClick={onClickOpenChat}
+                  size='md'
+                  startIcon={<MessageIcon />}
+                  sx={style.buttons}
+                  variant='tonal'
+                >
+                  {t('common.labels.sendMessage')}
+                </Button>
+                <Button
+                  component={Link}
+                  size='md'
+                  startIcon={<PersonIcon />}
+                  sx={style.buttons}
+                  to={getFullUrl({
+                    pathname: authRoutes.userProfile.route,
+                    parameters: {
+                      id: displayedUser._id
+                    },
+                    searchParameters: {
+                      role: displayedUser.role[0]
+                    }
+                  })}
+                  variant={ButtonVariantEnum.Tonal}
+                >
+                  {t('cooperationDetailsPage.profile')}
+                </Button>
+              </Box>
+            </Box>
+            <Typography sx={style.titles}>
+              {t('cooperationDetailsPage.tutoringSubject')}
+            </Typography>
+            <Box sx={style.subjectContainer}>
+              <Box sx={style.categoryContainer}>
+                <CategoryIcon sx={style.iconColor(categoryColor)} />
+                <Typography>{cooperationDetails.category.name}</Typography>
+              </Box>
+              <SubjectLevelChips
+                color={cooperationDetails.category.appearance.color}
+                proficiencyLevel={cooperationDetails.proficiencyLevel[0]}
+                subject={cooperationDetails.subject.name}
+              />
+            </Box>
+            <Typography sx={style.titles}>
+              {t('cooperationDetailsPage.aboutCooperation')}
+            </Typography>
+            <ShowMoreCollapse
+              collapsedSize={28}
+              collapsedTextLength={100}
+              description={cooperationDetails.description}
+              sx={style.aboutCooperation}
+              withoutTitle
             />
-            <Typography sx={style.profileName}>
-              {displayedUser.firstName} {displayedUser.lastName}
+            <Typography sx={style.titles}>
+              {t('cooperationDetailsPage.tutoringLanguages')}
             </Typography>
-            <Typography sx={style.profileDescription}>
-              {displayedUser.professionalSummary}
+            <Box sx={style.languageContainer}>{languages}</Box>
+            <Typography sx={style.titles}>
+              {t('cooperationDetailsPage.pricing')}
             </Typography>
+            <Typography>{`${cooperationDetails.price} UAH/hour`}</Typography>
           </Box>
-          <Box sx={style.userButtons}>
-            <Button
-              onClick={onClickOpenChat}
-              size='md'
-              startIcon={<MessageIcon />}
-              sx={style.buttons}
-              variant='tonal'
-            >
-              {t('common.labels.sendMessage')}
-            </Button>
-            <Button
-              component={Link}
-              size='md'
-              startIcon={<PersonIcon />}
-              sx={style.buttons}
-              to={getFullUrl({
-                pathname: authRoutes.userProfile.route,
-                parameters: {
-                  id: displayedUser._id
-                },
-                searchParameters: {
-                  role: displayedUserRole
-                }
-              })}
-              variant={ButtonVariantEnum.Tonal}
-            >
-              {t('cooperationDetailsPage.profile')}
-            </Button>
-          </Box>
+          {cooperationCompletion}
         </Box>
-        <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.tutoringSubject')}
-        </Typography>
-        <Box sx={style.subjectContainer}>
-          <Box sx={style.categoryContainer}>
-            <CategoryIcon sx={style.iconColor(categoryColor)} />
-            <Typography>{offer.category.name}</Typography>
-          </Box>
-          <SubjectLevelChips
-            color={offer.category.appearance.color}
-            proficiencyLevel={offer.proficiencyLevel}
-            subject={offer.subject.name}
-          />
-        </Box>
-        <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.aboutCooperation')}
-        </Typography>
-        <ShowMoreCollapse
-          collapsedSize={28}
-          collapsedTextLength={100}
-          description={offer.description}
-          sx={style.aboutCooperation}
-          withoutTitle
-        />
-        <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.tutoringLanguages')}
-        </Typography>
-        <Box sx={style.languageContainer}>{languages}</Box>
-        <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.pricing')}
-        </Typography>
-        <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
-      <CooperationCompletion
-        cooperationStatus={cooperationDetails.status}
-        onCloseCooperation={handleCloseCooperation}
-        userRole={userRole}
-      />
     </Box>
   )
 }

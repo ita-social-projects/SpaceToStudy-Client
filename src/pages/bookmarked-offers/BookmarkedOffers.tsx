@@ -65,10 +65,7 @@ const BookmarkedOffers = () => {
     isError
   } = useQuery({
     queryKey: ['bookmarks', filters, searchParams.toString()],
-    queryFn: getBookmarkedOffers,
-    options: {
-      staleTime: Infinity
-    }
+    queryFn: getBookmarkedOffers
   })
 
   useEffect(() => {

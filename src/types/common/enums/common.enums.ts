@@ -145,3 +145,9 @@ export enum SortByEnum {
   highestRating = 'highestRating',
   lowestRating = 'lowestRating'
 }
+
+export enum NeedActionTypeEnum {
+  WaitingForAnswer = 'waiting for answer',
+  WaitingForApproval = 'waiting for approval',
+  Price = 'price'
+}

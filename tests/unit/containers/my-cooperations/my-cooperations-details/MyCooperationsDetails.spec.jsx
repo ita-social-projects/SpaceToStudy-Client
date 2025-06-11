@@ -1,36 +1,13 @@
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { getCooperationByIdMockResponse } from '~tests/test-constants'
 import { URLs } from '~/constants/request'
 import MyCooperationsDetails from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.tsx'
 
 import { screen, fireEvent } from '@testing-library/react'
-import { vi } from 'vitest'
+import { expect, vi } from 'vitest'
 
-const mockedOffer = {
-  initiator: { _id: 'initiatorId', role: ['tutor'] },
-  receiver: { _id: 'receiverId', role: ['student'] },
-  offer: {
-    title: 'Title',
-    description: 'Description',
-    languages: ['Ukrainian', 'English'],
-    author: {
-      firstName: 'Michael',
-      lastName: 'Scarn',
-      photo: '1701182621626.jpg',
-      professionalSummary: 'Agent'
-    },
-    subject: {
-      name: 'Algebra'
-    },
-    category: {
-      name: 'Mathematics',
-      appearance: {
-        color: '#1234'
-      }
-    },
-    proficiencyLevel: ['INTERMEDIATE']
-  },
-  price: 100
-}
+const mockedCooperation = { ...getCooperationByIdMockResponse }
+mockedCooperation.languages = ['Ukrainian', 'English']
 
 const mockChatContext = {
   setChatInfo: vi.fn()
@@ -44,22 +21,28 @@ describe('MyCooperationsDetails component', () => {
   beforeEach(() => {
     mockAxiosClient
       .onGet(URLs.cooperations.getById.replace(':id', ''))
-      .reply(200, mockedOffer)
+      .reply(200, mockedCooperation)
 
     renderWithProviders(<MyCooperationsDetails />)
   })
 
-  it('should render title', async () => {
-    const title = await screen.findByText('cooperationDetailsPage.details')
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
 
-    expect(title).toBeInTheDocument()
+  it('should render title', async () => {
+    const title = await screen.findAllByText('cooperationDetailsPage.details')
+
+    expect(title).toHaveLength(2)
+    expect(...title).toBeInTheDocument()
   })
 
   it('should render languages', async () => {
     const language1 = await screen.findByText('Ukrainian')
-    const language2 = await screen.findByText('English')
+    expect(language1).toBeInTheDocument()
 
-    expect(language1, language2).toBeInTheDocument()
+    const language2 = await screen.findByText('English')
+    expect(language2).toBeInTheDocument()
   })
 
   it('should open chat after clicking on chat-button', async () => {
@@ -81,7 +64,7 @@ describe('MyCooperationsDetails component', () => {
 
     expect(profileButton).toBeInTheDocument()
     expect(profileButton.parentElement.href).toContain(
-      `/user/${mockedOffer.initiator._id}?role=${mockedOffer.initiator.role[0]}`
+      `/user/${mockedCooperation.initiator._id}?role=${mockedCooperation.initiator.role[0]}`
     )
   })
 })

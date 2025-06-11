@@ -28,19 +28,18 @@ const CooperationCard: FC<CooperationCardProps> = ({
   sx
 }) => {
   const { t } = useTranslation()
-  const { user, offer, updatedAt, proficiencyLevel, price } = cooperation
+  const { user, updatedAt, proficiencyLevel, price, status, needAction } =
+    cooperation
 
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const roleBasedStatus =
-    cooperation.needAction.role === userRole
+    needAction.role === userRole
       ? StatusEnum.NeedAction
       : StatusEnum.RequestToClose
 
   const cooperationStatus =
-    cooperation.status === StatusEnum.RequestToClose
-      ? roleBasedStatus
-      : cooperation.status
+    status === StatusEnum.RequestToClose ? roleBasedStatus : cooperation.status
 
   return (
     <AppCard onClick={onClick} sx={spliceSx(styles.root, sx)}>
@@ -51,7 +50,7 @@ const CooperationCard: FC<CooperationCardProps> = ({
           firstName={user.firstName}
           lastName={user.lastName}
           photo={user.photo}
-          role={user.role}
+          role={user.role[0]}
           sx={styles.userProfileInfo}
         />
         <Box sx={styles.priceWithStatus}>
@@ -64,12 +63,12 @@ const CooperationCard: FC<CooperationCardProps> = ({
         </Box>
       </Box>
       <SubjectLevelChips
-        color={offer.category.appearance.color}
+        color={cooperation.category.appearance.color}
         proficiencyLevel={proficiencyLevel}
-        subject={offer.subject.name}
+        subject={cooperation.subject.name}
         sx={styles.chipBox}
       />
-      <Typography sx={styles.title}>{cooperation.offer.title}</Typography>
+      <Typography sx={styles.title}>{cooperation.title}</Typography>
     </AppCard>
   )
 }

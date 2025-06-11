@@ -1,42 +1,15 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { mockedCooperations } from '~tests/test-constants'
 import { URLs } from '~/constants/request'
 
 import MyCooperations from '~/pages/my-cooperations/MyCooperations'
-
-const MOCK_RESPONSE = {
-  items: [
-    {
-      _id: 'id',
-      offer: {
-        description:
-          'Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... ',
-        subject: { _id: 'id', name: 'Quantum Mechanics' }
-      },
-      user: {
-        firstName: 'Kathryn',
-        lastName: 'Murphy',
-        photo:
-          'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-      },
-      price: 1800,
-      proficiencyLevel: 'Beginner',
-      status: 'pending',
-      needAction: {
-        role: 'student',
-        type: 'price',
-        messages: []
-      }
-    }
-  ],
-  count: 0
-}
 
 describe('MyCooperations', () => {
   beforeAll(() => {
     mockAxiosClient
       .onGet(new RegExp(URLs.cooperations.get))
-      .reply(200, MOCK_RESPONSE)
+      .reply(200, mockedCooperations)
   })
 
   beforeEach(() => {
@@ -50,7 +23,7 @@ describe('MyCooperations', () => {
   })
 
   it('should render opposite user name on cooperation card', async () => {
-    const activeTab = screen.queryByText('Kathryn Murphy')
+    const activeTab = screen.getByText('Jane Doe')
 
     expect(activeTab).toBeInTheDocument()
   })
