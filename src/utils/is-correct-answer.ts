@@ -23,7 +23,7 @@ export const isCorrectAnswer = (
 
   if (isSingleChoice && typeof userAnswer === 'string') {
     const correctAnswer = question.answers.find((item) => item.isCorrect)
-    return normalize(correctAnswer?.text || '') === normalize(userAnswer)
+    return normalize(correctAnswer?.text ?? '') === normalize(userAnswer)
   }
 
   if (isMultipleChoice && Array.isArray(userAnswer)) {

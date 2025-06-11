@@ -1,4 +1,5 @@
 import { Box, IconButton, Stack } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from '~/containers/quiz/quiz-question/Question.styles'
@@ -22,6 +23,7 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
   questionText,
   onUpdate
 }) => {
+  const { t } = useTranslation()
   const { id: cooperationId = '', quizId = '', attemptId = '' } = useParams()
   const [isCorrect, setIsCorrect] = useState<boolean>(false)
   const dispatch = useAppDispatch()
@@ -99,11 +101,11 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
     async (newIsCorrect: boolean) => {
       const updatedQuiz = handleGradeUpdate(newIsCorrect)
       if (!updatedQuiz) {
-        throw new Error("Couldn't find quiz to update")
+        throw new Error(t('errorMessages.quizNotFoundToUpdate'))
       }
       return ResourceService.editFinishedQuiz(attemptId, updatedQuiz)
     },
-    [handleGradeUpdate, attemptId]
+    [handleGradeUpdate, attemptId, t]
   )
 
   const { mutate: updateAttempt } = useMutation({
@@ -111,6 +113,12 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
     onError: onResponseError,
     onSuccess: async () => {
       await refetch()
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: t('quiz.answerUpdatedSuccessfully')
+        })
+      )
     }
   })
   const handleCorrectAnswer = (newIsCorrect: boolean) => {

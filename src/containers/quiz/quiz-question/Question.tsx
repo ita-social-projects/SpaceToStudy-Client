@@ -16,7 +16,7 @@ import { isCorrectAnswer } from '~/utils/is-correct-answer'
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/containers/quiz/quiz-question/Question.styles'
 
-import { Question, UserRoleEnum } from '~/types'
+import { type Question, UserRoleEnum } from '~/types'
 import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
 import { useAppSelector } from '~/hooks/use-redux'
 
@@ -64,6 +64,11 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     return ResourceService.getFinishedQuiz(attemptId)
   }
 
+  const ContainerComponent = shouldUseAppCardWrapper ? AppCard : Box
+  let answersBlock
+  let correctnessIcon
+  let formattedValue: string[] = []
+
   const { data: finishedQuiz, isLoading: isFinishedQuizLoading } = useQuery({
     queryKey: ['finished-quiz', attemptId],
     queryFn: getFinishedQuiz
@@ -99,14 +104,10 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     initialIsCorrect
   ])
 
-  const ContainerComponent = shouldUseAppCardWrapper ? AppCard : Box
-
   const answerSx =
     isAnswerCorrect === undefined
       ? {}
       : { backgroundColor: isAnswerCorrect ? 'success.50' : 'error.50' }
-
-  let formattedValue: string[] = []
 
   if (Array.isArray(value)) {
     formattedValue = value.map((v) => v.toLowerCase())
@@ -145,8 +146,6 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
       />
     )
   })
-
-  let answersBlock
 
   if (isOpenAnswer) {
     answersBlock = (
@@ -232,7 +231,6 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     </Box>
   )
 
-  let correctnessIcon = null
   if (shouldShowAnswersCorrectness && isAnswerCorrect !== undefined) {
     if (isAnswerCorrect) {
       correctnessIcon = <CheckIcon sx={styles.icon(AnswerStatusEnum.Correct)} />
