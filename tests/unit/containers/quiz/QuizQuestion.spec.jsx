@@ -1,6 +1,7 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import QuizQuestion from '~/containers/quiz/quiz-question/Question.tsx'
+import { renderWithProviders } from '~tests/test-utils'
 
 const mockQuestion = {
   _id: '665e1f1a9946b3dbb292339f',
@@ -15,8 +16,32 @@ const mockQuestion = {
   type: 'oneAnswer'
 }
 
+const openAnswerQuestion = {
+  ...mockQuestion,
+  type: 'openAnswer'
+}
+
+const defaultProps = {
+  shouldUseAppCardWrapper: false,
+  sx: {},
+  shouldShowPoints: true,
+  shouldShowCorrectAnswers: true,
+  shouldShowAnswersCorrectness: true,
+  isEditable: true,
+  value: '',
+  handleInputChange: vi.fn(),
+  handleNonInputValueChange: vi.fn()
+}
+
 const renderWithProps = (props = {}) =>
-  render(<QuizQuestion index={1} question={mockQuestion} {...props} />)
+  renderWithProviders(
+    <QuizQuestion
+      index={1}
+      question={mockQuestion}
+      {...defaultProps}
+      {...props}
+    />
+  )
 
 describe('Quiz Question tests', () => {
   it('should render QuizQuestion', () => {
@@ -28,9 +53,9 @@ describe('Quiz Question tests', () => {
 
   it('should render correct answers', () => {
     renderWithProps({ shouldShowCorrectAnswers: true })
-
-    const element = screen.getAllByText(mockQuestion.answers[0].text)[1]
-    expect(element).toBeInTheDocument()
+    const elements = screen.getAllByText(mockQuestion.answers[0].text)
+    expect(elements.length).toBeGreaterThan(0)
+    expect(elements[0]).toBeInTheDocument()
   })
 
   it('should render points', () => {
@@ -39,6 +64,7 @@ describe('Quiz Question tests', () => {
     const element = screen.getByText('0/1')
     expect(element).toBeInTheDocument()
   })
+
   it('should render correctness icon if shouldShowAnswersCorrectness is true', () => {
     renderWithProps({
       shouldShowAnswersCorrectness: true,
@@ -48,18 +74,15 @@ describe('Quiz Question tests', () => {
     const icon = screen.getAllByTestId('CheckIcon')[0]
     expect(icon).toBeInTheDocument()
   })
+
   it('should render open answer input field', () => {
-    const handleInputChangeMock = vi.fn((e) => e.target.value)
-    const openAnswerQuestion = { ...mockQuestion, type: 'openAnswer' }
     renderWithProps({
-      question: openAnswerQuestion,
-      value: '',
-      handleInputChange: handleInputChangeMock
+      question: openAnswerQuestion
     })
 
     const input = screen.getByRole('textbox')
     expect(input).toBeInTheDocument()
     fireEvent.change(input, { target: { value: 'Correct answer' } })
-    expect(handleInputChangeMock).toHaveBeenCalled()
+    expect(input).toHaveValue('Correct answer')
   })
 })

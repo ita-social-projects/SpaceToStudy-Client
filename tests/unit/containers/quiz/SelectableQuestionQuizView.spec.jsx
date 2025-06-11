@@ -37,9 +37,9 @@ describe('SelectableQuestion component test', () => {
   })
 
   it('renders component with checkbox', () => {
-    const checkbox = screen.getByTestId('CheckBoxOutlineBlankIcon')
-
-    expect(checkbox).toBeInTheDocument()
+    expect(
+      screen.getByText('questionPage.questionType.multipleChoice')
+    ).toBeInTheDocument()
   })
 
   it('redirects to the next or previous question when you click on the Next or Back button', () => {

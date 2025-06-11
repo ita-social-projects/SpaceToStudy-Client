@@ -6,8 +6,12 @@ import { useCallback, useEffect, useState } from 'react'
 import { ResourceService } from '~/services/resource-service'
 import { useParams } from 'react-router-dom'
 import useQuery from '~/hooks/use-query'
-import { ONE_HOUR } from '~/constants'
+import { ONE_HOUR, snackbarVariants } from '~/constants'
 import { useMutation } from '@tanstack/react-query'
+import { type ErrorResponse } from '~/types'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface TutorAnswerGradingProps {
   questionText?: string
@@ -20,6 +24,7 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
 }) => {
   const { id: cooperationId = '', quizId = '', attemptId = '' } = useParams()
   const [isCorrect, setIsCorrect] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
 
   const getFinishedQuizzes = useCallback(() => {
     return ResourceService.getFinishedQuizzesByQuizId(cooperationId, quizId)
@@ -82,6 +87,14 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
     [finishedQuizzes, onUpdate, isCorrect, attemptId, questionText]
   )
 
+  const onResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
+  }
   const handleUpdateGrade = useCallback(
     async (newIsCorrect: boolean) => {
       const updatedQuiz = handleGradeUpdate(newIsCorrect)
@@ -95,9 +108,7 @@ const TutorAnswerGrading: React.FC<TutorAnswerGradingProps> = ({
 
   const { mutate: updateAttempt } = useMutation({
     mutationFn: handleUpdateGrade,
-    onError: () => {
-      setIsCorrect((prev) => !prev)
-    },
+    onError: onResponseError,
     onSuccess: async () => {
       await refetch()
     }
