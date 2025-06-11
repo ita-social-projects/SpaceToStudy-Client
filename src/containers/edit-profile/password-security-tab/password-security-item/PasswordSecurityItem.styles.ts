@@ -20,6 +20,7 @@ export const styles = {
   appButton: {
     mt: '20px',
     width: '192px',
-    height: '40px'
+    height: '40px',
+    whiteSpace: 'nowrap'
   }
 }
