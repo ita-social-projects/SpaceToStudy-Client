@@ -30,5 +30,6 @@
   "reachedAttemptLimit": "Attempt limit reached.",
   "noUsedAttempts": "No attempts have been made yet",
   "questionsAmount": "Questions amount",
-  "answerUpdatedSuccessfully": "Answer updated successfully"
+  "answerUpdatedSuccessfully": "Answer updated successfully",
+  "successSubmittedQuiz": "The quiz has been successfully finished!"
 }

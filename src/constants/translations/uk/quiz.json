@@ -30,5 +30,6 @@
   "reachedAttemptLimit": "Кількість спроб вичерпано.",
   "noUsedAttempts": "Спроб ще не було",
   "questionsAmount": "Кількість питань",
-  "answerUpdatedSuccessfully": "Відповідь успішно оновлено"
+  "answerUpdatedSuccessfully": "Відповідь успішно оновлено",
+  "successSubmittedQuiz": "Тест було успішно завершено!"
 }
