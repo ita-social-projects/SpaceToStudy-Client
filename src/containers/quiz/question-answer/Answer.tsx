@@ -7,7 +7,6 @@ import FormControlLabel, {
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import Radio from '@mui/material/Radio'
-import InputAdornment from '@mui/material/InputAdornment'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import { SxProps } from '@mui/material/styles'
@@ -18,12 +17,12 @@ import { spliceSx } from '~/utils/helper-functions'
 import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 import { styles } from '~/containers/quiz/question-answer/Answer.styles'
 
-import { QuestionTypesEnum } from '~/types/my-resources/myResources.index'
+import { QuestionTypesEnum } from '~/types'
 import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
 
 interface AnswerProps {
   text: string
-  isCorrect?: boolean
+  isCorrect?: boolean | null
   value?: string
   label?: string
   checked?: boolean
@@ -82,14 +81,9 @@ const Answer: FC<AnswerProps> = ({
   const rootStyle = styles.root(answerStatus, isOpenAnswer)
 
   if (isOpenAnswer) {
-    const inputIcon = resultIcon && (
-      <InputAdornment position='end'>{resultIcon}</InputAdornment>
-    )
-
     return (
       <AppTextField
         InputProps={{
-          endAdornment: inputIcon,
           disabled: !isEditable
         }}
         fullWidth

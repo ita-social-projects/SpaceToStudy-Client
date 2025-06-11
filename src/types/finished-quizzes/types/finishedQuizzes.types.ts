@@ -19,8 +19,8 @@ export type CreateFinishedQuizParams = {
 }
 
 export type UpdateFinishedQuizParams = {
-  grade: number
-  results: Result[]
+  questionText: string
+  newIsCorrect: boolean
 }
 
 export type FinishedQuiz = CreateFinishedQuizParams & CommonEntityFields

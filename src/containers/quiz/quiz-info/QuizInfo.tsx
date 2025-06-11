@@ -18,9 +18,10 @@ import {
   spliceSx
 } from '~/utils/helper-functions'
 
-import { QuizAttempt, QuizTimeLimit } from '~/types'
+import { QuizAttempt, QuizTimeLimit, UserRoleEnum } from '~/types'
 import { getQuizTimeLimitFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { TFunction } from 'i18next'
+import { useAppSelector } from '~/hooks/use-redux'
 
 type ActiveQuizInfoProps = {
   questionsAnswered: number
@@ -99,7 +100,7 @@ const FinishedQuizInfo: React.FC<FinishedQuizInfoProps> = ({
       />
       <QuizInfoSection
         firstColumn={`${formatTime(createdAt)} - ${formatTime(updatedAt)}`}
-        secondColumn={`${formatTimeDifference(updatedAt, createdAt) + ' ' + t('quiz.min')}`}
+        secondColumn={`${Math.abs(formatTimeDifference(updatedAt, createdAt)) + ' ' + t('quiz.min')}`}
         title={t('quiz.duration')}
       />
       <Divider
@@ -109,7 +110,7 @@ const FinishedQuizInfo: React.FC<FinishedQuizInfoProps> = ({
         variant='middle'
       />
       <QuizInfoSection
-        firstColumn={`${points}/${totalPoints}`}
+        firstColumn={`${totalPoints}/${points}`}
         title={t('quiz.points')}
       />
     </Box>
@@ -157,7 +158,7 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
   onStart
 }) => {
   const { t } = useTranslation()
-
+  const { userRole } = useAppSelector((state) => state.appMain)
   const [totalAttempts] = attempts.split(' ')
 
   const limits = {
@@ -168,6 +169,12 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
 
   const hasAttempts =
     limits.isNoLimitAttempt || usedAttempts < limits.maxAttempts
+
+  let quizButtonLabel = t('quiz.viewQuiz')
+  if (userRole === UserRoleEnum.Student) {
+    quizButtonLabel =
+      usedAttempts === 0 ? t('quiz.startQuiz') : t('quiz.tryAgain')
+  }
 
   const typographyStyle = (subType: number) => {
     return spliceSx(
@@ -245,7 +252,7 @@ const StartViewQuizInfo: React.FC<StartViewQuizInfoProps> = ({
             onClick={onStart}
             size='sm'
           >
-            {usedAttempts === 0 ? t('quiz.startQuiz') : t('quiz.tryAgain')}
+            {quizButtonLabel}
           </Button>
         </Box>
       </Box>

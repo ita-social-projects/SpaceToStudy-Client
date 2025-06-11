@@ -46,6 +46,18 @@ export const styles = {
   answersContainer: {
     gap: '8px'
   },
+  tutorOpenAnswerContainer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  check: {
+    height: '20px',
+    width: '20px'
+  },
+  cross: {
+    height: '20px',
+    width: '20px'
+  },
   icon: (state?: AnswerCorrectnessStatus) => ({
     color: state === AnswerStatusEnum.Correct ? 'success.main' : 'error.main'
   })

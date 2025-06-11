@@ -21,6 +21,8 @@ import useQuizQuery from '~/hooks/query/use-quiz-query'
 
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
+import { formatQuizResults } from '~/utils/format-answer'
+import { calculateTotalPoints } from '~/utils/calculate-total-points'
 import styles from '~/pages/quiz/Quiz.styles'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import { defaultQuizResponse } from '~/pages/quiz/Quiz.constant'
@@ -83,18 +85,7 @@ const ActiveQuiz: React.FC = () => {
   const grade = Math.round((points / items.length) * 100)
 
   const mappedResults = useMemo(() => {
-    return items.map(({ text, answers, _id }) => {
-      return {
-        question: text,
-        answers: answers.map(({ text, isCorrect }) => {
-          return {
-            text,
-            isCorrect,
-            isChosen: data[_id]?.includes(text) ?? false
-          }
-        })
-      }
-    })
+    return formatQuizResults(data, items)
   }, [data, items])
 
   const addFinishedQuiz = useCallback(() => {
@@ -117,20 +108,9 @@ const ActiveQuiz: React.FC = () => {
   const editFinishedQuiz = useCallback(() => {
     return ResourceService.editFinishedQuiz(finishedQuizId, {
       grade,
-      results: items.map(({ text, answers, _id }) => {
-        return {
-          question: text,
-          answers: answers.map(({ text, isCorrect }) => {
-            return {
-              text,
-              isCorrect,
-              isChosen: data[_id]?.includes(text) ?? false
-            }
-          })
-        }
-      })
+      results: mappedResults
     })
-  }, [data, finishedQuizId, grade, items])
+  }, [finishedQuizId, grade, mappedResults])
 
   const { mutate: updateFinishedQuiz } = useMutation({
     mutationFn: editFinishedQuiz,
@@ -278,8 +258,13 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
 
   const isStepper = view === QuizViewEnum.Stepper
 
+  const totalPoints = useMemo(() => {
+    return calculateTotalPoints(finishedQuiz?.results)
+  }, [finishedQuiz?.results])
+
   const mappedResults = useMemo(() => {
     const result: Record<string, string | string[]> = {}
+
     finishedQuiz?.results?.forEach(({ question, answers }) => {
       const quizQuestion = quiz?.items.find((item) => item.text === question)
       const quizQuestionId = quizQuestion?._id
@@ -289,7 +274,9 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
         const textAnswers = chosenAnswers.map(
           (chosenAnswer) => chosenAnswer.text
         )
-        result[quizQuestionId] = textAnswers
+
+        result[quizQuestionId] =
+          textAnswers.length === 1 ? textAnswers[0] : textAnswers
       }
     })
 
@@ -331,7 +318,7 @@ const FinishedQuiz: React.FC<FinishedQuizProps> = ({ finishedQuizId }) => {
           description={description}
           points={items.length}
           title={title}
-          totalPoints={finishedQuiz.results?.length}
+          totalPoints={totalPoints}
           type='finished'
           updatedAt={finishedQuiz.updatedAt}
         />

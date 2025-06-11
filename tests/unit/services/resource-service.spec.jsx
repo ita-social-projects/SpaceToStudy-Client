@@ -428,4 +428,32 @@ describe('resourseService tests', () => {
     )
     expect(result).toEqual(mockQuestionData)
   })
+  it('should fetch a finished quiz by ID', async () => {
+    const quizId = '6641388f36ebdb0432a3a2e5'
+    const mockFinishedQuizData = {
+      _id: quizId,
+      title: 'Sample Finished Quiz',
+      score: 80,
+      status: 'completed',
+      answers: [
+        { questionId: '1', answer: 'A' },
+        { questionId: '2', answer: 'B' },
+        { questionId: '3', answer: 'C' }
+      ],
+      userId: '12345',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z'
+    }
+
+    mockAxiosClient
+      .onGet(URLs.finishedQuizzes.getById.replace(':id', quizId))
+      .reply(200, mockFinishedQuizData)
+
+    const result = await ResourceService.getFinishedQuiz(quizId)
+
+    expect(mockAxiosClient.history.get[0].url).toBe(
+      URLs.finishedQuizzes.getById.replace(':id', quizId)
+    )
+    expect(result).toEqual(mockFinishedQuizData)
+  })
 })

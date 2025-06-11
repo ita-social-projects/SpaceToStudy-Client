@@ -26,6 +26,8 @@ import { formatTime, getFormattedDate } from '~/utils/helper-functions'
 
 import useQuizQuery from '~/hooks/query/use-quiz-query'
 import { ONE_HOUR } from '~/constants'
+import { useAppSelector } from '~/hooks/use-redux'
+import { UserRoleEnum } from '~/types'
 
 const QuizAttemptsPage: React.FC = () => {
   const { id: cooperationId = '', quizId = '' } = useParams()
@@ -35,10 +37,20 @@ const QuizAttemptsPage: React.FC = () => {
   const { t } = useTranslation()
 
   const { quiz, isLoading } = useQuizQuery(quizId)
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const openModal = useCallback(() => {
-    setIsOpen(true)
-  }, [])
+    if (userRole === UserRoleEnum.Student) {
+      setIsOpen(true)
+    } else {
+      navigate(
+        getFullUrl({
+          pathname: authRoutes.myResources.editQuiz.route,
+          parameters: { id: quizId }
+        })
+      )
+    }
+  }, [navigate, quizId, userRole])
 
   const {
     settings: { attemptLimit, timeLimit },

@@ -102,7 +102,9 @@
     "successDuplication": "Запитання було успішно продубльовано",
     "successEditedQuestion": "Запитання було успішно відредаговано",
     "successAddedQuestion": "Запитання було успішно створено",
-    "searchInput": "Пошук запитання"
+    "searchInput": "Пошук запитання",
+    "reviewMessage": "Репетитор незабаром перегляне вашу відповідь",
+    "teacherMessage": "Усе у ваших руках — вирішіть, чи правильна ця відповідь"
   },
   "categories": {
     "category": "Категорія",
