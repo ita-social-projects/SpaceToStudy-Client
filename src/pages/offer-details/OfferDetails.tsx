@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { OfferService } from '~/services/offer-service'
 import { useModalContext } from '~/context/modal-context'
 import { useChatContext } from '~/context/chat-context'
-import useAxios from '~/hooks/use-axios'
+import useQuery from '~/hooks/use-query'
 import useConfirm from '~/hooks/use-confirm'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -27,12 +27,9 @@ import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import {
-  CreateOrUpdateOfferData,
-  Offer,
-  OutletContext,
+  type OutletContext,
+  type UserRole,
   StatusEnum,
-  ErrorResponse,
-  UserRole,
   UserRoleEnum
 } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
@@ -43,10 +40,9 @@ import {
 } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import { activeButtonActions } from '~/pages/offer-details/OfferDetails.constants'
 import { useToggleBookmark } from '~/utils/toggle-bookmark'
-import { openAlert } from '~/redux/features/snackbarSlice'
 import { setField, fetchUserById } from '~/redux/features/editProfileSlice'
-import { snackbarVariants } from '~/constants'
-import { getErrorKey } from '~/utils/get-error-key'
+import useMutation from '~/hooks/use-mutation'
+import useSnackbarAlert from '~/hooks/use-snackbar-alert'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -59,6 +55,7 @@ const OfferDetails = () => {
   const { checkConfirmation } = useConfirm()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
+  const { handleErrorAlert } = useSnackbarAlert()
 
   const offerDetailsPage = useRef(null)
   const { pageRef } = useOutletContext<OutletContext>()
@@ -69,54 +66,44 @@ const OfferDetails = () => {
       ? 'userProfilePage.reviews.titleTutor'
       : 'userProfilePage.reviews.titleStudent'
 
-  const getOffer = useCallback(() => OfferService.getOffer(id), [id])
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
     [navigate]
   )
+
   const {
-    response: offerData,
-    loading: offerLoading,
-    fetchData: fetchDataOffer
-  } = useAxios<Offer | null>({
-    service: getOffer,
-    defaultResponse: null,
-    onResponseError: responseError
+    data: offerData,
+    isLoading: isOfferLoading,
+    refetch: fetchDataOffer,
+    isError
+  } = useQuery({
+    queryKey: ['offer', id],
+    queryFn: () => OfferService.getOffer(id),
+    options: {
+      staleTime: Infinity
+    }
   })
 
-  const updateOffer = useCallback(
-    (updateData?: Partial<CreateOrUpdateOfferData>) =>
-      OfferService.updateOffer(id, updateData),
-    [id]
-  )
+  useEffect(() => {
+    if (isError) {
+      responseError()
+    }
+  }, [isError, responseError])
 
-  const { loading: updateLoading, fetchData: fetchDataUpdateOffer } = useAxios<
-    null,
-    Partial<CreateOrUpdateOfferData>
-  >({
-    service: updateOffer,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError: responseError
+  const { mutate: updateOfferDetails, isPending: updateLoading } = useMutation({
+    queryKeys: [['offers'], ['offer', id]],
+    mutationFn: OfferService.updateOffer,
+    onError: responseError
   })
 
   const handleResponse = (response: string[]) => {
     dispatch(setField({ field: 'bookmarkedOffers', value: response }))
   }
 
-  const handleResponseError = (error?: ErrorResponse) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
-    )
-  }
-
   const toggleBookmark = useToggleBookmark(
     userId,
     handleResponse,
-    handleResponseError
+    handleErrorAlert
   )
 
   const isBookmarked = useMemo(
@@ -136,36 +123,34 @@ const OfferDetails = () => {
       )
     })
 
-  const handleToggleOfferStatus = async () => {
+  const handleToggleOfferStatus = () => {
     const status =
       offerData?.status === StatusEnum.Draft
         ? StatusEnum.Active
         : StatusEnum.Draft
 
     if (offerData) {
-      await fetchDataUpdateOffer({ status })
-      void fetchDataOffer()
+      updateOfferDetails({ status, id })
     }
   }
 
   const handleCloseOffer = async () => {
-    const confirmed = checkConfirmation({
+    const confirmed = await checkConfirmation({
       message: 'offerDetailsPage.closeOffer',
       title: 'titles.confirmTitle',
       check: true
     })
-    if (await confirmed) {
-      await fetchDataUpdateOffer({ status: StatusEnum.Closed })
-      void fetchDataOffer()
+    if (confirmed) {
+      updateOfferDetails({ status: StatusEnum.Closed, id })
     }
   }
 
-  const handleEnrollOffer = async () => {
+  const handleEnrollOffer = () => {
     if (offerData) {
-      await fetchDataUpdateOffer({
-        enrolledUsers: [...offerData.enrolledUsers, userId]
+      updateOfferDetails({
+        enrolledUsers: [...offerData.enrolledUsers, userId],
+        id
       })
-      void fetchDataOffer()
     }
   }
 
@@ -202,8 +187,8 @@ const OfferDetails = () => {
   )
 
   useLayoutEffect(() => {
-    void dispatch(setPageLoad(offerLoading))
-  }, [dispatch, offerLoading])
+    void dispatch(setPageLoad(isOfferLoading))
+  }, [dispatch, isOfferLoading])
 
   useEffect(() => {
     void dispatch(
@@ -211,12 +196,8 @@ const OfferDetails = () => {
     )
   }, [dispatch, userId, userRole])
 
-  if (offerLoading) {
+  if (isOfferLoading || !offerData) {
     return <Loader pageLoad />
-  }
-
-  if (!offerData) {
-    return null
   }
 
   return (

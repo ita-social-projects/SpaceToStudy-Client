@@ -1,8 +1,9 @@
-import { expect, vi } from 'vitest'
+import { afterAll, afterEach, expect, vi } from 'vitest'
 import { fireEvent, waitFor, screen } from '@testing-library/react'
 import { URLs } from '~/constants/request'
 import OfferDetails from '~/pages/offer-details/OfferDetails'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import * as useQuery from '~/hooks/use-query'
 import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { setField } from '~/redux/features/editProfileSlice'
@@ -51,27 +52,37 @@ const desktopData = {
   isTablet: false
 }
 
-const mockState = {
+const mobileData = {
+  isLaptopAndAbove: false,
+  isMobile: true,
+  isTablet: false
+}
+
+const mockStateTutor = {
   appMain: { userId: mockOffer.author._id, userRole: 'tutor' }
 }
 
+const mockStateStudent = {
+  appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
+}
+
+useBreakpoints.mockImplementation(() => desktopData)
+
+mockAxiosClient
+  .onGet(URLs.offers.getById.replace(':id', mockOffer._id))
+  .reply(200, mockOffer)
+
+mockAxiosClient
+  .onPatch(URLs.offers.updateById.replace(':id', mockOffer._id))
+  .reply(204, null)
+
+mockAxiosClient.onGet(URLs.offers.get).reply(200, { offers: [], count: 0 })
+
 describe('OfferDetails on desktop', () => {
   beforeEach(() => {
-    useBreakpoints.mockImplementation(() => desktopData)
-
     renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
+      preloadedState: mockStateTutor
     })
-
-    mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
-      .reply(200, mockOffer)
-    mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-      .reply(200, { offers: [], count: 0 })
   })
 
   it('should display the offer details correctly', async () => {
@@ -91,7 +102,7 @@ describe('OfferDetails on desktop', () => {
 
   it('should change toggle button to active/draft', async () => {
     mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
+      .onGet(URLs.offers.getById.replace(':id', mockOffer._id))
       .reply(200, { ...mockOffer, status: 'draft' })
 
     const draft = await screen.findByText('common.labels.moveToDraft')
@@ -99,7 +110,6 @@ describe('OfferDetails on desktop', () => {
     fireEvent.click(draft)
 
     const active = await screen.findByText('common.labels.makeActive')
-
     expect(active).toBeInTheDocument()
   })
 
@@ -124,23 +134,11 @@ describe('OfferDetails on desktop', () => {
 
 describe('Offer details with student role', () => {
   beforeEach(() => {
-    useBreakpoints.mockImplementation(() => desktopData)
-
     renderWithProviders(<OfferDetails />, {
       preloadedState: {
-        appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
+        appMain: mockStateStudent
       }
     })
-
-    mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
-      .reply(200, mockOffer)
-    mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-      .reply(200, { offers: [], count: 0 })
   })
 
   it('should open modal window with enroll offer', async () => {
@@ -233,19 +231,24 @@ describe('Offer details with student role', () => {
 })
 
 describe('OfferDetails on mobile', () => {
-  const mobileData = {
-    isLaptopAndAbove: false,
-    isMobile: true,
-    isTablet: false
-  }
+  const useQuerySpy = vi.spyOn(useQuery, 'default')
+
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => mobileData)
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
-    })
+  })
+
+  afterEach(() => {
+    useQuerySpy.mockReset()
+  })
+
+  afterAll(() => {
+    useQuerySpy.mockRestore()
   })
 
   it('should display the offer details correctly', async () => {
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: mockStateTutor
+    })
     const authorAvgRating = await screen.findByText(
       mockOffer.author.averageRating.tutor
     )
@@ -258,13 +261,25 @@ describe('OfferDetails on mobile', () => {
     expect(title).toBeInTheDocument()
     expect(name).toBeInTheDocument()
   })
+
+  it('should render Loader', () => {
+    useQuerySpy.mockReturnValue({ isLoading: true })
+
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: mockStateTutor
+    })
+
+    const loader = screen.getByTestId('loader')
+
+    expect(loader).toBeInTheDocument()
+  })
 })
 
 describe('Offer details with student role', () => {
   beforeEach(() => {
     renderWithProviders(<OfferDetails />, {
       preloadedState: {
-        appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
+        appMain: mockStateStudent
       }
     })
   })
@@ -277,33 +292,5 @@ describe('Offer details with student role', () => {
     expect(
       screen.getByText('offerDetailsPage.enrollOffer.title')
     ).toBeInTheDocument()
-  })
-})
-
-describe('Should show Loader', () => {
-  it('should render Loader - (loading from useAxios)', async () => {
-    mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-      .reply(200, { offers: [], count: 0 })
-    const newMockState = {
-      appMain: {
-        userId: mockOffer.author._id,
-        userRole: 'tutor',
-        loading: true
-      }
-    }
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: newMockState
-    })
-
-    const loader = screen.getByTestId('loader')
-
-    expect(loader).toBeInTheDocument()
   })
 })

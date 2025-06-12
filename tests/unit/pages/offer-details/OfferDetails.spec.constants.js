@@ -8,6 +8,7 @@ export const mockOffer = {
     'Test Preparation',
     'Professional'
   ],
+  chatId: null,
   title: 'test',
   description: 'testtesttesttesttesttesttesttest',
   languages: ['Ukrainian'],

@@ -16,8 +16,9 @@ const EditOffer: FC<EditOfferProps> = ({ offer, closeDrawer }) => {
     async (updateData: CreateOrUpdateOfferData) => {
       if (!offer) return null
 
-      await OfferService.updateOfferWithBaseService(offer._id, {
+      await OfferService.updateOffer({
         ...updateData,
+        id: offer._id,
         FAQ: findFullObjects(updateData.FAQ)
       })
 

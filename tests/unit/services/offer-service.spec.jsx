@@ -114,6 +114,7 @@ describe('offerService getOffers function tests', () => {
   it('should update offer by id with given data', async () => {
     const offerId = '12345'
     const updateData = {
+      id: offerId,
       title: 'Updated Offer Title',
       price: 99
     }
@@ -124,10 +125,7 @@ describe('offerService getOffers function tests', () => {
       .onPatch(new RegExp(`${URLs.offers.updateById.replace(':id', offerId)}`))
       .reply(200)
 
-    const result = await OfferService.updateOfferWithBaseService(
-      offerId,
-      updateData
-    )
+    const result = await OfferService.updateOffer(updateData)
 
     expect(result).toBeUndefined()
     expect(getFullUrlSpy).toHaveBeenCalledWith({
