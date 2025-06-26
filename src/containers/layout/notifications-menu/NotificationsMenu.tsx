@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import Link from '@mui/material/Link'
-import { MenuProps } from '@mui/material'
+import { MenuProps } from '~/design-system/components/menu/Menu'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppMenu from '~/components/app-menu/AppMenu'
@@ -36,40 +36,56 @@ const NotificationsMenu: FC<NotificationsMenuProps> = ({
     onDelete(item)
   }
 
-  const menuItems = [
-    ...items.map((item) => (
-      <Typography key={item._id} sx={styles.menuItem}>
-        <Link
-          component={RouterLink}
-          onClick={() => handleLinkClick(item)}
-          sx={styles.link}
-          to={liksByType[item.type]}
-        >
-          {t(`header.notifications.messages.${item.type}`)}
-        </Link>
-        <IconButton onClick={() => onDelete(item)}>
-          <CloseRoundedIcon fontSize={SizeEnum.Small} sx={styles.closeIcon} />
-        </IconButton>
-      </Typography>
-    )),
-    <Button fullWidth key={null} onClick={onClear} variant='text-secondary'>
-      {t('header.notifications.clearAll')}
-    </Button>
+  const menuItems = items.map((item) => ({
+    title: (
+      <div data-title='notification-item'>
+        <Typography sx={styles.menuWrapper}>
+          <Link
+            component={RouterLink}
+            onClick={() => handleLinkClick(item)}
+            sx={styles.link}
+            to={liksByType[item.type]}
+          >
+            {t(`header.notifications.messages.${item.type}`)}
+          </Link>
+          <IconButton onClick={() => onDelete(item)}>
+            <CloseRoundedIcon fontSize={SizeEnum.Small} sx={styles.closeIcon} />
+          </IconButton>
+        </Typography>
+      </div>
+    ) as unknown as string,
+    onClick: () => {},
+    sx: styles.menuItem
+  }))
+
+  const menuList = [
+    ...menuItems,
+    {
+      title: (
+        <div data-title='clear-button'>
+          <Button fullWidth onClick={onClear} variant='text-secondary'>
+            {t('header.notifications.clearAll')}
+          </Button>
+        </div>
+      ) as unknown as string,
+      onClick: () => {},
+      sx: styles.clearButton
+    }
   ]
 
-  const emptyNotifications = (
-    <Typography sx={styles.empty}>
-      {t('header.notifications.emptyNotifications')}
-    </Typography>
-  )
+  const emptyNotifications = {
+    title: t('header.notifications.emptyNotifications'),
+    onClick: () => {},
+    sx: styles.empty
+  }
 
   return (
     <AppMenu
       anchorEl={anchorEl}
       maxHeight={264}
-      menuList={items.length ? menuItems : emptyNotifications}
+      menuList={items.length ? menuList : [emptyNotifications]}
       onClose={onClose}
-      open={Boolean(anchorEl)}
+      // open={Boolean(anchorEl)}
     />
   )
 }

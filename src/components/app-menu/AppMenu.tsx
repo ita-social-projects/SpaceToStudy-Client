@@ -1,38 +1,41 @@
-import { FC } from 'react'
+import Menu from '~/design-system/components/menu/Menu'
+import { MenuItemColorVariant } from '~/design-system/components/menu-item/MenuItem.constants'
 
-import Menu, { MenuProps } from '@mui/material/Menu'
-
-import { spliceSx } from '~/utils/helper-functions'
-
-import { PositionEnum } from '~/types'
-import { styles } from '~/components/app-menu/AppMenu.styles'
-
-interface AppMenuProps extends MenuProps {
+interface AppMenuProps {
+  anchorEl: HTMLElement | null
+  menuList: {
+    title: string
+    onClick: () => void
+    graphics?: JSX.Element
+    sx?: object
+    isDisabled?: boolean
+    colorVariant?: MenuItemColorVariant
+    density?: 1 | 2
+  }[]
+  onClose: () => void
   maxHeight?: number
-  menuList: JSX.Element | JSX.Element[]
+  minWidth?: number
 }
 
-const AppMenu: FC<AppMenuProps> = ({ maxHeight, menuList, sx, ...props }) => {
+const AppMenu = ({
+  anchorEl,
+  menuList,
+  onClose,
+  minWidth = 200,
+  maxHeight = 400
+}: AppMenuProps) => {
   return (
     <Menu
-      PaperProps={{
-        style: {
-          maxHeight
-        }
-      }}
-      anchorOrigin={{
-        vertical: PositionEnum.Bottom,
-        horizontal: PositionEnum.Right
-      }}
-      sx={spliceSx(styles.menu, sx)}
-      transformOrigin={{
-        vertical: PositionEnum.Top,
-        horizontal: PositionEnum.Right
-      }}
-      {...props}
-    >
-      {menuList}
-    </Menu>
+      anchorEl={anchorEl}
+      maxHeight={maxHeight}
+      menuItems={menuList.map((item) => ({
+        ...item,
+        disabled: item.isDisabled
+      }))}
+      minWidth={minWidth}
+      removeAllItemsTitle='Remove All'
+      setAnchorEl={onClose}
+    />
   )
 }
 

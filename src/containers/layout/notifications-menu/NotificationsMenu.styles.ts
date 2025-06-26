@@ -18,6 +18,15 @@ export const styles = {
     borderBottom: '1px solid',
     borderColor: 'primary.100'
   },
+  menuWrapper: {
+    typography: TypographyVariantEnum.MidTitle,
+    pl: 1,
+    maxHeight: '264px',
+    minWidth: '340px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
   link: {
     color: 'primary.700',
     textDecoration: 'none'
@@ -28,5 +37,10 @@ export const styles = {
   },
   closeIcon: {
     color: 'primary.900'
+  },
+  clearButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }

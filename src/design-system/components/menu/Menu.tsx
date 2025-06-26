@@ -25,7 +25,7 @@ interface MenuItemProps extends NestedMenuItemProps {
   nestedMenuItems?: NestedMenuItemProps[]
 }
 
-interface MenuProps {
+export interface MenuProps {
   anchorEl: HTMLElement | null
   setAnchorEl: (anchorEl: HTMLElement | null) => void
   menuItems: MenuItemProps[]
@@ -64,6 +64,7 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>(
     ref
   ) => {
     const [items, setItems] = useState<MenuItemProps[]>(menuItems)
+
     const [internalToggledItemsTitles, setInternalToggledItemsTitles] =
       useState<string[]>(
         allowToggleMultipleItems

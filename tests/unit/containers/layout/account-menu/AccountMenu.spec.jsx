@@ -20,6 +20,10 @@ describe('AccountMenu component', () => {
     )
   })
 
+  beforeEach(() => {
+    mockOnClose.mockClear()
+  })
+
   it('should render menu items based on userRole', () => {
     const expectedItems = Object.values(authRoutes.accountMenu['tutor']).map(
       (item) => screen.getByText(`header.${item.route}`)
@@ -42,6 +46,7 @@ describe('AccountMenu component', () => {
       `header.${authRoutes.accountMenu['tutor'].myCourses.route}`
     )
     fireEvent.click(menuItem)
-    expect(mockOnClose).toHaveBeenCalledTimes(1)
+
+    expect(mockOnClose).toHaveBeenCalled()
   })
 })

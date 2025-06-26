@@ -1,8 +1,5 @@
-import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import MenuItem from '@mui/material/MenuItem'
-import { MenuProps } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout'
 
 import AppMenu from '~/components/app-menu/AppMenu'
@@ -10,60 +7,53 @@ import { styles } from '~/containers/layout/account-menu/AccountMenu.styles'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import { authRoutes } from '~/router/constants/authRoutes'
-import { spliceSx } from '~/utils/helper-functions'
 import { RouteItem } from '~/types'
 
 interface AccountMenuProps {
-  anchorEl: MenuProps['anchorEl']
+  anchorEl: HTMLElement | null
   onClose: () => void
 }
 
-const AccountMenu: FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
+const AccountMenu: React.FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
   const { t } = useTranslation()
-
+  const navigate = useNavigate()
   const { userRole } = useAppSelector((state) => state.appMain)
 
-  const logOutButton = (
-    <MenuItem
-      component={Link}
-      key={authRoutes.accountMenu.logout.path}
-      onClick={onClose}
-      sx={spliceSx(styles.menuItem, styles.logoutItem)}
-      to={authRoutes.accountMenu.logout.path}
-    >
-      <LogoutIcon sx={styles.logoutIcon} />
-      {t(`header.${authRoutes.accountMenu.logout.route}`)}
-    </MenuItem>
-  )
+  const menuList = (() => {
+    const routes = Object.values(
+      authRoutes.accountMenu[userRole as keyof typeof authRoutes.accountMenu]
+    ) as RouteItem[]
 
-  const routes = Object.values(
-    authRoutes.accountMenu[userRole as keyof typeof authRoutes.accountMenu]
-  ) as RouteItem[]
+    const filteredRoutes = routes.filter(
+      (item) => item.route !== authRoutes.accountMenu.logout.route
+    )
 
-  const menuItems = routes
-    .filter((item) => item.route !== authRoutes.accountMenu.logout.route)
-    .map((item) => (
-      <MenuItem
-        component={Link}
-        key={item.path}
-        onClick={onClose}
-        sx={styles.menuItem}
-        to={item.path}
-      >
-        {t(`header.${item.route}`)}
-      </MenuItem>
-    ))
+    return [
+      ...filteredRoutes.map((item) => ({
+        title: t(`header.${item.route}`),
+        onClick: () => {
+          navigate(item.path)
+          onClose()
+        },
+        density: 2 as const,
+        sx: styles.menuItem
+      })),
+      {
+        title: t(`header.${authRoutes.accountMenu.logout.route}`),
+        onClick: () => {
+          navigate(authRoutes.accountMenu.logout.path)
+          onClose()
+        },
+        graphics: <LogoutIcon sx={styles.logoutIcon} />,
+        sx: {
+          ...styles.menuItem,
+          ...styles.logoutItem
+        }
+      }
+    ]
+  })()
 
-  const menuList = [...menuItems, logOutButton]
-
-  return (
-    <AppMenu
-      anchorEl={anchorEl}
-      menuList={menuList}
-      onClose={onClose}
-      open={Boolean(anchorEl)}
-    />
-  )
+  return <AppMenu anchorEl={anchorEl} menuList={menuList} onClose={onClose} />
 }
 
 export default AccountMenu

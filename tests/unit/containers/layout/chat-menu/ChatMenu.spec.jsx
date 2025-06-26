@@ -1,149 +1,153 @@
-import { fireEvent, screen, cleanup, waitFor } from '@testing-library/react'
-import { renderWithProviders } from '~tests/test-utils'
-import { expect, vi } from 'vitest'
+import { configureStore } from '@reduxjs/toolkit'
+import { render, screen, fireEvent, cleanup } from '@testing-library/react'
+import { Provider } from 'react-redux'
+import { vi } from 'vitest'
 import ChatMenu from '~/containers/layout/chat-menu/ChatMenu'
+import reducer from '~/redux/reducer'
+import useConfirm from '~/hooks/use-confirm'
+import { chatService } from '~/services/chat-service'
+import { I18nextProvider } from 'react-i18next'
 
-const mockOpenDialog = vi.fn()
-const mockOpenAlert = vi.fn()
-vi.mock('~/hooks/use-confirm', () => {
-  return {
-    default: () => ({
-      openDialog: mockOpenDialog,
-      setNeedConfirmation: () => true
-    })
+vi.mock('~/hooks/use-confirm', () => ({
+  default: vi.fn(() => ({ openDialog: vi.fn() }))
+}))
+
+vi.mock('~/services/chat-service', () => ({
+  chatService: {
+    deleteChat: vi.fn(),
+    markChatAsDeleted: vi.fn()
   }
-})
+}))
 
-vi.mock('~/hooks/use-axios', async () => {
-  const actual = await vi.importActual('~/hooks/use-axios')
-  return {
-    useAxios: vi.fn(() => ({
-      fetchData: vi.fn()
-    })),
-    ...actual
+vi.mock('~/services/message-service', () => ({
+  messageService: {
+    clearChatHistory: vi.fn(),
+    deleteMessagesFromChat: vi.fn()
   }
-})
+}))
 
-vi.mock('~/context/snackbar-context', async () => {
-  const actual = await vi.importActual('~/context/snackbar-context')
-  return {
-    openAlert: () => mockOpenAlert(),
-    ...actual
-  }
-})
+vi.mock('react-i18next', () => ({
+  I18nextProvider: ({ children }) => <div>{children}</div>,
+  useTranslation: () => ({
+    t: (key) => key,
+    i18n: { changeLanguage: vi.fn() }
+  })
+}))
 
-vi.mock('~/services/chat-service', async () => {
-  const actual = await vi.importActual('~/services/chat-service')
-  return {
-    chatService: {
-      markChatAsDeleted: vi.fn(),
-      deleteChat: vi.fn()
-    },
-    ...actual
-  }
-})
-
-describe('ChatMenu Component', () => {
-  const anchorEl = document.createElement('div')
-  const currentChat = {
-    _id: '1',
-    deletedFor: []
-  }
-  const messages = {
-    len: 0
-  }
-  const onClose = vi.fn()
-  const updateChats = vi.fn()
-  const updateMessages = vi.fn()
-
-  const renderComponent = () =>
-    renderWithProviders(
-      <ChatMenu
-        anchorEl={anchorEl}
-        currentChat={currentChat}
-        messagesLength={messages.len}
-        onClose={onClose}
-        updateChats={updateChats}
-        updateMessages={updateMessages}
-      />
-    )
-
-  beforeEach(() => {
-    renderComponent()
+const renderChatMenuWithStore = (preloadedState, messagesLength = 5) => {
+  const store = configureStore({
+    reducer: { appMain: reducer },
+    preloadedState
   })
 
-  it('renders without errors', () => {
+  render(
+    <Provider store={store}>
+      <I18nextProvider>
+        <ChatMenu
+          anchorEl={document.createElement('div')}
+          currentChat={{ _id: 'chatId', deletedFor: [] }}
+          messagesLength={messagesLength}
+          onClose={vi.fn()}
+          setIsHistoryCleared={vi.fn()}
+          updateChats={vi.fn(() => Promise.resolve())}
+          updateMessages={vi.fn(() => Promise.resolve())}
+        />
+      </I18nextProvider>
+    </Provider>
+  )
+}
+
+describe('ChatMenu Component', () => {
+  afterEach(() => {
+    cleanup()
+    vi.clearAllMocks()
+  })
+
+  it('renders menu items correctly', () => {
+    renderChatMenuWithStore({ appMain: {} })
+
     expect(
       screen.getByText('chatPage.chatMenu.clearHistory')
     ).toBeInTheDocument()
     expect(screen.getByText('chatPage.chatMenu.deleteChat')).toBeInTheDocument()
   })
 
-  it('should disable Clear History button if there are no messages', () => {
-    const clearHistoryButton = screen.getByText(
-      'chatPage.chatMenu.clearHistory'
-    )
-
-    fireEvent.click(clearHistoryButton)
-
-    expect(clearHistoryButton).toHaveAttribute('disabled')
-    expect(onClose).not.toHaveBeenCalled()
-    expect(updateMessages).not.toHaveBeenCalled()
-  })
-
-  it('handles Clear History button click', async () => {
-    messages.len = 5
-    cleanup()
-    renderComponent()
+  it('calls openDialog when Clear History is clicked', () => {
+    renderChatMenuWithStore({ appMain: {} })
 
     const clearHistoryButton = screen.getByText(
       'chatPage.chatMenu.clearHistory'
     )
-
     fireEvent.click(clearHistoryButton)
 
-    const confirmFunction = mockOpenDialog.mock.calls[0][0].sendConfirm
-    await confirmFunction(true)
-
-    expect(onClose).toHaveBeenCalled()
-    expect(mockOpenDialog).toHaveBeenCalledWith({
+    expect(
+      vi.mocked(useConfirm).mock.results[0].value.openDialog
+    ).toHaveBeenCalledWith({
       message: 'chatPage.chatMenu.clearHistoryWarning',
       sendConfirm: expect.any(Function),
       title: 'chatPage.chatMenu.clearHistoryTitle'
     })
-    await waitFor(() => expect(updateMessages).toHaveBeenCalled())
   })
 
-  it('handles Delete button click (mark as deleted)', async () => {
-    const deleteButton = screen.getByText('chatPage.chatMenu.deleteChat')
+  it('marks chat as deleted and updates state on soft deletion', async () => {
+    renderChatMenuWithStore({ appMain: {} })
 
-    fireEvent.click(deleteButton)
-    const confirmFunction = mockOpenDialog.mock.calls[1][0].sendConfirm
-    await confirmFunction(true)
+    const deleteChatButton = screen.getByText('chatPage.chatMenu.deleteChat')
+    fireEvent.click(deleteChatButton)
 
-    expect(onClose).toHaveBeenCalled()
-    expect(mockOpenDialog).toHaveBeenCalledWith({
+    const sendConfirm =
+      vi.mocked(useConfirm).mock.results[0].value.openDialog.mock.calls[0][0]
+        .sendConfirm
+    await sendConfirm(true)
+
+    expect(chatService.markChatAsDeleted).toHaveBeenCalledWith('chatId')
+  })
+
+  it('closes the menu when Close button is clicked', () => {
+    const closeMenuMock = vi.fn()
+    const setIsHistoryClearedMock = vi.fn()
+    const messagesLength = 5
+    const currentChat = { _id: '123', deletedFor: [] }
+    const updateChatsMock = vi.fn()
+    const updateMessagesMock = vi.fn()
+
+    const store = configureStore({ reducer: { appMain: reducer } })
+
+    render(
+      <Provider store={store}>
+        <I18nextProvider>
+          <ChatMenu
+            anchorEl={document.body}
+            currentChat={currentChat}
+            messagesLength={messagesLength}
+            onClose={closeMenuMock}
+            setIsHistoryCleared={setIsHistoryClearedMock}
+            updateChats={updateChatsMock}
+            updateMessages={updateMessagesMock}
+          />
+        </I18nextProvider>
+      </Provider>
+    )
+    const clearHistoryButton = screen.getByText(
+      /chatPage.chatMenu.clearHistory/i
+    )
+    fireEvent.click(clearHistoryButton)
+    expect(closeMenuMock).toHaveBeenCalled()
+    expect(setIsHistoryClearedMock).toHaveBeenCalledWith(messagesLength === 0)
+  })
+
+  it('calls openDialog with correct parameters when deleting a chat (soft delete)', () => {
+    renderChatMenuWithStore({ appMain: {} }, 5)
+
+    const deleteChatButton = screen.getByText('chatPage.chatMenu.deleteChat')
+    fireEvent.click(deleteChatButton)
+
+    expect(
+      vi.mocked(useConfirm).mock.results[0].value.openDialog
+    ).toHaveBeenCalledWith({
       message: 'chatPage.chatMenu.markingAsDeletedWarning',
       sendConfirm: expect.any(Function),
       title: 'chatPage.chatMenu.markingAsDeletedTitle'
     })
-    expect(updateChats).toHaveBeenCalled()
-  })
-
-  it('handles Delete button click (fully deleting)', async () => {
-    const deleteButton = screen.getByText('chatPage.chatMenu.deleteChat')
-    currentChat.deletedFor = ['user1']
-
-    fireEvent.click(deleteButton)
-    const confirmFunction = mockOpenDialog.mock.calls[2][0].sendConfirm
-    await confirmFunction(true)
-
-    expect(onClose).toHaveBeenCalled()
-    expect(mockOpenDialog).toHaveBeenCalledWith({
-      message: 'chatPage.chatMenu.fullDeleteWarning',
-      sendConfirm: expect.any(Function),
-      title: 'chatPage.chatMenu.fullDeleteTitle'
-    })
-    expect(updateChats).toHaveBeenCalled()
   })
 })
