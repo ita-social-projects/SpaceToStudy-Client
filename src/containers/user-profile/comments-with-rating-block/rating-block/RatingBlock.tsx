@@ -8,76 +8,82 @@ import AppRatingLarge from '~/components/app-rating-large/AppRatingLarge'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { RatingType } from '~/types'
+import { type ReviewResponse } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock.styles'
 
 interface RatingBlockProps {
   setFilter: (filter: number | null) => void
   averageRating: number
-  totalReviews: number
-  reviewsCount: RatingType[]
+  reviewCount: number
+  reviews: ReviewResponse[]
   activeFilter: number | null
 }
 
 const RatingBlock: FC<RatingBlockProps> = ({
   setFilter,
   averageRating,
-  totalReviews,
-  reviewsCount,
+  reviewCount,
+  reviews,
   activeFilter
 }) => {
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
-  const ratings = reviewsCount.reduce((acc, { count, rating }) => {
-    acc[rating] = count
-    return acc
-  }, Array<number>(6).fill(0))
+
+  const ratingCounts = Array.from({ length: 6 }, () => 0)
+
+  reviews.forEach(({ rating }) => {
+    ratingCounts[rating] += 1
+  })
 
   const resetFilters = () => setFilter(null)
 
-  const progresBars = ratings
-    .map((rating, idx: number) => {
-      const starPercent = (rating / totalReviews) * 100
-      const active = !activeFilter || activeFilter === idx
-      const handleProgresBarClick = () => {
-        if (rating) {
-          setFilter(idx)
-        }
-      }
-      const optionalStyles = {
-        opacity: active ? 1 : '0.5',
-        cursor: rating ? 'pointer' : 'default'
-      }
+  const createProgressBar = (rating: number, idx: number) => {
+    if (idx === 0) {
+      return null
+    }
 
-      return (
-        idx > 0 && (
-          <Box
-            data-testid={`progress-bar-${idx}`}
-            key={idx}
-            onClick={handleProgresBarClick}
-            sx={[styles.progressBar, optionalStyles]}
-          >
-            <Typography sx={styles.typography}>
-              {t('userProfilePage.reviews.starsCount', { count: idx })}
-            </Typography>
-            <LinearProgress
-              sx={styles.linearProgress}
-              value={starPercent}
-              variant='determinate'
-            />
-            <Typography sx={styles.typography}>{rating}</Typography>
-          </Box>
-        )
-      )
-    })
-    .reverse()
+    const starPercent = reviewCount ? (rating / reviewCount) * 100 : 0
+    const isActive = !activeFilter || activeFilter === idx
+
+    const handleClick = () => {
+      if (rating) {
+        setFilter(idx)
+      }
+    }
+
+    const dynamicStyles = {
+      opacity: isActive ? 1 : 0.5,
+      cursor: rating ? 'pointer' : 'default'
+    }
+
+    return (
+      <Box
+        data-testid={`progress-bar-${idx}`}
+        key={idx}
+        onClick={handleClick}
+        sx={[styles.progressBar, dynamicStyles]}
+      >
+        <Typography sx={styles.typography}>
+          {t('userProfilePage.reviews.starsCount', { count: idx })}
+        </Typography>
+        <LinearProgress
+          sx={styles.linearProgress}
+          value={starPercent}
+          variant='determinate'
+        />
+        <Typography sx={styles.typography}>{rating}</Typography>
+      </Box>
+    )
+  }
+
+  const progressBars = ratingCounts.map(createProgressBar).reverse()
 
   const ratingComponent = isMobile ? (
-    <AppRatingMobile reviewsCount={totalReviews} value={averageRating} />
+    <AppRatingMobile reviewsCount={reviewCount} value={averageRating} />
   ) : (
     <AppRatingLarge
       readOnly
-      reviewsCount={totalReviews}
+      reviewsCount={reviewCount}
       sx={styles.rating}
       value={averageRating}
     />
@@ -87,7 +93,7 @@ const RatingBlock: FC<RatingBlockProps> = ({
     <Box sx={styles.root}>
       {ratingComponent}
       <Box sx={styles.progressBarRoot}>
-        {progresBars}
+        {progressBars}
         {activeFilter && (
           <Typography
             data-testid='reset-filter'

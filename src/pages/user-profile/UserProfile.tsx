@@ -27,7 +27,6 @@ import useQuery from '~/hooks/use-query'
 import { userService } from '~/services/user-service'
 import videoImgProfile from '~/assets/img/user-profile-page/presentationVideoImg.png'
 
-import { responseMock } from '~/pages/user-profile/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { scrollToHash } from '~/utils/hash-scroll'
 import useSnackbarAlert from '~/hooks/use-snackbar-alert'
@@ -38,8 +37,6 @@ const UserProfile: React.FC = () => {
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const paramsRole = searchParams.get('role') as UserRoleEnum
   const { handleErrorAlert } = useSnackbarAlert()
-  const { user } = responseMock
-  const { reviews } = user.reviewStats || {}
 
   const { hash, pathname } = useLocation()
 
@@ -122,9 +119,12 @@ const UserProfile: React.FC = () => {
         />
       )}
       <CommentsWithRatingBlock
-        averageRating={user.reviewStats.averageRating}
-        reviewsCount={reviews}
-        totalReviews={user.reviewStats.totalReviews}
+        averageRating={
+          userResponse.averageRating[
+            preferredRole as UserRoleEnum.Student | UserRoleEnum.Tutor
+          ]
+        }
+        userId={preferredId}
         userRole={preferredRole}
       />
     </PageWrapper>

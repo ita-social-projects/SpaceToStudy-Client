@@ -8,62 +8,25 @@ import Comment from '~/components/comment/Comment'
 import Button from '~scss-components/button/Button'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { type ReviewResponse } from '~/types'
 
 import { styles } from '~/containers/user-profile/comments-block/CommentsBlock.styles'
 
-export interface MockResponseItem {
-  _id: string
-  comment: string
-  rating: number
-  author: {
-    _id: string
-    role: string[]
-    firstName: string
-    lastName: string
-    photo: string
-    email: string
-    categories: never[]
-    lastLogin: string
-    createdAt: string
-    updatedAt: string
-    __v: number
-  }
-  targetUserId: string
-  targetUserRole: string
-  offer: {
-    _id: string
-    price: number
-    proficiencyLevel: string[]
-    description: string
-    languages: string[]
-    authorRole: string
-    userId: string
-    subject: { _id: string; name: string }
-    category: { _id: string; name: string }
-    createdAt: string
-    updatedAt: string
-    __v: number
-  }
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-
-interface ComentsBlockProps {
+interface CommentsBlockProps {
   title?: string
-  data: MockResponseItem[]
+  data: ReviewResponse[]
   loading: boolean
   loadMore: () => void
   isExpandable: boolean
 }
 
-const ComentsBlock = ({
+const CommentsBlock: React.FC<CommentsBlockProps> = ({
   title,
   data,
   loading,
   loadMore,
   isExpandable
-}: ComentsBlockProps) => {
+}) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 
@@ -84,7 +47,7 @@ const ComentsBlock = ({
       onClick={loadMore}
       sx={styles.button}
     >
-      {t('userProfilePage.reviews.buttonTitle')}
+      {t('userProfilePage.reviews.moreReviews')}
     </Button>
   )
 
@@ -97,4 +60,4 @@ const ComentsBlock = ({
   )
 }
 
-export default ComentsBlock
+export default CommentsBlock

@@ -70,7 +70,17 @@
     "noAccess": "No access",
     "monthAccess": "month access",
     "yearAccess": "year access",
-    "permanentAccess": "Permanent access"
+    "permanentAccess": "Permanent access",
+    "reviewTitle": "Leave your review",
+    "studentReviewDescription": "Share your experience about the collaboration with the tutor. Your feedback will help improve the platform and user interactions.",
+    "tutorReviewDescription": "Share your experience about the collaboration with the student. Your feedback will help improve the platform and user interactions.",
+    "reviewRating": "Rate your experience:",
+    "reviewLabel": "Your review",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "success": "Your review was submitted successfully",
+    "leaveReviewSubtitle": "Share your feedback about this cooperation. The button will be enabled once the cooperation is closed.",
+    "leaveReviewTitle": "Leave a Review"
   },
   "notes": {
     "noteText": "Note text...",

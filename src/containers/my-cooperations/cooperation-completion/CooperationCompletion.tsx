@@ -7,30 +7,51 @@ import Divider from '@mui/material/Divider'
 import SettingItem from '~/components/setting-item/SettingItem'
 import Button from '~scss-components/button/Button'
 import AppSelect from '~/components/app-select/AppSelect'
+import AddReviewModal from '~/containers/my-cooperations/add-review-modal/AddReviewModal'
 
 import { cooperationAccessValues } from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion.constants'
 import { styles } from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion.styles'
+import { useModalContext } from '~/context/modal-context'
 import {
   CooperationMaterialsAccessEnum,
   UserRoleEnum,
-  StatusEnum
+  StatusEnum,
+  type ReviewDataFromCooperation
 } from '~/types'
+
 interface CooperationCompletionProps {
+  cooperationId: string
+  cooperationNeedActionRole: UserRoleEnum
   cooperationStatus: StatusEnum
+  isAbleToSendReview: boolean
   onCloseCooperation: () => void
   userRole: UserRoleEnum | ''
+  reviewData: ReviewDataFromCooperation
 }
 
 const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
+  cooperationId,
+  cooperationNeedActionRole,
   cooperationStatus,
+  isAbleToSendReview,
   onCloseCooperation,
-  userRole
+  userRole,
+  reviewData
 }) => {
   const { t } = useTranslation()
+  const { openModal } = useModalContext()
   const [materialsAccess, setMaterialsAccess] =
     useState<CooperationMaterialsAccessEnum>(
       CooperationMaterialsAccessEnum.OneMonthAccess
     )
+
+  const openAddReviewModal = () => {
+    openModal({
+      component: (
+        <AddReviewModal cooperationId={cooperationId} data={reviewData} />
+      )
+    })
+  }
 
   return (
     <Box>
@@ -52,6 +73,21 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
           variant='tonal-error'
         >
           {t('cooperationsPage.cooperationDetails.closeCooperationBtn')}
+        </Button>
+      </SettingItem>
+      <SettingItem
+        subtitle={t('cooperationsPage.cooperationDetails.leaveReviewSubtitle')}
+        title={t('cooperationsPage.cooperationDetails.leaveReviewTitle')}
+      >
+        <Button
+          disabled={
+            cooperationStatus !== StatusEnum.Closed ||
+            cooperationNeedActionRole === userRole ||
+            !isAbleToSendReview
+          }
+          onClick={openAddReviewModal}
+        >
+          {t('cooperationsPage.cooperationDetails.leaveReviewTitle')}
         </Button>
       </SettingItem>
       {userRole === UserRoleEnum.Tutor && (

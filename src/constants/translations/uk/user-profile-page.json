@@ -41,7 +41,7 @@
   "reviews": {
     "titleTutor": "Що говорять студенти",
     "titleStudent": "Що говорять викладачі",
-    "buttonTitle": "Більше відгуків",
+    "moreReviews": "Більше відгуків",
     "starsCount_zero": "{{count}} зірок",
     "starsCount_one": "{{count}} зірка",
     "starsCount_few": "{{count}} зірки",
@@ -49,7 +49,8 @@
     "reviewsCount_zero": "{{count}} відгуків",
     "reviewsCount_one": "{{count}} відгук",
     "reviewsCount_few": "{{count}} відгуки",
-    "reviewsCount_many": "{{count}} відгуків"
+    "reviewsCount_many": "{{count}} відгуків",
+    "buttonTitle": "Показати все"
   },
   "sortItems": {
     "Newest": "Нові",

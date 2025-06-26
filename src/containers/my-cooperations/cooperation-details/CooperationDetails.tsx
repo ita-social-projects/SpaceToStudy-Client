@@ -44,6 +44,8 @@ import {
 } from '~/redux/features/cooperationsSlice'
 import AcceptCooperationClosing from '~/containers/my-cooperations/accept-cooperation-close/AcceptCooperationClosing'
 import CooperationClosureDeclinedBanner from '~/containers/my-cooperations/cooperation-closure-declined-banner/CooperationClosureDeclinedBanner'
+import { useModalContext } from '~/context/modal-context'
+import AddReviewModal from '~/containers/my-cooperations/add-review-modal/AddReviewModal'
 
 const CooperationDetails = () => {
   const dispatch = useAppDispatch()
@@ -55,6 +57,8 @@ const CooperationDetails = () => {
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
   const [editMode, setEditMode] = useState<boolean>(false)
   const { userRole } = useAppSelector((state) => state.appMain)
+  const userId = useAppSelector((state) => state.appMain.userId)
+  const { openModal } = useModalContext()
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -106,12 +110,38 @@ const CooperationDetails = () => {
     dispatch(setIsActivityCreated(true))
   }, [dispatch])
 
+  const openAddReviewModal = useCallback(() => {
+    if (!cooperation || isLoading) {
+      return
+    }
+
+    const displayedUser =
+      cooperation.initiator._id === userId
+        ? cooperation.receiver
+        : cooperation?.initiator
+
+    const [displayedUserRole] = displayedUser.role
+
+    const reviewData = {
+      targetUserId: displayedUser._id,
+      targetUserRole: displayedUserRole,
+      offer: cooperation.offer._id
+    }
+
+    openModal({
+      component: (
+        <AddReviewModal cooperationId={cooperation._id} data={reviewData} />
+      )
+    })
+  }, [cooperation, isLoading, openModal, userId])
+
   const handleCooperationStatusUpdate = useCallback(async () => {
     await cooperationService.updateCooperation({
       _id: id,
       status: StatusEnum.Closed
     })
-  }, [id])
+    openAddReviewModal()
+  }, [id, openAddReviewModal])
 
   const { mutate: handleCooperationClosingAccept } = useMutation({
     mutationFn: handleCooperationStatusUpdate,

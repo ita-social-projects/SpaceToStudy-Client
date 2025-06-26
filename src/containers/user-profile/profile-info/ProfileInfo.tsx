@@ -94,7 +94,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
 
   const accountRating = (
     <AppRatingMobile
-      link={'#'}
+      link='#reviewSection'
       reviewsCount={reviewsCount}
       sx={styles.appRating}
       value={value}

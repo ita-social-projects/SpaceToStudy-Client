@@ -84,6 +84,12 @@ const MyCooperationsDetails = () => {
 
   const { offer, price } = cooperationDetails
 
+  const reviewData = {
+    targetUserId: displayedUser._id,
+    targetUserRole: displayedUserRole,
+    offer: cooperationDetails.offer._id
+  }
+
   const CategoryIcon = getCategoryIcon(offer.category.appearance.icon)
   const categoryColor = getValidatedHexColor(offer.category.appearance.color)
 
@@ -208,8 +214,12 @@ const MyCooperationsDetails = () => {
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
       <CooperationCompletion
+        cooperationId={cooperationDetails._id}
+        cooperationNeedActionRole={cooperationDetails.needAction.role}
         cooperationStatus={cooperationDetails.status}
+        isAbleToSendReview={cooperationDetails.isAbleToSendReview}
         onCloseCooperation={handleCloseCooperation}
+        reviewData={reviewData}
         userRole={userRole}
       />
     </Box>

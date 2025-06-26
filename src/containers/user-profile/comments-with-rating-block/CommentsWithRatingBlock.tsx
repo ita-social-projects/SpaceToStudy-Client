@@ -1,40 +1,34 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import RatingBlock from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock'
 import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock'
 import Loader from '~/components/loader/Loader'
-import { RatingType, SortByEnum, UserRoleEnum } from '~/types'
+import { SortByEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
-import {
-  responseMock,
-  loadingMock,
-  responseMockStudents,
-  MockReview
-} from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import {
   ListItemText,
   MenuItem,
   Select,
-  SelectChangeEvent
+  SelectChangeEvent,
+  Typography
 } from '@mui/material'
+import { ReviewService } from '~/services/review-service'
+import useQuery from '~/hooks/use-query'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
-  totalReviews: number
-  reviewsCount: RatingType[]
   labels?: ReadonlyMap<SortByEnum, string>
   userRole: UserRoleEnum
+  userId: string
 }
 
-const CommentsWithRatingBlock = ({
+const CommentsWithRatingBlock: React.FC<CommentsWithRatingBlockProps> = ({
   averageRating,
-  totalReviews,
-  reviewsCount,
   labels,
-  userRole
-}: CommentsWithRatingBlockProps) => {
+  userRole,
+  userId
+}) => {
   const [filter, setFilter] = useState<number | null>(null)
   const [sortBy, setSortBy] = useState<SortByEnum>(SortByEnum.Newest)
   const { t } = useTranslation()
@@ -44,10 +38,26 @@ const CommentsWithRatingBlock = ({
       ? 'userProfilePage.reviews.titleTutor'
       : 'userProfilePage.reviews.titleStudent'
 
-  const items: MockReview[] =
-    userRole === UserRoleEnum.Tutor
-      ? [...responseMock.items]
-      : [...responseMockStudents.items]
+  const getReviews = useCallback(() => {
+    return ReviewService.getUserReviews({ userId, userRole })
+  }, [userId, userRole])
+
+  const { data, isLoading } = useQuery({
+    queryFn: getReviews,
+    queryKey: ['reviews', userId, userRole],
+    options: {
+      staleTime: Infinity
+    }
+  })
+
+  if (isLoading || !data) {
+    return (
+      <Box id='reviewSection' sx={styles.root}>
+        <Typography sx={styles.title}>{t(titleKey)}</Typography>
+        <Loader data-testid='loader' />
+      </Box>
+    )
+  }
 
   const sortItems = Object.values(SortByEnum)
   const sortMenuItems = sortItems.map((el) => (
@@ -72,7 +82,7 @@ const CommentsWithRatingBlock = ({
     </MenuItem>
   ))
 
-  const filteredItems = items.filter(
+  const filteredItems = data.reviews.filter(
     (item) => filter === null || item.rating === filter
   )
 
@@ -96,52 +106,46 @@ const CommentsWithRatingBlock = ({
     setFilter(event.target.value === '' ? null : Number(event.target.value))
 
   return (
-    <Box sx={styles.root}>
+    <Box id='reviewSection' sx={styles.root}>
       <Typography sx={styles.title}>{t(titleKey)}</Typography>
-      {loadingMock && !items.length ? (
-        <Loader data-testid='loader' />
-      ) : (
-        <>
-          <RatingBlock
-            activeFilter={filter}
-            averageRating={averageRating}
-            data-testid='rating-block'
-            reviewsCount={reviewsCount}
-            setFilter={setFilter}
-            totalReviews={totalReviews}
-          />
-          <Box sx={styles.container}>
-            <Box sx={styles.innerBox}>
-              <Typography>{t('common.labels.sortBy')}</Typography>
-              <Select
-                data-testid='sort-select'
-                defaultValue={SortByEnum.Newest}
-                onChange={handleSortChange}
-              >
-                {sortMenuItems}
-              </Select>
-            </Box>
-            <Box sx={styles.innerBox}>
-              <Typography>{t('common.labels.filterBy')}</Typography>
-              <Select
-                data-testid='filter-select'
-                defaultValue={5}
-                onChange={handleFilterChange}
-                value={filter ?? 5}
-              >
-                {ratingMenuItems}
-              </Select>
-            </Box>
-          </Box>
-          <CommentsBlock
-            data={sortedItems}
-            data-testid='comments-block'
-            isExpandable
-            loadMore={() => null}
-            loading={loadingMock}
-          />
-        </>
-      )}
+      <RatingBlock
+        activeFilter={filter}
+        averageRating={averageRating}
+        data-testid='rating-block'
+        reviewCount={data.count}
+        reviews={data.reviews}
+        setFilter={setFilter}
+      />
+      <Box sx={styles.container}>
+        <Box sx={styles.innerBox}>
+          <Typography>{t('common.labels.sortBy')}</Typography>
+          <Select
+            data-testid='sort-select'
+            defaultValue={SortByEnum.Newest}
+            onChange={handleSortChange}
+          >
+            {sortMenuItems}
+          </Select>
+        </Box>
+        <Box sx={styles.innerBox}>
+          <Typography>{t('common.labels.filterBy')}</Typography>
+          <Select
+            data-testid='filter-select'
+            defaultValue={5}
+            onChange={handleFilterChange}
+            value={filter ?? 5}
+          >
+            {ratingMenuItems}
+          </Select>
+        </Box>
+      </Box>
+      <CommentsBlock
+        data={sortedItems}
+        data-testid='comments-block'
+        isExpandable
+        loadMore={() => null}
+        loading={isLoading}
+      />
     </Box>
   )
 }

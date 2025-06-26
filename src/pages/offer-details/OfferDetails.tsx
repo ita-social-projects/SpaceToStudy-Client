@@ -23,6 +23,8 @@ import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import AppCard from '~/components/app-card/AppCard'
 import Loader from '~/components/loader/Loader'
 
+import { ReviewService } from '~/services/review-service'
+
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
@@ -37,16 +39,13 @@ import {
 } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
-import {
-  responseMock,
-  loadingMock
-} from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import { activeButtonActions } from '~/pages/offer-details/OfferDetails.constants'
 import { useToggleBookmark } from '~/utils/toggle-bookmark'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { setField, fetchUserById } from '~/redux/features/editProfileSlice'
 import { snackbarVariants } from '~/constants'
 import { getErrorKey } from '~/utils/get-error-key'
+import useQuery from '~/hooks/use-query'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -62,12 +61,6 @@ const OfferDetails = () => {
 
   const offerDetailsPage = useRef(null)
   const { pageRef } = useOutletContext<OutletContext>()
-  const { items } = responseMock
-
-  const titleKey =
-    userRole === UserRoleEnum.Tutor
-      ? 'userProfilePage.reviews.titleTutor'
-      : 'userProfilePage.reviews.titleStudent'
 
   const getOffer = useCallback(() => OfferService.getOffer(id), [id])
   const responseError = useCallback(
@@ -84,11 +77,37 @@ const OfferDetails = () => {
     onResponseError: responseError
   })
 
+  let titleKey = ''
+
+  if (offerData) {
+    titleKey =
+      offerData.authorRole === UserRoleEnum.Tutor
+        ? 'titleTutor'
+        : 'titleStudent'
+  }
+
   const updateOffer = useCallback(
     (updateData?: Partial<CreateOrUpdateOfferData>) =>
       OfferService.updateOffer(id, updateData),
     [id]
   )
+
+  const getReviews = useCallback(() => {
+    return ReviewService.getUserReviews({
+      userId: offerData!.author._id,
+      userRole: offerData!.authorRole
+    })
+  }, [offerData])
+
+  const { data, isLoading } = useQuery({
+    queryFn: getReviews,
+    queryKey: [['reviews', userId, userRole]],
+    options: {
+      staleTime: Infinity
+    }
+  })
+
+  const reviews = data?.reviews ?? []
 
   const { loading: updateLoading, fetchData: fetchDataUpdateOffer } = useAxios<
     null,
@@ -273,13 +292,15 @@ const OfferDetails = () => {
         </AppCard>
       )}
       <AppCard sx={styles.wrapper}>
-        <CommentsBlock
-          data={items}
-          isExpandable
-          loadMore={() => null}
-          loading={loadingMock}
-          title={t(titleKey)}
-        />
+        {offerData && (
+          <CommentsBlock
+            data={reviews}
+            isExpandable
+            loadMore={() => null}
+            loading={isLoading}
+            title={t(`userProfilePage.reviews.${titleKey}`)}
+          />
+        )}
       </AppCard>
 
       <OfferCarousel offer={offerData} />
