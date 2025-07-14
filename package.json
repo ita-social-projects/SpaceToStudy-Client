@@ -57,7 +57,7 @@
     "@storybook/addon-onboarding": "^8.2.6",
     "@storybook/blocks": "^8.2.6",
     "@storybook/react": "^8.2.6",
-    "@storybook/react-vite": "^8.2.6",
+    "@storybook/react-vite": "^9.0.16",
     "@storybook/test": "^8.2.6",
     "@tanstack/eslint-plugin-query": "^5.62.1",
     "@tanstack/react-query-devtools": "^5.62.7",
