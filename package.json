@@ -95,7 +95,7 @@
     "lint-staged": "^15.0.2",
     "postcss": "^8.4.44",
     "prettier": "^3.0.3",
-    "storybook": "^8.2.6",
+    "storybook": "^9.1.6",
     "stylelint": "^16.9.0",
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-prettier": "^5.0.2",
