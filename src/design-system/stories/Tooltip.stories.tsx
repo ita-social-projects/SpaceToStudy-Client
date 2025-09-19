@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import ToolTip from '~scss-components/tooltip/Tooltip'
 import GppMaybeIcon from '@mui/icons-material/GppMaybe'
 

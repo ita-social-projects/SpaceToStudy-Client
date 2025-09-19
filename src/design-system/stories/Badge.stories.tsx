@@ -1,5 +1,5 @@
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import Badge from '~scss-components/badge/Badge'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
 

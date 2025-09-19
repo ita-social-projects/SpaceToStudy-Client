@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react-vite'
 import DividerComponent from '~scss-components/divider/Divider'
 
 const meta: Meta<typeof DividerComponent> = {
