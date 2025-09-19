@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 import UserAvatar from '~scss-components/user-avatar/UserAvatar'
 
 const meta: Meta<typeof UserAvatar> = {

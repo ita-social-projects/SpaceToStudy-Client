@@ -1,5 +1,5 @@
-import type { Meta } from '@storybook/react'
-import { fn } from '@storybook/test'
+import type { Meta } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 import { type ComponentProps, useState } from 'react'
 import Chip from '~/design-system/components/chip/Chip'
 
