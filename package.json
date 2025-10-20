@@ -85,7 +85,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-storybook": "^0.10.1",
+    "eslint-plugin-storybook": "^9.1.13",
     "eslint-plugin-testing-library": "^6.2.2",
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vitest-globals": "^1.5.0",
